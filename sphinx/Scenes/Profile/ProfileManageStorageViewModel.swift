@@ -12,7 +12,6 @@ import UIKit
 class ProfileManageStorageViewModel : NSObject{
     var vc : ProfileManageStorageViewController
     var mediaTypeTableView:UITableView
-    var mediaSourceTableView:UITableView
     var mediaTypes = StorageManagerMediaType.allCases
     var sourceTypes = StorageManagerMediaSource.allCases
     var typeStats = [StorageManagerMediaType:Double]()
@@ -20,12 +19,10 @@ class ProfileManageStorageViewModel : NSObject{
     
     init(
         vc:ProfileManageStorageViewController,
-        mediaTypeTableView:UITableView,
-        mediaSourceTableView:UITableView
+        mediaTypeTableView:UITableView
     ){
         self.vc = vc
         self.mediaTypeTableView = mediaTypeTableView
-        self.mediaSourceTableView = mediaSourceTableView
     }
     
     func finishSetup(){
@@ -34,12 +31,15 @@ class ProfileManageStorageViewModel : NSObject{
         self.mediaTypeTableView.delegate = self
         self.mediaTypeTableView.dataSource = self
         
-        self.mediaSourceTableView.delegate = self
-        self.mediaSourceTableView.dataSource = self
         
         mediaTypeTableView.register(UINib(nibName: "MediaStorageTypeSummaryTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID)
-        mediaSourceTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+        mediaTypeTableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
         
+    }
+    
+    func getSourceTypeIndex(indexPath:Int)->Int{
+        let sourceTypeIndex = indexPath - mediaTypes.count
+        return sourceTypeIndex
     }
     
     
@@ -47,7 +47,7 @@ class ProfileManageStorageViewModel : NSObject{
 
 extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSource, MediaStorageTypeSummaryTableViewCellDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if(tableView == mediaTypeTableView){
+        if(indexPath.row < mediaTypes.count){
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: MediaStorageTypeSummaryTableViewCell.reuseID,
                 for: indexPath
@@ -64,27 +64,38 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
                 withIdentifier: MediaStorageSourceTableViewCell.reuseID,
                 for: indexPath
             ) as! MediaStorageSourceTableViewCell
-            cell.configure(forSource: sourceTypes[indexPath.row])
-            cell.mediaSourceSizeLabel.text = formatBytes(Int(loadMediaSize(forSource: sourceTypes[indexPath.row]) ?? 0))
+            if(indexPath.row < (sourceTypes.count + mediaTypes.count)){
+                let sourceTypeIndex = getSourceTypeIndex(indexPath: indexPath.row)
+                cell.configure(forSource: sourceTypes[sourceTypeIndex])
+                cell.mediaSourceSizeLabel.text = formatBytes(Int(loadMediaSize(forSource: sourceTypes[sourceTypeIndex]) ?? 0))
+            }
+            else{
+                cell.configureAsDeletionByAge()
+            }
+            
             return cell
         }
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(tableView == mediaSourceTableView){
-            let sourceType = sourceTypes[indexPath.row]
+        if(indexPath.row >= mediaTypes.count && indexPath.row < mediaTypes.count + sourceTypes.count){
+            let sourceTypeIndex = getSourceTypeIndex(indexPath: indexPath.row)
+            let sourceType = sourceTypes[sourceTypeIndex]
             vc.showSourceDetailsVC(source: sourceType)
             tableView.deselectRow(at: indexPath, animated: true)
+        }
+        else if(indexPath.row >= mediaTypes.count + sourceTypes.count){
+            vc.showDeleteOldContent()
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(tableView == mediaTypeTableView){
-            return mediaTypes.count
+            return mediaTypes.count + sourceTypes.count + 1
         }
         else{
-            return sourceTypes.count
+            return 0
         }
     }
     
@@ -156,7 +167,6 @@ extension ProfileManageStorageViewModel : UITableViewDelegate,UITableViewDataSou
         self.vc.updateUsageLabels()
         
         self.mediaTypeTableView.reloadData()
-        self.mediaSourceTableView.reloadData()
     
     }
 }

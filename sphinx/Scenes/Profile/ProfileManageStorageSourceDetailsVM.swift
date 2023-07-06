@@ -23,6 +23,7 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
         }
     }
     
+    var selectedRow : Int = 0
     var podsDict : [PodcastFeed:[StorageManagerItem]]? = nil
     var podsArray = [PodcastFeed](){
         didSet{
@@ -56,6 +57,7 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
         tableView.dataSource = self
         
         tableView.register(UINib(nibName: "MediaStorageSourceTableViewCell", bundle: nil), forCellReuseIdentifier: MediaStorageSourceTableViewCell.reuseID)
+        tableView.register(UINib(nibName: "MaxContentAgeTableViewCell", bundle: nil), forCellReuseIdentifier: MaxContentAgeTableViewCell.reuseID)
     }
     
     func getDataSource(){
@@ -95,6 +97,10 @@ class ProfileManageStorageSourceDetailsVM : NSObject{
 extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if(vc.isFromDeleteOldContent == true){
+            return MessageAgePossibilities.allCases.count
+        }
+        
         if source == .chats,
            let chatData = chatDict{
             return chatsArray.count
@@ -108,10 +114,24 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if(vc.isFromDeleteOldContent){
+            let optionCell = tableView.dequeueReusableCell(
+                withIdentifier: MaxContentAgeTableViewCell.reuseID,
+                for: indexPath
+            ) as! MaxContentAgeTableViewCell
+            optionCell.delegate = self.vc
+            optionCell.backgroundColor = self.vc.view.backgroundColor
+            optionCell.selectionStyle = .none
+            optionCell.isSelectedRow = selectedRow == indexPath.row
+            optionCell.configureWithDuration(age: MessageAgePossibilities.allCases[indexPath.row])
+            return optionCell
+        }
+        
         let cell = tableView.dequeueReusableCell(
             withIdentifier: MediaStorageSourceTableViewCell.reuseID,
             for: indexPath
         ) as! MediaStorageSourceTableViewCell
+        
         if source == .chats{
             let chosenChat = chatsArray[indexPath.row]
             let items = chatDict?[chosenChat] ?? []
@@ -125,7 +145,19 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
         return cell
     }
     
+    func handleMaxAgeSelection(index:Int){
+        selectedRow = index
+        UserData.sharedInstance.setMaxAge(possibility: MessageAgePossibilities.allCases[index])
+        self.tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(vc.isFromDeleteOldContent){
+            handleMaxAgeSelection(index: indexPath.row)
+            return
+        }
+        
         switch(source){
         case .chats:
             let chat = chatsArray[indexPath.row]
@@ -147,6 +179,10 @@ extension ProfileManageStorageSourceDetailsVM : UITableViewDelegate,UITableViewD
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Specify the desired height for your cells
+        if(vc.isFromDeleteOldContent){
+            return 80.0
+        }
+        
         return 64.0 // Adjust this value according to your requirements
     }
 }

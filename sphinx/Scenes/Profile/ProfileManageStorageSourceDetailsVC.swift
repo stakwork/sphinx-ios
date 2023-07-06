@@ -14,7 +14,55 @@ public enum PMSSDVCPresentationContext{
     case downloadedPodcastList
 }
 
-class ProfileManageStorageSourceDetailsVC : UIViewController{
+public enum MessageAgePossibilities{
+    case never
+    case thirtyDays
+    case sixMonths
+    case oneYear
+    case customDays
+    
+    static var allCases: [MessageAgePossibilities]{
+        return [
+            .never,
+            .thirtyDays,
+            .sixMonths,
+            .oneYear,
+            .customDays
+        ]
+    }
+    
+    var localizedDescription: String {
+        switch self {
+        case .never:
+            return "storage.management.never".localized
+        case .oneYear:
+            return "storage.management.one.year.old".localized
+        case .thirtyDays:
+            return "storage.management.thirty.days.old".localized
+        case .sixMonths:
+            return "storage.management.six.months.old".localized
+        case .customDays:
+            return String(UserData.sharedInstance.getCustomMaxAgeValueInDays()) + " " + "storage.management.days".localized
+        }
+    }
+    
+    var valueInDays : Int{
+        switch self {
+        case .never:
+            return 365 * 1000
+        case .oneYear:
+            return 365
+        case .thirtyDays:
+            return 30
+        case .sixMonths:
+            return 180
+        case .customDays:
+            return UserData.sharedInstance.getCustomMaxAgeValueInDays()
+        }
+    }
+}
+
+class ProfileManageStorageSourceDetailsVC : NewKeyboardHandlerViewController{
     
     
     @IBOutlet weak var tableYOffset: NSLayoutConstraint!
@@ -24,12 +72,16 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     @IBOutlet weak var mediaSourceDetailsTableView: UITableView!
     @IBOutlet weak var mediaSourceTotalSizeLabel: UILabel!
     @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
+    @IBOutlet weak var deleteButton: UIButton!
+    
     var overlayView : UIView? = nil
     
     var source : StorageManagerMediaSource = .chats
+    var isFromDeleteOldContent : Bool = false
     var totalSize : Double = 0.0
     var isFirstLoad : Bool = true
     var presentationContext : PMSSDVCPresentationContext = .memoryManagement
+    var customLengthValue : Int? = nil
     
     lazy var vm : ProfileManageStorageSourceDetailsVM = {
         return ProfileManageStorageSourceDetailsVM(vc: self, tableView: mediaSourceDetailsTableView, source: self.source)
@@ -37,10 +89,13 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     static func instantiate(items:[StorageManagerItem],
                             source:StorageManagerMediaSource,
-                            sourceTotalSize:Double)->ProfileManageStorageSourceDetailsVC{
+                            sourceTotalSize:Double,
+                            isFromDeleteOldContent:Bool
+    )->ProfileManageStorageSourceDetailsVC{
         let viewController = StoryboardScene.Profile.profileManageStorageSourceDetailsVC.instantiate()
         viewController.source = source
         viewController.totalSize = sourceTotalSize
+        viewController.isFromDeleteOldContent = isFromDeleteOldContent
         return viewController
     }
     
@@ -61,6 +116,16 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         isFirstLoad = false
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if let newValue = self.customLengthValue{
+                UserData.sharedInstance.setCustomMaxAgeValueInDays(days: newValue)
+            }
+        })
+        
+        StorageManager.sharedManager.deleteAllOldChatMedia(completion: {})
+    }
+    
     func setupView(){
         switch(source){
         case .chats:
@@ -69,6 +134,14 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
         case .podcasts:
             headerLabel.text = "Podcasts"
             break
+        }
+        if(isFromDeleteOldContent == true){
+            headerLabel.text = "storage.management.delete.old.content".localized
+            mediaSourceTotalSizeLabel.isHidden = true
+            deleteButton.isHidden = true
+            if let selectedIndex = MessageAgePossibilities.allCases.firstIndex(where: {$0 == UserData.sharedInstance.getMaxAge()}){
+                vm.selectedRow = selectedIndex
+            }
         }
         mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
         hideDeletionWarningAlert()
@@ -210,4 +283,11 @@ extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDel
     }
     
     
+}
+
+
+extension ProfileManageStorageSourceDetailsVC : MaxContentAgeTableViewCellDelegate{
+    func didChangeCustomLength(value: Int) {
+        self.customLengthValue = value
+    }
 }

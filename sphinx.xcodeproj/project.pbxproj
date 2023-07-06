@@ -631,6 +631,8 @@
 		CE3133B12977747E00E91E3A /* BadgeAdminDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */; };
 		CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */; };
 		CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */; };
+		CE3BE5762A55D5C800C152ED /* MaxContentAgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3BE5742A55D5C800C152ED /* MaxContentAgeTableViewCell.swift */; };
+		CE3BE5772A55D5C800C152ED /* MaxContentAgeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3BE5752A55D5C800C152ED /* MaxContentAgeTableViewCell.xib */; };
 		CE3D8CA129B0FF7100EDB637 /* FeedItemDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */; };
 		CE3D8CA329B10FA500EDB637 /* FeedItemDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM.swift */; };
 		CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */; };
@@ -1585,6 +1587,8 @@
 		CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminDetailVC.swift; sourceTree = "<group>"; };
 		CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeAdminListTableViewCell.xib; sourceTree = "<group>"; };
 		CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListVC.swift; sourceTree = "<group>"; };
+		CE3BE5742A55D5C800C152ED /* MaxContentAgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxContentAgeTableViewCell.swift; sourceTree = "<group>"; };
+		CE3BE5752A55D5C800C152ED /* MaxContentAgeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MaxContentAgeTableViewCell.xib; sourceTree = "<group>"; };
 		CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVC.swift; sourceTree = "<group>"; };
 		CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVM.swift; sourceTree = "<group>"; };
 		CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailHeaderCell.swift; sourceTree = "<group>"; };
@@ -3326,6 +3330,8 @@
 		47904C1C24BF401400710E7A /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				CE3BE5742A55D5C800C152ED /* MaxContentAgeTableViewCell.swift */,
+				CE3BE5752A55D5C800C152ED /* MaxContentAgeTableViewCell.xib */,
 				CEE8CFFB2A211DDE00DF7112 /* ChatImageCollectionViewCell.swift */,
 				CEE8CFFC2A211DDE00DF7112 /* ChatImageCollectionViewCell.xib */,
 				47904C1D24BF403400710E7A /* NotificationSoundTableViewCell.swift */,
@@ -4571,6 +4577,7 @@
 				47904C0E24BF352300710E7A /* popcorn.caf in Resources */,
 				470F4C49257E708400288A9B /* TribeMemberInfoView.xib in Resources */,
 				477BCF3C2A014CC20080ED65 /* TransactionTableViewCell.xib in Resources */,
+				CE3BE5772A55D5C800C152ED /* MaxContentAgeTableViewCell.xib in Resources */,
 				4797E77224B8E51E00D13270 /* Chat.storyboard in Resources */,
 				4797E7A524B8F06A00D13270 /* PaidAttachmentView.xib in Resources */,
 				4749356A2A29250200AB5FFA /* PodcastAudioView.xib in Resources */,
@@ -4839,6 +4846,7 @@
 				F3CE637C26AFE823006E37A0 /* FeedFilterChipCollectionViewCell.swift in Sources */,
 				471161E229156511008EAFF2 /* Rake.swift in Sources */,
 				4787F8942476B8E600CCE8B9 /* CGFloat.swift in Sources */,
+				CE3BE5762A55D5C800C152ED /* MaxContentAgeTableViewCell.swift in Sources */,
 				472092C32A2676C000468796 /* ChatMessageTextFieldView+AttachmentExtension.swift in Sources */,
 				478B05C829786F8900A1B254 /* PodcastPlayerController+ActionsTracking.swift in Sources */,
 				F32A696126CFEF600004B8B3 /* PodcastEpisode+Properties.swift in Sources */,

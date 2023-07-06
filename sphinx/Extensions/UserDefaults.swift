@@ -60,6 +60,10 @@ extension UserDefaults {
         
         public static let maxMemory = DefaultKey<Int>("maxMemory")
         
+        public static let maxAge = DefaultKey<Int>("maxAge")
+        
+        public static let customMaxAge = DefaultKey<Int>("customMaxAge")
+        
         public static let inviteServerURL = DefaultKey<String>("inviteServerURL")
         public static let fileServerURL = DefaultKey<String>("fileServerURL")
         public static let meetingServerURL = DefaultKey<String>("meetingServerURL")

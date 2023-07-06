@@ -62,7 +62,7 @@ public enum MessageAgePossibilities{
     }
 }
 
-class ProfileManageStorageSourceDetailsVC : UIViewController{
+class ProfileManageStorageSourceDetailsVC : NewKeyboardHandlerViewController{
     
     
     @IBOutlet weak var tableYOffset: NSLayoutConstraint!

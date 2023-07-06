@@ -514,7 +514,7 @@ class StorageManager {
     
     func deleteAllOldChatMedia(completion: @escaping ()->()){
         let now = Date()
-        let daysValue = UserData.sharedInstance.getMaxAge().valueInDays
+        let daysValue = UserData.sharedInstance.getMaxAge().valueInDays * -1
         if let cutoffDatetime = Calendar.current.date(byAdding: .day, value: daysValue, to: now){
             let oldMediaOnChoppingBlock = allItems.filter({$0.source == .chats && $0.date < cutoffDatetime}).compactMap({$0.cachedMedia})
             deleteCacheItems(cms: oldMediaOnChoppingBlock, completion: {

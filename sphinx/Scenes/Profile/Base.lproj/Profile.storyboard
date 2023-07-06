@@ -1438,7 +1438,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="77.88 GB Free" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="myU-eK-pqV">
-                                <rect key="frame" x="304" y="187.5" width="88" height="17"/>
+                                <rect key="frame" x="301" y="187.5" width="91" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="qZg-sn-L9T"/>
                                 </constraints>
@@ -1486,11 +1486,8 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-X7-Dcd">
-                                <rect key="frame" x="0.0" y="293.5" width="414" height="392"/>
+                                <rect key="frame" x="0.0" y="293.5" width="414" height="602.5"/>
                                 <color key="backgroundColor" name="Body"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="392" id="3Lg-KA-ynh"/>
-                                </constraints>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJI-on-VIe" customClass="MediaDeletionConfirmationView" customModule="sphinx" customModuleProvider="target">
                                 <rect key="frame" x="51" y="271" width="312" height="368"/>
@@ -1520,6 +1517,7 @@
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="top" secondItem="n7u-9a-5PX" secondAttribute="top" id="CwP-dZ-mD3"/>
                             <constraint firstItem="DzR-Mi-Rn7" firstAttribute="centerY" secondItem="aZn-Kj-YV3" secondAttribute="centerY" id="G9r-PS-Hjh"/>
                             <constraint firstItem="Ngf-yd-OIl" firstAttribute="trailing" secondItem="n7u-9a-5PX" secondAttribute="trailing" id="Gve-mY-5rW"/>
+                            <constraint firstAttribute="bottom" secondItem="tn4-X7-Dcd" secondAttribute="bottom" id="ILV-ab-4lo"/>
                             <constraint firstItem="aZn-Kj-YV3" firstAttribute="top" secondItem="Fvo-5a-xTT" secondAttribute="bottom" constant="2" id="OAZ-yi-8km"/>
                             <constraint firstItem="h59-t6-zfg" firstAttribute="top" secondItem="MBC-sr-yDr" secondAttribute="bottom" constant="20" id="QhP-dQ-dvm"/>
                             <constraint firstItem="tn4-X7-Dcd" firstAttribute="leading" secondItem="1Ap-Ee-cOT" secondAttribute="leading" id="Sn5-tI-Cew"/>

@@ -56,6 +56,7 @@ public extension UIColor {
         public static let Shadow = color("Shadow")
         public static let BubbleShadow = color("BubbleShadow")
         public static let Divider = color("Divider")
+        public static let Divider2 = color("Divider2")
         public static let LightDivider = color("LightDivider")
         public static let ExpiredInvoice = color("ExpiredInvoice")
         public static let AddressBookHeader = color("AddressBookHeader")

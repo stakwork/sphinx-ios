@@ -68,20 +68,7 @@ class MaxContentAgeTableViewCell: UITableViewCell {
         customAgeTextField.delegate = self
         customAgeTextField.font = UIFont(name: "Roboto", size: 17.0)
         customAgeContainerView.layer.cornerRadius = customAgeTextField.frame.height/2.0
-        
-          if #available(iOS 13.0, *) {
-              if UIScreen.main.traitCollection.userInterfaceStyle == .dark {
-                  // Dark mode is active
-                  print("Dark mode")
-                  customAgeContainerView.backgroundColor = UIColor(hex: "#131B1D")
-              } else {
-                  // Light mode is active
-                  print("Light mode")
-                  customAgeContainerView.backgroundColor = UIColor(hex: "#CECECE")
-              }
-          } else {
-              customAgeContainerView.backgroundColor = UIColor(hex: "#CECECE")
-          }
+        customAgeContainerView.backgroundColor = UIColor.Sphinx.Divider2
     }
 }
 

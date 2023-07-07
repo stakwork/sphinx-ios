@@ -38,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oC3-XZ-fnj">
-                        <rect key="frame" x="171" y="30" width="133" height="20"/>
+                        <rect key="frame" x="182" y="30" width="122" height="20"/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                         <color key="textColor" name="TextMessages"/>
                         <nil key="highlightedColor"/>
@@ -74,7 +74,7 @@
                     <constraint firstItem="oC3-XZ-fnj" firstAttribute="centerY" secondItem="bEJ-lC-4UX" secondAttribute="centerY" id="XJp-qO-Vgp"/>
                     <constraint firstAttribute="bottom" secondItem="bEJ-lC-4UX" secondAttribute="bottom" id="hYc-IH-kUh"/>
                     <constraint firstItem="KfZ-NX-tjM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hh4-3O-aqU"/>
-                    <constraint firstItem="oC3-XZ-fnj" firstAttribute="leading" secondItem="KfZ-NX-tjM" secondAttribute="trailing" constant="4" id="l5F-9y-fEA"/>
+                    <constraint firstItem="oC3-XZ-fnj" firstAttribute="leading" secondItem="KfZ-NX-tjM" secondAttribute="trailing" constant="15" id="l5F-9y-fEA"/>
                     <constraint firstItem="bEJ-lC-4UX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pTJ-Lg-c4Y"/>
                     <constraint firstItem="KfZ-NX-tjM" firstAttribute="leading" secondItem="bEJ-lC-4UX" secondAttribute="leading" id="y1d-mo-FxJ"/>
                 </constraints>

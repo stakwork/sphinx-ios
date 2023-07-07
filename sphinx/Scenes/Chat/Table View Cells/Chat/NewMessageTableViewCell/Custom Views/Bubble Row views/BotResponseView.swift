@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import Down
 
 class BotResponseView: UIView {
 
@@ -54,17 +55,45 @@ class BotResponseView: UIView {
         
         if !loading {
             loadingWheel.stopAnimating()
-            
             let backgroundColor = UIColor(cgColor: UIColor.Sphinx.ReceivedMsgBG.resolvedCGColor(with: self)).toHexString()
-            let textColor = UIColor(cgColor: UIColor.Sphinx.Text.resolvedCGColor(with: self)).toHexString()
-            
-            let contentPrefix = String(format: kWebViewContentPrefix, textColor, backgroundColor, backgroundColor)
             let messageContent = botHTMLContent.html
-            let content = "\(contentPrefix)\(messageContent)\(kWebViewContentSuffix)"
+            let textColor = UIColor(cgColor: UIColor.Sphinx.Text.resolvedCGColor(with: self)).toHexString()
+            let contentPrefix = String(format: kWebViewContentPrefix, textColor, backgroundColor, backgroundColor)
+            let content = "```hello.world();\n```"//"\(contentPrefix)\(messageContent)\(kWebViewContentSuffix)"
+            setupMarkdownView(content: content)
             
-            let _ = webView.loadHTMLString(content, baseURL: Bundle.main.bundleURL)
+//            let backgroundColor = UIColor(cgColor: UIColor.Sphinx.ReceivedMsgBG.resolvedCGColor(with: self)).toHexString()
+//            let textColor = UIColor(cgColor: UIColor.Sphinx.Text.resolvedCGColor(with: self)).toHexString()
+//
+//            let contentPrefix = String(format: kWebViewContentPrefix, textColor, backgroundColor, backgroundColor)
+//            let messageContent = botHTMLContent.html
+//            let content = "\(contentPrefix)\(messageContent)\(kWebViewContentSuffix)"
+//
+//            let _ = webView.loadHTMLString(content, baseURL: Bundle.main.bundleURL)
         } else {
             loadingWheel.startAnimating()
+        }
+    }
+    
+    func setupMarkdownView(content:String){
+        do{
+
+            let dv = try DownView(frame: self.bounds, markdownString: content,templateBundle: nil)
+            let bubbleRadius = self.layer.cornerRadius
+            dv.layer.cornerRadius = bubbleRadius
+            self.layer.cornerRadius = bubbleRadius
+            for view in dv.subviews{
+                if let valid_view = view as? UIView{
+                    let bubbleRadius = self.layer.cornerRadius
+                    valid_view.backgroundColor = UIColor.clear
+                    valid_view.layer.cornerRadius = bubbleRadius
+                }
+            }
+            //dv.navigationDelegate = self
+            self.addSubview(dv)
+        }
+        catch let error{
+            print(error)
         }
     }
 

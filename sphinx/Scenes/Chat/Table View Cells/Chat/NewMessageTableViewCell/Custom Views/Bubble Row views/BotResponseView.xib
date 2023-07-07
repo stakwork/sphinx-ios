@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="BiX-dY-T5c"/>
                 <outlet property="loadingWheel" destination="fQb-kK-L9m" id="oT9-KT-dzi"/>
+                <outlet property="markdownLabel" destination="kF6-Aq-86L" id="bOD-Lv-sLg"/>
                 <outlet property="webView" destination="Lcf-y0-caE" id="c3W-yv-6av"/>
             </connections>
         </placeholder>
@@ -19,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="120"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lcf-y0-caE">
+                <wkWebView contentMode="TopLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Lcf-y0-caE">
                     <rect key="frame" x="16" y="16" width="268" height="88"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <wkWebViewConfiguration key="configuration">
@@ -30,14 +31,24 @@
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="fQb-kK-L9m">
                     <rect key="frame" x="140" y="50" width="20" height="20"/>
                 </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kF6-Aq-86L">
+                    <rect key="frame" x="16" y="16" width="268" height="88"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="kF6-Aq-86L" firstAttribute="trailing" secondItem="Lcf-y0-caE" secondAttribute="trailing" id="BLe-Fm-IXZ"/>
+                <constraint firstItem="kF6-Aq-86L" firstAttribute="bottom" secondItem="Lcf-y0-caE" secondAttribute="bottom" id="BhT-x8-eee"/>
                 <constraint firstItem="Lcf-y0-caE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="De4-0g-X3q"/>
                 <constraint firstItem="fQb-kK-L9m" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="PFe-nG-c7s"/>
                 <constraint firstItem="fQb-kK-L9m" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PGD-zn-40d"/>
+                <constraint firstItem="kF6-Aq-86L" firstAttribute="top" secondItem="Lcf-y0-caE" secondAttribute="top" id="XxA-ub-1YZ"/>
                 <constraint firstAttribute="trailing" secondItem="Lcf-y0-caE" secondAttribute="trailing" constant="16" id="c8e-Hi-3hC"/>
                 <constraint firstItem="Lcf-y0-caE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="jJi-23-1Dr"/>
+                <constraint firstItem="kF6-Aq-86L" firstAttribute="leading" secondItem="Lcf-y0-caE" secondAttribute="leading" id="lL5-HJ-W3k"/>
                 <constraint firstAttribute="bottom" secondItem="Lcf-y0-caE" secondAttribute="bottom" constant="16" id="taR-t4-Ijs"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

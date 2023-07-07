@@ -28,6 +28,7 @@ target 'sphinx' do
     pod 'ObjectMapper'
     pod 'UIView-Shimmer', '~> 1.0'
     pod 'Down'
+    pod "MarkdownKit"
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

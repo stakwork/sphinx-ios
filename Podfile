@@ -27,7 +27,6 @@ target 'sphinx' do
     pod 'HDWalletKit'
     pod 'ObjectMapper'
     pod 'UIView-Shimmer', '~> 1.0'
-    pod 'Down'
     pod "MarkdownKit"
     
     post_install do |installer|

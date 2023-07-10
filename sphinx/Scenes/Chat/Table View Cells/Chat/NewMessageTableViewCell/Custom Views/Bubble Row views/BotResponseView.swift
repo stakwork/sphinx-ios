@@ -8,8 +8,6 @@
 
 import UIKit
 import WebKit
-import Down
-import MarkdownKit
 
 
 class BotResponseView: UIView {
@@ -58,12 +56,7 @@ class BotResponseView: UIView {
         
         if !loading {
             loadingWheel.stopAnimating()
-            
-            self.testMarkdownKit()
-            //self.testDownLibrary()
-            //self.loadBotResponseContent(botHTMLContent:botHTMLContent)
-            
-            
+            self.loadBotResponseContent(botHTMLContent:botHTMLContent)
         } else {
             loadingWheel.startAnimating()
         }
@@ -78,45 +71,6 @@ class BotResponseView: UIView {
         let content = "\(contentPrefix)\(messageContent)\(kWebViewContentSuffix)"
 
         let _ = webView.loadHTMLString(content, baseURL: Bundle.main.bundleURL)
-    }
-    
-    func testMarkdownKit(){
-        self.webView.isHidden = true
-        
-        markdownLabel.numberOfLines = 0
-        let markdownParser = MarkdownParser(customElements: [MarkdownSubreddit()])
-        let markdown = "**/r/iosprogramming** can be *markdown* as well! ```print('Hello World!');```"
-        markdownLabel.attributedText = markdownParser.parse(markdown)
-    }
-    
-    func testDownLibrary(){
-        let backgroundColor = UIColor(cgColor: UIColor.Sphinx.ReceivedMsgBG.resolvedCGColor(with: self)).toHexString()
-        //let messageContent = botHTMLContent.html
-        let textColor = UIColor(cgColor: UIColor.Sphinx.Text.resolvedCGColor(with: self)).toHexString()
-        let contentPrefix = String(format: kWebViewContentPrefix, textColor, backgroundColor, backgroundColor)
-        let content = "```\nweenis();\n```"//"\(contentPrefix)\(messageContent)\(kWebViewContentSuffix)"
-        setupMarkdownView(content: content)
-    }
-    
-    func setupMarkdownView(content:String){
-        do{
-            let dv = try DownView(frame: self.bounds, markdownString: content,templateBundle: nil)
-            let bubbleRadius = self.layer.cornerRadius
-            dv.layer.cornerRadius = bubbleRadius
-            self.layer.cornerRadius = bubbleRadius
-            for view in dv.subviews{
-                if let valid_view = view as? UIView{
-                    let bubbleRadius = self.layer.cornerRadius
-                    valid_view.backgroundColor = UIColor.clear
-                    valid_view.layer.cornerRadius = bubbleRadius
-                }
-            }
-            dv.navigationDelegate = self
-            self.addSubview(dv)
-        }
-        catch let error{
-            print(error)
-        }
     }
     
     func styleView(webView:WKWebView,fontSize:String,fontColor:String,bubbleColor:String){
@@ -145,30 +99,3 @@ class BotResponseView: UIView {
 
 }
 
-
-extension BotResponseView : WKNavigationDelegate{
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        //printWebViewHTML(webView: webView)//for debug
-        styleView(webView: webView, fontSize: "10", fontColor: "#FFFFFF", bubbleColor: "#466085")
-    }
-}
-
-
-
-class MarkdownSubreddit: MarkdownLink {
-
-  private static let regex = "(^|\\s|\\W)(/?r/(\\w+)/?)"
-
-  override var regex: String {
-    return MarkdownSubreddit.regex
-  }
-
-    override func match(_ match: NSTextCheckingResult,
-                             attributedString: NSMutableAttributedString) {
-        let subredditName = attributedString.attributedSubstring(from: match.range(at: 3)).string
-    let linkURLString = "http://reddit.com/r/\(subredditName)"
-    formatText(attributedString, range: match.range, link: linkURLString)
-    addAttributes(attributedString, range: match.range, link: linkURLString)
-  }
-
-}

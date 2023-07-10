@@ -39,6 +39,9 @@ class NewPodcastPlayerViewController: UIViewController {
     }
     
     var fromDashboard = false
+    var fromDownloadedSection = false
+    
+    var downloadedFeedEpisodeID : String? = nil
     
     var podcastPlayerController = PodcastPlayerController.sharedInstance
     
@@ -81,12 +84,6 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
-    func loadEpisode(withID:String){
-        if let episodeIndex = self.tableDataSource.podcast.episodesArray.firstIndex(where: {$0.itemID == withID}){
-            didTapEpisodeAt(index: episodeIndex)
-        }
-    }
-    
     override func endAppearanceTransition() {
         super.endAppearanceTransition()
         
@@ -100,7 +97,8 @@ class NewPodcastPlayerViewController: UIViewController {
         podcast: PodcastFeed,
         delegate: PodcastPlayerVCDelegate,
         boostDelegate: CustomBoostDelegate,
-        fromDashboard: Bool
+        fromDashboard: Bool = false,
+        fromDownloadedSection: Bool = false
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
@@ -108,6 +106,7 @@ class NewPodcastPlayerViewController: UIViewController {
         viewController.delegate = delegate
         viewController.boostDelegate = boostDelegate
         viewController.fromDashboard = fromDashboard
+        viewController.fromDownloadedSection = fromDownloadedSection
     
         return viewController
     }
@@ -125,7 +124,8 @@ class NewPodcastPlayerViewController: UIViewController {
         tableDataSource = PodcastEpisodesDataSource(
             tableView: tableView,
             podcast: podcast,
-            delegate: self
+            delegate: self,
+            fromDownloadedSection: fromDownloadedSection
         )
         
         podcastPlayerController.addDelegate(tableHeaderView!, withKey: PodcastDelegateKeys.PodcastPlayerView.rawValue)
@@ -156,8 +156,12 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
         }
     }
     
-    func didTapEpisodeAt(index: Int) {
-        tableHeaderView?.didTapEpisodeAt(index: index)
+    func didTapEpisodeWith(
+        episodeId: String
+    ) {
+        tableHeaderView?.didTapEpisodeWith(
+            episodeId: episodeId
+        )        
     }
     
     func shouldToggleTopView(show: Bool) {
@@ -185,7 +189,9 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     }
     
     func reload(_ row: Int) {
-        tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+        if tableView.numberOfRows(inSection: 0) > row {
+            tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+        }
     }
 }
 

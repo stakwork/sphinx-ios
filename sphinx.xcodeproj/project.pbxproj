@@ -861,6 +861,7 @@
 		4707089324AE45D400A98DCA /* UserContactChatListExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactChatListExtension.swift; sourceTree = "<group>"; };
 		4707089524AE466D00A98DCA /* ChatChatListExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatChatListExtension.swift; sourceTree = "<group>"; };
 		470708A324B3669200A98DCA /* MetaDataCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataCache.swift; sourceTree = "<group>"; };
+		4708C2222A5C859400274AD4 /* sphinx 43.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 43.xcdatamodel"; sourceTree = "<group>"; };
 		47096CA426EA4BD10065DC54 /* sphinx 29.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 29.xcdatamodel"; sourceTree = "<group>"; };
 		470DB25323FAE43400D29FA5 /* SphinxCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxCache.swift; sourceTree = "<group>"; };
 		470F4C38257A949A00288A9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TribeLinkPreviewView.xib; sourceTree = "<group>"; };
@@ -6284,6 +6285,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				4708C2222A5C859400274AD4 /* sphinx 43.xcdatamodel */,
 				474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */,
 				470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */,
 				47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */,
@@ -6327,7 +6329,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = 474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */;
+			currentVersion = 4708C2222A5C859400274AD4 /* sphinx 43.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

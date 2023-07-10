@@ -394,6 +394,7 @@
 "bot.response" = "Sagot ng Bot";
 "file" = "File";
 "downloading.file" = "Nagda-download ng file...";
+"downloaded.content" = "Nilusong na Nilalaman";
 "amount.too.low" = "Masyadong mababa ang halaga";
 "amount.too.high" = "Masyadong mataas ang halaga";
 "onchain.amount.too.low" = "Masyadong mababa ang halaga. Pinakamaliit na maari ay 250000 sats";

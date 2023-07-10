@@ -125,7 +125,7 @@ extension UserContact {
                 .Predicates
                 .matching(searchQuery: searchQuery)
 
-            request.sortDescriptors = [Chat.SortDescriptors.nameAscending]
+            request.sortDescriptors = [UserContact.SortDescriptors.nameAscending]
 
             return request
         }

@@ -662,6 +662,8 @@
 		CE94A50D2A4B2BF6001EDF7E /* MentionOrMacroItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */; };
 		CE94A5102A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */; };
 		CE94A5112A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE94A50F2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib */; };
+		CE97CC292A5C2CE700FA9F91 /* CodeShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE97CC282A5C2CE700FA9F91 /* CodeShareView.swift */; };
+		CE97CC2B2A5C2CF500FA9F91 /* CodeShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE97CC2A2A5C2CF500FA9F91 /* CodeShareView.xib */; };
 		CE9A18572A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A18552A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift */; };
 		CE9A18582A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE9A18562A1D6AC900F176DE /* MediaStorageSourceTableViewCell.xib */; };
 		CE9A185A2A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A18592A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift */; };
@@ -1618,6 +1620,8 @@
 		CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionOrMacroItem.swift; sourceTree = "<group>"; };
 		CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteTableViewCell.swift; sourceTree = "<group>"; };
 		CE94A50F2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMentionAutocompleteTableViewCell.xib; sourceTree = "<group>"; };
+		CE97CC282A5C2CE700FA9F91 /* CodeShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeShareView.swift; sourceTree = "<group>"; };
+		CE97CC2A2A5C2CF500FA9F91 /* CodeShareView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CodeShareView.xib; sourceTree = "<group>"; };
 		CE9985B629D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		CE9985B729D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
 		CE9985B829D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Chat.strings; sourceTree = "<group>"; };
@@ -3733,6 +3737,8 @@
 				47E6A4AD2A2E237F00A9509E /* PodcastBoostView.xib */,
 				47E6A4AF2A2E275C00A9509E /* BotResponseView.swift */,
 				47E6A4B12A2E276500A9509E /* BotResponseView.xib */,
+				CE97CC282A5C2CE700FA9F91 /* CodeShareView.swift */,
+				CE97CC2A2A5C2CF500FA9F91 /* CodeShareView.xib */,
 				47E6A4B32A2E39BF00A9509E /* NewLinkPreviewView.swift */,
 				47E6A4B52A2E39C800A9509E /* NewLinkPreviewView.xib */,
 				47E6A4B72A2E406600A9509E /* NewMessageBoostView.swift */,
@@ -4524,6 +4530,7 @@
 				475BDD6B232BEFFC00C5BBD6 /* Root.storyboard in Resources */,
 				47EB025D29BA37D50032CFB5 /* CircularProgressView.xib in Resources */,
 				47ACBC3E265EA69200D2FE47 /* PersonModalView.xib in Resources */,
+				CE97CC2B2A5C2CF500FA9F91 /* CodeShareView.xib in Resources */,
 				4787F8822474623F00CCE8B9 /* GroupTagCollectionViewCell.xib in Resources */,
 				475BDD4D232AD00D00C5BBD6 /* Roboto-Medium.ttf in Resources */,
 				CE94A5112A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib in Resources */,
@@ -4864,6 +4871,7 @@
 				47B690E124A2E00800F07B73 /* UIWindow.swift in Sources */,
 				47308E0224FEE6E600FFAC6F /* SSLSecurity.swift in Sources */,
 				F3B2519526DFA1E800C96D42 /* DashboardRootViewController+DashboardFeedsListContainerViewControllerDelegate.swift in Sources */,
+				CE97CC292A5C2CE700FA9F91 /* CodeShareView.swift in Sources */,
 				4754FA9B272B1378006295A5 /* NewsletterFeedContainerViewController.swift in Sources */,
 				471D8D1227274ADB0024AEAC /* GroupsManager+Bot.swift in Sources */,
 				475BDD65232BEEAB00C5BBD6 /* LeftMenuViewController.swift in Sources */,

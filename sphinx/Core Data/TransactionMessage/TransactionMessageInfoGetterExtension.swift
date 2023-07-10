@@ -344,6 +344,10 @@ extension TransactionMessage {
         return type == TransactionMessageType.invoice.rawValue
     }
     
+    func isCodeShare()->Bool{
+        return type == TransactionMessageType.codeShare.rawValue
+    }
+    
     func isBotResponse() -> Bool {
         return type == TransactionMessageType.botResponse.rawValue
     }

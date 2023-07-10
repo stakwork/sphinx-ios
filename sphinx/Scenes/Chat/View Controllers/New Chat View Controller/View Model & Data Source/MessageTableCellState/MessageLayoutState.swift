@@ -145,6 +145,16 @@ struct BubbleMessageLayoutState {
         }
     }
     
+    struct CodeShareContent {
+        var codeBlock: String
+        
+        init(
+            codeBlock: String
+        ) {
+            self.codeBlock = codeBlock
+        }
+    }
+    
     struct DirectPayment {
         var amount: Int
         var isTribePmt: Bool

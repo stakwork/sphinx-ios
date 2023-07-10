@@ -26,6 +26,7 @@ struct MessageTableCellState {
     var messageString: String? = nil
     var messageType: Int? = nil
     var messageStatus: Int? = nil
+    var codeContent: String? = nil
     var chat: Chat
     var owner: UserContact
     var contact: UserContact? = nil
@@ -358,6 +359,21 @@ struct MessageTableCellState {
             url: message.getMediaUrlFromMediaToken(),
             mediaKey: message.mediaKey
         )
+    }()
+    
+    lazy var codeShareContent:BubbleMessageLayoutState.CodeShareContent? = {
+        return BubbleMessageLayoutState.CodeShareContent(codeBlock: "print('Hello Sphinx!);")
+        
+        guard let message = message, message.isCodeShare() else {
+            return nil
+        }
+        if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
+            var codeShareContent = BubbleMessageLayoutState.CodeShareContent(codeBlock: messageContent)
+            
+            return codeShareContent
+        } else {
+            return nil
+        }
     }()
     
     lazy var botHTMLContent: BubbleMessageLayoutState.BotHTMLContent? = {

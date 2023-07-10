@@ -53,6 +53,7 @@ extension NewMessageTableViewCell {
         callLinkView.isHidden = true
         podcastBoostView.isHidden = true
         botResponseView.isHidden = true
+        codeShareView.isHidden = true
         textMessageView.isHidden = true
         tribeLinkPreviewView.isHidden = true
         contactLinkPreviewView.isHidden = true

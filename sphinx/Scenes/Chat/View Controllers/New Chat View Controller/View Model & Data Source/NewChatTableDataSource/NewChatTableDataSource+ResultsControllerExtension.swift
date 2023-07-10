@@ -97,6 +97,7 @@ extension NewChatTableDataSource {
             let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
             let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
             let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
+            let codeShareData = (dataSourceItem.messageId != nil) ? self.codeShareData[dataSourceItem.messageId!] : nil
             let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
             
             cell?.configureWith(
@@ -105,6 +106,7 @@ extension NewChatTableDataSource {
                 tribeData: tribeData,
                 linkData: linkData,
                 botWebViewData: botWebViewData,
+                codeShareData: codeShareData,
                 uploadProgressData: uploadProgressData,
                 delegate: self,
                 searchingTerm: self.searchingTerm,

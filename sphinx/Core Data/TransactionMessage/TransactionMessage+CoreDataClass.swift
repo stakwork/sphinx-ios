@@ -48,7 +48,6 @@ public class TransactionMessage: NSManagedObject {
         case query_response = 31
         case call = 32
         case unknown = 33
-        case codeShare = 34
         case imageAttachment = 100
         case videoAttachment = 101
         case audioAttachment = 102

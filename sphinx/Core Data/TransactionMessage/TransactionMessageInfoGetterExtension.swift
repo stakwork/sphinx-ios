@@ -345,7 +345,11 @@ extension TransactionMessage {
     }
     
     func isCodeShare()->Bool{
-        return type == TransactionMessageType.codeShare.rawValue
+        if let mc = self.messageContent,
+           mc.components(separatedBy: "```").count > 2{
+            return true
+        }
+        return false
     }
     
     func isBotResponse() -> Bool {

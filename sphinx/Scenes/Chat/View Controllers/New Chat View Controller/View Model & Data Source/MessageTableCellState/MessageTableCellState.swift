@@ -362,8 +362,6 @@ struct MessageTableCellState {
     }()
     
     lazy var codeShareContent:BubbleMessageLayoutState.CodeShareContent? = {
-        return BubbleMessageLayoutState.CodeShareContent(codeBlock: "print('Hello Sphinx!);")
-        
         guard let message = message, message.isCodeShare() else {
             return nil
         }
@@ -681,7 +679,8 @@ struct MessageTableCellState {
                 (self.botHTMLContent == nil) &&
                 (self.paidContent == nil) &&
                 (self.podcastComment == nil) &&
-                (self.genericFile == nil)
+                (self.genericFile == nil) &&
+                (self.codeShareContent == nil)
         }
     }
 }

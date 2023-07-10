@@ -11,7 +11,27 @@ import MarkdownKit
 
 class CodeShareView: UIView {
     
+    @IBOutlet private var contentView: UIView!
+    
     @IBOutlet weak var markdownLabel: UILabel!
+    @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        Bundle.main.loadNibNamed("CodeShareView", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+    }
     
 
     func configureWith(
@@ -38,11 +58,10 @@ class CodeShareView: UIView {
     
     
     func loadMarkdownCode(code:String){
-        if(markdownLabel != nil){
-            markdownLabel.numberOfLines = 0
-            let markdownParser = MarkdownParser(customElements: [MarkdownSubreddit()])
-            let markdown = "```\(code)```"
-            markdownLabel.attributedText = markdownParser.parse(markdown)
-        }
+        markdownLabel.backgroundColor = UIColor.Sphinx.Body
+        markdownLabel.numberOfLines = 0
+        let markdownParser = MarkdownParser(customElements: [MarkdownSubreddit()])
+        let markdown = "\(code)"
+        markdownLabel.attributedText = markdownParser.parse(markdown)
     }
 }

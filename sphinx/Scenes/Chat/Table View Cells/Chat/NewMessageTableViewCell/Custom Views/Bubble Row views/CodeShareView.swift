@@ -61,6 +61,8 @@ class CodeShareView: UIView {
         markdownLabel.backgroundColor = UIColor.Sphinx.Body
         markdownLabel.numberOfLines = 0
         let markdownParser = MarkdownParser(customElements: [MarkdownSubreddit()])
+        markdownParser.code.color = UIColor.green
+        markdownParser.code.textBackgroundColor = UIColor.clear
         let markdown = "\(code)"
         markdownLabel.attributedText = markdownParser.parse(markdown)
     }

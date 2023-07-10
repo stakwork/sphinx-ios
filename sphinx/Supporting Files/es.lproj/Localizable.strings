@@ -386,6 +386,7 @@
 "save.file" = "Descargar";
 "flag.item" = "Reportar";
 "delete.message" = "Eliminar Mensaje";
+"show.thread" = "Mostrar Tema";
 "pin.message" = "Fijar Mensaje";
 "unpin.message" = "Remover Fijado";
 "message.pinned" = "Mensaje Fijado";

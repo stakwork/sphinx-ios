@@ -369,6 +369,7 @@
 "save.file" = "I-Save ang File";
 "flag.item" = "Flag";
 "delete.message" = "Tanggalin ang Mensahe";
+"show.thread" = "Show Thread";
 "pin.message" = "Pin Message";
 "unpin.message" = "Unpin Message";
 "message.pinned" = "Message Pinned";

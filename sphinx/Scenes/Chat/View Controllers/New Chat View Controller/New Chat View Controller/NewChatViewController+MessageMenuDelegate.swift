@@ -9,6 +9,11 @@
 import Foundation
 
 extension NewChatViewController : MessageOptionsVCDelegate {
+    
+    func shouldShowMessageThread(message:TransactionMessage){
+        self.showThread(threadID: message.id)
+    }
+    
     func shouldDeleteMessage(message: TransactionMessage) {
         chatViewModel.shouldDeleteMessage(message: message)
     }

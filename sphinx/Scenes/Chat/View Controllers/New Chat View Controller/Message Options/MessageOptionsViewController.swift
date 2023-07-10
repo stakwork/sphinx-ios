@@ -14,6 +14,7 @@ import UIKit
     func shouldBoostMessage(message: TransactionMessage)
     func shouldResendMessage(message: TransactionMessage)
     func shouldFlagMessage(message: TransactionMessage)
+    func shouldShowMessageThread(message:TransactionMessage)
     func shouldTogglePinState(message: TransactionMessage, pin: Bool)
     func shouldReloadChat()
 }
@@ -179,7 +180,7 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
         shouldDismissViewController(completion)
     }
     
-    func shouldReplayToMessage() {
+    func shouldReplyToMessage() {
         if let message = message {
             delegate?.shouldReplyToMessage(message: message)
         }
@@ -231,6 +232,12 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
     func showMediaSaveAlert(success: Bool, alertMessage: String) {
         DispatchQueue.main.async {
             NewMessageBubbleHelper().showGenericMessageView(text: alertMessage)
+        }
+    }
+    
+    func shouldShowMessageThread(){
+        if let message = message{
+            delegate?.shouldShowMessageThread(message: message)
         }
     }
 }

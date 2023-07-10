@@ -31,6 +31,7 @@ extension TransactionMessage {
         case Flag
         case Pin
         case Unpin
+        case ShowThread
     }
     
     
@@ -614,6 +615,11 @@ extension TransactionMessage {
             )
         }
         
+        if isShowThreadAllowed{
+            options.append(.init(tag: .ShowThread,materialIconName: "forum", label: "show.thread".localized))
+        }
+        
+        
         return options
     }
     
@@ -699,6 +705,12 @@ extension TransactionMessage {
     var isMessagePinned: Bool {
         get {
             return self.uuid == self.chat?.pinnedMessageUUID
+        }
+    }
+    
+    var isShowThreadAllowed:Bool{
+        get{
+            return true
         }
     }
     

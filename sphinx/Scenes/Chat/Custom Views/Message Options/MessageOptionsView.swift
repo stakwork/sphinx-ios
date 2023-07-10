@@ -11,7 +11,8 @@ import UIKit
 @objc protocol MessageOptionsDelegate: class {
     func shouldDismiss(completion: @escaping (() -> ()))
     func shouldDeleteMessage()
-    func shouldReplayToMessage()
+    func shouldReplyToMessage()
+    func shouldShowMessageThread()
     func shouldSaveFile()
     func shouldBoostMessage()
     func shouldResendMessage()
@@ -248,7 +249,9 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .Delete:
             delegate?.shouldDeleteMessage()
         case .Reply:
-            delegate?.shouldReplayToMessage()
+            delegate?.shouldReplyToMessage()
+        case .ShowThread:
+            delegate?.shouldShowMessageThread()
         case .Save:
             delegate?.shouldSaveFile()
         case .Boost:

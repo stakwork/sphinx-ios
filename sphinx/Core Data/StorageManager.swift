@@ -165,7 +165,6 @@ class StorageManager {
         var chatsToItemDict = [Chat:[StorageManagerItem]]()
         if let chatsOnly = bySource[.chats]{
             for item in chatsOnly{
-                print(item.cachedMedia)
                 if let cm = item.cachedMedia,
                    let itemsChat = cm.chat{
                     if chatsToItemDict[itemsChat] != nil{
@@ -250,7 +249,7 @@ class StorageManager {
             wdt_flag = false
         })
         let choppingBlockSnapshot = allItems.sorted(by: {$0.date < $1.date})//static snapshot that never changes
-        var changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
+        let changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
         var i = 0
         var semaphore = false
         while(checkForMemoryOverflow(items: changingChoppingBlock) && wdt_flag){
@@ -300,24 +299,20 @@ class StorageManager {
     func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem]) -> ()) {
         let blah = CachedMedia.getAll()
         let videoCMs = blah.filter({ cm in cm.fileExtension != "png" })
-        let fileManager = FileManager.default
         
         var items = [StorageManagerItem]()
         let sc = SphinxCache()
         for cm in videoCMs {
             var size: UInt64? = nil
-            do {
-                if let key = cm.key,
-                   let fileData = sc.value(forKey: key) {
-                    size = UInt64(fileData.count)
-                    
-                    let type = getStorageManagerTypeFromExtension(cm:cm)
-                    
-                    let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
-                    items.append(newItem)
-                }
-            } catch {
-                print("Error retrieving size of the file")
+            
+            if let key = cm.key,
+               let fileData = sc.value(forKey: key) {
+                size = UInt64(fileData.count)
+                
+                let type = getStorageManagerTypeFromExtension(cm:cm)
+                
+                let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
+                items.append(newItem)
             }
         }
         
@@ -597,8 +592,8 @@ class StorageManager {
             print(file.lastPathComponent)
             if let split = getFeedItemPairForString(string: file.lastPathComponent),
                split.count > 1{
-                var feedID = String(split[0])
-                var itemID = String(split[1])
+                let feedID = String(split[0])
+                let itemID = String(split[1])
                 if var existingFeedArray = results[feedID]{
                     existingFeedArray.append(itemID)
                     results[feedID] = existingFeedArray
@@ -614,8 +609,8 @@ class StorageManager {
     func getFeedItemPairForString(string:String)->[String]?{
         let split = string.split(separator: "_")
         if split.count > 1{
-            var feedID = String(split[0])
-            var itemID = String(split[1])
+            let feedID = String(split[0])
+            let itemID = String(split[1])
             
             return [feedID,itemID]
         }

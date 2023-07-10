@@ -21,7 +21,8 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastEpisodeWithID podcastEpisodeId: String
+        didSelectPodcastEpisodeWithID podcastEpisodeId: String,
+        fromDownloadedSection: Bool
     ) {
         guard
             let contentFeedItem = ContentFeedItem.getItemWith(itemID: podcastEpisodeId),
@@ -36,7 +37,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         
         let podcastFeed = PodcastFeed.convertFrom(contentFeed:  contentFeed)
         
-        pausePlayingIfNeeded(podcast: podcastFeed, itemId: contentFeedItem.itemID)
+        pausePlayingIfNeeded(
+            podcast: podcastFeed,
+            itemId: contentFeedItem.itemID
+        )
         
         podcastFeed.currentEpisodeId = contentFeedItem.itemID
         
@@ -46,7 +50,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
             andKey: PodcastDelegateKeys.DashboardSmallPlayerBar.rawValue
         )
         
-        presentPodcastPlayerFor(podcastFeed)
+        presentPodcastPlayerFor(
+            podcastFeed,
+            fromDownloadedSection: fromDownloadedSection
+        )
     }
     
     func viewController(
@@ -59,7 +66,10 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
         }
         
         feedsManager.restoreContentFeedStatusInBackgroundFor(feedId: podcastFeed.feedID)
-        presentPodcastPlayerFor(podcastFeed)
+        
+        presentPodcastPlayerFor(
+            podcastFeed
+        )
     }
     
     func viewController(
@@ -153,7 +163,8 @@ extension DashboardRootViewController: DashboardFeedsListContainerViewController
 extension DashboardRootViewController {
     
     func presentPodcastPlayerFor(
-        _ podcast: PodcastFeed
+        _ podcast: PodcastFeed,
+        fromDownloadedSection: Bool = false
     ) {
         if (podcast.isRecommendationsPodcast) {
             presentRecommendationsPlayerVC(for: podcast)
@@ -162,7 +173,8 @@ extension DashboardRootViewController {
                 podcast: podcast,
                 delegate: self,
                 boostDelegate: self,
-                fromDashboard: true
+                fromDashboard: true,
+                fromDownloadedSection: fromDownloadedSection
             )
             
             let navController = UINavigationController()

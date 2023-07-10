@@ -10,7 +10,7 @@ import UIKit
 
 protocol PodcastEpisodesDSDelegate : class {
     func didTapForDescriptionAt(episode:PodcastEpisode,cell:UITableViewCell)
-    func didTapEpisodeAt(index: Int,lookupById:String?)
+    func didTapEpisodeWith(episodeId: String)
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode)
     func shouldToggleTopView(show: Bool)
@@ -30,40 +30,29 @@ class PodcastEpisodesDataSource : NSObject {
     
     var tableView: UITableView! = nil
     var podcast: PodcastFeed! = nil
+    var episodes: [PodcastEpisode] = []
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
     let downloadService = DownloadService.sharedInstance
     
-    var downloadedID : String? = nil
-    
     init(
         tableView: UITableView,
         podcast: PodcastFeed,
         delegate: PodcastEpisodesDSDelegate,
-        isFromDownloadsFeedWithID:String?
+        fromDownloadedSection: Bool
     ) {
         super.init()
         
         self.tableView = tableView
         self.podcast = podcast
+        self.episodes = fromDownloadedSection ? podcast.episodesArray.filter({$0.isDownloaded == true}) : podcast.episodesArray
         self.delegate = delegate
-        self.downloadedID = isFromDownloadsFeedWithID
         
         self.tableView.registerCell(UnifiedEpisodeTableViewCell.self)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.reloadData()
-        
-        setupDownloadFeedCase()
-    }
-    
-    func setupDownloadFeedCase(){
-        if let episodeID = downloadedID{//make the first view work
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.delegate?.didTapEpisodeAt(index: 0, lookupById: episodeID)
-            })
-        }
     }
 }
 
@@ -72,8 +61,8 @@ extension PodcastEpisodesDataSource : UITableViewDelegate {
         return kRowHeight
     }
     
-    func getEpisodes()->[PodcastEpisode]{
-        return (downloadedID != nil) ? podcast.episodesArray.filter({$0.isDownloaded == true}) : podcast.episodesArray
+    func getEpisodes() -> [PodcastEpisode] {
+        return self.episodes
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -135,12 +124,12 @@ extension PodcastEpisodesDataSource : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let _ = downloadedID{
-            let id = getEpisodes()[indexPath.row].itemID
-            delegate?.didTapEpisodeAt(index: 0,lookupById: id)
-            return
+        let episode = getEpisodes()
+        
+        if episode.count > indexPath.row {
+            let episodeId = episode[indexPath.row].itemID
+            delegate?.didTapEpisodeWith(episodeId: episodeId)
         }
-        delegate?.didTapEpisodeAt(index: indexPath.row, lookupById: nil)
     }
 }
 

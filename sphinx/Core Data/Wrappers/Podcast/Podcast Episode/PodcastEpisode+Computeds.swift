@@ -88,6 +88,9 @@ extension PodcastEpisode {
                 
                 if FileManager.default.fileExists(atPath: path.path) {
                     try? FileManager.default.removeItem(at: path)
+                    
+                    self.feed?.updateLastDownloadedEpisodeWith(id: nil)
+                    
                     deleteCompletion()
                 }
             }

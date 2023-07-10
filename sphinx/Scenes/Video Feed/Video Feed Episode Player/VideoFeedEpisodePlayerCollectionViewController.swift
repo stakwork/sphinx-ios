@@ -413,7 +413,7 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
         }
     }
     
-    func didTapEpisodeAt(index: Int,lookupById:String?) {}
+    func didTapEpisodeWith(episodeId: String) {}
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     

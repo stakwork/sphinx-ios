@@ -361,7 +361,7 @@ extension ItemDescriptionViewController: PodcastEpisodesDSDelegate {
     
     func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     
-    func didTapEpisodeAt(index: Int,lookupById:String?) {}
+    func didTapEpisodeWith(episodeId: String) {}
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         itemDownloadTapped(episode: episode)

@@ -61,8 +61,7 @@ extension NewChatViewController : PodcastPlayerVCDelegate {
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
             podcast: podcast,
             delegate: self,
-            boostDelegate: self,
-            fromDashboard: false
+            boostDelegate: self
         )
         
         let navController = UINavigationController()

@@ -292,12 +292,14 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVM : UITableViewDataS
     func playPodcastItem(item:StorageManagerItem){
         if let sourcePath = item.sourceFilePath{
             if let pair = StorageManager.sharedManager.getFeedItemPairForString(string: sourcePath),
-            pair.count > 1{
+            pair.count > 1 {
+                
                 let feedID = pair[0]
                 let itemID = pair[1].replacingOccurrences(of: ".mp3", with: "")
-                if let feed = FeedsManager.sharedInstance.fetchFeeds().filter({$0.feedID == feedID}).first{
+                
+                if let feed = FeedsManager.sharedInstance.fetchFeeds().filter({$0.feedID == feedID}).first {
                     let pf = PodcastFeed.convertFrom(contentFeed: feed)
-                    self.vc.presentPodcastPlayerFor(pf,itemID: itemID)
+                    self.vc.presentPodcastPlayerFor(pf, itemID: itemID)
                 }
             }
         }

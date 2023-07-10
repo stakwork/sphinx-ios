@@ -20,9 +20,7 @@ class FeedsManager : NSObject {
     }
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
-    
-    var isPresentingDownloadedContentWithID : String? = nil
-    
+
     // MARK: - Content Feed fetch requests
     
     func fetchFeeds(
@@ -514,16 +512,19 @@ class FeedsManager : NSObject {
                 lookupContentFeedAndItem(feedID: feedID, itemID: itemID, feedURL: feedURL, completion: { feed,item in
                     if let valid_feed = feed as? PodcastFeed,
                        let valid_episode = item as? PodcastEpisode,
-                        let drvc = vc as? DashboardRootViewController{
+                        let drvc = vc as? DashboardRootViewController {
+                        
                         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
                             podcast: valid_feed,
                             delegate: drvc,
                             boostDelegate: drvc,
                             fromDashboard: true
                         )
+                        
                         if let currentTime = self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) {
                             valid_episode.currentTime = Int(currentTime)
                         }
+                        
                         valid_feed.currentEpisodeId = valid_episode.itemID
                         
                         let navController = UINavigationController()
@@ -535,7 +536,8 @@ class FeedsManager : NSObject {
                     }
                     else if let _ = feed as? VideoFeed,
                     let video = item as? Video,
-                    let drvc = vc as? DashboardRootViewController{
+                    let drvc = vc as? DashboardRootViewController {
+                        
                         let viewController = VideoFeedEpisodePlayerContainerViewController
                             .instantiate(
                                 videoPlayerEpisode: video,
@@ -557,7 +559,6 @@ class FeedsManager : NSObject {
                         drvc.presentItemWebView(for: newsletter)
                     }
                     else{
-                        //error message
                         AlertHelper.showAlert(title: "Error", message: "There was an issue with the link.")
                     }
                 })

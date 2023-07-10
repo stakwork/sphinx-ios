@@ -43,11 +43,20 @@ class StorageManagerItem{
     var sizeMB : Double
     var label : String
     var date : Date
-    var sourceFilePath:String?
-    var cachedMedia:CachedMedia?
-    var uid:String?=nil
+    var sourceFilePath: String?
+    var cachedMedia: CachedMedia?
+    var uid:String? = nil
     
-    init(source:StorageManagerMediaSource,type:StorageManagerMediaType,sizeMB:Double,label:String,date:Date,sourceFilePath:String?=nil,cachedMedia:CachedMedia?=nil,uid:String?=nil) {
+    init(
+        source: StorageManagerMediaSource,
+        type: StorageManagerMediaType,
+        sizeMB: Double,
+        label: String,
+        date: Date,
+        sourceFilePath: String?=nil,
+        cachedMedia: CachedMedia?=nil,
+        uid: String?=nil
+    ) {
         self.type = type
         self.sizeMB = sizeMB
         self.label = label
@@ -474,17 +483,15 @@ class StorageManager {
     func deleteAllPodcasts(completion:@escaping ()->()){
         var podsCounter = downloadedPods.count
         podsCounter == 0 ? (completion()) : ()
-        for pod in downloadedPods{
+        for pod in downloadedPods {
             if let sourcePath = pod.sourceFilePath{
                 deletePodEpisodeWithFileName(
                     fileName: sourcePath,
                     successCompletion: {
-                    print("deleted pod with id:\(pod.uid)")
                         podsCounter-=1
                         podsCounter > 0 ? () : completion()
                     },
                     failureCompletion: {
-                        print("failed to delete pod with id:\(pod.uid)")
                         podsCounter-=1
                         podsCounter > 0 ? () : completion()
                     })
@@ -492,7 +499,11 @@ class StorageManager {
         }
     }
     
-    func deletePodEpisodeWithFileName(fileName:String,successCompletion: @escaping ()->(),failureCompletion: @escaping ()->()){
+    func deletePodEpisodeWithFileName(
+        fileName: String,
+        successCompletion: @escaping ()->(),
+        failureCompletion: @escaping ()->()
+    ){
         if let path = FileManager
             .default
             .urls(for: .documentDirectory, in: .userDomainMask)
@@ -501,6 +512,7 @@ class StorageManager {
             
             if FileManager.default.fileExists(atPath: path.path) {
                 try? FileManager.default.removeItem(at: path)
+                updateLastDownloadedEpisodeFor(fileName: fileName)
                 successCompletion()
             }
             else{
@@ -510,6 +522,21 @@ class StorageManager {
         else{
             failureCompletion()
         }
+    }
+    
+    func updateLastDownloadedEpisodeFor(fileName: String) {
+        if let feedId = getFeedIdFrom(fileName: fileName) {
+            if let feed = ContentFeed.getFeedById(feedId: feedId) {
+                feed.lastDownloadedEpisodeId = nil
+            }
+        }
+    }
+    
+    func getFeedIdFrom(fileName: String) -> String? {
+        if let feedId = fileName.split(separator: "_").first {
+            return String(feedId)
+        }
+        return nil
     }
     
     func deleteAllOldChatMedia(completion: @escaping ()->()){

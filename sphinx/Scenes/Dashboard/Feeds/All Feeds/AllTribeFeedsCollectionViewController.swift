@@ -20,6 +20,7 @@ class AllTribeFeedsCollectionViewController: UICollectionViewController {
     var interCellSpacing: CGFloat = 6.0
 
     var onCellSelected: ((String) -> Void)!
+    var onDownloadedItemSelected: ((String, String) -> Void)!
     var onRecommendationSelected: (([RecommendationResult], String) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
     var onNewResultsFetched: ((Int) -> Void)!
@@ -76,6 +77,7 @@ extension AllTribeFeedsCollectionViewController {
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 10.0,
         onCellSelected: ((String) -> Void)!,
+        onDownloadedItemSelected: ((String, String) -> Void)!,
         onRecommendationSelected: (([RecommendationResult], String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
@@ -90,6 +92,7 @@ extension AllTribeFeedsCollectionViewController {
 
         viewController.interSectionSpacing = interSectionSpacing
         viewController.onCellSelected = onCellSelected
+        viewController.onDownloadedItemSelected = onDownloadedItemSelected
         viewController.onRecommendationSelected = onRecommendationSelected
         viewController.onNewResultsFetched = onNewResultsFetched
         viewController.onContentScrolled = onContentScrolled
@@ -127,11 +130,10 @@ extension AllTribeFeedsCollectionViewController {
     
     
     enum DataSourceItem: Hashable {
-        case listenNowEpisode(PodcastEpisode, Int)
+        case downloadedEpisode(PodcastEpisode, Int)
         case tribePodcastFeed(ContentFeed, Int)
         case tribeVideoFeed(ContentFeed, Int)
         case tribeNewsletterFeed(ContentFeed, Int)
-        
         case recommendedFeed(RecommendationResult)
         
         case loading
@@ -367,7 +369,7 @@ extension AllTribeFeedsCollectionViewController {
             }
             
             switch section {
-            case .followedFeeds, .recommendations, .recentlyPlayed,.downloaded:
+            case .followedFeeds, .recommendations, .recentlyPlayed, .downloaded:
                 if dataSourceItem.isLoading {
                     guard
                         let loadingCell = collectionView.dequeueReusableCell(
@@ -404,7 +406,7 @@ extension AllTribeFeedsCollectionViewController {
                     feedCell.configure(withItem: feedEntity)
                 } else if let resultEntity = dataSourceItem.resultEntity {
                     feedCell.configure(withItem: resultEntity as DashboardFeedSquaredThumbnailCollectionViewItem)
-                } else if let episodeEntity = dataSourceItem.episodeEntity{
+                } else if let episodeEntity = dataSourceItem.episodeEntity {
                     feedCell.configure(withItem: episodeEntity.0)
                 }
                 else {
@@ -438,8 +440,7 @@ extension AllTribeFeedsCollectionViewController {
                         section = .followedFeeds
                     } else if (section == .followedFeeds){
                         section = .recentlyPlayed
-                    }
-                    else if(section == .recentlyPlayed){
+                    } else if(section == .recentlyPlayed) {
                         section = .downloaded
                     }
                 }
@@ -525,23 +526,32 @@ extension AllTribeFeedsCollectionViewController {
             return nil
         }
         
-        var downloadedFeed = [DataSourceItem]()
-        for feed in allFeeds{
-            if feed.isPodcast,
-               let pf = PodcastFeed.convertFrom(contentFeed: feed) as? PodcastFeed
-            {
-                let downloadedEpisodes = pf.episodesArray.filter({ $0.isDownloaded })
-                for episode in downloadedEpisodes{
-                    let item = DataSourceItem.listenNowEpisode(episode, episode.currentTime ?? 0)
-                    
-                    downloadedFeed.append(item)
-                }
+        var downloadedEpisodes = [PodcastEpisode]()
+        var downloadedItems = [DataSourceItem]()
+        
+        for feed in (allFeeds.filter { $0.isPodcast}) {
+            for downloadedEpisode in PodcastFeed.convertFrom(
+                contentFeed: feed
+            ).episodesArray.filter({ $0.isDownloaded }) {
+                downloadedEpisodes.append(downloadedEpisode)
             }
         }
         
+        downloadedItems = (downloadedEpisodes.sorted { (first, second) in
+            let firstDate = first.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            let secondDate = second.datePublished ?? Date.init(timeIntervalSince1970: 0)
+            
+            return firstDate > secondDate
+        }).compactMap { episode -> DataSourceItem? in
+            DataSourceItem.downloadedEpisode(
+                episode,
+                episode.currentTime ?? 0
+            )
+        }
+        
 
-        if followedSourceItems.count > 0 {
-            snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed, CollectionViewSection.downloaded])
+        if !followedSourceItems.isEmpty {
+            snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed])
 
             snapshot.appendItems(
                 followedSourceItems,
@@ -552,9 +562,13 @@ extension AllTribeFeedsCollectionViewController {
                 recentlyPlayedFeed,
                 toSection: CollectionViewSection.recentlyPlayed
             )
+        }
+        
+        if !downloadedItems.isEmpty {
+            snapshot.appendSections([CollectionViewSection.downloaded])
             
             snapshot.appendItems(
-                downloadedFeed,
+                downloadedItems,
                 toSection: CollectionViewSection.downloaded
             )
         }
@@ -738,17 +752,15 @@ extension AllTribeFeedsCollectionViewController {
             onCellSelected?(feedEntity.id)
             scrollBackMostRecentFeed()
         } else if let recommendation = dataSourceItem.resultEntity {
-            onRecommendationSelected?(recommendedFeeds, recommendation.id)
-        }
-        else if let episode = dataSourceItem.episodeEntity{
-            if indexPath.section ==  2 {
-                FeedsManager.sharedInstance.isPresentingDownloadedContentWithID = episode.0.itemID
-            }
-            
-            if let feed = episode.0.feed{
-                onCellSelected?(feed.feedID)
-            }
-            
+            onRecommendationSelected?(
+                recommendedFeeds,
+                recommendation.id
+            )
+        } else if let episode = dataSourceItem.episodeEntity?.0, let feed = episode.feed {
+            onDownloadedItemSelected?(
+                feed.feedID,
+                episode.itemID
+            )
         }
     }
 }
@@ -812,7 +824,10 @@ extension AllTribeFeedsCollectionViewController.DataSourceItem {
     
     var episodeEntity: (PodcastEpisode, Int)? {
         switch self {
-        case .listenNowEpisode(let podcastEpisode, let currentTime):
+        case .downloadedEpisode(
+            let podcastEpisode,
+            let currentTime
+        ):
             return (podcastEpisode, currentTime)
         default:
             return nil

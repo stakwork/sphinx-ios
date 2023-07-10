@@ -14,6 +14,7 @@ struct MessageTableCellState {
     static let kBubbleCornerRadius: CGFloat = 8.0
     static let kRowLeftMargin: CGFloat = 15
     static let kRowRightMargin: CGFloat = 9
+    ///Should match width constraint in xib
     static let kBubbleWidthPercentage: CGFloat = 0.7
     static let kPodcastClipBubbleWidthPercentage: CGFloat = 0.85
     static let kLabelMargin: CGFloat = 16.0

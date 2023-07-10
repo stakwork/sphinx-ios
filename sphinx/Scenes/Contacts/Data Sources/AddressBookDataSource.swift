@@ -22,7 +22,7 @@ class AddressBookDataSource: NSObject {
     let kCellHeight: CGFloat = 85.0
     let kHeaderHeight: CGFloat = 38.0
     
-    var searchTerm = ""
+    var searchTerm: String? = nil
     var contacts = [UserContact]()
     var sections = [String]()
     var sectionWithContacts = [String: [UserContact]]()
@@ -35,12 +35,12 @@ class AddressBookDataSource: NSObject {
         reloadContacts()
     }
     
-    func reloadContacts() {
+    func reloadContacts(searchTerm: String? = nil) {
         contacts = UserContact.getAll().filter { !$0.isOwner && !$0.shouldBeExcluded() }
-        processContacts()
+        processContacts(searchTerm: searchTerm)
     }
     
-    func processContacts(searchTerm: String = "") {
+    func processContacts(searchTerm: String? = nil) {
         self.searchTerm = searchTerm
         
         sections = [String]()
@@ -51,7 +51,7 @@ class AddressBookDataSource: NSObject {
             let initial = ((nickName.first != nil) ? nickName.first : Character("u"))?.lowercased()
             
             if let initial = initial {
-                if searchTerm != "" && !nickName.lowercased().contains(searchTerm) {
+                if let searchTerm = searchTerm, searchTerm.isNotEmpty && !nickName.lowercased().contains(searchTerm) {
                     continue
                 }
                 

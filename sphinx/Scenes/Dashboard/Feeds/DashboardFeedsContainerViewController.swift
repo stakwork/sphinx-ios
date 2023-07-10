@@ -53,14 +53,16 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
 
 
 class DashboardFeedsContainerViewController: UIViewController {
+    
     @IBOutlet weak var filterChipCollectionViewContainer: UIView!
     @IBOutlet weak var feedContentCollectionViewContainer: UIView!
+    @IBOutlet weak var loadingWheelContainerView: UIView!
+    @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     private var managedObjectContext: NSManagedObjectContext!
     private var filterChipCollectionViewController: FeedFilterChipsCollectionViewController!
     
     private weak var feedsListContainerDelegate: DashboardFeedsListContainerViewControllerDelegate?
-    
     
     var contentFilterOptions: [ContentFilterOption] = []
     
@@ -72,6 +74,17 @@ class DashboardFeedsContainerViewController: UIViewController {
                     to: self!.activeFilterOption
                 )
             }
+        }
+    }
+    
+    var isLoading = false {
+        didSet {
+            LoadingWheelHelper.toggleLoadingWheel(
+                loading: isLoading,
+                loadingWheel: loadingWheel,
+                loadingWheelColor: UIColor.Sphinx.Text
+            )
+            loadingWheelContainerView.isHidden = !isLoading
         }
     }
     
@@ -159,9 +172,18 @@ class DashboardFeedsContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isLoading = true
+        
         setupFilterOptions()
         configureFilterChipCollectionView()
         configureFeedContentCollectionView()
+        
+        DelayPerformedHelper.performAfterDelay(
+            seconds: 0.5,
+            completion: {
+                self.isLoading = false
+            }
+        )
     }
 }
 
@@ -271,11 +293,10 @@ extension DashboardFeedsContainerViewController {
     
     
     private func configureFilterChipCollectionView() {
-        filterChipCollectionViewController = FeedFilterChipsCollectionViewController
-            .instantiate(
-                contentFilterOptions: Array(contentFilterOptions),
-                onCellSelected: handleFilterChipActivation(_:)
-            )
+        filterChipCollectionViewController = FeedFilterChipsCollectionViewController.instantiate(
+            contentFilterOptions: Array(contentFilterOptions),
+            onCellSelected: handleFilterChipActivation(_:)
+        )
         
         addChildVC(
             child: filterChipCollectionViewController,

@@ -54,8 +54,6 @@ extension FeedFilterChipsCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.isHidden = true
-        
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -174,10 +172,6 @@ extension FeedFilterChipsCollectionViewController {
         let snapshot = makeSnapshotForCurrentState()
         
         dataSource.apply(snapshot, animatingDifferences: false)
-        
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-            collectionView.isHidden = false
-        })
     }
 }
 

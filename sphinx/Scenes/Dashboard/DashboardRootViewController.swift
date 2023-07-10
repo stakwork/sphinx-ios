@@ -96,7 +96,6 @@ class DashboardRootViewController: RootViewController {
     internal var activeTab: DashboardTab = .friends {
         didSet {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
-//            let oldViewController = mainContentViewController(forActiveTab: oldValue)
             
             addChildVC(
                 child: newViewController,
@@ -137,19 +136,25 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
+    func forceShowLoadingWheel() {
+        didFinishInitialLoading = false
+        isLoading = true
+    }
+    
+    func forceHideLoadingWheel() {
+        didFinishInitialLoading = true
+        isLoading = false
+    }
     
     var isLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(
-                loading:
-                    (isLoading && didFinishInitialLoading == false)
-                    || onionConnector.isConnecting(),
+                loading: (isLoading && didFinishInitialLoading == false) || onionConnector.isConnecting(),
                 loadingWheel: headerView.loadingWheel,
                 loadingWheelColor: UIColor.white,
                 views: [
                     searchBarContainer,
-                    mainContentContainerView,
-                    bottomBarContainer,
+                    bottomBarContainer
                 ]
             )
         }
@@ -323,8 +328,6 @@ extension DashboardRootViewController {
 
 // MARK: -  Action Handling
 extension DashboardRootViewController {
-    
-    
     
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
         guard let button = BottomBarButton(rawValue: sender.tag) else {

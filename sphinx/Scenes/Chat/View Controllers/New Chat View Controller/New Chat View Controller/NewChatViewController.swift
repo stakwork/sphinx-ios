@@ -41,7 +41,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var webAppVC : WebAppViewController? = nil
     
-    var threadMessageId: Int? = nil
+    var threadUUID: String? = nil
     
     enum ViewMode: Int {
         case Standard
@@ -92,12 +92,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         setDelegates()
         setupData()
         configureFetchResultsController()
-        if let threadMessageId = threadMessageId{
-            print("pulling specific items")
-        }
-        else{
-            configureTableView()
-        }
+        configureTableView(threadUUID: threadUUID)
         initializeMacros()
     }
     
@@ -156,13 +151,13 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         })
     }
     
-    func showThread(threadID:Int){
+    func showThread(threadID:String){
         let chatVC = NewChatViewController.instantiate(
             contactId: self.contact?.id,
             chatId: self.chat?.id,
             chatListViewModel: chatListViewModel
         )
-        chatVC.threadMessageId = threadID
+        chatVC.threadUUID = threadID
         navigationController?.pushViewController(chatVC, animated: true)
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 extension NewChatViewController {
-    func configureTableView() {
+    func configureTableView(threadUUID:String?=nil) {
         if let ds = chatTableDataSource {
             if ds.isFinalDS() {
                 return
@@ -28,7 +28,8 @@ extension NewChatViewController {
             headerImageView: getContactImageView(),
             bottomView: bottomView,
             webView: botWebView,
-            delegate: self
+            delegate: self,
+            threadUUID: threadUUID
         )
         
         chatViewModel.setDataSource(chatTableDataSource)

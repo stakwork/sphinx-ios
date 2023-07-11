@@ -476,6 +476,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         
         let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
             for: chat,
+            threadUUID: threadUUID,
             with: items
         )
 
@@ -532,7 +533,11 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
             let firstSection = resultController.sections?.first {
             
             if controller == messagesResultsController {
-                if let messages = firstSection.objects as? [TransactionMessage] {
+                if var messages = firstSection.objects as? [TransactionMessage] {
+                    if let originalMessageUUID = threadUUID,
+                    let originalMessage = TransactionMessage.getMessageWith(uuid: originalMessageUUID){
+                        messages.append(originalMessage)
+                    }
                     self.messagesArray = messages.reversed()
                     
                     if !(self.delegate?.isOnStandardMode() ?? true) {

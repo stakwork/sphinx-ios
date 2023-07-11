@@ -1618,6 +1618,7 @@
 		CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionOrMacroItem.swift; sourceTree = "<group>"; };
 		CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteTableViewCell.swift; sourceTree = "<group>"; };
 		CE94A50F2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMentionAutocompleteTableViewCell.xib; sourceTree = "<group>"; };
+		CE97CC2C2A5DA19300FA9F91 /* sphinx 43.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 43.xcdatamodel"; sourceTree = "<group>"; };
 		CE9985B629D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		CE9985B729D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/RecommendationsHeaderCollectionReusableView.strings; sourceTree = "<group>"; };
 		CE9985B829D70CCF007CDE01 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Chat.strings; sourceTree = "<group>"; };
@@ -6284,6 +6285,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE97CC2C2A5DA19300FA9F91 /* sphinx 43.xcdatamodel */,
 				474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */,
 				470146192A3BB5D400A00DF8 /* sphinx 41.xcdatamodel */,
 				47E6A4AA2A2A65F900A9509E /* sphinx 40.xcdatamodel */,
@@ -6327,7 +6329,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = 474CA9082A4A21E300AA9218 /* sphinx 42.xcdatamodel */;
+			currentVersion = CE97CC2C2A5DA19300FA9F91 /* sphinx 43.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -94,6 +94,17 @@ struct BubbleMessageLayoutState {
         }
     }
     
+    struct MessagesThatRepliedToThis{
+        var replyingMessages: [TransactionMessage]
+        var totalReplies: Int
+        init(
+            replyingMessages: [TransactionMessage]
+        ) {
+            self.totalReplies = replyingMessages.count
+            self.replyingMessages = replyingMessages
+        }
+    }
+    
     struct MessageReply {
         var messageId: Int
         var color: UIColor

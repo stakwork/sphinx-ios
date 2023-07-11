@@ -93,6 +93,8 @@ extension NewChatViewModel {
             replyUUID: replyingTo?.uuid
         )
         
+        message?.threadUUID = replyingTo?.uuid
+        
         if chat == nil {
             ///Sending first message. Chat does not exist yet
             updateSnapshotWith(message: message)

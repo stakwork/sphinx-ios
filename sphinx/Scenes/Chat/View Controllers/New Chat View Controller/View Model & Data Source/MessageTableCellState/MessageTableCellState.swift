@@ -377,6 +377,25 @@ struct MessageTableCellState {
         }
     }()
     
+//    lazy var messageReplies : BubbleMessageLayoutState.MessagesThatRepliedToThis? = {
+//        guard let message = message, boostMessages.count > 0 else {
+//            return nil
+//        }
+//        
+//        var messagesThatReplied : [BubbleMessageLayoutState.MessagesThatRepliedToThis] = []
+//        
+//        if let chat = message.chat,
+//           let uuid = message.uuid{
+//            let fetch = TransactionMessage.getChatMessagesFetchRequest(for: chat, threadUUID: uuid, with: nil)
+//        }
+//        
+//        
+//        
+//        var totalNumberReplies = 0
+//        
+//        return BubbleMessageLayoutState.MessagesThatRepliedToThis(replyingMessages: messagesThatReplied)
+//    }()
+    
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
         
         guard let message = message, boostMessages.count > 0 else {

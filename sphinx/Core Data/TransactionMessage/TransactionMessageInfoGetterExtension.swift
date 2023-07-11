@@ -660,9 +660,15 @@ extension TransactionMessage {
         }
     }
     
+    var isOriginalThreadMessage : Bool{
+        get{
+            self.uuid == self.threadUUID
+        }
+    }
+    
     var isReplyActionAllowed: Bool {
         get {
-            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty
+            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty && (replyUUID == nil)
         }
     }
     
@@ -710,7 +716,7 @@ extension TransactionMessage {
     
     var isShowThreadAllowed:Bool{
         get{
-            return true
+            return self.replyUUID != nil
         }
     }
     

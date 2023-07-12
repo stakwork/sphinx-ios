@@ -34,6 +34,7 @@ struct MessageTableCellState {
     var contactImage: UIImage? = nil
     var replyingMessage: TransactionMessage? = nil
     var boostMessages: [TransactionMessage] = []
+    var threadMessages: [TransactionMessage] = []
     var purchaseMessages: [Int: TransactionMessage] = [:]
     var linkContact: LinkContact? = nil
     var linkTribe: LinkTribe? = nil
@@ -57,7 +58,7 @@ struct MessageTableCellState {
         bubbleState: MessageTableCellState.BubbleState? = nil,
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
-        threadMessages:[TransactionMessage]?=nil,
+        threadMessages:[TransactionMessage]=[],
         boostMessages: [TransactionMessage] = [],
         purchaseMessages: [Int: TransactionMessage] = [:],
         linkContact: LinkContact? = nil,
@@ -80,6 +81,7 @@ struct MessageTableCellState {
         self.contactImage = contactImage
         self.replyingMessage = replyingMessage
         self.boostMessages = boostMessages
+        self.threadMessages = threadMessages
         self.purchaseMessages = purchaseMessages
         self.linkContact = linkContact
         self.linkTribe = linkTribe
@@ -378,24 +380,22 @@ struct MessageTableCellState {
         }
     }()
     
-//    lazy var messageReplies : BubbleMessageLayoutState.MessagesThatRepliedToThis? = {
-//        guard let message = message, boostMessages.count > 0 else {
-//            return nil
-//        }
-//
-//        var messagesThatReplied : [BubbleMessageLayoutState.MessagesThatRepliedToThis] = []
-//
-//        if let chat = message.chat,
-//           let uuid = message.uuid{
-//            let fetch = TransactionMessage.getChatMessagesFetchRequest(for: chat, threadUUID: uuid, with: nil)
-//        }
-//
-//
-//
-//        var totalNumberReplies = 0
-//
-//        return BubbleMessageLayoutState.MessagesThatRepliedToThis(
-//    }()
+    lazy var threadMessageArray : BubbleMessageLayoutState.ThreadMessages? = {
+        guard let message = message, threadMessages.count > 0 else {
+            return nil
+        }
+
+        var threadMessageList: [BubbleMessageLayoutState.ThreadMessages] = []
+        
+        for threadMessage in threadMessages {
+            let senderInfo: (UIColor, String, String?) = getSenderInfo(message: threadMessage)
+            threadMessageList.append(
+                BubbleMessageLayoutState.ThreadMessage(previewText: threadMessage.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0)
+            )
+        }
+
+        return BubbleMessageLayoutState.ThreadMessages(threadMessages: threadMessageList)
+    }()
     
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
         

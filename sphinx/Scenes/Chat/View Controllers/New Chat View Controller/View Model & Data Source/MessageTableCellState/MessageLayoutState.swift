@@ -94,14 +94,33 @@ struct BubbleMessageLayoutState {
         }
     }
     
-    struct MessagesThatRepliedToThis{
-        var replyingMessages: [TransactionMessage]
+    struct ThreadMessage {
+        var previewText: String?
+        var senderPic: String?
+        var senderAlias: String?
+        var senderColor: UIColor?
+        
+        init(
+            previewText:String?,
+            senderPic: String?,
+            senderAlias: String?,
+            senderColor: UIColor?
+        ) {
+            self.previewText = previewText
+            self.senderPic = senderPic
+            self.senderAlias = senderAlias
+            self.senderColor = senderColor
+        }
+    }
+    
+    struct ThreadMessages{
+        var threadMessages: [TransactionMessage]
         var totalReplies: Int
         init(
-            replyingMessages: [TransactionMessage]
+            threadMessages: [TransactionMessage]
         ) {
-            self.totalReplies = replyingMessages.count
-            self.replyingMessages = replyingMessages
+            self.totalReplies = threadMessages.count
+            self.threadMessages = threadMessages
         }
     }
     

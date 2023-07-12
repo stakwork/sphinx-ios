@@ -239,8 +239,11 @@ class CrypterManager : NSObject {
                 if wordsCount == 12 || wordsCount == 24 {
                     self.newMessageBubbleHelper.showLoadingWheel()
                     
+                    let words = value.split(separator: " ").map { String($0).trim() }
+                    let fixedWords = words.joined(separator: " ")
+                    
                     let (mnemonic, seed) = self.generateAndPersistWalletMnemonic(
-                        mnemonic: value
+                        mnemonic: fixedWords
                     )
                     callback((mnemonic, seed))
                 } else {

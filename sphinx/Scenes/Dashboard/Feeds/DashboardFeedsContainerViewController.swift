@@ -251,8 +251,6 @@ extension DashboardFeedsContainerViewController {
             return newsletterFeedCollectionViewController
         case ContentFilterOption.play.id:
             return playFeedCollectionViewController
-        case ContentFilterOption.downloaded.id:
-            return downloadedPodcastsVC
         default:
             preconditionFailure()
         }

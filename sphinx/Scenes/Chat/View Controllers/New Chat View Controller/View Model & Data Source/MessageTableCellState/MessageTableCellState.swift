@@ -57,6 +57,7 @@ struct MessageTableCellState {
         bubbleState: MessageTableCellState.BubbleState? = nil,
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
+        threadMessages:[TransactionMessage]?=nil,
         boostMessages: [TransactionMessage] = [],
         purchaseMessages: [Int: TransactionMessage] = [:],
         linkContact: LinkContact? = nil,
@@ -381,19 +382,19 @@ struct MessageTableCellState {
 //        guard let message = message, boostMessages.count > 0 else {
 //            return nil
 //        }
-//        
+//
 //        var messagesThatReplied : [BubbleMessageLayoutState.MessagesThatRepliedToThis] = []
-//        
+//
 //        if let chat = message.chat,
 //           let uuid = message.uuid{
 //            let fetch = TransactionMessage.getChatMessagesFetchRequest(for: chat, threadUUID: uuid, with: nil)
 //        }
-//        
-//        
-//        
+//
+//
+//
 //        var totalNumberReplies = 0
-//        
-//        return BubbleMessageLayoutState.MessagesThatRepliedToThis(replyingMessages: messagesThatReplied)
+//
+//        return BubbleMessageLayoutState.MessagesThatRepliedToThis(
 //    }()
     
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {

@@ -143,6 +143,7 @@ extension NewChatTableDataSource {
         
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
         let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
+        let threadMessagesMap = getThreadMessagesFor(messages: messages)
         let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
         let linkContactsArray = getLinkContactsArrayFor(messages: messages)
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
@@ -183,6 +184,7 @@ extension NewChatTableDataSource {
             
             let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
             let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
+            let threadMessages = (message.uuid != nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
             let linkContact = linkContactsArray[message.id]
             let linkTribe = linkTribesArray[message.id]
@@ -375,6 +377,32 @@ extension NewChatTableDataSource {
         }
         
         return boostMessagesMap
+    }
+    
+    func getThreadMessagesFor(
+        messages: [TransactionMessage]
+    ) -> [String: [TransactionMessage]] {
+        
+        guard let chat = chat else {
+            return [:]
+        }
+        
+        let messageUUIDs: [String] = messages.map({ $0.threadUUID ?? "" }).filter({ $0.isNotEmpty })
+        let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
+        
+        var threadMessagesMap: [String: [TransactionMessage]] = [:]
+        
+        for threadMessage in threadMessages {
+            if let threadUUID = threadMessage.threadUUID {
+                if let map = threadMessagesMap[threadUUID], map.count > 0 {
+                    threadMessagesMap[threadUUID]?.append(threadMessage)
+                } else {
+                    threadMessagesMap[threadUUID] = [threadMessage]
+                }
+            }
+        }
+        
+        return threadMessagesMap
     }
     
     func getLinkContactsArrayFor(

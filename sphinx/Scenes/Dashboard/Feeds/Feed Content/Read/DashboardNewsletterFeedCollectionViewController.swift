@@ -492,7 +492,7 @@ extension DashboardNewsletterFeedCollectionViewController {
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
     ) -> NSFetchedResultsController<ContentFeed> {
-        let fetchRequest = NewsletterFeed.FetchRequests.followedFeeds()
+        let fetchRequest = NewsletterFeed.FetchRequests.allFeeds()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,

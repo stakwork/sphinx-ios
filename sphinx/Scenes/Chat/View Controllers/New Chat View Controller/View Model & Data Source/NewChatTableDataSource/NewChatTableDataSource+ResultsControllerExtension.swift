@@ -200,6 +200,7 @@ extension NewChatTableDataSource {
                 bubbleState: bubbleStateAndDate.0,
                 contactImage: headerImage,
                 replyingMessage: replyingMessage,
+                threadMessages:threadMessages,
                 boostMessages: boostsMessages,
                 purchaseMessages: purchaseMessages,
                 linkContact: linkContact,

@@ -28,16 +28,19 @@ class MessageOptionsViewController: UIViewController {
     
     var message: TransactionMessage? = nil
     var purchaseAcceptMessage: TransactionMessage? = nil
+    var hasReplies:Bool = false
     
     static func instantiate(
         message: TransactionMessage,
         purchaseAcceptMessage: TransactionMessage?,
-        delegate: MessageOptionsVCDelegate?
+        delegate: MessageOptionsVCDelegate?,
+        hasReplies:Bool
     ) -> MessageOptionsViewController {
         let viewController = StoryboardScene.Chat.messageOptionsViewController.instantiate()
         viewController.message = message
         viewController.purchaseAcceptMessage = purchaseAcceptMessage
         viewController.delegate = delegate
+        viewController.hasReplies = hasReplies
         return viewController
     }
     
@@ -176,6 +179,10 @@ class MessageOptionsViewController: UIViewController {
 }
 
 extension MessageOptionsViewController : MessageOptionsDelegate {
+    func getHasReplyStatus() -> Bool {
+        return self.hasReplies
+    }
+    
     func shouldDismiss(completion: @escaping (() -> ())) {
         shouldDismissViewController(completion)
     }

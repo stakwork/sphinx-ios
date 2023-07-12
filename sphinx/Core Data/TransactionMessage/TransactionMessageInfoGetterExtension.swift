@@ -527,7 +527,7 @@ extension TransactionMessage {
             }
         }
         
-        if isReplyActionAllowed {
+        if isReplyActionAllowed  {
             options.append(
                 .init(
                     tag: MessageActionsItem.Reply,
@@ -616,11 +616,15 @@ extension TransactionMessage {
         }
         
         if isShowThreadAllowed{
-            options.append(.init(tag: .ShowThread,materialIconName: "forum", label: "show.thread".localized))
+            options.append(getShowThreadOption())
         }
         
         
         return options
+    }
+    
+    func getShowThreadOption()->ActionsMenuOption{
+        return .init(tag: .ShowThread,materialIconName: "forum", label: "show.thread".localized)
     }
     
     func messageContainText() -> Bool {

@@ -18,6 +18,7 @@ import UIKit
     func shouldResendMessage()
     func shouldFlagMessage()
     func shouldTogglePinState(pin: Bool)
+    func getHasReplyStatus()->Bool
 }
 
 class MessageOptionsView : UIView {
@@ -112,7 +113,18 @@ class MessageOptionsView : UIView {
         guard let message = message else {
             return []
         }
-        return message.getActionsMenuOptions()
+        let initialOptions = message.getActionsMenuOptions()
+        let messageHasReplies = delegate?.getHasReplyStatus() ?? false
+        var options = initialOptions.filter({
+            if((messageHasReplies) && $0.tag == .Reply){
+                return false
+            }
+            else{
+                return true
+            }
+        })
+        (messageHasReplies == true) ? (options.append(message.getShowThreadOption())) : ()
+        return options
     }
     
     func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {

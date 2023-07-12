@@ -380,6 +380,10 @@ struct MessageTableCellState {
         }
     }()
     
+    mutating func getHasAReply()->Bool{
+        return (threadMessageArray?.threadMessages.count ?? 0) > 0 
+    }
+    
     lazy var threadMessageArray : BubbleMessageLayoutState.ThreadMessages? = {
         guard let message = message, threadMessages.count > 0 else {
             return BubbleMessageLayoutState.ThreadMessages(threadMessages: [])

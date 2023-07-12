@@ -33,7 +33,7 @@ protocol NewChatTableDataSourceDelegate : class {
     func didUpdateChat(_ chat: Chat)
     
     ///Message menu
-    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect,hasReplies:Bool)
     
     ///Leaderboard
     func shouldShowLeaderboardFor(messageId: Int)

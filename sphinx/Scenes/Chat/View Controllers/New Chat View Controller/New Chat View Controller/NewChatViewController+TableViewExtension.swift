@@ -139,7 +139,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         }
     }
     
-    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect) {
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect,hasReplies:Bool) {
         guard let indexPath = chatTableView.indexPath(for: cell) else {
             return
         }
@@ -162,7 +162,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 self.showMessageMenuFor(
                     messageId: messageId,
                     indexPath: indexPath,
-                    bubbleViewRect: bubbleViewRect
+                    bubbleViewRect: bubbleViewRect,
+                    hasReplies: hasReplies
                 )
             }
         })
@@ -218,7 +219,8 @@ extension NewChatViewController {
     func showMessageMenuFor(
         messageId: Int,
         indexPath: IndexPath,
-        bubbleViewRect: CGRect
+        bubbleViewRect: CGRect,
+        hasReplies:Bool
     ) {
         if let bubbleRectAndPath = ChatHelper.getMessageBubbleRectAndPath(
             tableView: self.chatTableView,
@@ -236,7 +238,8 @@ extension NewChatViewController {
             let messageOptionsVC = MessageOptionsViewController.instantiate(
                 message: message,
                 purchaseAcceptMessage: message.getPurchaseAcceptItem(),
-                delegate: self
+                delegate: self,
+                hasReplies: hasReplies
             )
             
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)

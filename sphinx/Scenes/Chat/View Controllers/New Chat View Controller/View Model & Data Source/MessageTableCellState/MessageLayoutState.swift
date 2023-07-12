@@ -114,10 +114,10 @@ struct BubbleMessageLayoutState {
     }
     
     struct ThreadMessages{
-        var threadMessages: [TransactionMessage]
+        var threadMessages: [ThreadMessage]
         var totalReplies: Int
         init(
-            threadMessages: [TransactionMessage]
+            threadMessages: [ThreadMessage]
         ) {
             self.totalReplies = threadMessages.count
             self.threadMessages = threadMessages

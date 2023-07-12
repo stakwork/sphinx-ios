@@ -382,10 +382,10 @@ struct MessageTableCellState {
     
     lazy var threadMessageArray : BubbleMessageLayoutState.ThreadMessages? = {
         guard let message = message, threadMessages.count > 0 else {
-            return nil
+            return BubbleMessageLayoutState.ThreadMessages(threadMessages: [])
         }
 
-        var threadMessageList: [BubbleMessageLayoutState.ThreadMessages] = []
+        var threadMessageList: [BubbleMessageLayoutState.ThreadMessage] = []
         
         for threadMessage in threadMessages {
             let senderInfo: (UIColor, String, String?) = getSenderInfo(message: threadMessage)

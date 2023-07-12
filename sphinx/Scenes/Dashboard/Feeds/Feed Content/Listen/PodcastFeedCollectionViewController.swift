@@ -322,7 +322,7 @@ extension PodcastFeedCollectionViewController {
             return snapshot
         }
         
-        snapshot.appendSections(CollectionViewSection.allCases)
+        snapshot.appendSections([CollectionViewSection.recentlyReleasePods])
 
         snapshot.appendItems(
             self.followedPodcastFeeds
@@ -333,13 +333,18 @@ extension PodcastFeedCollectionViewController {
             toSection: .recentlyReleasePods
        )
         
-        snapshot.appendItems(
-            allPodcastFeeds
-                .map {
-                    DataSourceItem.subscribedPodcastFeed($0)
-                },
-            toSection: .recentlyPlayedPods
-        )
+        let recentlyPlayedFeed = allPodcastFeeds.filter { $0.dateLastConsumed != nil }.compactMap { contentFeed -> DataSourceItem? in
+            return DataSourceItem.subscribedPodcastFeed(contentFeed)
+        }
+        
+        if !recentlyPlayedFeed.isEmpty {
+            snapshot.appendSections([CollectionViewSection.recentlyPlayedPods])
+            
+            snapshot.appendItems(
+                recentlyPlayedFeed,
+                toSection: .recentlyPlayedPods
+            )
+        }
 
         return snapshot
     }

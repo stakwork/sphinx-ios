@@ -515,15 +515,17 @@ extension AllTribeFeedsCollectionViewController {
             return nil
         }
         
-        let recentlyPlayedFeed = allFeeds.compactMap { contentFeed -> DataSourceItem? in
-            if contentFeed.isPodcast {
-                return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
-            } else if contentFeed.isVideo {
-                return DataSourceItem.tribeVideoFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
-            } else if contentFeed.isNewsletter {
-                return DataSourceItem.tribeNewsletterFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
-            }
-            return nil
+        let recentlyPlayedFeed = allFeeds
+            .filter { $0.dateLastConsumed != nil }
+            .compactMap { contentFeed -> DataSourceItem? in
+                if contentFeed.isPodcast {
+                    return DataSourceItem.tribePodcastFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+                } else if contentFeed.isVideo {
+                    return DataSourceItem.tribeVideoFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+                } else if contentFeed.isNewsletter {
+                    return DataSourceItem.tribeNewsletterFeed(contentFeed, CollectionViewSection.recentlyPlayed.rawValue)
+                }
+                return nil
         }
         
         var downloadedEpisodes = [PodcastEpisode]()
@@ -551,12 +553,16 @@ extension AllTribeFeedsCollectionViewController {
         
 
         if !followedSourceItems.isEmpty {
-            snapshot.appendSections([CollectionViewSection.followedFeeds, CollectionViewSection.recentlyPlayed])
-
+            snapshot.appendSections([CollectionViewSection.followedFeeds])
+            
             snapshot.appendItems(
                 followedSourceItems,
                 toSection: CollectionViewSection.followedFeeds
             )
+        }
+        
+        if !recentlyPlayedFeed.isEmpty {
+            snapshot.appendSections([CollectionViewSection.recentlyPlayed])
             
             snapshot.appendItems(
                 recentlyPlayedFeed,

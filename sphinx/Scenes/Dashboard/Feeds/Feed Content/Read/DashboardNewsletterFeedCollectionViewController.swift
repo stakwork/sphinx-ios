@@ -412,7 +412,7 @@ extension DashboardNewsletterFeedCollectionViewController {
             return snapshot
         }
 
-        snapshot.appendSections(CollectionViewSection.allCases)
+        snapshot.appendSections([CollectionViewSection.recentlyPublishedFeeds])
         
         snapshot.appendItems(
             recentlyReleasedNewsletterFeeds
@@ -421,11 +421,18 @@ extension DashboardNewsletterFeedCollectionViewController {
             toSection: .recentlyPublishedFeeds
         )
         
-        snapshot.appendItems(
-            recentlyPlayedNewsletterFeeds
-                .map { DataSourceItem.newsletterFeed($0) },
-            toSection: .recentlyReadFeeds
-        )
+        let recentlyReadFeed = recentlyPlayedNewsletterFeeds.filter { $0.dateLastConsumed != nil }.compactMap { contentFeed -> DataSourceItem? in
+            return DataSourceItem.newsletterFeed(contentFeed)
+        }
+        
+        if !recentlyReadFeed.isEmpty {
+            snapshot.appendSections([CollectionViewSection.recentlyReadFeeds])
+            
+            snapshot.appendItems(
+                recentlyReadFeed,
+                toSection: .recentlyReadFeeds
+            )
+        }
 
         return snapshot
     }

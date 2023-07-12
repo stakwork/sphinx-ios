@@ -563,11 +563,17 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
             
             if controller == messagesResultsController {
                 if var messages = firstSection.objects as? [TransactionMessage] {
+                    var isThread :Bool = false
                     if let originalMessageUUID = threadUUID,
                     let originalMessage = TransactionMessage.getMessageWith(uuid: originalMessageUUID){
                         messages.append(originalMessage)
+                        isThread = true
+                    }
+                    if(isThread == false){//remove hidden thread replies
+                        messages = messages.filter({$0.isHiddenThreadReply == false})
                     }
                     self.messagesArray = messages.reversed()
+                    
                     
                     if !(self.delegate?.isOnStandardMode() ?? true) {
                         return

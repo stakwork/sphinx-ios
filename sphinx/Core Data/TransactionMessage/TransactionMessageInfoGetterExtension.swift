@@ -664,9 +664,9 @@ extension TransactionMessage {
         }
     }
     
-    var isOriginalThreadMessage : Bool{
+    var isHiddenThreadReply : Bool{
         get{
-            self.uuid == self.threadUUID
+            self.threadUUID != nil && self.replyUUID == nil
         }
     }
     

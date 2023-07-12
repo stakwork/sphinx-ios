@@ -664,12 +664,6 @@ extension TransactionMessage {
         }
     }
     
-    var isHiddenThreadReply : Bool{
-        get{
-            self.threadUUID != nil && self.replyUUID == nil
-        }
-    }
-    
     var isReplyActionAllowed: Bool {
         get {
             return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty && (replyUUID == nil)

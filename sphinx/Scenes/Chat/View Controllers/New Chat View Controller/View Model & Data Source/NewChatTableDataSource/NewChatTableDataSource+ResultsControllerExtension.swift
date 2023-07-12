@@ -570,7 +570,21 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                         isThread = true
                     }
                     if(isThread == false){//remove hidden thread replies
-                        messages = messages.filter({$0.isHiddenThreadReply == false})
+                        messages = messages.filter({
+                            if($0.threadUUID == nil){//not a thread, don't filter
+                                return true
+                            }
+                            else if($0.replyUUID == $0.threadUUID){//first message of thread
+                                let originalMessage = TransactionMessage.getMessageWith(uuid: $0.threadUUID!)
+                                if let threadUUID = $0.threadUUID,
+                                   let chat = originalMessage?.chat{
+                                    let threadMessages = TransactionMessage.getThreadMessagesFor([threadUUID], on: chat)
+                                    return threadMessages.count < 2//message has only 1 reply
+                                }
+                                return false
+                            }
+                            return false
+                        })
                     }
                     self.messagesArray = messages.reversed()
                     

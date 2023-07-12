@@ -298,6 +298,13 @@
 "profile.mnemonic-copied" = "Palabras de seguridad copiadas al portapapeles";
 "profile.bitcoin-network" = "Red de Bitcoin";
 "profile.select-bitcoin-network" = "Seleccioná la red de Bitcoin";
+"profile.mnemonic-generation-title" = "Generación de palabras de seguridad";
+"profile.mnemonic-generation-description" = "Elegí la opción de tu preferencia";
+"profile.mnemonic-enter-title" = "Palabras de seguridad";
+"profile.mnemonic-enter-description" = "Ingresá 12 o 24 palabras de seguridad separadas por un espacio";
+"profile.mnemonic-enter-error" = "Las palabras ingresadas no son válidas";
+"profile.mnemonic-enter" = "Ingresá tus 12/24 palabras de seguridad";
+"profile.mnemonic-generate" = "Generar palabras de seguridad al azar";
 
 //PIN
 "choose.pin.upper" = "ELIGE TU PIN";

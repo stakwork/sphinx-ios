@@ -198,11 +198,62 @@ class CrypterManager : NSObject {
             },
             cancel: {}
         )
-        
     }
     
-    public func generateAndPersistWalletMnemonic() -> (String, String) {
-        let mnemonic = Mnemonic.create()
+    func promptForSeedGeneration(
+        callback: @escaping ((String, String)) -> ()
+    ) {
+        let generateMnemonicCallbak: (() -> ()) = {
+            self.newMessageBubbleHelper.showLoadingWheel()
+            let (mnemonic, seed) = self.generateAndPersistWalletMnemonic()
+            callback((mnemonic, seed))
+        }
+        
+        let enterMnemonicCallback: (() -> ()) = {
+            self.promptForSeedEnter(callback: callback)
+        }
+        
+        AlertHelper.showOptionsPopup(
+            title: "profile.mnemonic-generation-title".localized,
+            message: "profile.mnemonic-generation-description".localized,
+            options: [
+                "profile.mnemonic-generate".localized,
+                "profile.mnemonic-enter".localized
+            ],
+            callbacks: [generateMnemonicCallbak, enterMnemonicCallback],
+            sourceView: self.vc.view,
+            vc: self.vc
+        )
+    }
+    
+    func promptForSeedEnter(
+        callback: @escaping ((String, String)) -> ()
+    ) {
+        promptFor(
+            "profile.mnemonic-enter-title".localized,
+            message: "profile.mnemonic-enter-description".localized,
+            errorMessage: "profile.mnemonic-enter-error".localized,
+            callback: { value in
+                let wordsCount = value.split(separator: " ").count
+                
+                if wordsCount == 12 || wordsCount == 24 {
+                    self.newMessageBubbleHelper.showLoadingWheel()
+                    
+                    let (mnemonic, seed) = self.generateAndPersistWalletMnemonic(
+                        mnemonic: value
+                    )
+                    callback((mnemonic, seed))
+                } else {
+                    self.showErrorWithMessage("profile.mnemonic-enter-error".localized)
+                }
+            }
+        )
+    }
+    
+    public func generateAndPersistWalletMnemonic(
+        mnemonic: String? = nil
+    ) -> (String, String) {
+        let mnemonic = mnemonic ?? Mnemonic.create()
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = seed.bytes[0..<32]
         
@@ -211,77 +262,80 @@ class CrypterManager : NSObject {
     
     func testCrypter() {
         let sk1 = Nonce(length: 32).description.hexEncoded
-        
+
         var pk1: String? = nil
         do {
             pk1 = try pubkeyFromSecretKey(mySecretKey: sk1)
         } catch {
             print(error.localizedDescription)
         }
-        
+
         guard let pk1 = pk1 else {
             self.showSuccessWithMessage("There was an error. Please try again later")
             return
         }
-        
+
         guard let _ = hardwarePostDto.lightningNodeUrl else {
             self.showSuccessWithMessage("There was an error. Please try again later")
             return
         }
         
         self.newMessageBubbleHelper.showLoadingWheel()
-        
+
         API.sharedInstance.getHardwarePublicKey(callback: { pubKey in
-            
+
             var sec1: String? = nil
             do {
                 sec1 = try deriveSharedSecret(theirPubkey: pubKey, mySecretKey: sk1)
             } catch {
                 print(error.localizedDescription)
             }
-            
-            let (mnemonic, seed) = self.generateAndPersistWalletMnemonic()
-            
+
             self.newMessageBubbleHelper.hideLoadingWheel()
-            
-            self.showMnemonicToUser(mnemonic: mnemonic) {
-                guard let sec1 = sec1 else {
-                    self.showSuccessWithMessage("There was an error. Please try again later")
-                    return
-                }
-                
-                // encrypt plaintext with sec1
-                let nonce = Nonce(length: 12).description.hexEncoded
-                var cipher: String? = nil
-                
-                do {
-                    cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
-                } catch {
-                    print(error.localizedDescription)
-                }
 
-                guard let cipher = cipher else {
-                    self.showSuccessWithMessage("There was an error. Please try again later")
-                    return
-                }
+            self.promptForSeedGeneration() { (mnemonic, seed) in
                 
-                self.hardwarePostDto.publicKey = pk1
-                self.hardwarePostDto.encryptedSeed = cipher
+                self.newMessageBubbleHelper.hideLoadingWheel()
 
-                API.sharedInstance.sendSeedToHardware(
-                    hardwarePostDto: self.hardwarePostDto,
-                    callback: { success in
-                        
-                    if (success) {
-                        UserDefaults.Keys.setupSigningDevice.set(true)
-                        
-                        self.showSuccessWithMessage("profile.seed-sent-successfully".localized)
-                    } else {
-                        self.showErrorWithMessage("profile.error-sending-seed".localized)
+                self.showMnemonicToUser(mnemonic: mnemonic) {
+                    guard let sec1 = sec1 else {
+                        self.showSuccessWithMessage("There was an error. Please try again later")
+                        return
                     }
-                        
-                    self.endCallback()
-                })
+
+                    // encrypt plaintext with sec1
+                    let nonce = Nonce(length: 12).description.hexEncoded
+                    var cipher: String? = nil
+
+                    do {
+                        cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+
+                    guard let cipher = cipher else {
+                        self.showSuccessWithMessage("There was an error. Please try again later")
+                        return
+                    }
+
+                    self.hardwarePostDto.publicKey = pk1
+                    self.hardwarePostDto.encryptedSeed = cipher
+
+                    API.sharedInstance.sendSeedToHardware(
+                        hardwarePostDto: self.hardwarePostDto,
+                        callback: { success in
+
+                        if (success) {
+                            UserDefaults.Keys.setupSigningDevice.set(true)
+
+                            self.showSuccessWithMessage("profile.seed-sent-successfully".localized)
+                        } else {
+                            self.showErrorWithMessage("profile.error-sending-seed".localized)
+                        }
+
+                        self.endCallback()
+                    })
+                }
             }
         }, errorCallback: {
             self.showErrorWithMessage("profile.error-getting-hardware-public-key".localized)

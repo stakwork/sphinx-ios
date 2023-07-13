@@ -153,9 +153,24 @@ extension NewChatTableDataSource {
         var invoiceData: (Int, Int) = (0, 0)
         
         chat.processAliasesFrom(messages: messages)
-
+        
+        var filteredThreadMessages: [TransactionMessage] = []
+                
         for (index, message) in messages.enumerated() {
-            
+            guard let threadUUID = message.threadUUID else {
+                ///Message not on thread.
+                filteredThreadMessages.append(message)
+                continue
+            }
+            let messagesInThread = threadMessagesMap[threadUUID]
+            if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
+                ///Thread has more than 1 reply. Then skip
+                continue
+            }
+            filteredThreadMessages.append(message)
+        }
+
+        for (index, message) in filteredThreadMessages.enumerated() {
             invoiceData = (
                 invoiceData.0 + ((message.isPayment() && message.isIncoming(ownerId: owner.id)) ? -1 : 0),
                 invoiceData.1 + ((message.isPayment() && message.isOutgoing(ownerId: owner.id)) ? -1 : 0)
@@ -562,7 +577,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
             let firstSection = resultController.sections?.first {
             
             if controller == messagesResultsController {
-                if var messages = firstSection.objects as? [TransactionMessage] {
+                if let messages = firstSection.objects as? [TransactionMessage] {
                     self.messagesArray = messages.reversed()
                     
                     if !(self.delegate?.isOnStandardMode() ?? true) {

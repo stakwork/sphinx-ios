@@ -143,6 +143,7 @@ extension NewChatTableDataSource {
         
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
         let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
+        let threadMessagesMap = getThreadMessagesMapFor(messages: messages)
         let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
         let linkContactsArray = getLinkContactsArrayFor(messages: messages)
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
@@ -152,8 +153,24 @@ extension NewChatTableDataSource {
         var invoiceData: (Int, Int) = (0, 0)
         
         chat.processAliasesFrom(messages: messages)
-
+        
+        var filteredThreadMessages: [TransactionMessage] = []
+        
         for (index, message) in messages.enumerated() {
+            guard let threadUUID = message.threadUUID else {
+                ///Message not on thread.
+                filteredThreadMessages.append(message)
+                continue
+            }
+            let messagesInThread = threadMessagesMap[threadUUID]
+            if messagesInThread.count > 1 {
+                ///Thread has more than 1 reply. Then skip
+                continue
+            }
+            filteredThreadMessages.append(message)
+        }
+
+        for (index, message) in filteredThreadMessages.enumerated() {
             
             invoiceData = (
                 invoiceData.0 + ((message.isPayment() && message.isIncoming(ownerId: owner.id)) ? -1 : 0),
@@ -199,7 +216,6 @@ extension NewChatTableDataSource {
                 contactImage: headerImage,
                 replyingMessage: replyingMessage,
                 boostMessages: boostsMessages,
-                purchaseMessages: purchaseMessages,
                 linkContact: linkContact,
                 linkTribe: linkTribe,
                 linkWeb: linkWeb,
@@ -370,6 +386,32 @@ extension NewChatTableDataSource {
                     boostMessagesMap[replyUUID]?.append(boostMessage)
                 } else {
                     boostMessagesMap[replyUUID] = [boostMessage]
+                }
+            }
+        }
+        
+        return boostMessagesMap
+    }
+    
+    func getThreadMessagesMapFor(
+        messages: [TransactionMessage]
+    ) -> [String: [TransactionMessage]] {
+        
+        guard let chat = chat else {
+            return [:]
+        }
+        
+        let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
+        let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
+        
+        var threadMessagesMap: [String: [TransactionMessage]] = [:]
+        
+        for threadMessage in threadMessages {
+            if let threadUUID = threadMessage.threadUUID, threadUUID.isNotEmpty {
+                if let map = threadMessagesMap[threadUUID], map.count > 0 {
+                    threadMessagesMap[threadUUID]?.append(threadMessage)
+                } else {
+                    threadMessagesMap[threadUUID] = [threadMessage]
                 }
             }
         }

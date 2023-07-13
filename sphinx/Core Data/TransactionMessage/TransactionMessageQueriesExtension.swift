@@ -250,6 +250,18 @@ extension TransactionMessage {
         return reactions
     }
     
+    static func getThreadMessagesFor(
+        _ messages: [String],
+        on chat: Chat
+    ) -> [TransactionMessage] {
+        let boostType = TransactionMessageType.boost.rawValue
+        let predicate = NSPredicate(format: "chat == %@ AND threadUUID != nil AND (threadUUID IN %@)", chat, messages)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
+        
+        return reactions
+    }
+    
     static func getPurchaseItemsFor(
         _ muids: [String],
         on chat: Chat

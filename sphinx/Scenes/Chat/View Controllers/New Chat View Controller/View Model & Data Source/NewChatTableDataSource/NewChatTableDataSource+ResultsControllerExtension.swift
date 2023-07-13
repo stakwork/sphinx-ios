@@ -155,20 +155,25 @@ extension NewChatTableDataSource {
         chat.processAliasesFrom(messages: messages)
         
         var filteredThreadMessages: [TransactionMessage] = []
-                
-        for (index, message) in messages.enumerated() {
-            guard let threadUUID = message.threadUUID else {
-                ///Message not on thread.
+        if(threadUUID == nil){//only hide messages if we're not a thread specific chat VC
+            for (index, message) in messages.enumerated() {
+                guard let threadUUID = message.threadUUID else {
+                    ///Message not on thread.
+                    filteredThreadMessages.append(message)
+                    continue
+                }
+                let messagesInThread = threadMessagesMap[threadUUID]
+                if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
+                    ///Thread has more than 1 reply. Then skip
+                    continue
+                }
                 filteredThreadMessages.append(message)
-                continue
             }
-            let messagesInThread = threadMessagesMap[threadUUID]
-            if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
-                ///Thread has more than 1 reply. Then skip
-                continue
-            }
-            filteredThreadMessages.append(message)
         }
+        else{//we're a thread specific chat
+            filteredThreadMessages = messages
+        }
+        
 
         for (index, message) in filteredThreadMessages.enumerated() {
             invoiceData = (

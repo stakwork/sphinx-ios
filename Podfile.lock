@@ -22,6 +22,7 @@ PODS:
   - libwebp/webp (1.2.0)
   - lottie-ios (3.2.3)
   - MarqueeLabel (4.3.0)
+  - MessagePack.swift (4.0.0)
   - ObjectMapper (4.2.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - KYDrawerController
   - lottie-ios
   - MarqueeLabel
+  - MessagePack.swift (~> 4.0)
   - ObjectMapper
   - ReachabilitySwift
   - RNCryptor (~> 5.0)
@@ -90,6 +92,7 @@ SPEC REPOS:
     - libwebp
     - lottie-ios
     - MarqueeLabel
+    - MessagePack.swift
     - ObjectMapper
     - PINCache
     - PINOperation
@@ -129,6 +132,7 @@ SPEC CHECKSUMS:
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
+  MessagePack.swift: 417f6b6e27a86ad4f19a0ee47093b3985cd77323
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
@@ -147,6 +151,6 @@ SPEC CHECKSUMS:
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 7c5d735ed1bcb08f0ffabeb3b119ddb04debba46
+PODFILE CHECKSUM: b839cf1b108c78b4f4c0e68d6a064516ead52d27
 
 COCOAPODS: 1.11.3

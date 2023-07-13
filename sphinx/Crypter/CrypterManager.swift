@@ -11,6 +11,7 @@ import UIKit
 import HDWalletKit
 import NetworkExtension
 import CoreLocation
+import MessagePack
 
 class CrypterManager : NSObject {
     
@@ -75,17 +76,25 @@ class CrypterManager : NSObject {
     }
     
     func setupSigningDevice() {
-        self.checkNetwork {
-            self.promptForNetworkName() { networkName in
-                self.promptForNetworkPassword(networkName) {
-                    self.promptForHardwareUrl() {
-                        self.promptForBitcoinNetwork {
-                            self.testCrypter()
-                        }
-                    }
-                }
-            }
-        }
+        let packed = Data([147, 146, 164, 97, 97, 97, 97, 146, 15, 147, 204, 255, 204, 255, 204, 255, 146, 164, 98, 98, 98, 98, 146, 15, 147, 204, 255, 204, 255, 204, 255, 146, 164, 99, 99, 99, 99, 146, 15, 147, 204, 255, 204, 255, 204, 255])
+        
+        let unpacked = try? unpack(packed)
+        
+        print(unpacked?.value)
+        
+        array(
+            [
+                array(
+                    [string(aaaa), array([uint(15), array([uint(255), uint(255), uint(255)])])]
+                ),
+                array(
+                    [string(bbbb), array([uint(15), array([uint(255), uint(255), uint(255)])])]
+                ),
+                array(
+                    [string(cccc), array([uint(15), array([uint(255), uint(255), uint(255)])])]
+                )
+            ]
+        )
     }
     
     func checkNetwork(callback: @escaping () -> ()) {

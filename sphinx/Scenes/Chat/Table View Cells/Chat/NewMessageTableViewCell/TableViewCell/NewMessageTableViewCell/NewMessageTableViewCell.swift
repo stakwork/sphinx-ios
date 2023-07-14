@@ -32,7 +32,6 @@ protocol ChatTableViewCellProtocol: class {
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
-        codeShareData: MessageTableCellState.CodeShareData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
         searchingTerm: String?,
@@ -165,7 +164,6 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
-        codeShareData: MessageTableCellState.CodeShareData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
         searchingTerm: String?,
@@ -214,7 +212,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData, and: bubble)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(botHTMLContent: mutableMessageCellState.botHTMLContent, botWebViewData: botWebViewData)
-        configureWith(codeShareContent: mutableMessageCellState.codeShareContent, codeShareData: codeShareData)
+        configureWith(codeShareContent: mutableMessageCellState.codeShareContent)
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData, and: bubble)
         configureWith(podcastComment: mutableMessageCellState.podcastComment, mediaData: mediaData, and: bubble)
         

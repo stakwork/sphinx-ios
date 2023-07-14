@@ -35,25 +35,10 @@ class CodeShareView: UIView {
     
 
     func configureWith(
-        codeShareContent: BubbleMessageLayoutState.CodeShareContent,
-        codeShareData: MessageTableCellState.CodeShareData?
+        codeShareContent: BubbleMessageLayoutState.CodeShareContent
     ) {
-        let loading = false//codeShareData == nil
         
-//        loadingWheel.isHidden = !loading
-//        webView.isHidden = loading
-        
-        if !loading {
-//            loadingWheel.stopAnimating()
-            
-            self.loadMarkdownCode(code: codeShareContent.codeBlock)
-            //self.testDownLibrary()
-            //self.loadBotResponseContent(botHTMLContent:botHTMLContent)
-            
-            
-        } else {
-//            loadingWheel.startAnimating()
-        }
+        self.loadMarkdownCode(code: codeShareContent.codeBlock)
     }
     
     
@@ -65,6 +50,20 @@ class CodeShareView: UIView {
         markdownParser.code.textBackgroundColor = UIColor.clear
         let markdown = "\(code)"
         markdownLabel.attributedText = markdownParser.parse(markdown)
+    }
+    
+    func calculateLabelSize() -> CGSize {
+        let fontSize = self.markdownLabel.font.pointSize
+        let text = markdownLabel.text
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: fontSize)
+        label.text = text
+        label.numberOfLines = 0 // Allow multiple lines if needed
+        label.lineBreakMode = .byWordWrapping
+        label.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: .greatestFiniteMagnitude + 32.0)
+        label.sizeToFit()
+        
+        return label.frame.size
     }
 }
 

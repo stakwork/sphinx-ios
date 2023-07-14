@@ -194,14 +194,4 @@ extension MessageTableCellState {
             self.height = height
         }
     }
-    
-    struct CodeShareData {
-        var height: CGFloat
-        
-        init(
-            height: CGFloat
-        ) {
-            self.height = height
-        }
-    }
 }

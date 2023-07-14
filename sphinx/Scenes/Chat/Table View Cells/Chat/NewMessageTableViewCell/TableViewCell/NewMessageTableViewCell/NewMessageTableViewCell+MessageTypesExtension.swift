@@ -182,26 +182,15 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
-        codeShareContent: BubbleMessageLayoutState.CodeShareContent?,
-        codeShareData: MessageTableCellState.CodeShareData?
+        codeShareContent: BubbleMessageLayoutState.CodeShareContent?
     ) {
         if let codeShareContent = codeShareContent {
             
-            codeShareView.configureWith(codeShareContent: codeShareContent, codeShareData: codeShareData)
+            codeShareView.configureWith(codeShareContent: codeShareContent)
             codeShareView.isHidden = false
             
-            if let botWebViewData = codeShareData {
-                codeShareViewHeightConstraint.constant = botWebViewData.height
-                codeShareView.layoutIfNeeded()
-            } else if let messageId = messageId {
-                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-                DispatchQueue.global().asyncAfter(deadline: delayTime) {
-                    self.delegate?.shouldLoadBotWebViewDataFor(
-                        messageId: messageId,
-                        and: self.rowIndex
-                    )
-                }
-            }
+            codeShareViewHeightConstraint.constant = codeShareView.calculateLabelSize().height + 100.0
+            codeShareView.layoutIfNeeded()
         }
     }
     

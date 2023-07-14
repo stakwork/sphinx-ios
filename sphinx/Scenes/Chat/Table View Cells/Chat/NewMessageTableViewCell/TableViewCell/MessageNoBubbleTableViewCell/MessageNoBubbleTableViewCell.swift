@@ -55,7 +55,6 @@ class MessageNoBubbleTableViewCell: UITableViewCell, ChatTableViewCellProtocol {
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
-        codeShareData: MessageTableCellState.CodeShareData?,
         uploadProgressData: MessageTableCellState.UploadProgressData?,
         delegate: NewMessageTableViewCellDelegate?,
         searchingTerm: String?,

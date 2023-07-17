@@ -188,6 +188,8 @@ extension NewMessageTableViewCell {
             
             codeShareView.configureWith(codeShareContent: codeShareContent)
             codeShareView.isHidden = false
+            messageLabel.isHidden = true
+            
             
             codeShareViewHeightConstraint.constant = codeShareView.calculateLabelSize().height + 100.0
             codeShareView.layoutIfNeeded()

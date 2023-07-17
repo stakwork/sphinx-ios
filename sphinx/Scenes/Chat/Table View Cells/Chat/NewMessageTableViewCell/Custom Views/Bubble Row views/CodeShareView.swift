@@ -9,12 +9,18 @@
 import UIKit
 import MarkdownKit
 
+protocol CodeShareViewDelegate : NSObject{
+    func didTapCopy()
+}
+
 class CodeShareView: UIView {
     
     @IBOutlet private var contentView: UIView!
     
     @IBOutlet weak var markdownLabel: UILabel!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    
+    var delegate : CodeShareViewDelegate? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,15 +48,30 @@ class CodeShareView: UIView {
     }
     
     
-    func loadMarkdownCode(code:String){
+    @objc func labelTouched(){
+        if let text = markdownLabel.text{
+            ClipboardHelper.copyToClipboard(text: text.replacingOccurrences(of: "`", with: ""))
+        }
+    }
+    
+    
+    func loadMarkdownCode(code: String) {
         markdownLabel.backgroundColor = UIColor.Sphinx.Body
         markdownLabel.numberOfLines = 0
+        
         let markdownParser = MarkdownParser(customElements: [MarkdownSubreddit()])
-        markdownParser.code.color = UIColor.green
+        
+        // Update code block styles
+        markdownParser.code.color = UIColor.white
         markdownParser.code.textBackgroundColor = UIColor.clear
+        
         let markdown = "\(code)"
+        markdownParser.code.font = UIFont(name: "Roboto", size: markdownParser.code.font?.pointSize ?? 16.0)
         markdownLabel.attributedText = markdownParser.parse(markdown)
+        
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTouched)))
     }
+
     
     func calculateLabelSize() -> CGSize {
         let fontSize = self.markdownLabel.font.pointSize

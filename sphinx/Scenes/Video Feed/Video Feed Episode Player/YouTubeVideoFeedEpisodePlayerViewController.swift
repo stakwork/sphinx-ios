@@ -130,15 +130,29 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         setupDismissButton()
         
         if videoPlayerEpisode.isDownloaded{
-            localVideoPlayerContainer.isHidden = false
             if let url = //URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4")
             videoPlayerEpisode.getVideoUrl()
             {
-                avPlayer = createVideoPlayerView(withVideoURL: url)
-                avPlayer?.delegate = self
-                //avPlayer.player?.play()
+                DispatchQueue.main.sync {
+                    localVideoPlayerContainer.isHidden = false
+                    avPlayer = createVideoPlayerView(withVideoURL: url)
+                    avPlayer?.delegate = self
+                }
             }
-            
+        }
+        else{
+            API.sharedInstance.getVideoRemoteStorageStatus(videoID: "tADAlisn4HA", callback: { doesExist in
+                if doesExist,
+                   let url = URL(string: API.sharedInstance.getRemoteVideoCachePath(videoID: "tADAlisn4HA")){
+                    DispatchQueue.main.sync {
+                        self.localVideoPlayerContainer.isHidden = false
+                        self.avPlayer = self.createVideoPlayerView(withVideoURL: url)
+                        self.avPlayer?.delegate = self
+                    }
+                }
+            }, errorCallback: {
+                
+            })
         }
     }
     

@@ -218,12 +218,16 @@ extension API {
         }
     }
     
+    func getRemoteVideoCachePath(videoID:String)->String{
+        return "https://stakwork-uploads.s3.amazonaws.com/uploads/customers/6040/media_to_local/00002e82-6911-4aea-a214-62c9d88740e0/\(videoID).mp4"
+    }
+    
     func getVideoRemoteStorageStatus(
         videoID:String,
         callback: @escaping VideoFileExistsCallback,
         errorCallback: @escaping EmptyCallback
     ){
-        let urlPath = "https://stakwork-uploads.s3.amazonaws.com/uploads/customers/6040/media_to_local/00002e82-6911-4aea-a214-62c9d88740e0/\(videoID).mp4"
+        let urlPath = getRemoteVideoCachePath(videoID: videoID)
         
         guard let url = URL(string: urlPath) else{
             errorCallback()

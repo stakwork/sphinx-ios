@@ -151,4 +151,8 @@ class NewChatTableDataSource : NSObject {
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
         tableView.registerCell(NewOnlyTextMessageTableViewCell.self)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }

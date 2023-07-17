@@ -309,8 +309,6 @@ extension DashboardRootViewController {
         }
         setupAddTribeButton()
         
-        //startCallManagerTest()
-        
         if let stashedQuery = UserDefaults.Keys.stashedQuery.get(defaultValue: ""),
            let url = URL(string:"sphinx.chat://?\(stashedQuery)"){
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)

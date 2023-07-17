@@ -188,6 +188,8 @@ class DownloadService : NSObject {
             }
         }
     }
+    
+    
 }
 
 extension DownloadService : URLSessionDownloadDelegate {

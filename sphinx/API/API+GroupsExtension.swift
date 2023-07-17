@@ -294,7 +294,7 @@ extension API {
     ){
         let urlPath = API.kTribesServerBaseURL + "/leaderboard/\(tribeUUID)"
         
-        var urlComponents = URLComponents(string: urlPath)!
+        let urlComponents = URLComponents(string: urlPath)!
 
         guard let urlString = urlComponents.url?.absoluteString else {
             errorCallback()

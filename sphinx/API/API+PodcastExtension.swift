@@ -130,6 +130,7 @@ extension API {
         }
     }
     
+    
     func getContentFeedStatusFor(
         feedId: String,
         callback: @escaping ContentFeedStatusCallback,
@@ -216,4 +217,49 @@ extension API {
             }
         }
     }
+    
+    func getVideoRemoteStorageStatus(
+        videoID:String,
+        callback: @escaping VideoFileExistsCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let urlPath = "https://stakwork-uploads.s3.amazonaws.com/uploads/customers/6040/media_to_local/00002e82-6911-4aea-a214-62c9d88740e0/\(videoID).mp4"
+        
+        guard let url = URL(string: urlPath) else{
+            errorCallback()
+            return
+        }
+        
+        getFileSize(url: url, completion: { size in
+            if let size = size,
+               size > 100{
+                callback(true)
+            }
+            else{
+                callback(false)
+            }
+        })
+    }
+    
+    func getFileSize(url: URL, completion: @escaping (Int64?) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let httpResponse = response as? HTTPURLResponse, error == nil else {
+                completion(nil)
+                return
+            }
+            
+            if let contentLengthString = httpResponse.allHeaderFields["Content-Length"] as? String,
+               let contentLength = Int64(contentLengthString) {
+                completion(contentLength)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+    }
+
 }

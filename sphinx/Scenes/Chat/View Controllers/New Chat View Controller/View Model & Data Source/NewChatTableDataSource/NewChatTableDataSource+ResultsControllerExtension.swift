@@ -158,8 +158,9 @@ extension NewChatTableDataSource {
         
         if (isForShowAllThreads){ // we're showing the first message of all threads that exist in the chat
             for (index, message) in messages.enumerated() {
-                if let threadUUID = message.uuid,
-                let messagesInThread = threadMessagesMap[threadUUID],
+                if message.threadUUID == nil,
+                let firstMessageAndThreadUUID = message.uuid,
+                let messagesInThread = threadMessagesMap[firstMessageAndThreadUUID],
                 messagesInThread.count > 0 {
                     ///Thread has more than 1 reply. Then skip
                     filteredThreadMessages.append(message)

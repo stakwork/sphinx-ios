@@ -75,15 +75,7 @@ extension TransactionMessage {
         isForShowAllThreads:Bool,
         typesToExclude:[Int]
     )->NSPredicate{
-        if isForShowAllThreads{
-            return NSPredicate(
-                format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil)) AND threadUUID == nil",
-                chat,
-                typesToExclude,
-                TransactionMessageType.boost.rawValue
-            )
-        }
-        else if let tuid = threadUUID{//display thread results
+        if let tuid = threadUUID{//display thread results
             return NSPredicate(
                 format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil)) AND threadUUID == %@ OR uuid == %@",
                 chat,

@@ -688,6 +688,8 @@
 		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
 		CEEDEA162A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */; };
 		CEEDEA182A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */; };
+		CEEFD6082A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */; };
+		CEEFD6092A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1687,6 +1689,8 @@
 		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
 		CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVC.swift; sourceTree = "<group>"; };
 		CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVM.swift; sourceTree = "<group>"; };
+		CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewThreadOnlyMessageTableViewCell.swift; sourceTree = "<group>"; };
+		CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewThreadOnlyMessageTableViewCell.xib; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -1872,6 +1876,8 @@
 		4701460D2A3B79AD00A00DF8 /* NewMessageTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */,
+				CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */,
 				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
 				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
 				47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */,
@@ -4546,6 +4552,7 @@
 				476A10B923A7E9E500817892 /* ContactTableViewCell.xib in Resources */,
 				F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */,
 				47949BD824AA168D000D697B /* Roboto-Italic.ttf in Resources */,
+				CEEFD6092A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib in Resources */,
 				F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */,
 				47AF0D33254B238B00C98398 /* BoostButtonView.xib in Resources */,
 				477924882A28EF6E00CD3CF1 /* SentPaidDetails.xib in Resources */,
@@ -5214,6 +5221,7 @@
 				478B05CA29787B7D00A1B254 /* PodcastFeed+PlayerPodcastData.swift in Sources */,
 				471161DB291563D2008EAFF2 /* ActionTrack+FetchUtils.swift in Sources */,
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,
+				CEEFD6082A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift in Sources */,
 				474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */,
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				4779247E2A28D1D200CD3CF1 /* StatusHeaderView.swift in Sources */,

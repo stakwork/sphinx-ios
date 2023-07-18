@@ -156,5 +156,6 @@ class NewChatTableDataSource : NSObject {
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
         tableView.registerCell(NewOnlyTextMessageTableViewCell.self)
+        tableView.registerCell(NewThreadOnlyMessageTableViewCell.self)
     }
 }

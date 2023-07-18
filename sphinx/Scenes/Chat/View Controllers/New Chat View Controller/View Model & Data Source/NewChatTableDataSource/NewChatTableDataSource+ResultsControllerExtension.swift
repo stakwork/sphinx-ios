@@ -75,12 +75,19 @@ extension NewChatTableDataSource {
             var mutableDataSourceItem = dataSourceItem
             
             if let _ = mutableDataSourceItem.bubble {
-                if mutableDataSourceItem.isTextOnlyMessage {
+                if self.isForShowAllThreads{
+                    cell = tableView.dequeueReusableCell(
+                        withIdentifier: "NewThreadOnlyMessageTableViewCell",
+                        for: indexPath
+                    ) as! NewThreadOnlyMessageTableViewCell
+                }
+                else if mutableDataSourceItem.isTextOnlyMessage {
                     cell = tableView.dequeueReusableCell(
                         withIdentifier: "NewOnlyTextMessageTableViewCell",
                         for: indexPath
                     ) as! NewOnlyTextMessageTableViewCell
-                } else {
+                }
+                else {
                     cell = tableView.dequeueReusableCell(
                         withIdentifier: "NewMessageTableViewCell",
                         for: indexPath

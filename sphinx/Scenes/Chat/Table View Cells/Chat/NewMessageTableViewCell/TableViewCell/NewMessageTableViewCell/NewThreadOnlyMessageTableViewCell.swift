@@ -12,7 +12,11 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
 
     @IBOutlet weak var senderAvatarImageView: UIImageView!
     @IBOutlet weak var contactAliasLabel: UILabel!
-    
+    @IBOutlet weak var firstThreadMessageLabel: UILabel!
+    @IBOutlet weak var firstMessageTitle: UILabel!
+    @IBOutlet weak var replyCountLabel: UILabel!
+    @IBOutlet weak var lastResponseLabel: UILabel!
+    @IBOutlet weak var horizontalStackView: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,12 +29,45 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
         // Configure the view for the selected state
     }
     
-    func configure(){
-        senderAvatarImageView.makeCircular()
+    func getReplyCountText(threadMessageCount:Int)->String{
+        if(threadMessageCount == 1){
+            return "1 reply"
+        }
+        else{
+            return "\(String(describing: threadMessageCount)) replies"
+        }
     }
     
     
     func configureWith(messageCellState: MessageTableCellState, mediaData: MessageTableCellState.MediaData?, tribeData: MessageTableCellState.TribeData?, linkData: MessageTableCellState.LinkData?, botWebViewData: MessageTableCellState.BotWebViewData?, uploadProgressData: MessageTableCellState.UploadProgressData?, delegate: NewMessageTableViewCellDelegate?, searchingTerm: String?, indexPath: IndexPath) {
+        senderAvatarImageView.image = messageCellState.contactImage
+        senderAvatarImageView.makeCircular()
+        firstThreadMessageLabel.text = messageCellState.messageString
+        contactAliasLabel.text = messageCellState.contact?.nickname
+        
+        var cellState = messageCellState
+        
+        if let threadMessages = cellState.threadMessageArray?.threadMessages {
+            for message in threadMessages {
+                // Perform actions with each threadMessage
+                let newImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 23.0, height: 23.0))
+                //newImageView.image = #imageLiteral(resourceName: "bluecheckmark")
+                newImageView.sd_setImage(with: URL(string: message.senderPic ?? ""))
+                newImageView.contentMode = .scaleAspectFill
+                newImageView.makeCircular()
+                horizontalStackView.insertArrangedSubview(newImageView, at: 0)
+                newImageView.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    newImageView.widthAnchor.constraint(equalToConstant: 23.0),
+                    newImageView.heightAnchor.constraint(equalToConstant: 23.0)
+                ])
+            }
+        }
+        
+        horizontalStackView.superview?.layoutIfNeeded()
+        replyCountLabel.text = getReplyCountText(threadMessageCount: messageCellState.threadMessages.count)
+        print(messageCellState)
+        
         
     }
 }

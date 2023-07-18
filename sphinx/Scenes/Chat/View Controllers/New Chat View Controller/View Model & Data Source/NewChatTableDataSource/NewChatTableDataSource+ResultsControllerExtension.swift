@@ -155,7 +155,18 @@ extension NewChatTableDataSource {
         chat.processAliasesFrom(messages: messages)
         
         var filteredThreadMessages: [TransactionMessage] = []
-        if(threadUUID == nil){//only hide messages if we're not a thread specific chat VC
+        
+        if (isForShowAllThreads){ // we're showing the first message of all threads that exist in the chat
+            for (index, message) in messages.enumerated() {
+                if let threadUUID = message.uuid,
+                let messagesInThread = threadMessagesMap[threadUUID],
+                messagesInThread.count > 0 {
+                    ///Thread has more than 1 reply. Then skip
+                    filteredThreadMessages.append(message)
+                }
+            }
+        }
+        else if(threadUUID == nil){//only hide messages if we're not a thread specific chat VC
             for (index, message) in messages.enumerated() {
                 guard let threadUUID = message.threadUUID else {
                     ///Message not on thread.
@@ -526,6 +537,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
             for: chat,
             threadUUID: threadUUID,
+            isForShowAllThreads: isForShowAllThreads,
             with: items
         )
 

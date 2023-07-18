@@ -72,9 +72,18 @@ extension TransactionMessage {
     static func getPredicate(
         chat:Chat,
         threadUUID:String?,
+        isForShowAllThreads:Bool,
         typesToExclude:[Int]
     )->NSPredicate{
-        if let tuid = threadUUID{//display thread results
+        if isForShowAllThreads{
+            return NSPredicate(
+                format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil)) AND threadUUID == nil",
+                chat,
+                typesToExclude,
+                TransactionMessageType.boost.rawValue
+            )
+        }
+        else if let tuid = threadUUID{//display thread results
             return NSPredicate(
                 format: "chat == %@ AND (NOT (type IN %@) || (type == %d && replyUUID = nil)) AND threadUUID == %@ OR uuid == %@",
                 chat,
@@ -97,6 +106,7 @@ extension TransactionMessage {
     static func getChatMessagesFetchRequest(
         for chat: Chat,
         threadUUID:String?=nil,
+        isForShowAllThreads:Bool=false,
         with limit: Int? = nil
     ) -> NSFetchRequest<TransactionMessage> {
         
@@ -104,7 +114,12 @@ extension TransactionMessage {
         typesToExclude.append(TransactionMessageType.boost.rawValue)
         
         
-        let predicate = TransactionMessage.getPredicate(chat: chat, threadUUID: threadUUID, typesToExclude: typesToExclude)
+        let predicate = TransactionMessage.getPredicate(
+            chat: chat,
+            threadUUID: threadUUID,
+            isForShowAllThreads: isForShowAllThreads,
+            typesToExclude: typesToExclude
+        )
         
         
         

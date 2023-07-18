@@ -41,6 +41,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var webAppVC : WebAppViewController? = nil
     
+    var isForShowAllThreads : Bool = false
     var threadUUID: String? = nil
     
     enum ViewMode: Int {
@@ -92,7 +93,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         setDelegates()
         setupData()
         configureFetchResultsController()
-        configureTableView(threadUUID: threadUUID)
+        configureTableView(threadUUID: threadUUID,isForShowAllThreads: isForShowAllThreads)
         initializeMacros()
     }
     

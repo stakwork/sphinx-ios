@@ -103,6 +103,7 @@ class NewChatTableDataSource : NSObject {
     let webViewSemaphore = DispatchSemaphore(value: 1)
     var webViewLoadingCompletion: ((CGFloat?) -> ())? = nil
     var threadUUID:String? = nil
+    var isForShowAllThreads:Bool = false
     
     init(
         chat: Chat?,
@@ -112,7 +113,8 @@ class NewChatTableDataSource : NSObject {
         bottomView: UIView,
         webView: WKWebView,
         delegate: NewChatTableDataSourceDelegate?,
-        threadUUID:String?
+        threadUUID:String?,
+        isForShowAllThreads:Bool=false
     ) {
         super.init()
         
@@ -126,6 +128,7 @@ class NewChatTableDataSource : NSObject {
         
         self.delegate = delegate
         self.threadUUID = threadUUID
+        self.isForShowAllThreads = isForShowAllThreads
         
         configureTableView()
         configureDataSource()

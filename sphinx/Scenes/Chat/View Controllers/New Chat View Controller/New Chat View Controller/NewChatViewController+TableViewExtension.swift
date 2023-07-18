@@ -9,7 +9,9 @@
 import UIKit
 
 extension NewChatViewController {
-    func configureTableView(threadUUID:String?=nil) {
+    func configureTableView(threadUUID:String?=nil,
+                            isForShowAllThreads:Bool=false
+    ) {
         if let ds = chatTableDataSource {
             if ds.isFinalDS() {
                 return
@@ -29,7 +31,8 @@ extension NewChatViewController {
             bottomView: bottomView,
             webView: botWebView,
             delegate: self,
-            threadUUID: threadUUID
+            threadUUID: threadUUID,
+            isForShowAllThreads: isForShowAllThreads
         )
         
         chatViewModel.setDataSource(chatTableDataSource)

@@ -41,7 +41,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var webAppVC : WebAppViewController? = nil
     
-    var isForShowAllThreads : Bool = false
+    var isForShowAllThreads : Bool = true
     var threadUUID: String? = nil
     
     enum ViewMode: Int {
@@ -186,7 +186,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             chat: chat,
             contact: contact,
             andDelegate: self,
-            searchDelegate: self
+            searchDelegate: self,
+            isForShowAllThreads: isForShowAllThreads
         )
         
         configurePinnedMessageView()

@@ -387,6 +387,7 @@
 "flag.item" = "Reportar";
 "delete.message" = "Eliminar Mensaje";
 "show.thread" = "Mostrar Tema";
+"threads" = "Temas";
 "pin.message" = "Fijar Mensaje";
 "unpin.message" = "Remover Fijado";
 "message.pinned" = "Mensaje Fijado";

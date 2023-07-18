@@ -388,6 +388,7 @@
 "flag.item" = "Flag";
 "delete.message" = "Delete Message";
 "show.thread" = "Show Thread";
+"threads" = "Threads";
 "pin.message" = "Pin Message";
 "unpin.message" = "Unpin Message";
 "message.pinned" = "Message Pinned";

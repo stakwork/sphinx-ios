@@ -41,6 +41,8 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var webAppButton: UIButton!
     @IBOutlet weak var contributionsContainer: UIStackView!
     
+    var isForShowAllThreads:Bool = false
+    
     var keysLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: keysLoading, loadingWheel: keyLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text)
@@ -86,17 +88,19 @@ class ChatHeaderView: UIView {
     func configureWith(
         chat: Chat?,
         contact: UserContact?,
-        delegate: ChatHeaderViewDelegate
+        delegate: ChatHeaderViewDelegate,
+        isForShowAllThreads:Bool=false
     ) {
         self.chat = chat
         self.contact = contact
         self.delegate = delegate
+        self.isForShowAllThreads = isForShowAllThreads
         
         setChatInfo()
     }
     
     func setChatInfo() {
-        nameLabel.text = getHeaderName()
+        nameLabel.text = isForShowAllThreads ? "threads".localized : getHeaderName() 
         
         let isEncrypted = (chat?.isEncrypted() ?? contact?.hasEncryptionKey()) ?? false
         lockSign.text = isEncrypted ? "lock" : "lock_open"
@@ -109,6 +113,11 @@ class ChatHeaderView: UIView {
         if let contact = contact, !contact.hasEncryptionKey() {
             forceKeysExchange(contactId: contact.id)
         }
+        
+        lockSign.isHidden = isForShowAllThreads
+        webAppButton.isHidden = isForShowAllThreads
+        boltSign.isHidden = isForShowAllThreads
+        volumeButton.isHidden = isForShowAllThreads
     }
     
     func getHeaderName() -> String {

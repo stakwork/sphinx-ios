@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol NewThreadOnlyMessageTableViewCellDelegate : NSObject{
+    func didTapOnThread(threadUUID:String)
+}
+
 class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtocol {
 
     @IBOutlet weak var senderAvatarImageView: UIImageView!
@@ -19,6 +23,9 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     @IBOutlet weak var detailsStackView: UIStackView!
     @IBOutlet weak var avatarIconStackView: UIStackView!
     
+    var delegate : NewThreadOnlyMessageTableViewCellDelegate? = nil
+    var threadUUID:String? = nil
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,6 +35,10 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        self.threadUUID = nil
     }
     
     func getReplyCountText(threadMessageCount:Int)->String{
@@ -41,6 +52,8 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     
     
     func configureWith(messageCellState: MessageTableCellState, mediaData: MessageTableCellState.MediaData?, tribeData: MessageTableCellState.TribeData?, linkData: MessageTableCellState.LinkData?, botWebViewData: MessageTableCellState.BotWebViewData?, uploadProgressData: MessageTableCellState.UploadProgressData?, delegate: NewMessageTableViewCellDelegate?, searchingTerm: String?, indexPath: IndexPath) {
+        
+        contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleThreadTap)))
         
         senderAvatarImageView.makeCircular()
         firstThreadMessageLabel.text = messageCellState.messageString
@@ -85,6 +98,7 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                 contactAliasLabel.text = firstMessage.senderAlias
                 senderAvatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
                 senderAvatarImageView.contentMode = .scaleAspectFill
+                self.threadUUID = firstMessage.threadUUID
             }
             lastResponseLabel.text = threadMessages.last?.sendDate?.publishDateString
             
@@ -113,4 +127,11 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
         
         
     }
+    
+    @objc func handleThreadTap(){
+        if let threadUUID = threadUUID{
+            delegate?.didTapOnThread(threadUUID: threadUUID)
+        }
+    }
+    
 }

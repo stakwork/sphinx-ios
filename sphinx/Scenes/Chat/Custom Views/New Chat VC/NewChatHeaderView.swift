@@ -60,13 +60,15 @@ class NewChatHeaderView: UIView {
         contact: UserContact?,
         andDelegate delegate: ChatHeaderViewDelegate,
         searchDelegate: ChatSearchTextFieldViewDelegate? = nil,
-        isForShowAllThreads:Bool=false
+        isForShowAllThreads:Bool=false,
+        threadUUID:String?=nil
     ) {
         chatHeaderView.configureWith(
             chat: chat,
             contact: contact,
             delegate: delegate,
-            isForShowAllThreads: isForShowAllThreads
+            isForShowAllThreads: isForShowAllThreads,
+            threadUUID: threadUUID
         )
         
         

@@ -187,7 +187,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             contact: contact,
             andDelegate: self,
             searchDelegate: self,
-            isForShowAllThreads: isForShowAllThreads
+            isForShowAllThreads: isForShowAllThreads,
+            threadUUID:threadUUID
         )
         
         configurePinnedMessageView()

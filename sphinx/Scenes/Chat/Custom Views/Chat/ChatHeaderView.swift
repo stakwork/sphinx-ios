@@ -46,6 +46,7 @@ class ChatHeaderView: UIView {
     
     
     var isForShowAllThreads:Bool = false
+    var threadUUID: String? = nil
     
     var keysLoading = false {
         didSet {
@@ -93,12 +94,14 @@ class ChatHeaderView: UIView {
         chat: Chat?,
         contact: UserContact?,
         delegate: ChatHeaderViewDelegate,
-        isForShowAllThreads:Bool=false
+        isForShowAllThreads:Bool=false,
+        threadUUID:String?=nil
     ) {
         self.chat = chat
         self.contact = contact
         self.delegate = delegate
         self.isForShowAllThreads = isForShowAllThreads
+        self.threadUUID = threadUUID
         
         setChatInfo()
     }
@@ -118,8 +121,8 @@ class ChatHeaderView: UIView {
             forceKeysExchange(contactId: contact.id)
         }
         
+        (threadUUID != nil) ? (showThreadsButton.isHidden = true) : ()
         
-        hideForShowAllThreads(view: optionsButton)
         hideForShowAllThreads(view: imageContainer)
         hideForShowAllThreads(view: lockSign)
         hideForShowAllThreads(view: boltSign)

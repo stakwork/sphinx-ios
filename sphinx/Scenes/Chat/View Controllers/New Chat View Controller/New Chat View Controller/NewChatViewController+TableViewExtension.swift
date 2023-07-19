@@ -216,6 +216,10 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
             self.present(viewController, animated: false)
         }
     }
+    
+    func didTapThread(threadUUID:String){
+        self.showThread(threadID: threadUUID)
+    }
 }
 
 extension NewChatViewController {

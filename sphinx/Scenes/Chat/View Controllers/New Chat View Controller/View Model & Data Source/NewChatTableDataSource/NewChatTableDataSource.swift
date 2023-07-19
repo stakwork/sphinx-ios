@@ -51,6 +51,8 @@ protocol NewChatTableDataSourceDelegate : class {
     func isOnStandardMode() -> Bool
     func didFinishSearchingWith(matchesCount: Int, index: Int)
     func shouldToggleSearchLoadingWheel(active: Bool)
+    
+    func didTapThread(threadUUID:String)
 }
 
 class NewChatTableDataSource : NSObject {

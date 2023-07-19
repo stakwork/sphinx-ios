@@ -80,6 +80,9 @@ extension NewChatTableDataSource {
                         withIdentifier: "NewThreadOnlyMessageTableViewCell",
                         for: indexPath
                     ) as! NewThreadOnlyMessageTableViewCell
+                    if let cell = cell as? NewThreadOnlyMessageTableViewCell{
+                        cell.delegate = self
+                    }
                 }
                 else if mutableDataSourceItem.isTextOnlyMessage {
                     cell = tableView.dequeueReusableCell(
@@ -622,3 +625,5 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         }
     }
 }
+
+

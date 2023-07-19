@@ -990,3 +990,11 @@ extension NewChatTableDataSource {
         return tableCellStates
     }
 }
+
+
+extension NewChatTableDataSource : NewThreadOnlyMessageTableViewCellDelegate{
+    func didTapOnThread(threadUUID: String) {
+        delegate?.didTapThread(threadUUID: threadUUID)
+    }
+    
+}

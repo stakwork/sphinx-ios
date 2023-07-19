@@ -696,7 +696,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcc-3m-nzF">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcc-3m-nzF" customClass="ThreadHeaderView" customModule="sphinx" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
@@ -803,7 +803,7 @@
                         <outlet property="headerView" destination="hMb-Ac-dRv" id="ANb-B8-g1N"/>
                         <outlet property="mentionsAutocompleteTableView" destination="vlc-qx-DGF" id="osS-rX-MO5"/>
                         <outlet property="newMsgsIndicatorView" destination="WUJ-0a-zlK" id="DkF-z3-PbA"/>
-                        <outlet property="threadHeaderView" destination="fcc-3m-nzF" id="po8-Yu-xH6"/>
+                        <outlet property="threadHeaderView" destination="fcc-3m-nzF" id="OcG-I9-qWp"/>
                         <outlet property="threadHeaderViewHeightConstraint" destination="v5W-gT-eJr" id="mYX-H1-KCu"/>
                         <outlet property="webAppContainerView" destination="2KA-H5-xSv" id="uFC-DY-4Gs"/>
                     </connections>

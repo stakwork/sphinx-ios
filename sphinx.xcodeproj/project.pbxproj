@@ -690,6 +690,8 @@
 		CEEDEA182A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */; };
 		CEEFD6082A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */; };
 		CEEFD6092A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */; };
+		CEEFD60B2A6891E100FD7E73 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */; };
+		CEEFD60D2A68926000FD7E73 /* ThreadHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1691,6 +1693,8 @@
 		CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVM.swift; sourceTree = "<group>"; };
 		CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewThreadOnlyMessageTableViewCell.swift; sourceTree = "<group>"; };
 		CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewThreadOnlyMessageTableViewCell.xib; sourceTree = "<group>"; };
+		CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
+		CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadHeaderView.xib; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -3038,6 +3042,8 @@
 				47F8266D2A0D2B66002E81F0 /* NewChatAccessoryView.xib */,
 				472092B82A24FF6100468796 /* NewChatHeaderView.swift */,
 				472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */,
+				CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */,
+				CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */,
 			);
 			path = "New Chat VC";
 			sourceTree = "<group>";
@@ -4649,6 +4655,7 @@
 				F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */,
 				4797E7C124B8F3FA00D13270 /* Pin.storyboard in Resources */,
 				4797E7D624B8F53000D13270 /* Invite.storyboard in Resources */,
+				CEEFD60D2A68926000FD7E73 /* ThreadHeaderView.xib in Resources */,
 				4797E7C824B8F47200D13270 /* Profile.storyboard in Resources */,
 				47E6A4D22A2E6F8F00A9509E /* GroupActionsView.xib in Resources */,
 				F37D79A0271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib in Resources */,
@@ -4739,6 +4746,7 @@
 				475DD3042A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift in Sources */,
 				CE30D95B2A0C09DE00C83555 /* MaxMemorySlider.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
+				CEEFD60B2A6891E100FD7E73 /* ThreadHeaderView.swift in Sources */,
 				F394ECB12683CF5E00529038 /* NewUserGreetingViewController.swift in Sources */,
 				CE80EF672A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift in Sources */,
 				CE3133AF2977747E00E91E3A /* BadgeAdminListTableViewCell.swift in Sources */,

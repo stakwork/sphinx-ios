@@ -621,6 +621,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                 }
                 
                 self.processMessages(messages: self.messagesArray)
+                self.delegate?.didReloadContent()
             }
         }
     }

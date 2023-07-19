@@ -53,6 +53,7 @@ protocol NewChatTableDataSourceDelegate : class {
     func shouldToggleSearchLoadingWheel(active: Bool)
     
     func didTapThread(threadUUID:String)
+    func didReloadContent()
 }
 
 class NewChatTableDataSource : NSObject {

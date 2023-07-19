@@ -24,7 +24,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var mentionsAutocompleteTableView: UITableView!
     @IBOutlet weak var webAppContainerView: UIView!
     
-    @IBOutlet weak var threadHeaderView: UIView!
+    @IBOutlet weak var threadHeaderView: ThreadHeaderView!
     @IBOutlet weak var threadHeaderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var chatTableHeaderHeightConstraint: NSLayoutConstraint!
     let kThreadFirstMessageHeaderHeight : CGFloat = 170.0
@@ -185,17 +185,22 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         botWebViewWidthConstraint.constant = ((UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * MessageTableCellState.kBubbleWidthPercentage) - (MessageTableCellState.kLabelMargin * 2)
         botWebView.layoutIfNeeded()
         
-        layoutThreadHeaderView()
     }
     
     func layoutThreadHeaderView(){
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
-            self.threadHeaderViewHeightConstraint.constant = (self.threadUUID != nil) ? self.kThreadFirstMessageHeaderHeight : 0.0
-            self.chatTableViewHeightConstraint.constant -= (self.threadUUID != nil) ? self.kThreadFirstMessageHeaderHeight : 0.0
+        DispatchQueue.main.async {
+            guard let threadUUID = self.threadUUID,
+            let firstThreadMessage = self.chatTableDataSource?.messagesArray.filter({$0.uuid == threadUUID}).first
+            else{
+                return
+            }
+            self.threadHeaderView.configureWith(message: firstThreadMessage)
+            self.threadHeaderViewHeightConstraint.constant =  self.kThreadFirstMessageHeaderHeight
+            self.chatTableViewHeightConstraint.constant -=  self.kThreadFirstMessageHeaderHeight
             self.threadHeaderView.backgroundColor = .magenta
             self.view.bringSubviewToFront(self.threadHeaderView)
             self.view.layoutIfNeeded()
-        })
+        }
     }
     
     func setupData() {

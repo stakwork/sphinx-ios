@@ -99,17 +99,23 @@ struct BubbleMessageLayoutState {
         var senderPic: String?
         var senderAlias: String?
         var senderColor: UIColor?
+        var sendDate: Date?
+        var isOriginalMessage:Bool?
         
         init(
             previewText:String?,
             senderPic: String?,
             senderAlias: String?,
-            senderColor: UIColor?
+            senderColor: UIColor?,
+            sendDate:Date?,
+            isOriginalMessage:Bool
         ) {
             self.previewText = previewText
             self.senderPic = senderPic
             self.senderAlias = senderAlias
             self.senderColor = senderColor
+            self.sendDate = sendDate
+            self.isOriginalMessage = isOriginalMessage
         }
     }
     

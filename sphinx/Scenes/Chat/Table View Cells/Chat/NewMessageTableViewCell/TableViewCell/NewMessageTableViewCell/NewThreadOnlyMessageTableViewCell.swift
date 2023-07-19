@@ -13,7 +13,7 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     @IBOutlet weak var senderAvatarImageView: UIImageView!
     @IBOutlet weak var contactAliasLabel: UILabel!
     @IBOutlet weak var firstThreadMessageLabel: UILabel!
-    @IBOutlet weak var firstMessageTitle: UILabel!
+    @IBOutlet weak var firstResponseLabel: UILabel!
     @IBOutlet weak var replyCountLabel: UILabel!
     @IBOutlet weak var lastResponseLabel: UILabel!
     @IBOutlet weak var horizontalStackView: UIStackView!
@@ -40,15 +40,14 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     
     
     func configureWith(messageCellState: MessageTableCellState, mediaData: MessageTableCellState.MediaData?, tribeData: MessageTableCellState.TribeData?, linkData: MessageTableCellState.LinkData?, botWebViewData: MessageTableCellState.BotWebViewData?, uploadProgressData: MessageTableCellState.UploadProgressData?, delegate: NewMessageTableViewCellDelegate?, searchingTerm: String?, indexPath: IndexPath) {
-        senderAvatarImageView.image = messageCellState.contactImage
+        
         senderAvatarImageView.makeCircular()
         firstThreadMessageLabel.text = messageCellState.messageString
-        contactAliasLabel.text = messageCellState.contact?.nickname
-        
+                
         var cellState = messageCellState
         
         if let threadMessages = cellState.threadMessageArray?.threadMessages {
-            for message in threadMessages {
+            for message in threadMessages.filter({$0.isOriginalMessage == false}) {
                 // Perform actions with each threadMessage
                 let newImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 23.0, height: 23.0))
                 //newImageView.image = #imageLiteral(resourceName: "bluecheckmark")
@@ -62,10 +61,18 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                     newImageView.heightAnchor.constraint(equalToConstant: 23.0)
                 ])
             }
+            if let firstMessage = threadMessages.filter({$0.isOriginalMessage == true}).first{
+                firstResponseLabel.text = firstMessage.sendDate?.publishDateString
+                contactAliasLabel.text = firstMessage.senderAlias
+                senderAvatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
+                senderAvatarImageView.contentMode = .scaleAspectFill
+            }
+            lastResponseLabel.text = threadMessages.last?.sendDate?.publishDateString
         }
         
         horizontalStackView.superview?.layoutIfNeeded()
         replyCountLabel.text = getReplyCountText(threadMessageCount: messageCellState.threadMessages.count)
+        
         print(messageCellState)
         
         

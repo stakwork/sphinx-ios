@@ -394,9 +394,14 @@ struct MessageTableCellState {
         for threadMessage in threadMessages {
             let senderInfo: (UIColor, String, String?) = getSenderInfo(message: threadMessage)
             threadMessageList.append(
-                BubbleMessageLayoutState.ThreadMessage(previewText: threadMessage.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0)
+                BubbleMessageLayoutState.ThreadMessage(previewText: threadMessage.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0, sendDate: threadMessage.date, isOriginalMessage: false)
             )
         }
+        
+        let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
+        threadMessageList.append(
+            BubbleMessageLayoutState.ThreadMessage(previewText: message.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0, sendDate: message.date, isOriginalMessage: true)
+        )
 
         return BubbleMessageLayoutState.ThreadMessages(threadMessages: threadMessageList)
     }()

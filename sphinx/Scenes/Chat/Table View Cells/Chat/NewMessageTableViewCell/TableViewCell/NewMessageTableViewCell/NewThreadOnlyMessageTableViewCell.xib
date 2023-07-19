@@ -53,35 +53,35 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="12:05 PM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ji3-pK-XPW">
-                        <rect key="frame" x="105.33333333333331" y="21" width="50" height="16"/>
+                        <rect key="frame" x="105.33333333333331" y="21" width="70" height="16"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="6Qb-NM-D0d"/>
-                            <constraint firstAttribute="width" constant="50" id="D2v-pK-uQW"/>
+                            <constraint firstAttribute="width" constant="70" id="D2v-pK-uQW"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ucE-Sh-N7E">
-                        <rect key="frame" x="60.000000000000007" y="108" width="102.66666666666669" height="16"/>
+                        <rect key="frame" x="60" y="108" width="137" height="16"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="4 replies" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOz-Zw-gN5">
-                                <rect key="frame" x="0.0" y="0.0" width="56" height="16"/>
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="16"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="H6d-x0-dLa"/>
-                                    <constraint firstAttribute="width" constant="56" id="XMc-WY-i9f"/>
+                                    <constraint firstAttribute="width" constant="50" id="XMc-WY-i9f"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="10 min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmu-gv-p3C">
-                                <rect key="frame" x="62" y="0.0" width="40.666666666666657" height="16"/>
+                                <rect key="frame" x="56" y="0.0" width="81" height="16"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40.666666666666657" id="l9Z-07-z1Q"/>
+                                    <constraint firstAttribute="width" constant="81" id="l9Z-07-z1Q"/>
                                     <constraint firstAttribute="height" constant="16" id="sw1-nV-3Cy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
@@ -110,7 +110,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="contactAliasLabel" destination="knE-m4-3kt" id="D9U-eR-UNA"/>
-                <outlet property="firstMessageTitle" destination="Ji3-pK-XPW" id="beE-yU-oPM"/>
+                <outlet property="firstResponseLabel" destination="Ji3-pK-XPW" id="beE-yU-oPM"/>
                 <outlet property="firstThreadMessageLabel" destination="pxN-wv-7n5" id="QVr-hk-N6v"/>
                 <outlet property="horizontalStackView" destination="ucE-Sh-N7E" id="juW-E2-ac9"/>
                 <outlet property="lastResponseLabel" destination="Hmu-gv-p3C" id="t5K-8W-yyh"/>

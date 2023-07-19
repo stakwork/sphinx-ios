@@ -52,7 +52,7 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
             var overflowSenderUUIDs = [Int]()
             for message in threadMessages.filter({$0.isOriginalMessage == false}) {
                 // Perform actions with each threadMessage
-                if senderIds.contains(where: {$0 == message.senderUUID})
+                if shownSenderUUIDs.contains(where: {$0 == message.senderUUID})
                     { //don't count same user twice
                     
                     continue

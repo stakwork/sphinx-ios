@@ -41,7 +41,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var webAppVC : WebAppViewController? = nil
     
-    var isForShowAllThreads:Bool = true
+    var isForShowAllThreads:Bool = false
     var threadUUID: String? = nil
     
     enum ViewMode: Int {

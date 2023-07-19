@@ -131,6 +131,16 @@ extension NewChatViewController : ChatHeaderViewDelegate {
         }
     }
     
+    func didTapShowThreadsButton(){
+        let chatVC = NewChatViewController.instantiate(
+            contactId: self.contact?.id,
+            chatId: self.chat?.id,
+            chatListViewModel: chatListViewModel
+        )
+        chatVC.isForShowAllThreads = true
+        navigationController?.pushViewController(chatVC, animated: true)
+    }
+    
     func goToNotificationsLevel() {
         if let chat =  chat {
             

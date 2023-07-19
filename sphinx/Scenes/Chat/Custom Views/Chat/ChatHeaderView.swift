@@ -15,6 +15,7 @@ protocol ChatHeaderViewDelegate : class {
     func didTapWebAppButton()
     func didTapMuteButton()
     func didTapMoreOptionsButton(sender: UIButton)
+    func didTapShowThreadsButton()
     
     ///Chat search header
     func shouldSearchFor(term: String)
@@ -41,6 +42,7 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var webAppButton: UIButton!
     @IBOutlet weak var contributionsContainer: UIStackView!
     @IBOutlet weak var optionsButton: UIButton!
+    @IBOutlet weak var showThreadsButton: UIButton!
     
     
     var isForShowAllThreads:Bool = false
@@ -123,6 +125,7 @@ class ChatHeaderView: UIView {
         hideForShowAllThreads(view: boltSign)
         hideForShowAllThreads(view: webAppButton)
         hideForShowAllThreads(view: volumeButton)
+        hideForShowAllThreads(view: showThreadsButton)
     }
     
     func hideForShowAllThreads(view:UIView){
@@ -258,4 +261,9 @@ class ChatHeaderView: UIView {
             break
         }
     }
+    
+    @IBAction func showThreadsButtonTapped(_ sender: Any) {
+        delegate?.didTapShowThreadsButton()
+    }
+    
 }

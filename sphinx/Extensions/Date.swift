@@ -116,6 +116,22 @@ extension Date {
         }
     }
     
+    func getThreadDateTime() -> String {
+        let dateFormatter = DateFormatter()
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        if calendar.isDate(self, inSameDayAs: currentDate) {
+            return self.getStringDate(format: "h:mm a")
+        } else if calendar.isDate(self, equalTo: currentDate, toGranularity: .year) {
+            dateFormatter.dateFormat = "MMMM d 'at' h:mm a"
+            return dateFormatter.string(from: self)
+        } else {
+            dateFormatter.dateFormat = "MMMM d yyyy 'at' h:mm a"
+            return dateFormatter.string(from: self)
+        }
+    }
+    
     public func getLastMessageDateFormat() -> String {
         let todayDay = Date().dayOfYear
         let dateDay = self.dayOfYear

@@ -33,6 +33,7 @@
                 <outlet property="keyLoadingWheel" destination="8t1-dd-q25" id="lOd-Zb-nDx"/>
                 <outlet property="lockSign" destination="tp6-3C-IrP" id="Cwe-47-jWV"/>
                 <outlet property="nameLabel" destination="6In-3T-Qql" id="ktG-68-lek"/>
+                <outlet property="optionsButton" destination="ahL-K7-tna" id="Xmm-DE-V0F"/>
                 <outlet property="profileImageView" destination="FzU-vr-ru9" id="VV3-FJ-SPa"/>
                 <outlet property="volumeButton" destination="6uG-XH-Ptg" id="77y-CI-Nlm"/>
                 <outlet property="webAppButton" destination="Mt6-rI-5Dn" id="zIa-gv-EgZ"/>

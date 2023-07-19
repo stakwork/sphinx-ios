@@ -40,6 +40,8 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var volumeButton: UIButton!
     @IBOutlet weak var webAppButton: UIButton!
     @IBOutlet weak var contributionsContainer: UIStackView!
+    @IBOutlet weak var optionsButton: UIButton!
+    
     
     var isForShowAllThreads:Bool = false
     
@@ -114,10 +116,17 @@ class ChatHeaderView: UIView {
             forceKeysExchange(contactId: contact.id)
         }
         
-        lockSign.isHidden = isForShowAllThreads
-        webAppButton.isHidden = isForShowAllThreads
-        boltSign.isHidden = isForShowAllThreads
-        volumeButton.isHidden = isForShowAllThreads
+        
+        hideForShowAllThreads(view: optionsButton)
+        hideForShowAllThreads(view: imageContainer)
+        hideForShowAllThreads(view: lockSign)
+        hideForShowAllThreads(view: boltSign)
+        hideForShowAllThreads(view: webAppButton)
+        hideForShowAllThreads(view: volumeButton)
+    }
+    
+    func hideForShowAllThreads(view:UIView){
+        view.isHidden = (isForShowAllThreads) ? true : view.isHidden
     }
     
     func getHeaderName() -> String {

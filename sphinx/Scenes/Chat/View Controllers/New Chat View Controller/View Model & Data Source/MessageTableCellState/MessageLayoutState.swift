@@ -101,6 +101,7 @@ struct BubbleMessageLayoutState {
         var senderColor: UIColor?
         var sendDate: Date?
         var isOriginalMessage:Bool?
+        var senderUUID:Int
         
         init(
             previewText:String?,
@@ -108,7 +109,8 @@ struct BubbleMessageLayoutState {
             senderAlias: String?,
             senderColor: UIColor?,
             sendDate:Date?,
-            isOriginalMessage:Bool
+            isOriginalMessage:Bool,
+            senderUUID:Int
         ) {
             self.previewText = previewText
             self.senderPic = senderPic
@@ -116,6 +118,7 @@ struct BubbleMessageLayoutState {
             self.senderColor = senderColor
             self.sendDate = sendDate
             self.isOriginalMessage = isOriginalMessage
+            self.senderUUID = senderUUID
         }
     }
     

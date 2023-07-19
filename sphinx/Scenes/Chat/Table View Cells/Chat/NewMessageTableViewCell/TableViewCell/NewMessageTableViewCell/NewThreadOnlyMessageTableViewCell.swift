@@ -92,9 +92,7 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                 avatarIconStackView.sendSubviewToBack(newImageView)
             }
             if let firstMessage = threadMessages.filter({$0.isOriginalMessage == true}).first{
-                firstResponseLabel.text = firstMessage.sendDate?.getLastMessageDateFormat()
-                let ti :TimeInterval = 1626369200
-                firstResponseLabel.text = Date(timeIntervalSince1970: ti).getThreadDateTime()
+                firstResponseLabel.text = firstMessage.sendDate?.getThreadDateTime()
                 contactAliasLabel.text = firstMessage.senderAlias
                 senderAvatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
                 senderAvatarImageView.contentMode = .scaleAspectFill

@@ -388,6 +388,7 @@
 "delete.message" = "Eliminar Mensaje";
 "show.thread" = "Mostrar Tema";
 "threads" = "Temas";
+"thread" = "Tema";
 "pin.message" = "Fijar Mensaje";
 "unpin.message" = "Remover Fijado";
 "message.pinned" = "Mensaje Fijado";

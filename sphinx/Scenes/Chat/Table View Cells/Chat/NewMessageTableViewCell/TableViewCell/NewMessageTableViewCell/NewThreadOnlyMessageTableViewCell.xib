@@ -63,14 +63,14 @@
                         <color key="textColor" name="SecondaryText"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ucE-Sh-N7E">
-                        <rect key="frame" x="60" y="108" width="213" height="16"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="ucE-Sh-N7E">
+                        <rect key="frame" x="60" y="108" width="203" height="16"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="-8" translatesAutoresizingMaskIntoConstraints="NO" id="XN9-nB-1e6">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="16"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="4 replies" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOz-Zw-gN5">
-                                <rect key="frame" x="66" y="0.0" width="50" height="16"/>
+                                <rect key="frame" x="61" y="0.0" width="50" height="16"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="H6d-x0-dLa"/>
@@ -81,7 +81,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="10 min" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hmu-gv-p3C">
-                                <rect key="frame" x="132" y="0.0" width="81" height="16"/>
+                                <rect key="frame" x="122" y="0.0" width="81" height="16"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="81" id="l9Z-07-z1Q"/>

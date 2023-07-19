@@ -107,7 +107,7 @@ class ChatHeaderView: UIView {
     }
     
     func setChatInfo() {
-        nameLabel.text = isForShowAllThreads ? "threads".localized : getHeaderName() 
+        nameLabel.text = isForShowAllThreads ? ("threads".localized) : (threadUUID != nil ? "thread".localized : getHeaderName())
         
         let isEncrypted = (chat?.isEncrypted() ?? contact?.hasEncryptionKey()) ?? false
         lockSign.text = isEncrypted ? "lock" : "lock_open"
@@ -121,8 +121,6 @@ class ChatHeaderView: UIView {
             forceKeysExchange(contactId: contact.id)
         }
         
-        (threadUUID != nil) ? (showThreadsButton.isHidden = true) : ()
-        
         hideForShowAllThreads(view: imageContainer)
         hideForShowAllThreads(view: lockSign)
         hideForShowAllThreads(view: boltSign)
@@ -132,7 +130,7 @@ class ChatHeaderView: UIView {
     }
     
     func hideForShowAllThreads(view:UIView){
-        view.isHidden = (isForShowAllThreads) ? true : view.isHidden
+        view.isHidden = (isForShowAllThreads || threadUUID != nil) ? true : view.isHidden
     }
     
     func getHeaderName() -> String {

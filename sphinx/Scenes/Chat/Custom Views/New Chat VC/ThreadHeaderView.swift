@@ -14,6 +14,7 @@ class ThreadHeaderView : UIView{
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var firstMessageMessageContentLabel: UILabel!
+    @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
     
     let kHeightOffset = 116.0
@@ -36,14 +37,19 @@ class ThreadHeaderView : UIView{
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        contentView.backgroundColor = .green
-        firstMessageMessageContentLabel.backgroundColor = .red
+//        contentView.backgroundColor = .green
+//        firstMessageMessageContentLabel.backgroundColor = .red
     }
     
-    func configureWith(message:TransactionMessage){
-        firstMessageMessageContentLabel.text = message.messageContent
-        avatarImageView.sd_setImage(with: URL(string: message.senderPic ?? ""))
-        avatarImageView.makeCircular()
+    func configureWith(state:MessageTableCellState){
+        var stateCopy = state
+        if let firstMessage = stateCopy.threadMessageArray?.threadMessages.filter({$0.isOriginalMessage == true}).first{
+            firstMessageMessageContentLabel.text = firstMessage.previewText
+            avatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
+            avatarImageView.makeCircular()
+            imageContainerView.makeCircular()
+            avatarImageView.contentMode = .scaleAspectFill
+        }
     }
     
     func calculateViewHeight()->CGFloat?{
@@ -67,7 +73,8 @@ class ThreadHeaderView : UIView{
         let numLines = calculateNumberOfLines(text: labelText, fontSize: firstMessageMessageContentLabel.font.pointSize, lineSpacing: lineSpacing, width: width)
         var height = kHeightOffset + (CGFloat(numLines) * firstMessageMessageContentLabel.font.pointSize)
         if numLines >= 5{
-            let height = kHeightOffset + (CGFloat(5) * firstMessageMessageContentLabel.font.pointSize)
+            height = kHeightOffset + (CGFloat(5) * firstMessageMessageContentLabel.font.pointSize)
+            firstMessageMessageContentLabel.lineBreakMode = .byTruncatingTail
             //TODO: show more button should be visible
         }
         

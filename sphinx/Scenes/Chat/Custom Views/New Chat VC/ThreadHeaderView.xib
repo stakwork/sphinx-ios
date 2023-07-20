@@ -20,6 +20,7 @@
                 <outlet property="avatarImageView" destination="fKt-aZ-4f3" id="NUQ-dy-gQg"/>
                 <outlet property="contentView" destination="sqS-M2-rAJ" id="3QL-5U-sr7"/>
                 <outlet property="firstMessageMessageContentLabel" destination="8kj-a0-Pez" id="fId-N6-n19"/>
+                <outlet property="imageContainerView" destination="hEv-zz-OA2" id="cXZ-U0-6b5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

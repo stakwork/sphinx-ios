@@ -210,9 +210,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight - self.kThreadFirstMessageHeaderHeight
                 
             }
-            
-            
-            self.threadHeaderView.backgroundColor = .magenta
+            self.threadHeaderView.delegate = self
             self.view.bringSubviewToFront(self.threadHeaderView)
             self.view.layoutIfNeeded()
         }

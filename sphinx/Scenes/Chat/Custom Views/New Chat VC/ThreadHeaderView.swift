@@ -10,13 +10,23 @@ import Foundation
 import UIKit
 
 
+protocol ThreadHeaderViewDelegate : NSObject{
+    func didTapShowMore()
+    func didTapTextField()
+}
+
 class ThreadHeaderView : UIView{
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var firstMessageMessageContentLabel: UILabel!
+    @IBOutlet weak var senderNameLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var showMoreLabel: UILabel!
     
+    var delegate : ThreadHeaderViewDelegate? = nil
+    var isExpanded : Bool = false
     let kHeightOffset = 116.0
     
     override init(frame: CGRect) {
@@ -37,14 +47,14 @@ class ThreadHeaderView : UIView{
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        contentView.backgroundColor = .green
-//        firstMessageMessageContentLabel.backgroundColor = .red
     }
     
     func configureWith(state:MessageTableCellState){
         var stateCopy = state
         if let firstMessage = stateCopy.threadMessageArray?.threadMessages.filter({$0.isOriginalMessage == true}).first{
             firstMessageMessageContentLabel.text = firstMessage.previewText
+            senderNameLabel.text = firstMessage.senderAlias
+            timestampLabel.text = firstMessage.sendDate?.getThreadDateTime()
             avatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
             avatarImageView.makeCircular()
             imageContainerView.makeCircular()
@@ -72,10 +82,18 @@ class ThreadHeaderView : UIView{
         let width = firstMessageMessageContentLabel.frame.width
         let numLines = calculateNumberOfLines(text: labelText, fontSize: firstMessageMessageContentLabel.font.pointSize, lineSpacing: lineSpacing, width: width)
         var height = kHeightOffset + (CGFloat(numLines) * firstMessageMessageContentLabel.font.pointSize)
-        if numLines >= 5{
+        if numLines >= 5 && isExpanded == false{
             height = kHeightOffset + (CGFloat(5) * firstMessageMessageContentLabel.font.pointSize)
             firstMessageMessageContentLabel.lineBreakMode = .byTruncatingTail
-            //TODO: show more button should be visible
+            showMoreLabel.isHidden = false
+            showMoreLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShowMoreTouched)))
+            showMoreLabel.isUserInteractionEnabled = true
+            firstMessageMessageContentLabel.isUserInteractionEnabled = false
+        }
+        else{
+            showMoreLabel.isHidden = true
+            firstMessageMessageContentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTextViewTouched)))
+            firstMessageMessageContentLabel.isUserInteractionEnabled = true
         }
         
         return ceil(height)
@@ -98,6 +116,14 @@ class ThreadHeaderView : UIView{
         
         let numberOfLines = Int(ceil(boundingRect.height / (fontSize + lineSpacing)))
         return numberOfLines
+    }
+    
+    @objc func handleShowMoreTouched(){
+        delegate?.didTapShowMore()
+    }
+    
+    @objc func handleTextViewTouched(){
+        delegate?.didTapTextField()
     }
     
 }

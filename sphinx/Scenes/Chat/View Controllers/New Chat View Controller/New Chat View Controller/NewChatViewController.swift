@@ -27,7 +27,9 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var threadHeaderView: ThreadHeaderView!
     @IBOutlet weak var threadHeaderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var chatTableHeaderHeightConstraint: NSLayoutConstraint!
-    let kThreadFirstMessageHeaderHeight : CGFloat = 170.0
+    
+    let kThreadFirstMessageHeaderHeight : CGFloat = 150.0
+    let kDefaultChatTableHeight : CGFloat = 691.0
     
     var contact: UserContact?
     var chat: Chat?
@@ -192,11 +194,23 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             guard let threadUUID = self.threadUUID,
             let firstThreadMessage = self.chatTableDataSource?.messagesArray.filter({$0.uuid == threadUUID}).first
             else{
+                self.bottomView.isHidden = self.isForShowAllThreads
+                self.chatTableHeaderHeightConstraint.constant += (self.isForShowAllThreads) ? self.bottomView.frame.height : 0.0
                 return
             }
             self.threadHeaderView.configureWith(message: firstThreadMessage)
-            self.threadHeaderViewHeightConstraint.constant =  self.kThreadFirstMessageHeaderHeight
-            self.chatTableViewHeightConstraint.constant -=  self.kThreadFirstMessageHeaderHeight
+            
+            if let messageHeight = self.threadHeaderView.calculateViewHeight(){
+                self.threadHeaderViewHeightConstraint.constant =  messageHeight
+                self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight -  messageHeight
+            }
+            else{
+                self.threadHeaderViewHeightConstraint.constant =  self.kThreadFirstMessageHeaderHeight
+                self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight - self.kThreadFirstMessageHeaderHeight
+                
+            }
+            
+            
             self.threadHeaderView.backgroundColor = .magenta
             self.view.bringSubviewToFront(self.threadHeaderView)
             self.view.layoutIfNeeded()

@@ -27,7 +27,6 @@ class ThreadHeaderView : UIView{
     
     var delegate : ThreadHeaderViewDelegate? = nil
     var isExpanded : Bool = false
-    let kHeightOffset = 116.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +48,11 @@ class ThreadHeaderView : UIView{
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
-    func configureWith(state:MessageTableCellState){
+    func configureWith(
+        state:MessageTableCellState,
+        delegate:ThreadHeaderViewDelegate
+    ){
+        self.delegate = delegate
         var stateCopy = state
         if let firstMessage = stateCopy.threadMessageArray?.threadMessages.filter({$0.isOriginalMessage == true}).first{
             firstMessageMessageContentLabel.backgroundColor = contentView.backgroundColor
@@ -68,6 +71,9 @@ class ThreadHeaderView : UIView{
     func adjustNumberOfLines(max:Int=5){
         if(isExpanded){
             firstMessageMessageContentLabel.numberOfLines = 0
+            showMoreLabel.isHidden = true
+            firstMessageMessageContentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTextViewTouched)))
+            firstMessageMessageContentLabel.isUserInteractionEnabled = true
             return
         }
         guard let labelText = firstMessageMessageContentLabel.text
@@ -78,42 +84,14 @@ class ThreadHeaderView : UIView{
         let lineSpacing : CGFloat = 5.0
         let numLines = calculateNumberOfLines(text: labelText, fontSize: firstMessageMessageContentLabel.font.pointSize, lineSpacing: lineSpacing, width: width)
         firstMessageMessageContentLabel.numberOfLines = min(numLines,max)
-    }
-    
-    func calculateViewHeight()->CGFloat?{
-        guard let height = self.calculateTextHeight(lines: 2, lineSpacing: 5.0) else {
-            return nil
-        }
         
-        let offsetHeight = avatarImageView.frame.maxY + 28.0
-        
-        return height + offsetHeight
-    }
-    
-    
-    func calculateTextHeight(lines: Int, lineSpacing: CGFloat) -> CGFloat? {
-        guard let labelText = firstMessageMessageContentLabel.text
-        else{
-            return nil
-        }
-        let width = firstMessageMessageContentLabel.frame.width
-        let numLines = calculateNumberOfLines(text: labelText, fontSize: firstMessageMessageContentLabel.font.pointSize, lineSpacing: lineSpacing, width: width)
-        var height = kHeightOffset + (CGFloat(numLines) * firstMessageMessageContentLabel.font.pointSize)
         if numLines >= 5 && isExpanded == false{
-            height = kHeightOffset + (CGFloat(5) * firstMessageMessageContentLabel.font.pointSize)
             firstMessageMessageContentLabel.lineBreakMode = .byTruncatingTail
             showMoreLabel.isHidden = false
             showMoreLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShowMoreTouched)))
             showMoreLabel.isUserInteractionEnabled = true
             firstMessageMessageContentLabel.isUserInteractionEnabled = false
         }
-        else{
-            showMoreLabel.isHidden = true
-            firstMessageMessageContentLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTextViewTouched)))
-            firstMessageMessageContentLabel.isUserInteractionEnabled = true
-        }
-        
-        return ceil(height)
     }
     
     func calculateNumberOfLines(text: String, fontSize: CGFloat, lineSpacing: CGFloat, width: CGFloat) -> Int {

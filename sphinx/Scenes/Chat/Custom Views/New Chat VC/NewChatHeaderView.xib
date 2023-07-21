@@ -40,7 +40,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
                                     <color key="backgroundColor" name="HeaderBG"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" priority="750" constant="150" id="4KM-fc-wtN"/>
+                                        <constraint firstAttribute="height" priority="750" constant="225" id="4KM-fc-wtN"/>
                                     </constraints>
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yU6-b4-LJg" customClass="PinnedMessageView" customModule="sphinx" customModuleProvider="target">

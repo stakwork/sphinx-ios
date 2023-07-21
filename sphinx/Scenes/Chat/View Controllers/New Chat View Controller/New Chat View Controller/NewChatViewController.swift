@@ -194,25 +194,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 self.chatTableHeaderHeightConstraint.constant += (self.isForShowAllThreads) ? self.bottomView.frame.height : 0.0
                 return
             }
-            self.headerView.threadHeaderView.configureWith(state: firstMessageState.1)
-            self.headerView.threadHeaderView.delegate = self
+            self.headerView.threadHeaderView.configureWith(state: firstMessageState.1, delegate: self)
             self.headerView.threadHeaderView.isHidden = false
-//            self.threadHeaderView.configureWith(state: firstMessageState.1)
-//            UIView.animate(withDuration: animationDuration, delay: 0.0, animations: {
-//                if let messageHeight = self.threadHeaderView.calculateViewHeight(){
-//                    self.threadHeaderViewHeightConstraint.constant =  messageHeight
-//                    self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight -  messageHeight
-//                }
-//                else{
-//                    self.threadHeaderViewHeightConstraint.constant =  self.kThreadFirstMessageHeaderHeight
-//                    self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight - self.kThreadFirstMessageHeaderHeight
-//
-//                }
-//            })
-//
-//            self.threadHeaderView.delegate = self
-//            self.view.bringSubviewToFront(self.threadHeaderView)
-//            self.view.layoutIfNeeded()
         }
     }
     

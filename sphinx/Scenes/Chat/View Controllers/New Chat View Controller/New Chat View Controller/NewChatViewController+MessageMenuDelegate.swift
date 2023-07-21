@@ -49,16 +49,16 @@ extension NewChatViewController : MessageOptionsVCDelegate {
 
 extension NewChatViewController: ThreadHeaderViewDelegate{
     func didTapShowMore() {
-        threadHeaderView.isExpanded = true
+        headerView.threadHeaderView.isExpanded = true
         setupThreadHeaderHeight()
     }
     
     func didTapTextField() {
-        threadHeaderView.isExpanded = false
+        headerView.threadHeaderView.isExpanded = false
         setupThreadHeaderHeight()
     }
     
     func setupThreadHeaderHeight(){
-        layoutThreadHeaderView()
+        layoutThreadHeaderView(animationDuration: 0.2)
     }
 }

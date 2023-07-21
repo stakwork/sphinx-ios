@@ -17,6 +17,7 @@ class NewChatHeaderView: UIView {
     @IBOutlet weak var normalModeStackView: UIStackView!
     @IBOutlet weak var chatHeaderView: ChatHeaderView!
     @IBOutlet weak var pinnedMessageView: PinnedMessageView!
+    @IBOutlet weak var threadHeaderView: ThreadHeaderView!
     @IBOutlet weak var chatSearchView: ChatSearchTextFieldView!
     
     override init(frame: CGRect) {

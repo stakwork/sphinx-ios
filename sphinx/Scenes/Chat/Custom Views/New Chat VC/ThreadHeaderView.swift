@@ -47,11 +47,15 @@ class ThreadHeaderView : UIView{
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        //contentView.backgroundColor = .green
+//        firstMessageMessageContentLabel.backgroundColor = .red
     }
     
     func configureWith(state:MessageTableCellState){
         var stateCopy = state
         if let firstMessage = stateCopy.threadMessageArray?.threadMessages.filter({$0.isOriginalMessage == true}).first{
+            firstMessageMessageContentLabel.isHidden = false
+            firstMessageMessageContentLabel.backgroundColor = .red
             firstMessageMessageContentLabel.text = firstMessage.previewText
             senderNameLabel.text = firstMessage.senderAlias
             timestampLabel.text = firstMessage.sendDate?.getThreadDateTime()
@@ -74,7 +78,6 @@ class ThreadHeaderView : UIView{
     
     
     func calculateTextHeight(lines: Int, lineSpacing: CGFloat) -> CGFloat? {
-        
         guard let labelText = firstMessageMessageContentLabel.text
         else{
             return nil

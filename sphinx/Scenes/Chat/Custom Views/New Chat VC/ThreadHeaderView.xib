@@ -42,15 +42,18 @@
                         <constraint firstAttribute="height" constant="36" id="fE9-lP-ojv"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kj-a0-Pez">
-                    <rect key="frame" x="14" y="116" width="380" height="158"/>
-                    <mutableString key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis simos ducimus qui blanditiis prae sentium volu ptatum deleniti. Character Counter is a 100% free online character count calculator that's simple to use. Sometimes users prefer simplicity over all of the detailed writing information Word Counter provides, and this is exactly what this tool offers. It displays character count and word count which is often the only information a person needs to know about their writing. Best of all, you rece ...</mutableString>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kj-a0-Pez">
+                    <rect key="frame" x="14" y="116" width="380" height="164"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="164" id="evk-Nb-Eyh"/>
+                    </constraints>
+                    <string key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis simos ducimus qui blanditiis prae sentium volu ptatum deleniti. Character Counter is a 100% free online character count calculator that's simple to use. Sometimes users prefer simplicity over all of the detailed writing information Word Counter provides, and this is exactly what this tool offers. It displays character count and word count which is often the only information a person needs to know about their writing. Best of all, you rece ...</string>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                     <color key="textColor" name="TextMessages"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHOW MORE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEA-hH-qXC">
-                    <rect key="frame" x="323" y="250" width="71" height="24"/>
+                    <rect key="frame" x="323" y="256" width="71" height="24"/>
                     <color key="backgroundColor" name="HeaderBG"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="71" id="doj-P3-qv3"/>
@@ -94,13 +97,13 @@
             <constraints>
                 <constraint firstItem="XL4-fn-Gq7" firstAttribute="top" secondItem="hEv-zz-OA2" secondAttribute="top" constant="-8" id="7dk-sG-orE"/>
                 <constraint firstItem="UEA-hH-qXC" firstAttribute="bottom" secondItem="8kj-a0-Pez" secondAttribute="bottom" id="BgL-mc-XbO"/>
-                <constraint firstItem="8kj-a0-Pez" firstAttribute="top" secondItem="hEv-zz-OA2" secondAttribute="bottom" constant="13" id="Dyu-0j-OVP"/>
                 <constraint firstItem="fKt-aZ-4f3" firstAttribute="top" secondItem="XL4-fn-Gq7" secondAttribute="top" constant="8" id="Sbz-A1-gMZ"/>
                 <constraint firstItem="J6H-eN-Y8n" firstAttribute="trailing" secondItem="dKq-lH-jNS" secondAttribute="trailing" id="W5Q-as-Z4s"/>
                 <constraint firstItem="fKt-aZ-4f3" firstAttribute="leading" secondItem="XL4-fn-Gq7" secondAttribute="leading" constant="14" id="dmA-4C-FLc"/>
                 <constraint firstItem="8kj-a0-Pez" firstAttribute="leading" secondItem="hEv-zz-OA2" secondAttribute="leading" id="eHG-Ui-7dn"/>
-                <constraint firstItem="XL4-fn-Gq7" firstAttribute="bottom" secondItem="8kj-a0-Pez" secondAttribute="bottom" constant="28" id="eJU-HQ-JYl"/>
+                <constraint firstItem="XL4-fn-Gq7" firstAttribute="bottom" secondItem="8kj-a0-Pez" secondAttribute="bottom" constant="22" id="eJU-HQ-JYl"/>
                 <constraint firstItem="hEv-zz-OA2" firstAttribute="leading" secondItem="XL4-fn-Gq7" secondAttribute="leading" constant="14" id="emJ-Ne-oOw"/>
+                <constraint firstItem="8kj-a0-Pez" firstAttribute="top" secondItem="XL4-fn-Gq7" secondAttribute="top" constant="57" id="fsG-J1-gkJ"/>
                 <constraint firstItem="8kj-a0-Pez" firstAttribute="centerX" secondItem="XL4-fn-Gq7" secondAttribute="centerX" id="iEz-xe-maV"/>
                 <constraint firstItem="J6H-eN-Y8n" firstAttribute="leading" secondItem="dKq-lH-jNS" secondAttribute="leading" id="iUB-af-wXe"/>
                 <constraint firstItem="dKq-lH-jNS" firstAttribute="top" secondItem="fKt-aZ-4f3" secondAttribute="top" constant="7" id="kPY-az-7rB"/>

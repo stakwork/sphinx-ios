@@ -136,7 +136,8 @@ extension NewChatViewModel {
             type: messageType,
             text: text,
             botAmount: botAmount,
-            replyingMessage: replyingTo
+            replyingMessage: replyingTo,
+            threadUUID: provisionalMessage?.threadUUID
         ) else {
             completion(false)
             return

@@ -141,6 +141,7 @@ public class TransactionMessage: NSManagedObject {
         let receiver = m["contact_id"].intValue
         let uuid:String? = m["uuid"].string
         let replyUUID:String? = m["reply_uuid"].string
+        let threadUUID:String? = m["thread_uuid"].string
         
         var amount:NSDecimalNumber? = nil
         if let a = m["amount"].double, abs(a) > 0 {
@@ -194,6 +195,7 @@ public class TransactionMessage: NSManagedObject {
             id: id,
             uuid: uuid,
             replyUUID: replyUUID,
+            threadUUID: threadUUID,
             type: type,
             sender: sender,
             senderAlias: senderAlias,
@@ -240,6 +242,7 @@ public class TransactionMessage: NSManagedObject {
         id: Int,
         uuid: String? = nil,
         replyUUID: String? = nil,
+        threadUUID:String?=nil,
         type: Int,
         sender: Int,
         senderAlias: String?,

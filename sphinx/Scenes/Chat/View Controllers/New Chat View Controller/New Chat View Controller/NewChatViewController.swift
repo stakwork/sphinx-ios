@@ -23,9 +23,6 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     @IBOutlet weak var mentionsAutocompleteTableView: UITableView!
     @IBOutlet weak var webAppContainerView: UIView!
-    
-    @IBOutlet weak var threadHeaderView: ThreadHeaderView!
-    @IBOutlet weak var threadHeaderViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var chatTableHeaderHeightConstraint: NSLayoutConstraint!
     
     let kThreadFirstMessageHeaderHeight : CGFloat = 150.0
@@ -189,7 +186,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         
     }
     
-    func layoutThreadHeaderView(){
+    func layoutThreadHeaderView(animationDuration:TimeInterval=0.0){
         DispatchQueue.main.async {
             guard let threadUUID = self.threadUUID,
             let firstThreadMessage = self.chatTableDataSource?.messagesArray.filter({$0.uuid == threadUUID}).first,
@@ -199,20 +196,25 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 self.chatTableHeaderHeightConstraint.constant += (self.isForShowAllThreads) ? self.bottomView.frame.height : 0.0
                 return
             }
-            self.threadHeaderView.configureWith(state: firstMessageState.1)
-            
-            if let messageHeight = self.threadHeaderView.calculateViewHeight(){
-                self.threadHeaderViewHeightConstraint.constant =  messageHeight
-                self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight -  messageHeight
-            }
-            else{
-                self.threadHeaderViewHeightConstraint.constant =  self.kThreadFirstMessageHeaderHeight
-                self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight - self.kThreadFirstMessageHeaderHeight
-                
-            }
-            self.threadHeaderView.delegate = self
-            self.view.bringSubviewToFront(self.threadHeaderView)
-            self.view.layoutIfNeeded()
+            self.headerView.threadHeaderView.configureWith(state: firstMessageState.1)
+            self.headerView.threadHeaderView.delegate = self
+            self.headerView.threadHeaderView.isHidden = false
+//            self.threadHeaderView.configureWith(state: firstMessageState.1)
+//            UIView.animate(withDuration: animationDuration, delay: 0.0, animations: {
+//                if let messageHeight = self.threadHeaderView.calculateViewHeight(){
+//                    self.threadHeaderViewHeightConstraint.constant =  messageHeight
+//                    self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight -  messageHeight
+//                }
+//                else{
+//                    self.threadHeaderViewHeightConstraint.constant =  self.kThreadFirstMessageHeaderHeight
+//                    self.chatTableViewHeightConstraint.constant = self.kDefaultChatTableHeight - self.kThreadFirstMessageHeaderHeight
+//
+//                }
+//            })
+//
+//            self.threadHeaderView.delegate = self
+//            self.view.bringSubviewToFront(self.threadHeaderView)
+//            self.view.layoutIfNeeded()
         }
     }
     

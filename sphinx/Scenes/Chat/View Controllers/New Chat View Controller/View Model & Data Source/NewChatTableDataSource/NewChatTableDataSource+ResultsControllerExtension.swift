@@ -121,12 +121,15 @@ extension NewChatTableDataSource {
                 indexPath: indexPath
             )
             
-            //@Tom this is where we can determine if it is a thread
-            if(dataSourceItem.threadMessages.count > 1){
+            //@Tom this is where we can determine if it is a thread. It will only run if we are looking at the original chat
+            if self.threadUUID == nil && self.isForShowAllThreads == false,
+               (dataSourceItem.threadMessages.count > 1){
                 cell?.contentView.backgroundColor = .red
             }
             
-            cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+            if self.isForShowAllThreads == false{
+                cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+            }
             
             return (cell as? UITableViewCell) ?? UITableViewCell()
         }
@@ -198,7 +201,25 @@ extension NewChatTableDataSource {
             }
         }
         else{//we're a thread specific chat
-            filteredThreadMessages = messages
+            if let firstMessage = messages.filter({$0.uuid == threadUUID}).first,
+               let uuid = firstMessage.uuid,
+               let threadMessages = threadMessagesMap[uuid],
+               let chat = firstMessage.chat{
+                firstThreadMessage = firstMessage
+//                let firstMessageState = MessageTableCellState(
+//                    chat: chat,
+//                    owner: owner,
+//                    contact: contact,
+//                    tribeAdmin: admin,
+//                    separatorDate: nil,
+//                    invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
+//                )
+//
+//                let senderInfo: (UIColor, String, String?) = firstMessageState.getSenderInfo(message: firstMessage)
+//                    BubbleMessageLayoutState.ThreadMessage(previewText: firstMessage.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0, sendDate: firstMessage.date, isOriginalMessage: true,senderUUID: firstMessage.senderId,threadUUID: firstMessage.uuid)
+                
+            }
+            filteredThreadMessages = messages.filter({$0.uuid != threadUUID})
         }
         
 

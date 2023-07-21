@@ -186,15 +186,14 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     func layoutThreadHeaderView(animationDuration:TimeInterval=0.0){
         DispatchQueue.main.async {
-            guard let threadUUID = self.threadUUID,
-            let firstThreadMessage = self.chatTableDataSource?.messagesArray.filter({$0.uuid == threadUUID}).first,
-            let firstMessageState = self.chatTableDataSource?.getTableCellStateFor(messageId: firstThreadMessage.id)
+            guard let _ = self.threadUUID,
+                let firstThreadMessage = self.chatTableDataSource?.firstThreadMessage
             else{
                 self.bottomView.isHidden = self.isForShowAllThreads
                 self.chatTableHeaderHeightConstraint.constant += (self.isForShowAllThreads) ? self.bottomView.frame.height : 0.0
                 return
             }
-            self.headerView.threadHeaderView.configureWith(state: firstMessageState.1, delegate: self)
+            self.headerView.threadHeaderView.configureWith(firstMessage: firstThreadMessage, delegate: self)
             self.headerView.threadHeaderView.isHidden = false
         }
     }

@@ -153,8 +153,13 @@ class NewChatTableDataSource : NSObject {
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
-        tableView.contentInset.top = Constants.kMargin
-        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        if(isForShowAllThreads == false){
+            tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+            tableView.contentInset.top = Constants.kMargin
+        }
+        else{
+            //tableView.scrollToBottom()
+        }
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         

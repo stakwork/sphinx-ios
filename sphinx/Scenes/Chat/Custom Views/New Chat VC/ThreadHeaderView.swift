@@ -47,15 +47,13 @@ class ThreadHeaderView : UIView{
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        //contentView.backgroundColor = .green
-//        firstMessageMessageContentLabel.backgroundColor = .red
     }
     
     func configureWith(state:MessageTableCellState){
         var stateCopy = state
         if let firstMessage = stateCopy.threadMessageArray?.threadMessages.filter({$0.isOriginalMessage == true}).first{
+            firstMessageMessageContentLabel.backgroundColor = contentView.backgroundColor
             firstMessageMessageContentLabel.isHidden = false
-            firstMessageMessageContentLabel.backgroundColor = .red
             firstMessageMessageContentLabel.text = firstMessage.previewText
             senderNameLabel.text = firstMessage.senderAlias
             timestampLabel.text = firstMessage.sendDate?.getThreadDateTime()
@@ -63,7 +61,23 @@ class ThreadHeaderView : UIView{
             avatarImageView.makeCircular()
             imageContainerView.makeCircular()
             avatarImageView.contentMode = .scaleAspectFill
+            adjustNumberOfLines()
         }
+    }
+    
+    func adjustNumberOfLines(max:Int=5){
+        if(isExpanded){
+            firstMessageMessageContentLabel.numberOfLines = 0
+            return
+        }
+        guard let labelText = firstMessageMessageContentLabel.text
+        else{
+            return
+        }
+        let width = firstMessageMessageContentLabel.frame.width
+        let lineSpacing : CGFloat = 5.0
+        let numLines = calculateNumberOfLines(text: labelText, fontSize: firstMessageMessageContentLabel.font.pointSize, lineSpacing: lineSpacing, width: width)
+        firstMessageMessageContentLabel.numberOfLines = min(numLines,max)
     }
     
     func calculateViewHeight()->CGFloat?{

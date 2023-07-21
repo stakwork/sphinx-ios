@@ -4,7 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -38,9 +38,9 @@
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJs-Uv-YIA" customClass="ThreadHeaderView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
-                                    <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                    <color key="backgroundColor" name="HeaderBG"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" priority="750" constant="50" id="4KM-fc-wtN"/>
+                                        <constraint firstAttribute="height" priority="750" constant="150" id="4KM-fc-wtN"/>
                                     </constraints>
                                 </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yU6-b4-LJg" customClass="PinnedMessageView" customModule="sphinx" customModuleProvider="target">
@@ -79,8 +79,8 @@
         </view>
     </objects>
     <resources>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

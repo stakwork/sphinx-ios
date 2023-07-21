@@ -24,9 +24,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var mentionsAutocompleteTableView: UITableView!
     @IBOutlet weak var webAppContainerView: UIView!
     @IBOutlet weak var chatTableHeaderHeightConstraint: NSLayoutConstraint!
-    
-    let kThreadFirstMessageHeaderHeight : CGFloat = 150.0
-    let kDefaultChatTableHeight : CGFloat = 691.0
+
     
     var contact: UserContact?
     var chat: Chat?

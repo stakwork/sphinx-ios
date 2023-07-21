@@ -22,6 +22,8 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     @IBOutlet weak var lastResponseLabel: UILabel!
     @IBOutlet weak var detailsStackView: UIStackView!
     @IBOutlet weak var avatarIconStackView: UIStackView!
+    @IBOutlet weak var initialsLabel : UILabel!
+    
     
     var delegate : NewThreadOnlyMessageTableViewCellDelegate? = nil
     var threadUUID:String? = nil
@@ -57,7 +59,10 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
         
         senderAvatarImageView.makeCircular()
         firstThreadMessageLabel.text = messageCellState.messageString
-                
+        
+        initialsLabel.layer.cornerRadius = initialsLabel.frame.size.height/2
+        initialsLabel.clipsToBounds = true
+        
         var cellState = messageCellState
         let maxNumAvatars = 6
         if let threadMessages = cellState.threadMessageArray?.threadMessages {
@@ -94,7 +99,18 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
             if let firstMessage = threadMessages.filter({$0.isOriginalMessage == true}).first{
                 firstResponseLabel.text = firstMessage.sendDate?.getThreadDateTime()
                 contactAliasLabel.text = firstMessage.senderAlias
-                senderAvatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
+                if let path = firstMessage.senderPic{
+                    let avatarURL = URL(string: path)
+                    senderAvatarImageView.sd_setImage(with: avatarURL)
+                    senderAvatarImageView.makeCircular()
+                }
+                else{
+                    senderAvatarImageView.isHidden = true
+                    initialsLabel.isHidden = false
+                    initialsLabel.backgroundColor = firstMessage.senderColor
+                    initialsLabel.textColor = UIColor.white
+                    initialsLabel.text = firstMessage.senderAlias?.getInitialsFromName()
+                }
                 senderAvatarImageView.contentMode = .scaleAspectFill
                 self.threadUUID = firstMessage.threadUUID
             }

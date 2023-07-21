@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
         <array key="Roboto-Medium.ttf">
             <string>Roboto-Medium</string>
         </array>
@@ -24,6 +27,7 @@
                 <outlet property="contentView" destination="sqS-M2-rAJ" id="3QL-5U-sr7"/>
                 <outlet property="firstMessageMessageContentLabel" destination="8kj-a0-Pez" id="fId-N6-n19"/>
                 <outlet property="imageContainerView" destination="hEv-zz-OA2" id="cXZ-U0-6b5"/>
+                <outlet property="initialsLabel" destination="bec-BI-ty2" id="iOv-Am-Vng"/>
                 <outlet property="senderNameLabel" destination="dKq-lH-jNS" id="12b-ym-Prx"/>
                 <outlet property="showMoreLabel" destination="UEA-hH-qXC" id="mlk-qc-hjt"/>
                 <outlet property="timestampLabel" destination="J6H-eN-Y8n" id="4TK-Rv-e5M"/>
@@ -36,10 +40,23 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hEv-zz-OA2">
                     <rect key="frame" x="14" y="67" width="36" height="36"/>
+                    <subviews>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bec-BI-ty2">
+                            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                            <color key="textColor" name="Body"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="bec-BI-ty2" secondAttribute="trailing" id="0uG-7B-9zQ"/>
                         <constraint firstAttribute="width" constant="36" id="4KX-Gd-cOh"/>
+                        <constraint firstItem="bec-BI-ty2" firstAttribute="leading" secondItem="hEv-zz-OA2" secondAttribute="leading" id="aN0-Ow-OWB"/>
+                        <constraint firstItem="bec-BI-ty2" firstAttribute="top" secondItem="hEv-zz-OA2" secondAttribute="top" id="f8I-p7-9XT"/>
                         <constraint firstAttribute="height" constant="36" id="fE9-lP-ojv"/>
+                        <constraint firstAttribute="bottom" secondItem="bec-BI-ty2" secondAttribute="bottom" id="hLM-dm-LyX"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8kj-a0-Pez">
@@ -116,6 +133,9 @@
         </view>
     </objects>
     <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

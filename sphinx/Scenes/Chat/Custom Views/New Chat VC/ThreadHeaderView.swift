@@ -24,6 +24,7 @@ class ThreadHeaderView : UIView{
     @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var showMoreLabel: UILabel!
+    @IBOutlet weak var initialsLabel: UILabel!
     
     var delegate : ThreadHeaderViewDelegate? = nil
     var isExpanded : Bool = false
@@ -45,6 +46,9 @@ class ThreadHeaderView : UIView{
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
+        initialsLabel.layer.cornerRadius = initialsLabel.frame.size.height/2
+        initialsLabel.clipsToBounds = true
+        
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
@@ -60,8 +64,18 @@ class ThreadHeaderView : UIView{
             firstMessageMessageContentLabel.text = firstMessage.previewText
             senderNameLabel.text = firstMessage.senderAlias
             timestampLabel.text = firstMessage.sendDate?.getThreadDateTime()
-            avatarImageView.sd_setImage(with: URL(string: firstMessage.senderPic ?? ""))
-            avatarImageView.makeCircular()
+            if let path = firstMessage.senderPic{
+                let avatarURL = URL(string: path)
+                avatarImageView.sd_setImage(with: avatarURL)
+                avatarImageView.makeCircular()
+            }
+            else{
+                initialsLabel.isHidden = false
+                initialsLabel.backgroundColor = firstMessage.senderColor
+                initialsLabel.textColor = UIColor.white
+                initialsLabel.text = firstMessage.senderAlias?.getInitialsFromName()
+            }
+            
             imageContainerView.makeCircular()
             avatarImageView.contentMode = .scaleAspectFill
             adjustNumberOfLines()

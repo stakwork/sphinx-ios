@@ -121,6 +121,11 @@ extension NewChatTableDataSource {
                 indexPath: indexPath
             )
             
+            //@Tom this is where we can determine if it is a thread
+            if(dataSourceItem.threadMessages.count > 1){
+                cell?.contentView.backgroundColor = .red
+            }
+            
             cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
             
             return (cell as? UITableViewCell) ?? UITableViewCell()

@@ -92,7 +92,7 @@ class NewChatTableDataSource : NSObject {
     var mediaCached: [Int: MessageTableCellState.MediaData] = [:]
     var botsWebViewData: [Int: MessageTableCellState.BotWebViewData] = [:]
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
-    var firstThreadMessage : TransactionMessage? = nil
+    var firstThreadMessageState : MessageTableCellState? = nil
     
     var searchingTerm: String? = nil
     var searchMatches: [(Int, MessageTableCellState)] = []

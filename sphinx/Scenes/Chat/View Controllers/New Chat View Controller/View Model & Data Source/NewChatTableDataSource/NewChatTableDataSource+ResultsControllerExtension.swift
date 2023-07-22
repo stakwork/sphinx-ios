@@ -201,29 +201,13 @@ extension NewChatTableDataSource {
             }
         }
         else{//we're a thread specific chat
-            if let firstMessage = messages.filter({$0.uuid == threadUUID}).first,
-               let uuid = firstMessage.uuid,
-               let threadMessages = threadMessagesMap[uuid],
-               let chat = firstMessage.chat{
-                firstThreadMessage = firstMessage
-//                let firstMessageState = MessageTableCellState(
-//                    chat: chat,
-//                    owner: owner,
-//                    contact: contact,
-//                    tribeAdmin: admin,
-//                    separatorDate: nil,
-//                    invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
-//                )
-//
-//                let senderInfo: (UIColor, String, String?) = firstMessageState.getSenderInfo(message: firstMessage)
-//                    BubbleMessageLayoutState.ThreadMessage(previewText: firstMessage.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0, sendDate: firstMessage.date, isOriginalMessage: true,senderUUID: firstMessage.senderId,threadUUID: firstMessage.uuid)
-                
-            }
-            filteredThreadMessages = messages.filter({$0.uuid != threadUUID})
+            filteredThreadMessages = messages
         }
         
 
         for (index, message) in filteredThreadMessages.enumerated() {
+            var isThreadSpecificChatFirstMessage : Bool = (message.uuid == threadUUID)
+            
             invoiceData = (
                 invoiceData.0 + ((message.isPayment() && message.isIncoming(ownerId: owner.id)) ? -1 : 0),
                 invoiceData.1 + ((message.isPayment() && message.isOutgoing(ownerId: owner.id)) ? -1 : 0)
@@ -236,7 +220,8 @@ extension NewChatTableDataSource {
                 groupingDate: &groupingDate
             )
             
-            if let separatorDate = bubbleStateAndDate.1 {
+            if let separatorDate = bubbleStateAndDate.1,
+               isThreadSpecificChatFirstMessage == false{
                 array.insert(
                     MessageTableCellState(
                         chat: chat,
@@ -276,8 +261,13 @@ extension NewChatTableDataSource {
                 linkWeb: linkWeb,
                 invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
             )
-            
-            array.insert(messageTableCellState, at: 0)
+            if(isThreadSpecificChatFirstMessage == false){
+                array.insert(messageTableCellState, at: 0)
+            }
+            else{
+                firstThreadMessageState = messageTableCellState
+                continue
+            }
             
             invoiceData = (
                 invoiceData.0 + ((message.isInvoice() && message.isPaid() && message.isOutgoing(ownerId: owner.id)) ? 1 : 0),

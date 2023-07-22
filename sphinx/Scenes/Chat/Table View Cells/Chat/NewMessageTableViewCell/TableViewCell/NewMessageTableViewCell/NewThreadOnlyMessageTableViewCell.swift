@@ -79,22 +79,40 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                     overflowSenderUUIDs.append(message.senderUUID)
                     continue
                 }
-                
                 shownSenderUUIDs.append(message.senderUUID)
-                let newImageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 23.0, height: 23.0))
-                //newImageView.image = #imageLiteral(resourceName: "bluecheckmark")
-                newImageView.sd_setImage(with: URL(string: message.senderPic ?? ""))
-                newImageView.contentMode = .scaleAspectFill
-                newImageView.makeCircular()
-                avatarIconStackView.insertArrangedSubview(newImageView, at: 0)
-                newImageView.translatesAutoresizingMaskIntoConstraints = false
-                NSLayoutConstraint.activate([
-                    newImageView.widthAnchor.constraint(equalToConstant: 23.0),
-                    newImageView.heightAnchor.constraint(equalToConstant: 23.0)
-                ])
-                newImageView.layer.borderColor = UIColor.Sphinx.Body.cgColor
-                newImageView.layer.borderWidth = 2.0
-                avatarIconStackView.sendSubviewToBack(newImageView)
+                let newView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 23.0, height: 23.0))
+                if let path = message.senderPic{
+                    let newImageView = UIImageView(frame: newView.frame)
+                    //newImageView.image = #imageLiteral(resourceName: "bluecheckmark")
+                    let url = URL(string: path)
+                    newImageView.sd_setImage(with: URL(string: path))
+                    newImageView.contentMode = .scaleAspectFill
+                    newImageView.makeCircular()
+                    newImageView.translatesAutoresizingMaskIntoConstraints = false
+                    NSLayoutConstraint.activate([
+                        newImageView.widthAnchor.constraint(equalToConstant: 23.0),
+                        newImageView.heightAnchor.constraint(equalToConstant: 23.0)
+                    ])
+                    newImageView.layer.borderColor = UIColor.Sphinx.Body.cgColor
+                    newImageView.layer.borderWidth = 2.0
+                    newView.addSubview(newImageView)
+                }
+                else{
+                    let newInitialsLabel = UILabel(frame: newView.frame)
+                    newInitialsLabel.layer.cornerRadius = initialsLabel.frame.size.height/2
+                    newInitialsLabel.clipsToBounds = true
+                    
+                    newInitialsLabel.backgroundColor = message.senderColor
+                    newInitialsLabel.textColor = UIColor.white
+                    newInitialsLabel.text = message.senderAlias?.getInitialsFromName()
+                    newInitialsLabel.textAlignment = .center
+                    newInitialsLabel.makeCircular()
+                    newInitialsLabel.font = UIFont(name: "Montserrat-Regular", size: replyCountLabel.font.pointSize)
+                    newView.addSubview(newInitialsLabel)
+                }
+                avatarIconStackView.insertArrangedSubview(newView, at: 0)
+                avatarIconStackView.sendSubviewToBack(newView)
+                
             }
             if let firstMessage = threadMessages.filter({$0.isOriginalMessage == true}).first{
                 firstResponseLabel.text = firstMessage.sendDate?.getThreadDateTime()

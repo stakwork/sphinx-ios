@@ -92,13 +92,15 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                     newImageView.contentMode = .scaleAspectFill
                     newImageView.makeCircular()
                     newImageView.translatesAutoresizingMaskIntoConstraints = false
-                    NSLayoutConstraint.activate([
-                        newImageView.widthAnchor.constraint(equalToConstant: 23.0),
-                        newImageView.heightAnchor.constraint(equalToConstant: 23.0)
-                    ])
                     newImageView.layer.borderColor = UIColor.Sphinx.Body.cgColor
                     newImageView.layer.borderWidth = 2.0
                     newView.addSubview(newImageView)
+                    
+                    NSLayoutConstraint.activate([
+                        newImageView.widthAnchor.constraint(equalToConstant: 23.0),
+                        newImageView.heightAnchor.constraint(equalToConstant: 23.0),
+                        newImageView.centerYAnchor.constraint(equalTo: newView.centerYAnchor)
+                    ])
                 }
                 else{
                     let newInitialsLabel = UILabel(frame: newView.frame)
@@ -112,6 +114,12 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                     newInitialsLabel.makeCircular()
                     newInitialsLabel.font = UIFont(name: "Montserrat-Regular", size: replyCountLabel.font.pointSize)
                     newView.addSubview(newInitialsLabel)
+                    
+                    NSLayoutConstraint.activate([
+                        newInitialsLabel.widthAnchor.constraint(equalToConstant: 23.0),
+                        newInitialsLabel.heightAnchor.constraint(equalToConstant: 23.0),
+                        newInitialsLabel.centerYAnchor.constraint(equalTo: newView.centerYAnchor)
+                    ])
                 }
                 avatarIconStackView.insertArrangedSubview(newView, at: 0)
                 avatarIconStackView.sendSubviewToBack(newView)

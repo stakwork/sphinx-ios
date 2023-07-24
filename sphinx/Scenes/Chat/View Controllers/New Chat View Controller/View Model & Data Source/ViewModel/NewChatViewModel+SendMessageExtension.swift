@@ -52,7 +52,6 @@ extension NewChatViewModel {
             messageText: messageText,
             type: type,
             botAmount: botAmount,
-            threadUUID: chatDataSource?.threadUUID,
             completion: completion
         )
     }
@@ -61,14 +60,12 @@ extension NewChatViewModel {
         messageText: String,
         type: Int,
         botAmount: Int,
-        threadUUID:String?,
         completion: @escaping (Bool) -> ()
     ) -> TransactionMessage? {
         
         let provisionalMessage = insertProvisionalMessage(
             text: messageText,
             type: type,
-            threadUUID: threadUUID,
             chat: chat
         )
         
@@ -85,7 +82,6 @@ extension NewChatViewModel {
     func insertProvisionalMessage(
         text: String,
         type: Int,
-        threadUUID:String?,
         chat: Chat?
     ) -> TransactionMessage? {
         
@@ -94,15 +90,9 @@ extension NewChatViewModel {
             type: type,
             date: Date(),
             chat: chat,
-            replyUUID: replyingTo?.uuid
+            replyUUID: replyingTo?.uuid,
+            threadUUID: threadUUID ?? replyingTo?.threadUUID ?? replyingTo?.uuid
         )
-        
-        if let threadUUID = threadUUID{
-            message?.threadUUID = threadUUID
-        }
-        else{
-            message?.threadUUID = replyingTo?.uuid
-        }
         
         if chat == nil {
             ///Sending first message. Chat does not exist yet

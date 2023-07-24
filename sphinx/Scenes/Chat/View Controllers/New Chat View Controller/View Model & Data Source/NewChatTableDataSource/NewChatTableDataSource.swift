@@ -34,7 +34,7 @@ protocol NewChatTableDataSourceDelegate : class {
     func didUpdateChat(_ chat: Chat)
     
     ///Message menu
-    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect,hasReplies:Bool)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect, isThread: Bool)
     
     ///Leaderboard
     func shouldShowLeaderboardFor(messageId: Int)
@@ -54,7 +54,6 @@ protocol NewChatTableDataSourceDelegate : class {
     func shouldToggleSearchLoadingWheel(active: Bool)
     
     func didTapThread(threadUUID:String)
-    func didReloadContent()
 }
 
 class NewChatTableDataSource : NSObject {
@@ -71,6 +70,7 @@ class NewChatTableDataSource : NSObject {
     ///Chat
     var chat: Chat?
     var contact: UserContact?
+    var threadUUID: String?
     
     ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
@@ -92,7 +92,6 @@ class NewChatTableDataSource : NSObject {
     var mediaCached: [Int: MessageTableCellState.MediaData] = [:]
     var botsWebViewData: [Int: MessageTableCellState.BotWebViewData] = [:]
     var uploadingProgress: [Int: MessageTableCellState.UploadProgressData] = [:]
-    var firstThreadMessageState : MessageTableCellState? = nil
     
     var searchingTerm: String? = nil
     var searchMatches: [(Int, MessageTableCellState)] = []
@@ -107,24 +106,22 @@ class NewChatTableDataSource : NSObject {
     ///WebView Loading
     let webViewSemaphore = DispatchSemaphore(value: 1)
     var webViewLoadingCompletion: ((CGFloat?) -> ())? = nil
-    var threadUUID:String? = nil
-    var isForShowAllThreads:Bool = false
     
     init(
         chat: Chat?,
         contact: UserContact?,
+        threadUUID: String?,
         tableView: UITableView,
         headerImageView: UIImageView?,
         bottomView: UIView,
         webView: WKWebView,
-        delegate: NewChatTableDataSourceDelegate?,
-        threadUUID:String?,
-        isForShowAllThreads:Bool=false
+        delegate: NewChatTableDataSourceDelegate?
     ) {
         super.init()
         
         self.chat = chat
         self.contact = contact
+        self.threadUUID = threadUUID
         
         self.tableView = tableView
         self.headerImage = headerImageView?.image
@@ -132,8 +129,6 @@ class NewChatTableDataSource : NSObject {
         self.webView = webView
         
         self.delegate = delegate
-        self.threadUUID = threadUUID
-        self.isForShowAllThreads = isForShowAllThreads
         
         configureTableView()
         configureDataSource()
@@ -153,20 +148,13 @@ class NewChatTableDataSource : NSObject {
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
-        if(isForShowAllThreads == false){
-            tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
-            tableView.contentInset.top = Constants.kMargin
-        }
-        else{
-            tableView.contentInset.top = Constants.kMarginForAllThreads
-            //tableView.scrollToBottom()
-        }
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        tableView.contentInset.top = Constants.kMargin
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
         tableView.registerCell(NewOnlyTextMessageTableViewCell.self)
-        tableView.registerCell(NewThreadOnlyMessageTableViewCell.self)
     }
 }

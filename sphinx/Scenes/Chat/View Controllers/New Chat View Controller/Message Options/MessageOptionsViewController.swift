@@ -28,19 +28,19 @@ class MessageOptionsViewController: UIViewController {
     
     var message: TransactionMessage? = nil
     var purchaseAcceptMessage: TransactionMessage? = nil
-    var hasReplies:Bool = false
+    var isThread: Bool = false
     
     static func instantiate(
         message: TransactionMessage,
         purchaseAcceptMessage: TransactionMessage?,
         delegate: MessageOptionsVCDelegate?,
-        hasReplies:Bool
+        isThread: Bool
     ) -> MessageOptionsViewController {
         let viewController = StoryboardScene.Chat.messageOptionsViewController.instantiate()
         viewController.message = message
         viewController.purchaseAcceptMessage = purchaseAcceptMessage
         viewController.delegate = delegate
-        viewController.hasReplies = hasReplies
+        viewController.isThread = isThread
         return viewController
     }
     
@@ -144,11 +144,15 @@ class MessageOptionsViewController: UIViewController {
         view.addSubview(messagesView)
     }
     
-    func addMenuView(leftTopCorner: CGPoint, rightBottomCorner: CGPoint) {
+    func addMenuView(
+        leftTopCorner: CGPoint,
+        rightBottomCorner: CGPoint
+    ) {
         let menuView = MessageOptionsView(
             message: message,
             leftTopCorner: leftTopCorner,
             rightBottomCorner: rightBottomCorner,
+            isThread: isThread,
             delegate: self
         )
         self.view.addSubview(menuView)
@@ -179,10 +183,6 @@ class MessageOptionsViewController: UIViewController {
 }
 
 extension MessageOptionsViewController : MessageOptionsDelegate {
-    func getHasReplyStatus() -> Bool {
-        return self.hasReplies
-    }
-    
     func shouldDismiss(completion: @escaping (() -> ())) {
         shouldDismissViewController(completion)
     }
@@ -242,7 +242,7 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
         }
     }
     
-    func shouldShowMessageThread(){
+    func shouldShowMessageThread() {
         if let message = message{
             delegate?.shouldShowMessageThread(message: message)
         }

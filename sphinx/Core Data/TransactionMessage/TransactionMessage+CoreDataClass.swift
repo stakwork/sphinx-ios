@@ -242,7 +242,7 @@ public class TransactionMessage: NSManagedObject {
         id: Int,
         uuid: String? = nil,
         replyUUID: String? = nil,
-        threadUUID:String?=nil,
+        threadUUID:String? = nil,
         type: Int,
         sender: Int,
         senderAlias: String?,
@@ -274,6 +274,7 @@ public class TransactionMessage: NSManagedObject {
         message.id = id
         message.uuid = uuid
         message.replyUUID = replyUUID
+        message.threadUUID = threadUUID
         message.type = type
         message.senderId = sender
         message.senderAlias = senderAlias
@@ -314,7 +315,8 @@ public class TransactionMessage: NSManagedObject {
         type: Int,
         date: Date,
         chat: Chat?,
-        replyUUID: String? = nil
+        replyUUID: String? = nil,
+        threadUUID: String? = nil
     ) -> TransactionMessage? {
         
         let messageType = TransactionMessageType(fromRawValue: type)
@@ -323,8 +325,9 @@ public class TransactionMessage: NSManagedObject {
             messageContent: messageContent,
             date: date,
             chat: chat,
-            type: messageType,
-            replyUUID: replyUUID
+            replyUUID: replyUUID,
+            threadUUID: threadUUID,
+            type: messageType
         )
     }
     
@@ -332,16 +335,18 @@ public class TransactionMessage: NSManagedObject {
         attachmentObject: AttachmentObject,
         date: Date,
         chat: Chat?,
-        replyUUID: String? = nil
+        replyUUID: String? = nil,
+        threadUUID: String? = nil
     ) -> TransactionMessage? {
         
         return createProvisional(
             messageContent: attachmentObject.text,
             date: date,
             chat: chat,
+            replyUUID: replyUUID,
+            threadUUID: threadUUID,
             type: TransactionMessageType.attachment,
-            attachmentObject: attachmentObject,
-            replyUUID: replyUUID
+            attachmentObject: attachmentObject
         )
     }
     
@@ -349,9 +354,10 @@ public class TransactionMessage: NSManagedObject {
         messageContent: String?,
         date: Date,
         chat: Chat?,
+        replyUUID: String? = nil,
+        threadUUID: String? = nil,
         type: TransactionMessageType,
-        attachmentObject: AttachmentObject? = nil,
-        replyUUID: String? = nil
+        attachmentObject: AttachmentObject? = nil
     ) -> TransactionMessage? {
         
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
@@ -365,6 +371,7 @@ public class TransactionMessage: NSManagedObject {
         message.status = TransactionMessageStatus.pending.rawValue
         message.date = date
         message.replyUUID = replyUUID
+        message.threadUUID = threadUUID
         
         if let attachmentObject = attachmentObject {
             message.mediaType = attachmentObject.getMimeType()

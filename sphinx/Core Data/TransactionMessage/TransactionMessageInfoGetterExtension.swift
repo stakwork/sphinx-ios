@@ -25,13 +25,13 @@ extension TransactionMessage {
         case CopyPubKey
         case CopyCallLink
         case Reply
+        case ShowThread
         case Save
         case Boost
         case Resend
         case Flag
         case Pin
         case Unpin
-        case ShowThread
     }
     
     
@@ -473,7 +473,9 @@ extension TransactionMessage {
         return invoice?.getAmountString() ?? "0"
     }
     
-    func getActionsMenuOptions() -> [ActionsMenuOption] {
+    func getActionsMenuOptions(
+        isThread: Bool = false
+    ) -> [ActionsMenuOption] {
         var options = [ActionsMenuOption]()
         
         if isPodcastBoost() {
@@ -534,6 +536,17 @@ extension TransactionMessage {
                     materialIconName: "",
                     iconImage: nil,
                     label:  "reply".localized
+                )
+            )
+        }
+        
+        if isThread {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.ShowThread,
+                    materialIconName: "forum",
+                    iconImage: nil,
+                    label: "show.thread".localized
                 )
             )
         }
@@ -615,16 +628,7 @@ extension TransactionMessage {
             )
         }
         
-        if isShowThreadAllowed{
-            options.append(getShowThreadOption())
-        }
-        
-        
         return options
-    }
-    
-    func getShowThreadOption()->ActionsMenuOption{
-        return .init(tag: .ShowThread,materialIconName: "forum", label: "show.thread".localized)
     }
     
     func messageContainText() -> Bool {
@@ -709,12 +713,6 @@ extension TransactionMessage {
     var isMessagePinned: Bool {
         get {
             return self.uuid == self.chat?.pinnedMessageUUID
-        }
-    }
-    
-    var isShowThreadAllowed:Bool{
-        get{
-            return self.replyUUID != nil
         }
     }
     

@@ -9,9 +9,7 @@
 import UIKit
 
 extension NewChatViewController {
-    func configureTableView(threadUUID:String?=nil,
-                            isForShowAllThreads:Bool=false
-    ) {
+    func configureTableView() {
         if let ds = chatTableDataSource {
             if ds.isFinalDS() {
                 return
@@ -26,13 +24,12 @@ extension NewChatViewController {
         chatTableDataSource = NewChatTableDataSource(
             chat: chat,
             contact: contact,
+            threadUUID: threadUUID,
             tableView: chatTableView,
             headerImageView: getContactImageView(),
             bottomView: bottomView,
             webView: botWebView,
-            delegate: self,
-            threadUUID: threadUUID,
-            isForShowAllThreads: isForShowAllThreads
+            delegate: self
         )
         
         chatViewModel.setDataSource(chatTableDataSource)
@@ -75,12 +72,13 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     }
     
     func didBeginOrEndScroll(isScrolling:Bool){
-        let maxLines = isScrolling ? 2 : 5
-        let delay = (isScrolling) ? 0.0 : 0.25
-        DelayPerformedHelper.performAfterDelay(seconds: delay, completion: {
-            self.headerView.threadHeaderView.isExpanded = false
-            self.headerView.threadHeaderView.adjustNumberOfLines(max:maxLines)
-        })
+//        let maxLines = isScrolling ? 2 : 5
+//        let delay = (isScrolling) ? 0.0 : 0.25
+//        
+//        DelayPerformedHelper.performAfterDelay(seconds: delay, completion: {
+//            self.headerView.threadHeaderView.isExpanded = false
+//            self.headerView.threadHeaderView.adjustNumberOfLines(max:maxLines)
+//        })
     }
     
     func shouldGoToAttachmentViewFor(
@@ -151,7 +149,12 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         }
     }
     
-    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect,hasReplies:Bool) {
+    func didLongPressOn(
+        cell: UITableViewCell,
+        with messageId: Int,
+        bubbleViewRect: CGRect,
+        isThread: Bool
+    ) {
         guard let indexPath = chatTableView.indexPath(for: cell) else {
             return
         }
@@ -167,7 +170,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 self.messageMenuData = MessageTableCellState.MessageMenuData(
                     messageId: messageId,
                     bubbleRect: bubbleViewRect,
-                    indexPath: indexPath
+                    indexPath: indexPath,
+                    isThread: isThread
                 )
                 self.view.endEditing(true)
             } else {
@@ -175,7 +179,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                     messageId: messageId,
                     indexPath: indexPath,
                     bubbleViewRect: bubbleViewRect,
-                    hasReplies: hasReplies
+                    isThread: isThread
                 )
             }
         })
@@ -226,11 +230,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         }
     }
     
-    func didTapThread(threadUUID:String){
+    func didTapThread(threadUUID: String ){
         self.showThread(threadID: threadUUID)
-    }
-    func didReloadContent(){
-        layoutThreadHeaderView()
     }
 }
 
@@ -239,7 +240,7 @@ extension NewChatViewController {
         messageId: Int,
         indexPath: IndexPath,
         bubbleViewRect: CGRect,
-        hasReplies:Bool
+        isThread: Bool
     ) {
         if let bubbleRectAndPath = ChatHelper.getMessageBubbleRectAndPath(
             tableView: self.chatTableView,
@@ -248,7 +249,9 @@ extension NewChatViewController {
             bubbleViewRect: bubbleViewRect
         ), let message = TransactionMessage.getMessageWith(id: messageId)
         {
-            if message.getActionsMenuOptions().isEmpty {
+            if message.getActionsMenuOptions(
+                isThread: isThread
+            ).isEmpty {
                 return
             }
             
@@ -258,7 +261,7 @@ extension NewChatViewController {
                 message: message,
                 purchaseAcceptMessage: message.getPurchaseAcceptItem(),
                 delegate: self,
-                hasReplies: hasReplies
+                isThread: isThread
             )
             
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)

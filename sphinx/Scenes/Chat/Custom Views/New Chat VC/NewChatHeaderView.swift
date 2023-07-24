@@ -60,22 +60,32 @@ class NewChatHeaderView: UIView {
         chat: Chat?,
         contact: UserContact?,
         andDelegate delegate: ChatHeaderViewDelegate,
-        searchDelegate: ChatSearchTextFieldViewDelegate? = nil,
-        isForShowAllThreads:Bool=false,
-        threadUUID:String?=nil
+        searchDelegate: ChatSearchTextFieldViewDelegate? = nil
     ) {
         chatHeaderView.configureWith(
             chat: chat,
             contact: contact,
-            delegate: delegate,
-            isForShowAllThreads: isForShowAllThreads,
-            threadUUID: threadUUID
+            delegate: delegate
         )
-        
         
         self.searchDelegate = searchDelegate
         
         chatSearchView.setDelegate(self)
+    }
+    
+    func configureThreadHeaderWith(
+        message: TransactionMessage,
+        delegate: ThreadHeaderViewDelegate
+    ) {
+        threadHeaderView.configureWith(
+            message: message,
+            delegate: delegate
+        )
+        
+        threadHeaderView.isHidden = false
+        chatHeaderView.isHidden = true
+        pinnedMessageView.isHidden = true
+        chatSearchView.isHidden = true
     }
     
     func configurePinnedMessageViewWith(

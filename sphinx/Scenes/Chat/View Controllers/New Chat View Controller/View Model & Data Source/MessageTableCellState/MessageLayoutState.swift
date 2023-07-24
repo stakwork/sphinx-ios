@@ -95,43 +95,39 @@ struct BubbleMessageLayoutState {
     }
     
     struct ThreadMessage {
-        var previewText: String?
+        var text: String?
+        var font: UIFont?
         var senderPic: String?
         var senderAlias: String?
         var senderColor: UIColor?
         var sendDate: Date?
-        var isOriginalMessage:Bool?
-        var senderUUID:Int
-        var threadUUID:String?
         
         init(
-            previewText:String?,
+            text: String?,
+            font: UIFont?,
             senderPic: String?,
             senderAlias: String?,
             senderColor: UIColor?,
-            sendDate:Date?,
-            isOriginalMessage:Bool,
-            senderUUID:Int,
-            threadUUID:String?
+            sendDate: Date?
         ) {
-            self.previewText = previewText
+            self.text = text
+            self.font = font
             self.senderPic = senderPic
             self.senderAlias = senderAlias
             self.senderColor = senderColor
             self.sendDate = sendDate
-            self.isOriginalMessage = isOriginalMessage
-            self.senderUUID = senderUUID
-            self.threadUUID = threadUUID
         }
     }
     
     struct ThreadMessages{
+        var originalMessage: ThreadMessage
         var threadMessages: [ThreadMessage]
-        var totalReplies: Int
+        
         init(
+            originalMessage: ThreadMessage,
             threadMessages: [ThreadMessage]
         ) {
-            self.totalReplies = threadMessages.count
+            self.originalMessage = originalMessage
             self.threadMessages = threadMessages
         }
     }

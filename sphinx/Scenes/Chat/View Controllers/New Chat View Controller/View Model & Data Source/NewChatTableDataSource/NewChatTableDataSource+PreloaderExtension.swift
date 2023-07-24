@@ -10,6 +10,10 @@ import Foundation
 
 extension NewChatTableDataSource {
     func restorePreloadedMessages() {
+        if let _ = threadUUID {
+            return
+        }
+        
         guard let chat = chat else {
             return
         }
@@ -25,6 +29,10 @@ extension NewChatTableDataSource {
             return
         }
         
+        if let _ = threadUUID {
+            return
+        }
+        
         if let firstVisibleRow = tableView.indexPathsForVisibleRows?.last {
             preloaderHelper.add(
                 messageStateArray: messageTableCellStateArray.subarray(size: firstVisibleRow.row + 10),
@@ -35,6 +43,10 @@ extension NewChatTableDataSource {
     
     func saveSnapshotCurrentState() {
         guard let chat = chat else {
+            return
+        }
+        
+        if let _ = threadUUID {
             return
         }
         
@@ -57,6 +69,10 @@ extension NewChatTableDataSource {
     
     func restoreScrollLastPosition() {
         guard let chat = chat else {
+            return
+        }
+        
+        if let _ = threadUUID {
             return
         }
         

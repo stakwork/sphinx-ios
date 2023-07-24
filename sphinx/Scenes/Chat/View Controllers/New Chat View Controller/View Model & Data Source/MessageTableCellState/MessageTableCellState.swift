@@ -59,7 +59,7 @@ struct MessageTableCellState {
         bubbleState: MessageTableCellState.BubbleState? = nil,
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
-        threadMessages:[TransactionMessage]=[],
+        threadMessages:[TransactionMessage] = [],
         boostMessages: [TransactionMessage] = [],
         purchaseMessages: [Int: TransactionMessage] = [:],
         linkContact: LinkContact? = nil,
@@ -381,30 +381,43 @@ struct MessageTableCellState {
         }
     }()
     
-    mutating func getHasAReply()->Bool{
-        return (threadMessageArray?.threadMessages.count ?? 0) > 0 
-    }
-    
-    lazy var threadMessageArray : BubbleMessageLayoutState.ThreadMessages? = {
+    lazy var threadMessagesState : BubbleMessageLayoutState.ThreadMessages? = {
+        
         guard let message = message, threadMessages.count > 0 else {
-            return BubbleMessageLayoutState.ThreadMessages(threadMessages: [])
+            return nil
         }
 
         var threadMessageList: [BubbleMessageLayoutState.ThreadMessage] = []
         
         for threadMessage in threadMessages {
             let senderInfo: (UIColor, String, String?) = getSenderInfo(message: threadMessage)
+            
             threadMessageList.append(
-                BubbleMessageLayoutState.ThreadMessage(previewText: threadMessage.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0, sendDate: threadMessage.date, isOriginalMessage: false,senderUUID: threadMessage.senderId,threadUUID: message.uuid)
+                BubbleMessageLayoutState.ThreadMessage(
+                    text: threadMessage.bubbleMessageContentString,
+                    font: UIFont.getMessageFont(),
+                    senderPic: senderInfo.2,
+                    senderAlias: senderInfo.1,
+                    senderColor: senderInfo.0,
+                    sendDate: threadMessage.date
+                )
             )
         }
         
         let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
-        threadMessageList.append(
-            BubbleMessageLayoutState.ThreadMessage(previewText: message.messageContent, senderPic: senderInfo.2, senderAlias: senderInfo.1, senderColor: senderInfo.0, sendDate: message.date, isOriginalMessage: true,senderUUID: message.senderId,threadUUID: message.uuid)
+        let originalMessage = BubbleMessageLayoutState.ThreadMessage(
+            text: message.bubbleMessageContentString,
+            font: UIFont.getMessageFont(),
+            senderPic: senderInfo.2,
+            senderAlias: senderInfo.1,
+            senderColor: senderInfo.0,
+            sendDate: message.date
         )
 
-        return BubbleMessageLayoutState.ThreadMessages(threadMessages: threadMessageList)
+        return BubbleMessageLayoutState.ThreadMessages(
+            originalMessage: originalMessage,
+            threadMessages: threadMessageList
+        )
     }()
     
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
@@ -696,6 +709,12 @@ struct MessageTableCellState {
                 (self.paidContent == nil) &&
                 (self.podcastComment == nil) &&
                 (self.genericFile == nil)
+        }
+    }
+    
+    var isThread: Bool {
+        mutating get {
+            return threadMessagesState != nil
         }
     }
 }

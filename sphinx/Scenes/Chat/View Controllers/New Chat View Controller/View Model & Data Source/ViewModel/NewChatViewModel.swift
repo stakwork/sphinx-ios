@@ -20,15 +20,18 @@ class NewChatViewModel {
     
     var podcastComment: PodcastComment? = nil
     var replyingTo: TransactionMessage? = nil
+    var threadUUID: String? = nil
     
     var audioRecorderHelper = AudioRecorderHelper()
     
     init(
         chat: Chat?,
-        contact: UserContact?
+        contact: UserContact?,
+        threadUUID: String? = nil
     ) {
         self.chat = chat
         self.contact = contact
+        self.threadUUID = threadUUID
     }
     
     func setDataSource(_ dataSource: NewChatTableDataSource?) {

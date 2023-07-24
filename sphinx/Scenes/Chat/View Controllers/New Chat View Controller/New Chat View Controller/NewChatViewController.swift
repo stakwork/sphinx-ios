@@ -25,9 +25,9 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var webAppContainerView: UIView!
     @IBOutlet weak var chatTableHeaderHeightConstraint: NSLayoutConstraint!
 
-    
     var contact: UserContact?
     var chat: Chat?
+    var threadUUID: String? = nil
     
     var messageMenuData: MessageTableCellState.MessageMenuData? = nil
     
@@ -42,9 +42,6 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     let messageBubbleHelper = NewMessageBubbleHelper()
     
     var webAppVC : WebAppViewController? = nil
-    
-    var isForShowAllThreads:Bool = false
-    var threadUUID: String? = nil
     
     enum ViewMode: Int {
         case Standard
@@ -64,7 +61,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     static func instantiate(
         contactId: Int? = nil,
         chatId: Int? = nil,
-        chatListViewModel: ChatListViewModel? = nil
+        chatListViewModel: ChatListViewModel? = nil,
+        threadUUID: String? = nil
     ) -> NewChatViewController {
         let viewController = StoryboardScene.Chat.newChatViewController.instantiate()
         
@@ -76,11 +74,13 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
+        viewController.threadUUID = threadUUID
         viewController.chatListViewModel = chatListViewModel
         
         viewController.chatViewModel = NewChatViewModel(
             chat: viewController.chat,
-            contact: viewController.contact
+            contact: viewController.contact,
+            threadUUID: threadUUID
         )
         
         viewController.popOnSwipeEnabled = true
@@ -95,7 +95,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         setDelegates()
         setupData()
         configureFetchResultsController()
-        configureTableView(threadUUID: threadUUID,isForShowAllThreads: isForShowAllThreads)
+        configureTableView()
         initializeMacros()
     }
     
@@ -141,7 +141,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 messageId: messageMenuData.messageId,
                 indexPath: messageMenuData.indexPath,
                 bubbleViewRect: messageMenuData.bubbleRect,
-                hasReplies: false
+                isThread: messageMenuData.isThread
             )
             self.messageMenuData = nil
         }
@@ -155,14 +155,19 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         })
     }
     
-    func showThread(threadID:String){
+    func showThread(
+        threadID: String
+    ){
         let chatVC = NewChatViewController.instantiate(
             contactId: self.contact?.id,
             chatId: self.chat?.id,
-            chatListViewModel: chatListViewModel
+            chatListViewModel: chatListViewModel,
+            threadUUID: threadID
         )
-        chatVC.threadUUID = threadID
-        navigationController?.pushViewController(chatVC, animated: true)
+        navigationController?.pushViewController(
+            chatVC,
+            animated: true
+        )
     }
     
     func setTableViewHeight() {
@@ -184,33 +189,31 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         
     }
     
-    func layoutThreadHeaderView(animationDuration:TimeInterval=0.0){
-        DispatchQueue.main.async {
-            guard let _ = self.threadUUID,
-                let firstThreadMessageState = self.chatTableDataSource?.firstThreadMessageState
-            else{
-                self.bottomView.isHidden = self.isForShowAllThreads
-                self.chatTableHeaderHeightConstraint.constant += (self.isForShowAllThreads) ? self.bottomView.frame.height : 0.0
-                return
-            }
-            self.headerView.threadHeaderView.configureWith(state: firstThreadMessageState, delegate: self)
-            self.headerView.threadHeaderView.isHidden = false
-        }
-    }
-    
     func setupData() {
         headerView.configureHeaderWith(
             chat: chat,
             contact: contact,
             andDelegate: self,
-            searchDelegate: self,
-            isForShowAllThreads: isForShowAllThreads,
-            threadUUID:threadUUID
+            searchDelegate: self
         )
         
         configurePinnedMessageView()
+        configureThreadHeaderView()
+        
         bottomView.updateFieldStateFrom(chat)
         showPendingApprovalMessage()
+    }
+    
+    func configureThreadHeaderView() {
+        if
+            let threadUUID = self.threadUUID,
+            let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
+        {
+            headerView.configureThreadHeaderWith(
+                message: threadOriginalMessage,
+                delegate: self
+            )
+        }
     }
     
     func setDelegates() {

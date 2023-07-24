@@ -6,16 +6,15 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
 import UIKit
-
+import SDWebImage
 
 protocol ThreadHeaderViewDelegate : NSObject{
     func didTapShowMore()
     func didTapTextField()
 }
 
-class ThreadHeaderView : UIView{
+class ThreadHeaderView : UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var firstMessageMessageContentLabel: UILabel!
@@ -53,33 +52,31 @@ class ThreadHeaderView : UIView{
     }
     
     func configureWith(
-            state:MessageTableCellState,
-            delegate:ThreadHeaderViewDelegate
+        message: TransactionMessage,
+        delegate: ThreadHeaderViewDelegate
     ){
         self.delegate = delegate
-        var stateCopy = state
-        if let firstMessage = stateCopy.threadMessageArray?.threadMessages.filter({$0.isOriginalMessage == true}).first{
-            firstMessageMessageContentLabel.backgroundColor = contentView.backgroundColor
-            firstMessageMessageContentLabel.isHidden = false
-            firstMessageMessageContentLabel.text = firstMessage.previewText
-            senderNameLabel.text = firstMessage.senderAlias
-            timestampLabel.text = firstMessage.sendDate?.getThreadDateTime()
-            if let path = firstMessage.senderPic{
-                let avatarURL = URL(string: path)
-                avatarImageView.sd_setImage(with: avatarURL)
-                avatarImageView.makeCircular()
-            }
-            else{
-                initialsLabel.isHidden = false
-                initialsLabel.backgroundColor = firstMessage.senderColor
-                initialsLabel.textColor = UIColor.white
-                initialsLabel.text = firstMessage.senderAlias?.getInitialsFromName()
-            }
-            
-            imageContainerView.makeCircular()
-            avatarImageView.contentMode = .scaleAspectFill
-            adjustNumberOfLines()
+        
+        firstMessageMessageContentLabel.backgroundColor = contentView.backgroundColor
+        firstMessageMessageContentLabel.isHidden = false
+        firstMessageMessageContentLabel.text = message.bubbleMessageContentString
+        senderNameLabel.text = message.senderAlias
+        timestampLabel.text = message.date?.getThreadDateTime()
+        
+        if let path = message.senderPic {
+            let avatarURL = URL(string: path)
+            avatarImageView.sd_setImage(with: avatarURL)
+            avatarImageView.makeCircular()
+        } else {
+            initialsLabel.isHidden = false
+            initialsLabel.backgroundColor = ChatHelper.getSenderColorFor(message: message)
+            initialsLabel.textColor = UIColor.white
+            initialsLabel.text = message.senderAlias?.getInitialsFromName()
         }
+        
+        imageContainerView.makeCircular()
+        avatarImageView.contentMode = .scaleAspectFill
+        adjustNumberOfLines()
     }
     
     func adjustNumberOfLines(max:Int=5){

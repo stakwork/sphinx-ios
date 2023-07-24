@@ -18,7 +18,6 @@ import UIKit
     func shouldResendMessage()
     func shouldFlagMessage()
     func shouldTogglePinState(pin: Bool)
-    func getHasReplyStatus()->Bool
 }
 
 class MessageOptionsView : UIView {
@@ -47,7 +46,13 @@ class MessageOptionsView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(message: TransactionMessage?, leftTopCorner: CGPoint, rightBottomCorner: CGPoint, delegate: MessageOptionsDelegate) {
+    init(
+        message: TransactionMessage?,
+        leftTopCorner: CGPoint,
+        rightBottomCorner: CGPoint,
+        isThread: Bool,
+        delegate: MessageOptionsDelegate
+    ) {
         super.init(frame: CGRect.zero)
         
         self.delegate = delegate
@@ -59,7 +64,7 @@ class MessageOptionsView : UIView {
         
         let incoming = message.isIncoming()
         let coordinates = getCoordinates(leftTopCorner: leftTopCorner, rightBottomCorner: rightBottomCorner)
-        let messageOptions = getActionsMenuOptions()
+        let messageOptions = getActionsMenuOptions(isThread: isThread)
         let optionsCount = messageOptions.count
 
         let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(coordinates: coordinates, optionsCount: optionsCount, incoming: incoming)
@@ -109,22 +114,13 @@ class MessageOptionsView : UIView {
         return (menuRect, verticalPosition, horizontalPosition)
     }
     
-    func getActionsMenuOptions() -> [TransactionMessage.ActionsMenuOption] {
+    func getActionsMenuOptions(
+        isThread: Bool
+    ) -> [TransactionMessage.ActionsMenuOption] {
         guard let message = message else {
             return []
         }
-        let initialOptions = message.getActionsMenuOptions()
-        let messageHasReplies = delegate?.getHasReplyStatus() ?? false
-        var options = initialOptions.filter({
-            if((messageHasReplies) && $0.tag == .Reply){
-                return false
-            }
-            else{
-                return true
-            }
-        })
-        (messageHasReplies == true) ? (options.append(message.getShowThreadOption())) : ()
-        return options
+        return message.getActionsMenuOptions(isThread: isThread)
     }
     
     func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {

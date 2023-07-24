@@ -10,12 +10,11 @@ import Foundation
 
 extension NewChatViewController : MessageOptionsVCDelegate {
     
-    func shouldShowMessageThread(message:TransactionMessage){
-        if let tuid = message.threadUUID{
-            self.showThread(threadID: tuid)
-        }
-        else if let muid = message.uuid{
-            self.showThread(threadID: muid)
+    func shouldShowMessageThread(message: TransactionMessage) {
+        if let threadUUID = message.threadUUID {
+            self.showThread(threadID: threadUUID)
+        } else if let uuid = message.uuid {
+            self.showThread(threadID: uuid)
         }
     }
     

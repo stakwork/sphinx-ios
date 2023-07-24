@@ -163,15 +163,18 @@ extension MessageTableCellState {
         var messageId: Int
         var bubbleRect: CGRect
         var indexPath: IndexPath
+        var isThread: Bool
         
         init(
             messageId: Int,
             bubbleRect: CGRect,
-            indexPath: IndexPath
+            indexPath: IndexPath,
+            isThread: Bool
         ) {
             self.messageId = messageId
             self.bubbleRect = bubbleRect
             self.indexPath = indexPath
+            self.isThread = isThread
         }
     }
     

@@ -33,7 +33,8 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             attachmentObject: attachmentObject,
             date: Date(),
             chat: chat,
-            replyUUID: replyingMessage?.uuid
+            replyUUID: replyingTo?.uuid,
+            threadUUID: threadUUID ?? replyingTo?.threadUUID ?? replyingTo?.uuid
         ) {
             attachmentsManager.setData(
                 delegate: self,
@@ -46,7 +47,7 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             
             attachmentsManager.uploadAndSendAttachment(
                 attachmentObject: attachmentObject,
-                replyingMessage: replyingMessage
+                replyingMessage: replyingTo
             )
         }
         

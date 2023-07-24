@@ -52,20 +52,20 @@
                                     <constraint firstAttribute="width" constant="3" id="W3X-6v-8Ju"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ppO-Na-VYs">
-                                <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="271"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppO-Na-VYs">
+                                <rect key="frame" x="55.999999999999986" y="227" width="247.66666666666663" height="71"/>
                                 <color key="backgroundColor" name="SentMsgBG"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tTy-XL-aqw">
-                                <rect key="frame" x="52" y="27" width="12" height="8"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tTy-XL-aqw">
+                                <rect key="frame" x="52" y="227" width="12" height="8"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="cxL-KJ-ysm"/>
                                     <constraint firstAttribute="width" constant="12" id="nJ4-Io-jE2"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G0G-6Y-44r">
-                                <rect key="frame" x="295.66666666666669" y="27" width="15" height="8"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G0G-6Y-44r">
+                                <rect key="frame" x="295.66666666666669" y="227" width="15" height="8"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="XLe-jP-nUx"/>
@@ -142,14 +142,33 @@
                                                     <constraint firstAttribute="trailing" secondItem="0Ro-Us-cz5" secondAttribute="trailing" id="rhD-xC-7hs"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWp-Gm-zVF">
-                                                <rect key="frame" x="0.0" y="25" width="247.66666666666666" height="271"/>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3hw-LH-zG4">
+                                                <rect key="frame" x="0.0" y="25" width="247.66666666666666" height="200"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTP-2x-xVV">
-                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="239"/>
+                                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="blm-U9-Mcy" customClass="MessageThreadView" customModule="sphinx" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="247.66666666666666" height="205"/>
+                                                        <color key="backgroundColor" name="BadgeRed"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="250" constant="205" id="rUo-Wz-TmG"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="blm-U9-Mcy" firstAttribute="top" secondItem="3hw-LH-zG4" secondAttribute="top" id="BNi-Ia-Z0L"/>
+                                                    <constraint firstItem="blm-U9-Mcy" firstAttribute="leading" secondItem="3hw-LH-zG4" secondAttribute="leading" id="D7j-yV-b2e"/>
+                                                    <constraint firstAttribute="bottom" secondItem="blm-U9-Mcy" secondAttribute="bottom" constant="-5" id="mvn-Aq-YAC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="blm-U9-Mcy" secondAttribute="trailing" id="q3U-75-sTy"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWp-Gm-zVF">
+                                                <rect key="frame" x="0.0" y="225" width="247.66666666666666" height="71"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="This is a large" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTP-2x-xVV">
+                                                        <rect key="frame" x="16" y="16" width="215.66666666666666" height="39"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <color key="textColor" name="Text"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -271,11 +290,17 @@
         </tableViewCell>
     </objects>
     <resources>
+        <namedColor name="BadgeRed">
+            <color red="1" green="0.32156862745098042" blue="0.32156862745098042" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SentMsgBG">
             <color red="0.8666666666666667" green="0.92941176470588238" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

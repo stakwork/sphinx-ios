@@ -22,7 +22,7 @@ extension TransactionMessage {
         botAmount: Int = 0,
         priceToMeet: Int? = nil,
         replyingMessage: TransactionMessage? = nil,
-        threadUUID:String?=nil
+        threadUUID: String? = nil
     ) -> [String: AnyObject]? {
         
         var parameters = [String : AnyObject]()
@@ -61,7 +61,7 @@ extension TransactionMessage {
             parameters["reply_uuid"] = replyUUID as AnyObject?
         }
         
-        if let threadUUID = threadUUID{
+        if let threadUUID = threadUUID {
             parameters["thread_uuid"] = threadUUID as AnyObject?
         }
         

@@ -75,22 +75,12 @@ extension NewChatTableDataSource {
             var mutableDataSourceItem = dataSourceItem
             
             if let _ = mutableDataSourceItem.bubble {
-                if self.isForShowAllThreads{
-                    cell = tableView.dequeueReusableCell(
-                        withIdentifier: "NewThreadOnlyMessageTableViewCell",
-                        for: indexPath
-                    ) as! NewThreadOnlyMessageTableViewCell
-                    if let cell = cell as? NewThreadOnlyMessageTableViewCell{
-                        cell.delegate = self
-                    }
-                }
-                else if mutableDataSourceItem.isTextOnlyMessage {
+                if mutableDataSourceItem.isTextOnlyMessage {
                     cell = tableView.dequeueReusableCell(
                         withIdentifier: "NewOnlyTextMessageTableViewCell",
                         for: indexPath
                     ) as! NewOnlyTextMessageTableViewCell
-                }
-                else {
+                } else {
                     cell = tableView.dequeueReusableCell(
                         withIdentifier: "NewMessageTableViewCell",
                         for: indexPath
@@ -122,14 +112,11 @@ extension NewChatTableDataSource {
             )
             
             //@Tom this is where we can determine if it is a thread. It will only run if we are looking at the original chat
-            if self.threadUUID == nil && self.isForShowAllThreads == false,
-               (dataSourceItem.threadMessages.count > 1){
+            if self.threadUUID == nil, (dataSourceItem.threadMessages.count > 1) {
                 cell?.contentView.backgroundColor = .red
             }
             
-            if self.isForShowAllThreads == false{
-                cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
-            }
+            cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
             
             return (cell as? UITableViewCell) ?? UITableViewCell()
         }
@@ -159,6 +146,8 @@ extension NewChatTableDataSource {
         let admin = chat.getAdmin()
         let contact = chat.getConversationContact()
         
+        chat.processAliasesFrom(messages: messages)
+        
         let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
         let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
         let threadMessagesMap = getThreadMessagesFor(messages: messages)
@@ -167,46 +156,30 @@ extension NewChatTableDataSource {
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
         
         var groupingDate: Date? = nil
-        
         var invoiceData: (Int, Int) = (0, 0)
-        
-        chat.processAliasesFrom(messages: messages)
         
         var filteredThreadMessages: [TransactionMessage] = []
         
-        if (isForShowAllThreads){ // we're showing the first message of all threads that exist in the chat
-            for (index, message) in messages.enumerated() {
-                if message.threadUUID == nil,
-                let firstMessageAndThreadUUID = message.uuid,
-                let messagesInThread = threadMessagesMap[firstMessageAndThreadUUID],
-                messagesInThread.count > 0 {
-                    ///Thread has more than 1 reply. Then skip
-                    filteredThreadMessages.append(message)
-                }
-            }
-        }
-        else if(threadUUID == nil){//only hide messages if we're not a thread specific chat VC
-            for (index, message) in messages.enumerated() {
-                guard let threadUUID = message.threadUUID else {
-                    ///Message not on thread.
-                    filteredThreadMessages.append(message)
-                    continue
-                }
-                let messagesInThread = threadMessagesMap[threadUUID]
-                if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
-                    ///Thread has more than 1 reply. Then skip
-                    continue
-                }
-                filteredThreadMessages.append(message)
-            }
-        }
-        else{//we're a thread specific chat
+//        if threadUUID == nil {
+//            for message in messages {
+//                guard let threadUUID = message.threadUUID else {
+//                    ///Message not on thread.
+//                    filteredThreadMessages.append(message)
+//                    continue
+//                }
+//                let messagesInThread = threadMessagesMap[threadUUID]
+//                if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
+//                    ///Thread has more than 1 message. Then skip
+//                    continue
+//                }
+//                filteredThreadMessages.append(message)
+//            }
+//        } else {
             filteredThreadMessages = messages
-        }
+//        }
         
 
         for (index, message) in filteredThreadMessages.enumerated() {
-            var isThreadSpecificChatFirstMessage : Bool = (message.uuid == threadUUID)
             
             invoiceData = (
                 invoiceData.0 + ((message.isPayment() && message.isIncoming(ownerId: owner.id)) ? -1 : 0),
@@ -220,8 +193,7 @@ extension NewChatTableDataSource {
                 groupingDate: &groupingDate
             )
             
-            if let separatorDate = bubbleStateAndDate.1,
-               isThreadSpecificChatFirstMessage == false{
+            if let separatorDate = bubbleStateAndDate.1 {
                 array.insert(
                     MessageTableCellState(
                         chat: chat,
@@ -235,7 +207,7 @@ extension NewChatTableDataSource {
                 )
             }
             
-            let replyingMessage = (message.replyUUID != nil && threadUUID == nil) ? replyingMessagesMap[message.replyUUID!] : nil //override reply rendering if we're in thread specific chat
+            let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
             let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
             let threadMessages = (message.uuid != nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
@@ -261,13 +233,8 @@ extension NewChatTableDataSource {
                 linkWeb: linkWeb,
                 invoiceData: (invoiceData.0 > 0, invoiceData.1 > 0)
             )
-            if(isThreadSpecificChatFirstMessage == false){
-                array.insert(messageTableCellState, at: 0)
-            }
-            else{
-                firstThreadMessageState = messageTableCellState
-                continue
-            }
+            
+            array.insert(messageTableCellState, at: 0)
             
             invoiceData = (
                 invoiceData.0 + ((message.isInvoice() && message.isPaid() && message.isOutgoing(ownerId: owner.id)) ? 1 : 0),
@@ -564,7 +531,6 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
             for: chat,
             threadUUID: threadUUID,
-            isForShowAllThreads: isForShowAllThreads,
             with: items
         )
 
@@ -637,7 +603,6 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
                 }
                 
                 self.processMessages(messages: self.messagesArray)
-                self.delegate?.didReloadContent()
             }
         }
     }

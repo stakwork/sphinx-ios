@@ -17,6 +17,7 @@ public enum MessagesSize: Int {
 class Constants {
     
     public static var kMargin: CGFloat = 16.0
+    public static var kMarginForAllThreads: CGFloat = 48.0
     public static var kChatTableContentInset: CGFloat = 16.0
     
     //Fonts

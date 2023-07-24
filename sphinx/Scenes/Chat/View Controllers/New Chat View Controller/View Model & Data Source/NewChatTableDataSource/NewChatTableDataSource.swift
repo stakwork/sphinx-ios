@@ -158,6 +158,7 @@ class NewChatTableDataSource : NSObject {
             tableView.contentInset.top = Constants.kMargin
         }
         else{
+            tableView.contentInset.top = Constants.kMarginForAllThreads
             //tableView.scrollToBottom()
         }
         tableView.delegate = self

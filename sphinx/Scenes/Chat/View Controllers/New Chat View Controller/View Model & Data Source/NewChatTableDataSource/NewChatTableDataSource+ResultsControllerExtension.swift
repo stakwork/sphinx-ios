@@ -111,11 +111,6 @@ extension NewChatTableDataSource {
                 indexPath: indexPath
             )
             
-            //@Tom this is where we can determine if it is a thread. It will only run if we are looking at the original chat
-            if self.threadUUID == nil, (dataSourceItem.threadMessages.count > 1) {
-                cell?.contentView.backgroundColor = .red
-            }
-            
             cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
             
             return (cell as? UITableViewCell) ?? UITableViewCell()
@@ -160,23 +155,23 @@ extension NewChatTableDataSource {
         
         var filteredThreadMessages: [TransactionMessage] = []
         
-//        if threadUUID == nil {
-//            for message in messages {
-//                guard let threadUUID = message.threadUUID else {
-//                    ///Message not on thread.
-//                    filteredThreadMessages.append(message)
-//                    continue
-//                }
-//                let messagesInThread = threadMessagesMap[threadUUID]
-//                if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
-//                    ///Thread has more than 1 message. Then skip
-//                    continue
-//                }
-//                filteredThreadMessages.append(message)
-//            }
-//        } else {
+        if threadUUID == nil {
+            for message in messages {
+                guard let threadUUID = message.threadUUID else {
+                    ///Message not on thread.
+                    filteredThreadMessages.append(message)
+                    continue
+                }
+                let messagesInThread = threadMessagesMap[threadUUID]
+                if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
+                    ///Thread has more than 1 message. Then skip
+                    continue
+                }
+                filteredThreadMessages.append(message)
+            }
+        } else {
             filteredThreadMessages = messages
-//        }
+        }
         
 
         for (index, message) in filteredThreadMessages.enumerated() {
@@ -189,7 +184,7 @@ extension NewChatTableDataSource {
             let bubbleStateAndDate = getBubbleBackgroundForMessage(
                 message: message,
                 with: index,
-                in: messages,
+                in: filteredThreadMessages,
                 groupingDate: &groupingDate
             )
             
@@ -413,7 +408,11 @@ extension NewChatTableDataSource {
             return [:]
         }
         
-        let messageUUIDs: [String] = messages.map({ $0.threadUUID ?? "" }).filter({ $0.isNotEmpty })
+        if threadUUID != nil {
+            return [:]
+        }
+        
+        let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
         let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
         
         var threadMessagesMap: [String: [TransactionMessage]] = [:]

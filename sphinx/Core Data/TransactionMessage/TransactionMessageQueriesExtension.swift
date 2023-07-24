@@ -281,7 +281,7 @@ extension TransactionMessage {
     ) -> [TransactionMessage] {
         let boostType = TransactionMessageType.boost.rawValue
         let predicate = NSPredicate(format: "chat == %@ AND type != %d AND threadUUID != nil AND (threadUUID IN %@)", chat, boostType, messages)
-        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
         let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
         
         return reactions

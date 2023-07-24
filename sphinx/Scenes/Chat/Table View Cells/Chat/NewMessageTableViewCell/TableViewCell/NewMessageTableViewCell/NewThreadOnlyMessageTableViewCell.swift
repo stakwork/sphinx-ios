@@ -178,9 +178,9 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     }
     
     @objc func handleThreadTap(){
-        if let threadUUID = threadUUID{
-            delegate?.didTapOnThread(threadUUID: threadUUID)
-        }
+//        if let threadUUID = threadUUID {
+//            delegate?.didTapOnThread(threadUUID: threadUUID)
+//        }
     }
     
 }

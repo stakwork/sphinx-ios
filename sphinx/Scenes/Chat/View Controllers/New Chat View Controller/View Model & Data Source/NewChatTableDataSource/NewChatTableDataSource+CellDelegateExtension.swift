@@ -977,7 +977,7 @@ extension NewChatTableDataSource {
 
 extension NewChatTableDataSource {
     func getTableCellStateFor(
-        messageId: Int,
+        messageId: Int? = nil,
         and rowIndex: Int? = nil
     ) -> (Int, MessageTableCellState)? {
         
@@ -1010,12 +1010,4 @@ extension NewChatTableDataSource {
         
         return tableCellStates
     }
-}
-
-
-extension NewChatTableDataSource : NewThreadOnlyMessageTableViewCellDelegate{
-    func didTapOnThread(threadUUID: String) {
-        delegate?.didTapThread(threadUUID: threadUUID)
-    }
-    
 }

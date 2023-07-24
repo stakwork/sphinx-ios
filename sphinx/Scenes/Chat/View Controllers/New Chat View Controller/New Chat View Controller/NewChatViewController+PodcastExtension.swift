@@ -14,6 +14,10 @@ extension NewChatViewController {
             return
         }
         
+        if threadUUID != nil {
+            return
+        }
+        
         FeedLoaderHelper.loadPodcastFeedFor(chat: chat, callback: { podcast in
             self.addSmallPlayerFor(podcast)
         })

@@ -12,7 +12,7 @@ import UIKit
     func shouldDismiss(completion: @escaping (() -> ()))
     func shouldDeleteMessage()
     func shouldReplyToMessage()
-    func shouldShowMessageThread()
+    func shouldShowThread()
     func shouldSaveFile()
     func shouldBoostMessage()
     func shouldResendMessage()
@@ -259,7 +259,7 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .Reply:
             delegate?.shouldReplyToMessage()
         case .ShowThread:
-            delegate?.shouldShowMessageThread()
+            delegate?.shouldShowThread()
         case .Save:
             delegate?.shouldSaveFile()
         case .Boost:

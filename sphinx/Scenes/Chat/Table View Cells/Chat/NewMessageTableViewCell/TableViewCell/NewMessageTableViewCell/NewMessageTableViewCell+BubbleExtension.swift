@@ -87,7 +87,7 @@ extension NewMessageTableViewCell {
         
         sentArrow.isHidden = !isOutgoing
         sentArrow.setArrowColorTo(
-            color: isThread ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
+            color: isThread ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.SentMsgBG
         )
         
         messageLabelLeadingConstraint.priority = UILayoutPriority(textRightAligned ? 1 : 1000)

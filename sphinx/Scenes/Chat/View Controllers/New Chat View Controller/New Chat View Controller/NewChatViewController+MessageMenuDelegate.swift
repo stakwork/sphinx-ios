@@ -10,7 +10,7 @@ import Foundation
 
 extension NewChatViewController : MessageOptionsVCDelegate {
     
-    func shouldShowMessageThread(message: TransactionMessage) {
+    func shouldShowThreadFor(message: TransactionMessage) {
         if let threadUUID = message.threadUUID {
             self.showThread(threadID: threadUUID)
         } else if let uuid = message.uuid {

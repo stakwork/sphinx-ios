@@ -11,12 +11,11 @@ import UIKit
 extension NewChatViewController {
     func fetchTribeData() {
         configureMentions()
+        
         if chat?.isPublicGroup() == false {
             return
         }
         
-        
-
         chat?.updateTribeInfo() {
             self.headerView.setChatInfoOnHeader()
             self.loadPodcastFeed()
@@ -34,6 +33,10 @@ extension NewChatViewController {
     
     ///Pinned Message
     func configurePinnedMessageView() {
+        if threadUUID != nil {
+            return
+        }
+        
         if let chatId = chat?.id {
             headerView.configurePinnedMessageViewWith(
                 chatId: chatId,

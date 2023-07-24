@@ -9,6 +9,14 @@
 import UIKit
 
 extension NewChatTableDataSource: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if messageTableCellStateArray.count > indexPath.row {
+            if let message = messageTableCellStateArray[indexPath.row].message {
+                delegate?.shouldShowThreadFor(message: message)
+            }
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let difference: CGFloat = 16
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference

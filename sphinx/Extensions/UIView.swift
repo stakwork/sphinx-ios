@@ -237,6 +237,12 @@ extension UIView {
         self.layer.addSublayer(messageArrowLayer)
     }
     
+    func setArrowColorTo(
+        color: UIColor
+    ) {
+        ((self.layer.sublayers?.filter { $0.name == "arrow" })?.first as? CAShapeLayer)?.fillColor = color.cgColor
+    }
+    
     func drawSentBubbleArrow(
         color: UIColor,
         arrowWidth: CGFloat = 7

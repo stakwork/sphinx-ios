@@ -11,6 +11,8 @@ import UIKit
 extension NewMessageTableViewCell {
     
     func setupViews() {
+        mediaContentHeightConstraint.constant = (UIScreen.main.bounds.width - MessageTableCellState.kRowLeftMargin - MessageTableCellState.kRowRightMargin) * 0.7
+        
         bubbleAllView.layer.cornerRadius = MessageTableCellState.kBubbleCornerRadius
         leftPaymentDot.layer.cornerRadius = leftPaymentDot.frame.height / 2
         rightPaymentDot.layer.cornerRadius = rightPaymentDot.frame.height / 2

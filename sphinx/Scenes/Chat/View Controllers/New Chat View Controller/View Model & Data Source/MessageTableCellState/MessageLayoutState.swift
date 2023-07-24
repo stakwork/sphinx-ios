@@ -119,7 +119,7 @@ struct BubbleMessageLayoutState {
         }
     }
     
-    struct ThreadMessages{
+    struct ThreadMessages {
         var originalMessage: ThreadMessage
         var threadMessages: [ThreadMessage]
         

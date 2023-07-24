@@ -62,29 +62,42 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
-        bubble: BubbleMessageLayoutState.Bubble
+        bubble: BubbleMessageLayoutState.Bubble,
+        threadMessages: BubbleMessageLayoutState.ThreadMessages?
     ) {
-        configureWith(direction: bubble.direction)
+        configureWith(direction: bubble.direction, threadMessages: threadMessages)
         configureWith(bubbleState: bubble.grouping, direction: bubble.direction)
     }
     
     func configureWith(
-        direction: MessageTableCellState.MessageDirection
+        direction: MessageTableCellState.MessageDirection,
+        threadMessages: BubbleMessageLayoutState.ThreadMessages?
     ) {
         let isOutgoing = direction.isOutgoing()
+//        let isThread = threadMessages != nil
+        let isThread = true
         let textRightAligned = isOutgoing && bubbleAllView.isHidden
         
         sentMessageMargingView.isHidden = !isOutgoing
         receivedMessageMarginView.isHidden = isOutgoing
         
         receivedArrow.isHidden = isOutgoing
+        receivedArrow.setArrowColorTo(
+            color: isThread ? UIColor.Sphinx.ThreadOriginalMsg : UIColor.Sphinx.ReceivedMsgBG
+        )
+        
         sentArrow.isHidden = !isOutgoing
+        sentArrow.setArrowColorTo(
+            color: isThread ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
+        )
         
         messageLabelLeadingConstraint.priority = UILayoutPriority(textRightAligned ? 1 : 1000)
         messageLabelTrailingConstraint.priority = UILayoutPriority(textRightAligned ? 1000 : 1)
         
         let bubbleColor = isOutgoing ? UIColor.Sphinx.SentMsgBG : UIColor.Sphinx.ReceivedMsgBG
-        bubbleAllView.backgroundColor = bubbleColor
+        let threadBubbleColor = isOutgoing ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.ThreadLastReply
+        
+        bubbleAllView.backgroundColor = isThread ? threadBubbleColor : bubbleColor
         
         statusHeaderView.configureWith(direction: direction)
     }

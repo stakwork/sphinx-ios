@@ -74,6 +74,16 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        threadMessages: BubbleMessageLayoutState.ThreadMessages?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+//        if let messageThreadView = messageThreadView {
+            messageThreadView.configureWith(threadMessages: threadMessages, and: bubble)
+            messageThreadViewContainer.isHidden = false  
+//        }
+    }
+    
+    func configureWith(
         messageReply: BubbleMessageLayoutState.MessageReply?,
         and bubble: BubbleMessageLayoutState.Bubble
     ) {

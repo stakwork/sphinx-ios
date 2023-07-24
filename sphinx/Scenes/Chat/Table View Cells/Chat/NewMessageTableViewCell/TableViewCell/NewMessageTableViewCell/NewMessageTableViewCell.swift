@@ -109,7 +109,10 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var botResponseViewHeightConstraint: NSLayoutConstraint!
     
     ///First Container
-    @IBOutlet weak var messageReplyView: NewMessageReplyView!
+    @IBOutlet weak var messageReplyView: NewMessageReplyView! 
+    @IBOutlet weak var threadLastReplyHeader: ThreadLastMessageHeader!
+    @IBOutlet weak var messageThreadViewContainer: UIView!
+    @IBOutlet weak var messageThreadView: MessageThreadView!
     
     ///Second Container
     @IBOutlet weak var invoicePaymentView: InvoicePaymentView!
@@ -118,6 +121,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var paidTextMessageView: UIView!
     @IBOutlet weak var directPaymentView: DirectPaymentView!
     @IBOutlet weak var mediaContentView: MediaMessageView!
+    @IBOutlet weak var mediaContentHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView!
     @IBOutlet weak var podcastAudioView: PodcastAudioView!
@@ -196,6 +200,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
+        configureWith(threadMessages: mutableMessageCellState.threadMessagesState, and: bubble)
         
         ///Paid Content
         configureWith(paidContent: mutableMessageCellState.paidContent, and: bubble)
@@ -222,7 +227,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(avatarImage: mutableMessageCellState.avatarImage)
         
         ///Direction and grouping
-        configureWith(bubble: bubble)
+        configureWith(bubble: bubble, threadMessages: mutableMessageCellState.threadMessagesState)
         
         ///Invoice Lines
         configureWith(invoiceLines: mutableMessageCellState.invoicesLines)

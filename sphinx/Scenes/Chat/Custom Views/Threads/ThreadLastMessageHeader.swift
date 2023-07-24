@@ -9,13 +9,33 @@
 import UIKit
 
 class ThreadLastMessageHeader: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    @IBOutlet var contentView: UIView!
+    
+    @IBOutlet weak var chatAvatarView: ChatAvatarView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
     }
-    */
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+
+    private func setup() {
+        Bundle.main.loadNibNamed("ThreadLastMessageHeader", owner: self, options: nil)
+        addSubview(contentView)
+        
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        chatAvatarView.setInitialLabelSize(size: 11)
+        chatAvatarView.resetView()
+    }
 
 }

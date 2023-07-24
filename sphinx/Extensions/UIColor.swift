@@ -99,6 +99,9 @@ public extension UIColor {
         public static let FeedItemDetailDivider = color("FeedItemDetailDivider")
         public static let RowViewsDivider = color("RowViewsDivider")
         
+        public static let ThreadOriginalMsg = color("ThreadOriginalMsg")
+        public static let ThreadLastReply = color("ThreadLastReply")
+        
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta
             

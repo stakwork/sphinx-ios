@@ -531,6 +531,10 @@
 		47DAABCB24913E6E00EF38B0 /* SwipableReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DAABCA24913E6E00EF38B0 /* SwipableReplyCell.swift */; };
 		47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DAABCD2491410900EF38B0 /* MessageReplyView.swift */; };
 		47DAABD02491411400EF38B0 /* MessageReplyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47DAABCF2491411400EF38B0 /* MessageReplyView.xib */; };
+		47DE1C452A6ED0A50029597B /* MessageThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE1C442A6ED0A50029597B /* MessageThreadView.swift */; };
+		47DE1C472A6ED0B00029597B /* MessageThreadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47DE1C462A6ED0B00029597B /* MessageThreadView.xib */; };
+		47DE1C492A6ED0C30029597B /* ThreadLastMessageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */; };
+		47DE1C4B2A6ED0CA0029597B /* ThreadLastMessageHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */; };
 		47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */; };
 		47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */; };
 		47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */; };
@@ -1480,6 +1484,10 @@
 		47DAABCD2491410900EF38B0 /* MessageReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReplyView.swift; sourceTree = "<group>"; };
 		47DAABCF2491411400EF38B0 /* MessageReplyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageReplyView.xib; sourceTree = "<group>"; };
 		47DE1C422A6EB6CC0029597B /* sphinx 44.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 44.xcdatamodel"; sourceTree = "<group>"; };
+		47DE1C442A6ED0A50029597B /* MessageThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageThreadView.swift; sourceTree = "<group>"; };
+		47DE1C462A6ED0B00029597B /* MessageThreadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageThreadView.xib; sourceTree = "<group>"; };
+		47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadLastMessageHeader.swift; sourceTree = "<group>"; };
+		47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadLastMessageHeader.xib; sourceTree = "<group>"; };
 		47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxSocketManager.swift; sourceTree = "<group>"; };
 		47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuAddFriendTableViewCell.swift; sourceTree = "<group>"; };
 		47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRowButton.swift; sourceTree = "<group>"; };
@@ -2697,6 +2705,7 @@
 		475BDC96232AC15C00C5BBD6 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				47DE1C432A6ED07C0029597B /* Threads */,
 				47363CF62A4B268400C295D4 /* Search */,
 				476AAAA32A24FF0D0092AC87 /* New Chat VC */,
 				478BD8B72829B6F400C733FD /* Tribe Member */,
@@ -3697,6 +3706,17 @@
 			path = "Message Reply";
 			sourceTree = "<group>";
 		};
+		47DE1C432A6ED07C0029597B /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				47DE1C442A6ED0A50029597B /* MessageThreadView.swift */,
+				47DE1C462A6ED0B00029597B /* MessageThreadView.xib */,
+				47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */,
+				47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
 		47E194CC2350DAFC004B86A1 /* Websocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -4525,6 +4545,7 @@
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
+				47DE1C4B2A6ED0CA0029597B /* ThreadLastMessageHeader.xib in Resources */,
 				47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */,
 				CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
@@ -4545,6 +4566,7 @@
 				47904C0924BF352300710E7A /* note.caf in Resources */,
 				475BDD4E232AD00D00C5BBD6 /* Roboto-Regular.ttf in Resources */,
 				4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */,
+				47DE1C472A6ED0B00029597B /* MessageThreadView.xib in Resources */,
 				CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */,
 				47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */,
 				4746466C2988331A00FAF58B /* Dashboard.storyboard in Resources */,
@@ -4835,6 +4857,7 @@
 				F3DC6B06273C9D8600458E09 /* ContentFeedKind.swift in Sources */,
 				47FA44132374B6D4005D8C63 /* SubscriptionAmountView.swift in Sources */,
 				47CC7CE223E3611600730E6F /* API+TransactionsExtension.swift in Sources */,
+				47DE1C452A6ED0A50029597B /* MessageThreadView.swift in Sources */,
 				476EB47223C5064C009745E2 /* GroupAllContactsDataSource.swift in Sources */,
 				47308E0024FEE6E600FFAC6F /* SocketLogger.swift in Sources */,
 				47E6A4DC2A2E703800A9509E /* GroupRequestView.swift in Sources */,
@@ -5074,6 +5097,7 @@
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
 				475DD30C2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift in Sources */,
+				47DE1C492A6ED0C30029597B /* ThreadLastMessageHeader.swift in Sources */,
 				47CFA9462A38C5200030BC23 /* NewChatTableDataSource+ScrollExtension.swift in Sources */,
 				477BCF322A0031060080ED65 /* TransactionTableViewCell.swift in Sources */,
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,

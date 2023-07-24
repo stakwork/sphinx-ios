@@ -41,6 +41,9 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
     
     override func prepareForReuse() {
         self.threadUUID = nil
+        for item in avatarIconStackView.arrangedSubviews{
+            item.removeFromSuperview()
+        }
     }
     
     func getReplyCountText(threadMessageCount:Int)->String{
@@ -85,7 +88,7 @@ class NewThreadOnlyMessageTableViewCell: UITableViewCell,ChatTableViewCellProtoc
                     let newImageView = UIImageView(frame: newView.frame)
                     //newImageView.image = #imageLiteral(resourceName: "bluecheckmark")
                     let url = URL(string: path)
-                    newImageView.sd_setImage(with: URL(string: path))
+                    newImageView.sd_setImage(with: url)
                     newImageView.contentMode = .scaleAspectFill
                     newImageView.makeCircular()
                     newImageView.translatesAutoresizingMaskIntoConstraints = false

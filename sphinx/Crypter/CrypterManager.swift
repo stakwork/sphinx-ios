@@ -76,25 +76,26 @@ class CrypterManager : NSObject {
     }
     
     func setupSigningDevice() {
-        let packed = Data([147, 146, 164, 97, 97, 97, 97, 146, 15, 147, 204, 255, 204, 255, 204, 255, 146, 164, 98, 98, 98, 98, 146, 15, 147, 204, 255, 204, 255, 204, 255, 146, 164, 99, 99, 99, 99, 146, 15, 147, 204, 255, 204, 255, 204, 255])
+        let packed = Data([147, 146, 164, 97, 97, 97, 97, 146, 15, 196, 3, 255, 255, 255, 146, 164, 98, 98, 98, 98, 146, 15, 196, 3, 255, 255, 255, 146, 164, 99, 99, 99, 99, 146, 15, 196, 3, 255, 255, 255])
         
         let unpacked = try? unpack(packed)
+        let unpackedValue = (unpacked?.value as? MessagePackValue)?.arrayValue![0].arrayValue![1].arrayValue![0]
         
         print(unpacked?.value)
         
-        array(
-            [
-                array(
-                    [string(aaaa), array([uint(15), array([uint(255), uint(255), uint(255)])])]
-                ),
-                array(
-                    [string(bbbb), array([uint(15), array([uint(255), uint(255), uint(255)])])]
-                ),
-                array(
-                    [string(cccc), array([uint(15), array([uint(255), uint(255), uint(255)])])]
-                )
-            ]
-        )
+//        array(
+//            [
+//                array(
+//                    [string(aaaa), array([uint(15), array([uint(255), uint(255), uint(255)])])]
+//                ),
+//                array(
+//                    [string(bbbb), array([uint(15), array([uint(255), uint(255), uint(255)])])]
+//                ),
+//                array(
+//                    [string(cccc), array([uint(15), array([uint(255), uint(255), uint(255)])])]
+//                )
+//            ]
+//        )
     }
     
     func checkNetwork(callback: @escaping () -> ()) {

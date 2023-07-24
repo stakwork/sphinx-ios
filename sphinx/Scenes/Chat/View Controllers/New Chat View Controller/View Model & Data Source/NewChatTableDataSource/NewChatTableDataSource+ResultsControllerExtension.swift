@@ -235,7 +235,7 @@ extension NewChatTableDataSource {
                 )
             }
             
-            let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
+            let replyingMessage = (message.replyUUID != nil && threadUUID == nil) ? replyingMessagesMap[message.replyUUID!] : nil //override reply rendering if we're in thread specific chat
             let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
             let threadMessages = (message.uuid != nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]

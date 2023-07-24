@@ -20,7 +20,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FI6-aK-lAW">
@@ -36,13 +36,6 @@
                                         <constraint firstAttribute="height" constant="65" id="lOP-hO-KsQ"/>
                                     </constraints>
                                 </view>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJs-Uv-YIA" customClass="ThreadHeaderView" customModule="sphinx" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
-                                    <color key="backgroundColor" name="HeaderBG"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" priority="750" constant="225" id="4KM-fc-wtN"/>
-                                    </constraints>
-                                </view>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yU6-b4-LJg" customClass="PinnedMessageView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -52,6 +45,13 @@
                                 </view>
                             </subviews>
                         </stackView>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJs-Uv-YIA" customClass="ThreadHeaderView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
+                            <color key="backgroundColor" name="HeaderBG"/>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="250" constant="100" id="4KM-fc-wtN"/>
+                            </constraints>
+                        </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UhC-rO-mzO" customClass="ChatSearchTextFieldView" customModule="sphinx" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

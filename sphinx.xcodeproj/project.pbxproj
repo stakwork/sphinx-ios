@@ -3052,8 +3052,6 @@
 				47F8266D2A0D2B66002E81F0 /* NewChatAccessoryView.xib */,
 				472092B82A24FF6100468796 /* NewChatHeaderView.swift */,
 				472092BA2A24FF6E00468796 /* NewChatHeaderView.xib */,
-				CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */,
-				CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */,
 			);
 			path = "New Chat VC";
 			sourceTree = "<group>";
@@ -3713,6 +3711,8 @@
 				47DE1C462A6ED0B00029597B /* MessageThreadView.xib */,
 				47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */,
 				47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */,
+				CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */,
+				CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */,
 			);
 			path = Threads;
 			sourceTree = "<group>";

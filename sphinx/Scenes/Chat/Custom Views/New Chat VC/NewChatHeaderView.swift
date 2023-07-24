@@ -81,10 +81,9 @@ class NewChatHeaderView: UIView {
             message: message,
             delegate: delegate
         )
-        
         threadHeaderView.isHidden = false
-        chatHeaderView.isHidden = true
-        pinnedMessageView.isHidden = true
+        
+        normalModeStackView.isHidden = true
         chatSearchView.isHidden = true
     }
     

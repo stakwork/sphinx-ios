@@ -299,6 +299,13 @@
 "profile.mnemonic-copied" = "Mnemonic words copied to clipboard";
 "profile.bitcoin-network" = "Bitcoin Network";
 "profile.select-bitcoin-network" = "Select Bitcoin Network";
+"profile.mnemonic-generation-title" = "Mnemonic generation";
+"profile.mnemonic-generation-description" = "Choose the option of your preference";
+"profile.mnemonic-enter-title" = "Mnemonic words";
+"profile.mnemonic-enter-description" = "Enter your 12 or 24 mnemonic words separated by a space";
+"profile.mnemonic-enter-error" = "The entered words are not valid";
+"profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
+"profile.mnemonic-generate" = "Generate random mnemonic words";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";
@@ -415,6 +422,7 @@
 "bot.response" = "Bot response";
 "file" = "File";
 "downloading.file" = "Downloading file...";
+"downloaded.content" = "Downloaded Content";
 "amount.too.low" = "Amount too low";
 "amount.too.high" = "Amount too high";
 "onchain.amount.too.low" = "Amount too low. Minimum 250000 sats";

@@ -16,9 +16,9 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastEpisodeWithID podcastEpisodeID: String
+        didSelectPodcastEpisodeWithID podcastEpisodeID: String,
+        fromDownloadedSection: Bool
     )
-    
     
     func viewController(
         _ viewController: UIViewController,
@@ -101,6 +101,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         AllTribeFeedsCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
             onCellSelected: handleAllFeedsCellSelection(_:),
+            onDownloadedItemSelected: handleDownloadedItemCellSelection(_:_:),
             onRecommendationSelected: handleRecommendationSelection(_:_:),
             onNewResultsFetched: handleNewResultsFetch(_:),
             onContentScrolled: handleFeedScroll(scrollView:)
@@ -250,8 +251,6 @@ extension DashboardFeedsContainerViewController {
             return newsletterFeedCollectionViewController
         case ContentFilterOption.play.id:
             return playFeedCollectionViewController
-        case ContentFilterOption.downloaded.id:
-            return downloadedPodcastsVC
         default:
             preconditionFailure()
         }
@@ -355,6 +354,17 @@ extension DashboardFeedsContainerViewController {
         }
     }
     
+    private func handleDownloadedItemCellSelection(
+        _ feedId: String,
+        _ episodeId: String
+    ) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectPodcastEpisodeWithID: episodeId,
+            fromDownloadedSection: true
+        )
+    }
+    
     private func handleRecommendationSelection(
         _ recommendations: [RecommendationResult],
         _ selectedRecommendationId: String
@@ -378,7 +388,8 @@ extension DashboardFeedsContainerViewController {
     private func handlePodcastEpisodeCellSelection(_ feedItemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectPodcastEpisodeWithID: feedItemId
+            didSelectPodcastEpisodeWithID: feedItemId,
+            fromDownloadedSection: false
         )
     }
     

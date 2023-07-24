@@ -219,13 +219,16 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     func presentPodcastPlayerFor(
         _ podcast: PodcastFeed,
-        itemID:String?=nil
+        itemID: String? = nil
     ) {
+        if let itemID = itemID {
+            podcast.currentEpisodeId = itemID
+        }
+        
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
             podcast: podcast,
             delegate: self,
-            boostDelegate: self,
-            fromDashboard: true
+            boostDelegate: self
         )
         
         let navController = UINavigationController()
@@ -233,14 +236,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         navController.viewControllers = [podcastFeedVC]
         navController.modalPresentationStyle = .automatic
         navController.isNavigationBarHidden = true
-        navigationController?.present(navController, animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
-            if let itemID = itemID{
-                podcastFeedVC.loadEpisode(withID: itemID)
-            }
-        })
-        
+        navigationController?.present(navController, animated: true)        
     }
     
     func showDeletionWarningAlert(type:StorageManagerMediaType){

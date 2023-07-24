@@ -277,12 +277,14 @@ class PodcastPlayerView: UIView {
         delegate?.shouldReloadEpisodesTable()
     }
     
-    func didTapEpisodeAt(index: Int) {
-        audioLoading = true
-        
-        guard let episode = podcast.getEpisodeWith(index: index) else {
+    func didTapEpisodeWith(
+        episodeId: String
+    ) {
+        guard let episode = podcast.getEpisodeWith(id: episodeId) else {
             return
         }
+        audioLoading = true
+        
         playEpisode(episode: episode)
     }
     

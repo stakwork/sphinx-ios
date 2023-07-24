@@ -406,7 +406,7 @@ extension DashboardVideoFeedCollectionViewController {
             return snapshot
         }
 
-        snapshot.appendSections(CollectionViewSection.allCases)
+        snapshot.appendSections([CollectionViewSection.recentlyReleaseVideos])
         
         snapshot.appendItems(
             followedVideoFeeds
@@ -415,11 +415,18 @@ extension DashboardVideoFeedCollectionViewController {
             toSection: .recentlyReleaseVideos
         )
         
-        snapshot.appendItems(
-            allVideoFeeds
-                .map { DataSourceItem.videoFeed($0) },
-            toSection: .recentlyPlayedVideos
-        )
+        let recentlyPlayedFeed = allVideoFeeds.filter { $0.dateLastConsumed != nil }.compactMap { contentFeed -> DataSourceItem? in
+            return DataSourceItem.videoFeed(contentFeed)
+        }
+        
+        if !recentlyPlayedFeed.isEmpty {
+            snapshot.appendSections([CollectionViewSection.recentlyPlayedVideos])
+            
+            snapshot.appendItems(
+                recentlyPlayedFeed,
+                toSection: .recentlyPlayedVideos
+            )
+        }
 
         return snapshot
     }

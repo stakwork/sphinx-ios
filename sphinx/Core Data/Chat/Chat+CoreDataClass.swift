@@ -382,15 +382,6 @@ public class Chat: NSManagedObject {
     
     var unseenMessagesCount: Int = 0
     
-    var unseenMessagesCountLabel: String {
-        get {
-            if unseenMessagesCount > 0 {
-                return "+\(unseenMessagesCount)"
-            }
-            return ""
-        }
-    }
-    
     func getReceivedUnseenMessagesCount() -> Int {
         return unseenMessagesCount
     }

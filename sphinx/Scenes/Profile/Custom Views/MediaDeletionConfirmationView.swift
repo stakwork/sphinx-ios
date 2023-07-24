@@ -172,7 +172,7 @@ class MediaDeletionConfirmationView: UIView {
         imageViewWidth.constant = 68
         gotItButton.isHidden = false
         gotItButton.layer.borderWidth = cancelButton.layer.borderWidth
-        gotItButton.layer.borderColor = gotItButton.layer.borderColor
+        gotItButton.layer.borderColor = UIColor.Sphinx.Text.cgColor
         gotItButton.layer.cornerRadius = gotItButton.frame.height/2.0
         layoutIfNeeded()
         if let source = source,

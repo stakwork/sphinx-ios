@@ -43,11 +43,20 @@ class StorageManagerItem{
     var sizeMB : Double
     var label : String
     var date : Date
-    var sourceFilePath:String?
-    var cachedMedia:CachedMedia?
-    var uid:String?=nil
+    var sourceFilePath: String?
+    var cachedMedia: CachedMedia?
+    var uid:String? = nil
     
-    init(source:StorageManagerMediaSource,type:StorageManagerMediaType,sizeMB:Double,label:String,date:Date,sourceFilePath:String?=nil,cachedMedia:CachedMedia?=nil,uid:String?=nil) {
+    init(
+        source: StorageManagerMediaSource,
+        type: StorageManagerMediaType,
+        sizeMB: Double,
+        label: String,
+        date: Date,
+        sourceFilePath: String?=nil,
+        cachedMedia: CachedMedia?=nil,
+        uid: String?=nil
+    ) {
         self.type = type
         self.sizeMB = sizeMB
         self.label = label
@@ -156,7 +165,6 @@ class StorageManager {
         var chatsToItemDict = [Chat:[StorageManagerItem]]()
         if let chatsOnly = bySource[.chats]{
             for item in chatsOnly{
-                print(item.cachedMedia)
                 if let cm = item.cachedMedia,
                    let itemsChat = cm.chat{
                     if chatsToItemDict[itemsChat] != nil{
@@ -241,7 +249,7 @@ class StorageManager {
             wdt_flag = false
         })
         let choppingBlockSnapshot = allItems.sorted(by: {$0.date < $1.date})//static snapshot that never changes
-        var changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
+        let changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
         var i = 0
         var semaphore = false
         while(checkForMemoryOverflow(items: changingChoppingBlock) && wdt_flag){
@@ -291,24 +299,20 @@ class StorageManager {
     func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem]) -> ()) {
         let blah = CachedMedia.getAll()
         let videoCMs = blah.filter({ cm in cm.fileExtension != "png" })
-        let fileManager = FileManager.default
         
         var items = [StorageManagerItem]()
         let sc = SphinxCache()
         for cm in videoCMs {
             var size: UInt64? = nil
-            do {
-                if let key = cm.key,
-                   let fileData = sc.value(forKey: key) {
-                    size = UInt64(fileData.count)
-                    
-                    let type = getStorageManagerTypeFromExtension(cm:cm)
-                    
-                    let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
-                    items.append(newItem)
-                }
-            } catch {
-                print("Error retrieving size of the file")
+            
+            if let key = cm.key,
+               let fileData = sc.value(forKey: key) {
+                size = UInt64(fileData.count)
+                
+                let type = getStorageManagerTypeFromExtension(cm:cm)
+                
+                let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
+                items.append(newItem)
             }
         }
         
@@ -474,17 +478,15 @@ class StorageManager {
     func deleteAllPodcasts(completion:@escaping ()->()){
         var podsCounter = downloadedPods.count
         podsCounter == 0 ? (completion()) : ()
-        for pod in downloadedPods{
+        for pod in downloadedPods {
             if let sourcePath = pod.sourceFilePath{
                 deletePodEpisodeWithFileName(
                     fileName: sourcePath,
                     successCompletion: {
-                    print("deleted pod with id:\(pod.uid)")
                         podsCounter-=1
                         podsCounter > 0 ? () : completion()
                     },
                     failureCompletion: {
-                        print("failed to delete pod with id:\(pod.uid)")
                         podsCounter-=1
                         podsCounter > 0 ? () : completion()
                     })
@@ -492,7 +494,11 @@ class StorageManager {
         }
     }
     
-    func deletePodEpisodeWithFileName(fileName:String,successCompletion: @escaping ()->(),failureCompletion: @escaping ()->()){
+    func deletePodEpisodeWithFileName(
+        fileName: String,
+        successCompletion: @escaping ()->(),
+        failureCompletion: @escaping ()->()
+    ){
         if let path = FileManager
             .default
             .urls(for: .documentDirectory, in: .userDomainMask)
@@ -501,6 +507,7 @@ class StorageManager {
             
             if FileManager.default.fileExists(atPath: path.path) {
                 try? FileManager.default.removeItem(at: path)
+                updateLastDownloadedEpisodeFor(fileName: fileName)
                 successCompletion()
             }
             else{
@@ -510,6 +517,21 @@ class StorageManager {
         else{
             failureCompletion()
         }
+    }
+    
+    func updateLastDownloadedEpisodeFor(fileName: String) {
+        if let feedId = getFeedIdFrom(fileName: fileName) {
+            if let feed = ContentFeed.getFeedById(feedId: feedId) {
+                feed.lastDownloadedEpisodeId = nil
+            }
+        }
+    }
+    
+    func getFeedIdFrom(fileName: String) -> String? {
+        if let feedId = fileName.split(separator: "_").first {
+            return String(feedId)
+        }
+        return nil
     }
     
     func deleteAllOldChatMedia(completion: @escaping ()->()){
@@ -570,8 +592,8 @@ class StorageManager {
             print(file.lastPathComponent)
             if let split = getFeedItemPairForString(string: file.lastPathComponent),
                split.count > 1{
-                var feedID = String(split[0])
-                var itemID = String(split[1])
+                let feedID = String(split[0])
+                let itemID = String(split[1])
                 if var existingFeedArray = results[feedID]{
                     existingFeedArray.append(itemID)
                     results[feedID] = existingFeedArray
@@ -587,8 +609,8 @@ class StorageManager {
     func getFeedItemPairForString(string:String)->[String]?{
         let split = string.split(separator: "_")
         if split.count > 1{
-            var feedID = String(split[0])
-            var itemID = String(split[1])
+            let feedID = String(split[0])
+            let itemID = String(split[1])
             
             return [feedID,itemID]
         }

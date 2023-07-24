@@ -37,5 +37,18 @@ class ThreadLastMessageHeader: UIView {
         chatAvatarView.setInitialLabelSize(size: 11)
         chatAvatarView.resetView()
     }
+    
+    func configureWith(
+        threadLastReply: BubbleMessageLayoutState.ThreadLastReply
+    ) {
+        chatAvatarView.configureForUserWith(
+            color: threadLastReply.lastReplySenderInfo.0,
+            alias: threadLastReply.lastReplySenderInfo.1,
+            picture: threadLastReply.lastReplySenderInfo.2
+        )
+        
+        nameLabel.text = threadLastReply.lastReplySenderInfo.1
+        dateLabel.text = threadLastReply.timestamp
+    }
 
 }

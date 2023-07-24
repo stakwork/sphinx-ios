@@ -642,3 +642,6 @@
 "start.video.call" = "Iniciar video llamada";
 "send.payment" = "Enviar pago";
 "request.payment" = "Solicitar pago";
+
+//THREAD
+"more-replies" = "respuestas más";

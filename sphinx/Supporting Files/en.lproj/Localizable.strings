@@ -646,3 +646,6 @@
 "start.video.call" = "Start Video Call";
 "send.payment" = "Send Payment";
 "request.payment" = "Request Payment";
+
+//THREAD
+"more-replies" = "more replies";

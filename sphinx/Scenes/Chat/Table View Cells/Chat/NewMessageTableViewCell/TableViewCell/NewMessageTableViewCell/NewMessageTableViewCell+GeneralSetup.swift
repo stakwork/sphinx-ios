@@ -45,6 +45,8 @@ extension NewMessageTableViewCell {
         invoicePaymentView.isHidden = true
         invoiceView.isHidden = true
         messageReplyView.isHidden = true
+        messageThreadViewContainer.isHidden = true
+        threadLastReplyHeader.isHidden = true
         sentPaidDetailsView.isHidden = true
         paidTextMessageView.isHidden = true
         directPaymentView.isHidden = true

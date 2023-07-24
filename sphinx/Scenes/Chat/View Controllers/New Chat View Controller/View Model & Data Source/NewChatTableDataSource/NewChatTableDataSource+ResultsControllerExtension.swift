@@ -209,7 +209,7 @@ extension NewChatTableDataSource {
             
             let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
             let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
-            let threadMessages = (message.uuid != nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
+            let threadMessages = (message.uuid != nil && threadUUID == nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
             let linkContact = linkContactsArray[message.id]
             let linkTribe = linkTribesArray[message.id]

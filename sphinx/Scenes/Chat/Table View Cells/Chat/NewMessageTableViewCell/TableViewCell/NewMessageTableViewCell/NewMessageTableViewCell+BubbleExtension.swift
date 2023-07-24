@@ -74,8 +74,7 @@ extension NewMessageTableViewCell {
         threadMessages: BubbleMessageLayoutState.ThreadMessages?
     ) {
         let isOutgoing = direction.isOutgoing()
-//        let isThread = threadMessages != nil
-        let isThread = true
+        let isThread = threadMessages != nil
         let textRightAligned = isOutgoing && bubbleAllView.isHidden
         
         sentMessageMargingView.isHidden = !isOutgoing

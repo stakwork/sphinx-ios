@@ -204,6 +204,11 @@ struct MessageTableCellState {
     
     lazy var messageReply: BubbleMessageLayoutState.MessageReply? = {
         
+        if threadMessages.count > 1 {
+            return nil
+            
+        }
+        
         guard let message = message, let replyingMessage = replyingMessage else {
             return nil
         }
@@ -220,7 +225,7 @@ struct MessageTableCellState {
     }()
     
     lazy var messageContent: BubbleMessageLayoutState.MessageContent? = {
-        guard let message = message else {
+        guard let message = messageToShow else {
             return nil
         }
         
@@ -294,7 +299,7 @@ struct MessageTableCellState {
     }()
     
     lazy var messageMedia: BubbleMessageLayoutState.MessageMedia? = {
-        guard let message = message, message.isMediaAttachment() || message.isDirectPayment() || message.isGiphy() else {
+        guard let message = messageToShow, message.isMediaAttachment() || message.isDirectPayment() || message.isGiphy() else {
             return nil
         }
         
@@ -318,7 +323,7 @@ struct MessageTableCellState {
     }()
     
     lazy var audio: BubbleMessageLayoutState.Audio? = {
-        guard let message = message, message.isAudio() else {
+        guard let message = messageToShow, message.isAudio() else {
             return nil
         }
         
@@ -330,7 +335,7 @@ struct MessageTableCellState {
     }()
     
     lazy var messageMediaUrlAndKey: (URL?, String?) = {
-        guard let message = message else {
+        guard let message = messageToShow else {
             return (nil, nil)
         }
         
@@ -383,44 +388,72 @@ struct MessageTableCellState {
     
     lazy var threadMessagesState : BubbleMessageLayoutState.ThreadMessages? = {
         
-        guard let message = message, threadMessages.count > 0 else {
+        guard let message = message, threadMessages.count > 1 else {
             return nil
         }
-
-        var threadMessageList: [BubbleMessageLayoutState.ThreadMessage] = []
         
-        for threadMessage in threadMessages {
-            let senderInfo: (UIColor, String, String?) = getSenderInfo(message: threadMessage)
-            
-            threadMessageList.append(
-                BubbleMessageLayoutState.ThreadMessage(
-                    text: threadMessage.bubbleMessageContentString,
-                    font: UIFont.getMessageFont(),
-                    senderPic: senderInfo.2,
-                    senderAlias: senderInfo.1,
-                    senderColor: senderInfo.0,
-                    sendDate: threadMessage.date
-                )
-            )
+        guard let firstReplyMessage = threadMessages.first else {
+            return nil
         }
         
-        let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
-        let originalMessage = BubbleMessageLayoutState.ThreadMessage(
+        guard let lastReplyMessage = threadMessages.last else {
+            return nil
+        }
+        
+        let originalMessageSenderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
+        let originalThreadMessage = BubbleMessageLayoutState.ThreadMessage(
             text: message.bubbleMessageContentString,
             font: UIFont.getMessageFont(),
-            senderPic: senderInfo.2,
-            senderAlias: senderInfo.1,
-            senderColor: senderInfo.0,
+            senderPic: originalMessageSenderInfo.2,
+            senderAlias: originalMessageSenderInfo.1,
+            senderColor: originalMessageSenderInfo.0,
             sendDate: message.date
         )
+        
+        let lastReplySenderInfo: (UIColor, String, String?) = getSenderInfo(message: lastReplyMessage)
+        let lastReplyThreadMessage = BubbleMessageLayoutState.ThreadMessage(
+            text: lastReplyMessage.bubbleMessageContentString,
+            font: UIFont.getMessageFont(),
+            senderPic: lastReplySenderInfo.2,
+            senderAlias: lastReplySenderInfo.1,
+            senderColor: lastReplySenderInfo.0,
+            sendDate: lastReplyMessage.date
+        )
+        
+        var secondReplySenderInfo: (UIColor, String, String?)? = nil
+        
+        if threadMessages.count > 2 {
+            secondReplySenderInfo = getSenderInfo(message: threadMessages[1])
+        }
 
         return BubbleMessageLayoutState.ThreadMessages(
-            originalMessage: originalMessage,
-            threadMessages: threadMessageList
+            originalMessage: originalThreadMessage,
+            firstReplySenderIndo: getSenderInfo(message: firstReplyMessage),
+            secondReplySenderInfo: secondReplySenderInfo,
+            lastReply: lastReplyThreadMessage,
+            moreRepliesCount: threadMessages.count - 3
+        )
+    }()
+    
+    lazy var threadLastReplyHeader : BubbleMessageLayoutState.ThreadLastReply? = {
+        
+        guard let lastReplyMessage = threadMessages.last else {
+            return nil
+        }
+        
+        let lastReplySenderInfo: (UIColor, String, String?) = getSenderInfo(message: lastReplyMessage)
+
+        return BubbleMessageLayoutState.ThreadLastReply(
+            lastReplySenderInfo: lastReplySenderInfo,
+            timestamp: (lastReplyMessage.date ?? Date()).getStringDate(format: "hh:mm a")
         )
     }()
     
     lazy var boosts: BubbleMessageLayoutState.Boosts? = {
+        
+        if threadMessages.count > 1 {
+            return nil
+        }
         
         guard let message = message, boostMessages.count > 0 else {
             return nil
@@ -471,6 +504,10 @@ struct MessageTableCellState {
     }()
     
     lazy var contactLink: BubbleMessageLayoutState.ContactLink? = {
+        if threadMessages.count > 1 {
+            return nil
+        }
+        
         guard let linkContact = linkContact else {
             return nil
         }
@@ -487,6 +524,11 @@ struct MessageTableCellState {
     }()
     
     lazy var tribeLink: BubbleMessageLayoutState.TribeLink? = {
+        
+        if threadMessages.count > 1 {
+            return nil
+        }
+        
         guard let linkTribe = linkTribe else {
             return nil
         }
@@ -497,6 +539,10 @@ struct MessageTableCellState {
     }()
     
     lazy var webLink: BubbleMessageLayoutState.WebLink? = {
+        if threadMessages.count > 1 {
+            return nil
+        }
+        
         guard let linkWeb = linkWeb else {
             return nil
         }
@@ -507,7 +553,7 @@ struct MessageTableCellState {
     }()
     
     lazy var paidContent: BubbleMessageLayoutState.PaidContent? = {
-        guard let message = message, message.isPaidAttachment() else {
+        guard let message = messageToShow, message.isPaidAttachment() else {
             return nil
         }
         
@@ -693,11 +739,21 @@ struct MessageTableCellState {
         )
     }()
     
+    var messageToShow: TransactionMessage? {
+        get {
+            if threadMessages.count > 1 {
+                return threadMessages.last
+            }
+            return self.message
+        }
+    }
+    
     var isTextOnlyMessage: Bool {
         mutating get {
             return
                 (self.messageContent != nil) &&
                 (self.messageReply == nil) &&
+                (self.threadMessagesState == nil) &&
                 (self.callLink == nil) &&
                 (self.directPayment == nil) &&
                 (self.boosts == nil) &&

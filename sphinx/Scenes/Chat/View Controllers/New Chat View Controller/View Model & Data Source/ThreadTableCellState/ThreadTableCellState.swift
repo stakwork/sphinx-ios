@@ -38,15 +38,25 @@ struct ThreadTableCellState {
             senderInfo: getSenderInfo(message: originalMessage)
         )
         
-        var threadMessagesArray: [ThreadLayoutState.ThreadMessage] = []
+        var threadMessagesMap: [String: ThreadLayoutState.ThreadMessage] = [:]
         
         for message in threadMessages {
-            threadMessagesArray.append(
-                ThreadLayoutState.ThreadMessage(
-                    senderIndo: getSenderInfo(message: message)
+            let senderInfo = getSenderInfo(message: message)
+            
+            if let existingThreadMessage = threadMessagesMap[senderInfo.1] {
+                threadMessagesMap[senderInfo.1] = ThreadLayoutState.ThreadMessage(
+                    senderIndo: senderInfo,
+                    repliesCount: existingThreadMessage.repliesCount + 1
                 )
-            )
+            } else {
+                threadMessagesMap[senderInfo.1] = ThreadLayoutState.ThreadMessage(
+                    senderIndo: senderInfo,
+                    repliesCount: 1
+                )
+            }
         }
+        
+        let threadMessagesArray = threadMessagesMap.map { $0.value }
         
         return ThreadLayoutState.ThreadMessages(
             orignalThreadMessage: orignalMessageThred,

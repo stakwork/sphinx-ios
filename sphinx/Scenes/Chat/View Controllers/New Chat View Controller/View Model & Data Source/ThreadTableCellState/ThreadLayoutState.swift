@@ -47,11 +47,14 @@ struct ThreadLayoutState {
     
     struct ThreadMessage {
         var senderIndo: (UIColor, String, String?)
+        var repliesCount: Int
         
         init(
-            senderIndo: (UIColor, String, String?)
+            senderIndo: (UIColor, String, String?),
+            repliesCount: Int
         ) {
             self.senderIndo = senderIndo
+            self.repliesCount = repliesCount
         }
     }
 }

@@ -59,6 +59,8 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
         
         sendButtonContainer.isHidden = !forceSendButtonVisible
         audioButtonContainer.isHidden = forceSendButtonVisible
+        
+        attachmentButtonContainer.isHidden = (mode == .Attachment)
     }
 }
 

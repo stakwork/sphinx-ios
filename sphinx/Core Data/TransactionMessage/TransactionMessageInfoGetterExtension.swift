@@ -474,7 +474,7 @@ extension TransactionMessage {
     }
     
     func getActionsMenuOptions(
-        isThread: Bool = false
+        isThreadRow: Bool = false
     ) -> [ActionsMenuOption] {
         var options = [ActionsMenuOption]()
         
@@ -540,7 +540,7 @@ extension TransactionMessage {
             )
         }
         
-        if isThread {
+        if isThreadRow {
             options.append(
                 .init(
                     tag: MessageActionsItem.ShowThread,
@@ -670,7 +670,7 @@ extension TransactionMessage {
     
     var isReplyActionAllowed: Bool {
         get {
-            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty && (replyUUID == nil)
+            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty
         }
     }
     

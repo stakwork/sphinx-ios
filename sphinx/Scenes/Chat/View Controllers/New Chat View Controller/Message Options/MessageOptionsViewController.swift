@@ -28,19 +28,19 @@ class MessageOptionsViewController: UIViewController {
     
     var message: TransactionMessage? = nil
     var purchaseAcceptMessage: TransactionMessage? = nil
-    var isThread: Bool = false
+    var isThreadRow: Bool = false
     
     static func instantiate(
         message: TransactionMessage,
         purchaseAcceptMessage: TransactionMessage?,
         delegate: MessageOptionsVCDelegate?,
-        isThread: Bool
+        isThreadRow: Bool
     ) -> MessageOptionsViewController {
         let viewController = StoryboardScene.Chat.messageOptionsViewController.instantiate()
         viewController.message = message
         viewController.purchaseAcceptMessage = purchaseAcceptMessage
         viewController.delegate = delegate
-        viewController.isThread = isThread
+        viewController.isThreadRow = isThreadRow
         return viewController
     }
     
@@ -152,7 +152,7 @@ class MessageOptionsViewController: UIViewController {
             message: message,
             leftTopCorner: leftTopCorner,
             rightBottomCorner: rightBottomCorner,
-            isThread: isThread,
+            isThreadRow: isThreadRow,
             delegate: self
         )
         self.view.addSubview(menuView)

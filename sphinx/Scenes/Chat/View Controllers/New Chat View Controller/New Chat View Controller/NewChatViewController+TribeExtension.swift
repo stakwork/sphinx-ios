@@ -20,10 +20,17 @@ extension NewChatViewController {
             self.headerView.setChatInfoOnHeader()
             self.loadPodcastFeed()
             self.configurePinnedMessageView()
-
-            self.chatViewModel.loadBadgesAndLeaderboard()
+            self.loadBadgesAndLeaderboard()
         }
-    }    
+    }
+    
+    func loadBadgesAndLeaderboard() {
+        if isThread {
+            return
+        }
+        
+        self.chatViewModel.loadBadgesAndLeaderboard()
+    }
     
     func showPendingApprovalMessage() {
         if chat?.isStatusPending() ?? false {
@@ -33,7 +40,7 @@ extension NewChatViewController {
     
     ///Pinned Message
     func configurePinnedMessageView() {
-        if threadUUID != nil {
+        if isThread {
             return
         }
         

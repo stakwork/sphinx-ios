@@ -19,8 +19,6 @@ extension ChatMessageTextFieldView {
             textView.text = kAttchmentFieldPlaceHolder
         }
 
-        attachmentButtonContainer.isHidden = true
-        
         animateElements(sendButtonVisible: true)
         textViewDidChange(textView)
     }

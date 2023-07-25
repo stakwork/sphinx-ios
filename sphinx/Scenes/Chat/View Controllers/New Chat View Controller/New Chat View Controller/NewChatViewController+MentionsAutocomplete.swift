@@ -11,6 +11,9 @@ import UIKit
 extension NewChatViewController: ChatMentionAutocompleteDelegate {
     
     func initializeMacros() {
+        if isThread {
+            return
+        }
         
         let isContactConversation = self.chat?.isGroup() == false
         
@@ -40,17 +43,6 @@ extension NewChatViewController: ChatMentionAutocompleteDelegate {
                     self.shouldSendCallMessage(audioOnly: false)
                }
             )
-            //               MentionOrMacroItem(type: .macro, displayText: "Send Emoji",
-            //                image: #imageLiteral(resourceName: "emojiIcon"),
-            //                action: {
-            //                   //self.emojiButtonClicked(self)
-            //               }),
-            //               MentionOrMacroItem(type: .macro, displayText: "Record Voice Memo",
-            //                    image: #imageLiteral(resourceName:"microphone_icon") ,
-            //                    action: {
-            //                        self.bottomView.toggleAudioRecording(show: true)
-            //                        self.shouldStartRecording()
-            //               })
         ]
         
         if isContactConversation {

@@ -952,7 +952,7 @@ extension NewChatTableDataSource {
             cell: cell,
             with: messageId,
             bubbleViewRect: bubbleViewRect,
-            isThread: messageIsThread(cell: cell, with: messageId)
+            isThreadRow: messageIsThread(cell: cell, with: messageId)
         )
     }
     

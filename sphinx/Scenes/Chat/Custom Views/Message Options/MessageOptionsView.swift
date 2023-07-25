@@ -50,7 +50,7 @@ class MessageOptionsView : UIView {
         message: TransactionMessage?,
         leftTopCorner: CGPoint,
         rightBottomCorner: CGPoint,
-        isThread: Bool,
+        isThreadRow: Bool,
         delegate: MessageOptionsDelegate
     ) {
         super.init(frame: CGRect.zero)
@@ -64,7 +64,7 @@ class MessageOptionsView : UIView {
         
         let incoming = message.isIncoming()
         let coordinates = getCoordinates(leftTopCorner: leftTopCorner, rightBottomCorner: rightBottomCorner)
-        let messageOptions = getActionsMenuOptions(isThread: isThread)
+        let messageOptions = getActionsMenuOptions(isThreadRow: isThreadRow)
         let optionsCount = messageOptions.count
 
         let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(coordinates: coordinates, optionsCount: optionsCount, incoming: incoming)
@@ -115,12 +115,12 @@ class MessageOptionsView : UIView {
     }
     
     func getActionsMenuOptions(
-        isThread: Bool
+        isThreadRow: Bool
     ) -> [TransactionMessage.ActionsMenuOption] {
         guard let message = message else {
             return []
         }
-        return message.getActionsMenuOptions(isThread: isThread)
+        return message.getActionsMenuOptions(isThreadRow: isThreadRow)
     }
     
     func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {

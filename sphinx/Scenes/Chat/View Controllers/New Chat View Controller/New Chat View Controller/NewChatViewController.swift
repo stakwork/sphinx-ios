@@ -29,6 +29,12 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     var chat: Chat?
     var threadUUID: String? = nil
     
+    var isThread: Bool {
+        get {
+            return threadUUID != nil
+        }
+    }
+    
     var messageMenuData: MessageTableCellState.MessageMenuData? = nil
     
     var contactResultsController: NSFetchedResultsController<UserContact>!
@@ -141,7 +147,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 messageId: messageMenuData.messageId,
                 indexPath: messageMenuData.indexPath,
                 bubbleViewRect: messageMenuData.bubbleRect,
-                isThread: messageMenuData.isThread
+                isThreadRow: messageMenuData.isThreadRow
             )
             self.messageMenuData = nil
         }
@@ -164,6 +170,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             chatListViewModel: chatListViewModel,
             threadUUID: threadID
         )
+        
         navigationController?.pushViewController(
             chatVC,
             animated: true

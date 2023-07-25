@@ -14,7 +14,7 @@ extension NewChatViewController {
             return
         }
         
-        if threadUUID != nil {
+        if isThread {
             return
         }
         

@@ -60,8 +60,8 @@ extension NewChatTableDataSource {
         DispatchQueue.main.async {
             self.saveSnapshotCurrentState()
             self.dataSource.apply(snapshot, animatingDifferences: false)
-            self.tableView.alpha = 1.0
             self.restoreScrollLastPosition()
+            self.tableView.alpha = 1.0
             self.loadingMoreItems = false
         }
     }
@@ -248,7 +248,10 @@ extension NewChatTableDataSource {
         messageTableCellStateArray = array
         
         updateSnapshot()
-        delegate?.configureNewMessagesIndicatorWith(newMsgCount: newMsgCount)
+        
+        delegate?.configureNewMessagesIndicatorWith(
+            newMsgCount: isThread ? array.count : newMsgCount
+        )
         
         finishSearchProcess()
     }

@@ -17,7 +17,8 @@ class NewMessagesIndicatorView: UIView {
     weak var delegate: NewMessagesIndicatorViewDelegate?
 
     @IBOutlet private var contentView: UIView!
-    @IBOutlet weak var bubbleView: UIView!
+    @IBOutlet weak var arrowCircleView: UIView!
+    @IBOutlet weak var countView: UIView!
     @IBOutlet weak var countLabel: UILabel!
     
     override init(frame: CGRect) {
@@ -36,8 +37,11 @@ class NewMessagesIndicatorView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
-        bubbleView.layer.cornerRadius = 5.0
-        bubbleView.clipsToBounds = true
+        arrowCircleView.layer.cornerRadius = arrowCircleView.frame.height / 2
+        arrowCircleView.clipsToBounds = true
+        
+        countView.layer.cornerRadius = countView.frame.height / 2
+        countView.clipsToBounds = true
     }
     
     func configureWith(
@@ -50,8 +54,8 @@ class NewMessagesIndicatorView: UIView {
         }
         
         if let newMessagesCount = newMessagesCount {
-            countLabel.text = "+\(newMessagesCount)"
-            countLabel.isHidden = newMessagesCount == 0
+            countLabel.text = "\(newMessagesCount)"
+            countView.isHidden = newMessagesCount == 0
         }
         
         self.isHidden = tableContentOffset < -10

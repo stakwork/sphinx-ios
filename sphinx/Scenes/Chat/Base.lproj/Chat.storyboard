@@ -710,11 +710,11 @@
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUJ-0a-zlK" customClass="NewMessagesIndicatorView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="325" y="489" width="50" height="35"/>
+                                                <rect key="frame" x="295" y="488" width="80" height="46"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" priority="750" constant="50" id="Ei1-cQ-yao"/>
-                                                    <constraint firstAttribute="height" constant="35" id="tJG-V1-ErF"/>
+                                                    <constraint firstAttribute="width" priority="750" constant="80" id="Ei1-cQ-yao"/>
+                                                    <constraint firstAttribute="height" constant="46" id="tJG-V1-ErF"/>
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2KA-H5-xSv">
@@ -726,7 +726,7 @@
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="mmA-5V-kTx" secondAttribute="bottom" id="37i-oJ-9Os"/>
                                             <constraint firstAttribute="bottom" secondItem="7O1-jH-hsI" secondAttribute="bottom" id="4n5-mE-9yz"/>
-                                            <constraint firstAttribute="bottom" secondItem="WUJ-0a-zlK" secondAttribute="bottom" constant="20" id="Ahc-2C-vXG"/>
+                                            <constraint firstAttribute="bottom" secondItem="WUJ-0a-zlK" secondAttribute="bottom" constant="10" id="Ahc-2C-vXG"/>
                                             <constraint firstAttribute="bottom" secondItem="vlc-qx-DGF" secondAttribute="bottom" id="Fiu-E4-Z6c"/>
                                             <constraint firstAttribute="bottom" secondItem="2KA-H5-xSv" secondAttribute="bottom" id="Fkp-D7-VYl"/>
                                             <constraint firstAttribute="trailing" secondItem="2KA-H5-xSv" secondAttribute="trailing" id="ObL-ZX-59h"/>

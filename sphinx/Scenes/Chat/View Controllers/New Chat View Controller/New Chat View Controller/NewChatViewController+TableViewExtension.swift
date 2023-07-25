@@ -71,7 +71,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     
     func didScrollOutOfBottomArea() {
         newMsgsIndicatorView.configureWith(
-            tableContentOffset: self.chatTableView.contentOffset.y
+            tableContentOffset: self.chatTableView.contentOffset.y,
+            newMessagesCount: isThread ? (chatTableDataSource?.messageTableCellStateArray.count ?? 0) : nil
         )
     }
     

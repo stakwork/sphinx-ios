@@ -12,6 +12,10 @@ import CoreData
 extension NewChatViewController: NSFetchedResultsControllerDelegate {
     
     func configureFetchResultsController() {
+        if isThread {
+            return
+        }
+        
         if let contact = contact {
             let fetchRequest = UserContact.FetchRequests.matching(id: contact.id)
 
@@ -51,10 +55,6 @@ extension NewChatViewController: NSFetchedResultsControllerDelegate {
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
     ) {
-        if isThread {
-            return
-        }
-        
         if
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {

@@ -109,6 +109,7 @@ class NewChatTableDataSource : NSObject {
     var messagesCount = 0
     var loadingMoreItems = false
     var scrolledAtBottom = false
+    var firstLoad = true
     
     ///WebView Loading
     let webViewSemaphore = DispatchSemaphore(value: 1)

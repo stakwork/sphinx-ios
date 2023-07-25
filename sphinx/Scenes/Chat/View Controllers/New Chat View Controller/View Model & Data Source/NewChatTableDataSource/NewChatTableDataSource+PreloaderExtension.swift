@@ -69,9 +69,7 @@ extension NewChatTableDataSource {
     
     func restoreScrollLastPosition() {
         if isThread {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
-                self.tableView.scrollToBottom()
-            })
+            scrollToTop()
             return
         }
         
@@ -107,6 +105,16 @@ extension NewChatTableDataSource {
         
         if tableView.contentOffset.y <= Constants.kChatTableContentInset {
             delegate?.didScrollToBottom()
+        }
+    }
+    
+    func scrollToTop() {
+        if firstLoad {
+            ///Scroll to bottom just if it's first load of the view
+            DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
+                self.tableView.scrollToBottom()
+            })
+            firstLoad = false
         }
     }
 }

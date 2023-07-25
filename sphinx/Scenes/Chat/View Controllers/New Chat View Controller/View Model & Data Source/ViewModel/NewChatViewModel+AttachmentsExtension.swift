@@ -47,7 +47,8 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             
             attachmentsManager.uploadAndSendAttachment(
                 attachmentObject: attachmentObject,
-                replyingMessage: replyingTo
+                replyingMessage: replyingTo,
+                threadUUID: chatDataSource?.threadUUID ?? replyingTo?.threadUUID ?? replyingTo?.uuid
             )
         }
         

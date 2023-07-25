@@ -56,17 +56,33 @@ class ThreadHeaderView : UIView {
         
         bottomMarginView.isHidden = !messageLabel.isTruncated
         showMoreContainer.isHidden = !messageLabel.isTruncated
-        
-        senderNameLabel.text = message.senderAlias
         timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMMM d yyyy 'at' h:mm a")
         
-        let senderColor = ChatHelper.getSenderColorFor(message: message)
+        guard let owner = UserContact.getOwner() else {
+            return
+        }
         
-        senderAvatarView.configureForUserWith(
-            color: senderColor,
-            alias: message.senderAlias ?? "Unknow",
-            picture: message.senderPic
-        )
+        if message.isIncoming(ownerId: owner.id) {
+            let senderColor = ChatHelper.getSenderColorFor(message: message)
+            
+            senderAvatarView.configureForUserWith(
+                color: senderColor,
+                alias: message.senderAlias ?? "Unknow",
+                picture: message.senderPic
+            )
+            
+            senderNameLabel.text = message.senderAlias
+        } else {
+            let senderColor = owner.getColor()
+            
+            senderAvatarView.configureForUserWith(
+                color: senderColor,
+                alias: owner.nickname ?? "Unknow",
+                picture: owner.getPhotoUrl()
+            )
+            
+            senderNameLabel.text = owner.nickname
+        }
     }
     
     func collapseMessageLabel() {

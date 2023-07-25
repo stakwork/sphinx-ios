@@ -827,7 +827,8 @@ extension MessageTableCellState : Hashable {
             mutableLhs.boostMessages.count    == mutableRhs.boostMessages.count &&
             mutableLhs.isTextOnlyMessage      == mutableRhs.isTextOnlyMessage &&
             mutableLhs.separatorDate          == mutableRhs.separatorDate &&
-            mutableLhs.paidContent?.status    == mutableRhs.paidContent?.status
+            mutableLhs.paidContent?.status    == mutableRhs.paidContent?.status &&
+            mutableLhs.threadMessages.count   == mutableRhs.threadMessages.count
     }
 
     func hash(into hasher: inout Hasher) {

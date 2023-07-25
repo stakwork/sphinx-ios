@@ -71,6 +71,7 @@ class NewChatTableDataSource : NSObject {
     ///Chat
     var chat: Chat?
     var contact: UserContact?
+    var owner: UserContact? = nil
     var threadUUID: String?
     
     var isThread: Bool {
@@ -129,6 +130,7 @@ class NewChatTableDataSource : NSObject {
         
         self.chat = chat
         self.contact = contact
+        self.owner = UserContact.getOwner()
         self.threadUUID = threadUUID
         
         self.tableView = tableView

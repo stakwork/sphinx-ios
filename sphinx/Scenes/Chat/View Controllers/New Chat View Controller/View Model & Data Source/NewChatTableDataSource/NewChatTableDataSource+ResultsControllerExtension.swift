@@ -125,13 +125,9 @@ extension NewChatTableDataSource {
     ) {
         let chat = chat ?? contact?.getFakeChat()
         
-        guard let chat = chat else {
+        guard let chat = chat, let owner = owner else {
             return
         }
-        
-        guard let owner = UserContact.getOwner() else {
-            return
-        }        
         
         startSearchProcess()
         

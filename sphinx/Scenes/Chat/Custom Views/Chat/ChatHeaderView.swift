@@ -106,6 +106,8 @@ class ChatHeaderView: UIView {
         keysLoading = !isEncrypted
         
         configureWebAppButton()
+        configureThreadsButton()
+        
         setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
         
@@ -194,6 +196,11 @@ class ChatHeaderView: UIView {
         let hasWebAppUrl = chat?.getAppUrl() != nil
         webAppButton.isHidden = !hasWebAppUrl
         webAppButton.setTitle("apps", for: .normal)
+    }
+    
+    func configureThreadsButton() {
+        let isTribe = chat?.isPublicGroup() == true
+        showThreadsButton.isHidden = !isTribe
     }
     
     func setVolumeState(muted: Bool) {

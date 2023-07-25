@@ -655,6 +655,93 @@
             </objects>
             <point key="canvasLocation" x="-1338.4000000000001" y="160.56971514242881"/>
         </scene>
+        <!--Threads List View Controller-->
+        <scene sceneID="gnw-g9-M0i">
+            <objects>
+                <viewController storyboardIdentifier="ThreadsListViewController" id="BWB-iL-Mqf" customClass="ThreadsListViewController" customModule="sphinx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="38a-9t-FJD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yei-Yg-Zuq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D8U-e0-Mum" customClass="ThreadsListHeaderView" customModule="sphinx" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                                        <color key="backgroundColor" name="HeaderBG"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="65" id="BCP-jg-Weq"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7F9-VY-XCj">
+                                        <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j3W-Mj-Oob" customClass="ShimmeringList" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="602"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                            <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qeL-FG-wcy">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="602"/>
+                                                <color key="backgroundColor" name="Body"/>
+                                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </tableView>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No threads found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8d-Gl-VCj">
+                                                <rect key="frame" x="137" y="293.5" width="101.5" height="15.5"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                                <color key="textColor" name="Text"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="qeL-FG-wcy" firstAttribute="top" secondItem="7F9-VY-XCj" secondAttribute="top" id="8bJ-lT-VAS"/>
+                                            <constraint firstAttribute="trailing" secondItem="qeL-FG-wcy" secondAttribute="trailing" id="98a-z8-RY3"/>
+                                            <constraint firstAttribute="bottom" secondItem="j3W-Mj-Oob" secondAttribute="bottom" id="Dc7-AO-xHY"/>
+                                            <constraint firstItem="j3W-Mj-Oob" firstAttribute="top" secondItem="7F9-VY-XCj" secondAttribute="top" id="Hdv-Sk-NXt"/>
+                                            <constraint firstItem="O8d-Gl-VCj" firstAttribute="centerY" secondItem="7F9-VY-XCj" secondAttribute="centerY" id="N2l-GU-eov"/>
+                                            <constraint firstItem="O8d-Gl-VCj" firstAttribute="centerX" secondItem="7F9-VY-XCj" secondAttribute="centerX" id="Qdj-8S-YTM"/>
+                                            <constraint firstItem="qeL-FG-wcy" firstAttribute="leading" secondItem="7F9-VY-XCj" secondAttribute="leading" id="WBH-Q1-TvI"/>
+                                            <constraint firstAttribute="bottom" secondItem="qeL-FG-wcy" secondAttribute="bottom" id="gyb-09-aTG"/>
+                                            <constraint firstItem="j3W-Mj-Oob" firstAttribute="leading" secondItem="7F9-VY-XCj" secondAttribute="leading" id="iYR-He-zDr"/>
+                                            <constraint firstAttribute="trailing" secondItem="j3W-Mj-Oob" secondAttribute="trailing" id="oTW-xB-mlE"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="D8U-e0-Mum" firstAttribute="top" secondItem="yei-Yg-Zuq" secondAttribute="top" id="EK4-lI-9eZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="D8U-e0-Mum" secondAttribute="trailing" id="Vdn-zb-Qzv"/>
+                                    <constraint firstItem="D8U-e0-Mum" firstAttribute="leading" secondItem="yei-Yg-Zuq" secondAttribute="leading" id="WWM-2h-cnd"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6bA-Jl-dOx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                <color key="backgroundColor" name="HeaderBG"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2Tx-E2-ns9"/>
+                        <color key="backgroundColor" name="Body"/>
+                        <constraints>
+                            <constraint firstItem="yei-Yg-Zuq" firstAttribute="top" secondItem="6bA-Jl-dOx" secondAttribute="bottom" id="B6V-kD-3lv"/>
+                            <constraint firstItem="6bA-Jl-dOx" firstAttribute="top" secondItem="38a-9t-FJD" secondAttribute="top" id="KYX-os-tpf"/>
+                            <constraint firstItem="6bA-Jl-dOx" firstAttribute="leading" secondItem="38a-9t-FJD" secondAttribute="leading" id="YQ9-ny-hzN"/>
+                            <constraint firstItem="yei-Yg-Zuq" firstAttribute="top" secondItem="2Tx-E2-ns9" secondAttribute="top" id="bSc-4y-kHF"/>
+                            <constraint firstItem="yei-Yg-Zuq" firstAttribute="trailing" secondItem="2Tx-E2-ns9" secondAttribute="trailing" id="g9l-Lm-HfQ"/>
+                            <constraint firstAttribute="trailing" secondItem="6bA-Jl-dOx" secondAttribute="trailing" id="veQ-Py-m4L"/>
+                            <constraint firstItem="yei-Yg-Zuq" firstAttribute="leading" secondItem="2Tx-E2-ns9" secondAttribute="leading" id="zrE-Es-FXI"/>
+                            <constraint firstItem="yei-Yg-Zuq" firstAttribute="bottom" secondItem="2Tx-E2-ns9" secondAttribute="bottom" id="zxC-NJ-FMv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="noResultsFoundLabel" destination="qeL-FG-wcy" id="U5l-cI-NZo"/>
+                        <outlet property="shimmeringView" destination="j3W-Mj-Oob" id="FJg-VB-uYf"/>
+                        <outlet property="threadsHeaderView" destination="D8U-e0-Mum" id="viV-un-PST"/>
+                        <outlet property="threadsTableView" destination="qeL-FG-wcy" id="1gC-fP-N7w"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PS1-lm-6Lx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1327" y="910"/>
+        </scene>
         <!--New Chat View Controller-->
         <scene sceneID="QRf-Y6-u33">
             <objects>
@@ -860,17 +947,17 @@
                                 <rect key="frame" x="0.0" y="65" width="375" height="602"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOW-hs-xqG">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y2W-O9-BIt" customClass="SDAnimatedImageView">
-                                                <rect key="frame" x="0.0" y="150" width="375" height="110"/>
+                                                <rect key="frame" x="0.0" y="116.5" width="375" height="110"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="110" id="mpY-ur-2nO"/>
                                                 </constraints>
                                             </imageView>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysP-UC-48h" customClass="UIActivityIndicatorView">
-                                                <rect key="frame" x="162.5" y="180" width="50" height="50"/>
+                                                <rect key="frame" x="162.5" y="146.5" width="50" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="raL-yp-SyO"/>
@@ -878,14 +965,14 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Er9-t6-GE3">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
                                                 <color key="backgroundColor" name="Body"/>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EMn-y2-hY6">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Crj-K4-L6e" customClass="FileInfoView" customModule="sphinx" customModuleProvider="target">
-                                                        <rect key="frame" x="82.5" y="175" width="210" height="60"/>
+                                                        <rect key="frame" x="82.5" y="141.5" width="210" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="210" id="Ve6-gX-YnV"/>
@@ -968,7 +1055,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OpW-cd-PgG" customClass="NewChatAccessoryView" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="410" width="375" height="192"/>
+                                        <rect key="frame" x="0.0" y="343" width="375" height="259"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="500" id="uJs-jh-kvf"/>

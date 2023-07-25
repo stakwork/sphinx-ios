@@ -132,12 +132,12 @@ extension NewChatViewController : ChatHeaderViewDelegate, ThreadHeaderViewDelega
     }
     
     func didTapShowThreadsButton(){
-//        let chatVC = NewChatViewController.instantiate(
-//            contactId: self.contact?.id,
-//            chatId: self.chat?.id,
-//            chatListViewModel: chatListViewModel
-//        )
-//        navigationController?.pushViewController(chatVC, animated: true)
+        guard let chatId = self.chat?.id else {
+            return
+        }
+        
+        let threadsListVC = ThreadsListViewController.instantiate(chatId: chatId)
+        navigationController?.pushViewController(threadsListVC, animated: true)
     }
     
     func goToNotificationsLevel() {

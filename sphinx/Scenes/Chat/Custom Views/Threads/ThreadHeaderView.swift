@@ -15,6 +15,8 @@ protocol ThreadHeaderViewDelegate : NSObject{
 
 class ThreadHeaderView : UIView {
     
+    var delegate : ThreadHeaderViewDelegate? = nil
+    
     @IBOutlet var contentView: UIView!
     
     @IBOutlet weak var messageLabel: UILabel!
@@ -25,7 +27,6 @@ class ThreadHeaderView : UIView {
     @IBOutlet weak var showMoreContainer: UIView!
     @IBOutlet weak var bottomMarginView: UIView!
     
-    var delegate : ThreadHeaderViewDelegate? = nil
     var isExpanded : Bool = false
     
     override init(frame: CGRect) {

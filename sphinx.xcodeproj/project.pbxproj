@@ -162,6 +162,12 @@
 		47357A132729A14D00A49EEE /* NewsletterItem+Computeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */; };
 		47357A172729A16100A49EEE /* NewsletterItem+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A162729A16100A49EEE /* NewsletterItem+Properties.swift */; };
 		47357A192729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */; };
+		473596752A6FFB9700489606 /* ThreadsListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473596742A6FFB9700489606 /* ThreadsListHeaderView.swift */; };
+		4735967A2A6FFCFD00489606 /* ShimmeringList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473596782A6FFCFD00489606 /* ShimmeringList.swift */; };
+		4735967B2A6FFCFD00489606 /* ShimmeringList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473596792A6FFCFD00489606 /* ShimmeringList.xib */; };
+		4735967E2A6FFE8E00489606 /* ThreadsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735967D2A6FFE8E00489606 /* ThreadsListViewController.swift */; };
+		4735967F2A70012D00489606 /* ThreadHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473596812A70012D00489606 /* ThreadHeaderView.xib */; };
+		473596882A70015700489606 /* ThreadsListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4735968A2A70015700489606 /* ThreadsListHeaderView.xib */; };
 		473633E625558EFE007405F2 /* PodcastSatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E525558EFE007405F2 /* PodcastSatsView.swift */; };
 		473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473633E725558F0B007405F2 /* PodcastSatsView.xib */; };
 		473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E925559945007405F2 /* LogarithmicSlider.swift */; };
@@ -695,7 +701,6 @@
 		CEEFD6082A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */; };
 		CEEFD6092A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */; };
 		CEEFD60B2A6891E100FD7E73 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */; };
-		CEEFD60D2A68926000FD7E73 /* ThreadHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
 		CEF88DCC29B64F4F00DC1C40 /* UnifiedEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */; };
@@ -1017,6 +1022,18 @@
 		47357A122729A14D00A49EEE /* NewsletterItem+Computeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+Computeds.swift"; sourceTree = "<group>"; };
 		47357A162729A16100A49EEE /* NewsletterItem+Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+Properties.swift"; sourceTree = "<group>"; };
 		47357A182729A16C00A49EEE /* NewsletterItem+DisplayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsletterItem+DisplayUtils.swift"; sourceTree = "<group>"; };
+		473596742A6FFB9700489606 /* ThreadsListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsListHeaderView.swift; sourceTree = "<group>"; };
+		473596782A6FFCFD00489606 /* ShimmeringList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmeringList.swift; sourceTree = "<group>"; };
+		473596792A6FFCFD00489606 /* ShimmeringList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShimmeringList.xib; sourceTree = "<group>"; };
+		4735967D2A6FFE8E00489606 /* ThreadsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsListViewController.swift; sourceTree = "<group>"; };
+		473596802A70012D00489606 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ThreadHeaderView.xib; sourceTree = "<group>"; };
+		473596832A70013200489606 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ThreadHeaderView.strings; sourceTree = "<group>"; };
+		473596852A70013300489606 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ThreadHeaderView.strings; sourceTree = "<group>"; };
+		473596872A70013400489606 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ThreadHeaderView.strings; sourceTree = "<group>"; };
+		473596892A70015700489606 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ThreadsListHeaderView.xib; sourceTree = "<group>"; };
+		4735968C2A70015A00489606 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ThreadsListHeaderView.strings; sourceTree = "<group>"; };
+		4735968E2A70015A00489606 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ThreadsListHeaderView.strings; sourceTree = "<group>"; };
+		473596902A70015B00489606 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ThreadsListHeaderView.strings; sourceTree = "<group>"; };
 		473633E525558EFE007405F2 /* PodcastSatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSatsView.swift; sourceTree = "<group>"; };
 		473633E725558F0B007405F2 /* PodcastSatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastSatsView.xib; sourceTree = "<group>"; };
 		473633E925559945007405F2 /* LogarithmicSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogarithmicSlider.swift; sourceTree = "<group>"; };
@@ -1703,7 +1720,6 @@
 		CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewThreadOnlyMessageTableViewCell.swift; sourceTree = "<group>"; };
 		CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewThreadOnlyMessageTableViewCell.xib; sourceTree = "<group>"; };
 		CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
-		CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadHeaderView.xib; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
 		CEF88DCB29B64F4F00DC1C40 /* UnifiedEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeView.swift; sourceTree = "<group>"; };
@@ -2369,6 +2385,14 @@
 			path = NewsletterItem;
 			sourceTree = "<group>";
 		};
+		4735967C2A6FFE8000489606 /* ThreadsList */ = {
+			isa = PBXGroup;
+			children = (
+				4735967D2A6FFE8E00489606 /* ThreadsListViewController.swift */,
+			);
+			path = ThreadsList;
+			sourceTree = "<group>";
+		};
 		473633E425558EE5007405F2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2994,6 +3018,7 @@
 		475DD3152A14156300F92173 /* New Chat View Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4735967C2A6FFE8000489606 /* ThreadsList */,
 				47D4DE7A2A45C8AF004B03AF /* Message Options */,
 				47E6A4FE2A30C65900A9509E /* Custom Views */,
 				47E6A4F12A2F63C800A9509E /* View Model & Data Source */,
@@ -3707,12 +3732,16 @@
 		47DE1C432A6ED07C0029597B /* Threads */ = {
 			isa = PBXGroup;
 			children = (
+				473596782A6FFCFD00489606 /* ShimmeringList.swift */,
+				473596792A6FFCFD00489606 /* ShimmeringList.xib */,
 				47DE1C442A6ED0A50029597B /* MessageThreadView.swift */,
 				47DE1C462A6ED0B00029597B /* MessageThreadView.xib */,
 				47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */,
 				47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */,
 				CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */,
-				CEEFD60C2A68926000FD7E73 /* ThreadHeaderView.xib */,
+				473596812A70012D00489606 /* ThreadHeaderView.xib */,
+				473596742A6FFB9700489606 /* ThreadsListHeaderView.swift */,
+				4735968A2A70015700489606 /* ThreadsListHeaderView.xib */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -4502,6 +4531,7 @@
 				47AAD79B29BB6646002B70C1 /* playing_bar.json in Resources */,
 				CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */,
 				CEF88DD229B66B9200DC1C40 /* RecommendationItemWUnifiedViewCollectionViewCell.xib in Resources */,
+				473596882A70015700489606 /* ThreadsListHeaderView.xib in Resources */,
 				475BDD43232AD00D00C5BBD6 /* MaterialIcons-Regular.ttf in Resources */,
 				47904C0A24BF352300710E7A /* horn.caf in Resources */,
 				472092CA2A278B0400468796 /* NewMessageTableViewCell.xib in Resources */,
@@ -4678,12 +4708,13 @@
 				F3D86DC226B157D400EB9711 /* DashboardFeedCollectionViewSectionHeader.xib in Resources */,
 				4797E7C124B8F3FA00D13270 /* Pin.storyboard in Resources */,
 				4797E7D624B8F53000D13270 /* Invite.storyboard in Resources */,
-				CEEFD60D2A68926000FD7E73 /* ThreadHeaderView.xib in Resources */,
+				4735967F2A70012D00489606 /* ThreadHeaderView.xib in Resources */,
 				4797E7C824B8F47200D13270 /* Profile.storyboard in Resources */,
 				47E6A4D22A2E6F8F00A9509E /* GroupActionsView.xib in Resources */,
 				F37D79A0271E753E00CAB15F /* VideoFeedEpisodesSectionHeaderView.xib in Resources */,
 				4797E7B324B8F2EF00D13270 /* QRCodeScanner.storyboard in Resources */,
 				471161E82915680B008EAFF2 /* csvStopList.csv in Resources */,
+				4735967B2A6FFCFD00489606 /* ShimmeringList.xib in Resources */,
 				47ACBC05265E9C9300D2FE47 /* People.storyboard in Resources */,
 				47DAABD02491411400EF38B0 /* MessageReplyView.xib in Resources */,
 				47904C1324BF352300710E7A /* tweet.caf in Resources */,
@@ -4815,7 +4846,9 @@
 				CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift in Sources */,
 				4705D39D2799B3B0009C0729 /* FeedBoostHelper.swift in Sources */,
 				4787F86D247410C500CCE8B9 /* JoinGroupDetailsViewController.swift in Sources */,
+				4735967E2A6FFE8E00489606 /* ThreadsListViewController.swift in Sources */,
 				47A79D3824424D19005CD72F /* UITableViewCell.swift in Sources */,
+				473596752A6FFB9700489606 /* ThreadsListHeaderView.swift in Sources */,
 				CE9A18572A1D6AC900F176DE /* MediaStorageSourceTableViewCell.swift in Sources */,
 				47468FCE233131B40072124A /* NSManagedObjectContext.swift in Sources */,
 				CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */,
@@ -5171,6 +5204,7 @@
 				470146112A3B79E300A00DF8 /* NewOnlyTextMessageTableViewCell+LayoutExtension.swift in Sources */,
 				F39F2C8526E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.swift in Sources */,
 				47F826702A0D2E3A002E81F0 /* ChatMessageTextFieldView.swift in Sources */,
+				4735967A2A6FFCFD00489606 /* ShimmeringList.swift in Sources */,
 				4733C7E523C4DF4C006A2C51 /* GroupContactsViewController.swift in Sources */,
 				4787F87224743D7C00CCE8B9 /* NewPublicGroupViewControllerExtension.swift in Sources */,
 				F3EF52C726B28DBE00F06668 /* PodcastFeedCollectionViewController.swift in Sources */,
@@ -5492,6 +5526,28 @@
 				CE9985E529D70CD3007CDE01 /* fil */,
 			);
 			name = WebApps.storyboard;
+			sourceTree = "<group>";
+		};
+		473596812A70012D00489606 /* ThreadHeaderView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				473596802A70012D00489606 /* Base */,
+				473596832A70013200489606 /* en */,
+				473596852A70013300489606 /* fil */,
+				473596872A70013400489606 /* es */,
+			);
+			name = ThreadHeaderView.xib;
+			sourceTree = "<group>";
+		};
+		4735968A2A70015700489606 /* ThreadsListHeaderView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				473596892A70015700489606 /* Base */,
+				4735968C2A70015A00489606 /* en */,
+				4735968E2A70015A00489606 /* fil */,
+				473596902A70015B00489606 /* es */,
+			);
+			name = ThreadsListHeaderView.xib;
 			sourceTree = "<group>";
 		};
 		473C315527986EBB007735CD /* RestoreProgressView.xib */ = {

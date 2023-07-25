@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension NewChatViewController : ChatHeaderViewDelegate {
+extension NewChatViewController : ChatHeaderViewDelegate, ThreadHeaderViewDelegate {
     func didTapHeaderButton() {
         var vc: UIViewController? = nil
         

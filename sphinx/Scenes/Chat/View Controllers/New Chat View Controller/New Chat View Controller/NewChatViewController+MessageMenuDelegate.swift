@@ -45,15 +45,3 @@ extension NewChatViewController : MessageOptionsVCDelegate {
         chatTableDataSource?.forceReload()
     }
 }
-
-extension NewChatViewController: ThreadHeaderViewDelegate{
-    func didTapShowMore() {
-//        headerView.threadHeaderView.isExpanded = true
-//        headerView.threadHeaderView.adjustNumberOfLines()
-    }
-    
-    func didTapTextField() {
-//        headerView.threadHeaderView.isExpanded = false
-//        headerView.threadHeaderView.adjustNumberOfLines()
-    }
-}

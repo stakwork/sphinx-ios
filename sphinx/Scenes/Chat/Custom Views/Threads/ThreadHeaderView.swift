@@ -10,8 +10,6 @@ import UIKit
 import SDWebImage
 
 protocol ThreadHeaderViewDelegate : NSObject{
-    func didTapShowMore()
-    func didTapTextField()
     func didTapBackButton()
 }
 
@@ -24,6 +22,8 @@ class ThreadHeaderView : UIView {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var senderAvatarView: ChatAvatarView!
     @IBOutlet weak var showMoreLabel: UILabel!
+    @IBOutlet weak var showMoreContainer: UIView!
+    @IBOutlet weak var bottomMarginView: UIView!
     
     var delegate : ThreadHeaderViewDelegate? = nil
     var isExpanded : Bool = false
@@ -53,6 +53,10 @@ class ThreadHeaderView : UIView {
         self.delegate = delegate
         
         messageLabel.text = message.bubbleMessageContentString
+        
+        bottomMarginView.isHidden = !messageLabel.isTruncated
+        showMoreContainer.isHidden = !messageLabel.isTruncated
+        
         senderNameLabel.text = message.senderAlias
         timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMMM d yyyy 'at' h:mm a")
         
@@ -63,6 +67,26 @@ class ThreadHeaderView : UIView {
             alias: message.senderAlias ?? "Unknow",
             picture: message.senderPic
         )
+    }
+    
+    func collapseMessageLabel() {
+        if isExpanded {
+            showMoreButtonTouched()
+        }
+    }
+    
+    @IBAction func showMoreButtonTouched() {
+        if isExpanded {
+            messageLabel.numberOfLines = 4
+            messageLabel.minimumScaleFactor = 1.0
+            showMoreLabel.text = "show-more".localized
+        } else {
+            messageLabel.numberOfLines = 0
+            messageLabel.minimumScaleFactor = 0.5
+            showMoreLabel.text = "show-less".localized
+        }
+        
+        isExpanded = !isExpanded
     }
     
     @IBAction func backButtonTouched() {

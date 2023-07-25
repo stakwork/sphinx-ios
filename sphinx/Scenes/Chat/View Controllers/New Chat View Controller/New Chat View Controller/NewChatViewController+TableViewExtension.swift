@@ -75,14 +75,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         )
     }
     
-    func didBeginOrEndScroll(isScrolling: Bool){
-//        let maxLines = isScrolling ? 2 : 5
-//        let delay = (isScrolling) ? 0.0 : 0.25
-//        
-//        DelayPerformedHelper.performAfterDelay(seconds: delay, completion: {
-//            self.headerView.threadHeaderView.isExpanded = false
-//            self.headerView.threadHeaderView.adjustNumberOfLines(max:maxLines)
-//        })
+    func didScroll(){
+        headerView.threadHeaderView.collapseMessageLabel()
     }
     
     func shouldGoToAttachmentViewFor(

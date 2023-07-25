@@ -51,6 +51,10 @@ extension NewChatViewController: NSFetchedResultsControllerDelegate {
         _ controller: NSFetchedResultsController<NSFetchRequestResult>,
         didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
     ) {
+        if isThread {
+            return
+        }
+        
         if
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {

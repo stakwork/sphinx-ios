@@ -168,6 +168,9 @@
 		4735967E2A6FFE8E00489606 /* ThreadsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735967D2A6FFE8E00489606 /* ThreadsListViewController.swift */; };
 		4735967F2A70012D00489606 /* ThreadHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473596812A70012D00489606 /* ThreadHeaderView.xib */; };
 		473596882A70015700489606 /* ThreadsListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4735968A2A70015700489606 /* ThreadsListHeaderView.xib */; };
+		473596932A70031000489606 /* ThreadsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473596922A70031000489606 /* ThreadsListDataSource.swift */; };
+		473596962A7005E500489606 /* ThreadTableCellState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473596952A7005E500489606 /* ThreadTableCellState.swift */; };
+		473596982A70070400489606 /* ThreadLayoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473596972A70070400489606 /* ThreadLayoutState.swift */; };
 		473633E625558EFE007405F2 /* PodcastSatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E525558EFE007405F2 /* PodcastSatsView.swift */; };
 		473633E825558F0B007405F2 /* PodcastSatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 473633E725558F0B007405F2 /* PodcastSatsView.xib */; };
 		473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473633E925559945007405F2 /* LogarithmicSlider.swift */; };
@@ -698,8 +701,8 @@
 		CEEBBB4329DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */; };
 		CEEDEA162A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */; };
 		CEEDEA182A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */; };
-		CEEFD6082A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */; };
-		CEEFD6092A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */; };
+		CEEFD6082A66FD2D00FD7E73 /* ThreadListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD6062A66FD2D00FD7E73 /* ThreadListTableViewCell.swift */; };
+		CEEFD6092A66FD2D00FD7E73 /* ThreadListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEEFD6072A66FD2D00FD7E73 /* ThreadListTableViewCell.xib */; };
 		CEEFD60B2A6891E100FD7E73 /* ThreadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */; };
 		CEF821D62963B68600CBB28F /* DiscoverTribesWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */; };
 		CEF88DCA29B64E5100DC1C40 /* UnifiedEpisodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */; };
@@ -1034,6 +1037,9 @@
 		4735968C2A70015A00489606 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ThreadsListHeaderView.strings; sourceTree = "<group>"; };
 		4735968E2A70015A00489606 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ThreadsListHeaderView.strings; sourceTree = "<group>"; };
 		473596902A70015B00489606 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ThreadsListHeaderView.strings; sourceTree = "<group>"; };
+		473596922A70031000489606 /* ThreadsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadsListDataSource.swift; sourceTree = "<group>"; };
+		473596952A7005E500489606 /* ThreadTableCellState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadTableCellState.swift; sourceTree = "<group>"; };
+		473596972A70070400489606 /* ThreadLayoutState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadLayoutState.swift; sourceTree = "<group>"; };
 		473633E525558EFE007405F2 /* PodcastSatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastSatsView.swift; sourceTree = "<group>"; };
 		473633E725558F0B007405F2 /* PodcastSatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastSatsView.xib; sourceTree = "<group>"; };
 		473633E925559945007405F2 /* LogarithmicSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogarithmicSlider.swift; sourceTree = "<group>"; };
@@ -1717,8 +1723,8 @@
 		CEEBBB4129DC6AEC0093923D /* ItemDescriptionTableViewHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewHeaderCell.xib; sourceTree = "<group>"; };
 		CEEDEA152A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVC.swift; sourceTree = "<group>"; };
 		CEEDEA172A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSpecificChatOrContentFeedItemVM.swift; sourceTree = "<group>"; };
-		CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewThreadOnlyMessageTableViewCell.swift; sourceTree = "<group>"; };
-		CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewThreadOnlyMessageTableViewCell.xib; sourceTree = "<group>"; };
+		CEEFD6062A66FD2D00FD7E73 /* ThreadListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadListTableViewCell.swift; sourceTree = "<group>"; };
+		CEEFD6072A66FD2D00FD7E73 /* ThreadListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadListTableViewCell.xib; sourceTree = "<group>"; };
 		CEEFD60A2A6891E100FD7E73 /* ThreadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderView.swift; sourceTree = "<group>"; };
 		CEF821D52963B68600CBB28F /* DiscoverTribesWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesWebViewController.swift; sourceTree = "<group>"; };
 		CEF88DC929B64E5000DC1C40 /* UnifiedEpisodeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeView.xib; sourceTree = "<group>"; };
@@ -1905,8 +1911,6 @@
 		4701460D2A3B79AD00A00DF8 /* NewMessageTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				CEEFD6062A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift */,
-				CEEFD6072A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib */,
 				472092C72A278B0400468796 /* NewMessageTableViewCell.swift */,
 				472092C82A278B0400468796 /* NewMessageTableViewCell.xib */,
 				47E6A4F82A2FB2FC00A9509E /* NewMessageTableViewCell+BubbleExtension.swift */,
@@ -2393,6 +2397,32 @@
 			path = ThreadsList;
 			sourceTree = "<group>";
 		};
+		473596912A7002F900489606 /* TheadsListDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				473596922A70031000489606 /* ThreadsListDataSource.swift */,
+			);
+			path = TheadsListDataSource;
+			sourceTree = "<group>";
+		};
+		473596942A7005D600489606 /* ThreadTableCellState */ = {
+			isa = PBXGroup;
+			children = (
+				473596952A7005E500489606 /* ThreadTableCellState.swift */,
+				473596972A70070400489606 /* ThreadLayoutState.swift */,
+			);
+			path = ThreadTableCellState;
+			sourceTree = "<group>";
+		};
+		473596992A70145C00489606 /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				CEEFD6062A66FD2D00FD7E73 /* ThreadListTableViewCell.swift */,
+				CEEFD6072A66FD2D00FD7E73 /* ThreadListTableViewCell.xib */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
 		473633E425558EE5007405F2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2768,6 +2798,7 @@
 		475BDCBF232AC1FD00C5BBD6 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				473596992A70145C00489606 /* Threads */,
 				472092C62A278AE400468796 /* NewMessageTableViewCell */,
 				479EAB6423E311B0001013AB /* Common */,
 				477C525428C635EB00C24117 /* Notification Level */,
@@ -3830,6 +3861,8 @@
 		47E6A4F12A2F63C800A9509E /* View Model & Data Source */ = {
 			isa = PBXGroup;
 			children = (
+				473596942A7005D600489606 /* ThreadTableCellState */,
+				473596912A7002F900489606 /* TheadsListDataSource */,
 				47CFA94D2A3A12230030BC23 /* ViewModel */,
 				47CFA9482A38C5860030BC23 /* NewChatTableDataSource */,
 				47CFA9472A38C57B0030BC23 /* MessageTableCellState */,
@@ -4611,7 +4644,7 @@
 				476A10B923A7E9E500817892 /* ContactTableViewCell.xib in Resources */,
 				F3197C0E267FA2C800330F79 /* lightningNetwork.gif in Resources */,
 				47949BD824AA168D000D697B /* Roboto-Italic.ttf in Resources */,
-				CEEFD6092A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.xib in Resources */,
+				CEEFD6092A66FD2D00FD7E73 /* ThreadListTableViewCell.xib in Resources */,
 				F33846E7267B0FA00041F1EA /* Welcome.storyboard in Resources */,
 				47AF0D33254B238B00C98398 /* BoostButtonView.xib in Resources */,
 				477924882A28EF6E00CD3CF1 /* SentPaidDetails.xib in Resources */,
@@ -4814,6 +4847,7 @@
 				470F5CAF243E8881007E054F /* VideoCallPayButton.swift in Sources */,
 				47B46F66254AFE1C007F61CD /* ChatHeaderView.swift in Sources */,
 				47468079293E564B00F51457 /* PodcastPlayerControlsView.swift in Sources */,
+				473596982A70070400489606 /* ThreadLayoutState.swift in Sources */,
 				47893AA2240E857F002F675B /* AVAudioSession.swift in Sources */,
 				47F6CA10287C695B005EBCB6 /* Nonce.swift in Sources */,
 				CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */,
@@ -5274,6 +5308,7 @@
 				47D4DE832A45CD44004B03AF /* ChatHelper.swift in Sources */,
 				478DCF9E2343D7AC009A03D6 /* SetDataViewController.swift in Sources */,
 				472092C52A268A1500468796 /* ChatAttachmentViewController+AnimatinsExtension.swift in Sources */,
+				473596932A70031000489606 /* ThreadsListDataSource.swift in Sources */,
 				47357A112729A13600A49EEE /* NewsletterFeed+DisplayUtils.swift in Sources */,
 				4705D3992799AAB5009C0729 /* CustomBoostView.swift in Sources */,
 				F39767C826C5A85F00DDFC0A /* LeftMenuDelegate.swift in Sources */,
@@ -5288,7 +5323,7 @@
 				478B05CA29787B7D00A1B254 /* PodcastFeed+PlayerPodcastData.swift in Sources */,
 				471161DB291563D2008EAFF2 /* ActionTrack+FetchUtils.swift in Sources */,
 				47DAABCE2491410900EF38B0 /* MessageReplyView.swift in Sources */,
-				CEEFD6082A66FD2D00FD7E73 /* NewThreadOnlyMessageTableViewCell.swift in Sources */,
+				CEEFD6082A66FD2D00FD7E73 /* ThreadListTableViewCell.swift in Sources */,
 				474064932745581C00FB7F93 /* PeopleTorActionsView.swift in Sources */,
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				4779247E2A28D1D200CD3CF1 /* StatusHeaderView.swift in Sources */,
@@ -5347,6 +5382,7 @@
 				47D0046325E7F66400E74063 /* DownloadService.swift in Sources */,
 				4789E26124F03CF4003991BE /* CommonTabsView.swift in Sources */,
 				471161D529156384008EAFF2 /* PodcastClipAction.swift in Sources */,
+				473596962A7005E500489606 /* ThreadTableCellState.swift in Sources */,
 				474C7A5528D3A7A2007A3E17 /* sphinxrs.swift in Sources */,
 				F38744E3271FDA9200E28C84 /* VideoFeed+DisplayUtils.swift in Sources */,
 				472092BD2A2536F800468796 /* NewChatViewController+PodcastExtension.swift in Sources */,

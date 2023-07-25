@@ -46,6 +46,22 @@
                                 <rect key="frame" x="55.999999999999986" y="27" width="247.66666666666663" height="1844"/>
                                 <color key="backgroundColor" name="SentMsgBG"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdj-WN-CtK">
+                                <rect key="frame" x="52" y="27" width="12" height="8"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="ESh-Oo-5DJ"/>
+                                    <constraint firstAttribute="height" constant="8" id="L1c-Dr-0lM"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5b0-1L-71y">
+                                <rect key="frame" x="295.66666666666669" y="27" width="15" height="8"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="a0G-f9-0r7"/>
+                                    <constraint firstAttribute="height" constant="8" id="i7x-YV-qNv"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="mpu-Ww-LGT">
                                 <rect key="frame" x="15" y="2" width="353.66666666666669" height="1869"/>
                                 <subviews>
@@ -446,22 +462,6 @@
                                     <constraint firstItem="ezO-Vc-nm0" firstAttribute="top" secondItem="mpu-Ww-LGT" secondAttribute="top" constant="8" id="zLi-tt-2MG"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdj-WN-CtK">
-                                <rect key="frame" x="52" y="27" width="12" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="12" id="ESh-Oo-5DJ"/>
-                                    <constraint firstAttribute="height" constant="8" id="L1c-Dr-0lM"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5b0-1L-71y">
-                                <rect key="frame" x="295.66666666666669" y="27" width="15" height="8"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="15" id="a0G-f9-0r7"/>
-                                    <constraint firstAttribute="height" constant="8" id="i7x-YV-qNv"/>
-                                </constraints>
-                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqq-eJ-Nvz">
                                 <rect key="frame" x="74" y="3" width="6" height="6"/>
                                 <color key="backgroundColor" name="WashedOutReceivedText"/>

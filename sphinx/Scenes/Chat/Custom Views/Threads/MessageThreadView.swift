@@ -56,7 +56,6 @@ class MessageThreadView: UIView {
         moreRepliesLabel.text = "more-replies".localized
         
         originalMessageLabel.numberOfLines = 2
-        
         originalMessageBubbleView.layer.cornerRadius = 9
         
         firstReplyBubbleView.layer.cornerRadius = 9

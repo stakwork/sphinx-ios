@@ -189,6 +189,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="VLf-a3-FTa" firstAttribute="leading" secondItem="lOY-J0-M4B" secondAttribute="leading" id="1rU-W5-0Xe"/>
                         <constraint firstAttribute="trailing" secondItem="2Mc-hi-fEg" secondAttribute="trailing" id="2QH-Af-ZHO"/>
@@ -206,7 +207,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" name="Body"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="lOY-J0-M4B" secondAttribute="bottom" priority="750" constant="5" id="SFg-Ea-cbY"/>
                 <constraint firstAttribute="trailing" secondItem="lcA-mI-voQ" secondAttribute="trailing" id="d1a-dx-KVr"/>

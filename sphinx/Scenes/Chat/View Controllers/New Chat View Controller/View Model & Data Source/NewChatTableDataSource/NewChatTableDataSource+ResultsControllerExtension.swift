@@ -246,10 +246,17 @@ extension NewChatTableDataSource {
         updateSnapshot()
         
         delegate?.configureNewMessagesIndicatorWith(
-            newMsgCount: isThread ? array.count : newMsgCount
+            newMsgCount: isThread ? filteredThreadMessages.count : newMsgCount
         )
         
         finishSearchProcess()
+    }
+    
+    func getMessagesCount() -> Int {
+        return (messageTableCellStateArray.filter {
+            var mutableState = $0
+            return mutableState.isMessageRow
+        }).count
     }
     
     func forceReload() {

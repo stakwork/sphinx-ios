@@ -773,6 +773,12 @@ struct MessageTableCellState {
             return threadMessagesState != nil
         }
     }
+    
+    var isMessageRow: Bool {
+        mutating get {
+            return dateSeparator == nil
+        }
+    }
 }
 
 extension MessageTableCellState {

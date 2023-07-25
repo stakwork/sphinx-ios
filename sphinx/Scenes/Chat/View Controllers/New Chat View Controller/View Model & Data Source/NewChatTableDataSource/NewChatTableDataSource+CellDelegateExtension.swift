@@ -816,7 +816,7 @@ extension NewChatTableDataSource {
                 let episodeId = podcastComment.itemId,
                 let feed = ContentFeed.getFeedById(feedId: feedId)
             {
-                let audioInfo = mediaCached[messageId]?.audioInfo
+//                let audioInfo = mediaCached[messageId]?.audioInfo
                 let podcast = PodcastFeed.convertFrom(contentFeed: feed)
                 
                 let clipInfo = PodcastData.ClipInfo(

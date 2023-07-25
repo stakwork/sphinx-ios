@@ -60,6 +60,10 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     func didScrollToBottom() {
         self.configureNewMessagesIndicatorWith(newMsgCount: 0)
         
+        if isThread {
+            return
+        }
+        
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
             self.chat?.setChatMessagesAsSeen()
         })

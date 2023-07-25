@@ -73,6 +73,12 @@ class NewChatTableDataSource : NSObject {
     var contact: UserContact?
     var threadUUID: String?
     
+    var isThread: Bool {
+        get {
+            return threadUUID != nil
+        }
+    }
+    
     ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
     var additionMessagesResultsController: NSFetchedResultsController<TransactionMessage>!

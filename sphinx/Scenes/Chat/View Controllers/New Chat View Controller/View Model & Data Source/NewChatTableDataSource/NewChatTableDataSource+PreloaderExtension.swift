@@ -10,7 +10,7 @@ import Foundation
 
 extension NewChatTableDataSource {
     func restorePreloadedMessages() {
-        if let _ = threadUUID {
+        if isThread {
             return
         }
         
@@ -25,11 +25,11 @@ extension NewChatTableDataSource {
     }
     
     func saveMessagesToPreloader() {
-        guard let chat = chat else {
+        if isThread {
             return
         }
         
-        if let _ = threadUUID {
+        guard let chat = chat else {
             return
         }
         
@@ -42,11 +42,11 @@ extension NewChatTableDataSource {
     }
     
     func saveSnapshotCurrentState() {
-        guard let chat = chat else {
+        if isThread {
             return
         }
         
-        if let _ = threadUUID {
+        guard let chat = chat else {
             return
         }
         
@@ -68,11 +68,11 @@ extension NewChatTableDataSource {
     }
     
     func restoreScrollLastPosition() {
-        guard let chat = chat else {
+        if isThread {
             return
         }
         
-        if let _ = threadUUID {
+        guard let chat = chat else {
             return
         }
         

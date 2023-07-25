@@ -137,13 +137,16 @@ class ThreadsListDataSource : NSObject {
         
         for originalMesage in originalMessages {
             if let uuid = originalMesage.uuid, let threadMessageMap = threadMessagesMap[uuid] {
-                threadTableCellStateArray.append(
-                    ThreadTableCellState(
-                        originalMessage: threadMessageMap.0,
-                        threadMessages: threadMessageMap.1,
-                        owner: owner
+                
+                if threadMessageMap.1.count > 1 {
+                    threadTableCellStateArray.append(
+                        ThreadTableCellState(
+                            originalMessage: threadMessageMap.0,
+                            threadMessages: threadMessageMap.1,
+                            owner: owner
+                        )
                     )
-                )
+                }
             }
         }
         

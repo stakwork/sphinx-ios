@@ -56,7 +56,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-wv-7n5">
                                 <rect key="frame" x="46" y="22" width="408" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis ...
+                                <string key="text">Are there any updates?
 </string>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="TextMessages"/>
@@ -231,7 +231,6 @@
                             <constraint firstItem="rD7-X8-Btw" firstAttribute="leading" secondItem="Ewg-ir-2hU" secondAttribute="trailing" constant="16" id="9Bw-cl-k81"/>
                             <constraint firstItem="8Q0-UN-dmC" firstAttribute="leading" secondItem="FBm-ZG-QSy" secondAttribute="leading" id="FaY-ex-3XW"/>
                             <constraint firstItem="knE-m4-3kt" firstAttribute="leading" secondItem="8Q0-UN-dmC" secondAttribute="trailing" constant="10" id="G32-QM-tLQ"/>
-                            <constraint firstAttribute="height" constant="96" id="MFE-9e-XZO"/>
                             <constraint firstAttribute="trailing" secondItem="pxN-wv-7n5" secondAttribute="trailing" id="OUu-M3-5nq"/>
                             <constraint firstItem="rD7-X8-Btw" firstAttribute="centerY" secondItem="ucE-Sh-N7E" secondAttribute="centerY" id="ThQ-31-KTQ"/>
                             <constraint firstItem="Ewg-ir-2hU" firstAttribute="leading" secondItem="ucE-Sh-N7E" secondAttribute="trailing" constant="22" id="UrS-Nw-bwf"/>
@@ -241,6 +240,7 @@
                             <constraint firstItem="knE-m4-3kt" firstAttribute="top" secondItem="8Q0-UN-dmC" secondAttribute="top" id="hB6-uc-cpd"/>
                             <constraint firstItem="Ji3-pK-XPW" firstAttribute="leading" secondItem="knE-m4-3kt" secondAttribute="trailing" constant="8" id="nEP-Hb-Uf6"/>
                             <constraint firstItem="pxN-wv-7n5" firstAttribute="leading" secondItem="8Q0-UN-dmC" secondAttribute="trailing" constant="10" id="q8x-wn-egL"/>
+                            <constraint firstItem="ucE-Sh-N7E" firstAttribute="top" secondItem="pxN-wv-7n5" secondAttribute="bottom" constant="11" id="ruB-Ju-OER"/>
                             <constraint firstItem="8Q0-UN-dmC" firstAttribute="top" secondItem="FBm-ZG-QSy" secondAttribute="top" id="sVT-Zi-LIX"/>
                             <constraint firstAttribute="bottom" secondItem="ucE-Sh-N7E" secondAttribute="bottom" id="y7o-8Z-8yK"/>
                             <constraint firstItem="pxN-wv-7n5" firstAttribute="top" secondItem="knE-m4-3kt" secondAttribute="bottom" constant="6" id="yiQ-T1-xfb"/>

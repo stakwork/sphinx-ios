@@ -69,6 +69,9 @@ extension NewChatTableDataSource {
     
     func restoreScrollLastPosition() {
         if isThread {
+            DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+                self.tableView.scrollToBottom()
+            })
             return
         }
         

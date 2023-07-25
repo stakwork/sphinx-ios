@@ -61,7 +61,7 @@ extension TransactionMessage {
             parameters["reply_uuid"] = replyUUID as AnyObject?
         }
         
-        if let threadUUID = threadUUID {
+        if let threadUUID = threadUUID, chat?.isPublicGroup() == true {
             parameters["thread_uuid"] = threadUUID as AnyObject?
         }
         

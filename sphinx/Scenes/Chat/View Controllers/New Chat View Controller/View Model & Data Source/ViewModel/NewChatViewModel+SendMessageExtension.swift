@@ -132,6 +132,7 @@ extension NewChatViewModel {
             completion(false)
             return
         }
+        
         sendMessage(
             provisionalMessage: provisionalMessage,
             params: params,

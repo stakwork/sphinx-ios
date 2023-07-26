@@ -24,9 +24,11 @@ extension NewChatViewController: NSFetchedResultsControllerDelegate {
             
             contactResultsController.delegate = self
             
-            do {
-                try contactResultsController.performFetch()
-            } catch {}
+            CoreDataManager.sharedManager.persistentContainer.viewContext.perform {
+                do {
+                    try self.contactResultsController.performFetch()
+                } catch {}
+            }
         }
         
         if let chat = chat {
@@ -41,9 +43,11 @@ extension NewChatViewController: NSFetchedResultsControllerDelegate {
             
             chatResultsController.delegate = self
             
-            do {
-                try chatResultsController.performFetch()
-            } catch {}
+            CoreDataManager.sharedManager.persistentContainer.viewContext.perform {
+                do {
+                    try self.chatResultsController.performFetch()
+                } catch {}
+            }
         }
     }
 

@@ -122,8 +122,12 @@ class CoreDataManager {
         return managedContext.object(with:objectId) as? T
     }
     
-    func getAllOfType<T>(entityName: String, sortDescriptors: [NSSortDescriptor]? = nil) -> [T] {
-        let managedContext = persistentContainer.viewContext
+    func getAllOfType<T>(
+        entityName: String,
+        sortDescriptors: [NSSortDescriptor]? = nil,
+        context: NSManagedObjectContext? = nil
+    ) -> [T] {
+        let managedContext = context ?? persistentContainer.viewContext
         var objects:[T] = [T]()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"\(entityName)")

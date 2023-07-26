@@ -28,9 +28,10 @@ class FeedsManager : NSObject {
     ) -> [ContentFeed] {
         var feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(
             entityName: "ContentFeed",
-            sortDescriptors: [ContentFeed.SortDescriptors.nameAscending]
-        )        
-        
+            sortDescriptors: [ContentFeed.SortDescriptors.nameAscending],
+            context: context
+        )
+
         return feeds
     }
     

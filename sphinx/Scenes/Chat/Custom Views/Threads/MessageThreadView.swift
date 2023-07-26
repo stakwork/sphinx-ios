@@ -18,10 +18,12 @@ class MessageThreadView: UIView {
     @IBOutlet weak var firstReplyContainer: UIView!
     @IBOutlet weak var firstReplyBubbleView: UIView!
     @IBOutlet weak var firstReplyAvatarView: ChatAvatarView!
+    @IBOutlet weak var firstReplyAvatarOverlay: UIView!
     
     @IBOutlet weak var secondReplyContainer: UIView!
     @IBOutlet weak var secondReplyBubbleView: UIView!
     @IBOutlet weak var secondReplyAvatarView: ChatAvatarView!
+    @IBOutlet weak var secondReplyAvatarOverlay: UIView!
     
     @IBOutlet weak var moreRepliesContainer: UIView!
     @IBOutlet weak var moreRepliesBubbleView: UIView!
@@ -62,9 +64,15 @@ class MessageThreadView: UIView {
         firstReplyBubbleView.layer.borderColor = UIColor.Sphinx.LightDivider.cgColor
         firstReplyBubbleView.layer.borderWidth = 1
         
+        firstReplyAvatarOverlay.layer.cornerRadius = firstReplyAvatarOverlay.frame.height / 2
+        firstReplyAvatarOverlay.alpha = 0.5
+        
         secondReplyBubbleView.layer.cornerRadius = 9
         secondReplyBubbleView.layer.borderColor = UIColor.Sphinx.LightDivider.cgColor
         secondReplyBubbleView.layer.borderWidth = 1
+        
+        secondReplyAvatarOverlay.layer.cornerRadius = secondReplyAvatarOverlay.frame.height / 2
+        secondReplyAvatarOverlay.alpha = 0.5
         
         moreRepliesBubbleView.layer.cornerRadius = 9
         moreRepliesBubbleView.layer.borderColor = UIColor.Sphinx.LightDivider.cgColor

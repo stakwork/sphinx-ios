@@ -168,8 +168,23 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
 
 
 extension ProfileManageStorageSourceDetailsVC : ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate{
-    func finishedDeleteAll() {
-        self.navigationController?.popViewController(animated: true)
+    func finishedDeleteAll(feedID:String) {
+        if let podIndex = vm.podsArray.firstIndex(where: {$0.feedID == feedID})
+           {
+            let pod = vm.podsArray[podIndex]
+            self.vm.podsArray.remove(at: podIndex)
+            if let podDict = vm.podsDict,
+                let podItem = podDict[pod]{
+                vm.podsDict?.removeValue(forKey: pod)
+                totalSize -= StorageManager.sharedManager.getItemGroupTotalSize(items: podItem)
+                mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
+            }
+            isFirstLoad = true//override reload
+            vm.tableView.reloadData()
+        }
+        if(vm.podsArray.count == 0){
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 

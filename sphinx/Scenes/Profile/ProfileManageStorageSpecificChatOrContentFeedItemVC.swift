@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate : NSObject{
-    func finishedDeleteAll()
+    func finishedDeleteAll(feedID:String)
 }
 
 public enum ProfileManageStorageSpecificChatOrContentFeedItemVCState{
@@ -44,6 +44,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     var items : [StorageManagerItem] = []
     var delegate : ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate? = nil
     var isFirstLoad:Bool = true
+    var deleteAllInProcess : Bool = false
     
     lazy var vm : ProfileManageStorageSpecificChatOrContentFeedItemVM = {
         ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.podcastListTableView,imageCollectionView: self.imageCollectionView, filesTableView: filesListTableView, source: self.sourceType)
@@ -115,12 +116,11 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     
     @IBAction func deleteAllTapped(_ sender: Any) {
-        print("deleteAllTapped")
-        
         state = .batch
         mediaDeletionConfirmationView.delegate = self
         mediaDeletionConfirmationView.source = self.sourceType
         showDeletionWarningAlert(type: .audio)
+        deleteAllInProcess = true
     }
     
     @IBAction func deletionSummaryCloseTap(_ sender: Any) {
@@ -362,6 +362,13 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
         if(state == .batch){
             self.processDeleteAll {
                 self.mediaDeletionConfirmationView.state = .finished
+                if(self.deleteAllInProcess){
+                    self.deleteAllInProcess = false
+                    self.navigationController?.popViewController(animated: true)
+                    if let feedID = self.podcastFeed?.feedID{
+                        self.delegate?.finishedDeleteAll(feedID: feedID)
+                    }
+                }
             }
         }
         else if sourceType == .chats{

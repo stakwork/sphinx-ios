@@ -25,17 +25,14 @@ class FeedsManager : NSObject {
     
     func fetchFeeds(
         context: NSManagedObjectContext? = nil
-    ) -> [ContentFeed]{
-        var feeds: [ContentFeed] = []
-        let fetchRequest = ContentFeed.FetchRequests.default()
-        let managedContext = context ?? CoreDataManager.sharedManager.persistentContainer.viewContext
-        
-        do {
-            feeds = try managedContext.fetch(fetchRequest)
-            return feeds
-        } catch {
-            return []
-        }
+    ) -> [ContentFeed] {
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(
+            entityName: "ContentFeed",
+            sortDescriptors: [ContentFeed.SortDescriptors.nameAscending],
+            context: context
+        )
+
+        return feeds
     }
     
     func updateLastConsumedWithFeedID(feedID: String) {

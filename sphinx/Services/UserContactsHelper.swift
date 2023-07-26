@@ -17,7 +17,7 @@ class UserContactsHelper {
             self.insertChats(chats: chats)
             self.insertSubscriptions(subscriptions: subscriptions)
             self.insertInvites(invites: invites)
-        })
+        })        
     }
     
     public static func insertInvites(invites: [JSON]) {

@@ -548,8 +548,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         
         messagesResultsController.delegate = self
         
-        
-        DispatchQueue.global(qos: .userInitiated).async {
+        CoreDataManager.sharedManager.persistentContainer.viewContext.perform {
             do {
                 try self.messagesResultsController.performFetch()
             } catch {}
@@ -576,8 +575,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         
         additionMessagesResultsController.delegate = self
         
-        
-        DispatchQueue.global(qos: .userInitiated).async {
+        CoreDataManager.sharedManager.persistentContainer.viewContext.perform {
             do {
                 try self.additionMessagesResultsController.performFetch()
             } catch {}

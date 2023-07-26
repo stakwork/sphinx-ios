@@ -16,6 +16,7 @@ import BackgroundTasks
 import AVFAudio
 import SDWebImageSVGCoder
 import PushKit
+import SMLinkPreview
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -75,10 +76,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureSVGRendering()
         connectTor()
         registerForVoIP()
+        configureLinkPreview()
         
         setInitialVC()
 
         return true
+    }
+    
+    func configureLinkPreview() {
+        if let adaPreview = AdaSupportPreview(apiKey: nil) {
+            PreviewManager.session.add(source: adaPreview)
+        }
+        
+        if let mPreview = MicrolinkPreview(apiKey: nil) {
+            PreviewManager.session.add(source: mPreview)
+        }
     }
     
     func application(

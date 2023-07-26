@@ -27,6 +27,7 @@ target 'sphinx' do
     pod 'HDWalletKit'
     pod 'ObjectMapper'
     pod 'UIView-Shimmer', '~> 1.0'
+    pod 'SMLinkPreview'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

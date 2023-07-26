@@ -7,8 +7,9 @@
 //
 
 import UIKit
-import SwiftLinkPreview
+//import SwiftLinkPreview
 import AVKit
+import SMLinkPreview
 
 ///Loading content in background
 extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
@@ -51,63 +52,47 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
     }
     
     func shouldLoadLinkDataFor(messageId: Int, and rowIndex: Int) {
-//        if var tableCellState = getTableCellStateFor(
-//            messageId: messageId,
-//            and: rowIndex
-//        ),
-//           let link = tableCellState.1.webLink?.link
-//        {
-//            if let cached = linkPreviewsLoader.cache.slp_getCachedResponse(url: link) {
-//                updateMessageTableCellStateFor(
-//                    rowIndex: rowIndex,
-//                    messageId: messageId,
-//                    with: MessageTableCellState.LinkData(
-//                        link: link,
-//                        icon: cached.icon,
-//                        title: cached.title ?? "",
-//                        description: cached.description ?? "",
-//                        image: cached.image,
-//                        failed: (
-//                            cached.title == nil ||
-//                            cached.description == nil ||
-//                            cached.title?.isEmpty == true ||
-//                            cached.description?.isEmpty == true
-//                        )
-//                    )
-//                )
-//            } else  {
-//                linkPreviewsLoader.preview(link, onSuccess: { result in
-//                    self.updateMessageTableCellStateFor(
-//                        rowIndex: rowIndex,
-//                        messageId: messageId,
-//                        with: MessageTableCellState.LinkData(
-//                            link: link,
-//                            icon: result.icon,
-//                            title: result.title ?? "",
-//                            description: result.description ?? "",
-//                            image: result.image,
-//                            failed: (
-//                                result.title == nil ||
-//                                result.description == nil ||
-//                                result.title?.isEmpty == true ||
-//                                result.description?.isEmpty == true
-//                            )
-//                        )
-//                    )
-//                }, onError: { error in
-//                    self.updateMessageTableCellStateFor(
-//                        rowIndex: rowIndex,
-//                        messageId: messageId,
-//                        with: MessageTableCellState.LinkData(
-//                            link: link,
-//                            title: "",
-//                            description: "",
-//                            failed: true
-//                        )
-//                    )
-//                })
-//            }
-//        }
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let link = tableCellState.1.webLink?.link.withProtocol(protocolString: "http"), let url = URL(string: link)
+        {
+            PreviewManager.session.getLinkData(url: url) { linkData in
+                print(String(describing: linkData))
+                
+                if let linkData = linkData {
+                    self.updateMessageTableCellStateFor(
+                        rowIndex: rowIndex,
+                        messageId: messageId,
+                        with: MessageTableCellState.LinkData(
+                            link: link,
+                            icon: linkData.icon?.absoluteString,
+                            title: linkData.title ?? "",
+                            description: linkData.description ?? "",
+                            image: linkData.image?.absoluteString,
+                            failed: (
+                                linkData.title == nil ||
+                                linkData.description == nil ||
+                                linkData.title?.isEmpty == true ||
+                                linkData.description?.isEmpty == true
+                            )
+                        )
+                    )
+                } else {
+                    self.updateMessageTableCellStateFor(
+                        rowIndex: rowIndex,
+                        messageId: messageId,
+                        with: MessageTableCellState.LinkData(
+                            link: link,
+                            title: "",
+                            description: "",
+                            failed: true
+                        )
+                    )
+                }
+            }
+        }
     }
     
     func shouldLoadImageDataFor(

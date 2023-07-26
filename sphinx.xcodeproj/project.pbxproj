@@ -487,7 +487,6 @@
 		47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A644233BB54B00D2B022 /* AddressBookDataSource.swift */; };
 		47B9A648233BB6AE00D2B022 /* AddressBookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B9A647233BB6AE00D2B022 /* AddressBookHeaderView.swift */; };
 		47B9A64A233BB6BA00D2B022 /* AddressBookHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47B9A649233BB6BA00D2B022 /* AddressBookHeaderView.xib */; };
-		47BA7A9124118F6B0001773F /* CustomSwiftLinkPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BA7A9024118F6B0001773F /* CustomSwiftLinkPreview.swift */; };
 		47BB1D5C239572A30049802B /* NewContactDelegatesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BB1D5B239572A30049802B /* NewContactDelegatesExtension.swift */; };
 		47BB1D6A239934210049802B /* EncryptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BB1D69239934210049802B /* EncryptionManager.swift */; };
 		47BE85462464928800BE4AE8 /* KeychainRestoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE85452464928800BE4AE8 /* KeychainRestoreViewController.swift */; };
@@ -1446,7 +1445,6 @@
 		47B9A644233BB54B00D2B022 /* AddressBookDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookDataSource.swift; sourceTree = "<group>"; };
 		47B9A647233BB6AE00D2B022 /* AddressBookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookHeaderView.swift; sourceTree = "<group>"; };
 		47B9A649233BB6BA00D2B022 /* AddressBookHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressBookHeaderView.xib; sourceTree = "<group>"; };
-		47BA7A9024118F6B0001773F /* CustomSwiftLinkPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwiftLinkPreview.swift; sourceTree = "<group>"; };
 		47BB1D5B239572A30049802B /* NewContactDelegatesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactDelegatesExtension.swift; sourceTree = "<group>"; };
 		47BB1D69239934210049802B /* EncryptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionManager.swift; sourceTree = "<group>"; };
 		47BB1D6B23994F9E0049802B /* sphinx 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 4.xcdatamodel"; sourceTree = "<group>"; };
@@ -3075,7 +3073,6 @@
 				474FE33023F5A07700C06FC8 /* CachingPlayerItem.swift */,
 				470DB25323FAE43400D29FA5 /* SphinxCache.swift */,
 				47893A9F240D8ED0002F675B /* IntermitentAlphaAnimatedView.swift */,
-				47BA7A9024118F6B0001773F /* CustomSwiftLinkPreview.swift */,
 				470F5CA8243E6C00007E054F /* CustomPipViewCoordinator.swift */,
 				4740538B244CFE0000826533 /* CustomImageScrollView.swift */,
 				4787F88624746A5400CCE8B9 /* AlignedCollectionViewFlowLayout.swift */,
@@ -5416,7 +5413,6 @@
 				47F8266A2A0C150B002E81F0 /* NewChatViewController.swift in Sources */,
 				476EB47023C50640009745E2 /* GroupAddedContactsDataSource.swift in Sources */,
 				F3E9C02026FB76A100718942 /* DashboardFeedsEmptyStateViewController.swift in Sources */,
-				47BA7A9124118F6B0001773F /* CustomSwiftLinkPreview.swift in Sources */,
 				4701460A2A3B3F3700A00DF8 /* MessageNoBubbleTableViewCell+DelegateExtension.swift in Sources */,
 				47E6A4C32A2E65C700A9509E /* MessageNoBubbleTableViewCell.swift in Sources */,
 				4787F8922475BE3300CCE8B9 /* LoadingWheelHelper.swift in Sources */,

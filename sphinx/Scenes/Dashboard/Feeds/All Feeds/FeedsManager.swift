@@ -26,7 +26,7 @@ class FeedsManager : NSObject {
     func fetchFeeds(
         context: NSManagedObjectContext? = nil
     ) -> [ContentFeed] {
-        var feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(
             entityName: "ContentFeed",
             sortDescriptors: [ContentFeed.SortDescriptors.nameAscending]
         )        

@@ -86,7 +86,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="v6c-Wk-uyd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pti-og-Bac" secondAttribute="leading" constant="2" id="8DX-C6-AG4"/>
                                                     <constraint firstItem="v6c-Wk-uyd" firstAttribute="centerY" secondItem="pti-og-Bac" secondAttribute="centerY" id="8Zd-OI-bQX"/>
@@ -128,7 +128,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="Zuu-1W-Kuh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yS0-eb-JVd" secondAttribute="leading" constant="2" id="9x4-gd-6Vc"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zuu-1W-Kuh" secondAttribute="trailing" constant="2" id="aiD-Yd-Ooe"/>
@@ -170,7 +170,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="22" id="GpB-k4-UNj"/>
                                                     <constraint firstItem="j03-iW-WvQ" firstAttribute="centerY" secondItem="ODA-48-gIv" secondAttribute="centerY" id="LNp-Y9-EdI"/>
@@ -212,7 +212,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MR3-Xe-10g" secondAttribute="trailing" constant="2" id="8dq-91-4ok"/>
                                                     <constraint firstItem="MR3-Xe-10g" firstAttribute="centerY" secondItem="Unt-fB-dWe" secondAttribute="centerY" id="FcY-1x-Lzh"/>
@@ -254,7 +254,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="22" id="3XF-WB-zJ7"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cw6-iM-SIM" secondAttribute="trailing" constant="2" id="9HU-Zp-Pie"/>
@@ -296,7 +296,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="U6b-nq-NSj" secondAttribute="trailing" constant="2" id="CVP-xT-Tj5"/>
                                                     <constraint firstItem="U6b-nq-NSj" firstAttribute="centerX" secondItem="5GN-eG-guT" secondAttribute="centerX" id="OKy-wt-lQg"/>

@@ -734,8 +734,11 @@ extension AllTribeFeedsCollectionViewController {
     
     func scrollBackMostRecentFeed(){
         let mostRecentSectionNumber = (isTrackingEnabled()) ? 2 : 1
-        let indexPath = IndexPath(item: 0, section: mostRecentSectionNumber)//todo: programmatically determine the most recent section #
-        self.collectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true)
+        
+        if collectionView.numberOfSections > mostRecentSectionNumber {
+            let indexPath = IndexPath(item: 0, section: mostRecentSectionNumber)//todo: programmatically determine the most recent section #
+            self.collectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true)
+        }
     }
 }
 

@@ -349,7 +349,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REQUEST AMOUNT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JH8-XK-2TQ">
-                                                <rect key="frame" x="119" y="16.5" width="137.5" height="17"/>
+                                                <rect key="frame" x="119" y="16.5" width="137" height="17"/>
                                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                                 <color key="textColor" name="Text"/>
                                                 <nil key="highlightedColor"/>
@@ -685,9 +685,9 @@
                                                 <color key="backgroundColor" name="Body"/>
                                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No threads found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8d-Gl-VCj">
-                                                <rect key="frame" x="137" y="293.5" width="101.5" height="15.5"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No threads found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8d-Gl-VCj">
+                                                <rect key="frame" x="129" y="292" width="117" height="18"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="15"/>
                                                 <color key="textColor" name="Text"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -732,7 +732,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="noResultsFoundLabel" destination="qeL-FG-wcy" id="U5l-cI-NZo"/>
+                        <outlet property="noResultsFoundLabel" destination="O8d-Gl-VCj" id="hy0-nr-J3G"/>
                         <outlet property="shimmeringView" destination="j3W-Mj-Oob" id="FJg-VB-uYf"/>
                         <outlet property="threadsHeaderView" destination="D8U-e0-Mum" id="viV-un-PST"/>
                         <outlet property="threadsTableView" destination="qeL-FG-wcy" id="1gC-fP-N7w"/>
@@ -947,17 +947,17 @@
                                 <rect key="frame" x="0.0" y="65" width="375" height="602"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zOW-hs-xqG">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="276"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="y2W-O9-BIt" customClass="SDAnimatedImageView">
-                                                <rect key="frame" x="0.0" y="116.5" width="375" height="110"/>
+                                                <rect key="frame" x="0.0" y="83" width="375" height="110"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="110" id="mpY-ur-2nO"/>
                                                 </constraints>
                                             </imageView>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysP-UC-48h" customClass="UIActivityIndicatorView">
-                                                <rect key="frame" x="162.5" y="146.5" width="50" height="50"/>
+                                                <rect key="frame" x="162.5" y="113" width="50" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="raL-yp-SyO"/>
@@ -965,14 +965,14 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Er9-t6-GE3">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="276"/>
                                                 <color key="backgroundColor" name="Body"/>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EMn-y2-hY6">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="343"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="276"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Crj-K4-L6e" customClass="FileInfoView" customModule="sphinx" customModuleProvider="target">
-                                                        <rect key="frame" x="82.5" y="141.5" width="210" height="60"/>
+                                                        <rect key="frame" x="82.5" y="108" width="210" height="60"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="210" id="Ve6-gX-YnV"/>
@@ -1055,7 +1055,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OpW-cd-PgG" customClass="NewChatAccessoryView" customModule="sphinx" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="343" width="375" height="259"/>
+                                        <rect key="frame" x="0.0" y="276" width="375" height="326"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="500" id="uJs-jh-kvf"/>

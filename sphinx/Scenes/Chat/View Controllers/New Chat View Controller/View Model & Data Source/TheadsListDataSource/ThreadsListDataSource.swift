@@ -17,6 +17,8 @@ class ThreadsListDataSource : NSObject {
     
     ///View references
     var tableView : UITableView!
+    var noResultsFoundLabel : UILabel!
+    var shimmeringView: ShimmeringList!
     
     ///Objects
     var chat: Chat?
@@ -41,6 +43,8 @@ class ThreadsListDataSource : NSObject {
     init(
         chat: Chat?,
         tableView : UITableView,
+        noResultsFoundLabel : UILabel,
+        shimmeringView: ShimmeringList,
         delegate: ThreadsListDataSourceDelegate?
     ) {
         super.init()
@@ -50,6 +54,8 @@ class ThreadsListDataSource : NSObject {
         
         self.delegate = delegate
         self.tableView = tableView
+        self.shimmeringView = shimmeringView
+        self.noResultsFoundLabel = noResultsFoundLabel
         
         configureTableView()
         configureDataSource()
@@ -98,7 +104,14 @@ class ThreadsListDataSource : NSObject {
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: false)
             self.tableView.alpha = 1.0
+            self.toggleElementsVisibility()
         }
+    }
+    
+    func toggleElementsVisibility() {
+        noResultsFoundLabel.isHidden = !threadTableCellStateArray.isEmpty
+        tableView.isHidden = threadTableCellStateArray.isEmpty
+        shimmeringView.isHidden = threadTableCellStateArray.isEmpty
     }
     
     func makeCellProvider(

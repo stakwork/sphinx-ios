@@ -13,7 +13,7 @@ class ThreadsListViewController: PopHandlerViewController {
     @IBOutlet weak var threadsHeaderView: ThreadsListHeaderView!
     @IBOutlet weak var shimmeringView: ShimmeringList!
     @IBOutlet weak var threadsTableView: UITableView!
-    @IBOutlet weak var noResultsFoundLabel: UITableView!
+    @IBOutlet weak var noResultsFoundLabel: UILabel!
     
     var threadsListDataSource: ThreadsListDataSource? = nil
     
@@ -49,6 +49,8 @@ class ThreadsListViewController: PopHandlerViewController {
         threadsListDataSource = ThreadsListDataSource(
             chat: chat,
             tableView: threadsTableView,
+            noResultsFoundLabel: noResultsFoundLabel,
+            shimmeringView: shimmeringView,
             delegate: self
         )
     }

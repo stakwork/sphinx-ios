@@ -445,7 +445,7 @@ struct MessageTableCellState {
 
         return BubbleMessageLayoutState.ThreadLastReply(
             lastReplySenderInfo: lastReplySenderInfo,
-            timestamp: (lastReplyMessage.date ?? Date()).getStringDate(format: "hh:mm a")
+            timestamp: (lastReplyMessage.date ?? Date()).getStringDate(format: "EEE dd, hh:mm a")
         )
     }()
     

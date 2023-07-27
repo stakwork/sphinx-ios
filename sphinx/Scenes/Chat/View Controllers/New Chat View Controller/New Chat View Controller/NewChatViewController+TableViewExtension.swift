@@ -26,6 +26,7 @@ extension NewChatViewController {
             contact: contact,
             threadUUID: threadUUID,
             tableView: chatTableView,
+            newMsgIndicator: newMsgsIndicatorView,
             headerImageView: getContactImageView(),
             bottomView: bottomView,
             webView: botWebView,
@@ -51,6 +52,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
                 tableContentOffset: self.chatTableView.contentOffset.y,
+                isTableViewVisible: self.chatTableView.alpha == 1.0,
                 newMessagesCount: newMsgCount,
                 andDelegate: self
             )
@@ -58,7 +60,9 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     }
     
     func didScrollToBottom() {
-        self.configureNewMessagesIndicatorWith(newMsgCount: 0)
+        self.configureNewMessagesIndicatorWith(
+            newMsgCount: 0
+        )
         
         if isThread {
             return
@@ -72,6 +76,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     func didScrollOutOfBottomArea() {
         newMsgsIndicatorView.configureWith(
             tableContentOffset: self.chatTableView.contentOffset.y,
+            isTableViewVisible: self.chatTableView.alpha == 1.0,
             newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil
         )
     }

@@ -201,6 +201,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
         configureWith(threadMessages: mutableMessageCellState.threadMessagesState, and: bubble)
+        configureWith(threadLastReply: mutableMessageCellState.threadLastReplyHeader, and: bubble)
         
         ///Paid Content
         configureWith(paidContent: mutableMessageCellState.paidContent, and: bubble)

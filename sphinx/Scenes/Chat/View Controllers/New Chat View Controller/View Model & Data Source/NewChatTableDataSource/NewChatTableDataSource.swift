@@ -64,6 +64,7 @@ class NewChatTableDataSource : NSObject {
     
     ///View references
     var tableView : UITableView!
+    var newMsgIndicator : NewMessagesIndicatorView!
     var headerImage: UIImage?
     var bottomView: UIView!
     var webView: WKWebView!
@@ -121,6 +122,7 @@ class NewChatTableDataSource : NSObject {
         contact: UserContact?,
         threadUUID: String?,
         tableView: UITableView,
+        newMsgIndicator : NewMessagesIndicatorView,
         headerImageView: UIImageView?,
         bottomView: UIView,
         webView: WKWebView,
@@ -134,6 +136,7 @@ class NewChatTableDataSource : NSObject {
         self.threadUUID = threadUUID
         
         self.tableView = tableView
+        self.newMsgIndicator = newMsgIndicator
         self.headerImage = headerImageView?.image
         self.bottomView = bottomView
         self.webView = webView

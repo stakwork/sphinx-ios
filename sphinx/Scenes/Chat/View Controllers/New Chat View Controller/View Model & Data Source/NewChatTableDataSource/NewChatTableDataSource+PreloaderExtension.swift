@@ -77,6 +77,8 @@ extension NewChatTableDataSource {
             return
         }
         
+        tableView.alpha = 1.0
+        
         if let scrollState = preloaderHelper.getScrollState(
             for: chat.id,
             with: dataSource.snapshot().itemIdentifiers
@@ -112,7 +114,12 @@ extension NewChatTableDataSource {
         if firstLoad {
             ///Scroll to bottom just if it's first load of the view
             DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
-                self.tableView.scrollToBottom()
+                self.tableView.scrollToBottom(animated: false)
+                
+                DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+                    self.tableView.alpha = 1.0
+                    self.newMsgIndicator.isHidden = false
+                })
             })
             firstLoad = false
         }

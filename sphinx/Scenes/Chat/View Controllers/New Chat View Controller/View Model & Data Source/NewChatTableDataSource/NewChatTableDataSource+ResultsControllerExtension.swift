@@ -61,7 +61,6 @@ extension NewChatTableDataSource {
             self.saveSnapshotCurrentState()
             self.dataSource.apply(snapshot, animatingDifferences: false)
             self.restoreScrollLastPosition()
-            self.tableView.alpha = 1.0
             self.loadingMoreItems = false
         }
     }

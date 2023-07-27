@@ -47,7 +47,7 @@
                         <constraint firstItem="Jjz-gP-TSJ" firstAttribute="centerY" secondItem="awz-Gf-GaT" secondAttribute="centerY" id="iDc-6W-vBJ"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEp-m9-vsD">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEp-m9-vsD">
                     <rect key="frame" x="27" y="0.0" width="17" height="17"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hti-9w-0Zy">

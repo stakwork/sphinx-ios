@@ -283,16 +283,20 @@ extension TransactionMessage {
     ) -> [TransactionMessage] {
         let boostType = TransactionMessageType.boost.rawValue
         let predicate = NSPredicate(format: "chat == %@ AND type != %d AND threadUUID != nil AND (threadUUID IN %@)", chat, boostType, messages)
-        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-        let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
+        let sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         
-        return reactions
+        let threadMessages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
+        
+        return threadMessages
     }
     
     static func getThreadMessagesOn(
         on chat: Chat
     ) -> [TransactionMessage] {
-        let boostType = TransactionMessageType.boost.rawValue
         let predicate = NSPredicate(format: "chat == %@ AND threadUUID != nil", chat)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
         let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
@@ -304,7 +308,6 @@ extension TransactionMessage {
         _ threadMessages: [String],
         on chat: Chat
     ) -> [TransactionMessage] {
-        let boostType = TransactionMessageType.boost.rawValue
         let predicate = NSPredicate(format: "chat == %@ AND uuid != nil AND (uuid IN %@)", chat, threadMessages)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")

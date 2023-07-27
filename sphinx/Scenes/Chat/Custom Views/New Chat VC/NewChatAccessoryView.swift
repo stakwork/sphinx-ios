@@ -71,6 +71,13 @@ extension NewChatAccessoryView {
         messageFieldView.setupForAttachments(with: text)
     }
     
+    func setupForThreads(
+        with delegate: ChatMessageTextFieldViewDelegate
+    ) {
+        messageFieldView.delegate = delegate
+        messageFieldView.setupForThread()
+    }
+    
     func getMessage() -> String {
         messageFieldView.getMessage()
     }

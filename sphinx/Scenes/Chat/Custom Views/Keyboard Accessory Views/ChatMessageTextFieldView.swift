@@ -24,6 +24,7 @@ import UIKit
 enum MessagesFieldMode: Int {
     case Chat
     case Attachment
+    case Thread
 }
 
 class ChatMessageTextFieldView: UIView {
@@ -51,6 +52,7 @@ class ChatMessageTextFieldView: UIView {
     
     let kCharacterLimit = 1000
     let kFieldPlaceHolder = "message.placeholder".localized
+    let kThreadFieldPlaceHolder = "message.placeholder".localized
     let kAttchmentFieldPlaceHolder = ChatAttachmentViewController.kFieldPlaceHolder
     
     let kFieldPlaceHolderColor = UIColor.Sphinx.PlaceholderText

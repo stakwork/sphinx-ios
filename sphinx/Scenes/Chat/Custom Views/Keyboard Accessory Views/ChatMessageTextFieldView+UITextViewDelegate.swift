@@ -12,7 +12,14 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     
     var placeHolderText : String {
         get {
-            return (mode == .Chat) ? kFieldPlaceHolder : kAttchmentFieldPlaceHolder
+            switch(mode) {
+            case .Chat:
+                return kFieldPlaceHolder
+            case .Attachment:
+                return kAttchmentFieldPlaceHolder
+            case .Thread:
+                return kThreadFieldPlaceHolder
+            }
         }
     }
     
@@ -52,7 +59,7 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
     func animateElements(
         sendButtonVisible: Bool
     ) {
-        let forceSendButtonVisible = sendButtonVisible || (mode == .Attachment)
+        let forceSendButtonVisible = sendButtonVisible || (mode == .Attachment || mode == .Thread)
         
         attachmentButton.backgroundColor = forceSendButtonVisible ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.PrimaryBlue
         attachmentButton.setTitleColor(forceSendButtonVisible ? UIColor.Sphinx.MainBottomIcons : UIColor.white, for: .normal)
@@ -60,7 +67,7 @@ extension ChatMessageTextFieldView : UITextViewDelegate {
         sendButtonContainer.isHidden = !forceSendButtonVisible
         audioButtonContainer.isHidden = forceSendButtonVisible
         
-        attachmentButtonContainer.isHidden = (mode == .Attachment)
+        attachmentButtonContainer.isHidden = (mode == .Attachment || mode == .Thread)
     }
 }
 

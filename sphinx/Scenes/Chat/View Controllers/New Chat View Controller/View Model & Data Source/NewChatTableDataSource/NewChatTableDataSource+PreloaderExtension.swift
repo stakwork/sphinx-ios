@@ -118,7 +118,9 @@ extension NewChatTableDataSource {
                 
                 DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
                     self.tableView.alpha = 1.0
-                    self.newMsgIndicator.isHidden = false
+                    
+                    ///Show msgs indicator if it's scrolled to top because there's enought content
+                    self.newMsgIndicator.isHidden = self.tableView.contentOffset.y < -10
                 })
             })
             firstLoad = false

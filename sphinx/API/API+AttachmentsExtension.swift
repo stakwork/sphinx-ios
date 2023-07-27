@@ -158,7 +158,11 @@ extension API {
         }
     }
     
-    public func sendAttachment(params: [String : AnyObject], callback: @escaping MessageObjectCallback, errorCallback: @escaping EmptyCallback) {
+    public func sendAttachment(
+        params: [String : AnyObject],
+        callback: @escaping MessageObjectCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = getURLRequest(route: "/attachment", params: params as NSDictionary?, method: "POST") else {
             errorCallback()
             return

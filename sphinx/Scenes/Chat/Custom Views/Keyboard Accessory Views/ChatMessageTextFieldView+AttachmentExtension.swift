@@ -22,4 +22,11 @@ extension ChatMessageTextFieldView {
         animateElements(sendButtonVisible: true)
         textViewDidChange(textView)
     }
+    
+    func setupForThread() {
+        mode = MessagesFieldMode.Thread
+
+        animateElements(sendButtonVisible: true)
+        textViewDidChange(textView)
+    }
 }

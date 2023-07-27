@@ -205,13 +205,13 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         )
         
         configurePinnedMessageView()
-        configureThreadHeaderView()
+        configureThreadHeaderAndBottomView()
         
         bottomView.updateFieldStateFrom(chat)
         showPendingApprovalMessage()
     }
     
-    func configureThreadHeaderView() {
+    func configureThreadHeaderAndBottomView() {
         if
             let threadUUID = self.threadUUID,
             let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
@@ -220,6 +220,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 message: threadOriginalMessage,
                 delegate: self
             )
+            
+            bottomView.setupForThreads(with: self)
         }
     }
     

@@ -61,6 +61,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         activatedFromBackground = false
         
+        let arguments = CommandLine.arguments
+        print(arguments)
+        if let index = arguments.firstIndex(where: {$0 == "cgptkey"}){
+            let key = arguments[index + 1]
+            print(key)
+        }
+        
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = CGFloat(0)
         }

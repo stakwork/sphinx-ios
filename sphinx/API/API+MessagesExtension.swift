@@ -85,6 +85,24 @@ extension API {
                             self.lastSeenMessagesDate = date
                         }
                         
+                        var chatHistory = [Int:[(Int,String)]]()
+                        for message in newMessages{
+                            if let encryptedContent = message["message_content"].rawValue as? String,
+                               let sender = message["sender"].rawValue as? Int,
+                               let chatID = message["chat_id"].rawValue as? Int{
+                                let decrypted = EncryptionManager.sharedInstance.decryptMessage(message: encryptedContent).1
+                                let senderContentPair = (sender,decrypted)
+                                if let _ = chatHistory[chatID]{
+                                    chatHistory[chatID]?.append(senderContentPair)
+                                }
+                                else{
+                                    chatHistory[chatID] = [senderContentPair]
+                                }
+                            }
+                        }
+                        
+                        print(chatHistory)
+                        
                         self.cancellableRequest = nil
                         callback(messagesTotal, newMessages)
                         return

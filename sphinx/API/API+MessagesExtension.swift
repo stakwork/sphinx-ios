@@ -86,7 +86,7 @@ extension API {
                         }
                         
                         var chatHistory = [Int:[(Int,String)]]()
-                        for message in newMessages{
+                        for message in newMessages.sorted(by: {$0["date"] < $1["date"]}){
                             if let encryptedContent = message["message_content"].rawValue as? String,
                                let sender = message["sender"].rawValue as? Int,
                                let chatID = message["chat_id"].rawValue as? Int{
@@ -108,10 +108,11 @@ extension API {
                         callback(messagesTotal, newMessages)
                         
                         var queriesCount = 0
+                        let queryLimit = 5
                         for key in chatHistory.keys{
                             if let history = chatHistory[key]{
                                 queriesCount += 1
-                                if(queriesCount > 2){
+                                if(queriesCount > queryLimit){
                                     continue
                                 }
                                 var historyAsString = ""
@@ -119,8 +120,9 @@ extension API {
                                     historyAsString += "\(messagePair.0): \(messagePair.1)"
                                     historyAsString += "\n"
                                 }
-                                API.sharedInstance.askChatGPT(question: "Assuming that the following represents a chat history where the integer before colons represents the speaker ID and the subsequent text represents a given message's text, please summarize the key points of the chat discussion \(historyAsString)", completion: { result in
-                                    print(result)
+                                API.sharedInstance.askChatGPT(question: "Assuming that the following represents a chat history where the integer before colons represents the speaker ID and the subsequent text represents a given message's text, please summarize the key points of the chat discussion:\n \(historyAsString)", completion: { answer, question in
+                                    print(question)
+                                    print(answer)
                                 })
                             }
                         }

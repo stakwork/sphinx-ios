@@ -43,11 +43,11 @@ extension API {
         }
     }
     
-    public func askChatGPT(question: String,completion: @escaping (String?)->()) {
-        let url = URL(string: "https://api.openai.com/v1/engines/text-davinci-001/completions")!
+    public func askChatGPT(question: String,completion: @escaping (String?,String)->()) {
+        let url = URL(string: "https://api.openai.com/v1/engines/text-davinci-003/completions")!
         guard let delegate = UIApplication.shared.delegate as? AppDelegate,
         let apiKey = delegate.cgptKey else{
-            completion(nil)
+            completion(nil,question)
             return
         }
         var request = URLRequest(url: url)
@@ -72,10 +72,10 @@ extension API {
                let completions = result?["choices"] as? [[String: Any]],
                let text = completions.first?["text"] as? String {
                 print(text)
-                completion(text)
+                completion(text,question)
             } else {
                 print("Error: Unable to parse response")
-                completion(nil)
+                completion(nil,question)
             }
         }
         

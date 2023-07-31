@@ -101,10 +101,30 @@ extension API {
                             }
                         }
                         
+                        
                         print(chatHistory)
                         
                         self.cancellableRequest = nil
                         callback(messagesTotal, newMessages)
+                        
+                        var queriesCount = 0
+                        for key in chatHistory.keys{
+                            if let history = chatHistory[key]{
+                                queriesCount += 1
+                                if(queriesCount > 2){
+                                    continue
+                                }
+                                var historyAsString = ""
+                                for messagePair in history{
+                                    historyAsString += "\(messagePair.0): \(messagePair.1)"
+                                    historyAsString += "\n"
+                                }
+                                API.sharedInstance.askChatGPT(question: "Assuming that the following represents a chat history where the integer before colons represents the speaker ID and the subsequent text represents a given message's text, please summarize the key points of the chat discussion \(historyAsString)", completion: { result in
+                                    print(result)
+                                })
+                            }
+                        }
+                        
                         return
                     }
                 }

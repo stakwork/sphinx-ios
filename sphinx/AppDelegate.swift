@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     let chatListViewModel = ChatListViewModel()
     
+    var cgptKey : String? = nil
+    
     var activatedFromBackground = false
 
     //Lifecycle events
@@ -63,9 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let arguments = CommandLine.arguments
         print(arguments)
-        if let index = arguments.firstIndex(where: {$0 == "cgptkey"}){
-            let key = arguments[index + 1]
-            print(key)
+        if let index = arguments.firstIndex(where: {$0 == "-cgptkey"}){
+            cgptKey = arguments[index + 1]
         }
         
         if #available(iOS 15.0, *) {

@@ -11,7 +11,9 @@ import UIKit
 extension NewChatTableDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if messageTableCellStateArray.count > indexPath.row {
-            if let message = messageTableCellStateArray[indexPath.row].message {
+            var mutableTableCellStateArray = messageTableCellStateArray[indexPath.row]
+            
+            if let message = mutableTableCellStateArray.message, mutableTableCellStateArray.isThread {
                 delegate?.shouldShowThreadFor(message: message)
             }
         }

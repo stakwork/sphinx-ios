@@ -437,7 +437,7 @@ struct MessageTableCellState {
     
     lazy var threadLastReplyHeader : BubbleMessageLayoutState.ThreadLastReply? = {
         
-        guard let lastReplyMessage = threadMessages.last else {
+        guard let lastReplyMessage = threadMessages.last, threadMessages.count > 1 else {
             return nil
         }
         

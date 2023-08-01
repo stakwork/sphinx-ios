@@ -12,18 +12,21 @@ struct ThreadLayoutState {
     
     struct ThreadMessages {
         var orignalThreadMessage: ThreadOriginalMessage
-        var threadMessages: [ThreadMessage]
+        var threadPeople: [ThreadPeople]
+        var threadPeopleCount: Int
         var repliesCount: Int
         var lastReplyTimestamp: String
         
         init(
             orignalThreadMessage: ThreadOriginalMessage,
-            threadMessages: [ThreadMessage],
+            threadPeople: [ThreadPeople],
+            threadPeopleCount: Int,
             repliesCount: Int,
             lastReplyTimestamp: String
         ) {
             self.orignalThreadMessage = orignalThreadMessage
-            self.threadMessages = threadMessages
+            self.threadPeople = threadPeople
+            self.threadPeopleCount = threadPeopleCount
             self.repliesCount = repliesCount
             self.lastReplyTimestamp = lastReplyTimestamp
         }
@@ -45,16 +48,13 @@ struct ThreadLayoutState {
         }
     }
     
-    struct ThreadMessage {
+    struct ThreadPeople {
         var senderIndo: (UIColor, String, String?)
-        var repliesCount: Int
         
         init(
-            senderIndo: (UIColor, String, String?),
-            repliesCount: Int
+            senderIndo: (UIColor, String, String?)
         ) {
             self.senderIndo = senderIndo
-            self.repliesCount = repliesCount
         }
     }
 }

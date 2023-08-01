@@ -38,29 +38,26 @@ struct ThreadTableCellState {
             senderInfo: getSenderInfo(message: originalMessage)
         )
         
-        var threadMessagesMap: [String: ThreadLayoutState.ThreadMessage] = [:]
+        var threadPeopleMap: [String: ThreadLayoutState.ThreadPeople] = [:]
         
         for message in threadMessages {
             let senderInfo = getSenderInfo(message: message)
             
-            if let existingThreadMessage = threadMessagesMap[senderInfo.1] {
-                threadMessagesMap[senderInfo.1] = ThreadLayoutState.ThreadMessage(
-                    senderIndo: senderInfo,
-                    repliesCount: existingThreadMessage.repliesCount + 1
-                )
+            if let existingThreadMessage = threadPeopleMap[senderInfo.1] {
+                continue
             } else {
-                threadMessagesMap[senderInfo.1] = ThreadLayoutState.ThreadMessage(
-                    senderIndo: senderInfo,
-                    repliesCount: 1
+                threadPeopleMap[senderInfo.1] = ThreadLayoutState.ThreadPeople(
+                    senderIndo: senderInfo
                 )
             }
         }
         
-        let threadMessagesArray = threadMessagesMap.map { $0.value }
+        let threadPeopleArray = threadPeopleMap.map { $0.value }
         
         return ThreadLayoutState.ThreadMessages(
             orignalThreadMessage: orignalMessageThred,
-            threadMessages: threadMessagesArray,
+            threadPeople: threadPeopleArray.subarray(size: 6),
+            threadPeopleCount: threadPeopleArray.count,
             repliesCount: threadMessages.count,
             lastReplyTimestamp: (threadMessages.last?.date ?? Date()).timeIntervalSince1970.getDayDiffString()
         )

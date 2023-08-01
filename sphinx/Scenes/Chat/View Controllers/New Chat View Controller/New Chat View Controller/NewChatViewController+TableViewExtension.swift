@@ -131,6 +131,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
             chatId: chatId,
             chatListViewModel: chatListViewModel
         )
+        self.view.endEditing(true)
         navigationController?.pushViewController(chatVC, animated: true)
     }
     

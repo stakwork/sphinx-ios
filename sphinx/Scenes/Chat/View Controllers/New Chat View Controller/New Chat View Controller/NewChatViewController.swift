@@ -171,6 +171,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             threadUUID: threadID
         )
         
+        self.view.endEditing(true)
+        
         navigationController?.pushViewController(
             chatVC,
             animated: true

@@ -434,6 +434,7 @@ class NewMessageBubbleHelper {
                 let rootVC = appDelegate.getRootViewController(),
                 let navCenterController = rootVC.getCenterNavigationController()
             {
+                navCenterController.viewControllers.last?.view.endEditing(true)
                 navCenterController.pushViewController(chatVC, animated: true)
             }
         }

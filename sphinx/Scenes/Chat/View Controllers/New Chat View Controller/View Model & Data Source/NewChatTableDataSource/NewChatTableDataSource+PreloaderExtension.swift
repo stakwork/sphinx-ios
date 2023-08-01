@@ -116,7 +116,7 @@ extension NewChatTableDataSource {
             DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
                 self.tableView.scrollToBottom(animated: false)
                 
-                DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
+                DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
                     self.tableView.alpha = 1.0
                     
                     ///Show msgs indicator if it's scrolled to top because there's enought content

@@ -282,7 +282,17 @@ extension TransactionMessage {
         on chat: Chat
     ) -> [TransactionMessage] {
         let boostType = TransactionMessageType.boost.rawValue
-        let predicate = NSPredicate(format: "chat == %@ AND type != %d AND threadUUID != nil AND (threadUUID IN %@)", chat, boostType, messages)
+        
+        let deletedStatus = TransactionMessage.TransactionMessageStatus.deleted.rawValue
+
+        let predicate = NSPredicate(
+            format: "chat == %@ AND type != %d AND (threadUUID != nil AND (threadUUID IN %@)) AND status != %d",
+            chat,
+            boostType,
+            messages,
+            deletedStatus
+        )
+        
         let sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         
         let threadMessages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(

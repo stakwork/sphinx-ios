@@ -23,14 +23,20 @@ extension NewChatTableDataSource: UITableViewDelegate {
         let difference: CGFloat = 16
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
         let scrolledToBottom = tableView.contentOffset.y < -10
-        let didMoveOutOfStartArea = tableView.contentOffset.y > -10
+        let didMoveOutOfBottom = tableView.contentOffset.y > -10
+        let didMoveOutOfTop = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height - difference - 10
+        
+        print("MOVE OUT OF BOTTOM \(didMoveOutOfBottom)")
+        print("MOVE OUT OF TOP \(didMoveOutOfTop)")
                 
         if scrolledToTop {
             didScrollToTop()
         } else if scrolledToBottom {
             didScrollToBottom()
-        } else if didMoveOutOfStartArea {
-            didScrollOutOfStartArea()
+        } else if didMoveOutOfBottom {
+            didMoveOutOfBottomArea()
+        } else if didMoveOutOfTop {
+            didMoveOutOfTopArea()
         }
         
         delegate?.didScroll()
@@ -40,13 +46,17 @@ extension NewChatTableDataSource: UITableViewDelegate {
         return false
     }
     
-    func didScrollOutOfStartArea() {
+    @objc func didMoveOutOfBottomArea() {
         scrolledAtBottom = false
         
-        delegate?.didScrollOutOfStartArea()
+        delegate?.didScrollOutOfStartAreaWith(
+            tableContentOffset: tableView.contentSize.height - tableView.contentOffset.y
+        )
     }
     
-    func didScrollToBottom() {
+    @objc func didMoveOutOfTopArea() { }
+    
+    @objc func didScrollToBottom() {
         if scrolledAtBottom {
             return
         }
@@ -56,7 +66,7 @@ extension NewChatTableDataSource: UITableViewDelegate {
         delegate?.didScrollToBottom()
     }
     
-    func didScrollToTop() {
+    @objc func didScrollToTop() {
         if loadingMoreItems {
             return
         }
@@ -64,8 +74,6 @@ extension NewChatTableDataSource: UITableViewDelegate {
         loadingMoreItems = true
         
         loadMoreItems()
-        
-        delegate?.didScrollToTop()
     }
     
     @objc func loadMoreItems() {

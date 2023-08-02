@@ -193,4 +193,30 @@ class ThreadTableDataSource : NewChatTableDataSource {
     override func restoreScrollLastPosition() {
         tableView.alpha = 1.0
     }
+    
+    override func didMoveOutOfBottomArea() {}
+    
+    override func didMoveOutOfTopArea() {
+        scrolledAtBottom = false
+        
+        print("TABLE CONTENT HEIGHT \(tableView.contentSize.height)")
+        print("TABLE OFFSET \(tableView.contentOffset.y)")
+        print("TABLE CONTENT OFFSET \(tableView.contentSize.height - tableView.contentOffset.y)")
+        
+        delegate?.didScrollOutOfStartAreaWith(
+            tableContentOffset: tableView.contentOffset.y - 10
+        )
+    }
+    
+    override func didScrollToBottom() {}
+    
+    override func didScrollToTop() {
+        if scrolledAtBottom {
+            return
+        }
+        
+        scrolledAtBottom = true
+        
+        delegate?.didScrollToBottom()
+    }
 }

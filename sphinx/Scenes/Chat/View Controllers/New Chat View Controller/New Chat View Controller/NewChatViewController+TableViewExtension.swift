@@ -62,10 +62,6 @@ extension NewChatViewController {
 }
 
 extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerDelegate {
-    func didScrollToTop() {
-        
-    }
-    
     func configureNewMessagesIndicatorWith(newMsgCount: Int) {
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
@@ -91,9 +87,11 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         })
     }
     
-    func didScrollOutOfStartArea() {
+    func didScrollOutOfStartAreaWith(
+        tableContentOffset: CGFloat
+    ) {
         newMsgsIndicatorView.configureWith(
-            tableContentOffset: self.chatTableView.contentSize.height - self.chatTableView.contentOffset.y,
+            tableContentOffset: tableContentOffset,
             isTableViewVisible: self.chatTableView.alpha == 1.0,
             newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil
         )

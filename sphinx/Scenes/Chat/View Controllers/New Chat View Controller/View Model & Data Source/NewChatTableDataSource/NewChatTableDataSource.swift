@@ -16,8 +16,7 @@ protocol NewChatTableDataSourceDelegate : class {
     
     ///Scrolling
     func didScrollToBottom()
-    func didScrollToTop()
-    func didScrollOutOfStartArea()
+    func didScrollOutOfStartAreaWith(tableContentOffset: CGFloat)
     func didScroll()
     
     ///Attachments

@@ -60,11 +60,11 @@
                                     <color key="textColor" name="Text"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mps-4c-Doc">
+                                <view hidden="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mps-4c-Doc">
                                     <rect key="frame" x="60" y="14.666666666666664" width="348" height="36"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YqN-bc-nSd" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="0.0" width="36" height="36"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="36" id="6JX-Ba-fEU"/>
@@ -72,7 +72,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Gladys" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dKq-lH-jNS">
-                                            <rect key="frame" x="62" y="2.0000000000000018" width="40" height="15.999999999999998"/>
+                                            <rect key="frame" x="46" y="2.0000000000000018" width="40" height="15.999999999999998"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="16" id="oTl-r3-EyE"/>
@@ -82,7 +82,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="12:05 PM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6H-eN-Y8n">
-                                            <rect key="frame" x="62" y="21" width="47" height="13"/>
+                                            <rect key="frame" x="46" y="21" width="47" height="13"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                             <color key="textColor" name="SecondaryText"/>
@@ -92,7 +92,7 @@
                                     <color key="backgroundColor" name="HeaderBG"/>
                                     <constraints>
                                         <constraint firstItem="dKq-lH-jNS" firstAttribute="top" secondItem="YqN-bc-nSd" secondAttribute="top" constant="2" id="8Mx-Td-Yt8"/>
-                                        <constraint firstItem="YqN-bc-nSd" firstAttribute="leading" secondItem="mps-4c-Doc" secondAttribute="leading" constant="16" id="8Vj-gJ-ciZ"/>
+                                        <constraint firstItem="YqN-bc-nSd" firstAttribute="leading" secondItem="mps-4c-Doc" secondAttribute="leading" id="8Vj-gJ-ciZ"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="J6H-eN-Y8n" secondAttribute="trailing" constant="16" id="Mor-kF-p4Z"/>
                                         <constraint firstItem="J6H-eN-Y8n" firstAttribute="leading" secondItem="YqN-bc-nSd" secondAttribute="trailing" constant="10" id="OHW-Mx-3h8"/>
                                         <constraint firstItem="dKq-lH-jNS" firstAttribute="leading" secondItem="YqN-bc-nSd" secondAttribute="trailing" constant="10" id="RFm-FA-VVi"/>
@@ -117,11 +117,11 @@
                                 <constraint firstItem="6Xa-sS-gwA" firstAttribute="top" secondItem="i11-ZJ-k0w" secondAttribute="top" id="wzE-lZ-mm8"/>
                             </constraints>
                         </view>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9e-fE-0M9">
-                            <rect key="frame" x="0.0" y="0.0" width="408" height="72"/>
+                        <view hidden="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9e-fE-0M9">
+                            <rect key="frame" x="0.0" y="0.0" width="408" height="16"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="17" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8kj-a0-Pez" customClass="ExpandableLabel" customModule="ExpandableLabel">
-                                    <rect key="frame" x="16" y="16" width="376" height="40"/>
+                                    <rect key="frame" x="16" y="0.0" width="376" height="0.0"/>
                                     <string key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis simos ducimus qui blanditiis prae sentium volu ptatum deleniti. Character Counter is a 100% free online character count calculator that's simple to use. Sometimes users prefer simplicity over all of the detailed writing information Word Counter provides, and this is exactly what this tool offers. It displays character count and word count which is often the only information a person needs to know about their writing. Best of all, you rece ...</string>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                     <color key="textColor" name="TextMessages"/>
@@ -132,9 +132,8 @@
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="8kj-a0-Pez" secondAttribute="trailing" constant="16" id="4ZN-Jl-pqn"/>
                                 <constraint firstItem="8kj-a0-Pez" firstAttribute="leading" secondItem="R9e-fE-0M9" secondAttribute="leading" constant="16" id="PnA-B1-Dzr"/>
-                                <constraint firstAttribute="height" constant="72" id="UQV-Ae-gYu"/>
                                 <constraint firstAttribute="bottom" secondItem="8kj-a0-Pez" secondAttribute="bottom" constant="16" id="aNc-vN-rou"/>
-                                <constraint firstItem="8kj-a0-Pez" firstAttribute="top" secondItem="R9e-fE-0M9" secondAttribute="top" constant="16" id="bWe-TF-MKv"/>
+                                <constraint firstItem="8kj-a0-Pez" firstAttribute="top" secondItem="R9e-fE-0M9" secondAttribute="top" id="bWe-TF-MKv"/>
                             </constraints>
                         </view>
                     </subviews>

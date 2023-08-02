@@ -65,9 +65,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     func configureNewMessagesIndicatorWith(newMsgCount: Int) {
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
-                tableContentOffset: self.chatTableView.contentOffset.y,
-                isTableViewVisible: self.chatTableView.alpha == 1.0,
                 newMessagesCount: newMsgCount,
+                hidden: self.chatTableDataSource?.shouldHideNewMsgsIndicator() ?? true,
                 andDelegate: self
             )
         }
@@ -87,14 +86,15 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         })
     }
     
-    func didScrollOutOfStartAreaWith(
-        tableContentOffset: CGFloat
-    ) {
+    func didScrollOutOfBottomArea() {
         newMsgsIndicatorView.configureWith(
-            tableContentOffset: tableContentOffset,
-            isTableViewVisible: self.chatTableView.alpha == 1.0,
-            newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil
+            newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil,
+            hidden: chatTableDataSource?.shouldHideNewMsgsIndicator() ?? true
         )
+    }
+    
+    func shouldToggleThreadHeader(expanded: Bool) {
+        headerView.toggleThreadHeaderView(expanded: expanded)
     }
     
     func didScroll(){
@@ -301,7 +301,11 @@ extension NewChatViewController {
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {
     func didTouchButton() {
-        chatTableView.scrollToRow(index: 0, animated: true)
+        if isThread {
+            chatTableView.scrollToBottom(animated: true)
+        } else {
+            chatTableView.scrollToRow(index: 0, animated: true)
+        }
     }
 }
 

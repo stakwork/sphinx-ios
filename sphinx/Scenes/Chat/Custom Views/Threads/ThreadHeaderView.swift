@@ -85,6 +85,32 @@ class ThreadHeaderView : UIView {
         senderContainer.isHidden = true
     }
     
+    func toggleThreadHeaderView(expanded: Bool) {
+        let newAlpha = expanded ? 1.0 : 0.0
+        if newAlpha == senderContainer.alpha {
+            return
+        }
+        
+        if expanded {
+            self.senderContainer.isHidden = false
+            self.messageLabelContainer.isHidden = false
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.senderContainer.alpha = 1.0
+                self.messageLabelContainer.alpha = 1.0
+            })
+        } else {
+            self.messageLabelContainer.alpha = 0.0
+            self.messageLabelContainer.isHidden = true
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.senderContainer.alpha = 0.0
+            }, completion: { _ in
+                self.senderContainer.isHidden = true
+            })
+        }
+    }
+    
     @IBAction func backButtonTouched() {
         delegate?.didTapBackButton()
     }

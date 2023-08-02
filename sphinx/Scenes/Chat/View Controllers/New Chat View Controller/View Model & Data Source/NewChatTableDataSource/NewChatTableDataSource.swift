@@ -16,7 +16,7 @@ protocol NewChatTableDataSourceDelegate : class {
     
     ///Scrolling
     func didScrollToBottom()
-    func didScrollOutOfStartAreaWith(tableContentOffset: CGFloat)
+    func didScrollOutOfBottomArea()
     func didScroll()
     
     ///Attachments
@@ -55,6 +55,7 @@ protocol NewChatTableDataSourceDelegate : class {
     
     ///Threads
     func shouldShowThreadFor(message: TransactionMessage)
+    func shouldToggleThreadHeader(expanded: Bool)
 }
 
 class NewChatTableDataSource : NSObject {

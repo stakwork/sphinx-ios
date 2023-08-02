@@ -194,21 +194,19 @@ class ThreadTableDataSource : NewChatTableDataSource {
         tableView.alpha = 1.0
     }
     
-    override func didMoveOutOfBottomArea() {}
+    override func didMoveOutOfBottomArea() {
+        delegate?.shouldToggleThreadHeader(expanded: true)
+    }
     
     override func didMoveOutOfTopArea() {
         scrolledAtBottom = false
-        
-        print("TABLE CONTENT HEIGHT \(tableView.contentSize.height)")
-        print("TABLE OFFSET \(tableView.contentOffset.y)")
-        print("TABLE CONTENT OFFSET \(tableView.contentSize.height - tableView.contentOffset.y)")
-        
-        delegate?.didScrollOutOfStartAreaWith(
-            tableContentOffset: tableView.contentOffset.y - 10
-        )
+
+        delegate?.didScrollOutOfBottomArea()
     }
     
-    override func didScrollToBottom() {}
+    override func didScrollToBottom() {
+        delegate?.shouldToggleThreadHeader(expanded: false)
+    }
     
     override func didScrollToTop() {
         if scrolledAtBottom {
@@ -218,5 +216,10 @@ class ThreadTableDataSource : NewChatTableDataSource {
         scrolledAtBottom = true
         
         delegate?.didScrollToBottom()
+    }
+    
+    override func shouldHideNewMsgsIndicator() -> Bool {
+        let contentInset: CGFloat = 16
+        return (tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - contentInset) || tableView.alpha == 0
     }
 }

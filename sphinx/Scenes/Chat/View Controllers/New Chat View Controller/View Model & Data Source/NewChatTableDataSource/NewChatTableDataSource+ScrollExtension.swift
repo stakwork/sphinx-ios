@@ -24,18 +24,19 @@ extension NewChatTableDataSource: UITableViewDelegate {
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
         let scrolledToBottom = tableView.contentOffset.y < -10
         let didMoveOutOfBottom = tableView.contentOffset.y > -10
-        let didMoveOutOfTop = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height - difference - 10
-        
-        print("MOVE OUT OF BOTTOM \(didMoveOutOfBottom)")
-        print("MOVE OUT OF TOP \(didMoveOutOfTop)")
+        let didMoveOutOfTop = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height + difference - 10
                 
         if scrolledToTop {
             didScrollToTop()
         } else if scrolledToBottom {
             didScrollToBottom()
-        } else if didMoveOutOfBottom {
+        }
+        
+        if didMoveOutOfBottom {
             didMoveOutOfBottomArea()
-        } else if didMoveOutOfTop {
+        }
+        
+        if didMoveOutOfTop {
             didMoveOutOfTopArea()
         }
         
@@ -49,9 +50,7 @@ extension NewChatTableDataSource: UITableViewDelegate {
     @objc func didMoveOutOfBottomArea() {
         scrolledAtBottom = false
         
-        delegate?.didScrollOutOfStartAreaWith(
-            tableContentOffset: tableView.contentSize.height - tableView.contentOffset.y
-        )
+        delegate?.didScrollOutOfBottomArea()
     }
     
     @objc func didMoveOutOfTopArea() { }
@@ -81,5 +80,9 @@ extension NewChatTableDataSource: UITableViewDelegate {
             guard let self = self else { return }
             self.configureResultsController(items: self.messagesCount + 50)
         })
+    }
+    
+    @objc func shouldHideNewMsgsIndicator() -> Bool {
+        return tableView.contentOffset.y < -1 || tableView.alpha == 0
     }
 }

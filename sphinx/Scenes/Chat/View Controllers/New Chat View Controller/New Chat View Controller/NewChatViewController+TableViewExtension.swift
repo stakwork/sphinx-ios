@@ -21,17 +21,31 @@ extension NewChatViewController {
         setTableViewHeight()
         shouldAdjustTableViewTopInset()
         
-        chatTableDataSource = NewChatTableDataSource(
-            chat: chat,
-            contact: contact,
-            threadUUID: threadUUID,
-            tableView: chatTableView,
-            newMsgIndicator: newMsgsIndicatorView,
-            headerImageView: getContactImageView(),
-            bottomView: bottomView,
-            webView: botWebView,
-            delegate: self
-        )
+        
+        if let threadUUID = threadUUID {
+            chatTableDataSource = ThreadTableDataSource(
+                chat: chat,
+                contact: contact,
+                threadUUID: threadUUID,
+                tableView: chatTableView,
+                newMsgIndicator: newMsgsIndicatorView,
+                headerImageView: getContactImageView(),
+                bottomView: bottomView,
+                webView: botWebView,
+                delegate: self
+            )
+        } else {
+            chatTableDataSource = NewChatTableDataSource(
+                chat: chat,
+                contact: contact,
+                tableView: chatTableView,
+                newMsgIndicator: newMsgsIndicatorView,
+                headerImageView: getContactImageView(),
+                bottomView: bottomView,
+                webView: botWebView,
+                delegate: self
+            )
+        }
         
         chatViewModel.setDataSource(chatTableDataSource)
     }
@@ -48,6 +62,10 @@ extension NewChatViewController {
 }
 
 extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerDelegate {
+    func didScrollToTop() {
+        
+    }
+    
     func configureNewMessagesIndicatorWith(newMsgCount: Int) {
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
@@ -73,16 +91,16 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         })
     }
     
-    func didScrollOutOfBottomArea() {
+    func didScrollOutOfStartArea() {
         newMsgsIndicatorView.configureWith(
-            tableContentOffset: self.chatTableView.contentOffset.y,
+            tableContentOffset: self.chatTableView.contentSize.height - self.chatTableView.contentOffset.y,
             isTableViewVisible: self.chatTableView.alpha == 1.0,
             newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil
         )
     }
     
     func didScroll(){
-        headerView.threadHeaderView.collapseMessageLabel()
+//        headerView.threadHeaderView.collapseMessageLabel()
     }
     
     func shouldGoToAttachmentViewFor(

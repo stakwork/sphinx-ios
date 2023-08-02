@@ -110,7 +110,7 @@ extension NewChatTableDataSource {
                 indexPath: indexPath
             )
             
-            cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+            self.configureTableCellTransformOn(cell: cell)
             
             return (cell as? UITableViewCell) ?? UITableViewCell()
         }
@@ -119,7 +119,7 @@ extension NewChatTableDataSource {
 
 extension NewChatTableDataSource {
     
-    func processMessages(
+    @objc func processMessages(
         messages: [TransactionMessage]
     ) {
         let chat = chat ?? contact?.getFakeChat()
@@ -150,22 +150,18 @@ extension NewChatTableDataSource {
         
         var filteredThreadMessages: [TransactionMessage] = []
         
-        if threadUUID == nil {
-            for message in messages {
-                guard let threadUUID = message.threadUUID else {
-                    ///Message not on thread.
-                    filteredThreadMessages.append(message)
-                    continue
-                }
-                let messagesInThread = threadMessagesMap[threadUUID]
-                if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
-                    ///Thread has more than 1 message. Then skip
-                    continue
-                }
+        for message in messages {
+            guard let threadUUID = message.threadUUID else {
+                ///Message not on thread.
                 filteredThreadMessages.append(message)
+                continue
             }
-        } else {
-            filteredThreadMessages = messages
+            let messagesInThread = threadMessagesMap[threadUUID]
+            if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
+                ///Thread has more than 1 message. Then skip
+                continue
+            }
+            filteredThreadMessages.append(message)
         }
         
 
@@ -199,7 +195,7 @@ extension NewChatTableDataSource {
             
             let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
             let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
-            let threadMessages = (message.uuid != nil && threadUUID == nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
+            let threadMessages = (message.uuid != nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
             let linkContact = linkContactsArray[message.id]
             let linkTribe = linkTribesArray[message.id]
@@ -245,7 +241,7 @@ extension NewChatTableDataSource {
         updateSnapshot()
         
         delegate?.configureNewMessagesIndicatorWith(
-            newMsgCount: isThread ? filteredThreadMessages.count : newMsgCount
+            newMsgCount: newMsgCount
         )
         
         finishSearchProcess()
@@ -262,7 +258,7 @@ extension NewChatTableDataSource {
         processMessages(messages: messagesArray)
     }
     
-    private func getNewMessageCountFor(
+    func getNewMessageCountFor(
         message: TransactionMessage,
         and owner: UserContact
     ) -> Int {
@@ -276,7 +272,7 @@ extension NewChatTableDataSource {
         return 0
     }
     
-    private func getBubbleBackgroundForMessage(
+    func getBubbleBackgroundForMessage(
         message: TransactionMessage,
         with index: Int,
         in messages: [TransactionMessage],
@@ -405,15 +401,11 @@ extension NewChatTableDataSource {
         return boostMessagesMap
     }
     
-    func getThreadMessagesFor(
+    @objc func getThreadMessagesFor(
         messages: [TransactionMessage]
     ) -> [String: [TransactionMessage]] {
         
         guard let chat = chat else {
-            return [:]
-        }
-        
-        if threadUUID != nil {
             return [:]
         }
         
@@ -521,6 +513,16 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         messagesResultsController?.delegate = nil
     }
     
+    @objc func getFetchRequestFor(
+        chat: Chat,
+        with items: Int
+    ) -> NSFetchRequest<TransactionMessage> {
+        return TransactionMessage.getChatMessagesFetchRequest(
+            for: chat,
+            with: items
+        )
+    }
+    
     func configureResultsController(items: Int) {
         guard let chat = chat else {
             return
@@ -532,11 +534,7 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
         
         messagesCount = items
         
-        let fetchRequest = TransactionMessage.getChatMessagesFetchRequest(
-            for: chat,
-            threadUUID: threadUUID,
-            with: items
-        )
+        let fetchRequest = getFetchRequestFor(chat: chat, with: items)
 
         messagesResultsController = NSFetchedResultsController(
             fetchRequest: fetchRequest,

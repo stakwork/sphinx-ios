@@ -23,14 +23,14 @@ extension NewChatTableDataSource: UITableViewDelegate {
         let difference: CGFloat = 16
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
         let scrolledToBottom = tableView.contentOffset.y < -10
-        let didMoveOutOfBottomArea = tableView.contentOffset.y > -10
+        let didMoveOutOfStartArea = tableView.contentOffset.y > -10
                 
         if scrolledToTop {
             didScrollToTop()
         } else if scrolledToBottom {
             didScrollToBottom()
-        } else if didMoveOutOfBottomArea {
-            didScrollOutOfBottomArea()
+        } else if didMoveOutOfStartArea {
+            didScrollOutOfStartArea()
         }
         
         delegate?.didScroll()
@@ -40,10 +40,10 @@ extension NewChatTableDataSource: UITableViewDelegate {
         return false
     }
     
-    func didScrollOutOfBottomArea() {
+    func didScrollOutOfStartArea() {
         scrolledAtBottom = false
         
-        delegate?.didScrollOutOfBottomArea()
+        delegate?.didScrollOutOfStartArea()
     }
     
     func didScrollToBottom() {
@@ -64,9 +64,11 @@ extension NewChatTableDataSource: UITableViewDelegate {
         loadingMoreItems = true
         
         loadMoreItems()
+        
+        delegate?.didScrollToTop()
     }
     
-    func loadMoreItems() {
+    @objc func loadMoreItems() {
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
             guard let self = self else { return }
             self.configureResultsController(items: self.messagesCount + 50)

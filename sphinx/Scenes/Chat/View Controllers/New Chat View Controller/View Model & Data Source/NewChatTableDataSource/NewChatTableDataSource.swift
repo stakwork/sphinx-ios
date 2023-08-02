@@ -16,7 +16,8 @@ protocol NewChatTableDataSourceDelegate : class {
     
     ///Scrolling
     func didScrollToBottom()
-    func didScrollOutOfBottomArea()
+    func didScrollToTop()
+    func didScrollOutOfStartArea()
     func didScroll()
     
     ///Attachments
@@ -73,13 +74,6 @@ class NewChatTableDataSource : NSObject {
     var chat: Chat?
     var contact: UserContact?
     var owner: UserContact? = nil
-    var threadUUID: String?
-    
-    var isThread: Bool {
-        get {
-            return threadUUID != nil
-        }
-    }
     
     ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
@@ -111,7 +105,6 @@ class NewChatTableDataSource : NSObject {
     var messagesCount = 0
     var loadingMoreItems = false
     var scrolledAtBottom = false
-    var firstLoad = true
     
     ///WebView Loading
     let webViewSemaphore = DispatchSemaphore(value: 1)
@@ -120,7 +113,6 @@ class NewChatTableDataSource : NSObject {
     init(
         chat: Chat?,
         contact: UserContact?,
-        threadUUID: String?,
         tableView: UITableView,
         newMsgIndicator : NewMessagesIndicatorView,
         headerImageView: UIImageView?,
@@ -133,7 +125,6 @@ class NewChatTableDataSource : NSObject {
         self.chat = chat
         self.contact = contact
         self.owner = UserContact.getOwner()
-        self.threadUUID = threadUUID
         
         self.tableView = tableView
         self.newMsgIndicator = newMsgIndicator
@@ -161,13 +152,21 @@ class NewChatTableDataSource : NSObject {
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
-        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         tableView.contentInset.top = Constants.kMargin
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
+        configureTableTransform()
         
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
         tableView.registerCell(NewOnlyTextMessageTableViewCell.self)
+    }
+    
+    func configureTableTransform() {
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    }
+    
+    func configureTableCellTransformOn(cell: ChatTableViewCellProtocol?) {
+        cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
 }

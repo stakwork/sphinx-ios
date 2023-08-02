@@ -19,13 +19,12 @@ class ThreadHeaderView : UIView {
     
     @IBOutlet var contentView: UIView!
     
+    @IBOutlet weak var messageLabelContainer: UIView!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var senderContainer: UIView!
     @IBOutlet weak var senderNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var senderAvatarView: ChatAvatarView!
-    @IBOutlet weak var showMoreLabel: UILabel!
-    @IBOutlet weak var showMoreContainer: UIView!
-    @IBOutlet weak var bottomMarginView: UIView!
     
     var isExpanded : Bool = false
     
@@ -54,9 +53,6 @@ class ThreadHeaderView : UIView {
         self.delegate = delegate
         
         messageLabel.text = message.bubbleMessageContentString
-        
-        bottomMarginView.isHidden = !messageLabel.isTruncated
-        showMoreContainer.isHidden = !messageLabel.isTruncated
         timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMMM d yyyy 'at' h:mm a")
         
         guard let owner = UserContact.getOwner() else {
@@ -84,26 +80,9 @@ class ThreadHeaderView : UIView {
             
             senderNameLabel.text = owner.nickname
         }
-    }
-    
-    func collapseMessageLabel() {
-        if isExpanded {
-            showMoreButtonTouched()
-        }
-    }
-    
-    @IBAction func showMoreButtonTouched() {
-        if isExpanded {
-            messageLabel.numberOfLines = 4
-            messageLabel.minimumScaleFactor = 1.0
-            showMoreLabel.text = "show-more".localized
-        } else {
-            messageLabel.numberOfLines = 0
-            messageLabel.minimumScaleFactor = 0.5
-            showMoreLabel.text = "show-less".localized
-        }
         
-        isExpanded = !isExpanded
+        messageLabelContainer.isHidden = true
+        senderContainer.isHidden = true
     }
     
     @IBAction func backButtonTouched() {

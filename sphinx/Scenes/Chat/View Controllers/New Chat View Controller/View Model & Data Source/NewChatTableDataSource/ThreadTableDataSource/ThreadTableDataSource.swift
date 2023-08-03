@@ -46,7 +46,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
             return nil
         }
         
-        let kDifference:CGFloat = 50.0
+        let kDifference:CGFloat = 56.0
         
         return ThreadHeaderTableViewCell.getCellHeightWith(
             messageCellState: headerMessageCellState,

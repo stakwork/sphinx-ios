@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ThreadHeaderTableViewCellDelegate: class {
+    func shouldExpandHeaderMessage()
+}
+
 class ThreadHeaderTableViewCell: UITableViewCell {
+    
+    weak var delegate: ThreadHeaderTableViewCellDelegate!
     
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var senderNameLabel: UILabel!
@@ -33,12 +39,18 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     func configureWith(
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
+        isHeaderExpanded: Bool,
+        delegate: ThreadHeaderTableViewCellDelegate,
         indexPath: IndexPath
     ) {
+        self.delegate = delegate
+        
         var mutableMessageCellState = messageCellState
         
         if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessage {
-            messageLabel.text = threadOriginalMessage.text
+            messageLabel.text = threadOriginalMessage.text            
+            messageLabel.numberOfLines = isHeaderExpanded ? 0 : 12
+            
             timestampLabel.text = threadOriginalMessage.timestamp
             senderNameLabel.text = threadOriginalMessage.senderAlias
             
@@ -49,8 +61,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             )
         }
         
-        showMoreContainer.isHidden = true
-        bottomMarginView.isHidden = true
+        showMoreContainer.isHidden = isHeaderExpanded || !messageLabel.isTruncated
+        bottomMarginView.isHidden = isHeaderExpanded || !messageLabel.isTruncated
     }
     
     static func getCellHeightWith(
@@ -75,5 +87,6 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     }
     
     @IBAction func showMoreButtonTouched() {
+        delegate?.shouldExpandHeaderMessage()
     }
 }

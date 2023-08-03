@@ -13,6 +13,7 @@ import CoreData
 class ThreadTableDataSource : NewChatTableDataSource {
     
     var threadUUID: String!
+    var isHeaderExpanded = false
     
     init(
         chat: Chat?,
@@ -68,6 +69,8 @@ class ThreadTableDataSource : NewChatTableDataSource {
                 cell.configureWith(
                     messageCellState: dataSourceItem,
                     mediaData: nil,
+                    isHeaderExpanded: self.isHeaderExpanded,
+                    delegate: self,
                     indexPath: indexPath
                 )
                 
@@ -280,6 +283,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
             didMoveOutOfBottomArea()
         }
         
+        shouldCollapseHeader()
         delegate?.didScroll()
     }
     
@@ -310,5 +314,35 @@ class ThreadTableDataSource : NewChatTableDataSource {
     override func shouldHideNewMsgsIndicator() -> Bool {
         let contentInset: CGFloat = 16
         return (tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - contentInset) || tableView.alpha == 0
+    }
+}
+
+extension ThreadTableDataSource : ThreadHeaderTableViewCellDelegate {
+    func shouldExpandHeaderMessage() {
+        guard isHeaderExpanded == false else {
+            return
+        }
+        isHeaderExpanded = true
+        reloadHeaderRow()
+    }
+    
+    func shouldCollapseHeader() {
+        guard isHeaderExpanded == true else {
+            return
+        }
+        isHeaderExpanded = false
+        reloadHeaderRow()
+    }
+    
+    func reloadHeaderRow() {
+        guard let tableCellState = messageTableCellStateArray.first else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            var snapshot = self.dataSource.snapshot()
+            snapshot.reloadItems([tableCellState])
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
     }
 }

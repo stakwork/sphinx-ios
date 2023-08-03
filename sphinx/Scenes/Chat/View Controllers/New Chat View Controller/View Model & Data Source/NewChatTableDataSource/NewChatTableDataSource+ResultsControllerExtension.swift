@@ -274,7 +274,8 @@ extension NewChatTableDataSource {
         message: TransactionMessage,
         with index: Int,
         in messages: [TransactionMessage],
-        groupingDate: inout Date?
+        groupingDate: inout Date?,
+        threadOriginalMessage: TransactionMessage? = nil
     ) -> (MessageTableCellState.BubbleState?, Date?) {
         
         let previousMessage = (index > 0) ? messages[index - 1] : nil
@@ -282,7 +283,7 @@ extension NewChatTableDataSource {
         
         var separatorDate: Date? = nil
         
-        if let previousMessageDate = previousMessage?.date, let date = message.date {
+        if let previousMessageDate = previousMessage?.date ?? threadOriginalMessage?.date, let date = message.date {
             if Date.isDifferentDay(firstDate: previousMessageDate, secondDate: date) {
                 separatorDate = date
             }

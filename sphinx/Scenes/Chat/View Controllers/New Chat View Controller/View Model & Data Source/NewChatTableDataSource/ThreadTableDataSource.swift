@@ -101,6 +101,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
         
         let admin = chat.getAdmin()
         let contact = chat.getConversationContact()
+        let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
         
         chat.processAliasesFrom(messages: messages)
         
@@ -125,7 +126,8 @@ class ThreadTableDataSource : NewChatTableDataSource {
                 message: message,
                 with: index,
                 in: messages,
-                groupingDate: &groupingDate
+                groupingDate: &groupingDate,
+                threadOriginalMessage: threadOriginalMessage
             )
             
             if let separatorDate = bubbleStateAndDate.1 {
@@ -185,10 +187,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
             )
         }
         
-        if
-            let threadUUID = self.threadUUID,
-            let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
-        {
+        if let threadOriginalMessage = threadOriginalMessage {
             array.append(
                 MessageTableCellState(
                     message: threadOriginalMessage,

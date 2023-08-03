@@ -20,13 +20,58 @@ class ThreadHeaderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.contentView.clipsToBounds = false
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configureWith(
+        messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
+        indexPath: IndexPath
+    ) {
+        var mutableMessageCellState = messageCellState
+        
+        if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessage {
+            messageLabel.text = threadOriginalMessage.text
+            timestampLabel.text = threadOriginalMessage.timestamp
+            senderNameLabel.text = threadOriginalMessage.senderAlias
+            
+            senderAvatarView.configureForUserWith(
+                color: threadOriginalMessage.senderColor,
+                alias: threadOriginalMessage.senderAlias,
+                picture: threadOriginalMessage.senderPic
+            )
+        }
+        
+        showMoreContainer.isHidden = true
+        bottomMarginView.isHidden = true
+    }
+    
+    static func getCellHeightWith(
+        messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?
+    ) -> CGFloat {
+        var mutableMessageCellState = messageCellState
+        
+        if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessage {
+            let labelHeight = UILabel.getLabelSize(
+                width: UIScreen.main.bounds.width - (16 * 2),
+                text: threadOriginalMessage.text,
+                font: UIFont(name: "Roboto-Regular", size: 17)!
+            ).height
+            
+            let labelMargin: CGFloat = 32
+            let headerHeight: CGFloat = 36
+            
+            return labelHeight + labelMargin + headerHeight
+        }
+        return 0.0
     }
     
     @IBAction func showMoreButtonTouched() {

@@ -9,8 +9,9 @@
 import UIKit
 import SDWebImage
 
-protocol ThreadHeaderViewDelegate : NSObject{
+@objc protocol ThreadHeaderViewDelegate {
     func didTapBackButton()
+    @objc optional func didTapThreadHeaderButton()
 }
 
 class ThreadHeaderView : UIView {
@@ -109,6 +110,10 @@ class ThreadHeaderView : UIView {
                 self.senderContainer.isHidden = true
             })
         }
+    }
+    
+    @IBAction func headerButtonTouched() {
+        delegate?.didTapThreadHeaderButton?()
     }
     
     @IBAction func backButtonTouched() {

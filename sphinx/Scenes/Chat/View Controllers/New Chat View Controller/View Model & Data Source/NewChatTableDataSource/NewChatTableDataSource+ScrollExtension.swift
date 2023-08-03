@@ -24,7 +24,6 @@ extension NewChatTableDataSource: UITableViewDelegate {
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
         let scrolledToBottom = tableView.contentOffset.y < -10
         let didMoveOutOfBottom = tableView.contentOffset.y > -10
-        let didMoveOutOfTop = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height + difference - 10
                 
         if scrolledToTop {
             didScrollToTop()
@@ -34,10 +33,6 @@ extension NewChatTableDataSource: UITableViewDelegate {
         
         if didMoveOutOfBottom {
             didMoveOutOfBottomArea()
-        }
-        
-        if didMoveOutOfTop {
-            didMoveOutOfTopArea()
         }
         
         delegate?.didScroll()
@@ -52,8 +47,6 @@ extension NewChatTableDataSource: UITableViewDelegate {
         
         delegate?.didScrollOutOfBottomArea()
     }
-    
-    @objc func didMoveOutOfTopArea() { }
     
     @objc func didScrollToBottom() {
         if scrolledAtBottom {

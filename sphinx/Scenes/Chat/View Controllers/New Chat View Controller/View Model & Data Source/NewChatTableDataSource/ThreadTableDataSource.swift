@@ -40,7 +40,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
         )
     }
     
-    override func configureTableTransform() {
+    override func configureTableTransformAndInsets() {
         ///Nothing to do
     }
     
@@ -50,6 +50,39 @@ class ThreadTableDataSource : NewChatTableDataSource {
     
     override func loadMoreItems() {
         ///Nothing to do
+    }
+    
+    override func makeCellProvider(
+        for tableView: UITableView
+    ) -> DataSource.CellProvider {
+        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
+            
+            var cell: UITableViewCell? = nil
+            
+            if dataSourceItem.isThreadOriginalMessage {
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: "ThreadHeaderTableViewCell",
+                    for: indexPath
+                ) as! ThreadHeaderTableViewCell
+                
+                cell.configureWith(
+                    messageCellState: dataSourceItem,
+                    mediaData: nil,
+                    indexPath: indexPath
+                )
+                
+                return cell
+            }
+            
+            cell = self.getCellFor(
+                dataSourceItem: dataSourceItem,
+                indexPath: indexPath
+            )
+            
+            cell?.backgroundColor = UIColor.Sphinx.Body
+            
+            return cell ?? UITableViewCell()
+        }
     }
     
     override func processMessages(
@@ -152,6 +185,22 @@ class ThreadTableDataSource : NewChatTableDataSource {
             )
         }
         
+        if
+            let threadUUID = self.threadUUID,
+            let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
+        {
+            array.append(
+                MessageTableCellState(
+                    message: threadOriginalMessage,
+                    chat: chat,
+                    owner: owner,
+                    contact: contact,
+                    tribeAdmin: admin,
+                    isThreadOriginalMessage: true
+                )
+            )
+        }
+        
         messageTableCellStateArray = array.reversed()
         
         updateSnapshot()
@@ -194,21 +243,58 @@ class ThreadTableDataSource : NewChatTableDataSource {
         tableView.alpha = 1.0
     }
     
-    override func didMoveOutOfBottomArea() {
-        delegate?.shouldToggleThreadHeader(expanded: true)
+    lazy var threadHeaderHeight: CGFloat? = {
+        guard messageTableCellStateArray.count > 0 else {
+            return nil
+        }
+        
+        let kDifference:CGFloat = 32.0
+        
+        return ThreadHeaderTableViewCell.getCellHeightWith(
+            messageCellState: messageTableCellStateArray[0],
+            mediaData: nil
+        ) - kDifference
+    }()
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let headerHeight = self.threadHeaderHeight ?? 0
+        
+        let difference: CGFloat = 16
+        let scrolledToBottom = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
+        let scrolledToTop = tableView.contentOffset.y < headerHeight
+        let didMoveOutOfTop = tableView.contentOffset.y > headerHeight
+        let didMoveOutOfBottom = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height + difference
+                
+        if scrolledToBottom {
+            didScrollToBottom()
+        }
+        
+        if scrolledToTop {
+            didScrollToTop()
+        }
+        
+        if didMoveOutOfTop {
+            didMoveOutOfTopArea()
+        }
+        
+        if didMoveOutOfBottom {
+            didMoveOutOfBottomArea()
+        }
+        
+        delegate?.didScroll()
     }
     
-    override func didMoveOutOfTopArea() {
+    override func didMoveOutOfBottomArea() {
         scrolledAtBottom = false
 
         delegate?.didScrollOutOfBottomArea()
     }
     
-    override func didScrollToBottom() {
-        delegate?.shouldToggleThreadHeader(expanded: false)
+    func didMoveOutOfTopArea() {
+        delegate?.shouldToggleThreadHeader(expanded: true)
     }
     
-    override func didScrollToTop() {
+    override func didScrollToBottom() {
         if scrolledAtBottom {
             return
         }
@@ -216,6 +302,10 @@ class ThreadTableDataSource : NewChatTableDataSource {
         scrolledAtBottom = true
         
         delegate?.didScrollToBottom()
+    }
+    
+    override func didScrollToTop() {
+        delegate?.shouldToggleThreadHeader(expanded: false)
     }
     
     override func shouldHideNewMsgsIndicator() -> Bool {

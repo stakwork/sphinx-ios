@@ -191,7 +191,10 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         headerView.superview?.bringSubviewToFront(headerView)
         
         bottomView.addShadow(location: .top, color: UIColor.black, opacity: 0.1)
-        headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
+        
+        if !isThread {
+            headerView.addShadow(location: .bottom, color: UIColor.black, opacity: 0.1)
+        }
         
         botWebViewWidthConstraint.constant = ((UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * MessageTableCellState.kBubbleWidthPercentage) - (MessageTableCellState.kLabelMargin * 2)
         botWebView.layoutIfNeeded()

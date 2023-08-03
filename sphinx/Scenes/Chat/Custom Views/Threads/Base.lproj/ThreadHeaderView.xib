@@ -102,14 +102,28 @@
                                         <constraint firstAttribute="height" constant="36" id="zjd-XB-SPc"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsA-KQ-QXF">
+                                    <rect key="frame" x="45" y="0.0" width="363" height="65"/>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                    <state key="normal">
+                                        <color key="titleColor" name="WashedOutReceivedText"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="headerButtonTouched" destination="-1" eventType="touchUpInside" id="AX3-cT-ajz"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="QsA-KQ-QXF" firstAttribute="top" secondItem="i11-ZJ-k0w" secondAttribute="top" id="0g5-DI-dDp"/>
                                 <constraint firstAttribute="trailing" secondItem="mps-4c-Doc" secondAttribute="trailing" id="56n-oL-CDa"/>
                                 <constraint firstItem="mps-4c-Doc" firstAttribute="centerY" secondItem="i11-ZJ-k0w" secondAttribute="centerY" id="5sh-Dr-0au"/>
                                 <constraint firstAttribute="bottom" secondItem="6Xa-sS-gwA" secondAttribute="bottom" id="7Qb-m0-x0g"/>
+                                <constraint firstItem="QsA-KQ-QXF" firstAttribute="leading" secondItem="6Xa-sS-gwA" secondAttribute="trailing" id="8Dt-7a-Vgb"/>
                                 <constraint firstAttribute="height" constant="65" id="ClF-sS-OSa"/>
+                                <constraint firstAttribute="trailing" secondItem="QsA-KQ-QXF" secondAttribute="trailing" id="DfR-u3-ulv"/>
                                 <constraint firstItem="bKH-QF-Xex" firstAttribute="centerY" secondItem="6Xa-sS-gwA" secondAttribute="centerY" id="OcA-cl-kWK"/>
+                                <constraint firstAttribute="bottom" secondItem="QsA-KQ-QXF" secondAttribute="bottom" id="Ybh-gv-EhN"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bKH-QF-Xex" secondAttribute="trailing" constant="20" symbolic="YES" id="e4U-X7-ORx"/>
                                 <constraint firstItem="mps-4c-Doc" firstAttribute="leading" secondItem="6Xa-sS-gwA" secondAttribute="trailing" constant="15" id="ijn-eR-ITt"/>
                                 <constraint firstItem="bKH-QF-Xex" firstAttribute="leading" secondItem="6Xa-sS-gwA" secondAttribute="trailing" constant="15" id="imF-iT-4Qm"/>
@@ -127,11 +141,25 @@
                                     <color key="textColor" name="TextMessages"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohO-Y5-CVq">
+                                    <rect key="frame" x="0.0" y="0.0" width="408" height="16"/>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                    <state key="normal">
+                                        <color key="titleColor" name="WashedOutReceivedText"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="headerButtonTouched" destination="-1" eventType="touchUpInside" id="x21-PO-oRA"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="8kj-a0-Pez" secondAttribute="trailing" constant="16" id="4ZN-Jl-pqn"/>
+                                <constraint firstAttribute="bottom" secondItem="ohO-Y5-CVq" secondAttribute="bottom" id="7ob-35-QVe"/>
+                                <constraint firstAttribute="trailing" secondItem="ohO-Y5-CVq" secondAttribute="trailing" id="8Ly-gW-XUU"/>
+                                <constraint firstItem="ohO-Y5-CVq" firstAttribute="top" secondItem="R9e-fE-0M9" secondAttribute="top" id="BRj-5b-wfF"/>
                                 <constraint firstItem="8kj-a0-Pez" firstAttribute="leading" secondItem="R9e-fE-0M9" secondAttribute="leading" constant="16" id="PnA-B1-Dzr"/>
+                                <constraint firstItem="ohO-Y5-CVq" firstAttribute="leading" secondItem="R9e-fE-0M9" secondAttribute="leading" id="Wte-OE-cv2"/>
                                 <constraint firstAttribute="bottom" secondItem="8kj-a0-Pez" secondAttribute="bottom" constant="16" id="aNc-vN-rou"/>
                                 <constraint firstItem="8kj-a0-Pez" firstAttribute="top" secondItem="R9e-fE-0M9" secondAttribute="top" id="bWe-TF-MKv"/>
                             </constraints>

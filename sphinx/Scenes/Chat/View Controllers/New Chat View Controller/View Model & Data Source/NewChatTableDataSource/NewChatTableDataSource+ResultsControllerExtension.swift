@@ -65,55 +65,53 @@ extension NewChatTableDataSource {
         }
     }
     
-    func makeCellProvider(
-        for tableView: UITableView
-    ) -> DataSource.CellProvider {
-        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
-            
-            var cell: ChatTableViewCellProtocol? = nil
-            var mutableDataSourceItem = dataSourceItem
-            
-            if let _ = mutableDataSourceItem.bubble {
-                if mutableDataSourceItem.isTextOnlyMessage {
-                    cell = tableView.dequeueReusableCell(
-                        withIdentifier: "NewOnlyTextMessageTableViewCell",
-                        for: indexPath
-                    ) as! NewOnlyTextMessageTableViewCell
-                } else {
-                    cell = tableView.dequeueReusableCell(
-                        withIdentifier: "NewMessageTableViewCell",
-                        for: indexPath
-                    ) as! NewMessageTableViewCell
-                }
+    func getCellFor(
+        dataSourceItem: MessageTableCellState,
+        indexPath: IndexPath
+    ) -> UITableViewCell {
+        var cell: ChatTableViewCellProtocol? = nil
+        var mutableDataSourceItem = dataSourceItem
+        
+        if let _ = mutableDataSourceItem.bubble {
+            if mutableDataSourceItem.isTextOnlyMessage {
+                cell = tableView.dequeueReusableCell(
+                    withIdentifier: "NewOnlyTextMessageTableViewCell",
+                    for: indexPath
+                ) as! NewOnlyTextMessageTableViewCell
             } else {
                 cell = tableView.dequeueReusableCell(
-                    withIdentifier: "MessageNoBubbleTableViewCell",
+                    withIdentifier: "NewMessageTableViewCell",
                     for: indexPath
-                ) as! MessageNoBubbleTableViewCell
+                ) as! NewMessageTableViewCell
             }
-            
-            let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
-            let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
-            let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
-            let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
-            let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
-            
-            cell?.configureWith(
-                messageCellState: dataSourceItem,
-                mediaData: mediaData,
-                tribeData: tribeData,
-                linkData: linkData,
-                botWebViewData: botWebViewData,
-                uploadProgressData: uploadProgressData,
-                delegate: self,
-                searchingTerm: self.searchingTerm,
-                indexPath: indexPath
-            )
-            
-            self.configureTableCellTransformOn(cell: cell)
-            
-            return (cell as? UITableViewCell) ?? UITableViewCell()
+        } else {
+            cell = tableView.dequeueReusableCell(
+                withIdentifier: "MessageNoBubbleTableViewCell",
+                for: indexPath
+            ) as! MessageNoBubbleTableViewCell
         }
+        
+        let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
+        let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
+        let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
+        let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
+        let uploadProgressData = (dataSourceItem.messageId != nil) ? self.uploadingProgress[dataSourceItem.messageId!] : nil
+        
+        cell?.configureWith(
+            messageCellState: dataSourceItem,
+            mediaData: mediaData,
+            tribeData: tribeData,
+            linkData: linkData,
+            botWebViewData: botWebViewData,
+            uploadProgressData: uploadProgressData,
+            delegate: self,
+            searchingTerm: self.searchingTerm,
+            indexPath: indexPath
+        )
+        
+        self.configureTableCellTransformOn(cell: cell)
+        
+        return (cell as? UITableViewCell) ?? UITableViewCell()
     }
 }
 

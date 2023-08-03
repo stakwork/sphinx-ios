@@ -41,6 +41,7 @@ struct MessageTableCellState {
     var linkTribe: LinkTribe? = nil
     var linkWeb: LinkWeb? = nil
     var invoiceData: (Bool, Bool) = (false, false)
+    var isThreadOriginalMessage: Bool = false
     
     ///Generic rows Data
     var separatorDate: Date? = nil
@@ -55,7 +56,7 @@ struct MessageTableCellState {
         owner: UserContact,
         contact: UserContact?,
         tribeAdmin: UserContact?,
-        separatorDate: Date?,
+        separatorDate: Date? = nil,
         bubbleState: MessageTableCellState.BubbleState? = nil,
         contactImage: UIImage? = nil,
         replyingMessage: TransactionMessage? = nil,
@@ -65,7 +66,8 @@ struct MessageTableCellState {
         linkContact: LinkContact? = nil,
         linkTribe: LinkTribe? = nil,
         linkWeb: LinkWeb? = nil,
-        invoiceData: (Bool, Bool)
+        invoiceData: (Bool, Bool) = (false, false),
+        isThreadOriginalMessage: Bool = false
     ) {
         self.message = message
         self.messageId = message?.id
@@ -88,6 +90,8 @@ struct MessageTableCellState {
         self.linkTribe = linkTribe
         self.linkWeb = linkWeb
         self.invoiceData = invoiceData
+        
+        self.isThreadOriginalMessage = isThreadOriginalMessage
     }
     
     ///Reply
@@ -736,6 +740,23 @@ struct MessageTableCellState {
             status: memberRequestStatus,
             isActiveMember: chat.isActiveMember(id: message.senderId),
             senderAlias: message.senderAlias ?? "unknown".localized
+        )
+    }()
+    
+    ///Thread original message header
+    lazy var threadOriginalMessage: NoBubbleMessageLayoutState.ThreadOriginalMessage? = {
+        guard let message = message else {
+            return nil
+        }
+        
+        let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
+        
+        return NoBubbleMessageLayoutState.ThreadOriginalMessage(
+            text: message.bubbleMessageContentString ?? "",
+            senderPic: senderInfo.2,
+            senderAlias: senderInfo.1,
+            senderColor: senderInfo.0,
+            timestamp: (message.date ?? Date()).getStringDate(format: "MMM dd, hh:mm a")
         )
     }()
     

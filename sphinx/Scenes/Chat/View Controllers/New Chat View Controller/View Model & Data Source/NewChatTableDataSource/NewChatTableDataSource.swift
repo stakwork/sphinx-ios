@@ -152,21 +152,33 @@ class NewChatTableDataSource : NSObject {
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
-        tableView.contentInset.top = Constants.kMargin
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
-        configureTableTransform()
+        configureTableTransformAndInsets()
         
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
         tableView.registerCell(NewOnlyTextMessageTableViewCell.self)
+        tableView.registerCell(ThreadHeaderTableViewCell.self)
     }
     
-    func configureTableTransform() {
+    func configureTableTransformAndInsets() {
+        tableView.contentInset.top = Constants.kMargin
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     func configureTableCellTransformOn(cell: ChatTableViewCellProtocol?) {
         cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    }
+    
+    func makeCellProvider(
+        for tableView: UITableView
+    ) -> DataSource.CellProvider {
+        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
+            return self.getCellFor(
+                dataSourceItem: dataSourceItem,
+                indexPath: indexPath
+            )
+        }
     }
 }

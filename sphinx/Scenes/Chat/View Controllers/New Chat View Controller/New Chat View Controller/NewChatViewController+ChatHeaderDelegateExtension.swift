@@ -31,6 +31,10 @@ extension NewChatViewController : ChatHeaderViewDelegate, ThreadHeaderViewDelega
         toggleWebAppContainer()
     }
     
+    func didTapThreadHeaderButton() {
+        chatTableView.scrollToTop()
+    }
+    
     func didTapMuteButton() {
         guard let chat = chat else {
             return

@@ -302,9 +302,9 @@ extension NewChatViewController {
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {
     func didTouchButton() {
         if isThread {
-            chatTableView.scrollToBottom(animated: true)
+            chatTableView.scrollToBottom()
         } else {
-            chatTableView.scrollToRow(index: 0, animated: true)
+            chatTableView.scrollToTop()
         }
     }
 }

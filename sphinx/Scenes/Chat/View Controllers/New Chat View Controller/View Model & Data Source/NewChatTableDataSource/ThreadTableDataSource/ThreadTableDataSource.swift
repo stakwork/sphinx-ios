@@ -20,7 +20,6 @@ class ThreadTableDataSource : NewChatTableDataSource {
         contact: UserContact?,
         threadUUID: String,
         tableView: UITableView,
-        newMsgIndicator : NewMessagesIndicatorView,
         headerImageView: UIImageView?,
         bottomView: UIView,
         webView: WKWebView,
@@ -33,7 +32,6 @@ class ThreadTableDataSource : NewChatTableDataSource {
             chat: chat,
             contact: contact,
             tableView: tableView,
-            newMsgIndicator: newMsgIndicator,
             headerImageView: headerImageView,
             bottomView: bottomView,
             webView: webView,
@@ -69,19 +67,24 @@ class ThreadTableDataSource : NewChatTableDataSource {
     override func restorePreloadedMessages() {
         ///Nothing to do
     }
-    
+
     override func saveMessagesToPreloader() {
         ///Nothing to do
     }
-    
+
     override func saveSnapshotCurrentState() {
         ///Nothing to do
     }
     
     override func restoreScrollLastPosition() {
+        if tableView.isVisible {
+            ///Avoid scrolling if reloading snapshot because of new incoming messages
+            return
+        }
+        
         DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
             self.tableView.scrollToBottom(animated: false)
-            
+
             DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
                 self.tableView.alpha = 1.0
             })

@@ -23,7 +23,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var showMoreLabel: UILabel!
     @IBOutlet weak var showMoreContainer: UIView!
     @IBOutlet weak var bottomMarginView: UIView!
-
+    @IBOutlet weak var differenceViewHeightConstraint: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -41,7 +42,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         mediaData: MessageTableCellState.MediaData?,
         isHeaderExpanded: Bool,
         delegate: ThreadHeaderTableViewCellDelegate,
-        indexPath: IndexPath
+        indexPath: IndexPath,
+        headerDifference: CGFloat?
     ) {
         self.delegate = delegate
         
@@ -61,8 +63,16 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             )
         }
         
-        showMoreContainer.isHidden = isHeaderExpanded || !messageLabel.isTruncated
-        bottomMarginView.isHidden = isHeaderExpanded || !messageLabel.isTruncated
+        showMoreContainer.isHidden = !showMoreVisible(isHeaderExpanded)
+        bottomMarginView.isHidden = !showMoreVisible(isHeaderExpanded)
+        
+        differenceViewHeightConstraint.constant = headerDifference ?? 0
+    }
+    
+    func showMoreVisible(
+        _ isHeaderExpanded: Bool
+    ) -> Bool {
+        return !isHeaderExpanded && messageLabel.isTruncated && !(messageLabel.text ?? "").isEmpty
     }
     
     static func getCellHeightWith(

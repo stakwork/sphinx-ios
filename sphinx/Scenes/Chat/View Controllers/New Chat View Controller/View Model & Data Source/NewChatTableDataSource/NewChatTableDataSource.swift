@@ -66,6 +66,7 @@ class NewChatTableDataSource : NSObject {
     ///View references
     var tableView : UITableView!
     var headerImage: UIImage?
+    var headerView: UIView!
     var bottomView: UIView!
     var webView: WKWebView!
     
@@ -115,6 +116,7 @@ class NewChatTableDataSource : NSObject {
         tableView: UITableView,
         headerImageView: UIImageView?,
         bottomView: UIView,
+        headerView: UIView,
         webView: WKWebView,
         delegate: NewChatTableDataSourceDelegate?
     ) {
@@ -127,6 +129,7 @@ class NewChatTableDataSource : NSObject {
         self.tableView = tableView
         self.headerImage = headerImageView?.image
         self.bottomView = bottomView
+        self.headerView = headerView
         self.webView = webView
         
         self.delegate = delegate

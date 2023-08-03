@@ -14,6 +14,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
     
     var threadUUID: String!
     var isHeaderExpanded = false
+    var headerDifference: CGFloat? = nil
     
     init(
         chat: Chat?,
@@ -22,6 +23,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
         tableView: UITableView,
         headerImageView: UIImageView?,
         bottomView: UIView,
+        headerView: UIView,
         webView: WKWebView,
         delegate: NewChatTableDataSourceDelegate?
     ) {
@@ -34,13 +36,14 @@ class ThreadTableDataSource : NewChatTableDataSource {
             tableView: tableView,
             headerImageView: headerImageView,
             bottomView: bottomView,
+            headerView: headerView,
             webView: webView,
             delegate: delegate
         )
     }
     
     lazy var threadHeaderHeight: CGFloat? = {
-        guard let headerMessageCellState = messageTableCellStateArray.first else {
+        guard let headerMessageCellState = messageTableCellStateArray.last else {
             return nil
         }
         
@@ -52,12 +55,21 @@ class ThreadTableDataSource : NewChatTableDataSource {
         ) - kDifference
     }()
     
+    func getHeaderHeight() -> CGFloat? {
+        guard let _ = messageTableCellStateArray.last else {
+            return nil
+        }
+        
+        return threadHeaderHeight
+    }
+    
     override func configureTableTransformAndInsets() {
-        tableView.contentInset.bottom = Constants.kMargin
+        tableView.contentInset.top = Constants.kMargin
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     override func configureTableCellTransformOn(cell: ChatTableViewCellProtocol?) {
-        ///Nothing to do
+        cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
     }
     
     override func loadMoreItems() {
@@ -73,27 +85,40 @@ class ThreadTableDataSource : NewChatTableDataSource {
     }
 
     override func saveSnapshotCurrentState() {
-        ///Nothing to do
+        self.headerDifference = nil
     }
     
-    override func restoreScrollLastPosition() {
-        if tableView.isVisible {
-            ///Avoid scrolling if reloading snapshot because of new incoming messages
-            return
-        }
-        
+    override func restoreScrollLastPosition() {        
         DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
-            self.tableView.scrollToBottom(animated: false)
-
+            
+            self.calculateHeightAndReloadHeader()
+            
             DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
+                self.toggleHeader()
                 self.tableView.alpha = 1.0
             })
        })
     }
     
-    override func shouldHideNewMsgsIndicator() -> Bool {
-        let contentInset: CGFloat = 16
-        return (tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - contentInset) || tableView.alpha == 0
+    func calculateHeightAndReloadHeader() {
+        if let _ = self.headerDifference {
+            return
+        }
+        
+        let headerHeightDifference = tableView.frame.height - tableView.contentSize.height - tableView.contentInset.top
+        
+        if headerHeightDifference > 0 {
+            self.headerDifference = headerHeightDifference
+        } else {
+            self.headerDifference = 0
+        }
+        
+        self.reloadHeaderRow()
+    }
+    
+    func toggleHeader() {
+        let headerExpanded = ((tableView.contentSize.height + tableView.contentInset.top) - tableView.frame.height) > 1
+        self.delegate?.shouldToggleThreadHeader(expanded: headerExpanded)
     }
     
     override func makeCellProvider(

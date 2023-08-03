@@ -15,9 +15,10 @@ extension ThreadTableDataSource : ThreadHeaderTableViewCellDelegate {
         }
         isHeaderExpanded = true
         reloadHeaderRow()
+        tableView.scrollToBottom(animated: false)
     }
     
-    func shouldCollapseHeader() {
+    func shouldCollapseHeaderMessage() {
         guard isHeaderExpanded == true else {
             return
         }
@@ -26,14 +27,14 @@ extension ThreadTableDataSource : ThreadHeaderTableViewCellDelegate {
     }
     
     func reloadHeaderRow() {
-        guard let tableCellState = messageTableCellStateArray.first else {
+        guard let tableCellState = messageTableCellStateArray.last else {
             return
         }
         
         DispatchQueue.main.async {
             var snapshot = self.dataSource.snapshot()
             snapshot.reloadItems([tableCellState])
-            self.dataSource.apply(snapshot, animatingDifferences: true)
+            self.dataSource.apply(snapshot, animatingDifferences: false)
         }
     }
 }

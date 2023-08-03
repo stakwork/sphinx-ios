@@ -81,9 +81,6 @@ class ThreadHeaderView : UIView {
             
             senderNameLabel.text = owner.nickname
         }
-        
-        messageLabelContainer.isHidden = true
-        senderContainer.isHidden = true
     }
     
     func toggleThreadHeaderView(expanded: Bool) {

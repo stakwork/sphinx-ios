@@ -32,7 +32,7 @@ extension NewChatViewController : ChatHeaderViewDelegate, ThreadHeaderViewDelega
     }
     
     func didTapThreadHeaderButton() {
-        chatTableView.scrollToTop()
+        chatTableView.scrollToBottom()
     }
     
     func didTapMuteButton() {

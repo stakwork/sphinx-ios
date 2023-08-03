@@ -11,13 +11,16 @@ import UIKit
 extension ThreadTableDataSource {
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let headerHeight = self.threadHeaderHeight ?? 0
+        if tableView.contentSize.height <= 0 {
+            return
+        }
         
-        let difference: CGFloat = 16
-        let scrolledToBottom = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
-        let scrolledToTop = tableView.contentOffset.y < headerHeight
-        let didMoveOutOfTop = tableView.contentOffset.y > headerHeight
-        let didMoveOutOfBottom = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height + difference
+        let headerHeight = getHeaderHeight() ?? 0
+        
+        let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - headerHeight
+        let didMoveOutOfTop = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height - headerHeight
+        let scrolledToBottom = tableView.contentOffset.y < -10
+        let didMoveOutOfBottom = tableView.contentOffset.y > -10
                 
         if scrolledToBottom {
             didScrollToBottom()
@@ -35,7 +38,13 @@ extension ThreadTableDataSource {
             didMoveOutOfBottomArea()
         }
         
-        shouldCollapseHeader()
+        if let lastVisibleRow = tableView.indexPathsForVisibleRows?.last?.row {
+            if lastVisibleRow < messageTableCellStateArray.count - 1 {
+                ///Collapse header message when it scrolls out of boundaries
+                shouldCollapseHeaderMessage()
+            }
+        }
+        
         delegate?.didScroll()
     }
     

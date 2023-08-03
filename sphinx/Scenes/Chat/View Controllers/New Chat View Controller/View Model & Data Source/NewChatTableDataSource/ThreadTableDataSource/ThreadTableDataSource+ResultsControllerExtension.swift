@@ -27,8 +27,11 @@ extension ThreadTableDataSource {
                 mediaData: nil,
                 isHeaderExpanded: self.isHeaderExpanded,
                 delegate: self,
-                indexPath: indexPath
+                indexPath: indexPath,
+                headerDifference: headerDifference
             )
+            
+            cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
             
             return cell
         }
@@ -146,7 +149,7 @@ extension ThreadTableDataSource {
             )
         }
         
-        messageTableCellStateArray = array.reversed()
+        messageTableCellStateArray = array
         
         updateSnapshot()
         

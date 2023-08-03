@@ -76,6 +76,6 @@ extension NewChatTableDataSource: UITableViewDelegate {
     }
     
     @objc func shouldHideNewMsgsIndicator() -> Bool {
-        return tableView.contentOffset.y < -1 || tableView.alpha == 0
+        return tableView.contentOffset.y < -10 || tableView.alpha == 0
     }
 }

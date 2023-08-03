@@ -123,8 +123,19 @@
                                     <constraint firstItem="NjK-yM-870" firstAttribute="top" secondItem="GG7-PQ-HiL" secondAttribute="top" id="c70-mY-GXf"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22s-yO-xMt">
+                                <rect key="frame" x="0.0" y="500" width="408" height="0.0"/>
+                                <color key="backgroundColor" name="Body"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="KwA-we-rpb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="22s-yO-xMt" firstAttribute="leading" secondItem="C4H-5D-8K4" secondAttribute="leading" id="6Wv-G5-R0k"/>
+                            <constraint firstAttribute="trailing" secondItem="22s-yO-xMt" secondAttribute="trailing" id="ULY-Fe-EEb"/>
+                        </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-ig-NFM">
                         <rect key="frame" x="317.33333333333331" y="455" width="84.666666666666686" height="45"/>
@@ -178,6 +189,7 @@
             <color key="backgroundColor" name="HeaderBG"/>
             <connections>
                 <outlet property="bottomMarginView" destination="uDu-S2-CM1" id="S57-mK-v9z"/>
+                <outlet property="differenceViewHeightConstraint" destination="KwA-we-rpb" id="xBA-ce-2ja"/>
                 <outlet property="messageLabel" destination="NmQ-7f-GFw" id="nTC-Yz-LeB"/>
                 <outlet property="senderAvatarView" destination="JhS-4M-gL7" id="QQl-QW-i0t"/>
                 <outlet property="senderNameLabel" destination="iST-LB-DT7" id="92j-XM-Kqc"/>
@@ -189,6 +201,9 @@
         </tableViewCell>
     </objects>
     <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

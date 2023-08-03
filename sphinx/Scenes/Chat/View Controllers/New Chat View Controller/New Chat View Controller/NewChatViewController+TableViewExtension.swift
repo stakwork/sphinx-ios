@@ -30,6 +30,7 @@ extension NewChatViewController {
                 tableView: chatTableView,
                 headerImageView: getContactImageView(),
                 bottomView: bottomView,
+                headerView: headerView,
                 webView: botWebView,
                 delegate: self
             )
@@ -40,6 +41,7 @@ extension NewChatViewController {
                 tableView: chatTableView,
                 headerImageView: getContactImageView(),
                 bottomView: bottomView,
+                headerView: headerView,
                 webView: botWebView,
                 delegate: self
             )
@@ -299,11 +301,7 @@ extension NewChatViewController {
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {
     func didTouchButton() {
-        if isThread {
-            chatTableView.scrollToBottom()
-        } else {
-            chatTableView.scrollToTop()
-        }
+        chatTableView.scrollToTop()
     }
 }
 

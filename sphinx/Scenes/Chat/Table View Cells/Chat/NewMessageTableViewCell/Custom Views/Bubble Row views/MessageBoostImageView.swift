@@ -55,7 +55,7 @@ class MessageBoostImageView: UIView {
         if let senderPic = boost.senderPic, let url = URL(string: senderPic) {
             
             let transformer = SDImageResizingTransformer(
-                size: imageView.bounds.size,
+                size: CGSize(width: imageView.bounds.size.width * 3, height: imageView.bounds.size.height * 3),
                 scaleMode: .aspectFill
             )
             

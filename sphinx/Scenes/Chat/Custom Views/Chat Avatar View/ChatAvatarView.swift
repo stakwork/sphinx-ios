@@ -110,14 +110,14 @@ class ChatAvatarView: UIView {
         url: URL
     ) {
         let transformer = SDImageResizingTransformer(
-            size: self.bounds.size,
+            size: CGSize(width: bounds.size.width * 3, height: bounds.size.height * 3),
             scaleMode: .aspectFill
         )
         
         profileImageView.sd_setImage(
             with: url,
             placeholderImage: UIImage(named: "profile_avatar"),
-            options: [.decodeFirstFrameOnly, .lowPriority],
+            options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
             context: [.imageTransformer: transformer],
             progress: nil,
             completed: { (image, error, _, _) in

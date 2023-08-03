@@ -112,7 +112,7 @@ class TribeLinkPreviewView: UIView {
         
         if let image = imageUrl, let url = URL(string: image) {
             let transformer = SDImageResizingTransformer(
-                size: tribeImageView.bounds.size,
+                size: CGSize(width: tribeImageView.bounds.size.width * 3, height: tribeImageView.bounds.size.height * 3),
                 scaleMode: .aspectFill
             )
             

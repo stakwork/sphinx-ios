@@ -65,7 +65,10 @@ extension UITableView {
         }
     }
     
-    func scrollToRow(index:Int, animated:Bool = true){
+    func scrollToRow(
+        index: Int,
+        animated: Bool = true
+    ){
         if self.numberOfRows(inSection: self.numberOfSections - 1) == 0 {
             return
         }

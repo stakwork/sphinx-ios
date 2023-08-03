@@ -154,6 +154,9 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     }
     
     func shouldAdjustTableViewTopInset() {
+        if isThread {
+           return
+        }
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
             let newInset = Constants.kChatTableContentInset + abs(self.chatTableView.frame.origin.y)
             self.chatTableView.contentInset.bottom = newInset

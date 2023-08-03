@@ -46,7 +46,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
             return nil
         }
         
-        let kDifference:CGFloat = 32.0
+        let kDifference:CGFloat = 50.0
         
         return ThreadHeaderTableViewCell.getCellHeightWith(
             messageCellState: headerMessageCellState,
@@ -55,7 +55,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
     }()
     
     override func configureTableTransformAndInsets() {
-        ///Nothing to do
+        tableView.contentInset.bottom = Constants.kMargin
     }
     
     override func configureTableCellTransformOn(cell: ChatTableViewCellProtocol?) {
@@ -79,7 +79,13 @@ class ThreadTableDataSource : NewChatTableDataSource {
     }
     
     override func restoreScrollLastPosition() {
-        tableView.alpha = 1.0
+        DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
+            self.tableView.scrollToBottom(animated: false)
+            
+            DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
+                self.tableView.alpha = 1.0
+            })
+       })
     }
     
     override func shouldHideNewMsgsIndicator() -> Bool {

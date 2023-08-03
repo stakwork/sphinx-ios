@@ -797,7 +797,7 @@ struct MessageTableCellState {
     
     var isMessageRow: Bool {
         mutating get {
-            return dateSeparator == nil
+            return dateSeparator == nil && !isThreadOriginalMessage
         }
     }
 }

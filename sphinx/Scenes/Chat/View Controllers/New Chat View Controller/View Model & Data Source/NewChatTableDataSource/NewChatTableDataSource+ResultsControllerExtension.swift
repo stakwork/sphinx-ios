@@ -63,7 +63,7 @@ extension NewChatTableDataSource {
             self.restoreScrollLastPosition()
             self.loadingMoreItems = false
         }
-    }
+    }    
     
     func getCellFor(
         dataSourceItem: MessageTableCellState,

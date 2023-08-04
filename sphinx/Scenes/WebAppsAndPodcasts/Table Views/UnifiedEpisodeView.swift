@@ -292,10 +292,12 @@ class UnifiedEpisodeView : UIView {
         if let valid_duration = episode.duration, let valid_time = episode.currentTime, valid_time > 0 {
             let percentage = max(Float(valid_time) / Float(valid_duration), Float(0.075))
             let newProgressWidth = (percentage * Float(fullWidth))
-            progressWidthConstraint.constant = CGFloat(newProgressWidth)
-            
-            durationView.isHidden = false
-            progressView.isHidden = false
+            DispatchQueue.main.async {
+                self.progressWidthConstraint.constant = CGFloat(newProgressWidth)
+                
+                self.durationView.isHidden = false
+                self.progressView.isHidden = false
+            }
         }
     }
     

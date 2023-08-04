@@ -37,6 +37,7 @@ class DownloadService : NSObject {
     }()
   
     var activeDownloads: [String: Download] = [:]
+    private let downloadsQueue = DispatchQueue(label: "activeDownloads")
 
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
@@ -68,7 +69,10 @@ class DownloadService : NSObject {
         
         download.progress = 0
         download.state = Download.State.downloading
-        activeDownloads[url.absoluteString] = download
+        self.downloadsQueue.sync{
+            activeDownloads[url.absoluteString] = download
+        }
+        
         
         for d in self.delegates.values {
             d.shouldReloadRowFor(download: download)
@@ -79,8 +83,9 @@ class DownloadService : NSObject {
             
             download.task = self.downloadsSession.downloadTask(with: url)
             download.task?.resume()
-        
-            self.activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+            self.downloadsQueue.sync{
+                self.activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+            }
         }
     }
     
@@ -104,7 +109,9 @@ class DownloadService : NSObject {
         
             download.task?.resume()
             
-            self.activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+            self.downloadsQueue.sync {
+                self.activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+            }
         }
         
         DispatchQueue.main.async {
@@ -126,8 +133,10 @@ class DownloadService : NSObject {
         download.task?.cancel(byProducingResumeData: { resumeDataOrNil in
             download.resumeData = resumeDataOrNil
         })
-
-        activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+        
+        downloadsQueue.sync {
+            activeDownloads[download.task?.currentRequest?.url?.absoluteString ?? url.absoluteString] = download
+        }
         
         downloadDispatchSemaphore.signal()
         
@@ -155,10 +164,12 @@ extension DownloadService : URLSessionDownloadDelegate {
         }
         
         if let currentDownload = activeDownloads[urlString] {
-            activeDownloads[urlString] = nil
-            
-            if let originalUrl = currentDownload.originalUrl {
-                activeDownloads[originalUrl] = nil
+            downloadsQueue.sync {
+                self.activeDownloads[urlString] = nil
+                
+                if let originalUrl = currentDownload.originalUrl {
+                    self.activeDownloads[originalUrl] = nil
+                }
             }
         }
       
@@ -216,7 +227,9 @@ extension DownloadService : URLSessionDownloadDelegate {
             download.progress = newProgress
         }
         
-        activeDownloads[url.absoluteString] = download
+        downloadsQueue.sync {
+            activeDownloads[url.absoluteString] = download
+        }
         
         DispatchQueue.main.async {
             if shouldUpdateUI {

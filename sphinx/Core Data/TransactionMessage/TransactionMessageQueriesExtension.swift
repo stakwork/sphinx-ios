@@ -324,6 +324,33 @@ extension TransactionMessage {
         return threadMessages
     }
     
+    static func getOriginaalMessagesFor(
+        _ threadMessages: [String],
+        on chat: Chat
+    ) -> [TransactionMessage] {
+        let boostType = TransactionMessageType.boost.rawValue
+        
+        let deletedStatus = TransactionMessage.TransactionMessageStatus.deleted.rawValue
+
+        let predicate = NSPredicate(
+            format: "chat == %@ AND (uuid != nil AND (uuid IN %@))",
+            chat,
+            boostType,
+            threadMessages,
+            deletedStatus
+        )
+        
+        let sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+        
+        let originalMessages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
+        
+        return originalMessages
+    }
+    
     static func getThreadMessagesOn(
         on chat: Chat
     ) -> [TransactionMessage] {

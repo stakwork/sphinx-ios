@@ -49,7 +49,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         var mutableMessageCellState = messageCellState
         
-        if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessage {
+        if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessageHeader {
             messageLabel.text = threadOriginalMessage.text            
             messageLabel.numberOfLines = isHeaderExpanded ? 0 : 12
             
@@ -81,7 +81,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     ) -> CGFloat {
         var mutableMessageCellState = messageCellState
         
-        if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessage {
+        if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessageHeader {
             let labelHeight = UILabel.getLabelSize(
                 width: UIScreen.main.bounds.width - (16 * 2),
                 text: threadOriginalMessage.text,

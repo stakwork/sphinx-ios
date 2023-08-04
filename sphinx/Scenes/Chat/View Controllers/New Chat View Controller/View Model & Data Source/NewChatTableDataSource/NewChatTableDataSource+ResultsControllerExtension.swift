@@ -146,22 +146,12 @@ extension NewChatTableDataSource {
         var groupingDate: Date? = nil
         var invoiceData: (Int, Int) = (0, 0)
         
-        var filteredThreadMessages: [TransactionMessage] = []
+        let filteredThreadMessages: [TransactionMessage] = filterThreadMessagesFrom(
+            messages: messages,
+            threadMessagesMap: threadMessagesMap
+        )
         
-        for message in messages {
-            guard let threadUUID = message.threadUUID else {
-                ///Message not on thread.
-                filteredThreadMessages.append(message)
-                continue
-            }
-            let messagesInThread = threadMessagesMap[threadUUID]
-            if let messagesInThread = messagesInThread, messagesInThread.count > 1 {
-                ///Thread has more than 1 message. Then skip
-                continue
-            }
-            filteredThreadMessages.append(message)
-        }
-        
+        let originalMessagesMap = getOriginalMessagesFor(threadMessages: filteredThreadMessages)
 
         for (index, message) in filteredThreadMessages.enumerated() {
             
@@ -170,10 +160,20 @@ extension NewChatTableDataSource {
                 invoiceData.1 + ((message.isPayment() && message.isOutgoing(ownerId: owner.id)) ? -1 : 0)
             )
             
+            let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
+            let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
+            let threadMessages = (message.threadUUID != nil) ? (threadMessagesMap[message.threadUUID!] ?? []) : []
+            let threadOriginalMsg = (message.threadUUID != nil) ? originalMessagesMap[message.threadUUID!] : nil
+            let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
+            let linkContact = linkContactsArray[message.id]
+            let linkTribe = linkTribesArray[message.id]
+            let linkWeb = getLinkWebFor(message: message)
+            
             let bubbleStateAndDate = getBubbleBackgroundForMessage(
-                message: message,
+                msg: threadMessages.last ?? message,
                 with: index,
                 in: filteredThreadMessages,
+                and: originalMessagesMap,
                 groupingDate: &groupingDate
             )
             
@@ -191,16 +191,9 @@ extension NewChatTableDataSource {
                 )
             }
             
-            let replyingMessage = (message.replyUUID != nil) ? replyingMessagesMap[message.replyUUID!] : nil
-            let boostsMessages = (message.uuid != nil) ? (boostMessagesMap[message.uuid!] ?? []) : []
-            let threadMessages = (message.uuid != nil) ? (threadMessagesMap[message.uuid!] ?? []) : []
-            let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
-            let linkContact = linkContactsArray[message.id]
-            let linkTribe = linkTribesArray[message.id]
-            let linkWeb = getLinkWebFor(message: message)
-            
             let messageTableCellState = MessageTableCellState(
                 message: message,
+                threadOriginalMessage: threadOriginalMsg,
                 chat: chat,
                 owner: owner,
                 contact: contact,
@@ -209,7 +202,7 @@ extension NewChatTableDataSource {
                 bubbleState: bubbleStateAndDate.0,
                 contactImage: headerImage,
                 replyingMessage: replyingMessage,
-                threadMessages:threadMessages,
+                threadMessages: threadMessages,
                 boostMessages: boostsMessages,
                 purchaseMessages: purchaseMessages,
                 linkContact: linkContact,
@@ -225,7 +218,11 @@ extension NewChatTableDataSource {
                 invoiceData.1 + ((message.isInvoice() && message.isPaid() && message.isIncoming(ownerId: owner.id)) ? 1 : 0)
             )
             
-            newMsgCount += getNewMessageCountFor(message: message, and: owner)
+            newMsgCount += getNewMessageCountFor(
+                message: message,
+                and: owner,
+                threadMessages: threadMessages
+            )
             
             processForSearch(
                 message: message,
@@ -243,6 +240,36 @@ extension NewChatTableDataSource {
         )
         
         finishSearchProcess()
+    }
+    
+    func filterThreadMessagesFrom(
+        messages: [TransactionMessage],
+        threadMessagesMap: [String: [TransactionMessage]]
+    ) -> [TransactionMessage] {
+        var filteredThreadMessages: [TransactionMessage] = []
+        
+        for message in messages {
+            if let uuid = message.uuid {
+                ///Remove original message, just last reply will show
+                if let messagesInThread = threadMessagesMap[uuid], messagesInThread.count > 1 {
+                    continue
+                }
+            }
+            
+            guard let threadUUID = message.threadUUID else {
+                ///Message not on thread.
+                filteredThreadMessages.append(message)
+                continue
+            }
+            
+            if let messagesInThread = threadMessagesMap[threadUUID] {
+                if messagesInThread.last?.id == message.id, messagesInThread.count > 1 {
+                    filteredThreadMessages.append(message)
+                }
+            }
+        }
+        
+        return filteredThreadMessages
     }
     
     func getMessagesCount() -> Int {
@@ -270,20 +297,49 @@ extension NewChatTableDataSource {
         return 0
     }
     
-    func getBubbleBackgroundForMessage(
+    func getNewMessageCountFor(
         message: TransactionMessage,
+        and owner: UserContact,
+        threadMessages: [TransactionMessage]
+    ) -> Int {
+        var newMsgsCount = 0
+        
+        if threadMessages.isEmpty {
+            newMsgsCount = getNewMessageCountFor(message: message, and: owner)
+        } else {
+            for msg in threadMessages {
+                newMsgsCount += getNewMessageCountFor(message: msg, and: owner)
+            }
+        }
+        
+        return newMsgsCount
+    }
+    
+    func getBubbleBackgroundForMessage(
+        msg: TransactionMessage,
         with index: Int,
         in messages: [TransactionMessage],
+        and originalMessagesMap: [String: TransactionMessage],
         groupingDate: inout Date?,
         threadOriginalMessage: TransactionMessage? = nil
     ) -> (MessageTableCellState.BubbleState?, Date?) {
         
-        let previousMessage = (index > 0) ? messages[index - 1] : nil
-        let nextMessage = (index < messages.count - 1) ? messages[index + 1] : nil
+        var previousMessage = (index > 0) ? messages[index - 1] : nil
+        var nextMessage = (index < messages.count - 1) ? messages[index + 1] : nil
+        
+        let previousMessageDate = previousMessage?.date ?? threadOriginalMessage?.date
+        let msgDate = msg.date
+        
+        previousMessage = getActualMessageFrom(message: previousMessage, originalMessagesMap: originalMessagesMap)
+        nextMessage = getActualMessageFrom(message: nextMessage, originalMessagesMap: originalMessagesMap)
+        
+        guard let message = getActualMessageFrom(message: msg, originalMessagesMap: originalMessagesMap) else {
+            return (nil, nil)
+        }
         
         var separatorDate: Date? = nil
         
-        if let previousMessageDate = previousMessage?.date ?? threadOriginalMessage?.date, let date = message.date {
+        if let previousMessageDate = previousMessageDate, let date = msgDate {
             if Date.isDifferentDay(firstDate: previousMessageDate, secondDate: date) {
                 separatorDate = date
             }
@@ -331,6 +387,16 @@ extension NewChatTableDataSource {
             return (MessageTableCellState.BubbleState.Middle, separatorDate)
         }
         return (MessageTableCellState.BubbleState.Isolated, separatorDate)
+    }
+    
+    func getActualMessageFrom(
+        message: TransactionMessage?,
+        originalMessagesMap: [String: TransactionMessage]
+    ) -> TransactionMessage? {
+        if let threadUUID = message?.threadUUID, let originalMsg = originalMessagesMap[threadUUID] {
+            return originalMsg
+        }
+        return message
     }
     
     func getReplyingMessagesMapFor(
@@ -424,6 +490,28 @@ extension NewChatTableDataSource {
         }
         
         return threadMessagesMap
+    }
+    
+    @objc func getOriginalMessagesFor(
+        threadMessages: [TransactionMessage]
+    ) -> [String: TransactionMessage] {
+        
+        guard let chat = chat else {
+            return [:]
+        }
+        
+        let messageThreadUUIDs: [String] = threadMessages.map({ $0.threadUUID ?? "" }).filter({ $0.isNotEmpty })
+        let originalMessages = TransactionMessage.getOriginalMessagesFor(messageThreadUUIDs, on: chat)
+        
+        var originalMessagesMap: [String: TransactionMessage] = [:]
+        
+        for originalMessage in originalMessages {
+            if let uuid = originalMessage.uuid {
+                originalMessagesMap[uuid] = originalMessage
+            }
+        }
+        
+        return originalMessagesMap
     }
     
     func getLinkContactsArrayFor(

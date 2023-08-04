@@ -16,7 +16,7 @@ extension ThreadTableDataSource {
         indexPath: IndexPath
     ) -> UITableViewCell {
 
-        if dataSourceItem.isThreadOriginalMessage {
+        if dataSourceItem.isThreadHeaderMessage {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ThreadHeaderTableViewCell",
                 for: indexPath
@@ -78,9 +78,10 @@ extension ThreadTableDataSource {
             )
             
             let bubbleStateAndDate = getBubbleBackgroundForMessage(
-                message: message,
+                msg: message,
                 with: index,
                 in: messages,
+                and: [:],
                 groupingDate: &groupingDate,
                 threadOriginalMessage: threadOriginalMessage
             )
@@ -144,7 +145,7 @@ extension ThreadTableDataSource {
                     owner: owner,
                     contact: contact,
                     tribeAdmin: admin,
-                    isThreadOriginalMessage: true
+                    isThreadHeaderMessage: true
                 )
             )
         }

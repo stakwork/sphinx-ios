@@ -23,6 +23,7 @@ struct MessageTableCellState {
     
     ///Messages Data
     var message: TransactionMessage? = nil
+    var threadOriginalMessage: TransactionMessage? = nil
     var messageId: Int? = nil
     var messageString: String? = nil
     var messageType: Int? = nil
@@ -41,7 +42,7 @@ struct MessageTableCellState {
     var linkTribe: LinkTribe? = nil
     var linkWeb: LinkWeb? = nil
     var invoiceData: (Bool, Bool) = (false, false)
-    var isThreadOriginalMessage: Bool = false
+    var isThreadHeaderMessage: Bool = false
     
     ///Generic rows Data
     var separatorDate: Date? = nil
@@ -52,6 +53,7 @@ struct MessageTableCellState {
     
     init(
         message: TransactionMessage? = nil,
+        threadOriginalMessage: TransactionMessage? = nil,
         chat: Chat,
         owner: UserContact,
         contact: UserContact?,
@@ -67,9 +69,10 @@ struct MessageTableCellState {
         linkTribe: LinkTribe? = nil,
         linkWeb: LinkWeb? = nil,
         invoiceData: (Bool, Bool) = (false, false),
-        isThreadOriginalMessage: Bool = false
+        isThreadHeaderMessage: Bool = false
     ) {
         self.message = message
+        self.threadOriginalMessage = threadOriginalMessage
         self.messageId = message?.id
         self.messageType = message?.type
         self.messageStatus = message?.status
@@ -91,7 +94,7 @@ struct MessageTableCellState {
         self.linkWeb = linkWeb
         self.invoiceData = invoiceData
         
-        self.isThreadOriginalMessage = isThreadOriginalMessage
+        self.isThreadHeaderMessage = isThreadHeaderMessage
     }
     
     ///Reply
@@ -107,7 +110,7 @@ struct MessageTableCellState {
     ///Bubble States
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
         
-        guard let message = message, let bubbleState = self.bubbleState else {
+        guard let message = threadOriginalMessage ?? message, let bubbleState = self.bubbleState else {
             return nil
         }
         
@@ -143,7 +146,7 @@ struct MessageTableCellState {
     
     lazy var avatarImage: BubbleMessageLayoutState.AvatarImage? = {
         
-        guard let message = message else {
+        guard let message = threadOriginalMessage ?? message else {
             return nil
         }
         
@@ -175,7 +178,7 @@ struct MessageTableCellState {
     
     lazy var statusHeader: BubbleMessageLayoutState.StatusHeader? = {
         
-        guard let message = message else {
+        guard let message = threadOriginalMessage ?? message else {
             return nil
         }
         
@@ -189,6 +192,9 @@ struct MessageTableCellState {
             expirationTimestamp = String(format: "expires.in".localized, minutes)
         }
         
+        let timestampFormat = isThread ? "EEE dd, hh:mm a" : "hh:mm a"
+        let timestamp = (message.date ?? Date()).getStringDate(format: timestampFormat)
+        
         var statusHeader = BubbleMessageLayoutState.StatusHeader(
             senderName: (chat.isConversation() ? nil : message.senderAlias),
             color: ChatHelper.getSenderColorFor(message: message),
@@ -200,7 +206,7 @@ struct MessageTableCellState {
             showExpiredSent: message.isInvoice() && !message.isPaid() && !isSent,
             showExpiredReceived: message.isInvoice() && !message.isPaid() && isSent,
             expirationTimestamp: expirationTimestamp,
-            timestamp: (message.date ?? Date()).getStringDate(format: "hh:mm a")
+            timestamp: timestamp
         )
         
         return statusHeader
@@ -392,7 +398,7 @@ struct MessageTableCellState {
     
     lazy var threadMessagesState : BubbleMessageLayoutState.ThreadMessages? = {
         
-        guard let message = message, threadMessages.count > 1 else {
+        guard let message = threadOriginalMessage, threadMessages.count > 1 else {
             return nil
         }
         
@@ -744,7 +750,7 @@ struct MessageTableCellState {
     }()
     
     ///Thread original message header
-    lazy var threadOriginalMessage: NoBubbleMessageLayoutState.ThreadOriginalMessage? = {
+    lazy var threadOriginalMessageHeader: NoBubbleMessageLayoutState.ThreadOriginalMessage? = {
         guard let message = message else {
             return nil
         }
@@ -797,7 +803,7 @@ struct MessageTableCellState {
     
     var isMessageRow: Bool {
         mutating get {
-            return dateSeparator == nil && !isThreadOriginalMessage
+            return dateSeparator == nil && !isThreadHeaderMessage
         }
     }
 }

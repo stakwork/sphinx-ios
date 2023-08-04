@@ -117,7 +117,7 @@ extension ThreadTableDataSource {
                 bubbleState: bubbleStateAndDate.0,
                 contactImage: headerImage,
                 replyingMessage: replyingMessage,
-                threadMessages:threadMessages,
+                threadMessages: threadMessages,
                 boostMessages: boostsMessages,
                 purchaseMessages: purchaseMessages,
                 linkContact: linkContact,

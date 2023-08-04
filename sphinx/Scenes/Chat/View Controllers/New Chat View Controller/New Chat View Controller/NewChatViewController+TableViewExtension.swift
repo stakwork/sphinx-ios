@@ -176,8 +176,10 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         bubbleViewRect: CGRect,
         isThreadRow: Bool
     ) {
-        if isThreadRow, let message = TransactionMessage.getMessageWith(id: messageId) {
-            shouldShowThreadFor(message: message)
+        if isThreadRow {
+            if let message = TransactionMessage.getMessageWith(id: messageId) {
+                shouldShowThreadFor(message: message)
+            }
             return
         }
         

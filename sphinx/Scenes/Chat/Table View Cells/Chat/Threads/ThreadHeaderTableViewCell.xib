@@ -176,11 +176,11 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="JgW-bO-r6C" secondAttribute="trailing" id="2hd-Oy-3zD"/>
                     <constraint firstItem="JgW-bO-r6C" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="67r-DH-oSd"/>
+                    <constraint firstItem="q3P-ig-NFM" firstAttribute="bottom" secondItem="GG7-PQ-HiL" secondAttribute="bottom" id="HW1-ME-vzg"/>
                     <constraint firstAttribute="bottom" secondItem="C4H-5D-8K4" secondAttribute="bottom" priority="750" id="Ip2-iS-18U"/>
                     <constraint firstAttribute="bottom" secondItem="JgW-bO-r6C" secondAttribute="bottom" id="J0e-Md-xfN"/>
                     <constraint firstAttribute="trailing" secondItem="q3P-ig-NFM" secondAttribute="trailing" constant="6" id="NZh-1m-hQh"/>
                     <constraint firstAttribute="trailing" secondItem="C4H-5D-8K4" secondAttribute="trailing" id="Nlx-L8-MF9"/>
-                    <constraint firstAttribute="bottom" secondItem="q3P-ig-NFM" secondAttribute="bottom" id="NrW-NH-xwa"/>
                     <constraint firstItem="C4H-5D-8K4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="m8q-fQ-xFQ"/>
                     <constraint firstItem="C4H-5D-8K4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="rDh-qj-fZF"/>
                     <constraint firstItem="JgW-bO-r6C" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="-300" id="s0W-z5-lGV"/>

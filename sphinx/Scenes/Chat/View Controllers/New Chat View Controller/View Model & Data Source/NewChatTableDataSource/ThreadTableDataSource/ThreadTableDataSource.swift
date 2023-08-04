@@ -14,7 +14,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
     
     var threadUUID: String!
     var isHeaderExpanded = false
-    var headerDifference: CGFloat? = nil
+    var headerDifference: CGFloat = 0
     
     init(
         chat: Chat?,
@@ -85,7 +85,6 @@ class ThreadTableDataSource : NewChatTableDataSource {
     }
 
     override func saveSnapshotCurrentState() {
-        self.headerDifference = nil
     }
     
     override func restoreScrollLastPosition() {        
@@ -101,15 +100,11 @@ class ThreadTableDataSource : NewChatTableDataSource {
     }
     
     func calculateHeightAndReloadHeader() {
-        if let _ = self.headerDifference {
-            return
-        }
-        
-        let headerHeightDifference = tableView.frame.height - tableView.contentSize.height - tableView.contentInset.top
+        let headerHeightDifference = round(tableView.frame.height - tableView.contentSize.height - tableView.contentInset.top + headerDifference)
         
         if headerHeightDifference > 0 {
             self.headerDifference = headerHeightDifference
-        } else {
+        } else if headerHeightDifference < 0 {
             self.headerDifference = 0
         }
         

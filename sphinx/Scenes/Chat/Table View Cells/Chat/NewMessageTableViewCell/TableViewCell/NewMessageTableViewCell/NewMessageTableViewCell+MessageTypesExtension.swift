@@ -61,6 +61,8 @@ extension NewMessageTableViewCell {
                 messageLabel.addGestureRecognizer(tap)
             }
             
+            urlRanges = ChatHelper.removeDuplicatedContainedFrom(urlRanges: urlRanges)
+            
             if let messageId = messageId, messageContent.shouldLoadPaidText {
                 let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 DispatchQueue.global().asyncAfter(deadline: delayTime) {

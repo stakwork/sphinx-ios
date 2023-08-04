@@ -9,6 +9,7 @@
 import UIKit
 
 extension NewOnlyTextMessageTableViewCell {
+    
     func configureWith(
         statusHeader: BubbleMessageLayoutState.StatusHeader?
     ) {
@@ -65,6 +66,8 @@ extension NewOnlyTextMessageTableViewCell {
         } else {
             messageLabel.addGestureRecognizer(tap)
         }
+        
+        urlRanges = ChatHelper.removeDuplicatedContainedFrom(urlRanges: urlRanges)
     }
     
     func configureWith(

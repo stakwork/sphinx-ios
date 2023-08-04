@@ -70,6 +70,36 @@ class ChatHelper {
         
         return nil
     }
+    
+    public static func removeDuplicatedContainedFrom(
+        urlRanges: [NSRange]
+    ) -> [NSRange] {
+        var ranges = urlRanges
+        
+        var indexesToRemove: [Int] = []
+        
+        for (i, ur) in ranges.enumerated() {
+            for urlRange in ranges {
+                if (
+                    ur.lowerBound >= urlRange.lowerBound && ur.upperBound < urlRange.upperBound ||
+                    ur.lowerBound > urlRange.lowerBound && ur.upperBound <= urlRange.upperBound
+                ) {
+                    indexesToRemove.append(i)
+                }
+            }
+        }
+        
+        indexesToRemove = Array(Set(indexesToRemove))
+        indexesToRemove.sort(by: >)
+        
+        for index in indexesToRemove {
+            if ranges.count > index {
+                ranges.remove(at: index)
+            }
+        }
+        
+        return ranges
+    }
 }
 
 func getWindowInsets() -> UIEdgeInsets {

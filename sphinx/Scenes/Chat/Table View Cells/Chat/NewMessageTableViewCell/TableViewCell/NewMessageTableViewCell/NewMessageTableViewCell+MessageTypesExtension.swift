@@ -61,7 +61,7 @@ extension NewMessageTableViewCell {
                 messageLabel.addGestureRecognizer(tap)
             }
             
-            removeDuplicatedContainedUrlRanges()
+            urlRanges = ChatHelper.removeDuplicatedContainedFrom(urlRanges: urlRanges)
             
             if let messageId = messageId, messageContent.shouldLoadPaidText {
                 let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
@@ -71,30 +71,6 @@ extension NewMessageTableViewCell {
                         and: self.rowIndex
                     )
                 }
-            }
-        }
-    }
-    
-    func removeDuplicatedContainedUrlRanges() {
-        var indexesToRemove: [Int] = []
-        
-        for (i, ur) in urlRanges.enumerated() {
-            for urlRange in urlRanges {
-                if (
-                    ur.lowerBound >= urlRange.lowerBound && ur.upperBound < urlRange.upperBound ||
-                    ur.lowerBound > urlRange.lowerBound && ur.upperBound <= urlRange.upperBound
-                ) {
-                    indexesToRemove.append(i)
-                }
-            }
-        }
-        
-        indexesToRemove = Array(Set(indexesToRemove))
-        indexesToRemove.sort(by: >)
-        
-        for index in indexesToRemove {
-            if urlRanges.count > index {
-                urlRanges.remove(at: index)
             }
         }
     }

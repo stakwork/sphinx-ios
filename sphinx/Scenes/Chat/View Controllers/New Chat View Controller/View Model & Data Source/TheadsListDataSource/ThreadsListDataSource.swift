@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol ThreadsListDataSourceDelegate : class {
     ///Threads
@@ -28,6 +29,8 @@ class ThreadsListDataSource : NSObject {
     weak var delegate: ThreadsListDataSourceDelegate?
     
     ///Data source & Snapshot
+    var threadsResultsController: NSFetchedResultsController<TransactionMessage>!
+    
     var currentDataSnapshot: DataSourceSnapshot!
     var dataSource: DataSource!
     
@@ -82,7 +85,7 @@ class ThreadsListDataSource : NSObject {
     func configureDataSource() {
         dataSource = makeDataSource()
 
-        loadData()
+        configureResultsController()
     }
     
     func makeSnapshotForCurrentState() -> DataSourceSnapshot {
@@ -130,20 +133,21 @@ class ThreadsListDataSource : NSObject {
         }
     }
     
-    func loadData() {
+    func processThreadMessages(
+        _ messages: [TransactionMessage]
+    ) {
         guard let chat = chat, let owner = owner else {
             return
         }
         
-        let threadMesasages = TransactionMessage.getThreadMessagesOn(on: chat)
-        let threadUUIDs = threadMesasages.map({ $0.threadUUID ?? "" }).filter({ $0.isNotEmpty })
+        let threadUUIDs = messages.map({ $0.threadUUID ?? "" }).filter({ $0.isNotEmpty })
         let uniqueThreadUUIDs = Array(Set(threadUUIDs))
         
         let originalMessages = TransactionMessage.getOriginalMessagesFor(uniqueThreadUUIDs, on: chat)
         
         let threadMessagesMap = getThreadMessagesFrom(
             originalMessages: originalMessages,
-            threadMessages: threadMesasages
+            threadMessages: messages
         )
         
         threadTableCellStateArray = []
@@ -194,6 +198,55 @@ extension ThreadsListDataSource: UITableViewDelegate {
         if threadTableCellStateArray.count > indexPath.row {
             if let messageUUID = threadTableCellStateArray[indexPath.row].originalMessage?.uuid {
                 delegate?.didSelectThreadWith(uuid: messageUUID)
+            }
+        }
+    }
+}
+
+extension ThreadsListDataSource : NSFetchedResultsControllerDelegate {
+    
+    func startListeningToResultsController() {
+        threadsResultsController?.delegate = self
+    }
+    
+    func stopListeningToResultsController() {
+        threadsResultsController?.delegate = nil
+    }
+    
+    func configureResultsController() {
+        guard let chat = chat else {
+            return
+        }
+        
+        let fetchRequest = TransactionMessage.getThreadsFetchRequestOn(chat: chat)
+
+        threadsResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        threadsResultsController.delegate = self
+        
+        CoreDataManager.sharedManager.persistentContainer.viewContext.perform {
+            do {
+                try self.threadsResultsController.performFetch()
+            } catch {}
+        }
+    }
+    
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
+    ) {
+        if let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
+            let firstSection = resultController.sections?.first {
+            
+            if controller == threadsResultsController {
+                if let messages = firstSection.objects as? [TransactionMessage] {
+                    processThreadMessages(messages)
+                }
             }
         }
     }

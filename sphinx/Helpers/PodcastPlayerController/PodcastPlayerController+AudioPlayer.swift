@@ -8,6 +8,7 @@
 
 import Foundation
 import AVKit
+import MapKit
 
 extension PodcastPlayerController {
     func setAudioSession() {
@@ -34,6 +35,7 @@ extension PodcastPlayerController {
             name: AVAudioSession.interruptionNotification,
             object: session
         )
+        
     }
     
     @objc func handleInterruption(notification: NSNotification) {
@@ -50,12 +52,24 @@ extension PodcastPlayerController {
         if let interruptionType = AVAudioSession.InterruptionType(rawValue: intValue) {
             switch interruptionType {
             case .began:
-                if let podcastData = self.podcastData {
-                    self.pause(podcastData)
-                }
+                handleStartInterruption()
+            case .ended:
+                handleEndInterruption()
             default:
                 break
             }
+        }
+    }
+    
+    @objc func handleStartInterruption(){
+        if let podcastData = self.podcastData {
+            self.pause(podcastData)
+        }
+    }
+    
+    @objc func handleEndInterruption(){
+        if let podcastData = self.podcastData{
+            self.play(podcastData)
         }
     }
 }

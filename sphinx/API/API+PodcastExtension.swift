@@ -218,6 +218,43 @@ extension API {
         }
     }
     
+    func requestToCacheVideoRemotely(
+        for videoIDs: [String],
+        callback: @escaping EmptyCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let videoURLPaths = getYoutubeVideoURLPaths(videoIDs: videoIDs)
+        var requestPath = API.getUrl(route: "\(API.kTribesServerBaseURL)/feed/download")
+        let params = [
+            "youtube_urls" : videoURLPaths
+        ]
+        
+        guard let request = createRequest(requestPath.percentEscaped ?? requestPath, bodyParams: params as NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        AF.request(request).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                print(data)
+                callback()
+            case .failure(let error):
+                print(error)
+                errorCallback()
+            }
+        }
+        
+    }
+    
+    func getYoutubeVideoURLPaths(videoIDs:[String])->[String]{
+        var videoURLsArray = [String]()
+        for id in videoIDs{
+            videoURLsArray.append("https://www.youtube.com/watch?v=\(id)")
+        }
+        return videoURLsArray
+    }
+    
     func getRemoteVideoCachePath(videoID:String)->String{
         return "https://stakwork-uploads.s3.amazonaws.com/uploads/customers/6040/media_to_local/00002e82-6911-4aea-a214-62c9d88740e0/\(videoID).mp4"
     }

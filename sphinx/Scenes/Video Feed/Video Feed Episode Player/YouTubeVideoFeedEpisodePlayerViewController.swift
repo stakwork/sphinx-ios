@@ -52,7 +52,11 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     }
     
     public func startPlay(){
-        videoPlayerView.playVideo()
+        setupNativeVsYTPlayer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            (self.localVideoPlayerContainer.isHidden == true) ? (self.videoPlayerView.playVideo()) : ()
+        })
+        
     }
 }
 
@@ -128,9 +132,14 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
         
         setupDismissButton()
-        
+        setupNativeVsYTPlayer()
+    }
+    
+    func setupNativeVsYTPlayer(){
+        self.avPlayer?.player?.pause()
+        self.localVideoPlayerContainer.isHidden = true
         if videoPlayerEpisode.isDownloaded{
-            if let url = //URL(string: "http://wilcal.test.website.bucket.s3-website-us-west-1.amazonaws.com/h.264/big_buck_bunny_h.264.mp4")
+            if let url =
             videoPlayerEpisode.getVideoUrl()
             {
                 DispatchQueue.main.sync {
@@ -141,14 +150,26 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
             }
         }
         else{
-            API.sharedInstance.getVideoRemoteStorageStatus(videoID: "tADAlisn4HA", callback: { doesExist in
+            //example vid id = tADAlisn4HA
+            API.sharedInstance.getVideoRemoteStorageStatus(videoID: videoPlayerEpisode.youtubeVideoID, callback: { doesExist in
                 if doesExist,
-                   let url = URL(string: API.sharedInstance.getRemoteVideoCachePath(videoID: "tADAlisn4HA")){
+                   let url = URL(string: API.sharedInstance.getRemoteVideoCachePath(videoID:   self.videoPlayerEpisode.youtubeVideoID)){
                     DispatchQueue.main.sync {
                         self.localVideoPlayerContainer.isHidden = false
                         self.avPlayer = self.createVideoPlayerView(withVideoURL: url)
                         self.avPlayer?.delegate = self
                     }
+                }
+                else{//cache the video for posterity
+                    API.sharedInstance.requestToCacheVideoRemotely(
+                        for: [(self.videoPlayerEpisode.youtubeVideoID)],
+                        callback: {
+                            //success
+                        },
+                        errorCallback: {
+                            //failure
+                        }
+                    )
                 }
             }, errorCallback: {
                 

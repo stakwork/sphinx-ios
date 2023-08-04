@@ -564,6 +564,28 @@ struct NoBubbleMessageLayoutState {
             self.timestamp = timestamp
         }
     }
+    
+    struct ThreadOriginalMessage {
+        var text: String
+        var senderPic: String?
+        var senderAlias: String
+        var senderColor: UIColor
+        var timestamp: String
+        
+        init(
+            text: String,
+            senderPic: String?,
+            senderAlias: String,
+            senderColor: UIColor,
+            timestamp: String
+        ) {
+            self.text = text
+            self.senderPic = senderPic
+            self.senderAlias = senderAlias
+            self.senderColor = senderColor
+            self.timestamp = timestamp
+        }
+    }
 }
 
 

@@ -288,6 +288,12 @@
 		475BDD81232C01FE00C5BBD6 /* NewQRScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD7D232C01FE00C5BBD6 /* NewQRScannerViewController.swift */; };
 		475BDD89232C086C00C5BBD6 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD86232C086C00C5BBD6 /* HistoryViewController.swift */; };
 		475BDD95232C2F9100C5BBD6 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475BDD94232C2F9100C5BBD6 /* UILabel.swift */; };
+		475C56652A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475C56632A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.swift */; };
+		475C56662A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475C56642A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.xib */; };
+		475C56682A7AB8FE00E6F9A9 /* ThreadTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475C56672A7AB8FE00E6F9A9 /* ThreadTableDataSource.swift */; };
+		475C566B2A7BEBD300E6F9A9 /* ThreadTableDataSource+ScrollExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475C566A2A7BEBD300E6F9A9 /* ThreadTableDataSource+ScrollExtension.swift */; };
+		475C566D2A7BEC5F00E6F9A9 /* ThreadTableDataSource+ResultsControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475C566C2A7BEC5F00E6F9A9 /* ThreadTableDataSource+ResultsControllerExtension.swift */; };
+		475C566F2A7BEC8C00E6F9A9 /* ThreadTableDataSource+HeaderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475C566E2A7BEC8C00E6F9A9 /* ThreadTableDataSource+HeaderExtension.swift */; };
 		475CD5AC287E1198003FF171 /* CrypterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475CD5AB287E1198003FF171 /* CrypterManager.swift */; };
 		475DD3042A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3032A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift */; };
 		475DD3062A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475DD3052A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift */; };
@@ -1172,6 +1178,12 @@
 		475BDD7D232C01FE00C5BBD6 /* NewQRScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewQRScannerViewController.swift; sourceTree = "<group>"; };
 		475BDD86232C086C00C5BBD6 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		475BDD94232C2F9100C5BBD6 /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		475C56632A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		475C56642A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadHeaderTableViewCell.xib; sourceTree = "<group>"; };
+		475C56672A7AB8FE00E6F9A9 /* ThreadTableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadTableDataSource.swift; sourceTree = "<group>"; };
+		475C566A2A7BEBD300E6F9A9 /* ThreadTableDataSource+ScrollExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadTableDataSource+ScrollExtension.swift"; sourceTree = "<group>"; };
+		475C566C2A7BEC5F00E6F9A9 /* ThreadTableDataSource+ResultsControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadTableDataSource+ResultsControllerExtension.swift"; sourceTree = "<group>"; };
+		475C566E2A7BEC8C00E6F9A9 /* ThreadTableDataSource+HeaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadTableDataSource+HeaderExtension.swift"; sourceTree = "<group>"; };
 		475CD5AB287E1198003FF171 /* CrypterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrypterManager.swift; sourceTree = "<group>"; };
 		475DD3032A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		475DD3052A0D6F6600F92173 /* ChatMessageTextFieldView+RecordingAudioExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessageTextFieldView+RecordingAudioExtension.swift"; sourceTree = "<group>"; };
@@ -2419,6 +2431,8 @@
 			children = (
 				CEEFD6062A66FD2D00FD7E73 /* ThreadListTableViewCell.swift */,
 				CEEFD6072A66FD2D00FD7E73 /* ThreadListTableViewCell.xib */,
+				475C56632A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.swift */,
+				475C56642A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.xib */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -3046,6 +3060,17 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		475C56692A7BEBBF00E6F9A9 /* ThreadTableDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				475C56672A7AB8FE00E6F9A9 /* ThreadTableDataSource.swift */,
+				475C566A2A7BEBD300E6F9A9 /* ThreadTableDataSource+ScrollExtension.swift */,
+				475C566C2A7BEC5F00E6F9A9 /* ThreadTableDataSource+ResultsControllerExtension.swift */,
+				475C566E2A7BEC8C00E6F9A9 /* ThreadTableDataSource+HeaderExtension.swift */,
+			);
+			path = ThreadTableDataSource;
+			sourceTree = "<group>";
+		};
 		475DD3152A14156300F92173 /* New Chat View Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -3646,6 +3671,7 @@
 				47CEA44F2A4369A000E936CB /* NewChatTableDataSource+BotWebViewExtension.swift */,
 				47CEA4532A449D6D00E936CB /* NewChatTableDataSource+AudioExtension.swift */,
 				474934132A4C66AD0048C560 /* NewChatTableDataSource+SearchMessagesExtension.swift */,
+				475C56692A7BEBBF00E6F9A9 /* ThreadTableDataSource */,
 			);
 			path = NewChatTableDataSource;
 			sourceTree = "<group>";
@@ -4654,6 +4680,7 @@
 				47AF0D39254C98DE00C98398 /* BoostFireworksAnimationView.xib in Resources */,
 				47E6A4D62A2E6FDC00A9509E /* GroupActionMessageView.xib in Resources */,
 				CEA2ED152A12D6D000DAC671 /* StorageSummaryView.xib in Resources */,
+				475C56662A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.xib in Resources */,
 				47D03DF62510EDAA0077A968 /* FileInfoView.xib in Resources */,
 				47904C0C24BF352300710E7A /* aurora.caf in Resources */,
 				47D46A2D237B1D140005A548 /* SubscriptionFormButtonTableViewCell.xib in Resources */,
@@ -4825,6 +4852,7 @@
 			files = (
 				47F258C8253A292B00122A5A /* SocketPacket.swift in Sources */,
 				CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */,
+				475C566D2A7BEC5F00E6F9A9 /* ThreadTableDataSource+ResultsControllerExtension.swift in Sources */,
 				47E6A4D02A2E6F8500A9509E /* GroupActionsView.swift in Sources */,
 				CE6784602968B0E000342905 /* FeedsManager.swift in Sources */,
 				CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */,
@@ -4932,6 +4960,7 @@
 				472F9D3B2412F95100EFC30A /* Data.swift in Sources */,
 				F3188B99271CD36D00890DDD /* DashboardRootViewController+VideoPlayerViewControllerDelegate.swift in Sources */,
 				47357A0F2729A12A00A49EEE /* NewsletterFeed+Properties.swift in Sources */,
+				475C566F2A7BEC8C00E6F9A9 /* ThreadTableDataSource+HeaderExtension.swift in Sources */,
 				47AAFC7E238D7C8D00E30BDA /* PaymentRequestDecoder.swift in Sources */,
 				47B9A63F233BAEE500D2B022 /* AddressBookViewController.swift in Sources */,
 				CE7E4F8029AD2D1100F000FF /* VoIPRequestMessage.swift in Sources */,
@@ -5202,6 +5231,7 @@
 				4789E25B24EF07E2003991BE /* KeyboardEventsViewController.swift in Sources */,
 				CEEDEA162A1E8273004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVC.swift in Sources */,
 				F358212D2695D11500A314F1 /* ConnectionCodeSignupHandling.swift in Sources */,
+				475C56682A7AB8FE00E6F9A9 /* ThreadTableDataSource.swift in Sources */,
 				47F8266C2A0D2A0B002E81F0 /* NewChatAccessoryView.swift in Sources */,
 				4703CF97251D23E5007B685C /* LinkPreviewUIImage.swift in Sources */,
 				474CCFAA291562180037E1D4 /* API+ActionsExtension.swift in Sources */,
@@ -5365,6 +5395,7 @@
 				CEEDEA182A1E84F7004DC536 /* ProfileManageStorageSpecificChatOrContentFeedItemVM.swift in Sources */,
 				4787F8742474490200CCE8B9 /* GroupTagsViewController.swift in Sources */,
 				CE9A185C2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift in Sources */,
+				475C56652A7AA8B100E6F9A9 /* ThreadHeaderTableViewCell.swift in Sources */,
 				47AF0D37254C98D100C98398 /* BoostFireworksAnimationView.swift in Sources */,
 				47B9A645233BB54B00D2B022 /* AddressBookDataSource.swift in Sources */,
 				475BDD81232C01FE00C5BBD6 /* NewQRScannerViewController.swift in Sources */,
@@ -5395,6 +5426,7 @@
 				47E6A4F32A2F642800A9509E /* MessageTableCellState.swift in Sources */,
 				F394ECB32683EB5A00529038 /* SphinxDesktopAdViewController.swift in Sources */,
 				47F258CA253DD42500122A5A /* PinTimeSlider.swift in Sources */,
+				475C566B2A7BEBD300E6F9A9 /* ThreadTableDataSource+ScrollExtension.swift in Sources */,
 				471161D32915636E008EAFF2 /* MessageAction.swift in Sources */,
 				47AAFC742387062700E30BDA /* API+UsersExtension.swift in Sources */,
 				4734D3CB241AA7A000D6957E /* PaymentTemplatesDataSource.swift in Sources */,

@@ -9,8 +9,9 @@
 import UIKit
 import SDWebImage
 
-protocol ThreadHeaderViewDelegate : NSObject{
+@objc protocol ThreadHeaderViewDelegate {
     func didTapBackButton()
+    @objc optional func didTapThreadHeaderButton()
 }
 
 class ThreadHeaderView : UIView {
@@ -19,13 +20,12 @@ class ThreadHeaderView : UIView {
     
     @IBOutlet var contentView: UIView!
     
+    @IBOutlet weak var messageLabelContainer: UIView!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var senderContainer: UIView!
     @IBOutlet weak var senderNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var senderAvatarView: ChatAvatarView!
-    @IBOutlet weak var showMoreLabel: UILabel!
-    @IBOutlet weak var showMoreContainer: UIView!
-    @IBOutlet weak var bottomMarginView: UIView!
     
     var isExpanded : Bool = false
     
@@ -54,9 +54,6 @@ class ThreadHeaderView : UIView {
         self.delegate = delegate
         
         messageLabel.text = message.bubbleMessageContentString
-        
-        bottomMarginView.isHidden = !messageLabel.isTruncated
-        showMoreContainer.isHidden = !messageLabel.isTruncated
         timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMMM d yyyy 'at' h:mm a")
         
         guard let owner = UserContact.getOwner() else {
@@ -86,24 +83,34 @@ class ThreadHeaderView : UIView {
         }
     }
     
-    func collapseMessageLabel() {
-        if isExpanded {
-            showMoreButtonTouched()
+    func toggleThreadHeaderView(expanded: Bool) {
+        let newAlpha = expanded ? 1.0 : 0.0
+        if newAlpha == senderContainer.alpha {
+            return
+        }
+        
+        if expanded {
+            self.senderContainer.isHidden = false
+            self.messageLabelContainer.isHidden = false
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.senderContainer.alpha = 1.0
+                self.messageLabelContainer.alpha = 1.0
+            })
+        } else {
+            self.messageLabelContainer.alpha = 0.0
+            self.messageLabelContainer.isHidden = true
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                self.senderContainer.alpha = 0.0
+            }, completion: { _ in
+                self.senderContainer.isHidden = true
+            })
         }
     }
     
-    @IBAction func showMoreButtonTouched() {
-        if isExpanded {
-            messageLabel.numberOfLines = 4
-            messageLabel.minimumScaleFactor = 1.0
-            showMoreLabel.text = "show-more".localized
-        } else {
-            messageLabel.numberOfLines = 0
-            messageLabel.minimumScaleFactor = 0.5
-            showMoreLabel.text = "show-less".localized
-        }
-        
-        isExpanded = !isExpanded
+    @IBAction func headerButtonTouched() {
+        delegate?.didTapThreadHeaderButton?()
     }
     
     @IBAction func backButtonTouched() {

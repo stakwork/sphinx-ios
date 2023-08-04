@@ -55,6 +55,7 @@ protocol NewChatTableDataSourceDelegate : class {
     
     ///Threads
     func shouldShowThreadFor(message: TransactionMessage)
+    func shouldToggleThreadHeader(expanded: Bool)
 }
 
 class NewChatTableDataSource : NSObject {
@@ -64,8 +65,8 @@ class NewChatTableDataSource : NSObject {
     
     ///View references
     var tableView : UITableView!
-    var newMsgIndicator : NewMessagesIndicatorView!
     var headerImage: UIImage?
+    var headerView: UIView!
     var bottomView: UIView!
     var webView: WKWebView!
     
@@ -73,13 +74,6 @@ class NewChatTableDataSource : NSObject {
     var chat: Chat?
     var contact: UserContact?
     var owner: UserContact? = nil
-    var threadUUID: String?
-    
-    var isThread: Bool {
-        get {
-            return threadUUID != nil
-        }
-    }
     
     ///Data Source related
     var messagesResultsController: NSFetchedResultsController<TransactionMessage>!
@@ -111,7 +105,6 @@ class NewChatTableDataSource : NSObject {
     var messagesCount = 0
     var loadingMoreItems = false
     var scrolledAtBottom = false
-    var firstLoad = true
     
     ///WebView Loading
     let webViewSemaphore = DispatchSemaphore(value: 1)
@@ -120,11 +113,10 @@ class NewChatTableDataSource : NSObject {
     init(
         chat: Chat?,
         contact: UserContact?,
-        threadUUID: String?,
         tableView: UITableView,
-        newMsgIndicator : NewMessagesIndicatorView,
         headerImageView: UIImageView?,
         bottomView: UIView,
+        headerView: UIView,
         webView: WKWebView,
         delegate: NewChatTableDataSourceDelegate?
     ) {
@@ -133,12 +125,11 @@ class NewChatTableDataSource : NSObject {
         self.chat = chat
         self.contact = contact
         self.owner = UserContact.getOwner()
-        self.threadUUID = threadUUID
         
         self.tableView = tableView
-        self.newMsgIndicator = newMsgIndicator
         self.headerImage = headerImageView?.image
         self.bottomView = bottomView
+        self.headerView = headerView
         self.webView = webView
         
         self.delegate = delegate
@@ -161,13 +152,33 @@ class NewChatTableDataSource : NSObject {
     func configureTableView() {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200.0
-        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
-        tableView.contentInset.top = Constants.kMargin
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
+        configureTableTransformAndInsets()
         
         tableView.registerCell(NewMessageTableViewCell.self)
         tableView.registerCell(MessageNoBubbleTableViewCell.self)
         tableView.registerCell(NewOnlyTextMessageTableViewCell.self)
+        tableView.registerCell(ThreadHeaderTableViewCell.self)
+    }
+    
+    func configureTableTransformAndInsets() {
+        tableView.contentInset.top = Constants.kMargin
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    }
+    
+    func configureTableCellTransformOn(cell: ChatTableViewCellProtocol?) {
+        cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    }
+    
+    func makeCellProvider(
+        for tableView: UITableView
+    ) -> DataSource.CellProvider {
+        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
+            return self.getCellFor(
+                dataSourceItem: dataSourceItem,
+                indexPath: indexPath
+            )
+        }
     }
 }

@@ -16,7 +16,6 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
         audioDuration: Double? = nil
     ) {
         let attachmentsManager = AttachmentsManager.sharedInstance
-        let replyingMessage = replyingTo
         
         chatDataSource?.setMediaDataForMessageWith(
             messageId: TransactionMessage.getProvisionalMessageId(),
@@ -45,10 +44,12 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
             
             chatDataSource?.setProgressForProvisional(messageId: message.id, progress: 0)
             
+            let dataSourceThreadUUID = (chatDataSource as? ThreadTableDataSource)?.threadUUID
+            
             attachmentsManager.uploadAndSendAttachment(
                 attachmentObject: attachmentObject,
                 replyingMessage: replyingTo,
-                threadUUID: chatDataSource?.threadUUID ?? replyingTo?.threadUUID ?? replyingTo?.uuid
+                threadUUID: dataSourceThreadUUID ?? replyingTo?.threadUUID ?? replyingTo?.uuid
             )
         }
         

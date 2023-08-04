@@ -20,17 +20,23 @@ extension NewChatTableDataSource: UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if tableView.contentSize.height <= 0 {
+            return
+        }
+        
         let difference: CGFloat = 16
         let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - difference
         let scrolledToBottom = tableView.contentOffset.y < -10
-        let didMoveOutOfBottomArea = tableView.contentOffset.y > -10
+        let didMoveOutOfBottom = tableView.contentOffset.y > -10
                 
         if scrolledToTop {
             didScrollToTop()
         } else if scrolledToBottom {
             didScrollToBottom()
-        } else if didMoveOutOfBottomArea {
-            didScrollOutOfBottomArea()
+        }
+        
+        if didMoveOutOfBottom {
+            didMoveOutOfBottomArea()
         }
         
         delegate?.didScroll()
@@ -40,13 +46,13 @@ extension NewChatTableDataSource: UITableViewDelegate {
         return false
     }
     
-    func didScrollOutOfBottomArea() {
+    @objc func didMoveOutOfBottomArea() {
         scrolledAtBottom = false
         
         delegate?.didScrollOutOfBottomArea()
     }
     
-    func didScrollToBottom() {
+    @objc func didScrollToBottom() {
         if scrolledAtBottom {
             return
         }
@@ -56,7 +62,7 @@ extension NewChatTableDataSource: UITableViewDelegate {
         delegate?.didScrollToBottom()
     }
     
-    func didScrollToTop() {
+    @objc func didScrollToTop() {
         if loadingMoreItems {
             return
         }
@@ -66,10 +72,14 @@ extension NewChatTableDataSource: UITableViewDelegate {
         loadMoreItems()
     }
     
-    func loadMoreItems() {
+    @objc func loadMoreItems() {
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: { [weak self] in
             guard let self = self else { return }
             self.configureResultsController(items: self.messagesCount + 50)
         })
+    }
+    
+    @objc func shouldHideNewMsgsIndicator() -> Bool {
+        return tableView.contentOffset.y < -10 || tableView.alpha == 0
     }
 }

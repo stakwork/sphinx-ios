@@ -500,6 +500,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     return
                 }
                 
+                centerVC.view.endEditing(true)
+                
                 let chatVC = NewChatViewController.instantiate(
                     contactId: chat.conversationContact?.id,
                     chatId: chat.id,

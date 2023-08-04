@@ -110,7 +110,7 @@ class ContactLinkPreviewView: UIView {
         
         if let image = imageUrl, let url = URL(string: image) {
             let transformer = SDImageResizingTransformer(
-                size: contactImageView.bounds.size,
+                size: CGSize(width: contactImageView.bounds.size.width * 3, height: contactImageView.bounds.size.height * 3),
                 scaleMode: .aspectFill
             )
             

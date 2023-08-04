@@ -21,17 +21,31 @@ extension NewChatViewController {
         setTableViewHeight()
         shouldAdjustTableViewTopInset()
         
-        chatTableDataSource = NewChatTableDataSource(
-            chat: chat,
-            contact: contact,
-            threadUUID: threadUUID,
-            tableView: chatTableView,
-            newMsgIndicator: newMsgsIndicatorView,
-            headerImageView: getContactImageView(),
-            bottomView: bottomView,
-            webView: botWebView,
-            delegate: self
-        )
+        
+        if let threadUUID = threadUUID {
+            chatTableDataSource = ThreadTableDataSource(
+                chat: chat,
+                contact: contact,
+                threadUUID: threadUUID,
+                tableView: chatTableView,
+                headerImageView: getContactImageView(),
+                bottomView: bottomView,
+                headerView: headerView,
+                webView: botWebView,
+                delegate: self
+            )
+        } else {
+            chatTableDataSource = NewChatTableDataSource(
+                chat: chat,
+                contact: contact,
+                tableView: chatTableView,
+                headerImageView: getContactImageView(),
+                bottomView: bottomView,
+                headerView: headerView,
+                webView: botWebView,
+                delegate: self
+            )
+        }
         
         chatViewModel.setDataSource(chatTableDataSource)
     }
@@ -51,9 +65,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     func configureNewMessagesIndicatorWith(newMsgCount: Int) {
         DispatchQueue.main.async {
             self.newMsgsIndicatorView.configureWith(
-                tableContentOffset: self.chatTableView.contentOffset.y,
-                isTableViewVisible: self.chatTableView.alpha == 1.0,
                 newMessagesCount: newMsgCount,
+                hidden: self.chatTableDataSource?.shouldHideNewMsgsIndicator() ?? true,
                 andDelegate: self
             )
         }
@@ -75,14 +88,17 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     
     func didScrollOutOfBottomArea() {
         newMsgsIndicatorView.configureWith(
-            tableContentOffset: self.chatTableView.contentOffset.y,
-            isTableViewVisible: self.chatTableView.alpha == 1.0,
-            newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil
+            newMessagesCount: isThread ? (chatTableDataSource?.getMessagesCount() ?? 0) : nil,
+            hidden: chatTableDataSource?.shouldHideNewMsgsIndicator() ?? true
         )
     }
     
+    func shouldToggleThreadHeader(expanded: Bool) {
+        headerView.toggleThreadHeaderView(expanded: expanded)
+    }
+    
     func didScroll(){
-        headerView.threadHeaderView.collapseMessageLabel()
+//        headerView.threadHeaderView.collapseMessageLabel()
     }
     
     func shouldGoToAttachmentViewFor(
@@ -131,6 +147,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
             chatId: chatId,
             chatListViewModel: chatListViewModel
         )
+        self.view.endEditing(true)
         navigationController?.pushViewController(chatVC, animated: true)
     }
     
@@ -159,8 +176,10 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         bubbleViewRect: CGRect,
         isThreadRow: Bool
     ) {
-        if isThreadRow, let message = TransactionMessage.getMessageWith(id: messageId) {
-            shouldShowThreadFor(message: message)
+        if isThreadRow {
+            if let message = TransactionMessage.getMessageWith(id: messageId) {
+                shouldShowThreadFor(message: message)
+            }
             return
         }
         
@@ -284,7 +303,7 @@ extension NewChatViewController {
 
 extension NewChatViewController : NewMessagesIndicatorViewDelegate {
     func didTouchButton() {
-        chatTableView.scrollToRow(index: 0, animated: true)
+        chatTableView.scrollToTop()
     }
 }
 

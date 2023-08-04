@@ -291,7 +291,7 @@ extension ItemDescriptionViewController : UITableViewDelegate, UITableViewDataSo
     }
     
     @IBAction func navBarTapped(){
-        self.tableView.scrollToRow(index: 0,animated: true)
+        self.tableView.scrollToTop()
     }
     
     @IBAction func tappedPlay(){

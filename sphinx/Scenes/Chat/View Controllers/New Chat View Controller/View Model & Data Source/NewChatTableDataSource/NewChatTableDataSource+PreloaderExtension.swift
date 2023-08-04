@@ -9,11 +9,7 @@
 import Foundation
 
 extension NewChatTableDataSource {
-    func restorePreloadedMessages() {
-        if isThread {
-            return
-        }
-        
+    @objc func restorePreloadedMessages() {
         guard let chat = chat else {
             return
         }
@@ -24,11 +20,7 @@ extension NewChatTableDataSource {
         }
     }
     
-    func saveMessagesToPreloader() {
-        if isThread {
-            return
-        }
-        
+    @objc func saveMessagesToPreloader() {
         guard let chat = chat else {
             return
         }
@@ -41,11 +33,7 @@ extension NewChatTableDataSource {
         }
     }
     
-    func saveSnapshotCurrentState() {
-        if isThread {
-            return
-        }
-        
+    @objc func saveSnapshotCurrentState() {
         guard let chat = chat else {
             return
         }
@@ -67,12 +55,7 @@ extension NewChatTableDataSource {
         saveMessagesToPreloader()
     }
     
-    func restoreScrollLastPosition() {
-        if isThread {
-            scrollToTop()
-            return
-        }
-        
+    @objc func restoreScrollLastPosition() {
         guard let chat = chat else {
             return
         }
@@ -107,23 +90,6 @@ extension NewChatTableDataSource {
         
         if tableView.contentOffset.y <= Constants.kChatTableContentInset {
             delegate?.didScrollToBottom()
-        }
-    }
-    
-    func scrollToTop() {
-        if firstLoad {
-            ///Scroll to bottom just if it's first load of the view
-            DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
-                self.tableView.scrollToBottom(animated: false)
-                
-                DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
-                    self.tableView.alpha = 1.0
-                    
-                    ///Show msgs indicator if it's scrolled to top because there's enought content
-                    self.newMsgIndicator.isHidden = self.tableView.contentOffset.y < -10
-                })
-            })
-            firstLoad = false
         }
     }
 }

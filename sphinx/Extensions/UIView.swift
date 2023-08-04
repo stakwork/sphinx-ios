@@ -16,6 +16,10 @@ enum VerticalLocation: String {
 }
 
 extension UIView {
+    var isVisible : Bool {
+        return !self.isHidden && self.alpha == 1.0
+    }
+    
     public func orientationHasChanged(_ isInPortrait:inout Bool) -> Bool {
         if self.frame.width > self.frame.height {
             if isInPortrait {

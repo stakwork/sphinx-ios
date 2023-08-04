@@ -110,7 +110,7 @@ class ChatAvatarView: UIView {
         url: URL
     ) {
         let transformer = SDImageResizingTransformer(
-            size: profileImageView.bounds.size,
+            size: CGSize(width: bounds.size.width * 3, height: bounds.size.height * 3),
             scaleMode: .aspectFill
         )
         

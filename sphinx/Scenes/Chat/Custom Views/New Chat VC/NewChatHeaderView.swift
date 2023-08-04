@@ -87,6 +87,10 @@ class NewChatHeaderView: UIView {
         chatSearchView.isHidden = true
     }
     
+    func toggleThreadHeaderView(expanded: Bool) {
+        threadHeaderView.toggleThreadHeaderView(expanded: expanded)
+    }
+    
     func configurePinnedMessageViewWith(
         chatId: Int,
         andDelegate delegate: PinnedMessageViewDelegate,

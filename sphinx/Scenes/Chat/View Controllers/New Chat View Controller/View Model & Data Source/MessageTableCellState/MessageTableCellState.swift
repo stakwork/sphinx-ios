@@ -110,7 +110,7 @@ struct MessageTableCellState {
     ///Bubble States
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
         
-        guard let message = threadOriginalMessage ?? message, let bubbleState = self.bubbleState else {
+        guard let message = headerAndBubbleMessage, let bubbleState = self.bubbleState else {
             return nil
         }
         
@@ -146,7 +146,7 @@ struct MessageTableCellState {
     
     lazy var avatarImage: BubbleMessageLayoutState.AvatarImage? = {
         
-        guard let message = threadOriginalMessage ?? message else {
+        guard let message = headerAndBubbleMessage else {
             return nil
         }
         
@@ -178,7 +178,7 @@ struct MessageTableCellState {
     
     lazy var statusHeader: BubbleMessageLayoutState.StatusHeader? = {
         
-        guard let message = threadOriginalMessage ?? message else {
+        guard let message = headerAndBubbleMessage else {
             return nil
         }
         
@@ -775,6 +775,16 @@ struct MessageTableCellState {
         }
     }
     
+    ///Message to decide bubble direction and status info - sender name, date
+    var headerAndBubbleMessage: TransactionMessage? {
+        get {
+            if isThread, let threadOriginalMessage = threadOriginalMessage {
+                return threadOriginalMessage
+            }
+            return message
+        }
+    }
+    
     var isTextOnlyMessage: Bool {
         mutating get {
             return
@@ -796,8 +806,8 @@ struct MessageTableCellState {
     }
     
     var isThread: Bool {
-        mutating get {
-            return threadMessagesState != nil
+        get {
+            return threadOriginalMessage != nil && threadMessages.count > 1
         }
     }
     

@@ -174,7 +174,8 @@ extension NewChatTableDataSource {
                 with: index,
                 in: filteredThreadMessages,
                 and: originalMessagesMap,
-                groupingDate: &groupingDate
+                groupingDate: &groupingDate,
+                isThreadRow: !threadMessages.isEmpty
             )
             
             if let separatorDate = bubbleStateAndDate.1 {
@@ -263,7 +264,11 @@ extension NewChatTableDataSource {
             }
             
             if let messagesInThread = threadMessagesMap[threadUUID] {
-                if messagesInThread.last?.id == message.id, messagesInThread.count > 1 {
+                if messagesInThread.count == 1 {
+                    ///Just 1 reply, then show it
+                    filteredThreadMessages.append(message)
+                } else if messagesInThread.last?.id == message.id, messagesInThread.count > 1 {
+                    ///More than 1 reply, show thread on last reply place
                     filteredThreadMessages.append(message)
                 }
             }
@@ -321,13 +326,14 @@ extension NewChatTableDataSource {
         in messages: [TransactionMessage],
         and originalMessagesMap: [String: TransactionMessage],
         groupingDate: inout Date?,
-        threadOriginalMessage: TransactionMessage? = nil
+        isThreadRow: Bool = false,
+        threadHeaderMessage: TransactionMessage? = nil
     ) -> (MessageTableCellState.BubbleState?, Date?) {
         
         var previousMessage = (index > 0) ? messages[index - 1] : nil
         var nextMessage = (index < messages.count - 1) ? messages[index + 1] : nil
         
-        let previousMessageDate = previousMessage?.date ?? threadOriginalMessage?.date
+        let previousMessageDate = previousMessage?.date ?? threadHeaderMessage?.date
         let msgDate = msg.date
         
         previousMessage = getActualMessageFrom(message: previousMessage, originalMessagesMap: originalMessagesMap)
@@ -357,6 +363,10 @@ extension NewChatTableDataSource {
         
         if message.isInvoice() && !message.isPaid() && !message.isExpired() {
             return (MessageTableCellState.BubbleState.Empty, separatorDate)
+        }
+        
+        if isThreadRow {
+            return (MessageTableCellState.BubbleState.Isolated, separatorDate)
         }
         
         let groupingMinutesLimit = 5

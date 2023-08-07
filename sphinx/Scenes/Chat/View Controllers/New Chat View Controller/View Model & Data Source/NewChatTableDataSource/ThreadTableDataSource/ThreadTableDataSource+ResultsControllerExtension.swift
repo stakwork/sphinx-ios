@@ -83,7 +83,7 @@ extension ThreadTableDataSource {
                 in: messages,
                 and: [:],
                 groupingDate: &groupingDate,
-                threadOriginalMessage: threadOriginalMessage
+                threadHeaderMessage: threadOriginalMessage
             )
             
             if let separatorDate = bubbleStateAndDate.1 {

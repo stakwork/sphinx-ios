@@ -11,8 +11,27 @@ import UIKit
 import HDWalletKit
 import NetworkExtension
 import CoreLocation
+import CocoaMQTT
 
 class CrypterManager : NSObject {
+    
+    enum Topics: String {
+        case VLS = "vls"
+        case VLS_RES = "vls-res"
+        case CONTROL = "control"
+        case CONTROL_RES = "control-res"
+        case PROXY = "proxy"
+        case PROXY_RES = "proxy-res"
+        case ERROR = "error"
+        case INIT_1_MSG = "init-1-msg"
+        case INIT_1_RES = "init-1-res"
+        case INIT_2_MSG = "init-2-msg"
+        case INIT_2_RES = "init-2-res"
+        case LSS_MSG = "lss-msg"
+        case LSS_RES = "lss-res"
+        case HELLO = "hello"
+        case BYE = "bye"
+    }
     
     struct HardwareLink {
         var mqtt: String? = nil
@@ -57,6 +76,11 @@ class CrypterManager : NSObject {
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
+    var clientID: String = ""
+    var mqtt5: CocoaMQTT5! = nil
+    var sequence: Int! = nil
+    var argsDictionary: [String: AnyObject] = [:]
+    
     func setupSigningDevice(
         vc: UIViewController,
         hardwareLink: HardwareLink? = nil,
@@ -72,6 +96,103 @@ class CrypterManager : NSObject {
         }
         
         self.setupSigningDevice()
+    }
+    
+    func start() {
+        let mnemonic = Mnemonic.create()
+        let seed = Mnemonic.createSeed(mnemonic: mnemonic)
+        let seed32Bytes = seed.bytes[0..<32]
+        
+        var keys: Keys? = nil
+        do {
+            keys = try nodeKeys(net: "regtest", seed: seed32Bytes.hexString)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        guard let keys = keys else {
+            return
+        }
+        
+        var password: String? = nil
+        do {
+            password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        guard let password = password else {
+            return
+        }
+        
+        connectToMQTTWith(
+            keys: keys,
+            and: password
+        )
+    }
+    
+    func connectToMQTTWith(
+        keys: Keys,
+        and password: String
+    ) {
+        clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
+        mqtt5 = CocoaMQTT5(clientID: clientID, host: "localhost", port: 1883)
+
+        let connectProperties = MqttConnectProperties()
+        connectProperties.topicAliasMaximum = 0
+        connectProperties.sessionExpiryInterval = 0
+        connectProperties.receiveMaximum = 100
+        connectProperties.maximumPacketSize = 500
+        
+        mqtt5.connectProperties = connectProperties
+        mqtt5.username = keys.pubkey
+        mqtt5.password = password
+        mqtt5.willMessage = CocoaMQTT5Message(topic: "/will", string: "dieout")
+        
+        let success = mqtt5.connect()
+        
+        print("MQTT CONNECTION RESULT: \(success)")
+        
+        if success {
+            mqtt5.subscribe([
+                MqttSubscription(topic: "\(clientID)/\(Topics.VLS)"),
+                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_1_MSG)"),
+                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_2_MSG)"),
+                MqttSubscription(topic: "\(clientID)/\(Topics.LSS_MSG)")
+            ])
+            
+            mqtt5.didReceiveMessage = { mqtt, message, id, _ in
+                print("Message received in topic \(message.topic) with payload \(message.string!)")
+                
+                self.processMessage(
+                    topic: message.topic,
+                    payload: message.payload
+                )
+            }
+            
+            mqtt5.didDisconnect =  { cocaMQTT2, error in
+                
+            }
+            
+            mqtt5.publish(
+                CocoaMQTT5Message(
+                    topic: "\(clientID)/\(Topics.HELLO)",
+                    payload: []
+                ),
+                properties: MqttPublishProperties()
+            )
+        }
+    }
+    
+    func processMessage(topic: String, payload: [UInt8]) {
+        var a = argsAndState()
+    }
+    
+    func argsAndState() -> [String: [Byte]] {
+      const args = stringifyArgs(makeArgs());
+      const sta: State = await load_muts();
+      const state = msgpack.encode(sta);
+      return { args, state };
     }
     
     func setupSigningDevice() {
@@ -395,3 +516,9 @@ class CrypterManager : NSObject {
         )
     }
 }
+
+//extension CrypterManager : CocoaMQTT5Delegate {
+//    func mqtt5(_ mqtt5: CocoaMQTT5, didReceiveMessage message: CocoaMQTT5Message, id: UInt16, publishData: MqttDecodePublish?) {
+//        print("DID RECEIVE MESSAGE")
+//    }
+//}

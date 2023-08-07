@@ -1,5 +1,9 @@
 PODS:
   - Alamofire (5.6.4)
+  - CocoaMQTT (2.1.5):
+    - CocoaMQTT/Core (= 2.1.5)
+  - CocoaMQTT/Core (2.1.5):
+    - MqttCocoaAsyncSocket (~> 1.0.8)
   - CryptoSwift (1.0.0)
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.1):
@@ -22,6 +26,7 @@ PODS:
   - libwebp/webp (1.2.0)
   - lottie-ios (3.2.3)
   - MarqueeLabel (4.3.0)
+  - MqttCocoaAsyncSocket (1.0.8)
   - ObjectMapper (4.2.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
@@ -55,6 +60,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.6.4)
+  - CocoaMQTT
   - Giphy (= 2.1.1)
   - HDWalletKit
   - JitsiMeetSDK (~> 3.6.0)
@@ -80,6 +86,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CocoaMQTT
     - CryptoSwift
     - FLAnimatedImage
     - Giphy
@@ -90,6 +97,7 @@ SPEC REPOS:
     - libwebp
     - lottie-ios
     - MarqueeLabel
+    - MqttCocoaAsyncSocket
     - ObjectMapper
     - PINCache
     - PINOperation
@@ -119,6 +127,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  CocoaMQTT: af1bd1e42f81b9f4f9dcf3a8990c42b7c00989b9
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
@@ -129,6 +138,7 @@ SPEC CHECKSUMS:
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
+  MqttCocoaAsyncSocket: 77d3b74f76228dd5a05d1f9526eab101d415b30c
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
@@ -147,6 +157,6 @@ SPEC CHECKSUMS:
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 7c5d735ed1bcb08f0ffabeb3b119ddb04debba46
+PODFILE CHECKSUM: 355ca942c277567dcc6a1f4d050f7a808f1483c6
 
 COCOAPODS: 1.11.3

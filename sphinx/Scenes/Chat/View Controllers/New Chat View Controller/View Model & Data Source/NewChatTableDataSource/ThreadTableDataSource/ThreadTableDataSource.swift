@@ -112,7 +112,8 @@ class ThreadTableDataSource : NewChatTableDataSource {
     }
     
     func toggleHeader() {
-        let headerExpanded = ((tableView.contentSize.height + tableView.contentInset.top) - tableView.frame.height) > 1
+        let headerHeight = getHeaderHeight() ?? 0
+        let headerExpanded = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height - headerHeight
         self.delegate?.shouldToggleThreadHeader(expanded: headerExpanded)
     }
     

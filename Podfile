@@ -28,6 +28,7 @@ target 'sphinx' do
     pod 'ObjectMapper'
     pod 'UIView-Shimmer', '~> 1.0'
     pod 'CocoaMQTT'
+    pod 'MessagePack.swift', '~> 4.0'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

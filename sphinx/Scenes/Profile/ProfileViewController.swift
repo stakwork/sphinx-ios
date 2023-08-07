@@ -459,10 +459,12 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     }
     
     @IBAction func setupSigningDevice() {
-        cryptedManager.setupSigningDevice(
-            vc: self
-        ) {
-            self.configureSigningDeviceButton()
-        }
+        cryptedManager.start()
+        
+//        cryptedManager.setupSigningDevice(
+//            vc: self
+//        ) {
+//            self.configureSigningDeviceButton()
+//        }
     }
 }

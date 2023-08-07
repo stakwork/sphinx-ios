@@ -78,9 +78,12 @@ class CrypterManager : NSObject {
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
     var clientID: String = ""
-    var mqtt5: CocoaMQTT5! = nil
-    var sequence: Int! = nil
+//    var mqtt5: CocoaMQTT5! = nil
+    var mqtt: CocoaMQTT! = nil
+    var sequence: UInt16! = nil
+    var seed: Data! = nil
     var argsDictionary: [String: AnyObject] = [:]
+    var keys: [String] = []
     
     func setupSigningDevice(
         vc: UIViewController,
@@ -101,7 +104,7 @@ class CrypterManager : NSObject {
     
     func start() {
         let mnemonic = Mnemonic.create()
-        let seed = Mnemonic.createSeed(mnemonic: mnemonic)
+        seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = seed.bytes[0..<32]
         
         var keys: Keys? = nil
@@ -137,32 +140,40 @@ class CrypterManager : NSObject {
         and password: String
     ) {
         clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
-        mqtt5 = CocoaMQTT5(clientID: clientID, host: "localhost", port: 1883)
+        mqtt = CocoaMQTT(clientID: clientID, host: "localhost", port: 1883)
+//        mqtt5 = CocoaMQTT5(clientID: clientID, host: "localhost", port: 1883)
 
         let connectProperties = MqttConnectProperties()
-        connectProperties.topicAliasMaximum = 0
-        connectProperties.sessionExpiryInterval = 0
-        connectProperties.receiveMaximum = 100
-        connectProperties.maximumPacketSize = 500
+//        connectProperties.topicAliasMaximum = 0
+//        connectProperties.sessionExpiryInterval = 0
+//        connectProperties.receiveMaximum = 100
+//        connectProperties.maximumPacketSize = 500
         
-        mqtt5.connectProperties = connectProperties
-        mqtt5.username = keys.pubkey
-        mqtt5.password = password
-        mqtt5.willMessage = CocoaMQTT5Message(topic: "/will", string: "dieout")
+//        mqtt.connectProperties = connectProperties
+        mqtt.username = keys.pubkey
+        mqtt.password = password
+//        mqtt.willMessage = CocoaMQTTMessage(topic: "/will", string: "dieout")
+        mqtt.allowUntrustCACertificate = true
         
-        let success = mqtt5.connect()
+        let success = mqtt.connect()
         
         print("MQTT CONNECTION RESULT: \(success)")
         
         if success {
-            mqtt5.subscribe([
-                MqttSubscription(topic: "\(clientID)/\(Topics.VLS)"),
-                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_1_MSG)"),
-                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_2_MSG)"),
-                MqttSubscription(topic: "\(clientID)/\(Topics.LSS_MSG)")
+            mqtt.subscribe([
+                ("\(clientID)/\(Topics.VLS)", CocoaMQTTQoS.qos1),
+                ("\(clientID)/\(Topics.INIT_1_MSG)", CocoaMQTTQoS.qos1),
+                ("\(clientID)/\(Topics.INIT_2_MSG)", CocoaMQTTQoS.qos1),
+                ("\(clientID)/\(Topics.LSS_MSG)", CocoaMQTTQoS.qos1)
             ])
+//            mqtt.subscribe([
+//                MqttSubscription(topic: "\(clientID)/\(Topics.VLS)"),
+//                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_1_MSG)"),
+//                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_2_MSG)"),
+//                MqttSubscription(topic: "\(clientID)/\(Topics.LSS_MSG)")
+//            ])
             
-            mqtt5.didReceiveMessage = { mqtt, message, id, _ in
+            mqtt.didReceiveMessage = { mqtt, message, id in
                 print("Message received in topic \(message.topic) with payload \(message.string!)")
                 
                 self.processMessage(
@@ -171,52 +182,217 @@ class CrypterManager : NSObject {
                 )
             }
             
-            mqtt5.didDisconnect =  { cocaMQTT2, error in
-                
+            mqtt.didDisconnect =  { cocaMQTT2, error in
+                print("MQTT did disconnect")
             }
             
-            mqtt5.publish(
-                CocoaMQTT5Message(
+            mqtt.publish(
+                CocoaMQTTMessage(
                     topic: "\(clientID)/\(Topics.HELLO)",
                     payload: []
-                ),
-                properties: MqttPublishProperties()
+                )
             )
         }
     }
     
-    func processMessage(topic: String, payload: [UInt8]) {
-//        var a = argsAndState()
+    func processMessage(
+        topic: String,
+        payload: [UInt8]
+    ) {
+        let a = argsAndState()
+        
+        var ret: VlsResponse? = nil
+        do {
+            ret = try run(
+                topic: topic,
+                args: a.0,
+                state: Data(a.1),
+                msg1: Data(payload),
+                expectedSequence: sequence
+            )
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        guard let ret = ret else {
+            return
+        }
+        
+        processVlsResult(ret: ret)
+        
+        if topic.hasSuffix(Topics.VLS.rawValue) {
+//            if let cmd = ret.cmd {
+//                cmds.update((cs) => [...cs, ret.cmd]);
+//            }
+            // update expected sequence
+            sequence = ret.sequence + 1
+        }
     }
     
-//    func argsAndState() -> [String: [Byte]] {
-//      const args = stringifyArgs(makeArgs());
-//      const sta: State = await load_muts();
-//      const state = msgpack.encode(sta);
-//      return { args, state };
-//    }
+    func processVlsResult(ret: VlsResponse) {
+        let _ = storeMutations(inc: ret.state.bytes)
+        publish(topic: ret.topic, payload: ret.bytes.bytes)
+    }
     
+    func argsAndState() -> (String, [UInt8]) {
+        let args = asString(jsonDictionary: makeArgs())
+        let sta: [String: [UInt8]] = load_muts()
+        
+        let state = pack(
+            MessagePackValue(asString(jsonDictionary: sta))
+        )
+        
+        return (args, state.bytes)
+    }
+    
+    func makeArgs() -> [String: AnyObject] {
+        let seedHexString = seed.bytes[0..<32].hexString
+        
+        guard let seedBytes = stringToBytes(seedHexString) else {
+            return [:]
+        }
+        
+        let defaultPolicy: [String: AnyObject] = [
+          "msat_per_interval": 21000000000 as AnyObject,
+          "interval": "daily" as AnyObject,
+          "htlc_limit_msat": 1000000000 as AnyObject,
+        ]
+        
+        let lssNonce = randomBytes(32).hexString
+        
+        let args: [String: AnyObject] = [
+            "seed": seedBytes as AnyObject,
+            "network": "regtest" as AnyObject,
+            "policy": defaultPolicy as AnyObject,
+            "allowlist": [] as AnyObject,
+            "timestamp": UInt32(Date().timeIntervalSince1970) as AnyObject,
+            "lss_nonce": lssNonce as AnyObject,
+        ]
+        
+        return args
+    }
+    
+    func load_muts() -> [String: [UInt8]] {
+        var state:[String: [UInt8]] = [:]
+        
+        for key in keys {
+            if let value = UserDefaults.standard.object(forKey: key) as? [UInt8] {
+                state[key] = value
+            }
+        }
+        return state
+    }
+    
+    func storeMutations(inc: [UInt8]) -> [NSNumber] {
+        let muts = try? unpack(Data(inc))
+        
+        guard let mutsDictionary = (muts?.value as? MessagePackValue)?.dictionaryValue else {
+            return []
+        }
+        
+        persist_muts(muts: mutsDictionary)
+        
+        if let velocity = mutsDictionary[MessagePackValue(stringLiteral: "VELOCITY")]?.arrayValue {
+            let parsedVelocity = parseVelocity(veldata: velocity)
+            return parsedVelocity
+        }
+
+        return []
+    }
+    
+    func parseVelocity(veldata: [MessagePackValue]) -> [NSNumber] {
+        return []
+//      if (!veldata) return;
+//      try {
+//        const vel = msgpack.decode(veldata);
+//        if (Array.isArray(vel)) {
+//          if (vel.length > 1) {
+//            const pmts = vel[1];
+//            if (Array.isArray(pmts)) {
+//              return pmts;
+//            }
+//          }
+//        }
+//      } catch (e) {
+//        console.error("invalid velocity");
+//      }
+    }
+    
+    func persist_muts(muts: [MessagePackValue: MessagePackValue]) {
+      for  mut in muts {
+          if let key = mut.key.stringValue, let value = mut.value.dataValue?.bytes {
+              UserDefaults.standard.set(value, forKey: key)
+              UserDefaults.standard.synchronize()
+          }
+      }
+    }
+    
+    func asString(jsonDictionary: JSONDictionary) -> String {
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: .prettyPrinted)
+            return String(data: data, encoding: String.Encoding.utf8) ?? ""
+        } catch {
+            return ""
+        }
+    }
+    
+    func randomBytes(_ length: Int) -> Data {
+        guard length > 0 else { return Data() }
+        return Data(
+            (1...length).map { _ in UInt8.random(in: 0...UInt8.max) }
+        )
+    }
+    
+    func stringToBytes(_ string: String) -> [UInt8]? {
+        let length = string.count
+        if length & 1 != 0 {
+            return nil
+        }
+        var bytes = [UInt8]()
+        bytes.reserveCapacity(length/2)
+        var index = string.startIndex
+        for _ in 0..<length/2 {
+            let nextIndex = string.index(index, offsetBy: 2)
+            if let b = UInt8(string[index..<nextIndex], radix: 16) {
+                bytes.append(b)
+            } else {
+                return nil
+            }
+            index = nextIndex
+        }
+        return bytes
+    }
+    
+    func publish(topic: String, payload: [UInt8]) {
+        guard let mqtt = mqtt else  {
+            print("NO MQTT CLIENT")
+            return
+        }
+
+        mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(clientID)/\(topic)",
+                payload: []
+            )
+//            ,
+//            properties: MqttPublishProperties()
+        )
+    }
+    
+    ///Signer setup
     func setupSigningDevice() {
-        let packed = Data([147, 146, 164, 97, 97, 97, 97, 146, 15, 196, 3, 255, 255, 255, 146, 164, 98, 98, 98, 98, 146, 15, 196, 3, 255, 255, 255, 146, 164, 99, 99, 99, 99, 146, 15, 196, 3, 255, 255, 255])
-        
-        let unpacked = try? unpack(packed)
-        let unpackedValue = (unpacked?.value as? MessagePackValue)?.arrayValue![0].arrayValue![1].arrayValue![0]
-        
-        print(unpacked?.value)
-        
-//        array(
-//            [
-//                array(
-//                    [string(aaaa), array([uint(15), array([uint(255), uint(255), uint(255)])])]
-//                ),
-//                array(
-//                    [string(bbbb), array([uint(15), array([uint(255), uint(255), uint(255)])])]
-//                ),
-//                array(
-//                    [string(cccc), array([uint(15), array([uint(255), uint(255), uint(255)])])]
-//                )
-//            ]
-//        )
+        self.checkNetwork {
+            self.promptForNetworkName() { networkName in
+                self.promptForNetworkPassword(networkName) {
+                    self.promptForHardwareUrl() {
+                        self.promptForBitcoinNetwork {
+                            self.testCrypter()
+                        }
+                    }
+                }
+            }
+        }
+
     }
     
     func checkNetwork(callback: @escaping () -> ()) {

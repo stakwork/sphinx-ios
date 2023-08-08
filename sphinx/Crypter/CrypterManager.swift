@@ -13,6 +13,7 @@ import NetworkExtension
 import CoreLocation
 import CocoaMQTT
 import MessagePack
+import Moscapsule
 
 class CrypterManager : NSObject {
     
@@ -78,12 +79,14 @@ class CrypterManager : NSObject {
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
     var clientID: String = ""
-//    var mqtt5: CocoaMQTT5! = nil
-    var mqtt: CocoaMQTT! = nil
     var sequence: UInt16! = nil
     var seed: Data! = nil
     var argsDictionary: [String: AnyObject] = [:]
     var keys: [String] = []
+    
+    var mqtt: CocoaMQTT! = nil
+    var mqtt5: CocoaMQTT5! = nil
+    var mqttClient: MQTTClient! = nil
     
     func setupSigningDevice(
         vc: UIViewController,
@@ -135,13 +138,102 @@ class CrypterManager : NSObject {
         )
     }
     
+    func connectToMoscapsuleWith(
+        keys: Keys,
+        and password: String
+    ) {
+        
+        clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
+        
+        let mqttConfig = MQTTConfig(
+            clientId: clientID,
+            host: "localhost",
+            port: 1883,
+            keepAlive: 60
+        )
+        
+        mqttConfig.mqttAuthOpts = MQTTAuthOpts(
+            username: keys.pubkey,
+            password: password
+        )
+        
+        mqttConfig.onDisconnectCallback = { _ in
+            print("DISCONNECTED")
+        }
+        
+        mqttConfig.onConnectCallback = { returnCode in
+            print("Return Code is \(returnCode.description)")
+        }
+        
+        mqttConfig.onMessageCallback = { mqttMessage in
+            print("MQTT Message received: payload=\(mqttMessage.payloadString)")
+        }
+        
+        mqttClient = MQTT.newConnection(mqttConfig)
+        
+        mqttClient.subscribe("\(clientID)/\(Topics.VLS)", qos: 2)
+        mqttClient.subscribe("\(clientID)/\(Topics.INIT_1_MSG)", qos: 2)
+        mqttClient.subscribe("\(clientID)/\(Topics.INIT_2_MSG)", qos: 2)
+        mqttClient.subscribe("\(clientID)/\(Topics.LSS_MSG)", qos: 2)
+    }
+    
     func connectToMQTTWith(
         keys: Keys,
         and password: String
     ) {
+        clientID = "CocoaMQTT-" + EncryptionManager.randomString(length: 20)
+        mqtt = CocoaMQTT(clientID: clientID, host: "192.168.0.24", port: 1883)
+
+        mqtt.username = keys.pubkey
+        mqtt.password = password
+        mqtt.keepAlive = 60
+//        mqtt.willMessage = CocoaMQTTMessage(topic: "/will", string: "dieout")
+//        mqtt.allowUntrustCACertificate = true
+
+        let success = mqtt.connect()
+
+        print("MQTT CONNECTION RESULT: \(success)")
+
+        if success {
+            mqtt.didReceiveMessage = { mqtt, message, id in
+                print("Message received in topic \(message.topic) with payload \(message.string!)")
+
+                self.processMessage(
+                    topic: message.topic,
+                    payload: message.payload
+                )
+            }
+
+            mqtt.didDisconnect =  { cocaMQTT2, error in
+                print("MQTT did disconnect")
+            }
+            
+            mqtt.didConnectAck = { _, _ in
+                self.mqtt.subscribe([
+                    ("\(self.clientID)/\(Topics.VLS.rawValue)", CocoaMQTTQoS.qos1),
+                    ("\(self.clientID)/\(Topics.INIT_1_MSG.rawValue)", CocoaMQTTQoS.qos1),
+                    ("\(self.clientID)/\(Topics.INIT_2_MSG.rawValue)", CocoaMQTTQoS.qos1),
+                    ("\(self.clientID)/\(Topics.LSS_MSG.rawValue)", CocoaMQTTQoS.qos1)
+                ])
+                
+                DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+                    self.mqtt.publish(
+                        CocoaMQTTMessage(
+                            topic: "\(self.clientID)/\(Topics.HELLO.rawValue)",
+                            payload: []
+                        )
+                    )
+                })
+            }
+        }
+    }
+    
+    func connectToMQTT5With(
+        keys: Keys,
+        and password: String
+    ) {
         clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
-        mqtt = CocoaMQTT(clientID: clientID, host: "localhost", port: 1883)
-//        mqtt5 = CocoaMQTT5(clientID: clientID, host: "localhost", port: 1883)
+        mqtt5 = CocoaMQTT5(clientID: clientID, host: "localhost", port: 1883)
 
         let connectProperties = MqttConnectProperties()
 //        connectProperties.topicAliasMaximum = 0
@@ -149,49 +241,47 @@ class CrypterManager : NSObject {
 //        connectProperties.receiveMaximum = 100
 //        connectProperties.maximumPacketSize = 500
         
-//        mqtt.connectProperties = connectProperties
-        mqtt.username = keys.pubkey
-        mqtt.password = password
-//        mqtt.willMessage = CocoaMQTTMessage(topic: "/will", string: "dieout")
-        mqtt.allowUntrustCACertificate = true
-        
-        let success = mqtt.connect()
-        
+        mqtt5.connectProperties = connectProperties
+        mqtt5.username = keys.pubkey
+        mqtt5.password = password
+//        mqtt5.keepAlive = 60
+        mqtt5.willMessage = CocoaMQTT5Message(topic: "/will", string: "dieout")
+//        mqtt5.allowUntrustCACertificate = true
+        let success = mqtt5.connect()
+
         print("MQTT CONNECTION RESULT: \(success)")
-        
+
         if success {
-            mqtt.subscribe([
-                ("\(clientID)/\(Topics.VLS)", CocoaMQTTQoS.qos1),
-                ("\(clientID)/\(Topics.INIT_1_MSG)", CocoaMQTTQoS.qos1),
-                ("\(clientID)/\(Topics.INIT_2_MSG)", CocoaMQTTQoS.qos1),
-                ("\(clientID)/\(Topics.LSS_MSG)", CocoaMQTTQoS.qos1)
+            mqtt5.subscribe([
+                MqttSubscription(topic: "\(clientID)/\(Topics.VLS)"),
+                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_1_MSG)"),
+                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_2_MSG)"),
+                MqttSubscription(topic: "\(clientID)/\(Topics.LSS_MSG)")
             ])
-//            mqtt.subscribe([
-//                MqttSubscription(topic: "\(clientID)/\(Topics.VLS)"),
-//                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_1_MSG)"),
-//                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_2_MSG)"),
-//                MqttSubscription(topic: "\(clientID)/\(Topics.LSS_MSG)")
-//            ])
-            
-            mqtt.didReceiveMessage = { mqtt, message, id in
+
+            mqtt5.didReceiveMessage = { mqtt, message, id, _ in
                 print("Message received in topic \(message.topic) with payload \(message.string!)")
-                
+
                 self.processMessage(
                     topic: message.topic,
                     payload: message.payload
                 )
             }
-            
-            mqtt.didDisconnect =  { cocaMQTT2, error in
+
+            mqtt5.didDisconnect =  { cocaMQTT, error in
                 print("MQTT did disconnect")
             }
             
-            mqtt.publish(
-                CocoaMQTTMessage(
-                    topic: "\(clientID)/\(Topics.HELLO)",
-                    payload: []
-                )
-            )
+            mqtt5.didConnectAck = { cocaMQTT, code, _ in
+                print("MQTT did connect")
+            }
+
+//            mqtt5.publish(
+//                CocoaMQTTMessage(
+//                    topic: "\(clientID)/\(Topics.HELLO)",
+//                    payload: []
+//                )
+//            )
         }
     }
     
@@ -364,19 +454,19 @@ class CrypterManager : NSObject {
     }
     
     func publish(topic: String, payload: [UInt8]) {
-        guard let mqtt = mqtt else  {
-            print("NO MQTT CLIENT")
-            return
-        }
-
-        mqtt.publish(
-            CocoaMQTTMessage(
-                topic: "\(clientID)/\(topic)",
-                payload: []
-            )
-//            ,
-//            properties: MqttPublishProperties()
-        )
+//        guard let mqtt = mqtt5 else  {
+//            print("NO MQTT CLIENT")
+//            return
+//        }
+//
+//        mqtt.publish(
+//            CocoaMQTTMessage(
+//                topic: "\(clientID)/\(topic)",
+//                payload: []
+//            )
+////            ,
+////            properties: MqttPublishProperties()
+//        )
     }
     
     ///Signer setup

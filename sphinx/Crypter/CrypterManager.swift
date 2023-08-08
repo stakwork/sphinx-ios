@@ -13,7 +13,6 @@ import NetworkExtension
 import CoreLocation
 import CocoaMQTT
 import MessagePack
-import Moscapsule
 
 class CrypterManager : NSObject {
     

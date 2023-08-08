@@ -9,7 +9,12 @@
 import UIKit
 
 extension UILabel {
-    public static func getLabelSize(width: CGFloat? = nil, height: CGFloat? = nil, text: String, font: UIFont) -> CGSize {
+    public static func getLabelSize(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        text: String,
+        font: UIFont
+    ) -> CGSize {
         let label =  UILabel()
         label.numberOfLines = 0
         label.font = font
@@ -24,6 +29,34 @@ extension UILabel {
                                   height: ceil(boundingBox.height))
         
         return label.frame.size
+    }
+    
+    public static func getTextSize(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        text: String,
+        font: UIFont
+    ) -> CGSize {
+
+        let constraintRect = CGSize(
+            width: width ?? .greatestFiniteMagnitude,
+            height: height ?? .greatestFiniteMagnitude
+        )
+        
+        let boundingBox = text.boundingRect(
+            with: constraintRect,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        )
+        
+        return (
+            CGSize(
+                width: ceil(boundingBox.width),
+                height: ceil(boundingBox.height)
+            )
+        )
+            
     }
     
     func addTextSpacing(value: Double) {
@@ -99,18 +132,6 @@ extension UILabel {
         
         return nil
     }
-    
-    var isTruncated: Bool {
-            
-        guard let labelText = text else {
-            return false
-        }
-        
-        let labelTextSize = (labelText as NSString).boundingRect(with: CGSize(width: frame.size.width, height: .greatestFiniteMagnitude),options: .usesLineFragmentOrigin,attributes: [NSAttributedString.Key.font: font],context: nil).size
-        
-        return labelTextSize.height > bounds.size.height
-    }
-    
     
     var numberOfLinesVisible : Int {
         

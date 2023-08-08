@@ -16,6 +16,7 @@ protocol CustomAudioPlayerDelegate: class {
 class CustomAudioPlayer : NSObject {
     
     weak var delegate: CustomAudioPlayerDelegate?
+    var backgroundTask: UIBackgroundTaskIdentifier = .invalid
 
     class var sharedInstance : CustomAudioPlayer {
         struct Static {
@@ -84,6 +85,9 @@ class CustomAudioPlayer : NSObject {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.delegate = self
             audioPlayer?.volume = 1.0
+            backgroundTask = UIApplication.shared.beginBackgroundTask { [weak self] in
+                        self?.endBackgroundTask()
+                    }
         } catch {
             audioPlayer = nil
         }
@@ -120,10 +124,16 @@ class CustomAudioPlayer : NSObject {
     func getDuration() -> TimeInterval? {
         return audioPlayer?.duration
     }
+    
+    func endBackgroundTask() {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backgroundTask = .invalid
+        }
 }
 
 extension CustomAudioPlayer  : AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        endBackgroundTask()
         if flag {
             delegate?.audioDidFinishPlaying()
         }

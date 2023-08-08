@@ -146,6 +146,9 @@ class FeedItemDetailVM : NSObject {
         case .addToQueue:
             if let episode = episode{
                 FeedsManager.sharedInstance.queuedPodcastEpisodes.append(episode)
+                let fm = FeedsManager.sharedInstance
+                let episodes = fm.queuedPodcastEpisodes
+                print(episodes)
                 self.tableView?.reloadData()
             }
             break

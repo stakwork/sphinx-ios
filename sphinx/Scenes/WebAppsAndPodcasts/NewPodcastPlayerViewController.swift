@@ -47,6 +47,8 @@ class NewPodcastPlayerViewController: UIViewController {
     
     let downloadService = DownloadService.sharedInstance
     
+    var queuedEpisode : PodcastEpisode? = nil
+    
     var tableDataSource: PodcastEpisodesDataSource!
     
     override func viewDidLoad() {
@@ -66,6 +68,8 @@ class NewPodcastPlayerViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: .refreshFeedUI, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPodcastInfo), name: .refreshFeedUI, object: nil)
+        
+        handleQueuedEpisode()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +88,14 @@ class NewPodcastPlayerViewController: UIViewController {
         }
     }
     
+    func handleQueuedEpisode(){
+        if let queuedEpisode = queuedEpisode,
+           let episodeIndex = tableDataSource.episodes.firstIndex(where: {$0.itemID == queuedEpisode.itemID}){
+            self.tableDataSource.tableView(tableDataSource.tableView, didSelectRowAt: IndexPath(item: episodeIndex, section: 0))
+            FeedsManager.sharedInstance.queuedPodcastEpisodes.removeAll(where: {$0.itemID == queuedEpisode.itemID})
+        }
+    }
+    
     override func endAppearanceTransition() {
         super.endAppearanceTransition()
         
@@ -98,7 +110,8 @@ class NewPodcastPlayerViewController: UIViewController {
         delegate: PodcastPlayerVCDelegate,
         boostDelegate: CustomBoostDelegate,
         fromDashboard: Bool = false,
-        fromDownloadedSection: Bool = false
+        fromDownloadedSection: Bool = false,
+        queuedEpisode:PodcastEpisode? = nil
     ) -> NewPodcastPlayerViewController {
         let viewController = StoryboardScene.WebApps.newPodcastPlayerViewController.instantiate()
         
@@ -107,6 +120,7 @@ class NewPodcastPlayerViewController: UIViewController {
         viewController.boostDelegate = boostDelegate
         viewController.fromDashboard = fromDashboard
         viewController.fromDownloadedSection = fromDownloadedSection
+        viewController.queuedEpisode = queuedEpisode
     
         return viewController
     }

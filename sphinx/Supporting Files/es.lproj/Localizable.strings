@@ -544,6 +544,8 @@
 "marking.as.played" = "Marcando como leído!";
 "marking.as.unplayed" = "Marcando como no leído!";
 "erase.from.device" = "Borrar del despositivo";
+"add.to.queue" = "Add to queue";
+"remove.from.queue" = "Remove from queue";
 "share" = "Compartir";
 "share.from.beginning" = "Compartir del comienzo";
 "share.from.current.time" = "Compartir con tiempo ahora mismo";

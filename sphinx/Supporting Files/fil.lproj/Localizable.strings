@@ -525,6 +525,8 @@
 "marking.as.unplayed" = "Minamarkahan ang episode bilang hindi na-play!";
 "mark.as.unplayed" = "Markahan bilang hindi na-play";
 "erase.from.device" = "Burahin sa aparato";
+"add.to.queue" = "Add to queue";
+"remove.from.queue" = "Remove from queue";
 "share" = "Ibahagi";
 "share.from.beginning" = "Ibahagi sa simula";
 "share.from.current.time" = "Ibahagi mula sa kasalukuyang panahon";

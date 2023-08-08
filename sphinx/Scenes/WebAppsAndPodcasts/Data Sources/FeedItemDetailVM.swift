@@ -29,18 +29,21 @@ class FeedItemDetailVM : NSObject {
                 .copyLink
             ]
         }
+        let isInQueue = FeedsManager.sharedInstance.queuedPodcastEpisodes.contains(where: {$0.itemID == episode?.itemID})
         if (episode?.feed?.isRecommendationsPodcast ?? false) {
             return [
                 .share,
                 .copyLink,
-                (episode?.wasPlayed == true) ? .markAsUnplayed : .markAsPlayed
+                (episode?.wasPlayed == true) ? .markAsUnplayed : .markAsPlayed,
+                isInQueue ? .removeFromQueue : .addToQueue
             ]
         } else {
             return [
                 episode?.isDownloaded ?? false ? .erase : .download,
                 .share,
                 .copyLink,
-                (episode?.wasPlayed == true) ? .markAsUnplayed : .markAsPlayed
+                (episode?.wasPlayed == true) ? .markAsUnplayed : .markAsPlayed,
+                isInQueue ? .removeFromQueue : .addToQueue
             ]
         }
     }
@@ -137,6 +140,18 @@ class FeedItemDetailVM : NSObject {
         case .erase:
             if let episode = episode {
                 self.delegate?.deleteTapped(self.indexPath, episode: episode)
+                self.tableView?.reloadData()
+            }
+            break
+        case .addToQueue:
+            if let episode = episode{
+                FeedsManager.sharedInstance.queuedPodcastEpisodes.append(episode)
+                self.tableView?.reloadData()
+            }
+            break
+        case .removeFromQueue:
+            if let episode = episode{
+                FeedsManager.sharedInstance.queuedPodcastEpisodes = FeedsManager.sharedInstance.queuedPodcastEpisodes.filter({$0 != episode})
                 self.tableView?.reloadData()
             }
             break

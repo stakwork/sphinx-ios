@@ -15,6 +15,8 @@ public enum FeedItemActionType{
     case copyLink
     case markAsUnplayed
     case erase
+    case addToQueue
+    case removeFromQueue
 }
 
 class FeedItemDetailActionCell: UITableViewCell {
@@ -69,6 +71,16 @@ class FeedItemDetailActionCell: UITableViewCell {
             actionLabel.text = "erase.from.device".localized
             actionIconImage.image = UIImage(named: "itemDetailsDownloaded")
             actionIconImage.tintColor = UIColor.Sphinx.ReceivedIcon
+            break
+        case .addToQueue:
+            actionLabel.text = "add.to.queue".localized
+            actionIconImage.image = UIImage(named: "add_to_queue")
+            actionIconImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+            break
+        case .removeFromQueue:
+            actionLabel.text = "remove.from.queue".localized
+            actionIconImage.image = UIImage(named: "remove_from_queue")
+            actionIconImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         }
     }

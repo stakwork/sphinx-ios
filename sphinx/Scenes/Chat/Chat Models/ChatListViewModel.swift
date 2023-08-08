@@ -12,7 +12,7 @@ final class ChatListViewModel {
     
     init() {}
     
-    public static let kMessagesPerPage: Int = 200
+    public static let kMessagesPerPage: Int = 100
     
     func loadFriends(
         fromPush: Bool = false,

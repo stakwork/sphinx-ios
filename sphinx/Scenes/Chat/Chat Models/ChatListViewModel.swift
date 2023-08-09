@@ -12,25 +12,37 @@ final class ChatListViewModel {
     
     init() {}
     
-    public static let kMessagesPerPage: Int = 100
+    public static let kMessagesPerPage: Int = 200
     
     func loadFriends(
-        fromPush: Bool = false,
         completion: @escaping (Bool) -> ()
     ) {
         let restoring = self.isRestoring()
         
+        restoreContacts(
+            page: 1,
+            restoring: restoring,
+            completion: completion
+        )
+    }
+            
+    func restoreContacts(
+        page: Int,
+        restoring: Bool,
+        completion: @escaping (Bool) -> ()
+    ) {
         API.sharedInstance.getLatestContacts(
+            page: page,
             date: Date(),
+            nextPageCallback: {(contacts, chats, subscriptions, invites) -> () in
+                self.saveObjects(contacts: contacts, chats: chats, subscriptions: subscriptions, invites: invites)
+                
+                self.restoreContacts(page: page + 1, restoring: restoring, completion: completion)
+            },
             callback: {(contacts, chats, subscriptions, invites) -> () in
             
-                UserContactsHelper.insertObjects(
-                    contacts: contacts,
-                    chats: chats,
-                    subscriptions: subscriptions,
-                    invites: invites
-                )
-                    
+                self.saveObjects(contacts: contacts, chats: chats, subscriptions: subscriptions, invites: invites)
+                
                 CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
                     
                 self.forceKeychainSync()
@@ -38,6 +50,20 @@ final class ChatListViewModel {
                 
                 completion(restoring)
             }
+        )
+    }
+    
+    func saveObjects(
+        contacts: [JSON],
+        chats: [JSON],
+        subscriptions: [JSON],
+        invites: [JSON]
+    ) {
+        UserContactsHelper.insertObjects(
+            contacts: contacts,
+            chats: chats,
+            subscriptions: subscriptions,
+            invites: invites
         )
     }
     

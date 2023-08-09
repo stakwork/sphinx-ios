@@ -11,8 +11,8 @@ import UIKit
 import HDWalletKit
 import NetworkExtension
 import CoreLocation
-import CocoaMQTT
 import MessagePack
+import CocoaMQTT
 
 class CrypterManager : NSObject {
     
@@ -77,15 +77,31 @@ class CrypterManager : NSObject {
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-    var clientID: String = ""
+    var clientID: String {
+        get {
+            if let clientId: String = UserDefaults.Keys.clientID.get() {
+                return clientId
+            }
+            self.clientID = "CocoaMQTT-" + EncryptionManager.randomString(length: 20)
+            return self.clientID
+        }
+        set {
+            UserDefaults.Keys.clientID.set(newValue)
+        }
+    }
+    
     var sequence: UInt16! = nil
     var seed: Data! = nil
     var argsDictionary: [String: AnyObject] = [:]
     var keys: [String] = []
+    var lssNonce: String! = nil
     
     var mqtt: CocoaMQTT! = nil
-    var mqtt5: CocoaMQTT5! = nil
-    var mqttClient: MQTTClient! = nil
+    
+    override init() {
+        super.init()
+        lssNonce = randomBytes(32).hexString
+    }
     
     func setupSigningDevice(
         vc: UIViewController,
@@ -105,8 +121,7 @@ class CrypterManager : NSObject {
     }
     
     func start() {
-        let mnemonic = Mnemonic.create()
-        seed = Mnemonic.createSeed(mnemonic: mnemonic)
+        let (_, seed) = getOrCreateWalletMnemonic()
         let seed32Bytes = seed.bytes[0..<32]
         
         var keys: Keys? = nil
@@ -137,68 +152,22 @@ class CrypterManager : NSObject {
         )
     }
     
-    func connectToMoscapsuleWith(
-        keys: Keys,
-        and password: String
-    ) {
-        
-        clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
-        
-        let mqttConfig = MQTTConfig(
-            clientId: clientID,
-            host: "localhost",
-            port: 1883,
-            keepAlive: 60
-        )
-        
-        mqttConfig.mqttAuthOpts = MQTTAuthOpts(
-            username: keys.pubkey,
-            password: password
-        )
-        
-        mqttConfig.onDisconnectCallback = { _ in
-            print("DISCONNECTED")
-        }
-        
-        mqttConfig.onConnectCallback = { returnCode in
-            print("Return Code is \(returnCode.description)")
-        }
-        
-        mqttConfig.onMessageCallback = { mqttMessage in
-            print("MQTT Message received: payload=\(mqttMessage.payloadString)")
-        }
-        
-        mqttClient = MQTT.newConnection(mqttConfig)
-        
-        mqttClient.subscribe("\(clientID)/\(Topics.VLS)", qos: 2)
-        mqttClient.subscribe("\(clientID)/\(Topics.INIT_1_MSG)", qos: 2)
-        mqttClient.subscribe("\(clientID)/\(Topics.INIT_2_MSG)", qos: 2)
-        mqttClient.subscribe("\(clientID)/\(Topics.LSS_MSG)", qos: 2)
-    }
-    
     func connectToMQTTWith(
         keys: Keys,
         and password: String
     ) {
-        clientID = "CocoaMQTT-" + EncryptionManager.randomString(length: 20)
         mqtt = CocoaMQTT(clientID: clientID, host: "192.168.0.24", port: 1883)
-
         mqtt.username = keys.pubkey
         mqtt.password = password
-        mqtt.keepAlive = 60
-//        mqtt.willMessage = CocoaMQTTMessage(topic: "/will", string: "dieout")
-//        mqtt.allowUntrustCACertificate = true
 
         let success = mqtt.connect()
 
-        print("MQTT CONNECTION RESULT: \(success)")
-
         if success {
             mqtt.didReceiveMessage = { mqtt, message, id in
-                print("Message received in topic \(message.topic) with payload \(message.string!)")
+                print("Message received in topic \(message.topic) with payload \(message.string)")
 
                 self.processMessage(
-                    topic: message.topic,
+                    topic: message.topic.replacingOccurrences(of: "\(self.clientID)/", with: ""),
                     payload: message.payload
                 )
             }
@@ -227,63 +196,6 @@ class CrypterManager : NSObject {
         }
     }
     
-    func connectToMQTT5With(
-        keys: Keys,
-        and password: String
-    ) {
-        clientID = "CocoaMQTT-" + String(ProcessInfo().processIdentifier)
-        mqtt5 = CocoaMQTT5(clientID: clientID, host: "localhost", port: 1883)
-
-        let connectProperties = MqttConnectProperties()
-//        connectProperties.topicAliasMaximum = 0
-//        connectProperties.sessionExpiryInterval = 0
-//        connectProperties.receiveMaximum = 100
-//        connectProperties.maximumPacketSize = 500
-        
-        mqtt5.connectProperties = connectProperties
-        mqtt5.username = keys.pubkey
-        mqtt5.password = password
-//        mqtt5.keepAlive = 60
-        mqtt5.willMessage = CocoaMQTT5Message(topic: "/will", string: "dieout")
-//        mqtt5.allowUntrustCACertificate = true
-        let success = mqtt5.connect()
-
-        print("MQTT CONNECTION RESULT: \(success)")
-
-        if success {
-            mqtt5.subscribe([
-                MqttSubscription(topic: "\(clientID)/\(Topics.VLS)"),
-                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_1_MSG)"),
-                MqttSubscription(topic: "\(clientID)/\(Topics.INIT_2_MSG)"),
-                MqttSubscription(topic: "\(clientID)/\(Topics.LSS_MSG)")
-            ])
-
-            mqtt5.didReceiveMessage = { mqtt, message, id, _ in
-                print("Message received in topic \(message.topic) with payload \(message.string!)")
-
-                self.processMessage(
-                    topic: message.topic,
-                    payload: message.payload
-                )
-            }
-
-            mqtt5.didDisconnect =  { cocaMQTT, error in
-                print("MQTT did disconnect")
-            }
-            
-            mqtt5.didConnectAck = { cocaMQTT, code, _ in
-                print("MQTT did connect")
-            }
-
-//            mqtt5.publish(
-//                CocoaMQTTMessage(
-//                    topic: "\(clientID)/\(Topics.HELLO)",
-//                    payload: []
-//                )
-//            )
-        }
-    }
-    
     func processMessage(
         topic: String,
         payload: [UInt8]
@@ -295,7 +207,7 @@ class CrypterManager : NSObject {
             ret = try run(
                 topic: topic,
                 args: a.0,
-                state: Data(a.1),
+                state: Data(bytes: a.1),
                 msg1: Data(payload),
                 expectedSequence: sequence
             )
@@ -324,14 +236,40 @@ class CrypterManager : NSObject {
     }
     
     func argsAndState() -> (String, [UInt8]) {
-        let args = asString(jsonDictionary: makeArgs())
+        let args = makeArgs()
+        let stringArgs = asString(jsonDictionary: args)
+        
         let sta: [String: [UInt8]] = load_muts()
+
+        var mpDic = [MessagePackValue:MessagePackValue]()
+
+        for (key, value) in sta {
+            mpDic[MessagePackValue(key)] = MessagePackValue(Data(value))
+        }
         
         let state = pack(
-            MessagePackValue(asString(jsonDictionary: sta))
-        )
+            MessagePackValue(mpDic)
+        ).bytes
         
-        return (args, state.bytes)
+        return (stringArgs, state)
+    }
+    
+    func apply<T>(_ f:(T ...) -> T, with elements:[T]) -> T {
+       var elements = elements
+
+       if elements.count == 0 {
+           return f()
+       }
+
+       if elements.count == 1 {
+           return f(elements[0])
+       }
+
+       var result:T = f(elements.removeFirst(), elements.removeFirst())
+
+       result = elements.reduce(result, {f($0, $1)} )
+
+       return result
     }
     
     func makeArgs() -> [String: AnyObject] {
@@ -341,21 +279,23 @@ class CrypterManager : NSObject {
             return [:]
         }
         
+        guard let lssN = stringToBytes(lssNonce) else {
+            return [:]
+        }
+        
         let defaultPolicy: [String: AnyObject] = [
-          "msat_per_interval": 21000000000 as AnyObject,
-          "interval": "daily" as AnyObject,
-          "htlc_limit_msat": 1000000000 as AnyObject,
+          "msat_per_interval": 21000000000 as NSNumber,
+          "interval": "daily" as NSString,
+          "htlc_limit_msat": 1000000000 as NSNumber,
         ]
         
-        let lssNonce = randomBytes(32).hexString
-        
         let args: [String: AnyObject] = [
-            "seed": seedBytes as AnyObject,
-            "network": "regtest" as AnyObject,
-            "policy": defaultPolicy as AnyObject,
-            "allowlist": [] as AnyObject,
-            "timestamp": UInt32(Date().timeIntervalSince1970) as AnyObject,
-            "lss_nonce": lssNonce as AnyObject,
+            "seed": seedBytes as NSArray,
+            "network": "regtest" as NSString,
+            "policy": defaultPolicy as NSDictionary,
+            "allowlist": [] as NSArray,
+            "timestamp": UInt32(Date().timeIntervalSince1970) as NSNumber,
+            "lss_nonce": lssN as NSArray
         ]
         
         return args
@@ -408,17 +348,21 @@ class CrypterManager : NSObject {
     }
     
     func persist_muts(muts: [MessagePackValue: MessagePackValue]) {
-      for  mut in muts {
-          if let key = mut.key.stringValue, let value = mut.value.dataValue?.bytes {
-              UserDefaults.standard.set(value, forKey: key)
-              UserDefaults.standard.synchronize()
-          }
-      }
+        for  mut in muts {
+            if let key = mut.key.stringValue, let value = mut.value.dataValue?.bytes {
+                keys.append(key)
+              
+                UserDefaults.standard.set(value, forKey: key)
+                UserDefaults.standard.synchronize()
+            }
+        }
+        
+        keys = Array(Set(keys))
     }
     
     func asString(jsonDictionary: JSONDictionary) -> String {
         do {
-            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: .prettyPrinted)
+            let data = try JSONSerialization.data(withJSONObject: jsonDictionary, options: .withoutEscapingSlashes)
             return String(data: data, encoding: String.Encoding.utf8) ?? ""
         } catch {
             return ""
@@ -601,7 +545,7 @@ class CrypterManager : NSObject {
     ) {
         let generateMnemonicCallbak: (() -> ()) = {
             self.newMessageBubbleHelper.showLoadingWheel()
-            let (mnemonic, seed) = self.generateAndPersistWalletMnemonic()
+            let (mnemonic, seed) = self.generateWalletMnemonic()
             callback((mnemonic, seed))
         }
         
@@ -638,7 +582,7 @@ class CrypterManager : NSObject {
                     let words = value.split(separator: " ").map { String($0).trim() }
                     let fixedWords = words.joined(separator: " ")
                     
-                    let (mnemonic, seed) = self.generateAndPersistWalletMnemonic(
+                    let (mnemonic, seed) = self.generateWalletMnemonic(
                         mnemonic: fixedWords
                     )
                     callback((mnemonic, seed))
@@ -649,7 +593,7 @@ class CrypterManager : NSObject {
         )
     }
     
-    public func generateAndPersistWalletMnemonic(
+    public func generateWalletMnemonic(
         mnemonic: String? = nil
     ) -> (String, String) {
         let mnemonic = mnemonic ?? Mnemonic.create()
@@ -657,6 +601,17 @@ class CrypterManager : NSObject {
         let seed32Bytes = seed.bytes[0..<32]
         
         return (mnemonic, seed32Bytes.hexString)
+    }
+    
+    public func getOrCreateWalletMnemonic() -> (String, Data) {
+        let storedMnemonic: String? = UserDefaults.Keys.mnemonic.get()
+        let mnemonic = storedMnemonic ?? Mnemonic.create()
+        
+        seed = Mnemonic.createSeed(mnemonic: mnemonic)
+        
+        UserDefaults.Keys.mnemonic.set(mnemonic)
+        
+        return (mnemonic, seed)
     }
     
     func testCrypter() {
@@ -791,9 +746,3 @@ class CrypterManager : NSObject {
         )
     }
 }
-
-//extension CrypterManager : CocoaMQTT5Delegate {
-//    func mqtt5(_ mqtt5: CocoaMQTT5, didReceiveMessage message: CocoaMQTT5Message, id: UInt16, publishData: MqttDecodePublish?) {
-//        print("DID RECEIVE MESSAGE")
-//    }
-//}

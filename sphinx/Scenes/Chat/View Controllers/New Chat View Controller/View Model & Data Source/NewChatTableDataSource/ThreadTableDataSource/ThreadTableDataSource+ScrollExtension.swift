@@ -15,23 +15,11 @@ extension ThreadTableDataSource {
             return
         }
         
-        let headerHeight = getHeaderHeight() ?? 0
-        
-        let scrolledToTop = tableView.contentOffset.y > tableView.contentSize.height - tableView.frame.size.height - headerHeight
-        let didMoveOutOfTop = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height - headerHeight
         let scrolledToBottom = tableView.contentOffset.y < -10
         let didMoveOutOfBottom = tableView.contentOffset.y > -10
                 
         if scrolledToBottom {
             didScrollToBottom()
-        }
-        
-        if scrolledToTop {
-            didScrollToTop()
-        }
-        
-        if didMoveOutOfTop {
-            didMoveOutOfTopArea()
         }
         
         if didMoveOutOfBottom {
@@ -45,6 +33,8 @@ extension ThreadTableDataSource {
             }
         }
         
+        toggleHeader()
+        
         delegate?.didScroll()
     }
     
@@ -52,10 +42,6 @@ extension ThreadTableDataSource {
         scrolledAtBottom = false
 
         delegate?.didScrollOutOfBottomArea()
-    }
-    
-    func didMoveOutOfTopArea() {
-        delegate?.shouldToggleThreadHeader(expanded: true)
     }
     
     override func didScrollToBottom() {
@@ -66,9 +52,5 @@ extension ThreadTableDataSource {
         scrolledAtBottom = true
         
         delegate?.didScrollToBottom()
-    }
-    
-    override func didScrollToTop() {
-        delegate?.shouldToggleThreadHeader(expanded: false)
     }
 }

@@ -72,7 +72,26 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     func showMoreVisible(
         _ isHeaderExpanded: Bool
     ) -> Bool {
-        return !isHeaderExpanded && messageLabel.isTruncated && !(messageLabel.text ?? "").isEmpty
+        return !isHeaderExpanded && isLabelTruncated() && !(messageLabel.text ?? "").isEmpty
+    }
+    
+    lazy var labelHeight: CGFloat = {
+        return UILabel.getTextSize(
+            width: UIScreen.main.bounds.width - 32,
+            text: messageLabel.text ?? "",
+            font: messageLabel.font
+        ).height
+    }()
+
+    
+    func isLabelTruncated() -> Bool {
+        guard let _ = messageLabel.text else {
+            return false
+        }
+        
+        let maximumHeight: CGFloat = 240
+        
+        return labelHeight > maximumHeight
     }
     
     static func getCellHeightWith(
@@ -82,14 +101,20 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         var mutableMessageCellState = messageCellState
         
         if let threadOriginalMessage = mutableMessageCellState.threadOriginalMessageHeader {
-            let labelHeight = UILabel.getLabelSize(
-                width: UIScreen.main.bounds.width - (16 * 2),
+            let labelMargin: CGFloat = 32
+            let bottomMarginViewHeight: CGFloat = 21
+            let headerHeight: CGFloat = 36
+            let maximumHeight: CGFloat = 240 ///12 lines
+            
+            var labelHeight = UILabel.getTextSize(
+                width: UIScreen.main.bounds.width - labelMargin,
                 text: threadOriginalMessage.text,
                 font: UIFont(name: "Roboto-Regular", size: 17)!
             ).height
             
-            let labelMargin: CGFloat = 32
-            let headerHeight: CGFloat = 36
+            let truncated = (labelHeight > maximumHeight)
+            labelHeight = min(labelHeight, maximumHeight)
+            labelHeight = truncated ? (labelHeight + bottomMarginViewHeight) : labelHeight
             
             return labelHeight + labelMargin + headerHeight
         }

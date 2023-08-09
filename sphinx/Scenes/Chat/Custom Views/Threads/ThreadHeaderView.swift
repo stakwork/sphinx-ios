@@ -54,7 +54,7 @@ class ThreadHeaderView : UIView {
         self.delegate = delegate
         
         messageLabel.text = message.bubbleMessageContentString
-        timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMMM d yyyy 'at' h:mm a")
+        timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMM dd, hh:mm a")
         
         guard let owner = UserContact.getOwner() else {
             return

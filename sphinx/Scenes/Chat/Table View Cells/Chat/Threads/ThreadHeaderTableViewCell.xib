@@ -19,18 +19,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThreadHeaderTableViewCell" id="KGk-i7-Jjw" customClass="ThreadHeaderTableViewCell" customModule="sphinx" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="408" height="500"/>
+            <rect key="frame" x="0.0" y="0.0" width="408" height="308"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="408" height="500"/>
+                <rect key="frame" x="0.0" y="0.0" width="408" height="308"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgW-bO-r6C">
-                        <rect key="frame" x="0.0" y="-300" width="408" height="800"/>
+                        <rect key="frame" x="0.0" y="-300" width="408" height="608"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C4H-5D-8K4">
-                        <rect key="frame" x="0.0" y="0.0" width="408" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="408" height="308"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ymw-8s-TdE">
                                 <rect key="frame" x="0.0" y="0.0" width="408" height="36"/>
@@ -75,17 +75,17 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GG7-PQ-HiL">
-                                <rect key="frame" x="0.0" y="36" width="408" height="464"/>
+                                <rect key="frame" x="0.0" y="36" width="408" height="272"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NjK-yM-870">
-                                        <rect key="frame" x="16" y="0.0" width="376" height="464"/>
+                                        <rect key="frame" x="16" y="0.0" width="376" height="272"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51d-af-xpA">
-                                                <rect key="frame" x="0.0" y="0.0" width="376" height="464"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="376" height="272"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NmQ-7f-GFw" customClass="ExpandableLabel" customModule="ExpandableLabel">
-                                                        <rect key="frame" x="0.0" y="16" width="376" height="432"/>
-                                                        <mutableString key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis simos ducimus qui blanditiis prae sentium volu ptatum deleniti. Character Counter is a 100% free online character count calculator that's simple to use. Sometimes users prefer simplicity over all of the detailed writing information Word Counter provides, and this is exactly what this tool offers. It displays character count and word count which is often the only information a person needs to know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece </mutableString>
+                                                        <rect key="frame" x="0.0" y="16" width="376" height="240"/>
+                                                        <string key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis simos ducimus qui blanditiis prae sentium volu ptatum deleniti. Character Counter is a 100% free online character count calculator that's simple to use. Sometimes users prefer simplicity over all of the detailed writing information Word Counter provides, and this is exactly what this tool offers. It displays character count and word count which is often the only information a person needs to know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece </string>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                         <color key="textColor" name="TextMessages"/>
                                                         <nil key="highlightedColor"/>
@@ -100,7 +100,7 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDu-S2-CM1">
-                                                <rect key="frame" x="0.0" y="464" width="376" height="21"/>
+                                                <rect key="frame" x="0.0" y="272" width="376" height="21"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="FoP-jG-rcr"/>
@@ -124,7 +124,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22s-yO-xMt">
-                                <rect key="frame" x="0.0" y="500" width="408" height="0.0"/>
+                                <rect key="frame" x="0.0" y="308" width="408" height="0.0"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="KwA-we-rpb"/>
@@ -138,7 +138,7 @@
                         </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-ig-NFM">
-                        <rect key="frame" x="317.33333333333331" y="455" width="84.666666666666686" height="45"/>
+                        <rect key="frame" x="317.33333333333331" y="263" width="84.666666666666686" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHOW MORE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHr-97-Cyx">
                                 <rect key="frame" x="10" y="12" width="64.666666666666671" height="25"/>

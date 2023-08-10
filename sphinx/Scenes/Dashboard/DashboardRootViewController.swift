@@ -472,21 +472,38 @@ extension DashboardRootViewController {
         if chatsListViewModel.isRestoring() {
             DispatchQueue.main.async {
                 self.restoreProgressView.showRestoreProgressView(
-                    with: 2,
+                    with: 1,
                     label: "restoring-contacts".localized,
                     buttonEnabled: false
                 )
             }
         }
         
-        chatsListViewModel.loadFriends() { [weak self] restoring in
+        var contactsProgressShare : Float = 0.01
+        
+        chatsListViewModel.loadFriends(
+            progressCompletion: { restoring in
+                if restoring {
+                    
+                    contactsProgressShare += 0.01
+                    
+                    DispatchQueue.main.async {
+                        self.restoreProgressView.showRestoreProgressView(
+                            with: Int(contactsProgressShare * 100),
+                            label: "restoring-contacts".localized,
+                            buttonEnabled: false
+                        )
+                    }
+                }
+            }
+        ) { [weak self] restoring in
             guard let self = self else { return }
             
             if restoring {
                 
                 DispatchQueue.main.async {
                     self.restoreProgressView.showRestoreProgressView(
-                        with: 5,
+                        with: Int(contactsProgressShare * 100),
                         label: "restoring-contacts".localized,
                         buttonEnabled: false
                     )
@@ -498,7 +515,6 @@ extension DashboardRootViewController {
                 self.contactsService.configureFetchResultsController()
             }
             
-            let contactsProgressShare : Float = 0.05
             var contentProgressShare : Float = 0.0
             
             self.syncContentFeedStatus(

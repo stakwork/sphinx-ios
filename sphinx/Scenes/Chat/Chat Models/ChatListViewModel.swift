@@ -15,6 +15,7 @@ final class ChatListViewModel {
     public static let kMessagesPerPage: Int = 200
     
     func loadFriends(
+        progressCompletion: ((Bool) -> ())? = nil,
         completion: @escaping (Bool) -> ()
     ) {
         let restoring = self.isRestoring()
@@ -22,6 +23,7 @@ final class ChatListViewModel {
         restoreContacts(
             page: 1,
             restoring: restoring,
+            progressCompletion: progressCompletion,
             completion: completion
         )
     }
@@ -29,19 +31,37 @@ final class ChatListViewModel {
     func restoreContacts(
         page: Int,
         restoring: Bool,
+        progressCompletion: ((Bool) -> ())? = nil,
         completion: @escaping (Bool) -> ()
     ) {
         API.sharedInstance.getLatestContacts(
             page: page,
             date: Date(),
             nextPageCallback: {(contacts, chats, subscriptions, invites) -> () in
-                self.saveObjects(contacts: contacts, chats: chats, subscriptions: subscriptions, invites: invites)
+                self.saveObjects(
+                    contacts: contacts,
+                    chats: chats,
+                    subscriptions: subscriptions,
+                    invites: invites
+                )
                 
-                self.restoreContacts(page: page + 1, restoring: restoring, completion: completion)
+                self.restoreContacts(
+                    page: page + 1,
+                    restoring: restoring,
+                    progressCompletion: progressCompletion,
+                    completion: completion
+                )
+                
+                progressCompletion?(restoring)
             },
             callback: {(contacts, chats, subscriptions, invites) -> () in
             
-                self.saveObjects(contacts: contacts, chats: chats, subscriptions: subscriptions, invites: invites)
+                self.saveObjects(
+                    contacts: contacts,
+                    chats: chats,
+                    subscriptions: subscriptions,
+                    invites: invites
+                )
                 
                 CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
                     

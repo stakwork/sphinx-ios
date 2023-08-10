@@ -75,8 +75,11 @@ extension Chat: ChatListCommonObject {
             return true
         }
         
-        return
-            self.lastMessage?.isSeen(ownerId: ownerId) ?? true && self.seen
+        if self.lastMessage?.isSeen(ownerId: ownerId) ?? true {
+            return true
+        }
+        
+        return self.seen
     }
     
     public func isOnlyMentions() -> Bool {

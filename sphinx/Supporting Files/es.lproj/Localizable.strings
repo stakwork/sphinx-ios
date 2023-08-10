@@ -206,6 +206,7 @@
 "restoring-progress" = "Restaurando:";
 "restoring-content" = "Restaurando contenido:";
 "restoring-messages" = "Restaurando mensajes:";
+"restoring-contacts" = "Restaurando contactos:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Tengo un código de conexión";

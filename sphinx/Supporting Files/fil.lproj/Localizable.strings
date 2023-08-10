@@ -193,6 +193,7 @@
 "restoring-progress" = "Ibinabalik:";
 "restoring-content" = "Pagpapanumbalik ng nilalaman:";
 "restoring-messages" = "Pagpapanumbalik ng mga mensahe:";
+"restoring-contacts" = "Restoring contacts:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Mayroon akong Connection Code";

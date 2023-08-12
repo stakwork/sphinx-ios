@@ -11,8 +11,8 @@ import UIKit
 import HDWalletKit
 import NetworkExtension
 import CoreLocation
-import MessagePack
 import CocoaMQTT
+import MessagePack
 
 class CrypterManager : NSObject {
     
@@ -397,19 +397,17 @@ class CrypterManager : NSObject {
     }
     
     func publish(topic: String, payload: [UInt8]) {
-//        guard let mqtt = mqtt5 else  {
-//            print("NO MQTT CLIENT")
-//            return
-//        }
-//
-//        mqtt.publish(
-//            CocoaMQTTMessage(
-//                topic: "\(clientID)/\(topic)",
-//                payload: []
-//            )
-////            ,
-////            properties: MqttPublishProperties()
-//        )
+        guard let mqtt = mqtt else  {
+            print("NO MQTT CLIENT")
+            return
+        }
+
+        mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(clientID)/\(topic)",
+                payload: payload
+            )
+        )
     }
     
     ///Signer setup

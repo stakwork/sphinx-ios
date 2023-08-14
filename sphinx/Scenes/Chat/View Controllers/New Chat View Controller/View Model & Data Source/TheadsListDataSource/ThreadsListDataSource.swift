@@ -12,6 +12,13 @@ import CoreData
 protocol ThreadsListDataSourceDelegate : class {
     ///Threads
     func didSelectThreadWith(uuid: String)
+    
+    ///Attachments
+    func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)
+    func shouldGoToVideoPlayerFor(messageId: Int, with data: Data)
+    
+    ///File download
+    func shouldOpenActivityVCFor(url: URL)
 }
 
 class ThreadsListDataSource : NSObject {
@@ -42,6 +49,7 @@ class ThreadsListDataSource : NSObject {
     }
     
     var threadTableCellStateArray: [ThreadTableCellState] = []
+    var mediaCached: [Int: MessageTableCellState.MediaData] = [:]
     
     init(
         chat: Chat?,
@@ -65,7 +73,8 @@ class ThreadsListDataSource : NSObject {
     }
     
     func configureTableView() {
-        tableView.rowHeight = 128.0
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 128.0
         tableView.delegate = self
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.contentInset.bottom = getWindowInsets().bottom
@@ -127,7 +136,14 @@ class ThreadsListDataSource : NSObject {
                 for: indexPath
             ) as! ThreadListTableViewCell
             
-            cell.configureWith(threadCellState: dataSourceItem)
+            let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
+            
+            cell.configureWith(
+                threadCellState: dataSourceItem,
+                mediaData: mediaData,
+                delegate: self,
+                indexPath: indexPath
+            )
             
             return cell
         }

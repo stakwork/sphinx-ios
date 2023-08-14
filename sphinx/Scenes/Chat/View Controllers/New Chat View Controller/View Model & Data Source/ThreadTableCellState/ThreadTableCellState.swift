@@ -15,6 +15,7 @@ struct ThreadTableCellState {
     
     ///Messages Data
     var originalMessage: TransactionMessage! = nil
+    var messageId: Int? = nil
     var threadMessages: [TransactionMessage] = []
     var owner: UserContact! = nil
     
@@ -24,6 +25,7 @@ struct ThreadTableCellState {
         owner: UserContact
     ) {
         self.originalMessage = originalMessage
+        self.messageId = originalMessage.id
         self.threadMessages = threadMessages
         self.owner  = owner
     }
@@ -61,6 +63,51 @@ struct ThreadTableCellState {
             repliesCount: threadMessages.count,
             lastReplyTimestamp: (threadMessages.last?.date ?? Date()).timeIntervalSince1970.getDayDiffString()
         )
+    }()
+    
+    lazy var messageMedia: BubbleMessageLayoutState.MessageMedia? = {
+        guard let message = originalMessage, message.isMediaAttachment() || message.isGiphy() else {
+            return nil
+        }
+        
+        var urlAndKey = messageMediaUrlAndKey
+        
+        return BubbleMessageLayoutState.MessageMedia(
+            url: urlAndKey.0,
+            mediaKey: urlAndKey.1,
+            isImage: message.isImage() || message.isDirectPayment(),
+            isVideo: message.isVideo(),
+            isGif: message.isGif(),
+            isPdf: message.isPDF(),
+            isGiphy: message.isGiphy(),
+            isPaid: false,
+            isPaymentTemplate: false
+        )
+    }()
+    
+    lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
+        guard let message = originalMessage, message.isFileAttachment() else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.GenericFile(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var messageMediaUrlAndKey: (URL?, String?) = {
+        guard let message = originalMessage else {
+            return (nil, nil)
+        }
+        
+        var urlAndKey: (URL?, String?) = (nil, nil)
+        
+        if message.isMediaAttachment(){
+            urlAndKey = (message.getMediaUrlFromMediaToken(), message.mediaKey)
+        }
+        
+        return urlAndKey
     }()
 }
 

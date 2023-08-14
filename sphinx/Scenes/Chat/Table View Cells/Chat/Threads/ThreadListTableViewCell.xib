@@ -18,15 +18,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThreadListTableViewCell" rowHeight="161" id="KGk-i7-Jjw" customClass="ThreadListTableViewCell" customModule="sphinx" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="486" height="128"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThreadListTableViewCell" rowHeight="478" id="KGk-i7-Jjw" customClass="ThreadListTableViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="486" height="445"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="486" height="128"/>
+                <rect key="frame" x="0.0" y="0.0" width="486" height="445"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FBm-ZG-QSy">
-                        <rect key="frame" x="16" y="16" width="454" height="96"/>
+                        <rect key="frame" x="16" y="16" width="454" height="413"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Q0-UN-dmC" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
@@ -36,218 +36,280 @@
                                     <constraint firstAttribute="height" constant="36" id="uc4-rp-jaf"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Gladys" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knE-m4-3kt">
-                                <rect key="frame" x="46" y="0.0" width="37" height="16"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="vKJ-yw-KBt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
-                                <color key="textColor" name="TextMessages"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="12:05 PM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ji3-pK-XPW">
-                                <rect key="frame" x="91" y="1.6666666666666679" width="47" height="13"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
-                                <color key="textColor" name="SecondaryText"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-wv-7n5">
-                                <rect key="frame" x="46" y="22" width="408" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Are there any updates?
-</string>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                <color key="textColor" name="TextMessages"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucE-Sh-N7E">
-                                <rect key="frame" x="46" y="73" width="0.0" height="23"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="VB8-ln-Ljb">
+                                <rect key="frame" x="46" y="0.0" width="408" height="413"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="glU-12-3zn">
-                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5LP-56-4lh">
+                                        <rect key="frame" x="0.0" y="0.0" width="408" height="16"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oIV-x3-yA0" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Gladys" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knE-m4-3kt">
+                                                <rect key="frame" x="0.0" y="0.0" width="37" height="16"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="22" id="Gne-1B-1tS"/>
-                                                    <constraint firstAttribute="height" constant="22" id="nPR-eU-nFy"/>
+                                                    <constraint firstAttribute="height" constant="16" id="vKJ-yw-KBt"/>
                                                 </constraints>
-                                            </view>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                                <color key="textColor" name="TextMessages"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="12:05 PM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ji3-pK-XPW">
+                                                <rect key="frame" x="45" y="1.6666666666666679" width="47" height="13"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                                <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
-                                        <color key="backgroundColor" name="Body"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="oIV-x3-yA0" firstAttribute="centerY" secondItem="glU-12-3zn" secondAttribute="centerY" id="1Mm-1I-mnb"/>
-                                            <constraint firstItem="oIV-x3-yA0" firstAttribute="leading" secondItem="glU-12-3zn" secondAttribute="leading" constant="1" id="REW-Dl-8JU"/>
-                                            <constraint firstAttribute="height" constant="23" id="iMj-g6-H3g"/>
-                                            <constraint firstAttribute="width" constant="17" id="oDf-zH-gmK"/>
+                                            <constraint firstAttribute="height" constant="16" id="DlB-1B-nUp"/>
+                                            <constraint firstItem="knE-m4-3kt" firstAttribute="centerY" secondItem="5LP-56-4lh" secondAttribute="centerY" id="YOL-sF-yPy"/>
+                                            <constraint firstItem="knE-m4-3kt" firstAttribute="leading" secondItem="5LP-56-4lh" secondAttribute="leading" id="amg-Ig-X8z"/>
+                                            <constraint firstItem="Ji3-pK-XPW" firstAttribute="centerY" secondItem="5LP-56-4lh" secondAttribute="centerY" id="fIm-rv-WfL"/>
+                                            <constraint firstItem="Ji3-pK-XPW" firstAttribute="leading" secondItem="knE-m4-3kt" secondAttribute="trailing" constant="8" id="o9I-nC-1cb"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ZH-eO-KnF">
-                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5PS-qz-qnn">
+                                        <rect key="frame" x="0.0" y="28" width="408" height="257"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPE-D4-1Sx" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="22" id="gI3-uN-bKA"/>
-                                                    <constraint firstAttribute="height" constant="22" id="r95-sW-K74"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" name="Body"/>
-                                        <constraints>
-                                            <constraint firstItem="BPE-D4-1Sx" firstAttribute="centerY" secondItem="8ZH-eO-KnF" secondAttribute="centerY" id="7cm-g6-NUk"/>
-                                            <constraint firstAttribute="height" constant="23" id="CHm-JT-TLN"/>
-                                            <constraint firstAttribute="width" constant="17" id="fWa-zu-Eai"/>
-                                            <constraint firstItem="BPE-D4-1Sx" firstAttribute="leading" secondItem="8ZH-eO-KnF" secondAttribute="leading" constant="1" id="m7C-RI-4NV"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLC-Vh-kAH">
-                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLx-mj-bau" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="22" id="IYl-pZ-2SD"/>
-                                                    <constraint firstAttribute="width" constant="22" id="kgo-qz-rDC"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" name="Body"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="17" id="0sE-7U-R66"/>
-                                            <constraint firstItem="nLx-mj-bau" firstAttribute="centerY" secondItem="fLC-Vh-kAH" secondAttribute="centerY" id="Nnw-Jc-5RN"/>
-                                            <constraint firstAttribute="height" constant="23" id="T9N-9F-lie"/>
-                                            <constraint firstItem="nLx-mj-bau" firstAttribute="leading" secondItem="fLC-Vh-kAH" secondAttribute="leading" constant="1" id="VJb-ib-DFg"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oE3-DB-NMl">
-                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8N-G9-sP2" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="22" id="0d1-DT-Ezf"/>
-                                                    <constraint firstAttribute="width" constant="22" id="mO7-jt-MbJ"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" name="Body"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="17" id="9lR-54-OCD"/>
-                                            <constraint firstAttribute="height" constant="23" id="nD1-bx-Jn6"/>
-                                            <constraint firstItem="I8N-G9-sP2" firstAttribute="leading" secondItem="oE3-DB-NMl" secondAttribute="leading" constant="1" id="u1u-Ze-GXP"/>
-                                            <constraint firstItem="I8N-G9-sP2" firstAttribute="centerY" secondItem="oE3-DB-NMl" secondAttribute="centerY" id="wIm-5P-1JJ"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TYz-2m-XnQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lfe-Rc-KrQ" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="22" id="O9l-Wn-0YW"/>
-                                                    <constraint firstAttribute="height" constant="22" id="mii-iB-z3f"/>
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" name="Body"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="23" id="6q0-u0-abm"/>
-                                            <constraint firstAttribute="width" constant="17" id="ILp-lO-WIz"/>
-                                            <constraint firstItem="Lfe-Rc-KrQ" firstAttribute="centerY" secondItem="TYz-2m-XnQ" secondAttribute="centerY" id="de3-Ip-Wpl"/>
-                                            <constraint firstItem="Lfe-Rc-KrQ" firstAttribute="leading" secondItem="TYz-2m-XnQ" secondAttribute="leading" constant="1" id="vG8-UT-Kvr"/>
-                                        </constraints>
-                                    </view>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kNG-UG-hMh">
-                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0GG-CY-Ybb" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="22" id="36z-PD-YcD"/>
-                                                    <constraint firstAttribute="width" constant="22" id="JQf-4R-VM2"/>
-                                                </constraints>
-                                            </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GN-eG-guT">
-                                                <rect key="frame" x="1" y="0.6666666666666714" width="22" height="22"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FPx-9o-SdS" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="408" height="257"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U6b-nq-NSj">
-                                                        <rect key="frame" x="4.6666666666666705" y="4.3333333333333286" width="12.666666666666664" height="13"/>
-                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pD5-dZ-KQh" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="197" width="408" height="60"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="60" id="dMO-mM-hPd"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="backgroundColor" name="SemitransparentText"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="U6b-nq-NSj" secondAttribute="trailing" constant="2" id="CVP-xT-Tj5"/>
-                                                    <constraint firstItem="U6b-nq-NSj" firstAttribute="centerX" secondItem="5GN-eG-guT" secondAttribute="centerX" id="OKy-wt-lQg"/>
-                                                    <constraint firstItem="U6b-nq-NSj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5GN-eG-guT" secondAttribute="leading" constant="2" id="g9h-hu-P9o"/>
-                                                    <constraint firstAttribute="width" constant="22" id="im9-E8-siv"/>
-                                                    <constraint firstAttribute="height" constant="22" id="opr-IN-y5g"/>
-                                                    <constraint firstItem="U6b-nq-NSj" firstAttribute="centerY" secondItem="5GN-eG-guT" secondAttribute="centerY" id="tbe-Vy-J0W"/>
+                                                    <constraint firstAttribute="trailing" secondItem="pD5-dZ-KQh" secondAttribute="trailing" id="adb-HR-Dku"/>
+                                                    <constraint firstItem="pD5-dZ-KQh" firstAttribute="leading" secondItem="FPx-9o-SdS" secondAttribute="leading" id="eac-oF-Yy8"/>
+                                                    <constraint firstAttribute="bottom" secondItem="pD5-dZ-KQh" secondAttribute="bottom" id="pnI-Pc-Ahj"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" name="Body"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="5GN-eG-guT" firstAttribute="leading" secondItem="kNG-UG-hMh" secondAttribute="leading" constant="1" id="4PM-AD-Gxo"/>
-                                            <constraint firstAttribute="height" constant="23" id="52G-ws-Mzd"/>
-                                            <constraint firstAttribute="width" constant="17" id="Ccb-32-KDN"/>
-                                            <constraint firstItem="0GG-CY-Ybb" firstAttribute="leading" secondItem="kNG-UG-hMh" secondAttribute="leading" constant="1" id="FCU-K1-RME"/>
-                                            <constraint firstItem="0GG-CY-Ybb" firstAttribute="centerY" secondItem="kNG-UG-hMh" secondAttribute="centerY" id="PHA-Cq-IJs"/>
-                                            <constraint firstItem="5GN-eG-guT" firstAttribute="centerY" secondItem="kNG-UG-hMh" secondAttribute="centerY" id="blN-B3-vpt"/>
+                                            <constraint firstAttribute="width" secondItem="5PS-qz-qnn" secondAttribute="height" multiplier="100:63" id="0mb-g9-nH7"/>
+                                            <constraint firstAttribute="trailing" secondItem="FPx-9o-SdS" secondAttribute="trailing" id="XQV-eq-7SM"/>
+                                            <constraint firstItem="FPx-9o-SdS" firstAttribute="top" secondItem="5PS-qz-qnn" secondAttribute="top" id="eWy-cC-WkA"/>
+                                            <constraint firstItem="FPx-9o-SdS" firstAttribute="leading" secondItem="5PS-qz-qnn" secondAttribute="leading" id="nZV-Vd-4gr"/>
+                                            <constraint firstAttribute="bottom" secondItem="FPx-9o-SdS" secondAttribute="bottom" id="xoX-iZ-lFw"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-wv-7n5">
+                                        <rect key="frame" x="0.0" y="297" width="408" height="81"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <string key="text">Are there any updates?
+</string>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                        <color key="textColor" name="TextMessages"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hNA-xz-xQr">
+                                        <rect key="frame" x="0.0" y="390" width="408" height="23"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucE-Sh-N7E">
+                                                <rect key="frame" x="0.0" y="0.0" width="0.0" height="23"/>
+                                                <subviews>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="glU-12-3zn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oIV-x3-yA0" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="22" id="Gne-1B-1tS"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="nPR-eU-nFy"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="Body"/>
+                                                        <constraints>
+                                                            <constraint firstItem="oIV-x3-yA0" firstAttribute="centerY" secondItem="glU-12-3zn" secondAttribute="centerY" id="1Mm-1I-mnb"/>
+                                                            <constraint firstItem="oIV-x3-yA0" firstAttribute="leading" secondItem="glU-12-3zn" secondAttribute="leading" constant="1" id="REW-Dl-8JU"/>
+                                                            <constraint firstAttribute="height" constant="23" id="iMj-g6-H3g"/>
+                                                            <constraint firstAttribute="width" constant="17" id="oDf-zH-gmK"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ZH-eO-KnF">
+                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BPE-D4-1Sx" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="22" id="gI3-uN-bKA"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="r95-sW-K74"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="Body"/>
+                                                        <constraints>
+                                                            <constraint firstItem="BPE-D4-1Sx" firstAttribute="centerY" secondItem="8ZH-eO-KnF" secondAttribute="centerY" id="7cm-g6-NUk"/>
+                                                            <constraint firstAttribute="height" constant="23" id="CHm-JT-TLN"/>
+                                                            <constraint firstAttribute="width" constant="17" id="fWa-zu-Eai"/>
+                                                            <constraint firstItem="BPE-D4-1Sx" firstAttribute="leading" secondItem="8ZH-eO-KnF" secondAttribute="leading" constant="1" id="m7C-RI-4NV"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLC-Vh-kAH">
+                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLx-mj-bau" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="22" id="IYl-pZ-2SD"/>
+                                                                    <constraint firstAttribute="width" constant="22" id="kgo-qz-rDC"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="Body"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="17" id="0sE-7U-R66"/>
+                                                            <constraint firstItem="nLx-mj-bau" firstAttribute="centerY" secondItem="fLC-Vh-kAH" secondAttribute="centerY" id="Nnw-Jc-5RN"/>
+                                                            <constraint firstAttribute="height" constant="23" id="T9N-9F-lie"/>
+                                                            <constraint firstItem="nLx-mj-bau" firstAttribute="leading" secondItem="fLC-Vh-kAH" secondAttribute="leading" constant="1" id="VJb-ib-DFg"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oE3-DB-NMl">
+                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I8N-G9-sP2" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="22" id="0d1-DT-Ezf"/>
+                                                                    <constraint firstAttribute="width" constant="22" id="mO7-jt-MbJ"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="Body"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="17" id="9lR-54-OCD"/>
+                                                            <constraint firstAttribute="height" constant="23" id="nD1-bx-Jn6"/>
+                                                            <constraint firstItem="I8N-G9-sP2" firstAttribute="leading" secondItem="oE3-DB-NMl" secondAttribute="leading" constant="1" id="u1u-Ze-GXP"/>
+                                                            <constraint firstItem="I8N-G9-sP2" firstAttribute="centerY" secondItem="oE3-DB-NMl" secondAttribute="centerY" id="wIm-5P-1JJ"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TYz-2m-XnQ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lfe-Rc-KrQ" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="22" id="O9l-Wn-0YW"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="mii-iB-z3f"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="Body"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="23" id="6q0-u0-abm"/>
+                                                            <constraint firstAttribute="width" constant="17" id="ILp-lO-WIz"/>
+                                                            <constraint firstItem="Lfe-Rc-KrQ" firstAttribute="centerY" secondItem="TYz-2m-XnQ" secondAttribute="centerY" id="de3-Ip-Wpl"/>
+                                                            <constraint firstItem="Lfe-Rc-KrQ" firstAttribute="leading" secondItem="TYz-2m-XnQ" secondAttribute="leading" constant="1" id="vG8-UT-Kvr"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kNG-UG-hMh">
+                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="23"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0GG-CY-Ybb" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="22" id="36z-PD-YcD"/>
+                                                                    <constraint firstAttribute="width" constant="22" id="JQf-4R-VM2"/>
+                                                                </constraints>
+                                                            </view>
+                                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5GN-eG-guT">
+                                                                <rect key="frame" x="1" y="0.66666666666668561" width="22" height="22"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U6b-nq-NSj">
+                                                                        <rect key="frame" x="4.6666666666666705" y="4.3333333333333144" width="12.666666666666664" height="13"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="U6b-nq-NSj" secondAttribute="trailing" constant="2" id="CVP-xT-Tj5"/>
+                                                                    <constraint firstItem="U6b-nq-NSj" firstAttribute="centerX" secondItem="5GN-eG-guT" secondAttribute="centerX" id="OKy-wt-lQg"/>
+                                                                    <constraint firstItem="U6b-nq-NSj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5GN-eG-guT" secondAttribute="leading" constant="2" id="g9h-hu-P9o"/>
+                                                                    <constraint firstAttribute="width" constant="22" id="im9-E8-siv"/>
+                                                                    <constraint firstAttribute="height" constant="22" id="opr-IN-y5g"/>
+                                                                    <constraint firstItem="U6b-nq-NSj" firstAttribute="centerY" secondItem="5GN-eG-guT" secondAttribute="centerY" id="tbe-Vy-J0W"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" name="Body"/>
+                                                        <constraints>
+                                                            <constraint firstItem="5GN-eG-guT" firstAttribute="leading" secondItem="kNG-UG-hMh" secondAttribute="leading" constant="1" id="4PM-AD-Gxo"/>
+                                                            <constraint firstAttribute="height" constant="23" id="52G-ws-Mzd"/>
+                                                            <constraint firstAttribute="width" constant="17" id="Ccb-32-KDN"/>
+                                                            <constraint firstItem="0GG-CY-Ybb" firstAttribute="leading" secondItem="kNG-UG-hMh" secondAttribute="leading" constant="1" id="FCU-K1-RME"/>
+                                                            <constraint firstItem="0GG-CY-Ybb" firstAttribute="centerY" secondItem="kNG-UG-hMh" secondAttribute="centerY" id="PHA-Cq-IJs"/>
+                                                            <constraint firstItem="5GN-eG-guT" firstAttribute="centerY" secondItem="kNG-UG-hMh" secondAttribute="centerY" id="blN-B3-vpt"/>
+                                                        </constraints>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="23" id="GxH-X0-yyM"/>
+                                                </constraints>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="57 replies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ewg-ir-2hU">
+                                                <rect key="frame" x="22.000000000000004" y="5" width="48.333333333333343" height="13"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="11"/>
+                                                <color key="textColor" name="Text"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 min ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rD7-X8-Btw">
+                                                <rect key="frame" x="86.333333333333343" y="5" width="55.333333333333343" height="13"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                                                <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="ucE-Sh-N7E" firstAttribute="leading" secondItem="hNA-xz-xQr" secondAttribute="leading" id="IJH-Ey-pKE"/>
+                                            <constraint firstItem="Ewg-ir-2hU" firstAttribute="centerY" secondItem="ucE-Sh-N7E" secondAttribute="centerY" id="KGi-xZ-8Ux"/>
+                                            <constraint firstItem="ucE-Sh-N7E" firstAttribute="centerY" secondItem="hNA-xz-xQr" secondAttribute="centerY" id="NhN-Su-As2"/>
+                                            <constraint firstItem="Ewg-ir-2hU" firstAttribute="leading" secondItem="ucE-Sh-N7E" secondAttribute="trailing" constant="22" id="aiz-Ae-ybW"/>
+                                            <constraint firstItem="rD7-X8-Btw" firstAttribute="centerY" secondItem="Ewg-ir-2hU" secondAttribute="centerY" id="cUo-cR-C6r"/>
+                                            <constraint firstItem="rD7-X8-Btw" firstAttribute="leading" secondItem="Ewg-ir-2hU" secondAttribute="trailing" constant="16" id="f3W-3I-1rD"/>
+                                            <constraint firstAttribute="height" constant="23" id="mIH-QS-7XF"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="23" id="GxH-X0-yyM"/>
+                                    <constraint firstItem="5PS-qz-qnn" firstAttribute="leading" secondItem="VB8-ln-Ljb" secondAttribute="leading" id="Je8-zY-2dc"/>
+                                    <constraint firstAttribute="trailing" secondItem="5PS-qz-qnn" secondAttribute="trailing" id="MgP-45-5jv"/>
+                                    <constraint firstAttribute="trailing" secondItem="hNA-xz-xQr" secondAttribute="trailing" id="QTa-OE-iKT"/>
+                                    <constraint firstItem="hNA-xz-xQr" firstAttribute="leading" secondItem="VB8-ln-Ljb" secondAttribute="leading" id="Ztk-Av-f0Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="pxN-wv-7n5" secondAttribute="trailing" id="jgX-Ge-KhZ"/>
+                                    <constraint firstItem="pxN-wv-7n5" firstAttribute="leading" secondItem="VB8-ln-Ljb" secondAttribute="leading" id="uuz-Yg-RxV"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="57 replies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ewg-ir-2hU">
-                                <rect key="frame" x="68" y="78" width="48.333333333333343" height="13"/>
-                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="11"/>
-                                <color key="textColor" name="Text"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 min ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rD7-X8-Btw">
-                                <rect key="frame" x="132.33333333333334" y="78" width="55.333333333333343" height="13"/>
-                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
-                                <color key="textColor" name="SecondaryText"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="rD7-X8-Btw" firstAttribute="leading" secondItem="Ewg-ir-2hU" secondAttribute="trailing" constant="16" id="9Bw-cl-k81"/>
+                            <constraint firstAttribute="bottom" secondItem="VB8-ln-Ljb" secondAttribute="bottom" id="1RW-s8-rh1"/>
                             <constraint firstItem="8Q0-UN-dmC" firstAttribute="leading" secondItem="FBm-ZG-QSy" secondAttribute="leading" id="FaY-ex-3XW"/>
-                            <constraint firstItem="knE-m4-3kt" firstAttribute="leading" secondItem="8Q0-UN-dmC" secondAttribute="trailing" constant="10" id="G32-QM-tLQ"/>
-                            <constraint firstAttribute="trailing" secondItem="pxN-wv-7n5" secondAttribute="trailing" id="OUu-M3-5nq"/>
-                            <constraint firstItem="rD7-X8-Btw" firstAttribute="centerY" secondItem="ucE-Sh-N7E" secondAttribute="centerY" id="ThQ-31-KTQ"/>
-                            <constraint firstItem="Ewg-ir-2hU" firstAttribute="leading" secondItem="ucE-Sh-N7E" secondAttribute="trailing" constant="22" id="UrS-Nw-bwf"/>
-                            <constraint firstItem="ucE-Sh-N7E" firstAttribute="leading" secondItem="FBm-ZG-QSy" secondAttribute="leading" constant="46" id="ZhX-yz-fu3"/>
-                            <constraint firstItem="Ewg-ir-2hU" firstAttribute="centerY" secondItem="ucE-Sh-N7E" secondAttribute="centerY" id="aC4-4p-Fc3"/>
-                            <constraint firstItem="Ji3-pK-XPW" firstAttribute="centerY" secondItem="knE-m4-3kt" secondAttribute="centerY" id="e1n-LM-Iyu"/>
-                            <constraint firstItem="knE-m4-3kt" firstAttribute="top" secondItem="8Q0-UN-dmC" secondAttribute="top" id="hB6-uc-cpd"/>
-                            <constraint firstItem="Ji3-pK-XPW" firstAttribute="leading" secondItem="knE-m4-3kt" secondAttribute="trailing" constant="8" id="nEP-Hb-Uf6"/>
-                            <constraint firstItem="pxN-wv-7n5" firstAttribute="leading" secondItem="8Q0-UN-dmC" secondAttribute="trailing" constant="10" id="q8x-wn-egL"/>
-                            <constraint firstItem="ucE-Sh-N7E" firstAttribute="top" secondItem="pxN-wv-7n5" secondAttribute="bottom" constant="11" id="ruB-Ju-OER"/>
+                            <constraint firstItem="VB8-ln-Ljb" firstAttribute="leading" secondItem="FBm-ZG-QSy" secondAttribute="leading" constant="46" id="PHP-EN-sAV"/>
+                            <constraint firstItem="VB8-ln-Ljb" firstAttribute="top" secondItem="FBm-ZG-QSy" secondAttribute="top" id="UeR-Uy-2Vc"/>
+                            <constraint firstAttribute="trailing" secondItem="VB8-ln-Ljb" secondAttribute="trailing" id="pf5-gl-L58"/>
                             <constraint firstItem="8Q0-UN-dmC" firstAttribute="top" secondItem="FBm-ZG-QSy" secondAttribute="top" id="sVT-Zi-LIX"/>
-                            <constraint firstAttribute="bottom" secondItem="ucE-Sh-N7E" secondAttribute="bottom" id="y7o-8Z-8yK"/>
-                            <constraint firstItem="pxN-wv-7n5" firstAttribute="top" secondItem="knE-m4-3kt" secondAttribute="bottom" constant="6" id="yiQ-T1-xfb"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vFd-TS-ozf">
-                        <rect key="frame" x="62" y="127" width="408" height="1"/>
+                        <rect key="frame" x="62" y="444" width="408" height="1"/>
                         <color key="backgroundColor" name="Divider2"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="AZR-SG-Nea"/>
@@ -266,7 +328,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="fileDetailsView" destination="pD5-dZ-KQh" id="Koc-YN-H6Q"/>
                 <outlet property="lastReplyDateLabel" destination="rD7-X8-Btw" id="BuW-EC-6PQ"/>
+                <outlet property="mediaContainer" destination="5PS-qz-qnn" id="Tnr-y9-BYa"/>
+                <outlet property="mediaMessageView" destination="FPx-9o-SdS" id="YhQ-1y-RX0"/>
                 <outlet property="originalMessageAvatarView" destination="8Q0-UN-dmC" id="N4S-zI-Mkf"/>
                 <outlet property="originalMessageDateLabel" destination="Ji3-pK-XPW" id="Aat-Fn-uTo"/>
                 <outlet property="originalMessageSenderAliasLabel" destination="knE-m4-3kt" id="PoP-w8-COC"/>
@@ -287,7 +352,7 @@
                 <outlet property="reply6CountContainer" destination="5GN-eG-guT" id="vJU-cS-Ii0"/>
                 <outlet property="reply6CountLabel" destination="U6b-nq-NSj" id="fWd-KL-Tp9"/>
             </connections>
-            <point key="canvasLocation" x="85.496183206106863" y="28.169014084507044"/>
+            <point key="canvasLocation" x="85.496183206106863" y="139.78873239436621"/>
         </tableViewCell>
     </objects>
     <resources>
@@ -299,6 +364,9 @@
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SemitransparentText">
+            <color red="0.23499999940395355" green="0.24699999392032623" blue="0.25499999523162842" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Text">
             <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

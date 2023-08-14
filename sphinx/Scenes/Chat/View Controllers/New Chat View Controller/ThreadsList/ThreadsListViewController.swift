@@ -74,4 +74,21 @@ extension ThreadsListViewController : ThreadsListDataSourceDelegate {
             animated: true
         )
     }
+    
+    func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool) {
+        if let attachmentFullScreenVC = AttachmentFullScreenViewController.instantiate(messageId: messageId, animated: isPdf) {
+            self.navigationController?.present(attachmentFullScreenVC, animated: isPdf)
+        }
+    }
+    
+    func shouldGoToVideoPlayerFor(messageId: Int, with data: Data) {
+        let avVC = AVViewController.instantiate(data: data)
+        self.present(avVC, animated: true, completion: nil)
+    }
+    
+    func shouldOpenActivityVCFor(url: URL) {
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.threadsHeaderView
+        self.present(activityVC, animated: true, completion: nil)
+    }
 }

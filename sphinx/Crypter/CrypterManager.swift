@@ -100,7 +100,9 @@ class CrypterManager : NSObject {
     
     override init() {
         super.init()
-        lssNonce = randomBytes(32).hexString
+        
+        let lssNonceBytes = randomBytes(32)
+        lssNonce = lssNonceBytes.hexString
     }
     
     func setupSigningDevice(
@@ -231,7 +233,7 @@ class CrypterManager : NSObject {
     }
     
     func processVlsResult(ret: VlsResponse) {
-        let _ = storeMutations(inc: ret.state.bytes)
+        let _ =  storeMutations(inc: ret.state.bytes)
         publish(topic: ret.topic, payload: ret.bytes.bytes)
     }
     

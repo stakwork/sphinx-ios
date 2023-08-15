@@ -108,5 +108,6 @@ class ThreadListTableViewCell: UITableViewCell {
         
         configureWith(threadLayoutState: mutableThreadCellState.threadMessagesState)
         configureWith(messageMedia: mutableThreadCellState.messageMedia, mediaData: mediaData)
+        configureWith(genericFile: mutableThreadCellState.genericFile, mediaData: mediaData)
     }
 }

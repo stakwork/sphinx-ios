@@ -6,7 +6,7 @@
 //  Copyright © 2023 sphinx. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension ThreadListTableViewCell {
     func configureWith(
@@ -142,7 +142,6 @@ extension ThreadListTableViewCell {
                 and: self
             )
             
-            mediaContainer.isHidden = false
             mediaMessageView.isHidden = false
             
             if let messageId = messageId, mediaData == nil {
@@ -179,16 +178,15 @@ extension ThreadListTableViewCell {
         mediaData: MessageTableCellState.MediaData?
     ) {
         if let genericFile = genericFile {
-            
+
             fileDetailsView.configureWith(
                 genericFile: genericFile,
                 mediaData: mediaData,
                 and: self
             )
-            
-            mediaContainer.isHidden = false
+
             fileDetailsView.isHidden = false
-            
+
             if let messageId = messageId, mediaData == nil {
                 let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 DispatchQueue.global().asyncAfter(deadline: delayTime) {

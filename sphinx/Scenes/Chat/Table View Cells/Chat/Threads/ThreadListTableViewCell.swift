@@ -31,7 +31,6 @@ class ThreadListTableViewCell: UITableViewCell {
     @IBOutlet weak var originalMessageDateLabel: UILabel!
     @IBOutlet weak var originalMessageTextLabel: UILabel!
     
-    @IBOutlet weak var mediaContainer: UIView!
     @IBOutlet weak var mediaMessageView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     
@@ -84,10 +83,12 @@ class ThreadListTableViewCell: UITableViewCell {
         mediaMessageView.layer.cornerRadius = 9
         mediaMessageView.clipsToBounds = true    
         mediaMessageView.configureForThreadHeader()
+        
+        fileDetailsView.layer.cornerRadius = 9
+        fileDetailsView.clipsToBounds = true
     }
     
     func hideAllSubviews() {
-        mediaContainer.isHidden = true
         mediaMessageView.isHidden = true
         fileDetailsView.isHidden = true
         originalMessageTextLabel.isHidden = true

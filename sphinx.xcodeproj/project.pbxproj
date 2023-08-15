@@ -232,6 +232,8 @@
 		47515DA828BD15CA00D2B2CA /* AddTribeMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47515DA728BD15CA00D2B2CA /* AddTribeMemberViewModel.swift */; };
 		4752324D2A8AA4940009E75D /* ThreadListTableViewCell+MessageTypesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752324C2A8AA4940009E75D /* ThreadListTableViewCell+MessageTypesExtension.swift */; };
 		4752324F2A8AAD940009E75D /* ThreadsListDataSource+DelegateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752324E2A8AAD940009E75D /* ThreadsListDataSource+DelegateExtension.swift */; };
+		475232512A8BCF090009E75D /* ThreadMediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475232502A8BCF090009E75D /* ThreadMediaView.swift */; };
+		475232532A8BCF140009E75D /* ThreadMediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 475232522A8BCF140009E75D /* ThreadMediaView.xib */; };
 		4754FA8F2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */; };
 		4754FA93272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */; };
 		4754FA94272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4754FA92272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.xib */; };
@@ -1123,6 +1125,8 @@
 		47515DA728BD15CA00D2B2CA /* AddTribeMemberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTribeMemberViewModel.swift; sourceTree = "<group>"; };
 		4752324C2A8AA4940009E75D /* ThreadListTableViewCell+MessageTypesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadListTableViewCell+MessageTypesExtension.swift"; sourceTree = "<group>"; };
 		4752324E2A8AAD940009E75D /* ThreadsListDataSource+DelegateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadsListDataSource+DelegateExtension.swift"; sourceTree = "<group>"; };
+		475232502A8BCF090009E75D /* ThreadMediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadMediaView.swift; sourceTree = "<group>"; };
+		475232522A8BCF140009E75D /* ThreadMediaView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadMediaView.xib; sourceTree = "<group>"; };
 		475302A424D1B3BB000CC2FE /* sphinx 19.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 19.xcdatamodel"; sourceTree = "<group>"; };
 		4754FA8E2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterFeedCollectionViewController.swift; sourceTree = "<group>"; };
 		4754FA91272ADB02006295A5 /* DashboardNewsletterItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNewsletterItemCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -3867,6 +3871,8 @@
 				47E6A4BD2A2E426300A9509E /* MessageBoostImageView.xib */,
 				472809092A46147F0079BC40 /* InvoiceView.swift */,
 				4728090B2A4614850079BC40 /* InvoiceView.xib */,
+				475232502A8BCF090009E75D /* ThreadMediaView.swift */,
+				475232522A8BCF140009E75D /* ThreadMediaView.xib */,
 			);
 			path = "Bubble Row views";
 			sourceTree = "<group>";
@@ -4668,6 +4674,7 @@
 				470F4C37257A949A00288A9B /* TribeLinkPreviewView.xib in Resources */,
 				4734D3D5241AADD900D6957E /* PaymentTemplateCollectionViewCell.xib in Resources */,
 				47904C0F24BF352300710E7A /* bell.caf in Resources */,
+				475232532A8BCF140009E75D /* ThreadMediaView.xib in Resources */,
 				4746467429883D7C00FAF58B /* pause_animation_light.json in Resources */,
 				470F4C3E257A984800288A9B /* ContactLinkPreviewView.xib in Resources */,
 				47904C1224BF352300710E7A /* glass.caf in Resources */,
@@ -5397,6 +5404,7 @@
 				47CD9510265EC70E009B06A4 /* API+PeopleExtension.swift in Sources */,
 				470F5CB2243FA2D0007E054F /* VideoCallManager.swift in Sources */,
 				CE842DE5298C656C00620AD3 /* BadgeMemberKnownBadgesVC.swift in Sources */,
+				475232512A8BCF090009E75D /* ThreadMediaView.swift in Sources */,
 				47308E0F24FEE6E700FFAC6F /* SocketAnyEvent.swift in Sources */,
 				4794CA77252F5D66007C5022 /* API+PodcastExtension.swift in Sources */,
 				F3CE637726AFC44D006E37A0 /* DashboardRootViewController+MiscDelegateUtils.swift in Sources */,

@@ -48,6 +48,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         mediaContainer.layer.cornerRadius = 9
         mediaContainer.clipsToBounds = true
+        
+        mediaMessageView.configureForThreadHeader()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -79,7 +81,6 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         configureWith(
             threadOriginalMessage: mutableMessageCellState.threadOriginalMessageHeader,
-            mediaData: mediaData,
             isHeaderExpanded: isHeaderExpanded,
             headerDifference: headerDifference
         )
@@ -90,7 +91,6 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     
     func configureWith(
         threadOriginalMessage: NoBubbleMessageLayoutState.ThreadOriginalMessage?,
-        mediaData: MessageTableCellState.MediaData?,
         isHeaderExpanded: Bool,
         headerDifference: CGFloat?
     ) {

@@ -105,16 +105,33 @@ class ThreadTableDataSource : NewChatTableDataSource {
         if let lastVisibleRow = tableView.indexPathsForVisibleRows?.last {
             let lastRow = tableView.numberOfRows(inSection: 0) - 1
             
-            if lastVisibleRow.row < lastRow {
-                delegate?.shouldToggleThreadHeader(expanded: true)
-            } else {
-                let topOffset = tableView.contentSize.height - tableView.contentOffset.y - tableView.frame.height
-                let headerRowOffset = (tableView.cellForRow(at: lastVisibleRow)?.frame.height ?? 0) - topOffset
+            if let threadeHeaderMessageState = messageTableCellStateArray.last, threadeHeaderMessageState.isThreadHeaderMessage {
                 
-                if headerRowOffset < 56 {
-                    delegate?.shouldToggleThreadHeader(expanded: true)
+                let mediaData = (threadeHeaderMessageState.messageId != nil) ? self.mediaCached[threadeHeaderMessageState.messageId!] : nil
+                
+                if lastVisibleRow.row < lastRow {
+                    delegate?.shouldToggleThreadHeader(
+                        expanded: true,
+                        messageCellState: threadeHeaderMessageState,
+                        mediaData: mediaData
+                    )
                 } else {
-                    delegate?.shouldToggleThreadHeader(expanded: false)
+                    let topOffset = tableView.contentSize.height - tableView.contentOffset.y - tableView.frame.height
+                    let headerRowOffset = (tableView.cellForRow(at: lastVisibleRow)?.frame.height ?? 0) - topOffset
+                    
+                    if headerRowOffset < 56 {
+                        delegate?.shouldToggleThreadHeader(
+                            expanded: true,
+                            messageCellState: threadeHeaderMessageState,
+                            mediaData: mediaData
+                        )
+                    } else {
+                        delegate?.shouldToggleThreadHeader(
+                            expanded: false,
+                            messageCellState: threadeHeaderMessageState,
+                            mediaData: mediaData
+                        )
+                    }
                 }
             }
         }

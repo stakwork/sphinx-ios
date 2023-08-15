@@ -93,13 +93,23 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         )
     }
     
-    func shouldToggleThreadHeader(expanded: Bool) {
+    func shouldToggleThreadHeader(
+        expanded: Bool,
+        messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?
+    ) {
+        let mediaData = chatTableDataSource?.getMediaDataFor(messageId: messageCellState.messageId)
+        
+        headerView.configureThreadHeaderWith(
+            messageCellState: messageCellState,
+            mediaData: mediaData,
+            delegate: self
+        )
+        
         headerView.toggleThreadHeaderView(expanded: expanded)
     }
     
-    func didScroll(){
-//        headerView.threadHeaderView.collapseMessageLabel()
-    }
+    func didScroll() {}
     
     func shouldGoToAttachmentViewFor(
         messageId: Int,

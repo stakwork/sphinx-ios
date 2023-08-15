@@ -82,7 +82,8 @@ class ThreadListTableViewCell: UITableViewCell {
         reply6AvatarView.setInitialLabelSize(size: 12)
         
         mediaMessageView.layer.cornerRadius = 9
-        mediaMessageView.clipsToBounds = true
+        mediaMessageView.clipsToBounds = true    
+        mediaMessageView.configureForThreadHeader()
     }
     
     func hideAllSubviews() {

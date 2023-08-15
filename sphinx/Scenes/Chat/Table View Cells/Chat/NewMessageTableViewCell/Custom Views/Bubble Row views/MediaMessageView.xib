@@ -18,9 +18,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
             <connections>
+                <outlet property="bottomMarginConstraint" destination="nT1-Un-B7n" id="fkR-h3-VdL"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="krR-VC-n06"/>
                 <outlet property="fileInfoView" destination="nXK-yZ-qrD" id="aID-X8-MeA"/>
                 <outlet property="gifOverlay" destination="Unv-gb-1Mk" id="0Bt-cf-6Ih"/>
+                <outlet property="leadingMarginConstraint" destination="HBX-Kk-tl4" id="mpv-HG-fl6"/>
                 <outlet property="loadingContainer" destination="zIO-zy-uWs" id="xiC-V9-Fhw"/>
                 <outlet property="loadingImageView" destination="qdk-b7-RVv" id="w0h-kK-KhX"/>
                 <outlet property="mediaContainer" destination="Tgf-fN-vp1" id="SVv-8i-kkJ"/>
@@ -28,6 +30,8 @@
                 <outlet property="mediaNotAvailableIcon" destination="FOC-nl-FwV" id="DzP-Fl-lO8"/>
                 <outlet property="mediaNotAvailableView" destination="Ntf-VH-eNV" id="uqN-kZ-Qs8"/>
                 <outlet property="paidContentOverlay" destination="O20-Bu-VeO" id="lko-Z1-ETL"/>
+                <outlet property="topMarginConstraint" destination="9nj-hZ-vD7" id="m6g-cq-hFO"/>
+                <outlet property="trailingMarginConstraint" destination="Ger-ze-EJK" id="sbL-ts-KaY"/>
                 <outlet property="videoOverlay" destination="7X3-Xp-rXY" id="sPr-iA-2Lq"/>
             </connections>
         </placeholder>

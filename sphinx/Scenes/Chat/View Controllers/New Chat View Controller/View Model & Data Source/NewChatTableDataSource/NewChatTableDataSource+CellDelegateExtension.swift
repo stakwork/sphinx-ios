@@ -458,10 +458,14 @@ extension NewChatTableDataSource {
         ) {
             mediaCached[messageId] = updatedCachedMedia
             
-            DispatchQueue.main.async {
-                var snapshot = self.dataSource.snapshot()
-                snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+            if rowIndex < 0 {
+                self.delegate?.shouldReloadThreadHeaderView()
+            } else {
+                DispatchQueue.main.async {
+                    var snapshot = self.dataSource.snapshot()
+                    snapshot.reloadItems([tableCellState.1])
+                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                }
             }
         }
     }
@@ -966,7 +970,7 @@ extension NewChatTableDataSource {
                 messageId: messageId,
                 and: indexPath.row
             ){
-                var mutableTableCellState = tableCellState.1
+                let mutableTableCellState = tableCellState.1
                 return mutableTableCellState.isThread
             }
         }
@@ -982,6 +986,13 @@ extension NewChatTableDataSource {
     ) -> (Int, MessageTableCellState)? {
         
         var tableCellState: (Int, MessageTableCellState)? = nil
+        
+        ///Thread Header View
+        if let rowIndex = rowIndex, rowIndex < 0 {
+            if let threadHeaderMessageState = messageTableCellStateArray.last, threadHeaderMessageState.isThreadHeaderMessage {
+                return (rowIndex, threadHeaderMessageState)
+            }
+        }
         
         if let rowIndex = rowIndex, messageTableCellStateArray.count > rowIndex, messageTableCellStateArray[rowIndex].message?.id == messageId {
             return (rowIndex, messageTableCellStateArray[rowIndex])

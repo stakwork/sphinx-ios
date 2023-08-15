@@ -221,14 +221,9 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     func configureThreadHeaderAndBottomView() {
         if
-            let threadUUID = self.threadUUID,
-            let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
+            let _ = self.threadUUID
         {
-            headerView.configureThreadHeaderWith(
-                message: threadOriginalMessage,
-                delegate: self
-            )
-            
+            headerView.showThreadHeaderView()
             bottomView.setupForThreads(with: self)
         }
     }

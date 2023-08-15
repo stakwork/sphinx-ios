@@ -74,13 +74,22 @@ class NewChatHeaderView: UIView {
     }
     
     func configureThreadHeaderWith(
-        message: TransactionMessage,
+        messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
         delegate: ThreadHeaderViewDelegate
     ) {
         threadHeaderView.configureWith(
-            message: message,
+            messageCellState: messageCellState,
+            mediaData: mediaData,
             delegate: delegate
         )
+        threadHeaderView.isHidden = false
+        
+        normalModeStackView.isHidden = true
+        chatSearchView.isHidden = true
+    }
+    
+    func showThreadHeaderView() {
         threadHeaderView.isHidden = false
         
         normalModeStackView.isHidden = true

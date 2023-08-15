@@ -30,6 +30,12 @@ class MediaMessageView: UIView {
     @IBOutlet weak var mediaNotAvailableView: UIView!
     @IBOutlet weak var mediaNotAvailableIcon: UILabel!
     
+    @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leadingMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -48,6 +54,15 @@ class MediaMessageView: UIView {
         
         mediaContainer.layer.cornerRadius = 8.0
         mediaContainer.clipsToBounds = true
+    }
+    
+    func configureForThreadHeader() {
+        topMarginConstraint.constant = 0
+        trailingMarginConstraint.constant = 0
+        leadingMarginConstraint.constant = 0
+        bottomMarginConstraint.constant = 0
+        
+        self.layoutIfNeeded()
     }
     
     func configureWith(

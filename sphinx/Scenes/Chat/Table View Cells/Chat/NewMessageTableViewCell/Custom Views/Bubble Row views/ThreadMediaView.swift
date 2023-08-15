@@ -37,6 +37,8 @@ class ThreadMediaView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        fileContainer.backgroundColor = UIColor.Sphinx.ReceivedMsgBG.withAlphaComponent(0.9)
     }
     
     func configureWith(
@@ -54,9 +56,8 @@ class ThreadMediaView: UIView {
             mediaImageView.image = mediaData.image
             mediaImageView.contentMode = messageMedia.isPaymentTemplate ? .scaleAspectFit : .scaleAspectFill
             
-            if let _ = mediaData.fileInfo {
-//                fileInfoView.configure(fileInfo: fileInfo)
-                fileContainer.isHidden = false
+            if let _ = mediaData.fileInfo, messageMedia.isPdf {
+                configureForPDF()
             } else {
                 fileContainer.isHidden = true
             }
@@ -77,12 +78,14 @@ class ThreadMediaView: UIView {
         }
     }
     
-    func configureWith(
-        genericFile: BubbleMessageLayoutState.GenericFile,
-        mediaData: MessageTableCellState.MediaData?
-    ) {
-        //                fileInfoView.configure(fileInfo: fileInfo)
+    func configureForGenericFile() {
         fileContainer.isHidden = false
+        fileIcon.text = "insert_drive_file"
+    }
+    
+    func configureForPDF() {
+        fileContainer.isHidden = false
+        fileIcon.text = "picture_as_pdf"
     }
     
     func configureMediaNotAvailableIconWith(

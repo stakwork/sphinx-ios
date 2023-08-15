@@ -181,10 +181,9 @@ extension NewMessageTableViewCell {
         genericFile: BubbleMessageLayoutState.GenericFile?,
         mediaData: MessageTableCellState.MediaData?
     ) {
-        if let genericFile = genericFile {
+        if let _ = genericFile {
             
             fileDetailsView.configureWith(
-                genericFile: genericFile,
                 mediaData: mediaData,
                 and: self
             )

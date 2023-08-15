@@ -28,7 +28,6 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     var rowIndex: Int!
     var messageId: Int?
     
-    @IBOutlet weak var mediaContainer: UIView!
     @IBOutlet weak var mediaMessageView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var messageContainer: UIView!
@@ -46,8 +45,11 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         self.contentView.clipsToBounds = false
         
-        mediaContainer.layer.cornerRadius = 9
-        mediaContainer.clipsToBounds = true
+        mediaMessageView.layer.cornerRadius = 9
+        mediaMessageView.clipsToBounds = true
+        
+        fileDetailsView.layer.cornerRadius = 9
+        fileDetailsView.clipsToBounds = true
         
         mediaMessageView.configureForThreadHeader()
     }
@@ -57,7 +59,6 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     }
     
     func hideAllSubviews() {
-        mediaContainer.isHidden = true
         mediaMessageView.isHidden = true
         fileDetailsView.isHidden = true
         messageContainer.isHidden = true
@@ -133,7 +134,6 @@ class ThreadHeaderTableViewCell: UITableViewCell {
                 and: self
             )
             
-            mediaContainer.isHidden = false
             mediaMessageView.isHidden = false
             
             if let messageId = messageId, mediaData == nil {
@@ -169,15 +169,13 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         genericFile: BubbleMessageLayoutState.GenericFile?,
         mediaData: MessageTableCellState.MediaData?
     ) {
-        if let genericFile = genericFile {
+        if let _ = genericFile {
             
             fileDetailsView.configureWith(
-                genericFile: genericFile,
                 mediaData: mediaData,
                 and: self
             )
             
-            mediaContainer.isHidden = false
             fileDetailsView.isHidden = false
             
             if let messageId = messageId, mediaData == nil {

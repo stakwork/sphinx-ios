@@ -160,7 +160,7 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WWV-AV-Cde" customClass="ThreadMediaView" customModule="sphinx" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="nMx-s6-8fz"/>
                                                 <constraint firstAttribute="width" constant="40" id="nOV-0C-qRV"/>

@@ -150,14 +150,11 @@ class ThreadHeaderView : UIView {
         genericFile: BubbleMessageLayoutState.GenericFile?,
         mediaData: MessageTableCellState.MediaData?
     ) {
-        if let genericFile = genericFile {
+        if let _ = genericFile {
             
             viewToShow = messageAndMediaContainer
             
-            mediaView.configureWith(
-                genericFile: genericFile,
-                mediaData: mediaData
-            )
+            mediaView.configureForGenericFile()
             
             if let messageId = messageId, mediaData == nil {
                 let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)

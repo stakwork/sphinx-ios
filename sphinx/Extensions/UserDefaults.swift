@@ -74,6 +74,7 @@ extension UserDefaults {
         public static let shouldAutoDownloadSubscribedPods = DefaultKey<Bool>("shouldAutoDownloadSubscribedPods")
         public static let mnemonic = DefaultKey<String>("mnemonic")
         public static let clientID = DefaultKey<String>("clientID")
+        public static let lssNonce = DefaultKey<String>("lssNonce")
     }
     
     class func resetUserDefaults() {

@@ -90,19 +90,29 @@ class CrypterManager : NSObject {
         }
     }
     
+    var lssNonce: String {
+        get {
+            if let lssNonce: String = UserDefaults.Keys.lssNonce.get() {
+                return lssNonce
+            }
+            let lssNonce = randomBytes(32).hexString
+            UserDefaults.Keys.lssNonce.set(lssNonce)
+            return lssNonce
+        }
+        set {
+            UserDefaults.Keys.lssNonce.set(newValue)
+        }
+    }
+    
     var sequence: UInt16! = nil
     var seed: Data! = nil
     var argsDictionary: [String: AnyObject] = [:]
     var keys: [String] = []
-    var lssNonce: String! = nil
     
     var mqtt: CocoaMQTT! = nil
     
     override init() {
         super.init()
-        
-        let lssNonceBytes = randomBytes(32)
-        lssNonce = lssNonceBytes.hexString
     }
     
     func setupSigningDevice(
@@ -166,7 +176,11 @@ class CrypterManager : NSObject {
 
         if success {
             mqtt.didReceiveMessage = { mqtt, message, id in
-                print("Message received in topic \(message.topic) with payload \(message.string)")
+                print("Message received in topic \(message.topic) with payload \(message.payload)")
+                
+                if message.topic.contains("init-2-msg") {
+                    print("test")
+                }
 
                 self.processMessage(
                     topic: message.topic.replacingOccurrences(of: "\(self.clientID)/", with: ""),

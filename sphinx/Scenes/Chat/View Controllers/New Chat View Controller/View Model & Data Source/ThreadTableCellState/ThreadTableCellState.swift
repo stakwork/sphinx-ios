@@ -105,6 +105,8 @@ struct ThreadTableCellState {
         
         if message.isMediaAttachment(){
             urlAndKey = (message.getMediaUrlFromMediaToken(), message.mediaKey)
+        } else if message.isGiphy() {
+            urlAndKey = (message.getGiphyUrl(), nil)
         }
         
         return urlAndKey

@@ -36,7 +36,8 @@
                 <outlet property="originalMessageContainer" destination="Yyz-03-k2n" id="XpG-M3-Xia"/>
                 <outlet property="originalMessageFileDetails" destination="AkV-ph-vTs" id="YdO-SJ-VtX"/>
                 <outlet property="originalMessageLabel" destination="RZo-P2-gjT" id="D3f-Na-cc3"/>
-                <outlet property="originalMessageMediaView" destination="GqM-0O-AcM" id="H2G-br-LTo"/>
+                <outlet property="originalMessageMediaView" destination="UTo-xP-9yc" id="rwE-Fj-XbZ"/>
+                <outlet property="originalMessageMediaViewContainer" destination="GqM-0O-AcM" id="dl5-Ar-vSF"/>
                 <outlet property="secondReplyAvatarOverlay" destination="qAE-wB-HqS" id="MyJ-3s-23i"/>
                 <outlet property="secondReplyAvatarView" destination="DeC-XS-vIF" id="FQ4-US-mdo"/>
                 <outlet property="secondReplyBubbleView" destination="h0W-tX-cfd" id="2n9-ZS-92x"/>
@@ -55,11 +56,21 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lOY-J0-M4B">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="385"/>
                     <subviews>
-                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-0O-AcM" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
+                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-0O-AcM">
                             <rect key="frame" x="0.0" y="-170" width="393" height="170"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UTo-xP-9yc" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="180"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                            </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="UTo-xP-9yc" firstAttribute="top" secondItem="GqM-0O-AcM" secondAttribute="top" id="PhB-87-92N"/>
+                                <constraint firstAttribute="trailing" secondItem="UTo-xP-9yc" secondAttribute="trailing" id="XAp-zI-PwP"/>
+                                <constraint firstItem="UTo-xP-9yc" firstAttribute="leading" secondItem="GqM-0O-AcM" secondAttribute="leading" id="ZOY-hM-zez"/>
                                 <constraint firstAttribute="height" constant="170" id="xqG-Hg-m6J"/>
+                                <constraint firstAttribute="bottom" secondItem="UTo-xP-9yc" secondAttribute="bottom" constant="-10" id="z0N-u0-DR7"/>
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AkV-ph-vTs" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">

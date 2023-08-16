@@ -16,6 +16,7 @@ class MessageThreadView: UIView {
     @IBOutlet weak var originalMessageContainer: UIView!
     @IBOutlet weak var originalMessageLabel: UILabel!
     
+    @IBOutlet weak var originalMessageMediaViewContainer: UIView!
     @IBOutlet weak var originalMessageMediaView: MediaMessageView!
     @IBOutlet weak var originalMessageFileDetails: FileDetailsView!
     
@@ -63,6 +64,7 @@ class MessageThreadView: UIView {
         
         originalMessageLabel.numberOfLines = 2
         originalMessageBubbleView.layer.cornerRadius = 9
+        originalMessageContainer.layer.cornerRadius = 9
         
         originalMessageMediaView.removePadding()
         
@@ -96,7 +98,7 @@ class MessageThreadView: UIView {
     }
     
     func hideAllSubviews() {
-        originalMessageMediaView.isHidden = true
+        originalMessageMediaViewContainer.isHidden = true
         originalMessageFileDetails.isHidden = true
         originalMessageContainer.isHidden = true
     }
@@ -113,6 +115,7 @@ class MessageThreadView: UIView {
         
         ///Colors configuration for direction
         originalMessageBubbleView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.ThreadOriginalMsg : UIColor.Sphinx.SentMsgBG
+        originalMessageContainer.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.ThreadOriginalMsg : UIColor.Sphinx.SentMsgBG
         messageFakeBubbleView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.ThreadLastReply : UIColor.Sphinx.ReceivedMsgBG
         
         originalMessageLabel.textColor = bubble.direction.isIncoming() ? UIColor.Sphinx.MainBottomIcons : UIColor.Sphinx.TextMessages
@@ -170,7 +173,7 @@ class MessageThreadView: UIView {
         and delegate: MediaMessageViewDelegate
     ) {
         if let originalMessageMedia = originalMessageMedia {
-            originalMessageMediaView.isHidden = false
+            originalMessageMediaViewContainer.isHidden = false
             
             originalMessageMediaView.configureWith(
                 messageMedia: originalMessageMedia,

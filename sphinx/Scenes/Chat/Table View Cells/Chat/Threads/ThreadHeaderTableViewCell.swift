@@ -51,7 +51,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         fileDetailsView.layer.cornerRadius = 9
         fileDetailsView.clipsToBounds = true
         
-        mediaMessageView.configureForThreadHeader()
+        mediaMessageView.removePadding()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

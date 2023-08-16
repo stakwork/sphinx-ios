@@ -58,7 +58,7 @@ class MediaMessageView: UIView {
         mediaContainer.clipsToBounds = true
     }
     
-    func configureForThreadHeader() {
+    func removePadding() {
         topMarginConstraint.constant = 0
         trailingMarginConstraint.constant = 0
         leadingMarginConstraint.constant = 0

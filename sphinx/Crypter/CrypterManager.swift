@@ -133,8 +133,12 @@ class CrypterManager : NSObject {
     }
     
     func start() {
-        let (_, seed) = getOrCreateWalletMnemonic()
+        let (mnemonic, seed) = getOrCreateWalletMnemonic()
         let seed32Bytes = seed.bytes[0..<32]
+        
+        print("LOGGING MNEMONIC: \(mnemonic)")
+        print("LOGGING SEED: \(seed)")
+        print("LOGGING SEED 32 BYTES: \(seed32Bytes)")
         
         var keys: Keys? = nil
         do {
@@ -147,12 +151,17 @@ class CrypterManager : NSObject {
             return
         }
         
+        print("LOGGING PUB KEY: \(keys.pubkey)")
+        print("LOGGING SECRET: \(keys.secret)")
+        
         var password: String? = nil
         do {
             password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
         } catch {
             print(error.localizedDescription)
         }
+        
+        print("LOGGING PASSWORD: \(password)")
         
         guard let password = password else {
             return
@@ -620,7 +629,7 @@ class CrypterManager : NSObject {
     public func getOrCreateWalletMnemonic() -> (String, Data) {
         let storedMnemonic: String? = UserDefaults.Keys.mnemonic.get()
         let mnemonic = storedMnemonic ?? Mnemonic.create()
-        
+
         seed = Mnemonic.createSeed(mnemonic: mnemonic)
         
         UserDefaults.Keys.mnemonic.set(mnemonic)

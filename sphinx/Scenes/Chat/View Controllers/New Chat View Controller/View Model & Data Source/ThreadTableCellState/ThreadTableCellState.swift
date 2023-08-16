@@ -147,8 +147,8 @@ extension ThreadTableCellState {
 extension ThreadTableCellState : Hashable {
 
     static func == (lhs: ThreadTableCellState, rhs: ThreadTableCellState) -> Bool {
-        var mutableLhs = lhs
-        var mutableRhs = rhs
+        let mutableLhs = lhs
+        let mutableRhs = rhs
         
         return
             mutableLhs.originalMessage?.id      == mutableRhs.originalMessage?.id &&

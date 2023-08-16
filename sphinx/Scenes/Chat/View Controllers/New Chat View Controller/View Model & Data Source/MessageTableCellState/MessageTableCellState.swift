@@ -401,7 +401,7 @@ struct MessageTableCellState {
             urlAndKey = (message.getGiphyUrl(), nil)
         }
         
-        return (message.getMediaUrlFromMediaToken(), message.mediaKey)
+        return urlAndKey
     }()
     
     lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {

@@ -60,7 +60,7 @@
                             <rect key="frame" x="0.0" y="-170" width="393" height="170"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UTo-xP-9yc" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                             </subviews>
@@ -70,7 +70,7 @@
                                 <constraint firstAttribute="trailing" secondItem="UTo-xP-9yc" secondAttribute="trailing" id="XAp-zI-PwP"/>
                                 <constraint firstItem="UTo-xP-9yc" firstAttribute="leading" secondItem="GqM-0O-AcM" secondAttribute="leading" id="ZOY-hM-zez"/>
                                 <constraint firstAttribute="height" constant="170" id="xqG-Hg-m6J"/>
-                                <constraint firstAttribute="bottom" secondItem="UTo-xP-9yc" secondAttribute="bottom" constant="-10" id="z0N-u0-DR7"/>
+                                <constraint firstAttribute="bottom" secondItem="UTo-xP-9yc" secondAttribute="bottom" constant="-13" id="z0N-u0-DR7"/>
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AkV-ph-vTs" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">

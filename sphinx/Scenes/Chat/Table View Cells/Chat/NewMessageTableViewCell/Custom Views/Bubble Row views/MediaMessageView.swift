@@ -58,11 +58,17 @@ class MediaMessageView: UIView {
         mediaContainer.clipsToBounds = true
     }
     
-    func removePadding() {
-        topMarginConstraint.constant = 0
-        trailingMarginConstraint.constant = 0
-        leadingMarginConstraint.constant = 0
-        bottomMarginConstraint.constant = 0
+    func removeMargin() {
+        setMarginTo(0)
+    }
+    
+    func setMarginTo(
+        _ margin: CGFloat
+    ) {
+        topMarginConstraint.constant = margin
+        trailingMarginConstraint.constant = margin
+        leadingMarginConstraint.constant = margin
+        bottomMarginConstraint.constant = margin
         
         self.layoutIfNeeded()
     }

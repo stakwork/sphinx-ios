@@ -66,7 +66,7 @@ class MessageThreadView: UIView {
         originalMessageBubbleView.layer.cornerRadius = 9
         originalMessageContainer.layer.cornerRadius = 9
         
-        originalMessageMediaView.removePadding()
+        originalMessageMediaView.setMarginTo(0.5)
         
         firstReplyBubbleView.layer.cornerRadius = 9
         firstReplyBubbleView.layer.borderColor = UIColor.Sphinx.LightDivider.cgColor

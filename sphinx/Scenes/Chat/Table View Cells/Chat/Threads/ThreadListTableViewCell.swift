@@ -83,7 +83,7 @@ class ThreadListTableViewCell: UITableViewCell {
         mediaMessageView.layer.cornerRadius = 9
         mediaMessageView.clipsToBounds = true
         mediaMessageView.isUserInteractionEnabled = false
-        mediaMessageView.removePadding()
+        mediaMessageView.removeMargin()
         
         fileDetailsView.layer.cornerRadius = 9
         fileDetailsView.clipsToBounds = true

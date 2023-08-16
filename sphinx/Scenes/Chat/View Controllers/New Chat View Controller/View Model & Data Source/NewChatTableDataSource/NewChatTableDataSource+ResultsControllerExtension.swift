@@ -151,7 +151,10 @@ extension NewChatTableDataSource {
             threadMessagesMap: threadMessagesMap
         )
         
-        let originalMessagesMap = getOriginalMessagesFor(threadMessages: filteredThreadMessages)
+        let originalMessagesMap = getOriginalMessagesFor(
+            threadMessages: filteredThreadMessages,
+            threadMessagesMap: threadMessagesMap
+        )
 
         for (index, message) in filteredThreadMessages.enumerated() {
             
@@ -175,7 +178,7 @@ extension NewChatTableDataSource {
                 in: filteredThreadMessages,
                 and: originalMessagesMap,
                 groupingDate: &groupingDate,
-                isThreadRow: !threadMessages.isEmpty
+                isThreadRow: threadMessages.count > 1
             )
             
             if let separatorDate = bubbleStateAndDate.1 {
@@ -503,7 +506,8 @@ extension NewChatTableDataSource {
     }
     
     @objc func getOriginalMessagesFor(
-        threadMessages: [TransactionMessage]
+        threadMessages: [TransactionMessage],
+        threadMessagesMap: [String: [TransactionMessage]]
     ) -> [String: TransactionMessage] {
         
         guard let chat = chat else {
@@ -517,7 +521,9 @@ extension NewChatTableDataSource {
         
         for originalMessage in originalMessages {
             if let uuid = originalMessage.uuid {
-                originalMessagesMap[uuid] = originalMessage
+                if let threadMessages = threadMessagesMap[uuid], threadMessages.count > 1 {
+                    originalMessagesMap[uuid] = originalMessage
+                }
             }
         }
         

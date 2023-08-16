@@ -831,6 +831,16 @@ public func `parseResponse`(`res`: String) throws -> String {
     )
 }
 
+public func `makeAuthToken`(`ts`: UInt32, `secret`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_make_auth_token(
+        FfiConverterUInt32.lower(`ts`),
+        FfiConverterString.lower(`secret`),$0)
+}
+    )
+}
+
 public func `run`(`topic`: String, `args`: String, `state`: Data, `msg1`: Data, `expectedSequence`: UInt16?) throws -> VlsResponse {
     return try  FfiConverterTypeVlsResponse.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
@@ -840,16 +850,6 @@ public func `run`(`topic`: String, `args`: String, `state`: Data, `msg1`: Data, 
         FfiConverterData.lower(`state`),
         FfiConverterData.lower(`msg1`),
         FfiConverterOptionUInt16.lower(`expectedSequence`),$0)
-}
-    )
-}
-
-public func `makeAuthToken`(`ts`: UInt32, `secret`: String) throws -> String {
-    return try  FfiConverterString.lift(
-        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
-    uniffi_sphinxrs_fn_func_make_auth_token(
-        FfiConverterUInt32.lower(`ts`),
-        FfiConverterString.lower(`secret`),$0)
 }
     )
 }
@@ -896,10 +896,10 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_parse_response() != 12980) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_run() != 47350) {
+    if (uniffi_sphinxrs_checksum_func_make_auth_token() != 13236) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_make_auth_token() != 13236) {
+    if (uniffi_sphinxrs_checksum_func_run() != 47350) {
         return InitializationResult.apiChecksumMismatch
     }
 

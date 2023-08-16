@@ -44,7 +44,7 @@ class FileDetailsView: UIView {
     
     func configureWith(
         mediaData: MessageTableCellState.MediaData?,
-        and delegate: FileDetailsViewDelegate
+        and delegate: FileDetailsViewDelegate?
     ) {
         self.delegate = delegate
         

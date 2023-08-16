@@ -92,6 +92,7 @@ extension NewChatTableDataSource {
         }
         
         let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
+        let threadOriginalMessageMediaData = (dataSourceItem.threadOriginalMessage?.id != nil) ? self.mediaCached[dataSourceItem.threadOriginalMessage!.id] : nil
         let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
         let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
         let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
@@ -99,7 +100,7 @@ extension NewChatTableDataSource {
         
         cell?.configureWith(
             messageCellState: dataSourceItem,
-            mediaData: mediaData,
+            mediaData: mediaData ?? threadOriginalMessageMediaData,
             tribeData: tribeData,
             linkData: linkData,
             botWebViewData: botWebViewData,

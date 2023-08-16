@@ -205,6 +205,9 @@ extension ThreadListTableViewCell : MediaMessageViewDelegate {
             delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex)
         }
     }
+    
+    func shouldLoadOriginalMessageMediaDataFrom(originalMessageMedia: BubbleMessageLayoutState.MessageMedia) {}
+    func shouldLoadOriginalMessageFileDataFrom(originalMessageFile: BubbleMessageLayoutState.GenericFile) {}
 }
 
 extension ThreadListTableViewCell : FileDetailsViewDelegate {

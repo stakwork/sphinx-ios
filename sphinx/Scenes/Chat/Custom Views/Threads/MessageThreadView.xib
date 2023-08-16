@@ -33,7 +33,10 @@
                 <outlet property="moreRepliesCountView" destination="STg-CK-1mE" id="jis-vE-iAh"/>
                 <outlet property="moreRepliesLabel" destination="I0E-vS-bRu" id="B9U-Qf-97f"/>
                 <outlet property="originalMessageBubbleView" destination="LEz-09-WKf" id="rGf-Oy-wTj"/>
+                <outlet property="originalMessageContainer" destination="Yyz-03-k2n" id="XpG-M3-Xia"/>
+                <outlet property="originalMessageFileDetails" destination="AkV-ph-vTs" id="YdO-SJ-VtX"/>
                 <outlet property="originalMessageLabel" destination="RZo-P2-gjT" id="D3f-Na-cc3"/>
+                <outlet property="originalMessageMediaView" destination="GqM-0O-AcM" id="H2G-br-LTo"/>
                 <outlet property="secondReplyAvatarOverlay" destination="qAE-wB-HqS" id="MyJ-3s-23i"/>
                 <outlet property="secondReplyAvatarView" destination="DeC-XS-vIF" id="FQ4-US-mdo"/>
                 <outlet property="secondReplyBubbleView" destination="h0W-tX-cfd" id="2n9-ZS-92x"/>
@@ -42,21 +45,35 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="390"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEz-09-WKf">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="330"/>
+                    <color key="backgroundColor" name="ThreadOriginalMsg"/>
+                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lOY-J0-M4B">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="195"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="385"/>
                     <subviews>
+                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-0O-AcM" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="-170" width="393" height="170"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="170" id="xqG-Hg-m6J"/>
+                            </constraints>
+                        </view>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AkV-ph-vTs" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="-60" width="393" height="60"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="PjL-HN-NCg"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yyz-03-k2n">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="310"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEz-09-WKf">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="140"/>
-                                    <color key="backgroundColor" name="ThreadOriginalMsg"/>
-                                </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text message to see how it works with more than one line" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZo-P2-gjT">
-                                    <rect key="frame" x="16" y="16" width="361" height="88"/>
+                                    <rect key="frame" x="16" y="16" width="361" height="278"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <color key="textColor" name="MainBottomIcons"/>
@@ -67,16 +84,12 @@
                             <constraints>
                                 <constraint firstItem="RZo-P2-gjT" firstAttribute="top" secondItem="Yyz-03-k2n" secondAttribute="top" constant="16" id="7Ec-Ru-j4g"/>
                                 <constraint firstAttribute="bottom" secondItem="RZo-P2-gjT" secondAttribute="bottom" constant="16" id="GxV-1x-YNP"/>
-                                <constraint firstAttribute="trailing" secondItem="LEz-09-WKf" secondAttribute="trailing" id="RCo-Id-FOM"/>
-                                <constraint firstAttribute="bottom" secondItem="LEz-09-WKf" secondAttribute="bottom" constant="-20" id="WVk-zn-TRC"/>
                                 <constraint firstAttribute="trailing" secondItem="RZo-P2-gjT" secondAttribute="trailing" constant="16" id="fm1-SL-Sx9"/>
                                 <constraint firstItem="RZo-P2-gjT" firstAttribute="leading" secondItem="Yyz-03-k2n" secondAttribute="leading" constant="16" id="hFm-Co-m6O"/>
-                                <constraint firstItem="LEz-09-WKf" firstAttribute="leading" secondItem="Yyz-03-k2n" secondAttribute="leading" id="mHR-Th-m7d"/>
-                                <constraint firstItem="LEz-09-WKf" firstAttribute="top" secondItem="Yyz-03-k2n" secondAttribute="top" id="zRK-GO-CL0"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Mc-hi-fEg">
-                            <rect key="frame" x="0.0" y="120" width="393" height="20"/>
+                            <rect key="frame" x="0.0" y="310" width="393" height="20"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHJ-FE-zGc">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
@@ -115,7 +128,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ay-3A-NxK">
-                            <rect key="frame" x="0.0" y="140" width="393" height="20"/>
+                            <rect key="frame" x="0.0" y="330" width="393" height="20"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0W-tX-cfd">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
@@ -154,7 +167,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VLf-a3-FTa">
-                            <rect key="frame" x="0.0" y="160" width="393" height="35"/>
+                            <rect key="frame" x="0.0" y="350" width="393" height="35"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Md2-Pb-250">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="48"/>
@@ -182,7 +195,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="more replies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0E-vS-bRu">
-                                            <rect key="frame" x="55.000000000000007" y="10.333333333333343" width="66.666666666666686" height="14.333333333333336"/>
+                                            <rect key="frame" x="55.000000000000007" y="10.333333333333314" width="66.666666666666686" height="14.333333333333336"/>
                                             <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                             <color key="textColor" name="Text"/>
                                             <nil key="highlightedColor"/>
@@ -218,7 +231,7 @@
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-mI-voQ">
-                    <rect key="frame" x="0.0" y="195" width="393" height="40"/>
+                    <rect key="frame" x="0.0" y="385" width="393" height="40"/>
                     <color key="backgroundColor" name="SentMsgBG"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4fj-XE-lqs"/>
@@ -227,16 +240,20 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="LEz-09-WKf" firstAttribute="trailing" secondItem="lOY-J0-M4B" secondAttribute="trailing" id="1iD-Hf-lV9"/>
+                <constraint firstItem="LEz-09-WKf" firstAttribute="bottom" secondItem="Yyz-03-k2n" secondAttribute="bottom" constant="20" id="OVD-4a-pFq"/>
                 <constraint firstAttribute="bottom" secondItem="lOY-J0-M4B" secondAttribute="bottom" priority="750" constant="5" id="SFg-Ea-cbY"/>
+                <constraint firstItem="LEz-09-WKf" firstAttribute="top" secondItem="lOY-J0-M4B" secondAttribute="top" id="TFm-jV-dhk"/>
                 <constraint firstAttribute="trailing" secondItem="lcA-mI-voQ" secondAttribute="trailing" id="d1a-dx-KVr"/>
                 <constraint firstAttribute="trailing" secondItem="lOY-J0-M4B" secondAttribute="trailing" id="fe3-aF-uoV"/>
                 <constraint firstItem="lOY-J0-M4B" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lnZ-rg-Fef"/>
                 <constraint firstItem="lcA-mI-voQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="naj-NT-ytY"/>
                 <constraint firstItem="lOY-J0-M4B" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="nt4-Ch-Xd1"/>
+                <constraint firstItem="LEz-09-WKf" firstAttribute="leading" secondItem="lOY-J0-M4B" secondAttribute="leading" id="uBX-q8-I0Y"/>
                 <constraint firstItem="lcA-mI-voQ" firstAttribute="top" secondItem="lOY-J0-M4B" secondAttribute="bottom" id="x9H-Vk-Jkc"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="130.53435114503816" y="20.422535211267608"/>
+            <point key="canvasLocation" x="130.53435114503816" y="87.323943661971839"/>
         </view>
     </objects>
     <resources>

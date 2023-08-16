@@ -181,6 +181,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         self.rowIndex = indexPath.row
         self.messageId = mutableMessageCellState.message?.id
+        self.originalMessageId = mutableMessageCellState.threadOriginalMessage?.id
         self.delegate = delegate
         
         ///Swipe Reply
@@ -200,7 +201,14 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
-        configureWith(threadMessages: mutableMessageCellState.threadMessagesState, and: bubble)
+        configureWith(
+            threadMessages: mutableMessageCellState.threadMessagesState,
+            originalMessageMedia: mutableMessageCellState.threadOriginalMessageMedia,
+            originalMessageGenericFile: mutableMessageCellState.threadOriginalMessageGenericFile,
+            mediaData: mediaData,
+            bubble: bubble,
+            and: self
+        )
         configureWith(threadLastReply: mutableMessageCellState.threadLastReplyHeader, and: bubble)
         
         ///Paid Content

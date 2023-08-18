@@ -332,6 +332,26 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var threadOriginalMessageMedia: BubbleMessageLayoutState.MessageMedia? = {
+        guard let message = threadOriginalMessage, message.isMediaAttachment() || message.isGiphy() else {
+            return nil
+        }
+        
+        var urlAndKey = threadOriginalMessageMediaUrlAndKey
+        
+        return BubbleMessageLayoutState.MessageMedia(
+            url: urlAndKey.0,
+            mediaKey: urlAndKey.1,
+            isImage: message.isImage() || message.isDirectPayment(),
+            isVideo: message.isVideo(),
+            isGif: message.isGif(),
+            isPdf: message.isPDF(),
+            isGiphy: message.isGiphy(),
+            isPaid: message.isPaidAttachment(),
+            isPaymentTemplate: message.isDirectPayment()
+        )
+    }()
+    
     lazy var audio: BubbleMessageLayoutState.Audio? = {
         guard let message = messageToShow, message.isAudio() else {
             return nil
@@ -368,8 +388,35 @@ struct MessageTableCellState {
         return urlAndKey
     }()
     
+    lazy var threadOriginalMessageMediaUrlAndKey: (URL?, String?) = {
+        guard let message = threadOriginalMessage else {
+            return (nil, nil)
+        }
+        
+        var urlAndKey: (URL?, String?) = (nil, nil)
+        
+        if message.isMediaAttachment() {
+            urlAndKey = (message.getMediaUrlFromMediaToken(), message.mediaKey)
+        } else if message.isGiphy() {
+            urlAndKey = (message.getGiphyUrl(), nil)
+        }
+        
+        return urlAndKey
+    }()
+    
     lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
         guard let message = message, message.isFileAttachment() else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.GenericFile(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var threadOriginalMessageGenericFile: BubbleMessageLayoutState.GenericFile? = {
+        guard let message = threadOriginalMessage, message.isFileAttachment() else {
             return nil
         }
         
@@ -406,10 +453,6 @@ struct MessageTableCellState {
             return nil
         }
         
-        guard let lastReplyMessage = threadMessages.last else {
-            return nil
-        }
-        
         let originalMessageSenderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
         let originalThreadMessage = BubbleMessageLayoutState.ThreadMessage(
             text: message.bubbleMessageContentString,
@@ -418,16 +461,6 @@ struct MessageTableCellState {
             senderAlias: originalMessageSenderInfo.1,
             senderColor: originalMessageSenderInfo.0,
             sendDate: message.date
-        )
-        
-        let lastReplySenderInfo: (UIColor, String, String?) = getSenderInfo(message: lastReplyMessage)
-        let lastReplyThreadMessage = BubbleMessageLayoutState.ThreadMessage(
-            text: lastReplyMessage.bubbleMessageContentString,
-            font: UIFont.getMessageFont(),
-            senderPic: lastReplySenderInfo.2,
-            senderAlias: lastReplySenderInfo.1,
-            senderColor: lastReplySenderInfo.0,
-            sendDate: lastReplyMessage.date
         )
         
         var secondReplySenderInfo: (UIColor, String, String?)? = nil
@@ -440,7 +473,6 @@ struct MessageTableCellState {
             originalMessage: originalThreadMessage,
             firstReplySenderIndo: getSenderInfo(message: firstReplyMessage),
             secondReplySenderInfo: secondReplySenderInfo,
-            lastReply: lastReplyThreadMessage,
             moreRepliesCount: threadMessages.count - 3
         )
     }()

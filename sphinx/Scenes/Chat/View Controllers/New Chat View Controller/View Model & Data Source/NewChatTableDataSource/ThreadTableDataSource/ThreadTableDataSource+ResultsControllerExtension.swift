@@ -22,9 +22,11 @@ extension ThreadTableDataSource {
                 for: indexPath
             ) as! ThreadHeaderTableViewCell
             
+            let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
+            
             cell.configureWith(
                 messageCellState: dataSourceItem,
-                mediaData: nil,
+                mediaData: mediaData,
                 isHeaderExpanded: self.isHeaderExpanded,
                 delegate: self,
                 indexPath: indexPath,

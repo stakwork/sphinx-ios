@@ -123,20 +123,17 @@ struct BubbleMessageLayoutState {
         var originalMessage: ThreadMessage
         var firstReplySenderIndo: (UIColor, String, String?)
         var secondReplySenderInfo: (UIColor, String, String?)?
-        var lastReply: ThreadMessage
         var moreRepliesCount: Int
         
         init(
             originalMessage: ThreadMessage,
             firstReplySenderIndo: (UIColor, String, String?),
             secondReplySenderInfo: (UIColor, String, String?)?,
-            lastReply: ThreadMessage,
             moreRepliesCount: Int
         ) {
             self.originalMessage = originalMessage
             self.firstReplySenderIndo = firstReplySenderIndo
             self.secondReplySenderInfo = secondReplySenderInfo
-            self.lastReply = lastReply
             self.moreRepliesCount = moreRepliesCount
         }
     }

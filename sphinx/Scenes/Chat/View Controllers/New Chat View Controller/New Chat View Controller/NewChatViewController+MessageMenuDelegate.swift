@@ -18,6 +18,10 @@ extension NewChatViewController : MessageOptionsVCDelegate {
         }
     }
     
+    func shouldReloadThreadHeaderView() {
+        (chatTableDataSource as? ThreadTableDataSource)?.toggleHeader()
+    }
+    
     func shouldDeleteMessage(message: TransactionMessage) {
         chatViewModel.shouldDeleteMessage(message: message)
     }

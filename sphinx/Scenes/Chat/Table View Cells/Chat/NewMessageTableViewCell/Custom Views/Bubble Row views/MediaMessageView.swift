@@ -10,6 +10,8 @@ import UIKit
 
 protocol MediaMessageViewDelegate: class {
     func didTapMediaButton()
+    func shouldLoadOriginalMessageMediaDataFrom(originalMessageMedia: BubbleMessageLayoutState.MessageMedia)
+    func shouldLoadOriginalMessageFileDataFrom(originalMessageFile: BubbleMessageLayoutState.GenericFile)
 }
 
 class MediaMessageView: UIView {
@@ -30,6 +32,12 @@ class MediaMessageView: UIView {
     @IBOutlet weak var mediaNotAvailableView: UIView!
     @IBOutlet weak var mediaNotAvailableIcon: UILabel!
     
+    @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leadingMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -48,6 +56,21 @@ class MediaMessageView: UIView {
         
         mediaContainer.layer.cornerRadius = 8.0
         mediaContainer.clipsToBounds = true
+    }
+    
+    func removeMargin() {
+        setMarginTo(0)
+    }
+    
+    func setMarginTo(
+        _ margin: CGFloat
+    ) {
+        topMarginConstraint.constant = margin
+        trailingMarginConstraint.constant = margin
+        leadingMarginConstraint.constant = margin
+        bottomMarginConstraint.constant = margin
+        
+        self.layoutIfNeeded()
     }
     
     func configureWith(

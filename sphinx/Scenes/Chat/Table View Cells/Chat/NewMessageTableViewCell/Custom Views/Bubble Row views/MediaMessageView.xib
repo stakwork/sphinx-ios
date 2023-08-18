@@ -18,9 +18,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
             <connections>
+                <outlet property="bottomMarginConstraint" destination="nT1-Un-B7n" id="fkR-h3-VdL"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="krR-VC-n06"/>
                 <outlet property="fileInfoView" destination="nXK-yZ-qrD" id="aID-X8-MeA"/>
                 <outlet property="gifOverlay" destination="Unv-gb-1Mk" id="0Bt-cf-6Ih"/>
+                <outlet property="leadingMarginConstraint" destination="HBX-Kk-tl4" id="mpv-HG-fl6"/>
                 <outlet property="loadingContainer" destination="zIO-zy-uWs" id="xiC-V9-Fhw"/>
                 <outlet property="loadingImageView" destination="qdk-b7-RVv" id="w0h-kK-KhX"/>
                 <outlet property="mediaContainer" destination="Tgf-fN-vp1" id="SVv-8i-kkJ"/>
@@ -28,6 +30,8 @@
                 <outlet property="mediaNotAvailableIcon" destination="FOC-nl-FwV" id="DzP-Fl-lO8"/>
                 <outlet property="mediaNotAvailableView" destination="Ntf-VH-eNV" id="uqN-kZ-Qs8"/>
                 <outlet property="paidContentOverlay" destination="O20-Bu-VeO" id="lko-Z1-ETL"/>
+                <outlet property="topMarginConstraint" destination="9nj-hZ-vD7" id="m6g-cq-hFO"/>
+                <outlet property="trailingMarginConstraint" destination="Ger-ze-EJK" id="sbL-ts-KaY"/>
                 <outlet property="videoOverlay" destination="7X3-Xp-rXY" id="sPr-iA-2Lq"/>
             </connections>
         </placeholder>
@@ -69,10 +73,10 @@
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nXK-yZ-qrD" customClass="FileInfoView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="136" width="196" height="60"/>
+                            <rect key="frame" x="0.0" y="131" width="196" height="65"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="60" id="lVP-8i-e4g"/>
+                                <constraint firstAttribute="height" constant="65" id="lVP-8i-e4g"/>
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zIO-zy-uWs">
@@ -113,7 +117,7 @@
                                     </state>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="mtB-hd-1Ow" firstAttribute="centerY" secondItem="7X3-Xp-rXY" secondAttribute="centerY" id="WKk-7q-Z9t"/>
                                 <constraint firstItem="mtB-hd-1Ow" firstAttribute="centerX" secondItem="7X3-Xp-rXY" secondAttribute="centerX" id="aSi-sy-kah"/>

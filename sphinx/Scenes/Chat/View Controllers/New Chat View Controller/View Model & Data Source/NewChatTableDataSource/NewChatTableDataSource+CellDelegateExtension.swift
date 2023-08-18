@@ -118,8 +118,8 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-           let message = tableCellState.1.message,
-           let imageUrl = tableCellState.1.messageMedia?.url
+           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
+           let imageUrl = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url
         {
             if message.isDirectPayment() {
                 MediaLoader.loadPaymentTemplateImage(url: imageUrl, message: message, completion: { messageId, image in
@@ -134,7 +134,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
                 })
             } else {
-                let mediaKey = tableCellState.1.messageMedia?.mediaKey
+                let mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey ?? tableCellState.1.messageMedia?.mediaKey
                 
                 MediaLoader.loadImage(url: imageUrl, message: message, mediaKey: mediaKey, completion: { messageId, image in
                     let updatedMediaData = MessageTableCellState.MediaData(
@@ -159,9 +159,9 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-           let message = tableCellState.1.message,
-           let url = tableCellState.1.messageMedia?.url,
-           let mediaKey = tableCellState.1.messageMedia?.mediaKey
+           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
+           let url = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url,
+           let mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey ?? tableCellState.1.messageMedia?.mediaKey
         {
             shouldLoadFileDataFor(
                 messageId: messageId,
@@ -179,9 +179,9 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-           let message = tableCellState.1.message,
-           let url = tableCellState.1.genericFile?.url,
-           let mediaKey = tableCellState.1.genericFile?.mediaKey
+           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
+           let url = tableCellState.1.threadOriginalMessageGenericFile?.url ?? tableCellState.1.genericFile?.url,
+           let mediaKey = tableCellState.1.threadOriginalMessageGenericFile?.mediaKey ?? tableCellState.1.genericFile?.mediaKey
         {
             shouldLoadFileDataFor(
                 messageId: messageId,
@@ -278,9 +278,9 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-           let message = tableCellState.1.message,
-           let url = tableCellState.1.messageMedia?.url,
-           let mediaKey = tableCellState.1.messageMedia?.mediaKey
+           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
+           let url = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url,
+           let mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey ?? tableCellState.1.messageMedia?.mediaKey
         {
             MediaLoader.loadVideo(url: url, message: message, mediaKey: mediaKey, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
@@ -305,7 +305,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
             messageId: messageId,
             and: rowIndex
         ),
-           let url = tableCellState.1.messageMedia?.url
+           let url = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url
         {
             GiphyHelper.getGiphyDataFrom(url: url.absoluteString, messageId: messageId, completion: { (data, messageId) in
                 DispatchQueue.main.async {
@@ -458,10 +458,14 @@ extension NewChatTableDataSource {
         ) {
             mediaCached[messageId] = updatedCachedMedia
             
-            DispatchQueue.main.async {
-                var snapshot = self.dataSource.snapshot()
-                snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+            if rowIndex < 0 {
+                self.delegate?.shouldReloadThreadHeaderView()
+            } else {
+                DispatchQueue.main.async {
+                    var snapshot = self.dataSource.snapshot()
+                    snapshot.reloadItems([tableCellState.1])
+                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                }
             }
         }
     }
@@ -966,7 +970,7 @@ extension NewChatTableDataSource {
                 messageId: messageId,
                 and: indexPath.row
             ){
-                var mutableTableCellState = tableCellState.1
+                let mutableTableCellState = tableCellState.1
                 return mutableTableCellState.isThread
             }
         }
@@ -983,7 +987,18 @@ extension NewChatTableDataSource {
         
         var tableCellState: (Int, MessageTableCellState)? = nil
         
+        ///Thread Header View
+        if let rowIndex = rowIndex, rowIndex < 0 {
+            if let threadHeaderMessageState = messageTableCellStateArray.last, threadHeaderMessageState.isThreadHeaderMessage {
+                return (rowIndex, threadHeaderMessageState)
+            }
+        }
+        
         if let rowIndex = rowIndex, messageTableCellStateArray.count > rowIndex, messageTableCellStateArray[rowIndex].message?.id == messageId {
+            return (rowIndex, messageTableCellStateArray[rowIndex])
+        }
+        
+        if let rowIndex = rowIndex, messageTableCellStateArray.count > rowIndex, messageTableCellStateArray[rowIndex].threadOriginalMessage?.id == messageId {
             return (rowIndex, messageTableCellStateArray[rowIndex])
         }
         

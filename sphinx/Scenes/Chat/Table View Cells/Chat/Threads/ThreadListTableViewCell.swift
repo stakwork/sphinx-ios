@@ -8,12 +8,31 @@
 
 import UIKit
 
+protocol ThreadListTableViewCellDelegate: class {
+    func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
+    
+    func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int)
+}
+
 class ThreadListTableViewCell: UITableViewCell {
+    
+    weak var delegate: ThreadListTableViewCellDelegate!
+    
+    var rowIndex: Int!
+    var messageId: Int?
 
     @IBOutlet weak var originalMessageAvatarView: ChatAvatarView!
     @IBOutlet weak var originalMessageSenderAliasLabel: UILabel!
     @IBOutlet weak var originalMessageDateLabel: UILabel!
     @IBOutlet weak var originalMessageTextLabel: UILabel!
+    
+    @IBOutlet weak var mediaMessageView: MediaMessageView!
+    @IBOutlet weak var fileDetailsView: FileDetailsView!
     
     @IBOutlet weak var reply1Container: UIView!
     @IBOutlet weak var reply1AvatarView: ChatAvatarView!
@@ -60,123 +79,39 @@ class ThreadListTableViewCell: UITableViewCell {
         reply4AvatarView.setInitialLabelSize(size: 12)
         reply5AvatarView.setInitialLabelSize(size: 12)
         reply6AvatarView.setInitialLabelSize(size: 12)
+        
+        mediaMessageView.layer.cornerRadius = 9
+        mediaMessageView.clipsToBounds = true
+        mediaMessageView.isUserInteractionEnabled = false
+        mediaMessageView.removeMargin()
+        
+        fileDetailsView.layer.cornerRadius = 9
+        fileDetailsView.clipsToBounds = true
+        fileDetailsView.isUserInteractionEnabled = false
+    }
+    
+    func hideAllSubviews() {
+        mediaMessageView.isHidden = true
+        fileDetailsView.isHidden = true
+        originalMessageTextLabel.isHidden = true
     }
     
     func configureWith(
-        threadCellState: ThreadTableCellState
+        threadCellState: ThreadTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
+        delegate: ThreadListTableViewCellDelegate?,
+        indexPath: IndexPath
     ) {
         var mutableThreadCellState = threadCellState
         
-        guard let threadLayoutState = mutableThreadCellState.threadMessagesState else {
-            return
-        }
+        self.rowIndex = indexPath.row
+        self.messageId = mutableThreadCellState.originalMessage?.id
+        self.delegate = delegate
         
-        let originalMessageSenderInfo = threadLayoutState.orignalThreadMessage.senderInfo
+        hideAllSubviews()
         
-        originalMessageTextLabel.text = threadLayoutState.orignalThreadMessage.text
-        originalMessageDateLabel.text = threadLayoutState.orignalThreadMessage.timestamp
-        originalMessageSenderAliasLabel.text = originalMessageSenderInfo.1
-        
-        originalMessageAvatarView.configureForUserWith(
-            color: originalMessageSenderInfo.0,
-            alias: originalMessageSenderInfo.1,
-            picture: originalMessageSenderInfo.2
-        )
-        
-        repliesCountLabel.text = "\(threadLayoutState.repliesCount) replies"
-        lastReplyDateLabel.text = threadLayoutState.lastReplyTimestamp
-        
-        let threadPeople = threadLayoutState.threadPeople
-
-        if (threadPeople.count > 0) {
-            reply1Container.isHidden = false
-
-            let reply1SenderInfo = threadLayoutState.threadPeople[0].senderIndo
-
-            reply1AvatarView.configureForUserWith(
-                color: reply1SenderInfo.0,
-                alias: reply1SenderInfo.1,
-                picture: reply1SenderInfo.2
-            )
-        } else {
-            reply1Container.isHidden = true
-        }
-
-        if (threadPeople.count > 1) {
-            reply2Container.isHidden = false
-
-            let reply2SenderInfo = threadLayoutState.threadPeople[1].senderIndo
-
-            reply2AvatarView.configureForUserWith(
-                color: reply2SenderInfo.0,
-                alias: reply2SenderInfo.1,
-                picture: reply2SenderInfo.2
-            )
-        } else {
-            reply2Container.isHidden = true
-        }
-
-        if (threadPeople.count > 2) {
-            reply3Container.isHidden = false
-
-            let reply3SenderInfo = threadLayoutState.threadPeople[2].senderIndo
-
-            reply3AvatarView.configureForUserWith(
-                color: reply3SenderInfo.0,
-                alias: reply3SenderInfo.1,
-                picture: reply3SenderInfo.2
-            )
-        } else {
-            reply3Container.isHidden = true
-        }
-
-        if (threadPeople.count > 3) {
-            reply4Container.isHidden = false
-
-            let reply4SenderInfo = threadLayoutState.threadPeople[3].senderIndo
-
-            reply4AvatarView.configureForUserWith(
-                color: reply4SenderInfo.0,
-                alias: reply4SenderInfo.1,
-                picture: reply4SenderInfo.2
-            )
-        } else {
-            reply4Container.isHidden = true
-        }
-
-        if (threadPeople.count > 4) {
-            reply5Container.isHidden = false
-
-            let reply5SenderInfo = threadLayoutState.threadPeople[4].senderIndo
-
-            reply5AvatarView.configureForUserWith(
-                color: reply5SenderInfo.0,
-                alias: reply5SenderInfo.1,
-                picture: reply5SenderInfo.2
-            )
-        } else {
-            reply5Container.isHidden = true
-        }
-
-        if (threadPeople.count > 5) {
-            reply6Container.isHidden = false
-
-            let reply6SenderInfo = threadLayoutState.threadPeople[5].senderIndo
-
-            reply6AvatarView.configureForUserWith(
-                color: reply6SenderInfo.0,
-                alias: reply6SenderInfo.1,
-                picture: reply6SenderInfo.2
-            )
-        } else {
-            reply6Container.isHidden = true
-        }
-
-        if threadLayoutState.threadPeopleCount > 6 {
-            reply6CountContainer.isHidden = false
-            reply6CountLabel.text = "+\(threadLayoutState.threadPeopleCount-6)"
-        } else {
-            reply6CountContainer.isHidden = true
-        }
+        configureWith(threadLayoutState: mutableThreadCellState.threadMessagesState)
+        configureWith(messageMedia: mutableThreadCellState.messageMedia, mediaData: mediaData)
+        configureWith(genericFile: mutableThreadCellState.genericFile, mediaData: mediaData)
     }
 }

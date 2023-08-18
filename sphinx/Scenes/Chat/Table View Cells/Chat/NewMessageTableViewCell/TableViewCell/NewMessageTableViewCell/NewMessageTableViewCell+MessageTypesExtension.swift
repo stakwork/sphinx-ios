@@ -77,10 +77,21 @@ extension NewMessageTableViewCell {
     
     func configureWith(
         threadMessages: BubbleMessageLayoutState.ThreadMessages?,
-        and bubble: BubbleMessageLayoutState.Bubble
+        originalMessageMedia: BubbleMessageLayoutState.MessageMedia?,
+        originalMessageGenericFile: BubbleMessageLayoutState.GenericFile?,
+        mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: MediaMessageViewDelegate
     ) {
         if let threadMessages = threadMessages {
-            messageThreadView.configureWith(threadMessages: threadMessages, and: bubble)
+            messageThreadView.configureWith(
+                threadMessages: threadMessages,
+                originalMessageMedia: originalMessageMedia,
+                originalMessageGenericFile: originalMessageGenericFile,
+                mediaData: mediaData,
+                bubble: bubble,
+                and: delegate
+            )
             messageThreadViewContainer.isHidden = false
         }
     }
@@ -181,10 +192,9 @@ extension NewMessageTableViewCell {
         genericFile: BubbleMessageLayoutState.GenericFile?,
         mediaData: MessageTableCellState.MediaData?
     ) {
-        if let genericFile = genericFile {
+        if let _ = genericFile {
             
             fileDetailsView.configureWith(
-                genericFile: genericFile,
                 mediaData: mediaData,
                 and: self
             )

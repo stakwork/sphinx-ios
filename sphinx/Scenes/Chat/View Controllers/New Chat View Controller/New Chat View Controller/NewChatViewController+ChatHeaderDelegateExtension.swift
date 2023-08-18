@@ -35,6 +35,26 @@ extension NewChatViewController : ChatHeaderViewDelegate, ThreadHeaderViewDelega
         chatTableView.scrollToBottom()
     }
     
+    func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int) {
+        chatTableDataSource?.shouldLoadImageDataFor(messageId: messageId, and: rowIndex)
+    }
+    
+    func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int) {
+        chatTableDataSource?.shouldLoadPdfDataFor(messageId: messageId, and: rowIndex)
+    }
+    
+    func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int) {
+        chatTableDataSource?.shouldLoadFileDataFor(messageId: messageId, and: rowIndex)
+    }
+    
+    func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int) {
+        chatTableDataSource?.shouldLoadVideoDataFor(messageId: messageId, and: rowIndex)
+    }
+    
+    func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int) {
+        chatTableDataSource?.shouldLoadGiphyDataFor(messageId: messageId, and: rowIndex)
+    }
+    
     func didTapMuteButton() {
         guard let chat = chat else {
             return

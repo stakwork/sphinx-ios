@@ -11,23 +11,39 @@ import SDWebImage
 
 @objc protocol ThreadHeaderViewDelegate {
     func didTapBackButton()
+    
     @objc optional func didTapThreadHeaderButton()
+    
+    @objc optional func shouldLoadImageDataFor(messageId: Int, and rowIndex: Int)
+    @objc optional func shouldLoadPdfDataFor(messageId: Int, and rowIndex: Int)
+    @objc optional func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
+    @objc optional func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
+    @objc optional func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
 }
 
 class ThreadHeaderView : UIView {
     
     var delegate : ThreadHeaderViewDelegate? = nil
     
+    var messageId: Int?
+    
     @IBOutlet var contentView: UIView!
     
     @IBOutlet weak var messageLabelContainer: UIView!
     @IBOutlet weak var messageLabel: UILabel!
+    
+    @IBOutlet weak var messageAndMediaContainer: UIView!
+    @IBOutlet weak var messageAndMediaLabel: UILabel!
+    @IBOutlet weak var mediaView: ThreadMediaView!
+    
     @IBOutlet weak var senderContainer: UIView!
     @IBOutlet weak var senderNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var senderAvatarView: ChatAvatarView!
     
     var isExpanded : Bool = false
+    
+    var viewToShow: UIView! = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,41 +61,110 @@ class ThreadHeaderView : UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        mediaView.layer.cornerRadius = 4
+        mediaView.clipsToBounds = true
     }
     
     func configureWith(
-        message: TransactionMessage,
+        messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?,
         delegate: ThreadHeaderViewDelegate
     ){
+        var mutableMessageCellState = messageCellState
+        
         self.delegate = delegate
+        self.messageId = mutableMessageCellState.messageId
         
-        messageLabel.text = message.bubbleMessageContentString
-        timestampLabel.text = (message.date ?? Date()).getStringDate(format: "MMM dd, hh:mm a")
-        
-        guard let owner = UserContact.getOwner() else {
+        configureWith(threadOriginalMessage: mutableMessageCellState.threadOriginalMessageHeader)
+        configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
+        configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
+    }
+    
+    func configureWith(
+        threadOriginalMessage: NoBubbleMessageLayoutState.ThreadOriginalMessage?
+    ) {
+        guard let threadOriginalMessage = threadOriginalMessage else {
             return
         }
         
-        if message.isIncoming(ownerId: owner.id) {
-            let senderColor = ChatHelper.getSenderColorFor(message: message)
+        viewToShow = messageLabelContainer
+        
+        messageAndMediaLabel.text = threadOriginalMessage.text
+        messageLabel.text = threadOriginalMessage.text
+        
+        timestampLabel.text = threadOriginalMessage.timestamp
+        senderNameLabel.text = threadOriginalMessage.senderAlias
+        
+        senderAvatarView.configureForUserWith(
+            color: threadOriginalMessage.senderColor,
+            alias: threadOriginalMessage.senderAlias,
+            picture: threadOriginalMessage.senderPic
+        )
+    }
+    
+    func configureWith(
+        messageMedia: BubbleMessageLayoutState.MessageMedia?,
+        mediaData: MessageTableCellState.MediaData?
+    ) {
+        if let messageMedia = messageMedia {
             
-            senderAvatarView.configureForUserWith(
-                color: senderColor,
-                alias: message.senderAlias ?? "Unknow",
-                picture: message.senderPic
+            viewToShow = messageAndMediaContainer
+            
+            mediaView.configureWith(
+                messageMedia: messageMedia,
+                mediaData: mediaData,
+                bubble: BubbleMessageLayoutState.Bubble(direction: .Incoming, grouping: .Isolated)
             )
+
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    if messageMedia.isImage {
+                        self.delegate?.shouldLoadImageDataFor?(
+                            messageId: messageId,
+                            and: -1
+                        )
+                    } else if messageMedia.isPdf {
+                        self.delegate?.shouldLoadPdfDataFor?(
+                            messageId: messageId,
+                            and: -1
+                        )
+                    } else if messageMedia.isVideo {
+                        self.delegate?.shouldLoadVideoDataFor?(
+                            messageId: messageId,
+                            and: -1
+                        )
+                    } else if messageMedia.isGiphy {
+                        self.delegate?.shouldLoadGiphyDataFor?(
+                            messageId: messageId,
+                            and: -1
+                        )
+                    }
+                }
+            }
+        }
+    }
+    
+    func configureWith(
+        genericFile: BubbleMessageLayoutState.GenericFile?,
+        mediaData: MessageTableCellState.MediaData?
+    ) {
+        if let _ = genericFile {
             
-            senderNameLabel.text = message.senderAlias
-        } else {
-            let senderColor = owner.getColor()
+            viewToShow = messageAndMediaContainer
             
-            senderAvatarView.configureForUserWith(
-                color: senderColor,
-                alias: owner.nickname ?? "Unknow",
-                picture: owner.getPhotoUrl()
-            )
+            mediaView.configureForGenericFile()
             
-            senderNameLabel.text = owner.nickname
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadFileDataFor?(
+                        messageId: messageId,
+                        and: -1
+                    )
+                }
+            }
         }
     }
     
@@ -91,15 +176,15 @@ class ThreadHeaderView : UIView {
         
         if expanded {
             self.senderContainer.isHidden = false
-            self.messageLabelContainer.isHidden = false
+            self.viewToShow.isHidden = false
             
             UIView.animate(withDuration: 0.2, animations: {
                 self.senderContainer.alpha = 1.0
-                self.messageLabelContainer.alpha = 1.0
+                self.viewToShow.alpha = 1.0
             })
         } else {
-            self.messageLabelContainer.alpha = 0.0
-            self.messageLabelContainer.isHidden = true
+            self.viewToShow.alpha = 0.0
+            self.viewToShow.isHidden = true
             
             UIView.animate(withDuration: 0.2, animations: {
                 self.senderContainer.alpha = 0.0

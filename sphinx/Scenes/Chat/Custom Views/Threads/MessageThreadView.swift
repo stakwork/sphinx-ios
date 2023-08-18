@@ -13,7 +13,12 @@ class MessageThreadView: UIView {
     @IBOutlet var contentView: UIView!
     
     @IBOutlet weak var originalMessageBubbleView: UIView!
+    @IBOutlet weak var originalMessageContainer: UIView!
     @IBOutlet weak var originalMessageLabel: UILabel!
+    
+    @IBOutlet weak var originalMessageMediaViewContainer: UIView!
+    @IBOutlet weak var originalMessageMediaView: MediaMessageView!
+    @IBOutlet weak var originalMessageFileDetails: FileDetailsView!
     
     @IBOutlet weak var firstReplyContainer: UIView!
     @IBOutlet weak var firstReplyBubbleView: UIView!
@@ -59,6 +64,9 @@ class MessageThreadView: UIView {
         
         originalMessageLabel.numberOfLines = 2
         originalMessageBubbleView.layer.cornerRadius = 9
+        originalMessageContainer.layer.cornerRadius = 9
+        
+        originalMessageMediaView.setMarginTo(0.5)
         
         firstReplyBubbleView.layer.cornerRadius = 9
         firstReplyBubbleView.layer.borderColor = UIColor.Sphinx.LightDivider.cgColor
@@ -89,12 +97,25 @@ class MessageThreadView: UIView {
         secondReplyAvatarView.resetView()
     }
     
+    func hideAllSubviews() {
+        originalMessageMediaViewContainer.isHidden = true
+        originalMessageFileDetails.isHidden = true
+        originalMessageContainer.isHidden = true
+    }
+    
     func configureWith(
         threadMessages: BubbleMessageLayoutState.ThreadMessages,
-        and bubble: BubbleMessageLayoutState.Bubble
+        originalMessageMedia: BubbleMessageLayoutState.MessageMedia?,
+        originalMessageGenericFile: BubbleMessageLayoutState.GenericFile?,
+        mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: MediaMessageViewDelegate
     ) {
+        hideAllSubviews()
+        
         ///Colors configuration for direction
         originalMessageBubbleView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.ThreadOriginalMsg : UIColor.Sphinx.SentMsgBG
+        originalMessageContainer.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.ThreadOriginalMsg : UIColor.Sphinx.SentMsgBG
         messageFakeBubbleView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.ThreadLastReply : UIColor.Sphinx.ReceivedMsgBG
         
         originalMessageLabel.textColor = bubble.direction.isIncoming() ? UIColor.Sphinx.MainBottomIcons : UIColor.Sphinx.TextMessages
@@ -103,6 +124,7 @@ class MessageThreadView: UIView {
         ///Content configuration
         originalMessageLabel.text = threadMessages.originalMessage.text
         originalMessageLabel.font = threadMessages.originalMessage.font
+        originalMessageContainer.isHidden = threadMessages.originalMessage.text == nil || threadMessages.originalMessage.text?.isEmpty == true
         
         let firstReplySenderInfo = threadMessages.firstReplySenderIndo
         firstReplyAvatarView.configureForUserWith(
@@ -127,6 +149,62 @@ class MessageThreadView: UIView {
             moreRepliesContainer.isHidden = false
         } else {
             moreRepliesContainer.isHidden = true
+        }
+        
+        configureMediaWith(
+            originalMessageMedia: originalMessageMedia,
+            mediaData: mediaData,
+            bubble: bubble,
+            and: delegate
+        )
+        
+        configureFileWith(
+            originalMessageGenericFile: originalMessageGenericFile,
+            mediaData: mediaData,
+            bubble: bubble,
+            and: delegate
+        )
+    }
+    
+    func configureMediaWith(
+        originalMessageMedia: BubbleMessageLayoutState.MessageMedia?,
+        mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: MediaMessageViewDelegate
+    ) {
+        if let originalMessageMedia = originalMessageMedia {
+            originalMessageMediaViewContainer.isHidden = false
+            
+            originalMessageMediaView.configureWith(
+                messageMedia: originalMessageMedia,
+                mediaData: mediaData,
+                bubble: bubble,
+                and: delegate
+            )
+            
+            if mediaData == nil {
+                delegate.shouldLoadOriginalMessageMediaDataFrom(originalMessageMedia: originalMessageMedia)
+            }
+        }
+    }
+    
+    func configureFileWith(
+        originalMessageGenericFile: BubbleMessageLayoutState.GenericFile?,
+        mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: MediaMessageViewDelegate
+    ) {
+        if let originalMessageGenericFile = originalMessageGenericFile {
+            originalMessageFileDetails.isHidden = false
+            
+            originalMessageFileDetails.configureWith(
+                mediaData: mediaData,
+                and: nil
+            )
+            
+            if mediaData == nil {
+                delegate.shouldLoadOriginalMessageFileDataFrom(originalMessageFile: originalMessageGenericFile)
+            }
         }
     }
 

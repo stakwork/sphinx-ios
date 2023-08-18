@@ -43,9 +43,8 @@ class FileDetailsView: UIView {
     }
     
     func configureWith(
-        genericFile: BubbleMessageLayoutState.GenericFile,
         mediaData: MessageTableCellState.MediaData?,
-        and delegate: FileDetailsViewDelegate
+        and delegate: FileDetailsViewDelegate?
     ) {
         self.delegate = delegate
         

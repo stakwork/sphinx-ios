@@ -75,6 +75,8 @@ extension UserDefaults {
         public static let mnemonic = DefaultKey<String>("mnemonic")
         public static let clientID = DefaultKey<String>("clientID")
         public static let lssNonce = DefaultKey<String>("lssNonce")
+        public static let signerKeys = DefaultKey<String>("signerKeys")
+        public static let sequence = DefaultKey<String>("sequence")
     }
     
     class func resetUserDefaults() {

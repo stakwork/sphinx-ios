@@ -104,11 +104,33 @@ class CrypterManager : NSObject {
         }
     }
     
-    var sequence: UInt16! = nil
-    var seed: Data! = nil
-    var argsDictionary: [String: AnyObject] = [:]
-    var keys: [String] = []
+    var mutationKeys: [String] {
+        get {
+            if let signerKeys: String = UserDefaults.Keys.signerKeys.get() {
+                return signerKeys.components(separatedBy: ",")
+            }
+            return []
+        }
+        set {
+            UserDefaults.Keys.signerKeys.set(
+                newValue.joined(separator: ",")
+            )
+        }
+    }
     
+    var sequence: UInt16! {
+        get {
+            if let sequence: UInt16 = UserDefaults.Keys.sequence.get() {
+                return sequence
+            }
+            return nil
+        }
+        set {
+            UserDefaults.Keys.sequence.set(newValue)
+        }
+    }
+    
+    var seed: Data! = nil
     var mqtt: CocoaMQTT! = nil
     
     override init() {
@@ -187,10 +209,6 @@ class CrypterManager : NSObject {
             mqtt.didReceiveMessage = { mqtt, message, id in
                 print("Message received in topic \(message.topic) with payload \(message.payload)")
                 
-                if message.topic.contains("init-2-msg") {
-                    print("test")
-                }
-
                 self.processMessage(
                     topic: message.topic.replacingOccurrences(of: "\(self.clientID)/", with: ""),
                     payload: message.payload
@@ -198,7 +216,11 @@ class CrypterManager : NSObject {
             }
 
             mqtt.didDisconnect =  { cocaMQTT2, error in
-                print("MQTT did disconnect")
+                self.sequence = nil
+                
+                DelayPerformedHelper.performAfterDelay(seconds: 1, completion: {
+                    self.connectToMQTTWith(keys: keys, and: password)
+                })
             }
             
             mqtt.didConnectAck = { _, _ in
@@ -209,16 +231,26 @@ class CrypterManager : NSObject {
                     ("\(self.clientID)/\(Topics.LSS_MSG.rawValue)", CocoaMQTTQoS.qos1)
                 ])
                 
-                DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                    self.mqtt.publish(
-                        CocoaMQTTMessage(
-                            topic: "\(self.clientID)/\(Topics.HELLO.rawValue)",
-                            payload: []
-                        )
+                self.mqtt.publish(
+                    CocoaMQTTMessage(
+                        topic: "\(self.clientID)/\(Topics.HELLO.rawValue)",
+                        payload: []
                     )
-                })
+                )
             }
         }
+    }
+    
+    func restart() {
+        mutationKeys = []
+        sequence = nil
+        
+        mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(clientID)/\(Topics.HELLO.rawValue)",
+                payload: []
+            )
+        )
     }
     
     func processMessage(
@@ -237,7 +269,10 @@ class CrypterManager : NSObject {
                 expectedSequence: sequence
             )
         } catch {
-            print(error.localizedDescription)
+            if (error.localizedDescription.contains("Error: VLS Failed: invalid sequence")) {
+                restart()
+                return
+            }
         }
         
         guard let ret = ret else {
@@ -329,7 +364,7 @@ class CrypterManager : NSObject {
     func load_muts() -> [String: [UInt8]] {
         var state:[String: [UInt8]] = [:]
         
-        for key in keys {
+        for key in mutationKeys {
             if let value = UserDefaults.standard.object(forKey: key) as? [UInt8] {
                 state[key] = value
             }
@@ -373,6 +408,8 @@ class CrypterManager : NSObject {
     }
     
     func persist_muts(muts: [MessagePackValue: MessagePackValue]) {
+        var keys: [String] = []
+        
         for  mut in muts {
             if let key = mut.key.stringValue, let value = mut.value.dataValue?.bytes {
                 keys.append(key)
@@ -382,7 +419,7 @@ class CrypterManager : NSObject {
             }
         }
         
-        keys = Array(Set(keys))
+        mutationKeys = keys
     }
     
     func asString(jsonDictionary: JSONDictionary) -> String {

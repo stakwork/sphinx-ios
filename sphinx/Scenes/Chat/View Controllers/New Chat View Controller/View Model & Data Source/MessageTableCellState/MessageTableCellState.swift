@@ -788,9 +788,11 @@ struct MessageTableCellState {
         }
         
         let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
+        let messageContent = message.bubbleMessageContentString ?? ""
         
         return NoBubbleMessageLayoutState.ThreadOriginalMessage(
-            text: message.bubbleMessageContentString ?? "",
+            text: messageContent,
+            linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
             senderPic: senderInfo.2,
             senderAlias: senderInfo.1,
             senderColor: senderInfo.0,

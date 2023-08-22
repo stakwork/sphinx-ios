@@ -20,7 +20,7 @@ class CrypterManager : NSObject {
         struct Static {
             static let instance = CrypterManager()
         }
-        return CrypterManager.instance
+        return Static.instance
     }
     
     enum Topics: String {
@@ -611,7 +611,7 @@ class CrypterManager : NSObject {
     ) {
         let generateMnemonicCallbak: (() -> ()) = {
             self.newMessageBubbleHelper.showLoadingWheel()
-            let (mnemonic, seed) = self.generateWalletMnemonic()
+            let (mnemonic, seed) = self.getOrCreateWalletMnemonic()
             callback((mnemonic, seed))
         }
         
@@ -681,7 +681,7 @@ class CrypterManager : NSObject {
     }
     
     func testCrypter() {
-        let sk1 = Nonce(length: 32).description.hexEncoded
+        let sk1 = lssNonce.hexEncoded
 
         var pk1: String? = nil
         do {

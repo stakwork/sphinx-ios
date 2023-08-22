@@ -16,6 +16,13 @@ import MessagePack
 
 class CrypterManager : NSObject {
     
+    class var sharedInstance : CrypterManager {
+        struct Static {
+            static let instance = CrypterManager()
+        }
+        return CrypterManager.instance
+    }
+    
     enum Topics: String {
         case VLS = "vls"
         case VLS_RES = "vls-res"
@@ -160,10 +167,6 @@ class CrypterManager : NSObject {
         let (mnemonic, seed) = getOrCreateWalletMnemonic()
         let seed32Bytes = seed.bytes[0..<32]
         
-        print("LOGGING MNEMONIC: \(mnemonic)")
-        print("LOGGING SEED: \(seed)")
-        print("LOGGING SEED 32 BYTES: \(seed32Bytes)")
-        
         var keys: Keys? = nil
         do {
             keys = try nodeKeys(net: "regtest", seed: seed32Bytes.hexString)
@@ -175,17 +178,12 @@ class CrypterManager : NSObject {
             return
         }
         
-        print("LOGGING PUB KEY: \(keys.pubkey)")
-        print("LOGGING SECRET: \(keys.secret)")
-        
         var password: String? = nil
         do {
             password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
         } catch {
             print(error.localizedDescription)
         }
-        
-        print("LOGGING PASSWORD: \(password)")
         
         guard let password = password else {
             return

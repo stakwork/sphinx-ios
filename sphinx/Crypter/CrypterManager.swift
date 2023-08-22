@@ -135,6 +135,8 @@ class CrypterManager : NSObject {
     
     override init() {
         super.init()
+        
+        clear()
     }
     
     func setupSigningDevice(
@@ -216,6 +218,7 @@ class CrypterManager : NSObject {
             }
 
             mqtt.didDisconnect =  { cocaMQTT2, error in
+                self.mqtt.didDisconnect = { _, _ in }
                 self.sequence = nil
                 
                 DelayPerformedHelper.performAfterDelay(seconds: 1, completion: {
@@ -241,9 +244,13 @@ class CrypterManager : NSObject {
         }
     }
     
-    func restart() {
+    func clear() {
         mutationKeys = []
         sequence = nil
+    }
+    
+    func restart() {
+        clear()
         
         mqtt.publish(
             CocoaMQTTMessage(
@@ -419,6 +426,7 @@ class CrypterManager : NSObject {
             }
         }
         
+        keys.append(contentsOf: mutationKeys)
         mutationKeys = keys
     }
     

@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (5.6.4)
-  - CocoaMQTT (2.1.5):
-    - CocoaMQTT/Core (= 2.1.5)
-  - CocoaMQTT/Core (2.1.5):
+  - CocoaMQTT (2.1.6):
+    - CocoaMQTT/Core (= 2.1.6)
+  - CocoaMQTT/Core (2.1.6):
     - MqttCocoaAsyncSocket (~> 1.0.8)
   - CryptoSwift (1.0.0)
   - FLAnimatedImage (1.0.16)
@@ -61,7 +61,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.6.4)
-  - CocoaMQTT
+  - CocoaMQTT (from `https://github.com/emqx/CocoaMQTT.git`)
   - Giphy (= 2.1.1)
   - HDWalletKit
   - JitsiMeetSDK (~> 3.6.0)
@@ -88,7 +88,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - CocoaMQTT
     - CryptoSwift
     - FLAnimatedImage
     - Giphy
@@ -118,19 +117,24 @@ SPEC REPOS:
     - youtube-ios-player-helper
 
 EXTERNAL SOURCES:
+  CocoaMQTT:
+    :git: https://github.com/emqx/CocoaMQTT.git
   SwiftyXMLParser:
     :git: https://github.com/yahoojapan/SwiftyXMLParser.git
   Tor:
     :podspec: https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec
 
 CHECKOUT OPTIONS:
+  CocoaMQTT:
+    :commit: 990303d3549d4284fadd6c83ff8480e6ab0b4d42
+    :git: https://github.com/emqx/CocoaMQTT.git
   SwiftyXMLParser:
     :commit: 41900bb1882e704a25d4946f2dbad71b4bb02b8f
     :git: https://github.com/yahoojapan/SwiftyXMLParser.git
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
-  CocoaMQTT: af1bd1e42f81b9f4f9dcf3a8990c42b7c00989b9
+  CocoaMQTT: 1f206228b29318eabdacad0c2e4e88575922c27a
   CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
@@ -161,6 +165,6 @@ SPEC CHECKSUMS:
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 6ae92e82121c252c1cef868dc7421da46add0239
+PODFILE CHECKSUM: 0abb8bb6ac24f966ce319f0aa628d481a12c2f64
 
 COCOAPODS: 1.11.3

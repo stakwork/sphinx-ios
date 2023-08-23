@@ -55,7 +55,9 @@
 
 "IQP-Z6-eAF.text" = "Set Github Persnal Access Token";
 
-"z8e-Oe-Tdt.text" = "Setup Signing Device";
+"z8e-Oe-Tdt.text" = "Setup Signer";
+
+"9QJ-12-Kc1.text" = "Disconnect MQTT";
 
 "Uah-nc-EPN.text" = "Feed Recommendations";
 

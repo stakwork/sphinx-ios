@@ -459,12 +459,14 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     }
     
     @IBAction func setupSigningDevice() {
-        cryptedManager.start()
-        
-//        cryptedManager.setupSigningDevice(
-//            vc: self
-//        ) {
-//            self.configureSigningDeviceButton()
-//        }
+        cryptedManager.setupSigningDevice(
+            vc: self
+        ) {
+            self.configureSigningDeviceButton()
+        }
+    }
+    
+    @IBAction func disconnectMQTT() {
+        cryptedManager.resetMQTTConnection()
     }
 }

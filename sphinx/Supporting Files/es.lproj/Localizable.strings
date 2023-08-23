@@ -306,6 +306,10 @@
 "profile.mnemonic-enter-error" = "Las palabras ingresadas no son válidas";
 "profile.mnemonic-enter" = "Ingresá tus 12/24 palabras de seguridad";
 "profile.mnemonic-generate" = "Generar palabras de seguridad al azar";
+"profile.signer-setup-title" = "Configuración";
+"profile.signer-setup-message" = "Configurar hardware o phone signer";
+"profile.harware-option" = "Hardware";
+"profile.phone-signer-option" = "Teléfono";
 
 //PIN
 "choose.pin.upper" = "ELIGE TU PIN";

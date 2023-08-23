@@ -697,6 +697,26 @@ extension String {
         
         return nil
     }
+    
+    func getHostAndPort(
+        defaultPort: UInt16
+    ) -> (String, UInt16, Bool) {
+        
+        var port: UInt16 = defaultPort
+        
+        if let portIndex = self.lastIndex(of: ":") {
+            let portString = String(self[portIndex...]).replacingOccurrences(of: ":", with: "")
+            
+            if let portInt = UInt16(portString) {
+                port = portInt
+            }
+        }
+        
+        let actualHost = self.replacingOccurrences(of: ":\(port)", with: "")
+        let ssl = port == 8883
+        
+        return (actualHost, port, ssl)
+    }
 }
 
 extension Character {

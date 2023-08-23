@@ -27,7 +27,7 @@ target 'sphinx' do
     pod 'HDWalletKit'
     pod 'ObjectMapper'
     pod 'UIView-Shimmer', '~> 1.0'
-    pod 'CocoaMQTT'
+    pod 'CocoaMQTT', :git => 'https://github.com/emqx/CocoaMQTT.git'
     pod 'MessagePack.swift', '~> 4.0'
     
     post_install do |installer|

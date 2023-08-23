@@ -21,6 +21,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
 
     var avPlayer : AVPlayerViewController? = nil
+    var videoLoadingTimer : Timer? = nil
     
     let actionsManager = ActionsManager.sharedInstance
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -211,8 +212,7 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
             playerViewController.view.trailingAnchor.constraint(equalTo: localVideoPlayerContainer.trailingAnchor),
             playerViewController.view.bottomAnchor.constraint(equalTo: localVideoPlayerContainer.bottomAnchor)
         ])
-        
-        Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkForVideoLoad), userInfo: nil, repeats: true)
+        videoLoadingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkForVideoLoad), userInfo: nil, repeats: true)
         loadingIndicator.startAnimating()
         localVideoPlayerContainer.bringSubviewToFront(loadingIndicator)
         // Play the video
@@ -224,14 +224,21 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     func removePlayerView(){
         avPlayer?.player?.pause()
         avPlayer = nil
+        cleanupVideoLoadingTimer()
     }
     
     @objc func checkForVideoLoad(){
         if let item = avPlayer?.player?.currentItem{
             let status = item.status
             let isPlaying = status == .readyToPlay
-            isPlaying ? (loadingIndicator.stopAnimating()) : ()
+            isPlaying ? (cleanupVideoLoadingTimer()) : ()
         }
+    }
+    
+    func cleanupVideoLoadingTimer(){
+        loadingIndicator.stopAnimating()
+        videoLoadingTimer?.invalidate()
+        videoLoadingTimer = nil
     }
     
     

@@ -9,15 +9,8 @@ class InitialWelcomeViewController: UIViewController {
     @IBOutlet weak var newUserButtonContainer: UIView!
     @IBOutlet weak var existingUserButtonContainer: UIView!
     
-    private var rootViewController: RootViewController!
-
-    
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> InitialWelcomeViewController {
+    static func instantiate() -> InitialWelcomeViewController {
         let viewController = StoryboardScene.Welcome.initialWelcomeViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -44,8 +37,7 @@ class InitialWelcomeViewController: UIViewController {
     
     
     @IBAction func newUserButtonTapped(_ sender: UIButton) {
-        let nextVC = NewUserSignupOptionsViewController
-            .instantiate(rootViewController: rootViewController)
+        let nextVC = NewUserSignupOptionsViewController.instantiate()
         
         navigationController?
             .pushViewController(nextVC, animated: true)
@@ -53,8 +45,7 @@ class InitialWelcomeViewController: UIViewController {
     
     
     @IBAction func existingUserButtonTapped(_ sender: UIButton) {
-        let restoreExistingUserDescriptionVC = RestoreUserDescriptionViewController
-            .instantiate(rootViewController: rootViewController)
+        let restoreExistingUserDescriptionVC = RestoreUserDescriptionViewController.instantiate()
         
         navigationController?
             .pushViewController(restoreExistingUserDescriptionVC, animated: true)

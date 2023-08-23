@@ -38,40 +38,40 @@ final class MainCoordinator: NSObject {
     }
     
     func presentInitialWelcomeViewController() {
-        let initialWelcomeVC = InitialWelcomeViewController.instantiate(rootViewController: rootViewController)
+        let initialWelcomeVC = InitialWelcomeViewController.instantiate()
         presentSignupVC(vc: initialWelcomeVC)
     }
     
     
     func presentNewUserSignupOptionsViewController() {
-        let vc = InitialWelcomeViewController.instantiate(rootViewController: rootViewController)
+        let vc = InitialWelcomeViewController.instantiate()
         presentSignupVC(vc: vc)
     }
     
     func presentInviteWelcomeViewController() {
         if let inviter = SignupHelper.getInviter() {
-            let inviteWelcome = InviteWelcomeViewController.instantiate(rootViewController: rootViewController, inviter: inviter)
+            let inviteWelcome = InviteWelcomeViewController.instantiate(inviter: inviter)
             presentSignupVC(vc: inviteWelcome)
         }
     }
     
     func presentSetPinViewController() {
-        let setPinVC = SetPinCodeViewController.instantiate(rootViewController: self.rootViewController)
+        let setPinVC = SetPinCodeViewController.instantiate()
         presentSignupVC(vc: setPinVC)
     }
     
     func presentNewUserGreetingViewController() {
-        let greetingVC = NewUserGreetingViewController.instantiate(rootViewController: rootViewController)
+        let greetingVC = NewUserGreetingViewController.instantiate()
         presentSignupVC(vc: greetingVC)
     }
     
     func presentPersonalInfoViewController() {
-        let nicknameVC = SetNickNameViewController.instantiate(rootViewController: rootViewController)
+        let nicknameVC = SetNickNameViewController.instantiate()
         presentSignupVC(vc: nicknameVC)
     }
 
     func presentSphinxReadyViewController() {
-        let sphinxReadyVC = SphinxReadyViewController.instantiate(rootViewController: rootViewController)
+        let sphinxReadyVC = SphinxReadyViewController.instantiate()
         presentSignupVC(vc: sphinxReadyVC)
     }
     
@@ -84,11 +84,8 @@ final class MainCoordinator: NSObject {
     
     
     func presentInitialDrawer() {
-        let leftViewController = LeftMenuViewController.instantiate(rootViewController: rootViewController)
-        let mainViewController = DashboardRootViewController.instantiate(
-            rootViewController: rootViewController,
-            leftMenuDelegate:  leftViewController
-        )
+        let leftViewController = LeftMenuViewController.instantiate()
+        let mainViewController = DashboardRootViewController.instantiate(leftMenuDelegate: leftViewController)
         let navigationController = UINavigationController(rootViewController: mainViewController)
         
         UserData.sharedInstance.saveNewNodeOnKeychain()

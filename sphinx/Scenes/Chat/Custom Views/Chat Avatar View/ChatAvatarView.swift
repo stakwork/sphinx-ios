@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol ChatAvatarViewDelegate: class {
     func didTapAvatarView()
@@ -45,6 +46,13 @@ class ChatAvatarView: UIView {
         profileInitialContainer.clipsToBounds = true
     }
     
+    func resetView() {
+        profileImageView.isHidden = false
+        profileImageView.image = UIImage(named: "profile_avatar")
+        
+        profileInitialContainer.isHidden = true
+    }
+    
     func setInitialLabelSize(size: Double) {
         initialsLabel.font = UIFont(name: "Montserrat-Regular", size: size)!
     }
@@ -72,8 +80,12 @@ class ChatAvatarView: UIView {
     func configureForUserWith(
         color: UIColor,
         alias: String?,
-        picture: String?
+        picture: String?,
+        image: UIImage? = nil,
+        and delegate: ChatAvatarViewDelegate? = nil
     ) {
+        self.delegate = delegate
+        
         profileImageView.sd_cancelCurrentImageLoad()
         
         profileImageView.isHidden = true
@@ -85,50 +97,28 @@ class ChatAvatarView: UIView {
             color: color
         )
         
-        if let picture = picture, let url = URL(string: picture) {
+        if let image = image {
+            profileInitialContainer.isHidden = true
+            profileImageView.isHidden = false
+            profileImageView.image = image
+        } else if let picture = picture, let url = URL(string: picture) {
             showImageWith(url: url)
-        }
-    }
-    
-    func configureFor(
-        messageRow: TransactionMessageRow,
-        contact: UserContact?,
-        chat: Chat?,
-        with delegate: ChatAvatarViewDelegate? = nil
-    ) {
-        self.delegate = delegate
-        
-        profileImageView.sd_cancelCurrentImageLoad()
-        
-        profileImageView.isHidden = true
-        profileInitialContainer.isHidden = true
-        profileImageView.layer.borderWidth = 0
-        
-        let message = messageRow.transactionMessage!
-        
-        if !messageRow.getConsecutiveMessages().previousMessage {
-            
-            showInitialsWith(
-                alias: message.getMessageSenderNickname(),
-                color: ChatHelper.getSenderColorFor(message: message)
-            )
-            
-            let senderAvatarURL = message.getMessageSenderProfilePic(chat: chat, contact: contact)
-            
-            if let senderAvatarURL = senderAvatarURL, let url = URL(string: senderAvatarURL) {
-                
-                showImageWith(url: url)
-            }
         }
     }
     
     func showImageWith(
         url: URL
     ) {
+        let transformer = SDImageResizingTransformer(
+            size: CGSize(width: bounds.size.width * 3, height: bounds.size.height * 3),
+            scaleMode: .aspectFill
+        )
+        
         profileImageView.sd_setImage(
             with: url,
             placeholderImage: UIImage(named: "profile_avatar"),
             options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+            context: [.imageTransformer: transformer],
             progress: nil,
             completed: { (image, error, _, _) in
                 if (error == nil) {

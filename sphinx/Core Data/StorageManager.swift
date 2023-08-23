@@ -13,12 +13,14 @@ public enum StorageManagerMediaType{
     case audio
     case video
     case photo
+    case file
     
     static var allCases: [StorageManagerMediaType] {
         return [
             .photo,
             .video,
-            .audio
+            .audio,
+            .file
         ]
     }
 }
@@ -41,11 +43,20 @@ class StorageManagerItem{
     var sizeMB : Double
     var label : String
     var date : Date
-    var sourceFilePath:String?
-    var cachedMedia:CachedMedia?
-    var uid:String?=nil
+    var sourceFilePath: String?
+    var cachedMedia: CachedMedia?
+    var uid:String? = nil
     
-    init(source:StorageManagerMediaSource,type:StorageManagerMediaType,sizeMB:Double,label:String,date:Date,sourceFilePath:String?=nil,cachedMedia:CachedMedia?=nil,uid:String?=nil) {
+    init(
+        source: StorageManagerMediaSource,
+        type: StorageManagerMediaType,
+        sizeMB: Double,
+        label: String,
+        date: Date,
+        sourceFilePath: String?=nil,
+        cachedMedia: CachedMedia?=nil,
+        uid: String?=nil
+    ) {
         self.type = type
         self.sizeMB = sizeMB
         self.label = label
@@ -79,6 +90,21 @@ class StorageManager {
     
     var allItems : [StorageManagerItem]  {
         return downloadedPods + cachedMedia
+    }
+    
+    func getStorageManagerTypeFromExtension(cm:CachedMedia)->StorageManagerMediaType{
+        var type : StorageManagerMediaType = .file
+        if(cm.fileExtension == "png"){
+            type = .photo
+        }
+        else if(cm.fileExtension == "mp4"){
+            type = .video
+        }
+        else if(cm.fileExtension == "mp3"){
+            type = .audio
+        }
+        
+        return type
     }
     
     func getStorageItemSummaryByType()->[StorageManagerMediaType:Double]{
@@ -139,7 +165,6 @@ class StorageManager {
         var chatsToItemDict = [Chat:[StorageManagerItem]]()
         if let chatsOnly = bySource[.chats]{
             for item in chatsOnly{
-                print(item.cachedMedia)
                 if let cm = item.cachedMedia,
                    let itemsChat = cm.chat{
                     if chatsToItemDict[itemsChat] != nil{
@@ -224,7 +249,7 @@ class StorageManager {
             wdt_flag = false
         })
         let choppingBlockSnapshot = allItems.sorted(by: {$0.date < $1.date})//static snapshot that never changes
-        var changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
+        let changingChoppingBlock = choppingBlockSnapshot//changes so we can compare against limit
         var i = 0
         var semaphore = false
         while(checkForMemoryOverflow(items: changingChoppingBlock) && wdt_flag){
@@ -238,9 +263,14 @@ class StorageManager {
             }
             wdt_flag = (i >= choppingBlockSnapshot.count - 1) ? false : wdt_flag
         }
-        wdt_flag = false
-        garbageCleanIsInProgress = false
-        completion()
+        
+        //now cleanup old chat media
+        self.deleteAllOldChatMedia(completion: {
+            wdt_flag = false
+            self.garbageCleanIsInProgress = false
+            completion()
+        })
+        
     }
     
     func deleteItem(item:StorageManagerItem,completion: @escaping ()->()){
@@ -251,7 +281,7 @@ class StorageManager {
         }
         else if(item.isPodcast()),
                let sourcePath = item.sourceFilePath{
-            deletePodsWithID(
+            deletePodEpisodeWithFileName(
                 fileName: sourcePath,
                 successCompletion: {
                     completion()
@@ -269,22 +299,20 @@ class StorageManager {
     func getSphinxCacheVideos(completion: @escaping ([StorageManagerItem]) -> ()) {
         let blah = CachedMedia.getAll()
         let videoCMs = blah.filter({ cm in cm.fileExtension != "png" })
-        let fileManager = FileManager.default
         
         var items = [StorageManagerItem]()
         let sc = SphinxCache()
         for cm in videoCMs {
             var size: UInt64? = nil
-            do {
-                if let key = cm.key,
-                   let fileData = sc.value(forKey: key) {
-                    size = UInt64(fileData.count)
-                    
-                    let newItem = StorageManagerItem(source: .chats, type: .video, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
-                    items.append(newItem)
-                }
-            } catch {
-                print("Error retrieving size of the file")
+            
+            if let key = cm.key,
+               let fileData = sc.value(forKey: key) {
+                size = UInt64(fileData.count)
+                
+                let type = getStorageManagerTypeFromExtension(cm:cm)
+                
+                let newItem = StorageManagerItem(source: .chats, type: type, sizeMB: Double(size ?? 0) / 1e6, label: "", date: cm.creationDate ?? Date(), cachedMedia: cm)
+                items.append(newItem)
             }
         }
         
@@ -293,7 +321,7 @@ class StorageManager {
     }
     
     func populateVideoImages(){
-        let smis = allItems.filter({$0.type == .video})
+        let smis = allItems.filter({$0.type != .photo && $0.type != .audio})
         let sc = SphinxCache()
         for i in 0..<smis.count{
             let smi = smis[i]
@@ -307,7 +335,13 @@ class StorageManager {
                         if let newImage = image {
                             smi.cachedMedia?.image = newImage
                         } else {
-                            smi.cachedMedia?.image = #imageLiteral(resourceName: "videoPlaceholder")
+                            var defaultImage = #imageLiteral(resourceName: "videoPlaceholder")
+                            if let cm = smi.cachedMedia
+                            {
+                                let ext = (self.getStorageManagerTypeFromExtension(cm: cm))
+                                defaultImage = (ext == .file) ?  #imageLiteral(resourceName: "fileOptionIcon") : defaultImage
+                                defaultImage = (ext == .audio) ?  #imageLiteral(resourceName: "playPodcastIcon") : defaultImage
+                            }
                         }
                     })
                 }
@@ -396,13 +430,20 @@ class StorageManager {
                     cmCounter > 0 ? () : (completion())
                 })
             }
-            else if cm.fileExtension == "mp4"{
-                cm.removeVideoObject(completion: {
+            else{
+                cm.removeSphinxCacheObject(completion: {
                     cmCounter -= 1
                     cmCounter > 0 ? () : (completion())
                 })
             }
         }
+    }
+    
+    func deleteAllOtherFiles(completion:@escaping ()->()){
+        let allVids = allItems.filter({$0.type == .file}).compactMap({$0.cachedMedia})
+        deleteCacheItems(cms: allVids, completion: {
+            completion()
+        })
     }
     
     func deleteAllVideos(completion:@escaping ()->()){
@@ -420,19 +461,32 @@ class StorageManager {
     }
     
     func deleteAllAudioFiles(completion: @escaping ()->()){
+        deleteAllPodcasts(completion: {
+            self.deleteAllAudioMessages(completion: {
+                completion()
+            })
+        })
+    }
+    
+    func deleteAllAudioMessages(completion: @escaping ()->()){
+        let allFiles = allItems.filter({$0.type == .audio}).compactMap({$0.cachedMedia})
+        deleteCacheItems(cms: allFiles,completion: {
+            completion()
+        })
+    }
+    
+    func deleteAllPodcasts(completion:@escaping ()->()){
         var podsCounter = downloadedPods.count
         podsCounter == 0 ? (completion()) : ()
-        for pod in downloadedPods{
+        for pod in downloadedPods {
             if let sourcePath = pod.sourceFilePath{
-                deletePodsWithID(
+                deletePodEpisodeWithFileName(
                     fileName: sourcePath,
                     successCompletion: {
-                    print("deleted pod with id:\(pod.uid)")
                         podsCounter-=1
                         podsCounter > 0 ? () : completion()
                     },
                     failureCompletion: {
-                        print("failed to delete pod with id:\(pod.uid)")
                         podsCounter-=1
                         podsCounter > 0 ? () : completion()
                     })
@@ -440,7 +494,11 @@ class StorageManager {
         }
     }
     
-    func deletePodsWithID(fileName:String,successCompletion: @escaping ()->(),failureCompletion: @escaping ()->()){
+    func deletePodEpisodeWithFileName(
+        fileName: String,
+        successCompletion: @escaping ()->(),
+        failureCompletion: @escaping ()->()
+    ){
         if let path = FileManager
             .default
             .urls(for: .documentDirectory, in: .userDomainMask)
@@ -449,6 +507,7 @@ class StorageManager {
             
             if FileManager.default.fileExists(atPath: path.path) {
                 try? FileManager.default.removeItem(at: path)
+                updateLastDownloadedEpisodeFor(fileName: fileName)
                 successCompletion()
             }
             else{
@@ -457,6 +516,31 @@ class StorageManager {
         }
         else{
             failureCompletion()
+        }
+    }
+    
+    func updateLastDownloadedEpisodeFor(fileName: String) {
+        if let feedId = getFeedIdFrom(fileName: fileName) {
+            if let feed = ContentFeed.getFeedById(feedId: feedId) {
+                feed.lastDownloadedEpisodeId = nil
+            }
+        }
+    }
+    
+    func getFeedIdFrom(fileName: String) -> String? {
+        if let feedId = fileName.split(separator: "_").first {
+            return String(feedId)
+        }
+        return nil
+    }
+    
+    func deleteAllOldChatMedia(completion: @escaping ()->()){
+        let now = Date()
+        if let cutoffDatetime = Calendar.current.date(byAdding: .day, value: -30, to: now){
+            let oldMediaOnChoppingBlock = allItems.filter({$0.source == .chats && $0.date < cutoffDatetime}).compactMap({$0.cachedMedia})
+            deleteCacheItems(cms: oldMediaOnChoppingBlock, completion: {
+                print("done")
+            })
         }
     }
 
@@ -508,8 +592,8 @@ class StorageManager {
             print(file.lastPathComponent)
             if let split = getFeedItemPairForString(string: file.lastPathComponent),
                split.count > 1{
-                var feedID = String(split[0])
-                var itemID = String(split[1])
+                let feedID = String(split[0])
+                let itemID = String(split[1])
                 if var existingFeedArray = results[feedID]{
                     existingFeedArray.append(itemID)
                     results[feedID] = existingFeedArray
@@ -525,8 +609,8 @@ class StorageManager {
     func getFeedItemPairForString(string:String)->[String]?{
         let split = string.split(separator: "_")
         if split.count > 1{
-            var feedID = String(split[0])
-            var itemID = String(split[1])
+            let feedID = String(split[0])
+            let itemID = String(split[1])
             
             return [feedID,itemID]
         }

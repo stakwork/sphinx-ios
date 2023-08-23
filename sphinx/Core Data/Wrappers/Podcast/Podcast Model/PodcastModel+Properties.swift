@@ -11,14 +11,14 @@ import CoreData
 
 public class PodcastModel: NSObject {
     
-    public var objectID: NSManagedObjectID
     public var type: String?
     public var suggestedBTC: Double
     public var feed: PodcastFeed?
     
-    init(_ objectID: NSManagedObjectID) {
-        self.objectID = objectID
+    override init() {
         self.suggestedBTC = 0.0
+        
+        super.init()
     }
 }
 
@@ -40,7 +40,7 @@ extension PodcastModel {
         feed: PodcastFeed? = nil
     ) -> PodcastModel {
         
-        let podcastModel = PodcastModel(contentFeedPaymentModel.objectID)
+        let podcastModel = PodcastModel()
         
         podcastModel.suggestedBTC = contentFeedPaymentModel.suggestedBTC
         podcastModel.type = contentFeedPaymentModel.type

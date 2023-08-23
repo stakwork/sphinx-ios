@@ -10,6 +10,8 @@ class ChatsCollectionViewController: UICollectionViewController {
 
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
+    
+    private var owner: UserContact!
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
@@ -29,6 +31,7 @@ extension ChatsCollectionViewController {
         onContentScrolled: ((UIScrollView) -> Void)? = nil,
         onRefresh: ((UIRefreshControl) -> Void)? = nil
     ) -> ChatsCollectionViewController {
+        
         let viewController = StoryboardScene.Dashboard.chatsCollectionViewController.instantiate()
         
         viewController.chatListObjects = chatListObjects
@@ -109,6 +112,10 @@ extension ChatsCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        loadChatsList()
+    }
+    
+    func loadChatsList() {
         registerViews(for: collectionView)
         configure(collectionView)
         configureDataSource(for: collectionView)
@@ -279,6 +286,7 @@ extension ChatsCollectionViewController {
                     for: indexPath
                 ) as? CollectionViewCell else { return nil }
 
+                cell.owner = self.owner
                 cell.chatListObject = self.chatListObjects[indexPath.row]
 
                 return cell
@@ -287,10 +295,10 @@ extension ChatsCollectionViewController {
     }
 
 
-    func makeSupplementaryViewProvider(for collectionView: UICollectionView) -> DataSource.SupplementaryViewProvider {
-        return {
-            (collectionView: UICollectionView, kind: String, indexPath: IndexPath)
-        -> UICollectionReusableView in
+    func makeSupplementaryViewProvider(
+        for collectionView: UICollectionView
+    ) -> DataSource.SupplementaryViewProvider {
+        return { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView in
             switch kind {
             case UICollectionView.elementKindSectionHeader:
                 return UICollectionReusableView()
@@ -306,6 +314,8 @@ extension ChatsCollectionViewController {
 extension ChatsCollectionViewController {
 
     func updateSnapshot() {
+        updateOwner()
+        
         var snapshot = DataSourceSnapshot()
 
         snapshot.appendSections(CollectionViewSection.allCases)
@@ -315,7 +325,7 @@ extension ChatsCollectionViewController {
             DataSourceItem(
                 objectId: $0.getObjectId(),
                 messageId: $0.lastMessage?.id,
-                messageSeen: $0.isSeen(),
+                messageSeen: $0.isSeen(ownerId: owner.id),
                 contactStatus: $0.getContactStatus(),
                 inviteStatus: $0.getInviteStatus(),
                 muted: $0.isMuted()
@@ -326,6 +336,12 @@ extension ChatsCollectionViewController {
         snapshot.appendItems(items, toSection: .all)
         
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func updateOwner() {
+        if owner == nil {
+            owner = UserContact.getOwner()
+        }
     }
 }
 

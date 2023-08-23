@@ -35,7 +35,8 @@ extension Chat: ChatListCommonObject {
     
     func getConversationContact() -> UserContact? {
         if conversationContact == nil {
-            conversationContact = getContact()
+            let contacts = getContacts(includeOwner: false)
+            conversationContact = contacts.first
         }
         return conversationContact
     }
@@ -67,8 +68,18 @@ extension Chat: ChatListCommonObject {
         return self.notify == NotificationLevel.MuteChat.rawValue
     }
     
-    public func isSeen() -> Bool {
-        return (self.lastMessage?.seen ?? false) && self.seen
+    public func isSeen(
+        ownerId: Int
+    ) -> Bool {
+        if self.lastMessage?.isOutgoing(ownerId: ownerId) ?? true {
+            return true
+        }
+        
+        if self.lastMessage?.isSeen(ownerId: ownerId) ?? true {
+            return true
+        }
+        
+        return self.seen
     }
     
     public func isOnlyMentions() -> Bool {

@@ -16,28 +16,28 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectPodcastEpisodeWithID podcastEpisodeID: NSManagedObjectID
-    )
-    
-    
-    func viewController(
-        _ viewController: UIViewController,
-        didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
+        didSelectPodcastEpisodeWithID podcastEpisodeID: String,
+        fromDownloadedSection: Bool
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
+        didSelectVideoFeedWithID videoFeedID: String
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterFeedWithID newsletterFeedID: NSManagedObjectID
+        didSelectVideoEpisodeWithID videoEpisodeID: String
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterItemWithID newsletterItemID: NSManagedObjectID
+        didSelectNewsletterFeedWithID newsletterFeedID: String
+    )
+    
+    func viewController(
+        _ viewController: UIViewController,
+        didSelectNewsletterItemWithID newsletterItemID: String
     )
     
     func viewController(
@@ -53,14 +53,16 @@ protocol DashboardFeedsListContainerViewControllerDelegate: AnyObject {
 
 
 class DashboardFeedsContainerViewController: UIViewController {
+    
     @IBOutlet weak var filterChipCollectionViewContainer: UIView!
     @IBOutlet weak var feedContentCollectionViewContainer: UIView!
+    @IBOutlet weak var loadingWheelContainerView: UIView!
+    @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     private var managedObjectContext: NSManagedObjectContext!
     private var filterChipCollectionViewController: FeedFilterChipsCollectionViewController!
     
     private weak var feedsListContainerDelegate: DashboardFeedsListContainerViewControllerDelegate?
-    
     
     var contentFilterOptions: [ContentFilterOption] = []
     
@@ -72,6 +74,17 @@ class DashboardFeedsContainerViewController: UIViewController {
                     to: self!.activeFilterOption
                 )
             }
+        }
+    }
+    
+    var isLoading = false {
+        didSet {
+            LoadingWheelHelper.toggleLoadingWheel(
+                loading: isLoading,
+                loadingWheel: loadingWheel,
+                loadingWheelColor: UIColor.Sphinx.Text
+            )
+            loadingWheelContainerView.isHidden = !isLoading
         }
     }
     
@@ -88,6 +101,7 @@ class DashboardFeedsContainerViewController: UIViewController {
         AllTribeFeedsCollectionViewController.instantiate(
             managedObjectContext: managedObjectContext,
             onCellSelected: handleAllFeedsCellSelection(_:),
+            onDownloadedItemSelected: handleDownloadedItemCellSelection(_:_:),
             onRecommendationSelected: handleRecommendationSelection(_:_:),
             onNewResultsFetched: handleNewResultsFetch(_:),
             onContentScrolled: handleFeedScroll(scrollView:)
@@ -158,9 +172,18 @@ class DashboardFeedsContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isLoading = true
+        
         setupFilterOptions()
         configureFilterChipCollectionView()
         configureFeedContentCollectionView()
+        
+        DelayPerformedHelper.performAfterDelay(
+            seconds: 0.5,
+            completion: {
+                self.isLoading = false
+            }
+        )
     }
 }
 
@@ -228,8 +251,6 @@ extension DashboardFeedsContainerViewController {
             return newsletterFeedCollectionViewController
         case ContentFilterOption.play.id:
             return playFeedCollectionViewController
-        case ContentFilterOption.downloaded.id:
-            return downloadedPodcastsVC
         default:
             preconditionFailure()
         }
@@ -270,11 +291,10 @@ extension DashboardFeedsContainerViewController {
     
     
     private func configureFilterChipCollectionView() {
-        filterChipCollectionViewController = FeedFilterChipsCollectionViewController
-            .instantiate(
-                contentFilterOptions: Array(contentFilterOptions),
-                onCellSelected: handleFilterChipActivation(_:)
-            )
+        filterChipCollectionViewController = FeedFilterChipsCollectionViewController.instantiate(
+            contentFilterOptions: Array(contentFilterOptions),
+            onCellSelected: handleFilterChipActivation(_:)
+        )
         
         addChildVC(
             child: filterChipCollectionViewController,
@@ -312,20 +332,18 @@ extension DashboardFeedsContainerViewController {
     
     
     private func handleAllFeedsCellSelection(
-        _ managedObjectID: NSManagedObjectID
+        _ feedId: String
     ) {
-        let entity = managedObjectContext.object(with: managedObjectID)
-        
-        if let contentFeed = entity as? ContentFeed {
+        if let contentFeed = ContentFeed.getFeedById(feedId: feedId) {
             if contentFeed.isNewsletter {
                 feedsListContainerDelegate?.viewController(
                     self,
-                    didSelectNewsletterFeedWithID: managedObjectID
+                    didSelectNewsletterFeedWithID: feedId
                 )
             } else if contentFeed.isVideo {
                 feedsListContainerDelegate?.viewController(
                     self,
-                    didSelectVideoFeedWithID: managedObjectID
+                    didSelectVideoFeedWithID: feedId
                 )
             } else if contentFeed.isPodcast {
                 feedsListContainerDelegate?.viewController(
@@ -334,6 +352,17 @@ extension DashboardFeedsContainerViewController {
                 )
             }
         }
+    }
+    
+    private func handleDownloadedItemCellSelection(
+        _ feedId: String,
+        _ episodeId: String
+    ) {
+        feedsListContainerDelegate?.viewController(
+            self,
+            didSelectPodcastEpisodeWithID: episodeId,
+            fromDownloadedSection: true
+        )
     }
     
     private func handleRecommendationSelection(
@@ -356,10 +385,11 @@ extension DashboardFeedsContainerViewController {
 // MARK: -  Audio Podcast Selection
 extension DashboardFeedsContainerViewController {
     
-    private func handlePodcastEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handlePodcastEpisodeCellSelection(_ feedItemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectPodcastEpisodeWithID: managedObjectID
+            didSelectPodcastEpisodeWithID: feedItemId,
+            fromDownloadedSection: false
         )
     }
     
@@ -375,18 +405,18 @@ extension DashboardFeedsContainerViewController {
 // MARK: - Video Selection
 extension DashboardFeedsContainerViewController {
     
-    private func handleVideoEpisodeCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleVideoEpisodeCellSelection(_ feedItemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectVideoEpisodeWithID: managedObjectID
+            didSelectVideoEpisodeWithID: feedItemId
         )
     }
     
     
-    private func handleVideoFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleVideoFeedCellSelection(_ feedId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectVideoFeedWithID: managedObjectID
+            didSelectVideoFeedWithID: feedId
         )
     }
 }
@@ -394,18 +424,18 @@ extension DashboardFeedsContainerViewController {
 // MARK: - Newsletter Selection
 extension DashboardFeedsContainerViewController {
     
-    private func handleNewsletterItemCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleNewsletterItemCellSelection(_ feeditemId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectNewsletterItemWithID: managedObjectID
+            didSelectNewsletterItemWithID: feeditemId
         )
     }
     
     
-    private func handleNewsletterFeedCellSelection(_ managedObjectID: NSManagedObjectID) {
+    private func handleNewsletterFeedCellSelection(_ feedId: String) {
         feedsListContainerDelegate?.viewController(
             self,
-            didSelectNewsletterFeedWithID: managedObjectID
+            didSelectNewsletterFeedWithID: feedId
         )
     }
 }

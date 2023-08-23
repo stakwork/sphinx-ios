@@ -41,27 +41,39 @@ public class CachedMedia: NSManagedObject {
         return nil
     }
     
-    public static func createObject(id: Int, chat: Chat?,filePath:String?,fileExtension:String?,key:String? ) -> CachedMedia? {
+    public static func createObject(
+        id: Int,
+        chat: Chat?,
+        filePath: String?,
+        fileExtension: String?,
+        key: String?,
+        fileName: String?
+    ) -> CachedMedia? {
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         let cachedMedia = getCachedMediaInstance(id: id, managedContext: managedContext)
 
         cachedMedia.id = id
-        if let chat = chat{
+        
+        if let chat = chat {
             cachedMedia.chat = chat
         }
+        
         if let truncatedPath = CachedMedia.getTruncatedFilePath(filePath: filePath){
             cachedMedia.filePath = truncatedPath
         }
+        
         cachedMedia.fileExtension = fileExtension
         cachedMedia.key = key
+        cachedMedia.fileName = fileName
+        cachedMedia.creationDate = Date()
         
         managedContext.saveContext()
         
         return cachedMedia
     }
     
-    func removeVideoObject(completion:@escaping ()->()){
+    func removeSphinxCacheObject(completion:@escaping ()->()){
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         if let key = key{
             let _ = SphinxCache().removeFromDisk(forKey: key)

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 extension UserContact : ChatListCommonObject {
-    
+
     public func getObjectId() -> String {
         return "user-\(self.id)"
     }
@@ -100,7 +100,17 @@ extension UserContact : ChatListCommonObject {
         return conversation?.isMuted() ?? false
     }
     
-    public func isSeen() -> Bool {
-        return (self.getChat()?.lastMessage?.seen ?? false) && (self.getChat()?.seen ?? false)
+    public func isSeen(ownerId: Int) -> Bool {
+        let lastMessage = self.getChat()?.lastMessage
+        
+        if lastMessage?.isOutgoing(ownerId: ownerId) ?? true {
+            return true
+        }
+        
+        if lastMessage?.isSeen(ownerId: ownerId) ?? true {
+            return true
+        }
+        
+        return self.getChat()?.seen ?? true
     }
 }

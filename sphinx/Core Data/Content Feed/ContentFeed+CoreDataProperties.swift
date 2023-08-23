@@ -68,6 +68,9 @@ extension ContentFeed {
     
     @NSManaged
     public var paymentModel: ContentFeedPaymentModel?
+    
+    @NSManaged
+    public var lastDownloadedEpisodeId: String?
 }
 
 

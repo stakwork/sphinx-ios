@@ -89,7 +89,11 @@ class PaymentTransaction {
         } else if let chatId = chatId, let chat = Chat.getChatWith(id: chatId) {
             if let originalMUUI = originalMessageUUID, !originalMUUI.isEmpty, !isIncoming() && chat.isGroup() {
                 if let originalM = TransactionMessage.getMessageWith(uuid: originalMUUI) {
-                    return originalM.getMessageSenderNickname()
+                    
+                    return originalM.getMessageSenderNickname(
+                        owner: ContactsService.sharedInstance.owner,
+                        contact: ContactsService.sharedInstance.getContactWith(id: originalM.senderId)
+                    )
                 }
             } else if !chat.isMyPublicGroup() {
                 for contact in chat.getContacts(includeOwner: false) {

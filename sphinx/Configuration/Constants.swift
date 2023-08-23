@@ -15,11 +15,17 @@ public enum MessagesSize: Int {
 }
 
 class Constants {
+    
+    public static var kMargin: CGFloat = 16.0
+    public static var kMarginForAllThreads: CGFloat = 48.0
+    public static var kChatTableContentInset: CGFloat = 16.0
+    
     //Fonts
     public static var kMessageFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
+    public static var kMessageBoldFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     public static var kEmojisFont = UIFont(name: "Roboto-Regular", size: UIDevice.current.isIpad ? 40.0 : 30.0)!
     public static let kAmountFont = UIFont(name: "Roboto-Bold", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
-    public static let kBoldSmallMessageFont = UIFont(name: "Roboto-Bold", size: UIDevice.current.isIpad ? 14.0 : 10.0)!
+    public static let kBoldSmallMessageFont = UIFont(name: "Roboto-Bold", size: UIDevice.current.isIpad ? 20.0 : 16.0)!
     public static var kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 14.0)!
     public static var kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 14.0)!
     public static var kChatNameFont = UIFont(name: "Roboto-Regular", size: 17.0)!
@@ -75,7 +81,7 @@ class Constants {
             kChatListMessagePosition = 10.5
             break
         case MessagesSize.Medium.rawValue:
-            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 18.0 : 14.0)!
+            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 18.0 : 15.0)!
             kEmojisFont = UIFont(name: "Roboto-Regular", size: isIpad ? 35.0 : 33.0)!
             kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 13.0)!
             kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 13.0)!
@@ -93,7 +99,7 @@ class Constants {
             kChatListMessagePosition = 11.5
             break
         case MessagesSize.Big.rawValue:
-            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 20.0 : 16.0)!
+            kMessageFont = UIFont(name: "Roboto-Regular", size: isIpad ? 20.0 : 18.0)!
             kEmojisFont = UIFont(name: "Roboto-Regular", size: isIpad ? 40.0 : 36.0)!
             kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 14.0)!
             kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 14.0)!

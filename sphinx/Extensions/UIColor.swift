@@ -56,6 +56,7 @@ public extension UIColor {
         public static let Shadow = color("Shadow")
         public static let BubbleShadow = color("BubbleShadow")
         public static let Divider = color("Divider")
+        public static let Divider2 = color("Divider2")
         public static let LightDivider = color("LightDivider")
         public static let ExpiredInvoice = color("ExpiredInvoice")
         public static let AddressBookHeader = color("AddressBookHeader")
@@ -97,6 +98,11 @@ public extension UIColor {
         public static let OnboardingPlaceholderText = color("OnboardingPlaceholderText")
         
         public static let FeedItemDetailDivider = color("FeedItemDetailDivider")
+        public static let RowViewsDivider = color("RowViewsDivider")
+        
+        public static let ThreadOriginalMsg = color("ThreadOriginalMsg")
+        public static let ThreadLastReply = color("ThreadLastReply")
+        public static let NewMessageIndicator = color("NewMessageIndicator")
         
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta

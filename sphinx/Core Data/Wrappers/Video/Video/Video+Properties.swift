@@ -10,7 +10,6 @@ import CoreData
 
 public class Video: NSObject {
     
-    public var objectID: NSManagedObjectID
     public var videoID: String
     public var datePublished: Date?
     public var dateUpdated: Date?
@@ -22,8 +21,9 @@ public class Video: NSObject {
     public var thumbnailURL: URL?
     public var videoFeed: VideoFeed?
     
-    init(_ objectID: NSManagedObjectID, _ videoID: String) {
-        self.objectID = objectID
+    init(
+        _ videoID: String
+    ) {
         self.videoID = videoID
     }
 }
@@ -72,7 +72,6 @@ extension Video {
     ) -> Video {
 
         let video = Video(
-            contentFeedItem.objectID,
             contentFeedItem.itemID
         )
         

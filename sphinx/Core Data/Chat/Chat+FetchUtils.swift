@@ -24,7 +24,6 @@ extension Chat {
             )
         }
         
-        
         public static func matching(id: Chat.ID) -> NSPredicate {
             let keyword = "=="
             let formatSpecifier = "%i"
@@ -34,6 +33,15 @@ extension Chat {
                 "id",
                 id
             )
+        }
+        
+        public static func all() -> NSPredicate {
+            if GroupsPinManager.sharedInstance.isStandardPIN {
+                return NSPredicate(format: "pin == null")
+            } else {
+                let currentPin = GroupsPinManager.sharedInstance.currentPin
+                return NSPredicate(format: "pin = %@", currentPin)
+            }
         }
     }
 }
@@ -90,6 +98,14 @@ extension Chat {
             return request
         }
         
+        public static func all() -> NSFetchRequest<Chat> {
+            let request: NSFetchRequest<Chat> = baseFetchRequest()
+
+            request.sortDescriptors = [Chat.SortDescriptors.nameAscending]
+            request.predicate = Predicates.all()
+
+            return request
+        }
         
         public static func matching(searchQuery: String) -> NSFetchRequest<Chat> {
             let request: NSFetchRequest<Chat> = baseFetchRequest()

@@ -47,16 +47,14 @@ class RestoreProgressView: UIView {
     
     func showRestoreProgressView(
         with progress: Int,
-        messagesStartProgress: Int
+        label: String,
+        buttonEnabled: Bool
     ) {
-        
-        let restoringMessages = (progress >= messagesStartProgress)
-        let restoreLabel = (restoringMessages ? "restoring-messages" : "restoring-content").localized
-        restoreProgressLabel.text = (progress == 0) ? "resume-restoring".localized : "\(restoreLabel) \(progress)%"
+        restoreProgressLabel.text = (progress == 0) ? "resume-restoring".localized : "\(label) \(progress)%"
         progressView.progress = Float(progress) / 100
         
-        finishRestoringButton.isEnabled = restoringMessages
-        finishRestoringButton.alpha = restoringMessages ? 1.0 : 0.5
+        finishRestoringButton.isEnabled = buttonEnabled
+        finishRestoringButton.alpha = buttonEnabled ? 1.0 : 0.5
         
         showViewAnimated()
     }

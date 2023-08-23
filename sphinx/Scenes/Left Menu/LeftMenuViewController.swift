@@ -11,7 +11,6 @@ import StoreKit
 
 class LeftMenuViewController: UIViewController {
     
-    private var rootViewController : RootViewController!
     private var walletBalanceService = WalletBalanceService()
 
     @IBOutlet weak var profileImageView: UIImageView!
@@ -79,9 +78,8 @@ class LeftMenuViewController: UIViewController {
     }
     
     
-    static func instantiate(rootViewController : RootViewController) -> LeftMenuViewController {
+    static func instantiate() -> LeftMenuViewController {
         let viewController = StoryboardScene.LeftMenu.leftMenuViewController.instantiate()
-        viewController.rootViewController = rootViewController
         return viewController
     }
     
@@ -157,11 +155,7 @@ class LeftMenuViewController: UIViewController {
         ) {
             centerVC.navigationController?.popViewController(animated: false)
         } else {
-            let dashboardRootVC = DashboardRootViewController.instantiate(
-                rootViewController: rootViewController,
-                leftMenuDelegate: self
-            )
-            
+            let dashboardRootVC = DashboardRootViewController.instantiate(leftMenuDelegate: self)
             goTo(vc: dashboardRootVC)
         }
     }
@@ -170,18 +164,36 @@ class LeftMenuViewController: UIViewController {
         supportButtonTouched()
     }
     
+    func reloadDashboard() {
+        let dashboardRootVC = DashboardRootViewController.instantiate(leftMenuDelegate: self)
+        goTo(vc: dashboardRootVC)
+    }
+    
     public func goTo(vc: UIViewController) {
-        DispatchQueue.main.async {
-            self.rootViewController.setCenterViewController(vc: vc)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            rootVC.setCenterViewController(vc: vc)
             self.closeLeftMenu()
         }
     }
     
+    public func push(vc: UIViewController) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            if let navVC = rootVC.getCenterNavigationController() {
+                
+                DispatchQueue.main.async {
+                    navVC.pushViewController(vc, animated: true)
+                }
+                
+                self.closeLeftMenu()
+            }
+        }
+    }
+    
     @IBAction func supportButtonTouched() {
-        let supportVC = SupportViewController.instantiate(rootViewController: rootViewController)
+        let supportVC = SupportViewController.instantiate()
         
-        DispatchQueue.main.async {
-            self.rootViewController.presentViewController(vc: supportVC)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            rootVC.presentViewController(vc: supportVC)
             self.closeLeftMenu()
         }
     }
@@ -228,16 +240,13 @@ extension LeftMenuViewController : UITableViewDelegate {
         
         switch (option.tag) {
         case MenuOptions.Profile:
-            let profile = ProfileViewController.instantiate(rootViewController: rootViewController, delegate: self)
-            goTo(vc: profile)
+            let profile = ProfileViewController.instantiate()
+            push(vc: profile)
         case MenuOptions.Contacts:
-            let addressBook = AddressBookViewController.instantiate(rootViewController: rootViewController)
-            goTo(vc: addressBook)
+            let addressBook = AddressBookViewController.instantiate()
+            push(vc: addressBook)
         case MenuOptions.Dashboard:
-            let dashboardRootVC = DashboardRootViewController.instantiate(
-                rootViewController: rootViewController,
-                leftMenuDelegate: self
-            )
+            let dashboardRootVC = DashboardRootViewController.instantiate(leftMenuDelegate: self)
             goTo(vc: dashboardRootVC)
         }
     }
@@ -271,40 +280,51 @@ extension LeftMenuViewController : AddFriendRowButtonDelegate {
     func didTouchAddFriend() {
         closeLeftMenu()
         
-        if let centerVC = rootViewController.getLastCenterViewController() {
-            let addfriendVC = AddFriendViewController.instantiate(rootViewController: self.rootViewController)
-            addfriendVC.delegate = centerVC as? NewContactVCDelegate
-            present(vc: addfriendVC, in: centerVC)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            if let centerVC = rootVC.getLastCenterViewController() {
+                let addfriendVC = AddFriendViewController.instantiate()
+                addfriendVC.delegate = centerVC as? NewContactVCDelegate
+                present(vc: addfriendVC, in: centerVC)
+            }
         }
     }
     
     func didTouchCreateGroup() {
         closeLeftMenu()
         
-        if let centerVC = rootViewController.getLastCenterViewController() {
-            let delegate = centerVC as? NewContactVCDelegate
-            let createTribeVC = NewPublicGroupViewController.instantiate(rootViewController: rootViewController, delegate: delegate)
-            present(vc: createTribeVC, in: centerVC)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            if let centerVC = rootVC.getLastCenterViewController() {
+                let delegate = centerVC as? NewContactVCDelegate
+                let createTribeVC = NewPublicGroupViewController.instantiate(delegate: delegate)
+                present(vc: createTribeVC, in: centerVC)
+            }
         }
     }
     
     func present(vc: UIViewController, in centerVC: UIViewController) {
         let newNC = UINavigationController(rootViewController: vc)
         newNC.isNavigationBarHidden = true
-        centerVC.present(newNC, animated: true, completion: nil)
+        
+        DispatchQueue.main.async {
+            centerVC.present(newNC, animated: true, completion: nil)
+        }
     }
 }
 
 extension LeftMenuViewController : LeftMenuDelegate {
     func shouldOpenLeftMenu() {
-        if let drawer = rootViewController?.getDrawer() {
-            drawer.setDrawerState(.opened, animated: true)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            if let drawer = rootVC.getDrawer() {
+                drawer.setDrawerState(.opened, animated: true)
+            }
         }
     }
     
     func closeLeftMenu() {
-        if let drawer = rootViewController?.getDrawer() {
-            drawer.setDrawerState(.closed, animated: true)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            if let drawer = rootVC.getDrawer() {
+                drawer.setDrawerState(.closed, animated: true)
+            }
         }
     }
 }

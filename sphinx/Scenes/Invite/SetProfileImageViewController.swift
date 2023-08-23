@@ -22,12 +22,9 @@ class SetProfileImageViewController: SetDataViewController {
     
     var imagePickerManager = ImagePickerManager.sharedInstance
     
-    static func instantiate(rootViewController : RootViewController, nickname: String?) -> SetProfileImageViewController {
+    static func instantiate(nickname: String?) -> SetProfileImageViewController {
         let viewController = StoryboardScene.Invite.setProfileImageViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
         viewController.nickname = nickname
-        
         return viewController
     }
     
@@ -40,7 +37,7 @@ class SetProfileImageViewController: SetDataViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2
         profileImageView.clipsToBounds = true
@@ -101,7 +98,7 @@ class SetProfileImageViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            let _ = self.contactsService.insertContact(contact: contact)
+            let _ = UserContactsHelper.insertContact(contact: contact)
             self.goToSphinxDesktopAd()
         }, errorCallback: {
             self.loading = false
@@ -112,7 +109,7 @@ class SetProfileImageViewController: SetDataViewController {
     func goToSphinxDesktopAd() {
         SignupHelper.step = SignupHelper.SignupStep.PersonalInfoSet.rawValue
         
-        let sphinxDesktopAdVC = SphinxDesktopAdViewController.instantiate(rootViewController: rootViewController)
+        let sphinxDesktopAdVC = SphinxDesktopAdViewController.instantiate()
         self.navigationController?.pushViewController(sphinxDesktopAdVC, animated: true)
     }
 }
@@ -145,7 +142,7 @@ extension SetProfileImageViewController : AttachmentsManagerDelegate {
     
     func didSuccessUploadingImage(url: String) {
         if let image = profileImageView.image?.fixedOrientation() {
-            MediaLoader.storeImageInCache(img: image, url: url, chat: nil)
+            MediaLoader.storeImageInCache(img: image, url: url, message: nil)
         }
         updateProfile(photoUrl: url)
     }

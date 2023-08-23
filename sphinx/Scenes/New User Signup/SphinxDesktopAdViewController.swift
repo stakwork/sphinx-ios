@@ -13,17 +13,10 @@ class SphinxDesktopAdViewController: UIViewController {
     @IBOutlet weak var getItNowButtonView: UIButton!
     @IBOutlet weak var skipButtonView: UIButton!
     
-    private var rootViewController: RootViewController!
-
     static let desktopAppStoreURL = URL(string: "https://sphinx.chat/")!
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> SphinxDesktopAdViewController {
+    static func instantiate() -> SphinxDesktopAdViewController {
         let viewController = StoryboardScene.NewUserSignup.sphinxDesktopAdViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -42,8 +35,7 @@ class SphinxDesktopAdViewController: UIViewController {
     
     
     @IBAction func skipButtonTapped(_ sender: UIButton) {
-        let sphinxReadyVC = SphinxReadyViewController.instantiate(rootViewController: rootViewController)
-        
+        let sphinxReadyVC = SphinxReadyViewController.instantiate()
         navigationController?.pushViewController(sphinxReadyVC, animated: true)
     }
 }

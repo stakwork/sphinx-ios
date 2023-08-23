@@ -78,11 +78,22 @@ public extension ContainerViewController where Self: UIViewController {
         return nil
     }
     
+    func getCenterNavigationController() -> UINavigationController? {
+        if let drawer = getDrawer(),
+            let centerNV = drawer.mainViewController as? UINavigationController {
+                return centerNV
+        }
+        return nil
+    }
+    
     func setCenterViewController(vc: UIViewController) {
-        if let drawer = getDrawer(), let centerVC = drawer.mainViewController as? UINavigationController, let lastVC = centerVC.viewControllers.last {
-            if object_getClass(vc) == object_getClass(lastVC) {
-                return
-            }
+        if let drawer = getDrawer(),
+            let centerVC = drawer.mainViewController as? UINavigationController,
+            let lastVC = centerVC.viewControllers.last {
+            
+                if object_getClass(vc) == object_getClass(lastVC) {
+                    return
+                }
         }
         
         setCenterViewControllers(vcs: [vc])

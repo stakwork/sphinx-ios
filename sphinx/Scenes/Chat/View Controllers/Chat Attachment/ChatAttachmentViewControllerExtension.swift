@@ -12,6 +12,17 @@ import SDWebImage
 import Photos
 import PhotosUI
 
+extension ChatAttachmentViewController : AttachmentsDelegate {
+    func willDismissPresentedVC() {
+        closeButtonTouched()
+    }
+    
+    func shouldStartUploading(attachmentObject: AttachmentObject) {}
+    func shouldSendGiphy(message: String, data: Data) {}
+    func didTapReceiveButton() {}
+    func didTapSendButton() {}
+}
+
 extension ChatAttachmentViewController {
     func isButtonDisabled(option: OptionsButton) -> Bool {
         switch(option) {
@@ -27,8 +38,6 @@ extension ChatAttachmentViewController {
                 return false
             }
             return true
-        case OptionsButton.Message:
-            return true
         default:
             break
         }
@@ -36,19 +45,59 @@ extension ChatAttachmentViewController {
     }
 }
 
-extension ChatAttachmentViewController : AttachmentsDelegate {
-    func willDismissPresentedVC() {
-        closeButtonTouched()
+extension ChatAttachmentViewController: ChatMessageTextFieldViewDelegate {
+    func didDetectPossibleMacro(macro: String) {
+        //
     }
     
-    func shouldStartUploading(attachmentObject: AttachmentObject) {}
-    func shouldSendGiphy(message: String) {}
-    func didTapReceiveButton() {}
-    func didTapSendButton() {}
+    func didDetectPossibleMention(mentionText: String) {
+        //Implement mentions
+    }
+    
+    func didChangeText(text: String) {
+        updatePreview(message: text, price: price)
+    }
+    
+    func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
+        shouldSend(message: text, completion: completion)
+    }
+    
+    func didTapSendBlueButton() {
+        shouldSend()
+    }
+    
+    func shouldSend(
+        message: String? = nil,
+        completion: ((Bool) -> ())? = nil
+    ) {
+        if let giphy = selectedGiphy,
+            let messageString = giphyHelper.getMessageStringFrom(media: giphy.0, text: message) {
+            delegate?.shouldSendGiphy(message: messageString, data: giphy.1)
+            dismissView()
+            completion?(true)
+            
+            return
+        }
+        uploadAndSend(message: message, completion: completion)
+    }
+    
+    func didChangeAccessoryViewHeight(heightDiff: CGFloat, updatedText: String) {
+        updatePreview(message: updatedText, price: price)
+    }
+}
+
+extension ChatAttachmentViewController : MessageReplyViewDelegate {
+    func didCloseReplyView() {
+        delegate?.didCloseReplyView()
+    }
 }
 
 extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
         DispatchQueue.main.async {
             if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 if let asset = info[UIImagePickerController.InfoKey.phAsset] as? PHAsset {
@@ -90,7 +139,11 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
         showImagePreview(image: image)
     }
     
-    func showImagePreview(image: UIImage? = nil, animatedImage: SDAnimatedImage? = nil, allowPrice: Bool = true) {
+    func showImagePreview(
+        image: UIImage? = nil,
+        animatedImage: SDAnimatedImage? = nil,
+        allowPrice: Bool = true
+    ) {
         if allowPrice { showPriceContainer() }
         loading = image == nil && animatedImage == nil
         
@@ -108,12 +161,9 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     }
     
     func showGeneralViews() {
-        containerBottomConstraint.constant = getWindowInsets().bottom
-        view.layoutIfNeeded()
-        
         headerContainer.alpha = 1.0
-        bottomView.alpha = 1.0
-        accessoryView.show(animated: false)
+        contentStackView.isHidden = false
+        bottomView.isHidden = false
     }
 
     func showMessageLabel() {
@@ -157,68 +207,6 @@ extension ChatAttachmentViewController : UIImagePickerControllerDelegate, UINavi
     }
 }
 
-extension ChatAttachmentViewController : ChatAccessoryViewDelegate {
-    
-    func didDetectPossibleMention(mentionText:String) {
-        let possibleMentions = self.chat?.aliases.filter({$0.lowercased().contains(mentionText)})
-        print(possibleMentions)
-        
-    }
-    
-    func keyboardWillShow(_ notification: Notification) {
-        adjustContentForKeyboard(shown: true, notification: notification)
-    }
-    
-    func keyboardWillHide(_ notification: Notification) {
-        adjustContentForKeyboard(shown: false, notification: notification)
-    }
-    
-    func adjustContentForKeyboard(shown: Bool, notification: Notification) {
-        if shown {
-            shouldHidePriceChildVC()
-        }
-        
-        if let keyboardEndSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let animationDuration:Double = KeyboardHelper.getKeyboardAnimationDuration(notification: notification)
-            let animationCurve:Int = KeyboardHelper.getKeyboardAnimationCurve(notification: notification)
-            
-            let keyboardHeight = !shown ? getWindowInsets().bottom : keyboardEndSize.height
-            self.containerBottomConstraint.constant = keyboardHeight
-
-            UIView.animate(withDuration: animationDuration, delay: 0, options: UIView.AnimationOptions(rawValue: UIView.AnimationOptions.RawValue(animationCurve)), animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        }
-    }
-    
-    func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
-        shouldSend(message: text)
-    }
-    
-    func didTapSendBlueButton() {
-        shouldSend()
-    }
-    
-    func shouldSend(message: String? = nil) {
-        if let giphy = selectedGiphy, let messageString = giphyHelper.getMessageStringFrom(media: giphy, text: message) {
-            delegate?.shouldSendGiphy(message: messageString)
-            dismissView()
-            return
-        }
-        uploadAndSend(message: message)
-    }
-    
-    func didCloseReplyView() {
-        accessoryViewHeightConstraint.constant = accessoryView.viewContentSize().height
-        delegate?.didCloseReplyView()
-    }
-    
-    func didChangeAccessoryViewHeight(heightDiff: CGFloat, updatedText: String) {
-        accessoryViewHeightConstraint.constant = accessoryView.viewContentSize().height
-        updatePreview(message: updatedText, price: price)
-    }
-}
-
 extension ChatAttachmentViewController {
     func showPreviewVC() {
         previewVC = PaidMessagePreviewViewController.instantiate()
@@ -231,7 +219,7 @@ extension ChatAttachmentViewController {
     func updatePreview(message: String, price: Int) {
         if let previewVC = previewVC {
             let previewMessage = message == ChatAttachmentViewController.kFieldPlaceHolder ? "" : message
-            previewVC.configureMessageRow(text: previewMessage, price: price)
+            previewVC.configureMessageWith(text: previewMessage, andPrice: price)
         }
     }
 }
@@ -257,7 +245,7 @@ extension ChatAttachmentViewController : AttachmentPriceDelegate {
             priceLabel.text = (amount > 0) ? "\(amountString)" : "set.price.upper".localized
             priceUnitLabel.text = (amount > 0) ? "sat" : ""
             
-            updatePreview(message: accessoryView.getMessage(), price: price)
+            updatePreview(message: newChatAccessoryView.getMessage(), price: price)
         }
     }
 }
@@ -271,7 +259,9 @@ extension ChatAttachmentViewController : GiphyDelegate {
                 if let data = data {
                     let animated = SDAnimatedImage(data: data)
                     let image = UIImage(data: data)
-                    self.selectedGiphy = media
+                    
+                    self.selectedGiphy = (media, data)
+                    
                     self.gifSelected(animatedImage: animated, staticImage: image, allowPrice: false)
                 }
             })
@@ -279,7 +269,6 @@ extension ChatAttachmentViewController : GiphyDelegate {
     }
     
     func hideAllGiphyView(giphyViewController: GiphyUISDK.GiphyViewController) {
-        accessoryView.kCharacterLimit = 200
         hideOptionsContainer()
         showImagePreview(allowPrice: false)
         giphyViewController.dismiss(animated: true, completion: nil)
@@ -289,7 +278,10 @@ extension ChatAttachmentViewController : GiphyDelegate {
 }
 
 extension ChatAttachmentViewController : UIDocumentPickerDelegate {
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+    func documentPicker(
+        _ controller: UIDocumentPickerViewController,
+        didPickDocumentAt url: URL
+    ) {
         do {
             selectedFileData = try Data(contentsOf: url)
         } catch {}

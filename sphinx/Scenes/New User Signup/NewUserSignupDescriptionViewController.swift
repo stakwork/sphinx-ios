@@ -13,16 +13,9 @@ class NewUserSignupDescriptionViewController: UIViewController {
     @IBOutlet weak var continueButtonContainer: UIView!
     @IBOutlet weak var continueButton: UIButton!
 
-    private var rootViewController: RootViewController!
-
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> NewUserSignupDescriptionViewController {
+    static func instantiate() -> NewUserSignupDescriptionViewController {
         let viewController = StoryboardScene.NewUserSignup.newUserSignupDescriptionViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -36,10 +29,7 @@ class NewUserSignupDescriptionViewController: UIViewController {
     
     
     @IBAction func continueButtonTapped(_ sender: UIButton) {
-        let newUserSignupFormVC = NewUserSignupFormViewController.instantiate(
-            rootViewController: rootViewController
-        )
-        
+        let newUserSignupFormVC = NewUserSignupFormViewController.instantiate()
         self.navigationController?.pushViewController(newUserSignupFormVC, animated: true)
     }
 }

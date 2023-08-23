@@ -59,9 +59,13 @@ extension API {
         }
     }
     
-    public func verifyAuthentication(id: String, sig: String, callback: @escaping VerifyAuthenticationCallback) {
-        let hexEncodedPubKey = UserContact.getOwner()?.publicKey ?? ""
-        let url = "\(API.kAttachmentsServerUrl)/verify?id=\(id)&sig=\(sig)&pubkey=\(hexEncodedPubKey)"
+    public func verifyAuthentication(
+        id: String,
+        sig: String,
+        pubkey: String,
+        callback: @escaping VerifyAuthenticationCallback
+    ) {
+        let url = "\(API.kAttachmentsServerUrl)/verify?id=\(id)&sig=\(sig)&pubkey=\(pubkey)"
         
         guard let request = createRequest(url, bodyParams: nil, method: "POST", contentType: "multipart/form-data") else {
             callback(nil)
@@ -154,7 +158,11 @@ extension API {
         }
     }
     
-    public func sendAttachment(params: [String : AnyObject], callback: @escaping MessageObjectCallback, errorCallback: @escaping EmptyCallback) {
+    public func sendAttachment(
+        params: [String : AnyObject],
+        callback: @escaping MessageObjectCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
         guard let request = getURLRequest(route: "/attachment", params: params as NSDictionary?, method: "POST") else {
             errorCallback()
             return

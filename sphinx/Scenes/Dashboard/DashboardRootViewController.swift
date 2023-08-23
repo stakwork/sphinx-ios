@@ -47,13 +47,13 @@ class DashboardRootViewController: RootViewController {
     }
     
     
-    internal var rootViewController: RootViewController!
     internal weak var leftMenuDelegate: LeftMenuDelegate?
     
     internal var managedObjectContext: NSManagedObjectContext!
     internal let onionConnector = SphinxOnionConnector.sharedInstance
     internal let socketManager = SphinxSocketManager.sharedInstance
     internal let actionsManager = ActionsManager.sharedInstance
+    internal let contactsService = ContactsService.sharedInstance
     internal let refreshControl = UIRefreshControl()
     
     internal let newBubbleHelper = NewMessageBubbleHelper()
@@ -61,7 +61,7 @@ class DashboardRootViewController: RootViewController {
     internal let podcastPlayerController = PodcastPlayerController.sharedInstance
 
     internal lazy var chatsListViewModel: ChatListViewModel = {
-        ChatListViewModel(contactsService: contactsService)
+        ChatListViewModel()
     }()
     
     
@@ -80,14 +80,14 @@ class DashboardRootViewController: RootViewController {
     
     internal lazy var contactChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.contactChats,
+            tab: ChatsContainerViewController.Tab.Friends,
             chatsListDelegate: self
         )
     }()
     
     internal lazy var tribeChatsContainerViewController: ChatsContainerViewController = {
         ChatsContainerViewController.instantiate(
-            chats: chatsListViewModel.tribeChats,
+            tab: ChatsContainerViewController.Tab.Tribes,
             chatsListDelegate: self
         )
     }()
@@ -96,9 +96,6 @@ class DashboardRootViewController: RootViewController {
     internal var activeTab: DashboardTab = .friends {
         didSet {
             let newViewController = mainContentViewController(forActiveTab: activeTab)
-            let oldViewController = mainContentViewController(forActiveTab: oldValue)
-            
-            removeChildVC(child: oldViewController)
             
             addChildVC(
                 child: newViewController,
@@ -139,19 +136,25 @@ class DashboardRootViewController: RootViewController {
         }
     }
     
+    func forceShowLoadingWheel() {
+        didFinishInitialLoading = false
+        isLoading = true
+    }
+    
+    func forceHideLoadingWheel() {
+        didFinishInitialLoading = true
+        isLoading = false
+    }
     
     var isLoading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(
-                loading:
-                    (isLoading && didFinishInitialLoading == false)
-                    || onionConnector.isConnecting(),
+                loading: (isLoading && didFinishInitialLoading == false) || onionConnector.isConnecting(),
                 loadingWheel: headerView.loadingWheel,
                 loadingWheelColor: UIColor.white,
                 views: [
                     searchBarContainer,
-                    mainContentContainerView,
-                    bottomBarContainer,
+                    bottomBarContainer
                 ]
             )
         }
@@ -162,21 +165,11 @@ class DashboardRootViewController: RootViewController {
     var indicesOfTabsWithNewMessages: [Int] {
         var indices = [Int]()
 
-        let contacts = chatsListViewModel.contactsService.chatListObjects.filter { $0.isConversation() }
-        if contacts
-            .contains(
-                where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
-            )
-        {
+        if contactsService.contactsHasNewMessages {
             indices.append(1)
         }
         
-        let tribes = chatsListViewModel.contactsService.chatListObjects.filter { $0.isPublicGroup() }
-        if tribes
-            .contains(
-                where: { $0.getChat()?.getReceivedUnseenMessagesCount() ?? 0 > 0 }
-            )
-        {
+        if contactsService.chatsHasNewMessages {
             indices.append(2)
         }
         
@@ -191,13 +184,11 @@ class DashboardRootViewController: RootViewController {
 extension DashboardRootViewController {
     
     static func instantiate(
-        rootViewController: RootViewController,
         leftMenuDelegate: LeftMenuDelegate,
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     ) -> DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
-        viewController.rootViewController = rootViewController
         viewController.leftMenuDelegate = leftMenuDelegate
         viewController.managedObjectContext = managedObjectContext
         
@@ -226,6 +217,12 @@ extension DashboardRootViewController {
         activeTab = .friends
         
         loadLastPlayedPod()
+        
+        NotificationCenter.default.removeObserver(self, name: .onContactsAndChatsChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .onSizeConfigurationChanged, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: .onContactsAndChatsChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
     }
     
     func loadLastPlayedPod() {
@@ -280,8 +277,8 @@ extension DashboardRootViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        rootViewController.setStatusBarColor(light: true)
-        socketManager.setDelegate(delegate: self)
+        setStatusBarColor()
+        
         headerView.delegate = self
         
         podcastPlayerController.addDelegate(
@@ -310,7 +307,7 @@ extension DashboardRootViewController {
         setupAddTribeButton()
         
         if let stashedQuery = UserDefaults.Keys.stashedQuery.get(defaultValue: ""),
-           let url = URL(string:"sphinx.chat://?\(stashedQuery)"){
+           let url = URL(string:"sphinx.chat://?\(stashedQuery)") {
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
             self.handleLinkQueries()
         }
@@ -324,34 +321,13 @@ extension DashboardRootViewController {
 extension DashboardRootViewController {
     
     public func handleDeepLinksAndPush() {
-        deepLinkIntoChatDetails()
         handleLinkQueries()
-    }
-
-    
-    public func deepLinkIntoChatDetails() {
-        if
-            let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1),
-            let chat = Chat.getChatWith(id: chatId)
-        {
-            presentChatDetailsVC(for: chat)
-        } else if
-            let contactId = UserDefaults.Keys.contactId.get(defaultValue: -1),
-            let contact = UserContact.getContactWith(id: contactId)
-        {
-            presentChatDetailsVC(for: nil, contact: contact)
-        }
-
-        UserDefaults.Keys.contactId.removeValue()
-        UserDefaults.Keys.chatId.removeValue()
     }
 }
 
 
 // MARK: -  Action Handling
 extension DashboardRootViewController {
-    
-    
     
     @IBAction func bottomBarButtonTouched(_ sender: UIButton) {
         guard let button = BottomBarButton(rawValue: sender.tag) else {
@@ -373,10 +349,7 @@ extension DashboardRootViewController {
     func scanQRCodeButtonTouched(
         mode: NewQRScannerViewController.Mode
     ) {
-        let viewController = NewQRScannerViewController.instantiate(
-            rootViewController: rootViewController,
-            currentMode: mode
-        )
+        let viewController = NewQRScannerViewController.instantiate(currentMode: mode)
         
         viewController.delegate = self
         
@@ -389,15 +362,13 @@ extension DashboardRootViewController {
     }
     
     func transactionsHistoryButtonTouched() {
-        let viewController = HistoryViewController.instantiate(
-            rootViewController: rootViewController
-        )
+        let viewController = HistoryViewController.instantiate()
         
         presentNavigationControllerWith(vc: viewController)
     }
     
     func presentNewContactVC(pubkey:String){
-        let newContactVC = NewContactViewController.instantiate(rootViewController: self.rootViewController,pubkey:pubkey)
+        let newContactVC = NewContactViewController.instantiate(pubkey: pubkey)
         newContactVC.delegate = self
         self.present(newContactVC, animated: true)
     }
@@ -405,11 +376,9 @@ extension DashboardRootViewController {
     
     func sendSatsButtonTouched(pubkey:String?=nil) {
         let viewController = CreateInvoiceViewController.instantiate(
-            viewModel: ChatViewModel(),
             delegate: self,
-            paymentMode: CreateInvoiceViewController.paymentMode.send,
-            preloadedPubkey: pubkey,
-            rootViewController: rootViewController
+            paymentMode: PaymentsViewModel.PaymentMode.send,
+            preloadedPubkey: pubkey
         )
         
         presentNavigationControllerWith(vc: viewController)
@@ -418,9 +387,7 @@ extension DashboardRootViewController {
     
     func requestSatsButtonTouched() {
         let viewController = CreateInvoiceViewController.instantiate(
-            viewModel: ChatViewModel(),
-            delegate: self,
-            rootViewController: rootViewController
+            delegate: self
         )
         
         presentNavigationControllerWith(vc: viewController)
@@ -480,13 +447,13 @@ extension DashboardRootViewController {
     internal func resetSearchField() {
         searchTextField?.text = ""
         view.endEditing(true)
+        contactsService.resetSearches()
     }
     
     
     internal func handleLinkQueries() {
         if DeepLinksHandlerHelper.didHandleLinkQuery(
             vc: self,
-            rootViewController: rootViewController,
             delegate: self
         ) {
             isLoading = false
@@ -497,21 +464,55 @@ extension DashboardRootViewController {
     internal func loadContactsAndSyncMessages(
         shouldShowHeaderLoadingWheel: Bool = false
     ) {
-        updateCurrentViewControllerData()
-        
         self.shouldShowHeaderLoadingWheel = shouldShowHeaderLoadingWheel
         
         isLoading = true
         headerView.updateBalance()
-
-        chatsListViewModel.loadFriends() { [weak self] restoring in
+        
+        if chatsListViewModel.isRestoring() {
+            DispatchQueue.main.async {
+                self.restoreProgressView.showRestoreProgressView(
+                    with: 1,
+                    label: "restoring-contacts".localized,
+                    buttonEnabled: false
+                )
+            }
+        }
+        
+        var contactsProgressShare : Float = 0.01
+        
+        chatsListViewModel.loadFriends(
+            progressCompletion: { restoring in
+                if restoring {
+                    
+                    contactsProgressShare += 0.01
+                    
+                    DispatchQueue.main.async {
+                        self.restoreProgressView.showRestoreProgressView(
+                            with: Int(contactsProgressShare * 100),
+                            label: "restoring-contacts".localized,
+                            buttonEnabled: false
+                        )
+                    }
+                }
+            }
+        ) { [weak self] restoring in
             guard let self = self else { return }
             
             if restoring {
-                self.chatsListViewModel.askForNotificationPermissions()
                 
-                self.chatsListViewModel.updateContactsAndChats()
-                self.updateCurrentViewControllerData()
+                DispatchQueue.main.async {
+                    self.restoreProgressView.showRestoreProgressView(
+                        with: Int(contactsProgressShare * 100),
+                        label: "restoring-contacts".localized,
+                        buttonEnabled: false
+                    )
+                }
+                
+                self.chatsListViewModel.askForNotificationPermissions()
+                self.contactsService.forceUpdate()
+            } else {
+                self.contactsService.configureFetchResultsController()
             }
             
             var contentProgressShare : Float = 0.0
@@ -522,10 +523,13 @@ extension DashboardRootViewController {
                     contentProgressShare = 0.1
                     
                     if (contentProgress >= 0 && restoring) {
+                        let contentProgress = Int(contentProgressShare * Float(contentProgress))
+                        
                         DispatchQueue.main.async {
                             self.restoreProgressView.showRestoreProgressView(
-                                with: Int(contentProgressShare * Float(contentProgress)),
-                                messagesStartProgress: Int(contentProgressShare * Float(100))
+                                with: contentProgress + Int(contactsProgressShare * 100),
+                                label: "restoring-content".localized,
+                                buttonEnabled: false
                             )
                         }
                     }
@@ -535,17 +539,21 @@ extension DashboardRootViewController {
                         progressCallback: { progress in
                             if (restoring) {
                                 self.isLoading = false
-                                let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare))
+                                let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare - contactsProgressShare))
                                 
                                 if (progress >= 0) {
-                                    self.restoreProgressView.showRestoreProgressView(
-                                        with: messagesProgress + Int(contentProgressShare * 100),
-                                        messagesStartProgress: Int(contentProgressShare * Float(100))
-                                    )
+                                    DispatchQueue.main.async {
+                                        self.restoreProgressView.showRestoreProgressView(
+                                            with: messagesProgress + Int(contentProgressShare * 100) + Int(contactsProgressShare * 100),
+                                            label: "restoring-messages".localized,
+                                            buttonEnabled: true
+                                        )
+                                    }
                                 } else {
                                     self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
                                 }
                                 
+                                self.contactsService.forceUpdate()
                             }
                         },
                         completion: { (_,_) in
@@ -579,24 +587,21 @@ extension DashboardRootViewController {
         )
     }
     
+    @objc func sizeDidChange() {
+        contactChatsContainerViewController.reloadCollectionView()
+        tribeChatsContainerViewController.reloadCollectionView()
+    }
     
-    internal func updateCurrentViewControllerData() {
+    @objc func dataDidChange() {
         updateNewMessageBadges()
         
-        let queryString = searchTextField?.text ?? ""
+        contactChatsContainerViewController.updateWithNewChats(
+            contactsService.contactListObjects
+        )
         
-        switch activeTab {
-        case .feed:
-            break
-        case .friends:
-            contactChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.contactChats(fromSearchQuery: queryString)
-            )
-        case .tribes:
-            tribeChatsContainerViewController.updateWithNewChats(
-                chatsListViewModel.tribeChats(fromSearchQuery: queryString)
-            )
-        }
+        tribeChatsContainerViewController.updateWithNewChats(
+            contactsService.chatListObjects
+        )
     }
     
     
@@ -613,10 +618,6 @@ extension DashboardRootViewController {
     
     
     internal func finishLoading() {
-        defer { didFinishInitialLoading = true }
-        
-        updateCurrentViewControllerData()
-        
         newBubbleHelper.hideLoadingWheel()
         restoreProgressView.hideViewAnimated()
         
@@ -625,6 +626,9 @@ extension DashboardRootViewController {
         
         updateNewMessageBadges()
         
+        didFinishInitialLoading = true
+        
+        contactsService.configureFetchResultsController()
     }
     
     
@@ -644,29 +648,18 @@ extension DashboardRootViewController {
         didRetry:Bool = false
     ) {
         let contact = contact ?? chat?.getContact()
-        
+
         if handleInvite(for: contact) {
             return
         }
         
-        if let topVC = topMostViewController() as? NewPodcastPlayerViewController, didRetry == false {
-            topVC.dismiss(animated: false)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.presentChatDetailsVC(for: chat,didRetry: true)///retry
-            })
-            return
-        }
-        
-        let chatVC = ChatViewController.instantiate(
-            contact: contact,
-            chat: chat,
-            contactsService: contactsService,
-            rootViewController: rootViewController
+        let chatVC = NewChatViewController.instantiate(
+            contactId: contact?.id,
+            chatId: chat?.id,
+            chatListViewModel: chatsListViewModel
         )
         
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)
-        
-        resetSearchField()
     }
     
     private func handleInvite(for contact: UserContact?) -> Bool {
@@ -706,11 +699,10 @@ extension DashboardRootViewController {
     private func payInvite(invite: UserInvite) {
         AlertHelper.showTwoOptionsAlert(title: "pay.invitation".localized, message: "", confirm: {
             self.chatsListViewModel.payInvite(invite: invite, completion: { contact in
-                if let contact = contact {
-                    self.didUpdateContact(contact: contact)
-                } else {
-                    AlertHelper.showAlert(title: "generic.error.title".localized, message: "payment.failed".localized)
+                if let _ = contact {
+                    return
                 }
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "payment.failed".localized)
             })
         })
     }

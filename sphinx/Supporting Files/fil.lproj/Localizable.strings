@@ -12,6 +12,7 @@
 "save.upper" = "I-SAVE";
 "cancel" = "Kanselahin";
 "done" = "Tapos";
+"delete" = "Delete";
 "yes" = "Oo";
 "no" = "Hindi";
 "uploaded.progress" = "Na-upload: %d %%";
@@ -23,6 +24,8 @@
 "today" = "Ngayon";
 "join" = "Sumali";
 "open" = "Buksan";
+"match" = "match";
+"matches" = "matches";
 "connected.to.node" = "Kumunekta sa Node";
 "socket.disconnected" = "Hindi available ang Live updates";
 "unable.to.connect" = "HIndi makakunekta sa Node";
@@ -88,6 +91,7 @@
 "tribe.details" = "Mga Detalye ng Tribo";
 "share.group" = "Ibahagi ang QR code ng tribo";
 "create.call" = "Lumikha ng Tawag";
+"search.messages" = "Search Messages";
 "share.group.link" = "QR code sa Pagsali sa Tribo";
 "group.members.upper" = "MGA MIYEMBRO NG GRUPO";
 "tribe.members.upper" = "MGA MIYEMBRO NG TRIBO";
@@ -189,6 +193,7 @@
 "restoring-progress" = "Ibinabalik:";
 "restoring-content" = "Pagpapanumbalik ng nilalaman:";
 "restoring-messages" = "Pagpapanumbalik ng mga mensahe:";
+"restoring-contacts" = "Restoring contacts:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Mayroon akong Connection Code";
@@ -260,9 +265,9 @@
 "profile.github-pat.success" = "Matagumpay na naitakda ang Github Personal Access Token";
 "profile.setup-signing-device" = "I-setup ang Signing Device";
 "profile.configure-signing-device" = "I-configure ang Signing Device";
-"profile.lightning-ip-title" = "IP ng lightning node";
-"profile.lightning-ip-message" = "Ilagay ang IP ng iyong lightning node";
-"profile.lightning-ip-error" = "Hindi maaaring walang laman ang Lightning node IP";
+"profile.lightning-url-title" = "URL ng lightning node";
+"profile.lightning-url-message" = "Ilagay ang URL ng iyong lightning node";
+"profile.lightning-url-error" = "Hindi maaaring walang laman ang Lightning node URL";
 "profile.lightning-port-title" = "Lightning node Port";
 "profile.lightning-port-message" = "Ilagay ang numbero ng Port ng iyong lightning node";
 "profile.lightning-port-error" = "Hindi maaaring walang laman ang port";
@@ -281,6 +286,14 @@
 "profile.mnemonic-copied" = "Ang mga Mnemonic na salita  ay nakopya na sa clipboard";
 "profile.bitcoin-network" = "Bitcoin Network";
 "profile.select-bitcoin-network" = "Piliin ang Bitcoin Network";
+"profile.mnemonic-generation-title" = "Mnemonic generation";
+"profile.mnemonic-generation-description" = "Choose the option of your preference";
+"profile.mnemonic-enter-title" = "Mnemonic words";
+"profile.mnemonic-enter-description" = "Enter your 12 or 24 mnemonic words separated by a space";
+"profile.mnemonic-enter-error" = "The entered words are not valid";
+"profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
+"profile.mnemonic-enter-format-error" = "Enter your 12/24 mnemonic words";
+"profile.mnemonic-generate" = "Generate random mnemonic words";
 
 //PIN
 "choose.pin.upper" = "PUMILI NG PIN";
@@ -317,6 +330,7 @@
 "sorry" = "Paumanhin";
 "code.not.recognized" = "Hindi namin nakikilala ang ganitong uri ng code.";
 "expired" = "Nag-expire na: ";
+"expired.invoice" = "Expired Invoice";
 "invoice" = "Invoice";
 "confirm.pay.invoice" = "Sigurado ka bang gusto mong bayaran ang invoice na ito?";
 
@@ -326,8 +340,9 @@
 "chat.muted.message" = "Naka-mute na ang chat. Hindi ka makakatanggap ng mga push notipikasyon para sa mga papasok na mensahe sa chat na ito";
 "pay.invitation" = "Magbayad para sa imbitasyon";
 "payment.failed" = "Nabigo ang pagbabayad, subukang muli sa ibang pagkakataon";
-"expires.in" = "Mag-e-expire sa %@ minuto";
+"expires.in" = "Mag-e-expire sa %d minuto";
 "invoice.paid.on" = "Nagbayad ng Invoice sa %@";
+"invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Nag-expire ang mga termino ng media";
 "message.failed" = "Nabigo ang Mensahe";
 "invite.name" = "Paanyaya: %@";
@@ -363,6 +378,9 @@
 "save.file" = "I-Save ang File";
 "flag.item" = "Flag";
 "delete.message" = "Tanggalin ang Mensahe";
+"show.thread" = "Show Thread";
+"threads" = "Threads";
+"thread" = "Thread";
 "pin.message" = "Pin Message";
 "unpin.message" = "Unpin Message";
 "message.pinned" = "Message Pinned";
@@ -380,7 +398,7 @@
 "paid.message.capitalize" = "Bayad na Mensahe";
 "message.not.supported" = "Hindi suportado ang mensahe";
 "from.lower" = "mula sa";
-"purchase.item.description" = "Bumili ng item %@";
+"purchase.item.description" = "Bumili ng item";
 "item.purchased" = "Nabili ang item";
 "item.purchase.denied" = "Tinanggihan ang pagbili ng item";
 "confirm.purchase" = "Kumpirmahin ang Pagbili";
@@ -388,6 +406,7 @@
 "bot.response" = "Sagot ng Bot";
 "file" = "File";
 "downloading.file" = "Nagda-download ng file...";
+"downloaded.content" = "Nilusong na Nilalaman";
 "amount.too.low" = "Masyadong mababa ang halaga";
 "amount.too.high" = "Masyadong mataas ang halaga";
 "onchain.amount.too.low" = "Masyadong mababa ang halaga. Pinakamaliit na maari ay 250000 sats";
@@ -578,3 +597,34 @@
 "badges.deactivation-success" = "Matagumpay na na-deactivate ang mga badge";
 "member-profile.moderator" = "MODERATOR";
 "member-profile.tribe-member" = "MIYEMBRO NG TRIBU";
+
+//STORAGE MANAGEMENT
+"storage.management.loading.deletion" = "Deleting";
+"storage.management.loading.deletion.subtitle" = "It may take up to a minute...";
+"saving.limit.warning" = "Saving this limit will delete at least %@ of your oldest data";
+"deletion.warning.title" = "You've chosen to delete %@";
+"deletion.warning.subtitle" = "This action deletes all of the selected files permanently and cannot be undone.";
+"are.you.sure.deletion.warning" = "Continuing will delete all of your %@.";
+"storage.management.this.podcast" = "the selected podcast episode(s)";
+"storage.management.chat.media" = "all chat media";
+"storage.management.selected.chat.media" = "the selected chat media";
+"storage.management.audio.files" = "all podcast episodes";
+"storage.management.video" = "all video";
+"storage.management.images" = "all images";
+"storage.management.files" = "all files";
+"are.you.sure" = "Are you sure?";
+"chat.media" = "chat media";
+"storage.management.deletion.complete.title" = "%@ successfully deleted";
+"storage.management.deletion.complete.subtitle" = "You have freed up %@ storage space";
+
+//MACRO
+"send.giphy" = "Send Giphy";
+"start.audio.call" = "Start Audio Call";
+"start.video.call" = "Start Video Call";
+"send.payment" = "Send Payment";
+"request.payment" = "Request Payment";
+
+//THREAD
+"more-replies" = "more replies";
+"show-more" = "SHOW MORE";
+"show-less" = "SHOW LESS";

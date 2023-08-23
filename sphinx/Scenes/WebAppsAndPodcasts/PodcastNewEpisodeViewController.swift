@@ -25,28 +25,44 @@ class PodcastNewEpisodeViewController: UIViewController {
         return viewController
     }
     
-    static func checkForNewEpisode(chat: Chat, rootViewController: RootViewController) {
+    static func checkForNewEpisode(
+        chatId: Int?
+    ) {
+        if let chatId = chatId, let chat = Chat.getChatWith(id: chatId) {
+            if let podcast = chat.podcast {
+                checkForNewEpisode(podcast: podcast)
+            }
+        }
+    }
+    
+    static func checkForNewEpisode(
+        chat: Chat
+    ) {
         if let podcast = chat.podcast {
-            if (chat.podcast?.episodes ?? []).count == 0 { return }
-            guard let chatId = rootViewController.getChatVCId() else { return }
-            if chatId != chat.id { return }
+            checkForNewEpisode(podcast: podcast)
+        }
+    }
+    
+    static func checkForNewEpisode(
+        podcast: PodcastFeed
+    ) {
+        if podcast.episodes?.count == 0 { return }
 
-            let lastStoredEpisodeId = podcast.lastEpisodeId ?? podcast.currentEpisodeId
+        let lastStoredEpisodeId = podcast.lastEpisodeId ?? podcast.currentEpisodeId
 
-            if podcast.episodesArray.count > 0 {
+        if podcast.episodesArray.count > 0 {
+            
+            let lastEpisode = podcast.episodesArray[0]
+            let lastEpisodeId = lastEpisode.itemID
+            
+            podcast.lastEpisodeId = lastEpisodeId
+
+            if !lastStoredEpisodeId.isEmpty &&
+                lastStoredEpisodeId != lastEpisodeId {
                 
-                let lastEpisode = podcast.episodesArray[0]
-                let lastEpisodeId = lastEpisode.itemID
-                
-                podcast.lastEpisodeId = lastEpisodeId
-
-                if !lastStoredEpisodeId.isEmpty &&
-                    lastStoredEpisodeId != lastEpisodeId {
-                    
-                    let podcastNewEpisodeVC = PodcastNewEpisodeViewController.instantiate()
-                    podcastNewEpisodeVC.episode = lastEpisode
-                    WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastNewEpisodeVC)
-                }
+                let podcastNewEpisodeVC = PodcastNewEpisodeViewController.instantiate()
+                podcastNewEpisodeVC.episode = lastEpisode
+                WindowsManager.sharedInstance.showConveringWindowWith(rootVC: podcastNewEpisodeVC)
             }
         }
     }

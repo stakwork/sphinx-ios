@@ -21,9 +21,10 @@
 "save.upper" = "GUARDAR";
 "cancel" = "Cancelar";
 "done" = "Listo";
+"delete" = "Eliminar";
 "yes" = "Si";
 "no" = "No";
-"uploaded.progress" = "Subido: %d %%";
+"uploaded.progress" = "Subiendo: %d %%";
 "public.key" = "Clave Pública";
 "route.hint" = "Pista de Ruta";
 "name.you" = "Tú";
@@ -32,6 +33,8 @@
 "today" = "Hoy";
 "join" = "Unirse";
 "open" = "Abrir";
+"match" = "coincidencia";
+"matches" = "coincidencias";
 "connected.to.node" = "Conectado al Nodo";
 "socket.disconnected" = "Actualizaciones en tiempo real\nno disponibles";
 "unable.to.connect" = "No es posible conectarse al Nodo";
@@ -100,6 +103,7 @@
 "tribe.details" = "Detalles de la Tribu";
 "share.group" = "Compartir código QR";
 "create.call" = "Crear Llamada";
+"search.messages" = "Buscar Mensajes";
 "share.group.link" = "Código QR de la tribu";
 "group.members.upper" = "MIEMBROS DEL GRUPO";
 "tribe.members.upper" = "MIEMBROS DE LA TRIBU";
@@ -202,6 +206,7 @@
 "restoring-progress" = "Restaurando:";
 "restoring-content" = "Restaurando contenido:";
 "restoring-messages" = "Restaurando mensajes:";
+"restoring-contacts" = "Restaurando contactos:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Tengo un código de conexión";
@@ -273,9 +278,9 @@
 "profile.github-pat.success" = "El Personal Access Token de Github ha sido establecido con éxito";
 "profile.setup-signing-device" = "Configurar Dispositivo de firma";
 "profile.configure-signing-device" = "Configurar Dispositivo de firma";
-"profile.lightning-ip-title" = "IP del nodo de lightning";
-"profile.lightning-ip-message" = "Ingresa la IP de tu nodo de lightning";
-"profile.lightning-ip-error" = "La IP no puede ser vacía";
+"profile.lightning-url-title" = "URL del nodo de lightning";
+"profile.lightning-url-message" = "Ingresa la URL de tu nodo de lightning";
+"profile.lightning-url-error" = "La URL no puede ser vacía";
 "profile.lightning-port-title" = "Puerto del nodo de lightning";
 "profile.lightning-port-message" = "Ingresa el número de puerto de tu nodo de lightning";
 "profile.lightning-port-error" = "El Puerto no puede ser vacío";
@@ -294,6 +299,13 @@
 "profile.mnemonic-copied" = "Palabras de seguridad copiadas al portapapeles";
 "profile.bitcoin-network" = "Red de Bitcoin";
 "profile.select-bitcoin-network" = "Seleccioná la red de Bitcoin";
+"profile.mnemonic-generation-title" = "Generación de palabras de seguridad";
+"profile.mnemonic-generation-description" = "Elegí la opción de tu preferencia";
+"profile.mnemonic-enter-title" = "Palabras de seguridad";
+"profile.mnemonic-enter-description" = "Ingresá 12 o 24 palabras de seguridad separadas por un espacio";
+"profile.mnemonic-enter-error" = "Las palabras ingresadas no son válidas";
+"profile.mnemonic-enter" = "Ingresá tus 12/24 palabras de seguridad";
+"profile.mnemonic-generate" = "Generar palabras de seguridad al azar";
 
 //PIN
 "choose.pin.upper" = "ELIGE TU PIN";
@@ -331,6 +343,7 @@
 "sorry" = "Lo lamentamos";
 "code.not.recognized" = "No podemos reconocer este tipo de código.";
 "expired" = "Caducado: ";
+"expired.invoice" = "Solicitud caducada";
 "invoice" = "Solicitud";
 "confirm.pay.invoice" = "¿Estás seguro que deseas pagar esta solicitud?";
 "pub.key.options" = "Opciones de Public Key";
@@ -343,8 +356,9 @@
 "chat.muted.message" = "La conversación está ahora silenciada. No recibirás notificaciones para las mensajes entrantes en esta conversación.";
 "pay.invitation" = "Pagar la invitación";
 "payment.failed" = "Pago fallido, inténtalo nuevamente más tarde";
-"expires.in" = "Caduca en %@ minutos";
+"expires.in" = "Caduca en %d minutos";
 "invoice.paid.on" = "Solicitud pagada el %@";
+"invoice.amount.paid.on" = "Solicitud de %@ sats pagada el %@";
 "media.terms.expired" = "Archivo caducado";
 "message.failed" = "Mensaje fallido";
 "invite.name" = "Invitación: %@";
@@ -380,6 +394,9 @@
 "save.file" = "Descargar";
 "flag.item" = "Reportar";
 "delete.message" = "Eliminar Mensaje";
+"show.thread" = "Mostrar Tema";
+"threads" = "Temas";
+"thread" = "Tema";
 "pin.message" = "Fijar Mensaje";
 "unpin.message" = "Remover Fijado";
 "message.pinned" = "Mensaje Fijado";
@@ -397,7 +414,7 @@
 "paid.message.capitalize" = "Mensaje Pago";
 "message.not.supported" = "Formato no válido";
 "from.lower" = "de";
-"purchase.item.description" = "Mensaje pago %@";
+"purchase.item.description" = "Mensaje pago";
 "item.purchased" = "Pago de artículo";
 "item.purchase.denied" = "Pago de artículo denegado";
 "confirm.purchase" = "Confirmar Compra";
@@ -405,6 +422,7 @@
 "bot.response" = "Respuesta de Bot";
 "file" = "Archivo";
 "downloading.file" = "Descargando archivo...";
+"downloaded.content" = "Contenido Descargado";
 "amount.too.low" = "Importe demasiado bajo";
 "amount.too.high" = "Importe demasiado alto";
 "onchain.amount.too.low" = "Importe demasiado bajo. Mínimo 250000 sats";
@@ -612,7 +630,21 @@
 "deletion.warning.title" = "Has escogido eliminar todos tus %@";
 "deletion.warning.subtitle" = "Esta acción elimina permanentemente todos los archivos seleccionados y no se puede deshacer.";
 "storage.management.audio.files" = "archivos de audio";
-"storage.management.video" = "video";
-"storage.management.images" = "imágenes";
+"storage.management.this.podcast" = "el/los episodio(s) de podcast seleccionado";
+"storage.management.video" = "todos los videos";
+"storage.management.images" = "todos los imágenes";
+"storage.management.files" = "todos los archivos";
 "are.you.sure" = "Are you sure?";
 "chat.media" = "medios de chat";
+
+//MACRO
+"send.giphy" = "Enviar Giphy";
+"start.audio.call" = "Iniciar llamada de audio";
+"start.video.call" = "Iniciar video llamada";
+"send.payment" = "Enviar pago";
+"request.payment" = "Solicitar pago";
+
+//THREAD
+"more-replies" = "respuestas más";
+"show-more" = "MOSTRAR MÁS";
+"show-less" = "MOSTRAR MENOS";

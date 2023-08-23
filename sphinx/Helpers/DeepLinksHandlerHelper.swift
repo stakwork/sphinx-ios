@@ -12,25 +12,21 @@ class DeepLinksHandlerHelper {
     
     static func didHandleLinkQuery(
         vc: UIViewController,
-        rootViewController: RootViewController,
         delegate: PaymentInvoiceDelegate? = nil
     ) -> Bool {
-        if SubscriptionManager.sharedInstance.goToSubscriptionDetails(vc: vc, rootViewController: rootViewController) {
+        if SubscriptionManager.sharedInstance.goToSubscriptionDetails(vc: vc) {
             return true
         }
         
-        if InvoiceManager.sharedInstance.goToCreateInvoiceDetails(vc: vc, rootViewController: rootViewController, delegate: delegate) {
+        if InvoiceManager.sharedInstance.goToCreateInvoiceDetails(vc: vc, delegate: delegate) {
             return true
         }
         
-        if GroupsManager.sharedInstance.goToGroupDetails(
-            vc: vc,
-            rootViewController: rootViewController
-        ) {
+        if GroupsManager.sharedInstance.goToGroupDetails(vc: vc) {
             return true
         }
         
-        if FeedsManager.sharedInstance.goToContentFeed(vc: vc, rootViewController: rootViewController){
+        if FeedsManager.sharedInstance.goToContentFeed(vc: vc){
             return true
         }
         
@@ -54,6 +50,26 @@ class DeepLinksHandlerHelper {
             return false
         }
         
+        if DeepLinksHandlerHelper.goToSignerHardwareSetup(vc: vc) {
+            return true
+        }
+        
+        return false
+    }
+    
+    static func goToSignerHardwareSetup(vc: UIViewController) -> Bool {
+        if let glyphQuery = UserDefaults.Keys.glyphQuery.get(defaultValue: ""), glyphQuery.isNotEmpty {
+            
+            UserDefaults.Keys.glyphQuery.removeValue()
+            
+            if let hardwareLink = CrypterManager.HardwareLink.getHardwareLinkFrom(
+                query: glyphQuery
+            ) {
+                let cryptedManager = CrypterManager()
+                cryptedManager.setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: {})
+            }
+
+        }
         return false
     }
     
@@ -95,14 +111,15 @@ class DeepLinksHandlerHelper {
                 case "share_content":
                     UserDefaults.Keys.shareContentQuery.set(query)
                     shouldSetVC = true
+                case "glyph":
+                    UserDefaults.Keys.glyphQuery.set(query)
+                    shouldSetVC = true
                     break
                 default:
                     break
                 }
             }
-        }
-        else if UserData.sharedInstance.isUserLogged() == false,
-                let query = url.query{
+        } else if UserData.sharedInstance.isUserLogged() == false, let query = url.query {
             UserDefaults.Keys.stashedQuery.set(query)
         }
         

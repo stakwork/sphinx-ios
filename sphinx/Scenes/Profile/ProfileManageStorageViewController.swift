@@ -135,7 +135,6 @@ class ProfileManageStorageViewController : UIViewController{
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.isHidden = false
-            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
             if(self.mediaDeletionConfirmationView.state == .awaitingApproval){
                 self.mediaDeletionConfirmationView.type = type
             }
@@ -155,14 +154,11 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     func setIsLoading(){
-        //self.isLoading = true
         mediaDeletionConfirmationView.state = .loading
     }
     
     func resetIsLoading(type:StorageManagerMediaType){
-        //self.isLoading = false
         mediaDeletionConfirmationView.state = .finished
-        //showDeletionWarningAlert(type: type)
     }
     
     lazy var vm : ProfileManageStorageViewModel = {
@@ -298,7 +294,6 @@ class ProfileManageStorageViewController : UIViewController{
     }
     
     @IBAction func changeButtonTap(_ sender: Any) {
-        print("changeButtonTap")
         isEditingMaxMemory = true
         maxSliderView.setSlider()
         editingModeMaximumLabel.text = formatBytes(Int(Double(maxSliderView.sliderControl.value) * 1e9))
@@ -307,15 +302,12 @@ class ProfileManageStorageViewController : UIViewController{
     
     
     @IBAction func saveTapped(_ sender: Any) {
-        print("saveTapped")
         UserData.sharedInstance.setMaxMemory(GB: Int(maxSliderView.sliderControl.value))
         isEditingMaxMemory = false
         maxGB = Int(maxSliderView.sliderControl.value)
         updateUsageLabels()
         storageSummaryView.summaryDict = vm.typeStats
         StorageManager.sharedManager.cleanupGarbage {
-            //stop loading
-            print("done cleaning up garbage")
             StorageManager.sharedManager.refreshAllStoredData(completion: {
                 self.setupStorageViewsAndModels()
             })
@@ -374,14 +366,13 @@ extension ProfileManageStorageViewController: MaxMemorySliderDelegate{
 }
 
 extension ProfileManageStorageViewController : MediaDeletionConfirmationViewDelegate{
-    func deleteTapped() {
+    func mediaDeletionConfirmTapped() {
         if let type = mediaDeletionConfirmationView.type{
             vm.handleDeletion(type: type)
         }
-        //
     }
     
-    func cancelTapped() {
+    func mediaDeletionCancelTapped() {
         if(mediaDeletionConfirmationView.state == .finished){
             mediaDeletionConfirmationView.state = .awaitingApproval
         }

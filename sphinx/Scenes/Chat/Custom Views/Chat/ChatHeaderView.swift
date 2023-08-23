@@ -9,11 +9,17 @@
 import UIKit
 
 protocol ChatHeaderViewDelegate : class {
+    ///Chat header
     func didTapHeaderButton()
     func didTapBackButton()
     func didTapWebAppButton()
     func didTapMuteButton()
     func didTapMoreOptionsButton(sender: UIButton)
+    func didTapShowThreadsButton()
+    
+    ///Chat search header
+    func shouldSearchFor(term: String)
+    func didTapSearchCancelButton()
 }
 
 class ChatHeaderView: UIView {
@@ -27,7 +33,6 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var initialsLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var headerNameY: NSLayoutConstraint!
     @IBOutlet weak var contributedSatsLabel: UILabel!
     @IBOutlet weak var contributedSatsIcon: UILabel!
     @IBOutlet weak var lockSign: UILabel!
@@ -35,8 +40,9 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var keyLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var volumeButton: UIButton!
     @IBOutlet weak var webAppButton: UIButton!
-    @IBOutlet weak var webAppButtonTrailing: NSLayoutConstraint!
-    @IBOutlet weak var videoCallButton: UIButton!
+    @IBOutlet weak var contributionsContainer: UIStackView!
+    @IBOutlet weak var optionsButton: UIButton!
+    @IBOutlet weak var showThreadsButton: UIButton!
     
     var keysLoading = false {
         didSet {
@@ -46,7 +52,6 @@ class ChatHeaderView: UIView {
     
     var chat: Chat? = nil
     var contact: UserContact? = nil
-    var contactsService: ContactsService! = nil
     
     public enum RightButtons: Int {
         case WebApp
@@ -81,11 +86,16 @@ class ChatHeaderView: UIView {
         }
     }
     
-    func configure(chat: Chat?, contact: UserContact?, contactsService: ContactsService, delegate: ChatHeaderViewDelegate) {
+    func configureWith(
+        chat: Chat?,
+        contact: UserContact?,
+        delegate: ChatHeaderViewDelegate
+    ) {
         self.chat = chat
         self.contact = contact
-        self.contactsService = contactsService
         self.delegate = delegate
+        
+        setChatInfo()
     }
     
     func setChatInfo() {
@@ -96,6 +106,8 @@ class ChatHeaderView: UIView {
         keysLoading = !isEncrypted
         
         configureWebAppButton()
+        configureThreadsButton()
+        
         setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
         
@@ -141,15 +153,26 @@ class ChatHeaderView: UIView {
         showInitialsFor(contact: contact, and: chat)
         
         if let imageUrl = getImageUrl()?.trim(), let nsUrl = URL(string: imageUrl) {
-            MediaLoader.asyncLoadImage(imageView: profileImageView, nsUrl: nsUrl, placeHolderImage: UIImage(named: "profile_avatar"), completion: { image in
-                self.initialsLabel.isHidden = true
-                self.profileImageView.isHidden = false
-                self.profileImageView.image = image
-            }, errorCompletion: { _ in })
+            profileImageView.sd_setImage(
+                with: nsUrl,
+                placeholderImage: UIImage(named: "profile_avatar"),
+                options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+                progress: nil,
+                completed: { (image, error, _, _) in
+                    if (error == nil) {
+                        self.initialsLabel.isHidden = true
+                        self.profileImageView.isHidden = false
+                        self.profileImageView.image = image
+                    }
+                }
+            )
         }
     }
     
-    func showInitialsFor(contact: UserContact?, and chat: Chat?) {
+    func showInitialsFor(
+        contact: UserContact?,
+        and chat: Chat?
+    ) {
         let name = getHeaderName()
         let color = getInitialsColor()
         
@@ -164,17 +187,20 @@ class ChatHeaderView: UIView {
             let isMyTribe = (chat?.isMyPublicGroup() ?? false)
             let label = isMyTribe ? "earned.sats".localized : "contributed.sats".localized
             let sats = PodcastPaymentsHelper.getSatsEarnedFor(feedID)
-            headerNameY.constant = -8
-            contributedSatsIcon.isHidden = false
             contributedSatsLabel.text = String(format: label, sats)
+            contributionsContainer.isHidden = false
         }
     }
     
     func configureWebAppButton() {
         let hasWebAppUrl = chat?.getAppUrl() != nil
-        webAppButtonTrailing.constant = hasWebAppUrl ? 0 : -30
         webAppButton.isHidden = !hasWebAppUrl
         webAppButton.setTitle("apps", for: .normal)
+    }
+    
+    func configureThreadsButton() {
+        let isTribe = chat?.isPublicGroup() == true
+        showThreadsButton.isHidden = !isTribe
     }
     
     func setVolumeState(muted: Bool) {
@@ -182,15 +208,19 @@ class ChatHeaderView: UIView {
     }
     
     func forceKeysExchange(contactId: Int) {
-        contactsService.exchangeKeys(id: contactId)
+        UserContactsHelper.exchangeKeys(id: contactId)
     }
     
     func checkRoute() {
-        API.sharedInstance.checkRoute(chat: self.chat, contact: self.contact, callback: { success in
-            DispatchQueue.main.async {
-                self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
+        API.sharedInstance.checkRoute(
+            chat: self.chat,
+            contact: self.contact,
+            callback: { success in
+                DispatchQueue.main.async {
+                    self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
+                }
             }
-        })
+        )
     }
     
     func toggleWebAppIcon(showChatIcon: Bool) {
@@ -220,4 +250,9 @@ class ChatHeaderView: UIView {
             break
         }
     }
+    
+    @IBAction func showThreadsButtonTapped(_ sender: Any) {
+        delegate?.didTapShowThreadsButton()
+    }
+    
 }

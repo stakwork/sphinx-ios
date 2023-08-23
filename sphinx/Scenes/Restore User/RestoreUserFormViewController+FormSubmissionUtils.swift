@@ -114,9 +114,7 @@ extension RestoreUserFormViewController {
     
     
     func presentConnectingLoadingScreenVC() {
-        let restoreExistingConnectingVC = RestoreUserConnectingViewController.instantiate(
-            rootViewController: rootViewController
-        )
+        let restoreExistingConnectingVC = RestoreUserConnectingViewController.instantiate()
         
         navigationController?.pushViewController(
             restoreExistingConnectingVC,
@@ -133,9 +131,7 @@ extension RestoreUserFormViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             
-            let welcomeCompleteVC = WelcomeCompleteViewController.instantiate(
-                rootViewController: self.rootViewController
-            )
+            let welcomeCompleteVC = WelcomeCompleteViewController.instantiate()
             
             self.navigationController?.pushViewController(
                 welcomeCompleteVC,

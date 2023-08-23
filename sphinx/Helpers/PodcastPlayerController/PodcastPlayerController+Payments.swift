@@ -32,7 +32,9 @@ extension PodcastPlayerController {
             podcastFeed: podcast,
             boostAmount: amount,
             itemId: podcastData.episodeId,
-            currentTime: podcastData.currentTime ?? 0
+            currentTime: podcastData.currentTime ?? 0,
+            clipSenderPubKey: podcastData.clipInfo?.clipSenderPubKey,
+            uuid: podcastData.clipInfo?.messageUUID
         )
     }
 }

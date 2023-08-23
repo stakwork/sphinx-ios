@@ -10,7 +10,6 @@ extension DashboardRootViewController: DashboardChatsListDelegate {
         orContact contact: UserContact?
     ) {
         presentChatDetailsVC(for: chat, contact: contact)
-        updateCurrentViewControllerData()
     }
     
     

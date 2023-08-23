@@ -12,9 +12,8 @@ class GroupContactsViewController: CommonGroupContactsViewController {
     
     weak var delegate: NewContactVCDelegate?
     
-    static func instantiate(rootViewController : RootViewController, delegate: NewContactVCDelegate?, chat: Chat? = nil) -> GroupContactsViewController {
+    static func instantiate(delegate: NewContactVCDelegate?, chat: Chat? = nil) -> GroupContactsViewController {
         let viewController = StoryboardScene.Groups.groupContactsViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.delegate = delegate
         viewController.chat = chat
         
@@ -57,7 +56,7 @@ class GroupContactsViewController: CommonGroupContactsViewController {
             return
         }
         
-        let groupNameVC = GroupNameViewController.instantiate(rootViewController: rootViewController, delegate: delegate)
+        let groupNameVC = GroupNameViewController.instantiate(delegate: delegate)
         self.navigationController?.pushViewController(groupNameVC, animated: true)
     }
     

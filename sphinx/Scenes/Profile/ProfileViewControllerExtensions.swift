@@ -11,7 +11,7 @@ import Photos
 
 extension ProfileViewController {
     func shouldChangePIN() {
-        let pinCodeVC = SetPinCodeViewController.instantiate(rootViewController: rootViewController, mode: SetPinCodeViewController.SetPinMode.Change)
+        let pinCodeVC = SetPinCodeViewController.instantiate(mode: SetPinCodeViewController.SetPinMode.Change)
         pinCodeVC.doneCompletion = { pin in
             pinCodeVC.dismiss(animated: true, completion: {
                 if pin == UserData.sharedInstance.getPrivacyPin() {
@@ -36,7 +36,7 @@ extension ProfileViewController {
     func shouldChangePrivacyPIN() {
         let isPrivacyPinSet = GroupsPinManager.sharedInstance.isPrivacyPinSet()
         let mode: SetPinCodeViewController.SetPinMode = isPrivacyPinSet ? .Change : .Set
-        let pinCodeVC = SetPinCodeViewController.instantiate(rootViewController: rootViewController, mode: mode, pinMode: .Privacy, subtitle: "")
+        let pinCodeVC = SetPinCodeViewController.instantiate(mode: mode, pinMode: .Privacy, subtitle: "")
         pinCodeVC.doneCompletion = { pin in
             pinCodeVC.dismiss(animated: true, completion: {
                 if pin == UserData.sharedInstance.getAppPin() {
@@ -145,7 +145,7 @@ extension ProfileViewController : UITextFieldDelegate {
             }
             
             API.sharedInstance.updateUser(id: profile.id, params: parameters, callback: { contact in
-                let _ = self.contactsService.insertContact(contact: contact)
+                let _ = UserContactsHelper.insertContact(contact: contact)
                 self.configureProfile()
             }, errorCallback: {
                 self.configureProfile()
@@ -223,7 +223,7 @@ extension ProfileViewController : AttachmentsManagerDelegate {
     
     func didSuccessUploadingImage(url: String) {
         if let image = profileImageView.image {
-            MediaLoader.storeImageInCache(img: image, url: url, chat: nil)
+            MediaLoader.storeImageInCache(img: image, url: url, message: nil)
         }
         updateProfile(photoUrl: url)
     }

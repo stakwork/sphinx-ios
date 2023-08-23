@@ -351,15 +351,23 @@ class SubscriptionManager {
     }
     
     //Navigate methods
-    func goToSubscriptionDetails(vc: UIViewController, rootViewController: RootViewController) -> Bool {
+    func goToSubscriptionDetails(
+        vc: UIViewController
+    ) -> Bool {
         if let subscriptionQuery = UserDefaults.Keys.subscriptionQuery.get(defaultValue: ""), subscriptionQuery != "" {
             UserDefaults.Keys.subscriptionQuery.removeValue()
             resetValues()
             
             let (valid, subscription) = setValueFrom(subscriptionString: subscriptionQuery)
+            
             if let delegate = vc as? QRCodeScannerDelegate, valid {
-                let subscriptionDetailsVC = SubscriptionDetailsViewController.instantiate(rootViewController: rootViewController, subscriptionQR: subscription, delegate: delegate)
+                
+                let subscriptionDetailsVC = SubscriptionDetailsViewController.instantiate(
+                    subscriptionQR: subscription,
+                    delegate: delegate
+                )
                 vc.presentNavigationControllerWith(vc: subscriptionDetailsVC)
+                
                 return true
             }
         }

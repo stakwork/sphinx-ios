@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +44,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ci4-KM-Txa">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ci4-KM-Txa">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
                     <color key="backgroundColor" name="Divider"/>
                     <constraints>
@@ -52,14 +52,14 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eos-qX-jFn">
-                    <rect key="frame" x="10" y="5" width="5" height="40"/>
+                    <rect key="frame" x="16" y="5" width="5" height="40"/>
                     <color key="backgroundColor" name="WashedOutReceivedText"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="5" id="KJz-RX-cyd"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IEu-Mw-Amf">
-                    <rect key="frame" x="15" y="5" width="47" height="40"/>
+                    <rect key="frame" x="21" y="5" width="47" height="40"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lM9-Sh-LyL">
                             <rect key="frame" x="7" y="0.0" width="40" height="40"/>
@@ -95,13 +95,13 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSA-VN-nmg">
-                    <rect key="frame" x="69" y="9" width="51" height="14"/>
+                    <rect key="frame" x="75" y="9" width="51" height="14"/>
                     <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                     <color key="textColor" name="PrimaryText"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message deleted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8SA-MJ-i51">
-                    <rect key="frame" x="69" y="26" width="107" height="17"/>
+                    <rect key="frame" x="75" y="26" width="107" height="17"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                     <color key="textColor" name="Text"/>
                     <nil key="highlightedColor"/>
@@ -118,12 +118,15 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3D-qn-J29">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="CBn-mT-WDq"/>
+                    </constraints>
                     <connections>
                         <action selector="rowButtonTouched" destination="-1" eventType="touchUpInside" id="85b-84-OHI"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DpS-8C-ZqN">
-                    <rect key="frame" x="0.0" y="50" width="414" height="1"/>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DpS-8C-ZqN">
+                    <rect key="frame" x="0.0" y="49" width="414" height="1"/>
                     <color key="backgroundColor" name="ReplyDividerReceived"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="v8V-Jw-HUV"/>
@@ -141,7 +144,7 @@
                 <constraint firstAttribute="trailing" secondItem="6Bo-7B-fvk" secondAttribute="trailing" constant="10" id="GJb-S4-nM6"/>
                 <constraint firstItem="eSA-VN-nmg" firstAttribute="leading" secondItem="IEu-Mw-Amf" secondAttribute="trailing" constant="7" id="Kj9-HO-uEn"/>
                 <constraint firstItem="DpS-8C-ZqN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Mtk-w8-Toi"/>
-                <constraint firstItem="eos-qX-jFn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="OTl-uc-U7f"/>
+                <constraint firstItem="eos-qX-jFn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="OTl-uc-U7f"/>
                 <constraint firstItem="eos-qX-jFn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="Sx5-Rb-B5x"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eSA-VN-nmg" secondAttribute="trailing" constant="5" id="WgR-6M-4DL"/>
                 <constraint firstItem="IEu-Mw-Amf" firstAttribute="bottom" secondItem="eos-qX-jFn" secondAttribute="bottom" id="Wis-ZW-0eV"/>
@@ -154,7 +157,7 @@
                 <constraint firstItem="ci4-KM-Txa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="pjc-SS-lV1"/>
                 <constraint firstItem="8SA-MJ-i51" firstAttribute="leading" secondItem="eSA-VN-nmg" secondAttribute="leading" id="qdk-uT-ukP"/>
                 <constraint firstItem="IEu-Mw-Amf" firstAttribute="leading" secondItem="eos-qX-jFn" secondAttribute="trailing" id="tuv-uN-i0X"/>
-                <constraint firstAttribute="bottom" secondItem="DpS-8C-ZqN" secondAttribute="bottom" constant="-1" id="vS0-q5-to0"/>
+                <constraint firstAttribute="bottom" secondItem="DpS-8C-ZqN" secondAttribute="bottom" id="vS0-q5-to0"/>
                 <constraint firstAttribute="bottom" secondItem="6Bo-7B-fvk" secondAttribute="bottom" id="vWa-Mo-fmS"/>
                 <constraint firstItem="IEu-Mw-Amf" firstAttribute="top" secondItem="eos-qX-jFn" secondAttribute="top" id="vdP-C5-Ugi"/>
                 <constraint firstAttribute="bottom" secondItem="8SA-MJ-i51" secondAttribute="bottom" constant="7" id="wS6-q1-Or6"/>

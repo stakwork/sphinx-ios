@@ -16,5 +16,4 @@ class DelayPerformedHelper {
             completion()
         }
     }
-    
 }

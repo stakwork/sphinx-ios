@@ -11,8 +11,6 @@ import AVFoundation
 
 class SetPinCodeViewController: UIViewController {
 
-    private var rootViewController : RootViewController!
-    
     @IBOutlet var dotViews: [UIView]!
     @IBOutlet var keyPadButtons: [UIButton]!
     
@@ -55,9 +53,12 @@ class SetPinCodeViewController: UIViewController {
     
     var doneCompletion: ((String) -> ())? = nil
     
-    static func instantiate(rootViewController : RootViewController? = nil, mode: SetPinMode = SetPinMode.Set, pinMode: PinMode = PinMode.Standard, subtitle: String = "") -> SetPinCodeViewController {
+    static func instantiate(
+        mode: SetPinMode = SetPinMode.Set,
+        pinMode: PinMode = PinMode.Standard,
+        subtitle: String = ""
+    ) -> SetPinCodeViewController {
         let viewController = StoryboardScene.Pin.setPinCodeViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.mode = mode
         viewController.pinMode = pinMode
         viewController.subtitle = subtitle
@@ -203,7 +204,7 @@ class SetPinCodeViewController: UIViewController {
             
             SignupHelper.step = SignupHelper.SignupStep.PINSet.rawValue
             
-            let newUserGreetingVC = NewUserGreetingViewController.instantiate(rootViewController: rootViewController)
+            let newUserGreetingVC = NewUserGreetingViewController.instantiate()
             self.navigationController?.pushViewController(newUserGreetingVC, animated: true)
         }
     }

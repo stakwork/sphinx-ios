@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GroupRemovedView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="kK5-68-UcD"/>
+                <outlet property="deleteButton" destination="2PJ-LV-kfi" id="vVD-0o-J53"/>
+                <outlet property="messageLabel" destination="CyX-yB-yyl" id="W0b-HY-S7Y"/>
+                <outlet property="messageView" destination="2mP-Nm-eVW" id="jig-to-Ujt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2mP-Nm-eVW">
+                    <rect key="frame" x="73.000000000000014" y="10" width="247.33333333333337" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CyX-yB-yyl">
+                            <rect key="frame" x="11.999999999999993" y="9.6666666666666679" width="121.33333333333331" height="26.000000000000004"/>
+                            <string key="text">The admin has removed 
+you from this group</string>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                            <color key="textColor" name="Text"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2PJ-LV-kfi">
+                            <rect key="frame" x="145.33333333333334" y="9" width="90" height="27"/>
+                            <color key="backgroundColor" name="BadgeRed"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="27" id="3pw-bS-KAc"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Sjm-yZ-fuS"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                            <state key="normal" title="Delete group">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="deleteButtonTouched" destination="-1" eventType="touchUpInside" id="dVK-FE-L31"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" name="ReceivedMsgBG"/>
+                    <constraints>
+                        <constraint firstItem="2PJ-LV-kfi" firstAttribute="centerY" secondItem="2mP-Nm-eVW" secondAttribute="centerY" id="77U-GM-9IY"/>
+                        <constraint firstItem="CyX-yB-yyl" firstAttribute="centerY" secondItem="2mP-Nm-eVW" secondAttribute="centerY" id="FrP-gh-gTZ"/>
+                        <constraint firstItem="CyX-yB-yyl" firstAttribute="leading" secondItem="2mP-Nm-eVW" secondAttribute="leading" constant="12" id="Pv6-6E-KrT"/>
+                        <constraint firstAttribute="trailing" secondItem="2PJ-LV-kfi" secondAttribute="trailing" constant="12" id="V3F-k3-1WU"/>
+                        <constraint firstItem="2PJ-LV-kfi" firstAttribute="leading" secondItem="CyX-yB-yyl" secondAttribute="trailing" constant="12" id="oLi-Cg-5y9"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="2mP-Nm-eVW" secondAttribute="bottom" constant="10" id="NYU-qw-euF"/>
+                <constraint firstItem="2mP-Nm-eVW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="gbH-4K-fGU"/>
+                <constraint firstItem="2mP-Nm-eVW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="pwF-xO-4BF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-21" y="-1"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="BadgeRed">
+            <color red="1" green="0.32156862745098042" blue="0.32156862745098042" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ReceivedMsgBG">
+            <color red="0.94901960784313721" green="0.95294117647058818" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

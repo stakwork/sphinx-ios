@@ -21,7 +21,7 @@ class NewMessageBubbleHelper {
     let font = UIFont(name: "Roboto-Regular", size: 13.0)!
     let titleFont = UIFont(name: "Roboto-Bold", size: 15.0)!
     let loadingWheelSize: CGFloat = 50.0
-    var genericMessageY: CGFloat = 110.0
+    var genericMessageY: CGFloat = 120.0
     
     var urlRanges = [NSRange]()
     
@@ -45,12 +45,13 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func showGenericMessageView(text: String,
-                                delay: Double = 1.5,
-                                textColor: UIColor = UIColor.Sphinx.Body,
-                                backColor: UIColor = UIColor.Sphinx.Text,
-                                backAlpha: CGFloat = 0.7) {
-        
+    func showGenericMessageView(
+        text: String,
+        delay: Double = 1.5,
+        textColor: UIColor = UIColor.Sphinx.Body,
+        backColor: UIColor = UIColor.Sphinx.Text,
+        backAlpha: CGFloat = 0.7
+    ) {
         if GroupsPinManager.sharedInstance.shouldAskForPin() {
             return
         }
@@ -68,11 +69,12 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func showLoadingWheel(text: String? = nil,
-                          textColor: UIColor = UIColor.Sphinx.Body,
-                          backColor: UIColor = UIColor.Sphinx.Text,
-                          backAlpha: CGFloat = 0.8) {
-        
+    func showLoadingWheel(
+        text: String? = nil,
+        textColor: UIColor = UIColor.Sphinx.Body,
+        backColor: UIColor = UIColor.Sphinx.Text,
+        backAlpha: CGFloat = 0.8
+    ) {
         if GroupsPinManager.sharedInstance.shouldAskForPin() {
             return
         }
@@ -98,7 +100,7 @@ class NewMessageBubbleHelper {
         view.alpha = 0.0
         view.tag = NewMessageBubbleHelper.loadingViewTag
         
-        if let window = UIApplication.shared.keyWindow {
+        if let window = UIApplication.shared.windows.first {
             window.isUserInteractionEnabled = false
             self.toggleGenericBubbleView(view: view, show: true, tag: NewMessageBubbleHelper.loadingViewTag)
         }
@@ -113,7 +115,7 @@ class NewMessageBubbleHelper {
     }
     
     func hideBubbleWith(tag: Int) {
-        if let window = UIApplication.shared.keyWindow {
+        if let window = UIApplication.shared.windows.first {
             window.isUserInteractionEnabled = true
             
             for v in window.subviews {
@@ -128,11 +130,12 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func toggleGenericBubbleView(view: UIView,
-                                 show: Bool,
-                                 tag: Int = NewMessageBubbleHelper.messageViewTag) {
-        
-        if let window = UIApplication.shared.keyWindow {
+    func toggleGenericBubbleView(
+        view: UIView,
+        show: Bool,
+        tag: Int = NewMessageBubbleHelper.messageViewTag
+    ) {
+        if let window = UIApplication.shared.windows.first {
             if show {
                 for v in window.subviews {
                     if v.tag == tag {
@@ -158,10 +161,11 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func getGenericMessageBubbleView(label: UILabel? = nil,
-                                     backColor: UIColor = UIColor.Sphinx.Text,
-                                     backAlpha: CGFloat = 0.8, hasWheel: Bool = false) -> UIView {
-        
+    func getGenericMessageBubbleView(
+        label: UILabel? = nil,
+        backColor: UIColor = UIColor.Sphinx.Text,
+        backAlpha: CGFloat = 0.8, hasWheel: Bool = false
+    ) -> UIView {
         let screenSize = WindowsManager.getWindowSize()
         var viewWidth = hasWheel ? loadingWheelSize : 0.0
         var viewHeight = hasWheel ? loadingWheelSize : 0.0
@@ -188,9 +192,10 @@ class NewMessageBubbleHelper {
         return v
     }
     
-    func getGenericMessageLabel(text: String,
-                                textColor: UIColor = UIColor.Sphinx.Body) -> UILabel {
-        
+    func getGenericMessageLabel(
+        text: String,
+        textColor: UIColor = UIColor.Sphinx.Body
+    ) -> UILabel {
         let screenSize = WindowsManager.getWindowSize()
         let labelSize = getLabelSize(text: text, font: font, screenSize: screenSize)
         let label = UILabel(frame: CGRect(x: labelMargin, y: labelMargin, width: labelSize.width, height: labelSize.height))
@@ -205,9 +210,10 @@ class NewMessageBubbleHelper {
         return label
     }
     
-    func addLinksOn(_ label: UILabel,
-                    color: UIColor) {
-        
+    func addLinksOn(
+        _ label: UILabel,
+        color: UIColor
+    ) {
         urlRanges = label.addLinksOnLabel(linkColor: color)
         
         if urlRanges.count > 0 {
@@ -233,23 +239,36 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func showMessageView(title: String,
-                         text: String,
-                         chatId: Int = -1,
-                         delay: Double = 2.5,
-                         onKeyWindow: Bool = true) {
-        
-        let screenSize = WindowsManager.getWindowSize()
-        let titleLabel = getTitleLabel(title: title, screenSize: screenSize)
-        let messageLabel = getMessageLabel(text: text, screenSize: screenSize)
-        let v = getBubbleView(label: messageLabel, chatId: chatId)
-        v.addSubview(titleLabel)
-        v.addSubview(messageLabel)
-        
-        let windowToShow = onKeyWindow ? UIApplication.shared.keyWindow : UIApplication.shared.windows.last
-        
-        if let window = windowToShow {
+    func showMessageView(
+        title: String,
+        text: String,
+        chatId: Int? = nil,
+        delay: Double = 2.5,
+        onKeyWindow: Bool = true,
+        isNewMessage: Bool = false
+    ) {
+        if let window = UIApplication.shared.windows.first {
+            
+            if let rootVC = (window.rootViewController as? RootViewController), isNewMessage {
+                if rootVC.isDashboardVC() {
+                    return
+                }
+                
+                if let vcChatId = rootVC.getChatVCId(), vcChatId == chatId {
+                    return
+                }
+            }
+            
+            let screenSize = WindowsManager.getWindowSize()
+            let titleLabel = getTitleLabel(title: title, screenSize: screenSize)
+            let messageLabel = getMessageLabel(text: text, screenSize: screenSize)
+            let v = getBubbleView(label: messageLabel, chatId: chatId)
+            
+            v.addSubview(titleLabel)
+            v.addSubview(messageLabel)
+            
             window.addSubview(v)
+            
             toggleBubbleView(view: v, show: true)
             
             DelayPerformedHelper.performAfterDelay(seconds: delay) {
@@ -258,24 +277,46 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func showMessageView(message: TransactionMessage,
-                         delay: Double = 2.5,
-                         onKeyWindow: Bool = true) {
-        
+    func showMessageView(
+        message: TransactionMessage,
+        delay: Double = 2.5,
+        onKeyWindow: Bool = true
+    ) {
+        let contactsService = ContactsService.sharedInstance
         let chatName = message.chat?.name ?? ""
-        let text = message.getMessageDescription()
-        if text.isNotSupportedMessage { return }
-        let senderNickname = message.getMessageSenderNickname()
-        let bubbleTitle = (chatName != "") ? "\(senderNickname) on \(chatName)" : senderNickname
-        let chatId = message.chat?.id ?? -1
+        let sender = contactsService.getContactWith(id: message.senderId)
         
-        showMessageView(title: bubbleTitle, text: text, chatId: chatId, delay: delay, onKeyWindow: onKeyWindow)
+        let text = message.getMessageContentPreview(
+            owner: contactsService.owner,
+            contact: sender
+        )
+        
+        if text.isNotSupportedMessage { return }
+        
+        let senderNickname = message.getMessageSenderNickname(
+            owner: contactsService.owner,
+            contact: sender
+        )
+        
+        let bubbleTitle = (chatName != "") ? "\(senderNickname) on \(chatName)" : senderNickname
+        
+        if let chat = message.chat {
+            showMessageView(
+                title: bubbleTitle,
+                text: text,
+                chatId: chat.id,
+                delay: delay,
+                onKeyWindow: onKeyWindow,
+                isNewMessage: true
+            )
+        }
     }
     
-    func toggleBubbleView(view: UIView,
-                          show: Bool,
-                          animated: Bool = true) {
-        
+    func toggleBubbleView(
+        view: UIView,
+        show: Bool,
+        animated: Bool = true
+    ) {
         let windowInsets = getWindowInsets()
         
         if !animated {
@@ -294,9 +335,10 @@ class NewMessageBubbleHelper {
         }
     }
     
-    func getBubbleView(label: UILabel,
-                       chatId: Int) -> UIView {
-        
+    func getBubbleView(
+        label: UILabel,
+        chatId: Int? = nil
+    ) -> UIView {
         let viewWidth = label.frame.size.width + (labelMargin * 2)
         let viewHeight = label.frame.size.height + (labelMargin * 2) + titleLabelHeight + titleLabelBottomMargin
         let v = UIView(frame: CGRect(x: bubbleMargin, y: -viewHeight, width: viewWidth, height: viewHeight))
@@ -304,7 +346,10 @@ class NewMessageBubbleHelper {
         v.layer.cornerRadius = 5
         v.addShadow(offset: CGSize(width: 0, height: 0), radius: 3.0)
         
-        v.tag = chatId
+        if let chatId = chatId {
+            v.tag = chatId
+        }
+        
         let tap = TouchUpGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         v.addGestureRecognizer(tap)
         
@@ -315,9 +360,10 @@ class NewMessageBubbleHelper {
         return v
     }
     
-    func getTitleLabel(title: String,
-                       screenSize: CGSize) -> UILabel {
-        
+    func getTitleLabel(
+        title: String,
+        screenSize: CGSize
+    ) -> UILabel {
         let labelWidth = screenSize.width - (bubbleMargin * 2) - (labelMargin * 2)
         let label = UILabel(frame: CGRect(x: labelMargin, y: labelMargin, width: labelWidth, height: titleLabelHeight))
         label.font = titleFont
@@ -327,9 +373,10 @@ class NewMessageBubbleHelper {
         return label
     }
     
-    func getMessageLabel(text: String,
-                         screenSize: CGSize) -> UILabel {
-        
+    func getMessageLabel(
+        text: String,
+        screenSize: CGSize
+    ) -> UILabel {
         let labelSize = getLabelSize(text: text, font: font, screenSize: screenSize)
         let labelWidth = screenSize.width - (bubbleMargin * 2) - (labelMargin * 2)
         let label = UILabel(frame: CGRect(x: labelMargin, y: labelMargin + titleLabelHeight + titleLabelBottomMargin, width: labelWidth, height: labelSize.height))
@@ -340,9 +387,11 @@ class NewMessageBubbleHelper {
         return label
     }
     
-    func getLabelSize(text: String,
-                      font: UIFont,
-                      screenSize: CGSize) -> CGRect {
+    func getLabelSize(
+        text: String,
+        font: UIFont,
+        screenSize: CGSize
+    ) -> CGRect {
         
         let screenWidth = screenSize.width
         let labelWidth = screenWidth - (bubbleMargin * 2) - (labelMargin * 2)
@@ -373,11 +422,20 @@ class NewMessageBubbleHelper {
     }
     
     func goToChat(chatId: Int) {
-        let rootVC = UIApplication.shared.keyWindow?.rootViewController
-        if let rootVC = rootVC as? RootViewController, !rootVC.isVCPresented() {
-            if let leftMenuVC = rootVC.getLeftMenuVC() {
-                UserDefaults.Keys.chatId.set(chatId)
-                leftMenuVC.goToChatList()
+        if let chat = Chat.getChatWith(id: chatId) {
+            
+            let chatVC = NewChatViewController.instantiate(
+                contactId: chat.conversationContact?.id,
+                chatId: chat.id
+            )
+            
+            if
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                let rootVC = appDelegate.getRootViewController(),
+                let navCenterController = rootVC.getCenterNavigationController()
+            {
+                navCenterController.viewControllers.last?.view.endEditing(true)
+                navCenterController.pushViewController(chatVC, animated: true)
             }
         }
     }

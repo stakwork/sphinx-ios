@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-
 class DashboardNewsletterFeedCollectionViewController: UICollectionViewController {
     
     var recentlyReleasedNewsletterFeeds: [NewsletterFeed] = []
@@ -17,8 +16,8 @@ class DashboardNewsletterFeedCollectionViewController: UICollectionViewControlle
     
     var interSectionSpacing: CGFloat = 20.0
 
-    var onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!
-    var onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!
+    var onNewsletterItemCellSelected: ((String) -> Void)!
+    var onNewsletterFeedCellSelected: ((String) -> Void)!
     var onNewResultsFetched: ((Int) -> Void)!
     var onContentScrolled: ((UIScrollView) -> Void)?
 
@@ -42,8 +41,8 @@ extension DashboardNewsletterFeedCollectionViewController {
     static func instantiate(
         managedObjectContext: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext,
         interSectionSpacing: CGFloat = 20.0,
-        onNewsletterItemCellSelected: ((NSManagedObjectID) -> Void)!,
-        onNewsletterFeedCellSelected: ((NSManagedObjectID) -> Void)!,
+        onNewsletterItemCellSelected: ((String) -> Void)!,
+        onNewsletterFeedCellSelected: ((String) -> Void)!,
         onNewResultsFetched: @escaping ((Int) -> Void) = { _ in },
         onContentScrolled: ((UIScrollView) -> Void)? = nil
     ) -> DashboardNewsletterFeedCollectionViewController {
@@ -413,7 +412,7 @@ extension DashboardNewsletterFeedCollectionViewController {
             return snapshot
         }
 
-        snapshot.appendSections(CollectionViewSection.allCases)
+        snapshot.appendSections([CollectionViewSection.recentlyPublishedFeeds])
         
         snapshot.appendItems(
             recentlyReleasedNewsletterFeeds
@@ -422,11 +421,18 @@ extension DashboardNewsletterFeedCollectionViewController {
             toSection: .recentlyPublishedFeeds
         )
         
-        snapshot.appendItems(
-            recentlyPlayedNewsletterFeeds
-                .map { DataSourceItem.newsletterFeed($0) },
-            toSection: .recentlyReadFeeds
-        )
+        let recentlyReadFeed = recentlyPlayedNewsletterFeeds.filter { $0.dateLastConsumed != nil }.compactMap { contentFeed -> DataSourceItem? in
+            return DataSourceItem.newsletterFeed(contentFeed)
+        }
+        
+        if !recentlyReadFeed.isEmpty {
+            snapshot.appendSections([CollectionViewSection.recentlyReadFeeds])
+            
+            snapshot.appendItems(
+                recentlyReadFeed,
+                toSection: .recentlyReadFeeds
+            )
+        }
 
         return snapshot
     }
@@ -486,7 +492,7 @@ extension DashboardNewsletterFeedCollectionViewController {
     static func makeFetchedResultsController(
         using managedObjectContext: NSManagedObjectContext
     ) -> NSFetchedResultsController<ContentFeed> {
-        let fetchRequest = NewsletterFeed.FetchRequests.followedFeeds()
+        let fetchRequest = NewsletterFeed.FetchRequests.allFeeds()
         
         return NSFetchedResultsController(
             fetchRequest: fetchRequest,
@@ -539,7 +545,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 preconditionFailure()
             }
             
-            onNewsletterItemCellSelected?(newsletterItem.objectID)
+            onNewsletterItemCellSelected?(newsletterItem.id)
         case .recentlyReadFeeds:
             guard
                 case let .newsletterFeed(newsletterFeed) = dataSourceItem
@@ -547,7 +553,7 @@ extension DashboardNewsletterFeedCollectionViewController {
                 preconditionFailure()
             }
             
-            onNewsletterFeedCellSelected?(newsletterFeed.objectID)
+            onNewsletterFeedCellSelected?(newsletterFeed.id)
         }
     }
 }

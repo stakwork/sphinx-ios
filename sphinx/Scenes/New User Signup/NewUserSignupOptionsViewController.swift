@@ -18,10 +18,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     @IBOutlet weak var purchaseLiteNodeButton: UIButton!
     @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
     
-    
-    internal var rootViewController: RootViewController!
     internal var hubNodeInvoice: API.HUBNodeInvoice?
-    
 
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     let storeKitService = StoreKitService.shared
@@ -39,13 +36,8 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     var liteNodePurchaseProduct: SKProduct?
     
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> NewUserSignupOptionsViewController {
+    static func instantiate() -> NewUserSignupOptionsViewController {
         let viewController = StoryboardScene.NewUserSignup.newUserSignupOptionsViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -89,10 +81,7 @@ extension NewUserSignupOptionsViewController {
     
     
     @IBAction func connectionCodeButtonTapped(_ sender: UIButton) {
-        let nextVC = NewUserSignupDescriptionViewController.instantiate(
-            rootViewController: rootViewController
-        )
-        
+        let nextVC = NewUserSignupDescriptionViewController.instantiate()
         navigationController?.pushViewController(nextVC, animated: true)
     }
     

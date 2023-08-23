@@ -34,11 +34,12 @@ class GifOverlayView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        gifIconContainer.layer.cornerRadius = gifIconContainer.frame.size.height / 2
     }
     
     func configure(delegate: GifOverlayDelegate) {
         self.delegate = delegate
-        gifIconContainer.layer.cornerRadius = gifIconContainer.frame.size.height / 2
     }
     
     @IBAction func buttonTouched() {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,16 +27,17 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="y1W-dV-rOa"/>
                 <outlet property="contributedSatsIcon" destination="1oL-rq-nHf" id="PrL-6P-tnL"/>
                 <outlet property="contributedSatsLabel" destination="73C-AC-DOG" id="FIU-C8-Tgt"/>
-                <outlet property="headerNameY" destination="SWE-mZ-idj" id="hrG-Sf-yEl"/>
+                <outlet property="contributionsContainer" destination="EHK-om-ehd" id="Euj-ve-X9j"/>
                 <outlet property="imageContainer" destination="pEL-5f-Xhc" id="t32-HF-PRu"/>
                 <outlet property="initialsLabel" destination="TRE-AS-kSV" id="uoZ-mY-iWj"/>
                 <outlet property="keyLoadingWheel" destination="8t1-dd-q25" id="lOd-Zb-nDx"/>
                 <outlet property="lockSign" destination="tp6-3C-IrP" id="Cwe-47-jWV"/>
                 <outlet property="nameLabel" destination="6In-3T-Qql" id="ktG-68-lek"/>
+                <outlet property="optionsButton" destination="ahL-K7-tna" id="Xmm-DE-V0F"/>
                 <outlet property="profileImageView" destination="FzU-vr-ru9" id="VV3-FJ-SPa"/>
-                <outlet property="volumeButton" destination="6uG-XH-Ptg" id="77y-CI-Nlm"/>
+                <outlet property="showThreadsButton" destination="6uG-XH-Ptg" id="RkN-o4-DJl"/>
+                <outlet property="volumeButton" destination="Ws4-aZ-De7" id="oj6-it-ors"/>
                 <outlet property="webAppButton" destination="Mt6-rI-5Dn" id="zIa-gv-EgZ"/>
-                <outlet property="webAppButtonTrailing" destination="oyF-xL-U2b" id="2i5-Ji-Wfk"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -47,183 +48,204 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atH-u3-D4Y">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRM-fg-mWl">
-                            <rect key="frame" x="0.0" y="0.0" width="45" height="65"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="45" id="yFP-5j-sLO"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
-                            <state key="normal" title="">
-                                <color key="titleColor" name="WashedOutReceivedText"/>
-                            </state>
-                            <connections>
-                                <action selector="backButtonTouched" destination="-1" eventType="touchUpInside" id="Zdc-aI-GUQ"/>
-                            </connections>
-                        </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pEL-5f-Xhc">
-                            <rect key="frame" x="45" y="0.0" width="45" height="65"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFH-3u-eVa">
+                            <rect key="frame" x="0.0" y="0.0" width="90" height="65"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="FzU-vr-ru9">
-                                    <rect key="frame" x="0.0" y="10" width="45" height="45"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRM-fg-mWl">
+                                    <rect key="frame" x="0.0" y="0.0" width="45" height="65"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="45" id="yFP-5j-sLO"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                    <state key="normal" title="">
+                                        <color key="titleColor" name="WashedOutReceivedText"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="backButtonTouched" destination="-1" eventType="touchUpInside" id="Zdc-aI-GUQ"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pEL-5f-Xhc">
+                                    <rect key="frame" x="45" y="0.0" width="45" height="65"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="FzU-vr-ru9">
+                                            <rect key="frame" x="0.0" y="10" width="45" height="45"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="45" id="1sJ-G3-iv6"/>
+                                                <constraint firstAttribute="width" constant="45" id="kls-sQ-Ced"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRE-AS-kSV">
+                                            <rect key="frame" x="0.0" y="10" width="45" height="45"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
+                                            <color key="textColor" name="Body"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="45" id="1sJ-G3-iv6"/>
-                                        <constraint firstAttribute="width" constant="45" id="kls-sQ-Ced"/>
+                                        <constraint firstItem="TRE-AS-kSV" firstAttribute="top" secondItem="FzU-vr-ru9" secondAttribute="top" id="4Ne-lC-vUN"/>
+                                        <constraint firstItem="TRE-AS-kSV" firstAttribute="trailing" secondItem="FzU-vr-ru9" secondAttribute="trailing" id="CWU-4W-Ww8"/>
+                                        <constraint firstItem="TRE-AS-kSV" firstAttribute="bottom" secondItem="FzU-vr-ru9" secondAttribute="bottom" id="GkF-C6-c9N"/>
+                                        <constraint firstItem="FzU-vr-ru9" firstAttribute="centerX" secondItem="pEL-5f-Xhc" secondAttribute="centerX" id="KSR-mG-YNC"/>
+                                        <constraint firstAttribute="width" constant="45" id="a1V-4q-OAT"/>
+                                        <constraint firstItem="FzU-vr-ru9" firstAttribute="centerY" secondItem="pEL-5f-Xhc" secondAttribute="centerY" id="glG-Vx-lVi"/>
+                                        <constraint firstItem="TRE-AS-kSV" firstAttribute="leading" secondItem="FzU-vr-ru9" secondAttribute="leading" id="v6b-uR-Pgz"/>
                                     </constraints>
-                                </imageView>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRE-AS-kSV">
-                                    <rect key="frame" x="0.0" y="10" width="45" height="45"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="17"/>
-                                    <color key="textColor" name="Body"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="TRE-AS-kSV" firstAttribute="top" secondItem="FzU-vr-ru9" secondAttribute="top" id="4Ne-lC-vUN"/>
-                                <constraint firstItem="TRE-AS-kSV" firstAttribute="trailing" secondItem="FzU-vr-ru9" secondAttribute="trailing" id="CWU-4W-Ww8"/>
-                                <constraint firstItem="TRE-AS-kSV" firstAttribute="bottom" secondItem="FzU-vr-ru9" secondAttribute="bottom" id="GkF-C6-c9N"/>
-                                <constraint firstItem="FzU-vr-ru9" firstAttribute="centerX" secondItem="pEL-5f-Xhc" secondAttribute="centerX" id="KSR-mG-YNC"/>
-                                <constraint firstAttribute="width" constant="45" id="a1V-4q-OAT"/>
-                                <constraint firstItem="FzU-vr-ru9" firstAttribute="centerY" secondItem="pEL-5f-Xhc" secondAttribute="centerY" id="glG-Vx-lVi"/>
-                                <constraint firstItem="TRE-AS-kSV" firstAttribute="leading" secondItem="FzU-vr-ru9" secondAttribute="leading" id="v6b-uR-Pgz"/>
-                            </constraints>
-                        </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No name" textAlignment="natural" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6In-3T-Qql">
-                            <rect key="frame" x="102" y="23" width="65" height="19"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
-                            <color key="textColor" name="TextMessages"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tp6-3C-IrP">
-                            <rect key="frame" x="171" y="26" width="15" height="13"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="13" id="CXt-xc-7CH"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
-                            <color key="textColor" name="WashedOutReceivedText"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="flash_on" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEV-z5-dqb">
-                            <rect key="frame" x="186" y="26" width="15" height="13"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="13" id="oK8-Mm-hu5"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
-                            <color key="textColor" name="WashedOutReceivedText"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8t1-dd-q25" customClass="UIActivityIndicatorView">
-                            <rect key="frame" x="201" y="17.5" width="30" height="30"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="30" id="CZQ-fj-PGk"/>
-                                <constraint firstAttribute="height" constant="30" id="Mqj-Th-Y9Z"/>
-                            </constraints>
-                        </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73C-AC-DOG">
-                            <rect key="frame" x="102" y="45" width="0.0" height="0.0"/>
-                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
-                            <color key="textColor" name="SecondaryText"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="verified_user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1oL-rq-nHf">
-                            <rect key="frame" x="107" y="38.5" width="14" height="13"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="13" id="lDk-GK-3II"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="14"/>
-                            <color key="textColor" name="SecondaryText"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="P4M-ui-Sb4">
+                            <rect key="frame" x="102" y="12" width="211" height="41"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="hrf-zs-UDT">
+                                    <rect key="frame" x="0.0" y="0.0" width="211" height="41"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Test Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6In-3T-Qql">
+                                            <rect key="frame" x="0.0" y="0.0" width="42.5" height="41"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                            <color key="textColor" name="TextMessages"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="lock" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tp6-3C-IrP">
+                                            <rect key="frame" x="43.5" y="0.0" width="18" height="41"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="18" id="Md2-l8-1De"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
+                                            <color key="textColor" name="WashedOutReceivedText"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" text="flash_on" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEV-z5-dqb">
+                                            <rect key="frame" x="62.5" y="0.0" width="15" height="41"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
+                                            <color key="textColor" name="WashedOutReceivedText"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8t1-dd-q25" customClass="UIActivityIndicatorView">
+                                            <rect key="frame" x="78.5" y="0.0" width="30" height="41"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="CZQ-fj-PGk"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="23" id="Mqj-Th-Y9Z"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="hX2-cM-pxh">
+                                            <rect key="frame" x="109.5" y="0.0" width="101.5" height="41"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="EHK-om-ehd">
+                                    <rect key="frame" x="0.0" y="0.0" width="211" height="0.0"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73C-AC-DOG">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="0.0"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                            <color key="textColor" name="SecondaryText"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="verified_user" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1oL-rq-nHf">
+                                            <rect key="frame" x="53" y="0.0" width="158" height="0.0"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="14"/>
+                                            <color key="textColor" name="SecondaryText"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AZ-Nl-f1j">
-                            <rect key="frame" x="90" y="0.0" width="256" height="65"/>
+                            <rect key="frame" x="102" y="12" width="211" height="41"/>
                             <connections>
                                 <action selector="headerButtonTouched" destination="-1" eventType="touchUpInside" id="Dog-n8-eLi"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mt6-rI-5Dn">
-                            <rect key="frame" x="346" y="0.0" width="30" height="65"/>
-                            <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="cII-Zq-jqe"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="23"/>
-                            <color key="tintColor" name="MainBottomIcons"/>
-                            <state key="normal" title="apps">
-                                <color key="titleColor" name="MainBottomIcons"/>
-                            </state>
-                            <connections>
-                                <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="UOF-Mw-WEa"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uG-XH-Ptg">
-                            <rect key="frame" x="346" y="0.0" width="30" height="65"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="30" id="hkW-Fm-j4B"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                            <color key="tintColor" name="MainBottomIcons"/>
-                            <state key="normal" image="muteOffIcon">
-                                <color key="titleColor" name="MainBottomIcons"/>
-                            </state>
-                            <connections>
-                                <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="QuO-DW-CvM"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahL-K7-tna">
-                            <rect key="frame" x="376" y="0.0" width="38" height="65"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="38" id="iTp-YE-hwF"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
-                            <color key="tintColor" name="WashedOutReceivedText"/>
-                            <state key="normal" title="more_vert">
-                                <color key="titleColor" name="MainBottomIcons"/>
-                            </state>
-                            <connections>
-                                <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="vTb-2n-aC3"/>
-                            </connections>
-                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qk6-Jn-NmJ">
+                            <rect key="frame" x="313" y="0.0" width="95" height="65"/>
+                            <subviews>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mt6-rI-5Dn">
+                                    <rect key="frame" x="-35" y="0.0" width="35" height="65"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="dkU-Pd-4OC"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="23"/>
+                                    <color key="tintColor" name="MainBottomIcons"/>
+                                    <state key="normal" title="apps">
+                                        <color key="titleColor" name="MainBottomIcons"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="UOF-Mw-WEa"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6uG-XH-Ptg">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="65"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="hkW-Fm-j4B"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                    <color key="tintColor" name="MainBottomIcons"/>
+                                    <state key="normal" image="threadsBubble">
+                                        <color key="titleColor" name="MainBottomIcons"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showThreadsButtonTapped:" destination="-1" eventType="touchUpInside" id="e2n-Xv-Th4"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ws4-aZ-De7">
+                                    <rect key="frame" x="35" y="0.0" width="30" height="65"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="8zY-gX-hVc"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                    <color key="tintColor" name="MainBottomIcons"/>
+                                    <state key="normal" image="muteOffIcon">
+                                        <color key="titleColor" name="MainBottomIcons"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="ffv-S1-oK6"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahL-K7-tna">
+                                    <rect key="frame" x="65" y="0.0" width="30" height="65"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="iTp-YE-hwF"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                                    <color key="tintColor" name="WashedOutReceivedText"/>
+                                    <state key="normal" title="more_vert">
+                                        <color key="titleColor" name="MainBottomIcons"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="vTb-2n-aC3"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="6uG-XH-Ptg" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="0Us-fU-nfl"/>
-                        <constraint firstItem="pEL-5f-Xhc" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="0nw-AU-fPq"/>
-                        <constraint firstItem="1oL-rq-nHf" firstAttribute="leading" secondItem="73C-AC-DOG" secondAttribute="trailing" constant="5" id="2aB-z3-4xN"/>
-                        <constraint firstItem="ahL-K7-tna" firstAttribute="leading" secondItem="6uG-XH-Ptg" secondAttribute="trailing" id="6dL-Sg-cye"/>
-                        <constraint firstItem="3AZ-Nl-f1j" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="C0A-zO-hG4"/>
-                        <constraint firstItem="tRM-fg-mWl" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="Dor-xZ-gZl"/>
-                        <constraint firstAttribute="bottom" secondItem="ahL-K7-tna" secondAttribute="bottom" id="HA1-2x-Q0d"/>
-                        <constraint firstAttribute="bottom" secondItem="tRM-fg-mWl" secondAttribute="bottom" id="HBo-TZ-u1h"/>
-                        <constraint firstItem="1oL-rq-nHf" firstAttribute="centerY" secondItem="73C-AC-DOG" secondAttribute="centerY" id="Jtv-X6-1D6"/>
-                        <constraint firstItem="tp6-3C-IrP" firstAttribute="leading" secondItem="6In-3T-Qql" secondAttribute="trailing" constant="4" id="KeH-tx-szO"/>
-                        <constraint firstItem="Mt6-rI-5Dn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6In-3T-Qql" secondAttribute="trailing" constant="40" id="Kop-eJ-UxO"/>
-                        <constraint firstItem="ZEV-z5-dqb" firstAttribute="leading" secondItem="tp6-3C-IrP" secondAttribute="trailing" id="RsK-QZ-Zqo"/>
-                        <constraint firstItem="6In-3T-Qql" firstAttribute="centerY" secondItem="atH-u3-D4Y" secondAttribute="centerY" id="SWE-mZ-idj"/>
-                        <constraint firstAttribute="trailing" secondItem="ahL-K7-tna" secondAttribute="trailing" id="VBX-te-foA"/>
-                        <constraint firstAttribute="bottom" secondItem="6uG-XH-Ptg" secondAttribute="bottom" id="WAL-9S-sKz"/>
-                        <constraint firstAttribute="bottom" secondItem="pEL-5f-Xhc" secondAttribute="bottom" id="Xe7-id-QUW"/>
-                        <constraint firstItem="73C-AC-DOG" firstAttribute="top" secondItem="6In-3T-Qql" secondAttribute="bottom" constant="3" id="YCf-mE-AWO"/>
-                        <constraint firstItem="pEL-5f-Xhc" firstAttribute="leading" secondItem="tRM-fg-mWl" secondAttribute="trailing" id="Yrg-nW-YyB"/>
-                        <constraint firstItem="8t1-dd-q25" firstAttribute="centerY" secondItem="6In-3T-Qql" secondAttribute="centerY" id="ZzG-Ku-NuU"/>
-                        <constraint firstItem="Mt6-rI-5Dn" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="aXE-vx-Nry"/>
-                        <constraint firstItem="tRM-fg-mWl" firstAttribute="leading" secondItem="atH-u3-D4Y" secondAttribute="leading" id="amS-Rz-JOs"/>
-                        <constraint firstItem="ZEV-z5-dqb" firstAttribute="centerY" secondItem="tp6-3C-IrP" secondAttribute="centerY" id="beJ-B3-BND"/>
-                        <constraint firstItem="73C-AC-DOG" firstAttribute="leading" secondItem="6In-3T-Qql" secondAttribute="leading" id="cBb-j3-hzV"/>
-                        <constraint firstAttribute="bottom" secondItem="Mt6-rI-5Dn" secondAttribute="bottom" id="dzn-eP-Osy"/>
-                        <constraint firstAttribute="bottom" secondItem="3AZ-Nl-f1j" secondAttribute="bottom" id="eVl-6H-gbl"/>
-                        <constraint firstItem="tp6-3C-IrP" firstAttribute="centerY" secondItem="6In-3T-Qql" secondAttribute="centerY" id="laE-Uf-PUg"/>
-                        <constraint firstItem="3AZ-Nl-f1j" firstAttribute="leading" secondItem="pEL-5f-Xhc" secondAttribute="trailing" id="oAS-WM-5UH"/>
-                        <constraint firstItem="6uG-XH-Ptg" firstAttribute="leading" secondItem="Mt6-rI-5Dn" secondAttribute="trailing" constant="-30" id="oyF-xL-U2b"/>
-                        <constraint firstItem="Mt6-rI-5Dn" firstAttribute="leading" secondItem="3AZ-Nl-f1j" secondAttribute="trailing" id="qNg-dE-1Jc"/>
-                        <constraint firstItem="8t1-dd-q25" firstAttribute="leading" secondItem="tp6-3C-IrP" secondAttribute="trailing" constant="15" id="rYp-vx-31K"/>
-                        <constraint firstItem="ahL-K7-tna" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="v1j-aa-527"/>
-                        <constraint firstItem="6In-3T-Qql" firstAttribute="leading" secondItem="pEL-5f-Xhc" secondAttribute="trailing" constant="12" id="wqe-eW-304"/>
+                        <constraint firstItem="P4M-ui-Sb4" firstAttribute="leading" secondItem="VFH-3u-eVa" secondAttribute="trailing" constant="12" id="1zc-7G-WWc"/>
+                        <constraint firstItem="3AZ-Nl-f1j" firstAttribute="leading" secondItem="P4M-ui-Sb4" secondAttribute="leading" id="AGh-gt-1bk"/>
+                        <constraint firstItem="Qk6-Jn-NmJ" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="Atw-Yd-bOJ"/>
+                        <constraint firstItem="3AZ-Nl-f1j" firstAttribute="bottom" secondItem="P4M-ui-Sb4" secondAttribute="bottom" id="Bcl-49-52o"/>
+                        <constraint firstItem="3AZ-Nl-f1j" firstAttribute="top" secondItem="P4M-ui-Sb4" secondAttribute="top" id="Dc8-Ui-eJ1"/>
+                        <constraint firstAttribute="bottom" secondItem="P4M-ui-Sb4" secondAttribute="bottom" constant="12" id="K1C-oo-y9z"/>
+                        <constraint firstAttribute="bottom" secondItem="Qk6-Jn-NmJ" secondAttribute="bottom" id="KAP-gO-FaS"/>
+                        <constraint firstItem="VFH-3u-eVa" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" id="KJ5-Ga-kUx"/>
+                        <constraint firstAttribute="trailing" secondItem="Qk6-Jn-NmJ" secondAttribute="trailing" constant="6" id="MpQ-3Q-CdI"/>
+                        <constraint firstItem="3AZ-Nl-f1j" firstAttribute="trailing" secondItem="P4M-ui-Sb4" secondAttribute="trailing" id="Xjr-iC-hOE"/>
+                        <constraint firstItem="P4M-ui-Sb4" firstAttribute="top" secondItem="atH-u3-D4Y" secondAttribute="top" constant="12" id="cFn-27-kf0"/>
+                        <constraint firstAttribute="bottom" secondItem="VFH-3u-eVa" secondAttribute="bottom" id="dbY-wj-YWv"/>
+                        <constraint firstItem="VFH-3u-eVa" firstAttribute="leading" secondItem="atH-u3-D4Y" secondAttribute="leading" id="sNf-Au-00o"/>
+                        <constraint firstItem="Qk6-Jn-NmJ" firstAttribute="leading" secondItem="P4M-ui-Sb4" secondAttribute="trailing" id="z7Q-wF-Buw"/>
                     </constraints>
                 </view>
             </subviews>
@@ -243,6 +265,7 @@
     <resources>
         <image name="muteOffIcon" width="18" height="18"/>
         <image name="profile_avatar" width="45" height="45"/>
+        <image name="threadsBubble" width="22" height="20.5"/>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

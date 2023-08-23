@@ -16,11 +16,8 @@ class SetNickNameViewController: SetDataViewController {
     @IBOutlet weak var nickNameField: UITextField!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
-    static func instantiate(rootViewController : RootViewController) -> SetNickNameViewController {
+    static func instantiate() -> SetNickNameViewController {
         let viewController = StoryboardScene.Invite.setNickNameViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
-        
         return viewController
     }
     
@@ -33,7 +30,7 @@ class SetNickNameViewController: SetDataViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
 
         nextButton.isHidden = true
         
@@ -62,7 +59,7 @@ class SetNickNameViewController: SetDataViewController {
     }
     
     func insertAndUpdateOwner(contacts: [JSON]) {
-        contactsService.insertContacts(contacts: contacts)
+        UserContactsHelper.insertContacts(contacts: contacts)
         UserData.sharedInstance.saveNewNodeOnKeychain()
         
         let id = UserData.sharedInstance.getUserId()
@@ -70,7 +67,7 @@ class SetNickNameViewController: SetDataViewController {
         
         API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
             self.loading = false
-            let _ = self.contactsService.insertContact(contact: contact)
+            let _ = UserContactsHelper.insertContact(contact: contact)
             self.goToProfilePicture()
         }, errorCallback: {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
@@ -78,7 +75,7 @@ class SetNickNameViewController: SetDataViewController {
     }
     
     func goToProfilePicture() {
-        let profilePictureVC = SetProfileImageViewController.instantiate(rootViewController: rootViewController, nickname: nickNameField.text ?? nil)
+        let profilePictureVC = SetProfileImageViewController.instantiate(nickname: nickNameField.text ?? nil)
         self.navigationController?.pushViewController(profilePictureVC, animated: true)
     }
 }

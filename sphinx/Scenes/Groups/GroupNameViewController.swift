@@ -12,8 +12,6 @@ class GroupNameViewController: UIViewController {
     
     weak var delegate: NewContactVCDelegate?
     
-    var rootViewController : RootViewController!
-    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -37,9 +35,8 @@ class GroupNameViewController: UIViewController {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController, delegate: NewContactVCDelegate?) -> GroupNameViewController {
+    static func instantiate(delegate: NewContactVCDelegate?) -> GroupNameViewController {
         let viewController = StoryboardScene.Groups.groupNameViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.delegate = delegate
         
         return viewController

@@ -11,8 +11,6 @@ import SwiftyJSON
 
 class SphinxReadyViewController: UIViewController {
     
-    private var rootViewController : RootViewController!
-    
     @IBOutlet weak var centerLabel: UILabel!
     @IBOutlet weak var centerSubtitle: UILabel!
     @IBOutlet weak var nextButtonContainer: UIView!
@@ -28,17 +26,15 @@ class SphinxReadyViewController: UIViewController {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController) -> SphinxReadyViewController {
+    static func instantiate() -> SphinxReadyViewController {
         let viewController = StoryboardScene.Invite.sphinxReadyViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: true)
+        setStatusBarColor()
         
         nextButtonContainer.layer.cornerRadius = nextButtonContainer.frame.size.height / 2
         nextButtonContainer.clipsToBounds = true
@@ -118,9 +114,16 @@ class SphinxReadyViewController: UIViewController {
         resetSignupData()
         UserDefaults.Keys.lastPinDate.set(Date())
         
-        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
-            let mainCoordinator = MainCoordinator(rootViewController: self.rootViewController)
-            mainCoordinator.presentInitialDrawer()
-        })
+        DelayPerformedHelper.performAfterDelay(
+            seconds: 1.0,
+            completion: {
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+                   let rootVC = appDelegate.getRootViewController()
+                {
+                    let mainCoordinator = MainCoordinator(rootViewController: rootVC)
+                    mainCoordinator.presentInitialDrawer()
+                }
+            }
+        )
     }
 }

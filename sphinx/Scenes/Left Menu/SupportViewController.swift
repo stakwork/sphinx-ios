@@ -11,8 +11,6 @@ import MessageUI
 
 class SupportViewController: UIViewController {
     
-    var rootViewController : RootViewController!
-    
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var textViewContainer: UIView!
     @IBOutlet weak var messageTextView: UITextView!
@@ -35,18 +33,15 @@ class SupportViewController: UIViewController {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController) -> SupportViewController {
+    static func instantiate() -> SupportViewController {
         let viewController = StoryboardScene.LeftMenu.supportViewController.instantiate()
-        viewController.rootViewController = rootViewController
         return viewController
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
-        
-        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         textViewContainer.layer.borderWidth = 1
         textViewContainer.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)

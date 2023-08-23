@@ -15,7 +15,8 @@ class PaidMessagePreviewViewController: UIViewController {
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     
     var message: TransactionMessage? = nil
-    var messageRow: TransactionMessageRow? = nil
+    var chat: Chat! = nil
+    var messageTableCellState: MessageTableCellState? = nil
     
     static func instantiate() -> PaidMessagePreviewViewController {
         let viewController = StoryboardScene.Chat.paidMessagePreviewViewController.instantiate()
@@ -24,53 +25,81 @@ class PaidMessagePreviewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configurePreview()
-        configureMessageRow(text: "", price: 0)
+        configureMessageWith(text: "", andPrice: 0)
     }
-    
+
     func configurePreview() {
-        previewTableView.registerCell(PaidMessageSentTableViewCell.self)
+        previewTableView.registerCell(NewMessageTableViewCell.self)
         previewTableView.delegate = self
         previewTableView.dataSource = self
     }
-    
-    func configureMessageRow(text: String, price: Int) {
+
+    func configureMessageWith(
+        text: String,
+        andPrice price: Int
+    ) {
         let isMessageEmpty = text.isEmpty
         previewTableView.isHidden = isMessageEmpty
         loadingLabel.isHidden = !isMessageEmpty
-        
+
         if isMessageEmpty {
             return
         }
         
+        guard let owner = UserContact.getOwner() else {
+            return
+        }
+
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         
+        if chat == nil {
+            chat = Chat(context: managedContext)
+        }
+        
+        chat.createdAt = Date()
+
         if message == nil {
             message = TransactionMessage(context: managedContext)
         }
+        
+        let mediaTokenPrice = "amt=\(price)&ttl=undefined".base64Encoded ?? ""
+        
         message!.messageContent = text
         message!.encrypted = false
         message!.senderId = UserData.sharedInstance.getUserId()
         message!.date = Date()
-        message!.uploadingObject = AttachmentObject(data: Data(), mediaKey: "", type: .Text, paidMessage: text, price: price)
         message!.type = TransactionMessage.TransactionMessageType.attachment.rawValue
         message!.mediaType = "sphinx/text"
+        message!.mediaToken = "test.test.test.test.\(mediaTokenPrice)"
         
-        if messageRow == nil {
-            messageRow = TransactionMessageRow(message: message)
-        }
-        
+        messageTableCellState = MessageTableCellState(
+            message: message,
+            chat: chat,
+            owner: owner,
+            contact: nil,
+            tribeAdmin: nil,
+            separatorDate: nil,
+            bubbleState: MessageTableCellState.BubbleState.Isolated,
+            invoiceData: (false, false)
+        )
+
+        previewTableView.rowHeight = UITableView.automaticDimension
+        previewTableView.estimatedRowHeight = 200.0
         previewTableView.reloadData()
         resizeTableView()
     }
-    
+
     func removeProvisionalMessage() {
         if let message = message {
             CoreDataManager.sharedManager.deleteObject(object: message)
         }
+        if let chat = chat {
+            CoreDataManager.sharedManager.deleteObject(object: chat)
+        }
     }
-    
+
     func resizeTableView() {
         previewTableView.layoutIfNeeded()
         tableViewHeightConstraint.constant = previewTableView.contentSize.height + 17
@@ -78,34 +107,7 @@ class PaidMessagePreviewViewController: UIViewController {
     }
 }
 
-extension PaidMessagePreviewViewController : UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getRowHeight()
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return getRowHeight()
-    }
-    
-    func getRowHeight() -> CGFloat {
-        if let messageRow = self.messageRow {
-            return PaidMessageSentTableViewCell.getRowHeight(messageRow: messageRow)
-        }
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let messageRow = self.messageRow {
-            let sender = UserContact.getOwner()
-
-            if let cell = cell as? PaidMessageSentTableViewCell {
-                cell.configureMessageRow(messageRow: messageRow, contact: sender, chat: nil)
-            }
-        }
-    }
-}
-
-extension PaidMessagePreviewViewController : UITableViewDataSource {
+extension PaidMessagePreviewViewController : UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -115,7 +117,22 @@ extension PaidMessagePreviewViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PaidMessageSentTableViewCell", for: indexPath) as! PaidMessageSentTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewMessageTableViewCell", for: indexPath) as! NewMessageTableViewCell
+        
+        if let messageTableCellState = messageTableCellState {
+            cell.configureWith(
+                messageCellState: messageTableCellState,
+                mediaData: nil,
+                tribeData: nil,
+                linkData: nil,
+                botWebViewData: nil,
+                uploadProgressData: nil,
+                delegate: nil,
+                searchingTerm: nil,
+                indexPath: indexPath
+            )
+        }
+        
         return cell
     }
 }

@@ -28,5 +28,7 @@ class AppSizeView: CommonTabsView {
         UserDefaults.Keys.messagesSize.set(sender.tag)
         Constants.setSize()
         setViewBorder()
+        
+        NotificationCenter.default.post(name: .onSizeConfigurationChanged, object: nil)
     }
 }

@@ -11,10 +11,12 @@ import SwiftyJSON
 import AVFoundation
 
 @objc protocol AttachmentsManagerDelegate: class {
+    @objc optional func didUpdateUploadProgressFor(messageId: Int, progress: Int)
     @objc optional func didUpdateUploadProgress(progress: Int)
     @objc optional func didFailSendingMessage(provisionalMessage: TransactionMessage?)
     @objc optional func didSuccessSendingAttachment(message: TransactionMessage, image: UIImage?)
     @objc optional func didSuccessUploadingImage(url: String)
+    @objc optional func shouldReplaceMediaDataFor(provisionalMessageId: Int, and messageId: Int)
 }
 
 class AttachmentsManager {
@@ -60,17 +62,33 @@ class AttachmentsManager {
         self.authenticate(completion: {_ in }, errorCompletion: {})
     }
     
-    func authenticate(completion: @escaping (String) -> (), errorCompletion: @escaping () -> ()) {
-            API.sharedInstance.askAuthentication(callback: { id, challenge in
+    func authenticate(
+        completion: @escaping (String) -> (),
+        errorCompletion: @escaping () -> ()
+    ) {
+        guard let pubkey = UserContact.getOwner()?.publicKey else {
+            errorCompletion()
+            return
+        }
+        
+        API.sharedInstance.askAuthentication(callback: { id, challenge in
             if let id = id, let challenge = challenge {
                 
-                self.delegate?.didUpdateUploadProgress?(progress: 10)
+                if let provisionalMessage = self.provisionalMessage {
+                    self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: 10)
+                } else {
+                    self.delegate?.didUpdateUploadProgress?(progress: 10)
+                }
                 
                 API.sharedInstance.signChallenge(challenge: challenge, callback: { sig in
                     if let sig = sig {
-                        self.delegate?.didUpdateUploadProgress?(progress: 15)
+                        if let provisionalMessage = self.provisionalMessage {
+                            self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: 15)
+                        } else {
+                            self.delegate?.didUpdateUploadProgress?(progress: 15)
+                        }
                         
-                        API.sharedInstance.verifyAuthentication(id: id, sig: sig, callback: { token in
+                        API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
                             if let token = token {
                                 UserDefaults.Keys.attachmentsToken.set(token)
                                 completion(token)
@@ -132,7 +150,11 @@ class AttachmentsManager {
         }
     }
     
-    func uploadAndSendAttachment(attachmentObject: AttachmentObject, replyingMessage: TransactionMessage? = nil) {
+    func uploadAndSendAttachment(
+        attachmentObject: AttachmentObject,
+        replyingMessage: TransactionMessage? = nil,
+        threadUUID: String? = nil
+    ) {
         uploading = true
         delegate?.didUpdateUploadProgress?(progress: 5)
         
@@ -149,7 +171,12 @@ class AttachmentsManager {
         
         if let _ = attachmentObject.data {
             uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
-                self.sendAttachment(file: fileJSON, attachmentObject: attachmentObject, replyingMessage: replyingMessage)
+                self.sendAttachment(
+                    file: fileJSON,
+                    attachmentObject: attachmentObject,
+                    replyingMessage: replyingMessage,
+                    threadUUID: threadUUID
+                )
             }
         }
     }
@@ -165,11 +192,20 @@ class AttachmentsManager {
     func uploadData(attachmentObject: AttachmentObject, route: String, token: String, completion: @escaping (NSDictionary, AttachmentObject) -> ()) {
         API.sharedInstance.uploadData(attachmentObject: attachmentObject, route: route, token: token, progressCallback: { progress in
             let totalProgress = (progress * 85) / 100 + 10
-            self.delegate?.didUpdateUploadProgress?(progress: totalProgress)
+            if let provisionalMessage = self.provisionalMessage {
+                self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: totalProgress)
+            } else {
+                self.delegate?.didUpdateUploadProgress?(progress: totalProgress)
+            }
         }, callback: { success, fileJSON in
             if let fileJSON = fileJSON, success {
                 self.uploadedImage = attachmentObject.image
-                self.delegate?.didUpdateUploadProgress?(progress: 100)
+                
+                if let provisionalMessage = self.provisionalMessage {
+                    self.delegate?.didUpdateUploadProgressFor?(messageId: provisionalMessage.id, progress: 100)
+                } else {
+                    self.delegate?.didUpdateUploadProgress?(progress: 100)
+                }
                 completion(fileJSON, attachmentObject)
             } else {
                 self.uploadFailed()
@@ -177,8 +213,22 @@ class AttachmentsManager {
         })
     }
     
-    func sendAttachment(file: NSDictionary, attachmentObject: AttachmentObject, replyingMessage: TransactionMessage? = nil) {
-        guard let params = TransactionMessage.getMessageParams(contact: contact, chat: chat, file: file, text: attachmentObject.text, mediaKey: attachmentObject.mediaKey, price: attachmentObject.price, replyingMessage: replyingMessage) else {
+    func sendAttachment(
+        file: NSDictionary,
+        attachmentObject: AttachmentObject,
+        replyingMessage: TransactionMessage? = nil,
+        threadUUID: String? = nil
+    ) {
+        guard let params = TransactionMessage.getMessageParams(
+            contact: contact,
+            chat: chat,
+            file: file,
+            text: attachmentObject.text,
+            mediaKey: attachmentObject.mediaKey,
+            price: attachmentObject.price,
+            replyingMessage: replyingMessage,
+            threadUUID: threadUUID
+        ) else {
             uploadFailed()
             return
         }
@@ -206,7 +256,17 @@ class AttachmentsManager {
         })
     }
     
-    func createLocalMessage(message: JSON, attachmentObject: AttachmentObject) {
+    func createLocalMessage(
+        message: JSON,
+        attachmentObject: AttachmentObject
+    ) {
+        if let provisionalMessage = provisionalMessage {
+            delegate?.shouldReplaceMediaDataFor?(
+                provisionalMessageId: provisionalMessage.id,
+                and: message["id"].intValue
+            )
+        }
+        
         if let message = TransactionMessage.insertMessage(m: message, existingMessage: provisionalMessage).0 {
             delegate?.didUpdateUploadProgress?(progress: 100)
             cacheImageAndMediaData(message: message, attachmentObject: attachmentObject)
@@ -214,18 +274,25 @@ class AttachmentsManager {
         }
     }
     
-    func cacheImageAndMediaData(message: TransactionMessage, attachmentObject: AttachmentObject) {
-        if let mediaUrl = message.getMediaUrl()?.absoluteString {
-            if let data = attachmentObject.data, message.isVideo() || message.isAudio() || message.isGif() {
+    func cacheImageAndMediaData(
+        message: TransactionMessage,
+        attachmentObject: AttachmentObject
+    ) {
+        if let mediaUrl = message.getMediaUrlFromMediaToken()?.absoluteString {
+            if let data = attachmentObject.data {
                 if let mediaKey = message.mediaKey {
                     if let decryptedData = SymmetricEncryptionManager.sharedInstance.decryptData(data: data, key: mediaKey) {
-                        MediaLoader.storeMediaDataInCache(data: decryptedData, url: mediaUrl)
+                        MediaLoader.storeMediaDataInCache(data: decryptedData, url: mediaUrl,message: message)
                     }
                 }
             }
             
             if let image = uploadedImage {
-                MediaLoader.storeImageInCache(img: image, url: mediaUrl, chat: message.chat)
+                MediaLoader.storeImageInCache(
+                    img: image,
+                    url: mediaUrl,
+                    message: message
+                )
             }
         }
     }

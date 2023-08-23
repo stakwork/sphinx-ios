@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioMessageView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="r2R-uO-7iP"/>
+                <outlet property="currentTimeView" destination="kq8-fd-MbZ" id="etp-UI-2FU"/>
+                <outlet property="durationView" destination="kDA-iV-fSN" id="DTc-Ne-bBn"/>
+                <outlet property="loadingWheel" destination="aYK-pD-v7O" id="lJT-p2-prn"/>
+                <outlet property="playPauseButton" destination="dlI-oX-aHr" id="5MO-Bl-QoI"/>
+                <outlet property="progressView" destination="t5g-I4-pmp" id="Lez-UX-zaT"/>
+                <outlet property="progressViewWidthConstraint" destination="pTy-7k-kXE" id="ABz-4W-o91"/>
+                <outlet property="tapHandlerView" destination="LZV-dp-CTc" id="MMh-cH-BVy"/>
+                <outlet property="timeLabel" destination="Q6G-5g-HAs" id="fOs-h8-Qvm"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orL-Xj-X9o">
+                    <rect key="frame" x="0.0" y="0.0" width="377" height="60"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Dn-JF-WxV">
+                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlI-oX-aHr">
+                                    <rect key="frame" x="15" y="11.666666666666664" width="30" height="37"/>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                                    <state key="normal" title="play_arrow">
+                                        <color key="titleColor" name="Text"/>
+                                    </state>
+                                    <state key="disabled">
+                                        <color key="titleColor" name="SecondaryText"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="playPauseButtonTouched" destination="-1" eventType="touchUpInside" id="pcK-dj-36A"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYK-pD-v7O" customClass="UIActivityIndicatorView">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="aYK-pD-v7O" firstAttribute="top" secondItem="8Dn-JF-WxV" secondAttribute="top" id="AUe-fi-C4j"/>
+                                <constraint firstItem="dlI-oX-aHr" firstAttribute="centerY" secondItem="8Dn-JF-WxV" secondAttribute="centerY" id="Upm-ba-wda"/>
+                                <constraint firstAttribute="bottom" secondItem="aYK-pD-v7O" secondAttribute="bottom" id="XH1-8W-4ii"/>
+                                <constraint firstItem="dlI-oX-aHr" firstAttribute="leading" secondItem="8Dn-JF-WxV" secondAttribute="leading" constant="15" id="uQi-wu-eK4"/>
+                                <constraint firstAttribute="width" constant="60" id="uqb-GR-hAT"/>
+                                <constraint firstItem="aYK-pD-v7O" firstAttribute="leading" secondItem="8Dn-JF-WxV" secondAttribute="leading" id="wUq-th-yez"/>
+                                <constraint firstAttribute="trailing" secondItem="aYK-pD-v7O" secondAttribute="trailing" id="x4g-hl-t1b"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G7n-Pq-Tyi">
+                            <rect key="frame" x="60" y="0.0" width="267" height="60"/>
+                            <subviews>
+                                <view alpha="0.30000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kDA-iV-fSN">
+                                    <rect key="frame" x="0.0" y="28.666666666666668" width="267" height="3"/>
+                                    <color key="backgroundColor" name="WashedOutReceivedText"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="3" id="nYs-IP-9bV"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5g-I4-pmp">
+                                    <rect key="frame" x="0.0" y="28.666666666666668" width="50" height="3"/>
+                                    <color key="backgroundColor" name="ReceivedIcon"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="3" id="Obt-SW-WoG"/>
+                                        <constraint firstAttribute="width" constant="50" id="pTy-7k-kXE"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kq8-fd-MbZ">
+                                    <rect key="frame" x="50" y="24.666666666666668" width="11" height="11.000000000000004"/>
+                                    <color key="backgroundColor" name="ReceivedIcon"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="11" id="9Ca-gu-FgK"/>
+                                        <constraint firstAttribute="width" constant="11" id="p82-Q1-bua"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZV-dp-CTc">
+                                    <rect key="frame" x="40" y="14.666666666666664" width="31" height="31"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="31" id="AoX-b1-1uD"/>
+                                        <constraint firstAttribute="width" constant="31" id="Pyx-uo-vgV"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="kDA-iV-fSN" firstAttribute="centerY" secondItem="G7n-Pq-Tyi" secondAttribute="centerY" id="0BA-op-DMq"/>
+                                <constraint firstItem="LZV-dp-CTc" firstAttribute="centerX" secondItem="kq8-fd-MbZ" secondAttribute="centerX" id="ACV-QI-Bb4"/>
+                                <constraint firstItem="kq8-fd-MbZ" firstAttribute="leading" secondItem="t5g-I4-pmp" secondAttribute="trailing" id="N43-wn-4HJ"/>
+                                <constraint firstItem="t5g-I4-pmp" firstAttribute="centerY" secondItem="kDA-iV-fSN" secondAttribute="centerY" id="Pge-jP-lqe"/>
+                                <constraint firstItem="LZV-dp-CTc" firstAttribute="centerY" secondItem="kq8-fd-MbZ" secondAttribute="centerY" id="Ueg-Kb-xK3"/>
+                                <constraint firstItem="kq8-fd-MbZ" firstAttribute="centerY" secondItem="t5g-I4-pmp" secondAttribute="centerY" id="cNV-Ct-rUG"/>
+                                <constraint firstAttribute="trailing" secondItem="kDA-iV-fSN" secondAttribute="trailing" id="jUR-2i-jRV"/>
+                                <constraint firstItem="t5g-I4-pmp" firstAttribute="leading" secondItem="kDA-iV-fSN" secondAttribute="leading" id="t9N-sU-xiH"/>
+                                <constraint firstItem="kDA-iV-fSN" firstAttribute="leading" secondItem="G7n-Pq-Tyi" secondAttribute="leading" id="tBi-Ln-BwS"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ezi-F3-nfB">
+                            <rect key="frame" x="327" y="0.0" width="50" height="60"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q6G-5g-HAs">
+                                    <rect key="frame" x="14.666666666666689" y="21.666666666666664" width="35.333333333333343" height="16.666666666666664"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                    <color key="textColor" name="Text"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="3UW-Qf-Mo7"/>
+                                <constraint firstAttribute="trailing" secondItem="Q6G-5g-HAs" secondAttribute="trailing" id="gYH-MA-Iuf"/>
+                                <constraint firstItem="Q6G-5g-HAs" firstAttribute="centerY" secondItem="Ezi-F3-nfB" secondAttribute="centerY" id="yA5-FI-zQi"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="orL-Xj-X9o" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Dl2-fJ-rBJ"/>
+                <constraint firstAttribute="trailing" secondItem="orL-Xj-X9o" secondAttribute="trailing" constant="16" id="FhN-3T-rv7"/>
+                <constraint firstItem="orL-Xj-X9o" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TNw-Io-LfA"/>
+                <constraint firstAttribute="bottom" secondItem="orL-Xj-X9o" secondAttribute="bottom" id="hdR-Dy-ULM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-25.190839694656489" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="ReceivedIcon">
+            <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutReceivedText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

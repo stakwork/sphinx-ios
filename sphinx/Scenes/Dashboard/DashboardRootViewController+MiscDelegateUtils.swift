@@ -33,7 +33,7 @@ extension DashboardRootViewController: NewContactVCDelegate {
 extension DashboardRootViewController: PaymentInvoiceDelegate {
 
     func willDismissPresentedView(paymentCreated: Bool) {
-        rootViewController.setStatusBarColor(light: true)
+        setStatusBarColor()
         headerView.updateBalance()
     }
 }

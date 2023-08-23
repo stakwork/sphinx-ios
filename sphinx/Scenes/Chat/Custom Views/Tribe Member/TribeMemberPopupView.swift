@@ -10,7 +10,8 @@ import UIKit
 
 protocol TribeMemberViewDelegate: class {
     func shouldGoToSendPayment(message: TransactionMessage)
-    func didDismissTribeMemberVC()
+    func shouldDismissMemberPopup()
+    func shouldDisplayKnownBadges()
 }
 
 class TribeMemberPopupView: UIView {
@@ -62,10 +63,9 @@ class TribeMemberPopupView: UIView {
     
     @IBAction func sendSatsButtonTouched() {
         delegate?.shouldGoToSendPayment(message: message)
-        WindowsManager.sharedInstance.removeCoveringWindow()
     }
     
     @IBAction func closeButtonTouched() {
-        WindowsManager.sharedInstance.removeCoveringWindow()
+        delegate?.shouldDismissMemberPopup()
     }
 }

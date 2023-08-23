@@ -19,26 +19,25 @@ import PushKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
     var window: UIWindow?
 
-    var launchingVC = false
     var style : UIUserInterfaceStyle? = nil
-
     var notificationUserInfo : [String: AnyObject]? = nil
-
     var backgroundSessionCompletionHandler: (() -> Void)?
     
     let onionConnector = SphinxOnionConnector.sharedInstance
-    
-    let newMessageBubbleHelper = NewMessageBubbleHelper()
-    
     let actionsManager = ActionsManager.sharedInstance
     let feedsManager = FeedsManager.sharedInstance
-    
+    let storageManager = StorageManager.sharedManager
     let podcastPlayerController = PodcastPlayerController.sharedInstance
     
-    let chatListViewModel = ChatListViewModel(contactsService: ContactsService())
+    let newMessageBubbleHelper = NewMessageBubbleHelper()
+    let chatListViewModel = ChatListViewModel()
+    
+    var activatedFromBackground = false
 
+    //Lifecycle events
     func application(
         _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
@@ -60,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
+        activatedFromBackground = false
+        
         if #available(iOS 15.0, *) {
             UITableView.appearance().sectionHeaderTopPadding = CGFloat(0)
         }
@@ -73,14 +74,118 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureStoreKit()
         configureSVGRendering()
         connectTor()
-        
-        setInitialVC(launchingApp: true)
-        
         registerForVoIP()
+        
+        setInitialVC()
 
         return true
     }
     
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
+            if let currentVC = getCurrentVC() {
+                if let currentVC = currentVC as? DashboardRootViewController {
+                    if let presentedVC = currentVC.navigationController?.presentedViewController {
+                        presentedVC.dismiss(animated: true) {
+                            currentVC.handleLinkQueries()
+                        }
+                    } else {
+                        currentVC.handleLinkQueries()
+                    }
+                } else {
+                    ///handleLinkQueries will be called in viewDidLoad
+                    currentVC.navigationController?.popToRootViewController(animated: true)
+                }
+            } else {
+                setInitialVC(deepLink: true)
+            }
+        }
+        return true
+    }
+
+    func application(
+        _ application: UIApplication,
+        handleEventsForBackgroundURLSession identifier: String,
+        completionHandler: @escaping () -> Void
+    ) {
+        backgroundSessionCompletionHandler = completionHandler
+    }
+
+    func applicationDidEnterBackground(
+        _ application: UIApplication
+    ) {
+        saveCurrentStyle()
+        setBadge(application: application)
+        
+        podcastPlayerController.finishAndSaveContentConsumed()
+        
+        actionsManager.syncActionsInBackground()
+        feedsManager.saveContentFeedStatus()
+        storageManager.processGarbageCleanup()
+        
+        CoreDataManager.sharedManager.saveContext()
+        
+        scheduleAppRefresh()
+    }
+
+    func applicationWillEnterForeground(
+        _ application: UIApplication
+    ) {
+        activatedFromBackground = true
+        notificationUserInfo = nil
+
+        if !UserData.sharedInstance.isUserLogged() {
+            return
+        }
+        
+        presentPINIfNeeded()
+        
+        feedsManager.restoreContentFeedStatusInBackground()
+        podcastPlayerController.finishAndSaveContentConsumed()
+    }
+    
+    func applicationDidBecomeActive(
+        _ application: UIApplication
+    ) {
+        reloadAppIfStyleChanged()
+        
+        if !UserData.sharedInstance.isUserLogged() {
+            return
+        }
+        
+        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+        handlePushAndFetchData()
+    }
+
+    func handlePushAndFetchData() {
+        if
+            let chatId = getChatIdFrom(notification: notificationUserInfo),
+            let chat = Chat.getChatWith(id: chatId)
+        {
+            reloadMessages() {
+                self.goTo(chat: chat)
+            }
+        } else if activatedFromBackground {
+            reloadContactsAndMessages()
+        }
+    }
+    
+    func applicationWillTerminate(
+        _ application: UIApplication
+    ) {
+        setBadge(application: application)
+
+        SKPaymentQueue.default().remove(StoreKitService.shared)
+
+        podcastPlayerController.finishAndSaveContentConsumed()
+        CoreDataManager.sharedManager.saveContext()
+    }
+    
+    ///On app launch
     func setAppConfiguration() {
         Constants.setSize()
         window?.setStyle()
@@ -94,7 +199,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func configureSVGRendering(){
-        // register coder, on AppDelegate
         let SVGCoder = SDImageSVGCoder.shared
         SDImageCodersManager.shared.addCoder(SVGCoder)
         
@@ -115,31 +219,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SKPaymentQueue.default().add(StoreKitService.shared)
     }
     
-    func syncDeviceId() {
-        UserContact.syncDeviceId()
-    }
-    
-    func getRelayKeys() {
-        UserData.sharedInstance.getAndSaveTransportKey()
-        UserData.sharedInstance.getOrCreateHMACKey()
-    }
-    
-    func handleAppRefresh(task: BGTask) {
-        scheduleAppRefresh()
-        
-        chatListViewModel.loadFriends { _ in
-            self.chatListViewModel.syncMessages(
-                progressCallback: { _ in },
-                completion: { (_, _) in
-                    task.setTaskCompleted(success: true)
-                },
-                errorCompletion: {
-                    task.setTaskCompleted(success: true)
-                }
-            )
-        }
-    }
-    
     fileprivate func registerForVoIP(){
         let registry = PKPushRegistry(queue: .main)
         DispatchQueue.main.async {
@@ -148,18 +227,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registry.desiredPushTypes = [PKPushType.voIP]
     }
     
-    
-    
-    func scheduleAppRefresh() {
-        let request = BGAppRefreshTaskRequest(identifier: "com.gl.sphinx.refresh")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            print("Could not schedule app refresh \(error)")
-        }
-    }
-
     func connectTor() {
         if !SignupHelper.isLogged() { return }
 
@@ -168,144 +235,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         onionConnector.startTor(delegate: self)
     }
-
-    func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
-    ) -> Bool {
-        
-        if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
-            setInitialVC(launchingApp: false, deepLink: true)
-        }
-        return true
-    }
-
-    func application(
-        _ application: UIApplication,
-        handleEventsForBackgroundURLSession identifier: String,
-        completionHandler: @escaping () -> Void
-    ) {
-        backgroundSessionCompletionHandler = completionHandler
-    }
-
-    func applicationDidEnterBackground(
-        _ application: UIApplication
-    ) {
-        saveCurrentStyle()
-        WindowsManager.sharedInstance.removeMessageOptions()
-        setBadge(application: application)
-        
-        podcastPlayerController.finishAndSaveContentConsumed()
-        
-        actionsManager.syncActionsInBackground()
-        feedsManager.saveContentFeedStatus()
-        
-        CoreDataManager.sharedManager.saveContext()
-        
-        scheduleAppRefresh()
-    }
-
-    func applicationWillEnterForeground(
-        _ application: UIApplication
-    ) {
-        notificationUserInfo = nil
-
-        if !UserData.sharedInstance.isUserLogged() {
-            return
-        }
-        
-        reloadMessagesData()
-        presentPINIfNeeded()
-        
-        feedsManager.restoreContentFeedStatusInBackground()
-        podcastPlayerController.finishAndSaveContentConsumed()
-    }
-
-    func saveCurrentStyle() {
-        if #available(iOS 13.0, *) {
-            style = UITraitCollection.current.userInterfaceStyle
-        }
-    }
     
-    func handleIncomingCall(
-        callerName:String
-    ){
-        if #available(iOS 14.0, *) {
-            JitsiIncomingCallManager.sharedInstance.reportIncomingCall(
-                uuid: UUID(),
-                handle: callerName
-            )
-        }
-    }
-    
-    func handleAcceptedCall(
-        callLink:String,
-        audioOnly: Bool
-    ){
-        hideAccessoryView()
-        VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: audioOnly)
-    }
-
-    func reloadAppIfStyleChanged() {
-        if #available(iOS 13.0, *) {
-            guard let _ = UIWindow.getSavedStyle() else {
-                if style != UIScreen.main.traitCollection.userInterfaceStyle {
-                    style = UIScreen.main.traitCollection.userInterfaceStyle
-
-                    let isUserLogged = UserData.sharedInstance.isUserLogged()
-                    takeUserToInitialVC(isUserLogged: isUserLogged)
-                }
-                return
-            }
-        }
-    }
-
-    func applicationDidBecomeActive(
-        _ application: UIApplication
-    ) {
-        reloadAppIfStyleChanged()
-        
-        if !UserData.sharedInstance.isUserLogged() {
-            return
-        }
-        
-        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
-
-        if let notification = notificationUserInfo {
-            handlePush(notification: notification)
-            setInitialVC(launchingApp: false)
-        }
-    }
-
-
-    func applicationWillTerminate(
-        _ application: UIApplication
-    ) {
-        setBadge(application: application)
-
-        SKPaymentQueue.default().remove(StoreKitService.shared)
-
-        podcastPlayerController.finishAndSaveContentConsumed()
-        CoreDataManager.sharedManager.saveContext()
-    }
-
+    //Initial VC
     func setInitialVC(
-        launchingApp: Bool,
         deepLink: Bool = false
     ) {
-        if launchingVC {
-            return
-        }
-        launchingVC = true
-
         let isUserLogged = UserData.sharedInstance.isUserLogged()
-
-        if shouldStayInView(launchingApp: launchingApp) && !deepLink {
-            reloadMessagesData()
-            launchingVC = false
-            return
-        }
         
         if isUserLogged {
             syncDeviceId()
@@ -327,8 +262,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func takeUserToInitialVC(
         isUserLogged: Bool
     ) {
-        hideAccessoryView()
-
         let rootViewController = StoryboardScene.Root.initialScene.instantiate()
         let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
 
@@ -343,51 +276,90 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.setDarkStyle()
             mainCoordinator.presentSignUpScreen()
         }
-
-        launchingVC = false
+    }
+    
+    func getRelayKeys() {
+        UserData.sharedInstance.getAndSaveTransportKey()
+        UserData.sharedInstance.getOrCreateHMACKey()
+    }
+    
+    //Notifications
+    func syncDeviceId() {
+        UserContact.syncDeviceId()
+    }
+    
+    func handleIncomingCall(
+        callerName:String
+    ){
+        if #available(iOS 14.0, *) {
+            JitsiIncomingCallManager.sharedInstance.reportIncomingCall(
+                uuid: UUID(),
+                handle: callerName
+            )
+        }
+    }
+    
+    func handleAcceptedCall(
+        callLink:String,
+        audioOnly: Bool
+    ){
+        VideoCallManager.sharedInstance.startVideoCall(link: callLink, audioOnly: audioOnly)
+    }
+    
+    //Background App refresh
+    func handleAppRefresh(task: BGTask) {
+        scheduleAppRefresh()
+        
+        chatListViewModel.loadFriends { _ in
+            self.chatListViewModel.syncMessages(
+                progressCallback: { _ in },
+                completion: { (_, _) in
+                    task.setTaskCompleted(success: true)
+                },
+                errorCompletion: {
+                    task.setTaskCompleted(success: true)
+                }
+            )
+        }
+    }
+    
+    func scheduleAppRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: "com.gl.sphinx.refresh")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("Could not schedule app refresh \(error)")
+        }
     }
 
-    func shouldStayInView(
-        launchingApp: Bool
-    ) -> Bool {
-        let isUserLogged = UserData.sharedInstance.isUserLogged()
-        let shouldTakeToChat = UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0
-        let shouldTakeToSubscription = UserDefaults.Keys.subscriptionQuery.get(defaultValue: "") != ""
-
-        if isUserLogged && !launchingApp && !shouldTakeToChat && !shouldTakeToSubscription {
-            UserDefaults.Keys.chatId.removeValue()
-            return true
+    //App stylre
+    func saveCurrentStyle() {
+        if #available(iOS 13.0, *) {
+            style = UITraitCollection.current.userInterfaceStyle
         }
-
-        if shouldTakeToChat && isOnSameChatAsPush() {
-            UserDefaults.Keys.chatId.removeValue()
-            return true
-        }
-
-        if (shouldTakeToChat || shouldTakeToSubscription) && isOnChatList() {
-            return true
-        }
-
-        return false
     }
 
-    func isOnSameChatAsPush() -> Bool {
-        let chatId = UserDefaults.Keys.chatId.get(defaultValue: -1)
+    func reloadAppIfStyleChanged() {
+        if #available(iOS 13.0, *) {
+            guard let _ = UIWindow.getSavedStyle() else {
+                if style != UIScreen.main.traitCollection.userInterfaceStyle {
+                    style = UIScreen.main.traitCollection.userInterfaceStyle
 
-        if let currentVC = getCurrentVC() as? ChatViewController, let currentVCChatId = currentVC.chat?.id, currentVCChatId == chatId {
-            return true
+                    let isUserLogged = UserData.sharedInstance.isUserLogged()
+                    takeUserToInitialVC(isUserLogged: isUserLogged)
+                }
+                return
+            }
         }
-        return false
     }
-
-    func isOnChatList() -> Bool {
-        getCurrentVC() is DashboardRootViewController
-    }
-
-    func hideAccessoryView() {
-        if let currentVC = getCurrentVC() as? ChatViewController {
-            currentVC.accessoryView.hide()
+    
+    //Utils
+    func getRootViewController() -> RootViewController? {
+        if let window = window, let rootVC = window.rootViewController as? RootViewController {
+            return rootVC
         }
+        return nil
     }
 
     func getCurrentVC() -> UIViewController? {
@@ -399,50 +371,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return nil
     }
 
+    //App connection error
     func goToSupport() {
         if let roowVController = window?.rootViewController as? RootViewController, let leftMenuVC = roowVController.getLeftMenuVC() {
             leftMenuVC.goToSupport()
         }
     }
 
-    func reloadDashboard() {
-        reloadMessagesData()
-    }
-
-    func reloadMessagesData() {
-        if let currentVC = getCurrentVC() {
-            if let currentVC = currentVC as? ChatViewController {
-                UserDefaults.Keys.chatId.removeValue()
-                currentVC.fetchNewData()
-            } else if let dashboardRootVC = currentVC as? DashboardRootViewController {
-                
-                let shouldDeepLinkIntoChatDetails =
-                    UserDefaults.Keys.chatId.get(defaultValue: -1) >= 0 ||
-                    UserDefaults.Keys.contactId.get(defaultValue: -1) >= 0
-
-                if shouldDeepLinkIntoChatDetails {
-                    dashboardRootVC.handleDeepLinksAndPush()
-                } else {
-                    dashboardRootVC.loadContactsAndSyncMessages(
-                        shouldShowHeaderLoadingWheel: true
-                    )
-                }
-            }
+    //Content fetch
+    func reloadContactsAndMessages() {
+        chatListViewModel.loadFriends() { [weak self] restoring in
+            guard let self = self else { return }
+            
+            self.chatListViewModel.syncMessages(
+                progressCallback: { _ in },
+                completion: { (_,_) in }
+            )
         }
     }
+    
+    func reloadMessages(
+        completion: @escaping () -> ()
+    ) {
+        let dashboardVC = getCurrentVC() as? DashboardRootViewController
+        dashboardVC?.forceShowLoadingWheel()
+        
+        chatListViewModel.syncMessages(
+            progressCallback: { _ in },
+            completion: { (_,_) in
+                completion()
+                dashboardVC?.forceHideLoadingWheel()
+            },
+            errorCompletion: {
+                dashboardVC?.forceHideLoadingWheel()
+            }
+        )
+    }
 
+    //Notifications bagde
     func setBadge(
         application: UIApplication
     ) {
         application.applicationIconBadgeNumber = TransactionMessage.getReceivedUnseenMessagesCount()
-    }
-
-    func setMessagesAsSeen() {
-        if let rootVController = window?.rootViewController as? RootViewController,
-           let currentVC = rootVController.getLastCenterViewController() as? ChatViewController,
-           let currentChat = currentVC.chat {
-            currentChat.setChatMessagesAsSeen()
-        }
     }
 }
 
@@ -506,17 +476,49 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             }
         }
     }
-
-    func handlePush(
-        notification: [String: AnyObject]
-    ) {
-        if let aps = notification["aps"] as? [String: AnyObject],
-            let customData = aps["custom_data"] as? [String: AnyObject] {
+    
+    func getChatIdFrom(
+        notification: [String: AnyObject]?
+    ) -> Int? {
+        if
+            let notification = notification,
+            let aps = notification["aps"] as? [String: AnyObject],
+            let customData = aps["custom_data"] as? [String: AnyObject]
+        {
             if let chatId = customData["chat_id"] as? Int {
-                UserDefaults.Keys.chatId.set(chatId)
+                return chatId
             }
         }
-        notificationUserInfo = nil
+        return nil
+    }
+    
+    func goTo(chat: Chat) {
+        if let rootVC = getRootViewController() {
+            if let centerVC = rootVC.getLastCenterViewController() {
+                
+                if let centerVC = centerVC as? NewChatViewController, centerVC.chat?.id == chat.id {
+                    return
+                }
+                
+                centerVC.view.endEditing(true)
+                
+                let chatVC = NewChatViewController.instantiate(
+                    contactId: chat.conversationContact?.id,
+                    chatId: chat.id,
+                    chatListViewModel: chatListViewModel
+                )
+                
+                let navCenterController: UINavigationController? = centerVC.navigationController
+                
+                if let presentedVC = navCenterController?.presentedViewController {
+                    presentedVC.dismiss(animated: true) {
+                        navCenterController?.pushViewController(chatVC, animated: true)
+                    }
+                } else {
+                    navCenterController?.pushViewController(chatVC, animated: true)
+                }
+            }
+        }
     }
 }
 
@@ -529,7 +531,7 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
         newMessageBubbleHelper.hideLoadingWheel()
         
         SphinxSocketManager.sharedInstance.reconnectSocketOnTor()
-        reloadDashboard()
+        reloadContactsAndMessages()
     }
 
     func onionConnectionFailed() {

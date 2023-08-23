@@ -117,11 +117,8 @@ class BadgeAdminDetailVC : UIViewController{
         }
     }
     
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> UIViewController {
+    static func instantiate() -> UIViewController {
         let viewController = StoryboardScene.BadgeManagement.badgeDetailViewController.instantiate()
-        
         return viewController
     }
 
@@ -156,7 +153,7 @@ class BadgeAdminDetailVC : UIViewController{
             return
         }
         
-        let viewController = ChatAttachmentViewController.instantiate(delegate: self, chat: nil)
+        let viewController = ChatAttachmentViewController.instantiate(delegate: self)
         viewController.presentationContext = .fromBadgeCreateUpdate
         viewController.modalPresentationStyle = .overCurrentContext
         self.present(viewController, animated: false)
@@ -332,7 +329,7 @@ extension BadgeAdminDetailVC : AttachmentsDelegate{
         badgeImageView.image = attachmentObject.image
     }
     
-    func shouldSendGiphy(message: String) {
+    func shouldSendGiphy(message: String, data: Data) {
         
     }
     

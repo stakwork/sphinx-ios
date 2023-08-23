@@ -43,13 +43,12 @@ public class Chat: NSManagedObject {
         }
     }
     
-    public var lastMessage : TransactionMessage? = nil
     public var conversationContact : UserContact? = nil
     
     var ongoingMessage : String? = nil
     var image : UIImage? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
-    var aliases : [String] = [String]()
+    var aliasesAndPics: [(String, String)] = []
     
     
     static func getChatInstance(id: Int, managedContext: NSManagedObjectContext) -> Chat {
@@ -217,15 +216,7 @@ public class Chat: NSManagedObject {
     }
     
     static func getAll() -> [Chat] {
-        var predicate: NSPredicate! = nil
-        
-        if GroupsPinManager.sharedInstance.isStandardPIN {
-            predicate = NSPredicate(format: "pin == null")
-        } else {
-            let currentPin = GroupsPinManager.sharedInstance.currentPin
-            predicate = NSPredicate(format: "pin = %@", currentPin)
-        }
-        
+        let predicate: NSPredicate = Chat.Predicates.all()
         let chats:[Chat] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "Chat")
         return chats
     }
@@ -244,14 +235,14 @@ public class Chat: NSManagedObject {
         return chats
     }
     
-    static func getAllGroups() -> [Chat] {
+    static func getAllTribes() -> [Chat] {
         var predicate: NSPredicate! = nil
         
         if GroupsPinManager.sharedInstance.isStandardPIN {
-            predicate = NSPredicate(format: "type IN %@ AND pin == null", [Chat.ChatType.privateGroup.rawValue, Chat.ChatType.publicGroup.rawValue])
+            predicate = NSPredicate(format: "type == %d AND pin == null", Chat.ChatType.publicGroup.rawValue)
         } else {
             let currentPin = GroupsPinManager.sharedInstance.currentPin
-            predicate = NSPredicate(format: "type IN %@ AND pin = %@", [Chat.ChatType.privateGroup.rawValue, Chat.ChatType.publicGroup.rawValue], currentPin)
+            predicate = NSPredicate(format: "type == %d AND pin = %@", Chat.ChatType.publicGroup.rawValue, currentPin)
         }
         
         let sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
@@ -283,7 +274,14 @@ public class Chat: NSManagedObject {
     static func getChatWith(id: Int, managedContext: NSManagedObjectContext? = nil) -> Chat? {
         let predicate = NSPredicate(format: "id == %d", id)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let chat:Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "Chat", managedContext: managedContext)
+        
+        let chat: Chat? = CoreDataManager.sharedManager.getObjectOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "Chat",
+            managedContext: managedContext
+        )
+        
         return chat
     }
     
@@ -295,26 +293,29 @@ public class Chat: NSManagedObject {
         return chat
     }
     
-    //Added firstMessage param to the query method. If stored then chat will load all messages starting from that one and won't consider the limit param
+    static func getChatsWith(uuids: [String]) -> [Chat] {
+        let predicate = NSPredicate(format: "uuid IN %@", uuids)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let chats: [Chat] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "Chat"
+        )
+        
+        return chats
+    }
+    
     func getAllMessages(
-        limit: Int? = 100,
-        messagesIdsToExclude: [Int] = [],
-        lastMessage: TransactionMessage? = nil,
-        firstMessage: TransactionMessage? = nil
+        limit: Int? = nil,
+        context: NSManagedObjectContext? = nil
     ) -> [TransactionMessage] {
         
         return TransactionMessage.getAllMessagesFor(
             chat: self,
             limit: limit,
-            messagesIdsToExclude: messagesIdsToExclude,
-            lastMessage: lastMessage,
-            firstMessage: firstMessage
+            context: context
         )
-        
-    }
-    
-    func getAllMessagesCount() -> Int {
-        return TransactionMessage.getAllMessagesCountFor(chat: self)
     }
     
     func getNewMessagesCount(lastMessageId: Int? = nil) -> Int {
@@ -328,17 +329,21 @@ public class Chat: NSManagedObject {
         shouldSync: Bool = true,
         shouldSave: Bool = true
     ) {
-        let receivedUnseenMessages = self.getReceivedUnseenMessages()
+        let receivedUnseenMessages = getReceivedUnseenMessages()
+        
         if receivedUnseenMessages.count > 0 {
             for m in receivedUnseenMessages {
                 m.seen = true
             }
         }
         
-        seen = true
+        if !self.seen {
+            seen = true
+        }
+        
         unseenMessagesCount = 0
         unseenMentionsCount = 0
-        
+
         if shouldSync && receivedUnseenMessages.count > 0 {
             API.sharedInstance.setChatMessagesAsSeen(chatId: self.id, callback: { _ in })
         }
@@ -352,37 +357,38 @@ public class Chat: NSManagedObject {
         return text
     }
     
-    func getReceivedUnseenMessages() -> [TransactionMessage] {
+    func getReceivedUnseenMessages(
+        context: NSManagedObjectContext? = nil
+    ) -> [TransactionMessage] {
+        
         let userId = UserData.sharedInstance.getUserId()
-        let predicate = NSPredicate(format: "senderId != %d AND chat == %@ AND seen == %@", userId, self, NSNumber(booleanLiteral: false))
-        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: [], entityName: "TransactionMessage")
+        
+        let predicate = NSPredicate(
+            format: "senderId != %d AND chat == %@ AND seen == %@",
+            userId,
+            self,
+            NSNumber(booleanLiteral: false)
+        )
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: [],
+            entityName: "TransactionMessage",
+            context: context
+        )
+        
         return messages
     }
     
     var unseenMessagesCount: Int = 0
     
-    var unseenMessagesCountLabel: String {
-        get {
-            if unseenMessagesCount > 0 {
-                return "+\(unseenMessagesCount)"
-            }
-            return ""
-        }
-    }
-    
     func getReceivedUnseenMessagesCount() -> Int {
-        if unseenMessagesCount == 0 {
-            calculateUnseenMessagesCount()
-        }
         return unseenMessagesCount
     }
     
     var unseenMentionsCount: Int = 0
     
     func getReceivedUnseenMentionsCount() -> Int {
-        if unseenMentionsCount == 0 {
-            calculateUnseenMentionsCount()
-        }
         return unseenMentionsCount
     }
     
@@ -399,7 +405,7 @@ public class Chat: NSManagedObject {
             NSNumber(booleanLiteral: false),
             NSNumber(booleanLiteral: false)
         )
-        unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")
+        unseenMessagesCount = CoreDataManager.sharedManager.getObjectsCountOfTypeWith(predicate: predicate, entityName: "TransactionMessage")        
     }
     
     func calculateUnseenMentionsCount() {
@@ -422,21 +428,6 @@ public class Chat: NSManagedObject {
         return messages.first
     }
     
-    public static func updateLastMessageForChats(_ chatIds: [Int]) {
-        for id in chatIds {
-            if let chat = Chat.getChatWith(id: id) {
-                chat.calculateBadge()
-            }
-        }
-    }
-    
-    public func updateLastMessage() {
-        if lastMessage?.id ?? 0 <= 0 {
-            lastMessage = getLastMessageToShow()
-            calculateBadge()
-        }
-    }
-    
     public func setLastMessage(_ message: TransactionMessage) {
         guard let lastM = lastMessage else {
             lastMessage = message
@@ -450,10 +441,15 @@ public class Chat: NSManagedObject {
         }
     }
     
+    public func updateLastMessage() {
+        if lastMessage == nil {
+            lastMessage = getLastMessageToShow()
+        }
+    }
+    
     public func getContact() -> UserContact? {
         if self.type == Chat.ChatType.conversation.rawValue {
-            let contacts = getContacts(includeOwner: false)
-            return contacts.first
+            return getConversationContact()
         }
         return nil
     }
@@ -518,7 +514,7 @@ public class Chat: NSManagedObject {
                     self.updateChatFromTribesInfo()
                     
                     if let feedUrl = self.tribeInfo?.feedUrl, !feedUrl.isEmpty {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: self.objectID) { feedId in
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: self.id) { feedId in
                             if let feedId = feedId {
                                 self.contentFeed = ContentFeed.getFeedById(feedId: feedId)
                                 self.saveChat()
@@ -643,8 +639,10 @@ public class Chat: NSManagedObject {
         return false
     }
     
-    func isMyPublicGroup() -> Bool {
-        return isPublicGroup() && ownerPubkey == UserData.sharedInstance.getUserPubKey()
+    func isMyPublicGroup(
+        ownerPubKey: String? = nil
+    ) -> Bool {
+        return isPublicGroup() && ownerPubkey == (ownerPubKey ?? UserData.sharedInstance.getUserPubKey())
     }
     
     
@@ -655,8 +653,50 @@ public class Chat: NSManagedObject {
         }
     }
     
-    func getJoinChatLink() -> String {
-        return "sphinx.chat://?action=tribe&uuid=\(self.uuid ?? "")&host=\(self.host ?? "")"
+    func getJoinChatLink() -> String? {
+        if let uuid = self.uuid, let host = self.host, uuid.isNotEmpty && host.isNotEmpty {
+            return "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)"
+        }
+        return nil
+    }
+    
+    func processAliases() {
+        if self.isConversation() {
+            return
+        }
+        
+        let backgroundContext = CoreDataManager.sharedManager.getBackgroundContext()
+        
+        backgroundContext.perform {
+            let messages = self.getAllMessages(
+                limit: 2000,
+                context: backgroundContext
+            )
+            
+            for message in messages {
+                if let alias = message.senderAlias, alias.isNotEmpty {
+                    if !self.aliasesAndPics.contains(where: {$0.0 == alias}) {
+                        self.aliasesAndPics.append(
+                            (alias, message.senderPic ?? "")
+                        )
+                    }
+                }
+            }
+        }
+    }
+    
+    func processAliasesFrom(
+        messages: [TransactionMessage]
+    ) {
+        for message in messages {
+            if let alias = message.senderAlias, alias.isNotEmpty {
+                if !aliasesAndPics.contains(where: {$0.0 == alias}) {
+                    self.aliasesAndPics.append(
+                        (alias, message.senderPic ?? "")
+                    )
+                }
+            }
+        }
     }
     
     func saveChat() {

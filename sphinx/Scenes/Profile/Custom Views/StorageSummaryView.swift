@@ -19,13 +19,16 @@ class StorageSummaryView: UIView {
     @IBOutlet weak var totalMemoryFootprintView: UIView!
     @IBOutlet weak var deletionFootprintView: UIView!
     @IBOutlet weak var additionFootprintView: UIView!
+    @IBOutlet weak var otherMemoryFootprintView: UIView!
     
+    @IBOutlet weak var audioToOtherHorizontalSpacing: NSLayoutConstraint!
     @IBOutlet weak var totalMemoryFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var imageFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var imageToVideoHorizontalSpacing: NSLayoutConstraint!
     @IBOutlet weak var videoToAudioHorizontalSpacing: NSLayoutConstraint!
     @IBOutlet weak var videoFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var audioFootprintWidth: NSLayoutConstraint!
+    @IBOutlet weak var otherFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var deletionFootprintWidth: NSLayoutConstraint!
     @IBOutlet weak var deletionTrailingEdge: NSLayoutConstraint!
     @IBOutlet weak var additionFootprintWidth: NSLayoutConstraint!
@@ -60,6 +63,7 @@ class StorageSummaryView: UIView {
                 imagesMemoryFootprintView.isHidden = true
                 videosMemoryFootprintView.isHidden = true
                 audioMemoryFootprintView.isHidden = true
+                otherMemoryFootprintView.isHidden = true
                 self.bringSubviewToFront(totalMemoryFootprintView)
                 
                 deletionFootprintWidth.constant = 0
@@ -74,6 +78,7 @@ class StorageSummaryView: UIView {
                 imagesMemoryFootprintView.isHidden = false
                 videosMemoryFootprintView.isHidden = false
                 audioMemoryFootprintView.isHidden = false
+                otherMemoryFootprintView.isHidden = false
                 self.sendSubviewToBack(totalMemoryFootprintView)
                 totalMemoryFootprintView.superview?.layoutIfNeeded()
             }
@@ -134,8 +139,16 @@ class StorageSummaryView: UIView {
             audioFootprintWidth.constant = 2
         }
         
+        if let size = dict[.file]{
+            otherFootprintWidth.constant = size/Double(max) * maxMemoryFootprintBackgroundView.frame.width
+        }
+        else{
+            otherFootprintWidth.constant = 2
+        }
+        
         imageToVideoHorizontalSpacing.constant = imageFootprintWidth.constant == 0 ? (0.01) : (2)
         videoToAudioHorizontalSpacing.constant = videoFootprintWidth.constant == 0 ? (0.01) : (2)
+        audioToOtherHorizontalSpacing.constant = audioFootprintWidth.constant == 0 ? (0.01) : (2)
         
         audioFootprintWidth.constant = (audioFootprintWidth.constant < minimumBarPixels) ? minimumBarPixels : audioFootprintWidth.constant
         videoFootprintWidth.constant = (videoFootprintWidth.constant < minimumBarPixels) ? minimumBarPixels : videoFootprintWidth.constant

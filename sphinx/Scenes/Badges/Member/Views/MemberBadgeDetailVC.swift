@@ -64,11 +64,9 @@ class MemberBadgeDetailVC : UIViewController{
         animateView(show: true)
     }
     
-    func handleEarnBadgesTap(){
+    func handleEarnBadgesTap() {
         self.dismiss(animated: true, completion: {
-            if let vc = self.delegate as? ChatViewController{
-                vc.displayKnownBadges()
-            }
+            self.delegate?.shouldDisplayKnownBadges()
         })
     }
     

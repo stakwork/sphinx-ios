@@ -33,7 +33,7 @@ class RecommendationsHelper {
     func getPodcastFor(
         recommendations: [RecommendationResult]
     ) -> PodcastFeed {
-        let podcast = PodcastFeed(nil, RecommendationsHelper.kRecommendationPodcastId, false)
+        let podcast = PodcastFeed(RecommendationsHelper.kRecommendationPodcastId, false)
         
         podcast.title = RecommendationsHelper.kRecommendationTitle
         podcast.podcastDescription = RecommendationsHelper.kRecommendationDescription
@@ -41,7 +41,7 @@ class RecommendationsHelper {
         var episodes: [PodcastEpisode] = []
         
         for item in recommendations {
-            let episode = PodcastEpisode(nil, item.id)
+            let episode = PodcastEpisode(item.id)
             episode.title = item.episodeTitle
             episode.episodeDescription = item.itemDescription
             

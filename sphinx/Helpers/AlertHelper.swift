@@ -52,16 +52,21 @@ class AlertHelper {
         message: String,
         confirmButtonTitle: String? = nil,
         cancelButtonTitle: String? = nil,
+        confirmStyle: UIAlertAction.Style = .default,
+        cancelStyle: UIAlertAction.Style = .default,
+        vc: UIViewController? = nil,
         confirm: (() -> ())? = nil,
         cancel: (() -> ())? = nil
     ){
-        if let rootViewController: UIViewController = getRootVC() {
+        if let rootViewController: UIViewController = vc ?? getRootVC() {
             showTwoOptionsAlert(
                 title: title,
                 message: message,
                 on: rootViewController,
                 confirmButtonTitle: confirmButtonTitle,
                 cancelButtonTitle: cancelButtonTitle,
+                confirmStyle: confirmStyle,
+                cancelStyle: cancelStyle,
                 confirm: confirm,
                 cancel: cancel
             )
@@ -74,16 +79,19 @@ class AlertHelper {
         on vc: UIViewController,
         confirmButtonTitle: String? = nil,
         cancelButtonTitle: String? = nil,
+        confirmStyle: UIAlertAction.Style = .default,
+        cancelStyle: UIAlertAction.Style = .default,
         confirm: (() -> ())? = nil,
         cancel: (() -> ())? = nil
     ){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: cancelButtonTitle ?? "cancel".localized, style: .destructive , handler:{ (UIAlertAction)in
+        
+        alert.addAction(UIAlertAction(title: cancelButtonTitle ?? "cancel".localized, style: cancelStyle , handler:{ (UIAlertAction)in
             if let cancel = cancel {
                 cancel()
             }
         }))
-        alert.addAction(UIAlertAction(title: confirmButtonTitle ?? "confirm".localized, style: .default , handler:{ (UIAlertAction)in
+        alert.addAction(UIAlertAction(title: confirmButtonTitle ?? "confirm".localized, style: confirmStyle , handler:{ (UIAlertAction)in
             if let confirm = confirm {
                 confirm()
             }

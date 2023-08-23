@@ -8,17 +8,16 @@
 import UIKit
 import CoreData
 
-
 protocol VideoFeedEpisodePlayerViewControllerDelegate: AnyObject {
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoFeedWithID videoFeedID: NSManagedObjectID
+        didSelectVideoFeedWithID videoFeedID: String
     )
     
     func viewController(
         _ viewController: UIViewController,
-        didSelectVideoEpisodeWithID videoEpisodeID: NSManagedObjectID
+        didSelectVideoEpisodeWithID videoEpisodeID: String
     )
     
     func viewControllerShouldDismiss(
@@ -190,10 +189,10 @@ extension VideoFeedEpisodePlayerContainerViewController {
 extension VideoFeedEpisodePlayerContainerViewController {
     
     private func handleVideoEpisodeCellSelection(
-        _ managedObjectID: NSManagedObjectID
+        _ feeditemId: String
     ) {
         guard
-            let selectedFeedItem = managedObjectContext.object(with: managedObjectID) as? ContentFeedItem
+            let selectedFeedItem = ContentFeedItem.getItemWith(itemID: feeditemId)
         else {
             preconditionFailure()
         }
@@ -209,7 +208,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
                 
                 delegate?.viewController(
                     self,
-                    didSelectVideoEpisodeWithID: managedObjectID
+                    didSelectVideoEpisodeWithID: feeditemId
                 )
             }
         }
@@ -220,7 +219,7 @@ extension VideoFeedEpisodePlayerContainerViewController {
         if  let videoFeed = self.videoPlayerEpisode?.videoFeed,
             let feedUrl = videoFeed.feedURL?.absoluteString {
             
-            FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, objectID: videoFeed.objectID)
+            FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, feedId: videoFeed.id)
         }
     }
 }

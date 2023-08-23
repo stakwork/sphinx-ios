@@ -19,11 +19,11 @@ import SwiftyJSON
 
 class CommonPaymentViewController : UIViewController {
     
-    var rootViewController: RootViewController!
-    var contacts : [UserContact]?
+    var contact : UserContact?
     var chat: Chat?
     var message: TransactionMessage?
-    var chatViewModel: ChatViewModel!
+    
+    var paymentsViewModel: PaymentsViewModel!
     
     public weak var delegate: PaymentInvoiceDelegate?
     
@@ -39,8 +39,7 @@ class CommonPaymentViewController : UIViewController {
     }
     
     func createLocalMessages(message: JSON?) {
-        let chatVModel = chatViewModel ?? ChatViewModel()
-        let (messageObject, success) = chatVModel.createLocalMessages(message: message)
+        let (messageObject, success) = paymentsViewModel.createLocalMessages(message: message)
         
         if let messageObject = messageObject, success {
             self.dismiss(animated: true, completion: {

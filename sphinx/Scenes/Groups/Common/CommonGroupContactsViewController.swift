@@ -10,8 +10,6 @@ import UIKit
 
 class CommonGroupContactsViewController: KeyboardEventsViewController {
     
-    var rootViewController : RootViewController!
-     
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!

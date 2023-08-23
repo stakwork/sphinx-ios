@@ -9,9 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class ProfileViewController: KeyboardEventsViewController {
-    
-    private weak var delegate: LeftMenuDelegate?
+class ProfileViewController: NewKeyboardHandlerViewController {
     
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -78,8 +76,6 @@ class ProfileViewController: KeyboardEventsViewController {
         }
     }
     
-    var rootViewController : RootViewController!
-    var contactsService : ContactsService!
     let urlUpdateHelper = RelayURLUpdateHelper()
     let userData = UserData.sharedInstance
     
@@ -98,21 +94,17 @@ class ProfileViewController: KeyboardEventsViewController {
         case RelayUrl
     }
     
-    static func instantiate(rootViewController : RootViewController, delegate: LeftMenuDelegate) -> ProfileViewController {
+    static func instantiate() -> ProfileViewController {
         let viewController = StoryboardScene.Profile.profileViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
-        viewController.delegate = delegate
-        
+        viewController.popOnSwipeEnabled = true
         return viewController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         advanceScrollView.isScrollEnabled = true
-        SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
         
-        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         viewTitle.addTextSpacing(value: 2)
         appearanceView.delegate = self
         settingsTabView.delegate = self
@@ -149,22 +141,23 @@ class ProfileViewController: KeyboardEventsViewController {
         changePINContainerView.addShadow(location: VerticalLocation.center, color: UIColor.black, opacity: 0.2, radius: 2.0)
         privacyPinGroupContainer.addShadow(location: VerticalLocation.center, color: UIColor.black, opacity: 0.2, radius: 2.0)
         
-        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         walletBalanceService.updateBalance(labels: [balanceLabel])
     }
-
-    @objc override func keyboardWillShow(_ notification: Notification) {
+    
+    override func keyboardWillShowHandler(_ notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
             advanceScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         }
     }
-
-    @objc override func keyboardWillHide(_ notification: Notification) {
+    
+    override func keyboardWillHideHandler(_ notification: Notification) {
         contentScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         advanceScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
@@ -320,7 +313,6 @@ class ProfileViewController: KeyboardEventsViewController {
 
     }
     
-    
     func getAddress() -> String? {
         if let address = addressTextField.text, !address.isEmpty {
             let routeHint = (routeHintTextField.text ?? "").isEmpty ? "" : ":\((routeHintTextField.text ?? ""))"
@@ -338,6 +330,7 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBAction func sharePhotoSwitchChanged(_ sender: UISwitch) {
         updateProfile()
     }
+    
     @IBAction func trackRecommendationsSwitchChanged(_ sender: Any) {
         print("Changed")
         UserDefaults.Keys.shouldTrackActions.set(trackRecommendationsSwitch.isOn)
@@ -346,7 +339,6 @@ class ProfileViewController: KeyboardEventsViewController {
     @IBAction func autoDownloadSubscribedPodsChanged(_ sender: Any) {
         UserDefaults.Keys.shouldAutoDownloadSubscribedPods.set(autoDownloadSubscribedPodsSwitch.isOn)
     }
-    
     
     @IBAction func qrCodeButtonTouched() {
         if let profile = UserContact.getOwner(), let qrCodeString = profile.getAddress(), !qrCodeString.isEmpty {
@@ -360,8 +352,8 @@ class ProfileViewController: KeyboardEventsViewController {
         self.present(viewController, animated: true, completion: nil)
     }
     
-    @IBAction func menuButtonTouched() {
-        delegate?.shouldOpenLeftMenu()
+    @IBAction func backbuttonTouched() {
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func profilePictureButtonTouched() {
@@ -402,12 +394,6 @@ class ProfileViewController: KeyboardEventsViewController {
             },
             cancel: {}
         )
-    }
-    
-    @IBAction func setupSigningDevice() {
-        cryptedManager.setupSigningDevice(vc: self) {
-            self.configureSigningDeviceButton()
-        }
     }
     
     func sendGithubPAT(
@@ -469,6 +455,14 @@ class ProfileViewController: KeyboardEventsViewController {
             if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
                 setShadows()
             }
+        }
+    }
+    
+    @IBAction func setupSigningDevice() {
+        cryptedManager.setupSigningDevice(
+            vc: self
+        ) {
+            self.configureSigningDeviceButton()
         }
     }
 }

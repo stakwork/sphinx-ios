@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DirectPaymentView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="BEq-9b-NnR"/>
+                <outlet property="receivedPaymentContainer" destination="odN-4i-d0e" id="5Al-f3-fBK"/>
+                <outlet property="receivedPmtAmountLabel" destination="Iv6-jR-bGD" id="Oet-Zs-P6a"/>
+                <outlet property="receivedPmtIconImageView" destination="E4h-ld-4mh" id="2db-Hi-oxd"/>
+                <outlet property="receivedPmtUnitLabel" destination="cFP-AY-bkg" id="xpI-Xu-kke"/>
+                <outlet property="recipientAvatarView" destination="T7a-du-07C" id="YJ6-zy-Sgz"/>
+                <outlet property="sentPaymentContainer" destination="dC5-fH-mzx" id="fCU-rL-4Sl"/>
+                <outlet property="sentPmtAmountLabel" destination="ReZ-sQ-mHX" id="S5b-JR-oMD"/>
+                <outlet property="sentPmtIconImageView" destination="ddV-gf-oY1" id="Dbm-Jl-05l"/>
+                <outlet property="sentPmtUnitLabel" destination="kJB-wR-WXS" id="0td-I5-QsR"/>
+                <outlet property="tribeReceivedPaymentContainer" destination="qcj-iQ-kxe" id="sse-ow-DO0"/>
+                <outlet property="tribeReceivedPmtAmountLabel" destination="fTV-RD-TjW" id="smI-0o-Wq5"/>
+                <outlet property="tribeReceivedPmtIconImageView" destination="pkI-5b-2Uv" id="NgL-lg-EjN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7a-du-07C" customClass="ChatAvatarView" customModule="sphinx" customModuleProvider="target">
+                    <rect key="frame" x="16" y="10" width="36" height="36"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="e2l-af-dgS"/>
+                        <constraint firstAttribute="height" constant="36" id="nGH-4B-LkA"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qcj-iQ-kxe">
+                    <rect key="frame" x="16" y="10" width="343" height="36"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ye5-mB-jIw">
+                            <rect key="frame" x="292.33333333333331" y="9.6666666666666679" width="50.666666666666686" height="17"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTV-RD-TjW">
+                                    <rect key="frame" x="0.0" y="0.0" width="27.666666666666668" height="17"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                    <color key="textColor" name="SecondaryText"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice-pay-button" translatesAutoresizingMaskIntoConstraints="NO" id="pkI-5b-2Uv">
+                                    <rect key="frame" x="33.666666666666686" y="0.0" width="17" height="17"/>
+                                    <color key="tintColor" name="SecondaryText"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="17" id="6b0-gz-TFF"/>
+                                        <constraint firstAttribute="height" constant="17" id="xwm-bn-5aj"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="ye5-mB-jIw" secondAttribute="trailing" id="aH3-Hu-WkG"/>
+                        <constraint firstItem="ye5-mB-jIw" firstAttribute="centerY" secondItem="qcj-iQ-kxe" secondAttribute="centerY" id="acS-7b-OrH"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="odN-4i-d0e">
+                    <rect key="frame" x="16" y="10" width="343" height="36"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="XBh-KW-ZG6">
+                            <rect key="frame" x="0.0" y="8.6666666666666679" width="100.66666666666667" height="19"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice-receive-icon" translatesAutoresizingMaskIntoConstraints="NO" id="E4h-ld-4mh">
+                                    <rect key="frame" x="0.0" y="0.0" width="29" height="19"/>
+                                    <color key="tintColor" name="ReceivedIcon"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="19" id="TyI-lw-nid"/>
+                                        <constraint firstAttribute="width" constant="29" id="etr-aY-gIc"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iv6-jR-bGD">
+                                    <rect key="frame" x="35" y="0.0" width="37" height="19"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="16"/>
+                                    <color key="textColor" name="Text"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFP-AY-bkg">
+                                    <rect key="frame" x="78" y="0.0" width="22.666666666666671" height="19"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                    <color key="textColor" name="WashedOutReceivedText"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="XBh-KW-ZG6" firstAttribute="centerY" secondItem="odN-4i-d0e" secondAttribute="centerY" id="WPk-SY-Qyi"/>
+                        <constraint firstItem="XBh-KW-ZG6" firstAttribute="leading" secondItem="odN-4i-d0e" secondAttribute="leading" id="tcy-C2-wPy"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dC5-fH-mzx">
+                    <rect key="frame" x="16" y="10" width="343" height="36"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Zna-ss-dCL">
+                            <rect key="frame" x="242.33333333333329" y="8.6666666666666679" width="100.66666666666666" height="19"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReZ-sQ-mHX">
+                                    <rect key="frame" x="0.0" y="0.0" width="37" height="19"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="16"/>
+                                    <color key="textColor" name="Text"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJB-wR-WXS">
+                                    <rect key="frame" x="43" y="0.0" width="22.666666666666671" height="19"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                    <color key="textColor" name="WashedOutSentText"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="invoice-pay-button" translatesAutoresizingMaskIntoConstraints="NO" id="ddV-gf-oY1">
+                                    <rect key="frame" x="71.666666666666686" y="0.0" width="29" height="19"/>
+                                    <color key="tintColor" name="Text"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="29" id="m7U-Ks-e6L"/>
+                                        <constraint firstAttribute="height" constant="19" id="ypF-Bd-Gsb"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Zna-ss-dCL" secondAttribute="trailing" id="SNv-YC-H9E"/>
+                        <constraint firstItem="Zna-ss-dCL" firstAttribute="centerY" secondItem="dC5-fH-mzx" secondAttribute="centerY" id="lmR-HV-gk1"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="dC5-fH-mzx" secondAttribute="bottom" constant="10" id="0T6-5z-DN5"/>
+                <constraint firstItem="dC5-fH-mzx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="3zL-mY-VEj"/>
+                <constraint firstAttribute="trailing" secondItem="qcj-iQ-kxe" secondAttribute="trailing" constant="16" id="BZf-e1-Jov"/>
+                <constraint firstItem="odN-4i-d0e" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Dwh-83-mRn"/>
+                <constraint firstItem="T7a-du-07C" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="O5O-lf-LjP"/>
+                <constraint firstItem="T7a-du-07C" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Xl2-6O-0Xb"/>
+                <constraint firstItem="dC5-fH-mzx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="ZT5-7E-QgH"/>
+                <constraint firstItem="odN-4i-d0e" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="mGf-5C-Bao"/>
+                <constraint firstItem="qcj-iQ-kxe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="rc6-C4-Etu"/>
+                <constraint firstItem="qcj-iQ-kxe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="sUL-ve-W2d"/>
+                <constraint firstAttribute="bottom" secondItem="qcj-iQ-kxe" secondAttribute="bottom" constant="10" id="u6T-UV-TZI"/>
+                <constraint firstAttribute="trailing" secondItem="dC5-fH-mzx" secondAttribute="trailing" constant="16" id="wi1-aw-gbc"/>
+                <constraint firstAttribute="trailing" secondItem="odN-4i-d0e" secondAttribute="trailing" constant="16" id="xBr-Nu-XJa"/>
+                <constraint firstAttribute="bottom" secondItem="odN-4i-d0e" secondAttribute="bottom" constant="10" id="zaf-yb-BzL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="109" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="invoice-pay-button" width="19" height="19"/>
+        <image name="invoice-receive-icon" width="19" height="19"/>
+        <namedColor name="ReceivedIcon">
+            <color red="0.50980392156862742" green="0.70588235294117652" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutReceivedText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutSentText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

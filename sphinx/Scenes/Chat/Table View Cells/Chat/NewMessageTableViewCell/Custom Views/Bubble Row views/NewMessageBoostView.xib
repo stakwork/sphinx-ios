@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewMessageBoostView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="amountLabel" destination="TTb-D0-GkU" id="fEq-yU-lVf"/>
+                <outlet property="boostIcon" destination="g37-cZ-hEe" id="1GG-xN-xJb"/>
+                <outlet property="boostIconView" destination="NfI-2t-U4y" id="G3y-Or-5eu"/>
+                <outlet property="boostUserCountLabel" destination="a2S-0U-xP1" id="x34-mK-VD8"/>
+                <outlet property="boostUserView1" destination="Dt7-FI-wfL" id="01E-Su-x5N"/>
+                <outlet property="boostUserView2" destination="oOY-d4-wnc" id="MXc-xw-wWI"/>
+                <outlet property="boostUserView3" destination="2CO-qk-Nrr" id="gki-xQ-HWS"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="iMN-ke-e3V"/>
+                <outlet property="unitLabel" destination="ibL-CC-Ws0" id="rd4-TF-DaA"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="41"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="7Mb-7E-i5r">
+                    <rect key="frame" x="16" y="5" width="361" height="25"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ukm-pZ-7Hi">
+                            <rect key="frame" x="0.0" y="0.0" width="19" height="25"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NfI-2t-U4y">
+                                    <rect key="frame" x="0.0" y="5" width="15" height="15"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="boostIcon" translatesAutoresizingMaskIntoConstraints="NO" id="g37-cZ-hEe">
+                                            <rect key="frame" x="0.66666666666666785" y="0.66666666666666607" width="14" height="14"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="g37-cZ-hEe" secondAttribute="height" multiplier="1:1" id="QeF-yj-PL7"/>
+                                                <constraint firstAttribute="width" constant="14" id="zup-4J-y33"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" name="PrimaryGreen"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="15" id="PlM-5M-uC1"/>
+                                        <constraint firstItem="g37-cZ-hEe" firstAttribute="centerY" secondItem="NfI-2t-U4y" secondAttribute="centerY" id="QD0-Lr-fWO"/>
+                                        <constraint firstAttribute="width" secondItem="NfI-2t-U4y" secondAttribute="height" multiplier="1:1" id="ZqS-f3-4j2"/>
+                                        <constraint firstItem="g37-cZ-hEe" firstAttribute="centerX" secondItem="NfI-2t-U4y" secondAttribute="centerX" id="hl0-kG-0dU"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="NfI-2t-U4y" firstAttribute="centerY" secondItem="ukm-pZ-7Hi" secondAttribute="centerY" id="0Nj-rd-2O4"/>
+                                <constraint firstItem="NfI-2t-U4y" firstAttribute="leading" secondItem="ukm-pZ-7Hi" secondAttribute="leading" id="lEj-EY-j8F"/>
+                                <constraint firstAttribute="trailing" secondItem="NfI-2t-U4y" secondAttribute="trailing" constant="4" id="pM7-1C-hih"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTb-D0-GkU">
+                            <rect key="frame" x="23" y="0.0" width="18.666666666666671" height="25"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                            <color key="textColor" name="Text"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sats" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ibL-CC-Ws0">
+                            <rect key="frame" x="45.666666666666664" y="0.0" width="21.333333333333336" height="25"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                            <color key="textColor" name="WashedOutReceivedText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nlj-qW-ZGg">
+                            <rect key="frame" x="71.000000000000014" y="0.0" width="212.33333333333337" height="25"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mXi-ca-KCL">
+                            <rect key="frame" x="287.33333333333331" y="0.0" width="57" height="25"/>
+                            <subviews>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dt7-FI-wfL" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="32" y="0.0" width="25" height="25"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="DkZ-aJ-Nbs"/>
+                                        <constraint firstAttribute="width" constant="25" id="wGO-8a-rQV"/>
+                                    </constraints>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOY-d4-wnc" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="16" y="0.0" width="25" height="25"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="25" id="cK4-wm-FUr"/>
+                                        <constraint firstAttribute="height" constant="25" id="xRd-Tz-Jn5"/>
+                                    </constraints>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CO-qk-Nrr" customClass="MessageBoostImageView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="4t0-pY-l3w"/>
+                                        <constraint firstAttribute="width" constant="25" id="XDO-Wo-2QD"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="Dt7-FI-wfL" firstAttribute="leading" secondItem="oOY-d4-wnc" secondAttribute="trailing" constant="-9" id="6wo-29-HTA"/>
+                                <constraint firstAttribute="trailing" secondItem="Dt7-FI-wfL" secondAttribute="trailing" id="e3I-bG-0MM"/>
+                                <constraint firstItem="2CO-qk-Nrr" firstAttribute="centerY" secondItem="mXi-ca-KCL" secondAttribute="centerY" id="lDu-I6-Lqw"/>
+                                <constraint firstItem="oOY-d4-wnc" firstAttribute="centerY" secondItem="mXi-ca-KCL" secondAttribute="centerY" id="m3l-fy-dIQ"/>
+                                <constraint firstItem="oOY-d4-wnc" firstAttribute="leading" secondItem="2CO-qk-Nrr" secondAttribute="trailing" constant="-9" id="mis-P6-eZ8"/>
+                                <constraint firstAttribute="width" constant="57" id="v6N-SG-4sk"/>
+                                <constraint firstItem="Dt7-FI-wfL" firstAttribute="centerY" secondItem="mXi-ca-KCL" secondAttribute="centerY" id="zxN-xj-9D4"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2S-0U-xP1">
+                            <rect key="frame" x="348.33333333333331" y="0.0" width="12.666666666666686" height="25"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
+                            <color key="textColor" name="WashedOutReceivedText"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="7Mb-7E-i5r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="7uJ-sD-joT"/>
+                <constraint firstAttribute="trailing" secondItem="7Mb-7E-i5r" secondAttribute="trailing" constant="16" id="HeU-xi-oBt"/>
+                <constraint firstItem="7Mb-7E-i5r" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Mn3-e4-H0g"/>
+                <constraint firstAttribute="bottom" secondItem="7Mb-7E-i5r" secondAttribute="bottom" constant="11" id="oLY-hd-BrP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-106" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="boostIcon" width="40" height="40"/>
+        <namedColor name="PrimaryGreen">
+            <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WashedOutReceivedText">
+            <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class QRCodeDetailViewController: UIViewController {
+final class QRCodeDetailViewController: UIViewController, SocketManagerDelegate {
     
     @IBOutlet private weak var qrCodeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

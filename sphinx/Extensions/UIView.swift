@@ -16,6 +16,10 @@ enum VerticalLocation: String {
 }
 
 extension UIView {
+    var isVisible : Bool {
+        return !self.isHidden && self.alpha == 1.0
+    }
+    
     public func orientationHasChanged(_ isInPortrait:inout Bool) -> Bool {
         if self.frame.width > self.frame.height {
             if isInPortrait {
@@ -58,35 +62,29 @@ extension UIView {
         return shapeLayer
     }
     
-    func roundCorners(corners: UIRectCorner, radius: CGFloat, borderColor: UIColor? = nil) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    func roundCorners(
+        corners: UIRectCorner,
+        radius: CGFloat,
+        borderColor: UIColor? = nil,
+        viewBounds: CGRect? = nil
+    ) {
+        let path = UIBezierPath(roundedRect: viewBounds ?? bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         
         if let borderColor = borderColor {
-            removeBorderLayer()
-            
             let shapeLayer = CAShapeLayer()
-            shapeLayer.frame = bounds
+            shapeLayer.frame = viewBounds ?? bounds
             shapeLayer.path = path.cgPath
             shapeLayer.strokeColor = borderColor.resolvedCGColor(with: self)
             shapeLayer.fillColor = UIColor.clear.resolvedCGColor(with: self)
             shapeLayer.lineWidth = 2
             shapeLayer.masksToBounds = false
-            shapeLayer.name = CommonBubbleView.kBubbleLayerName
 
             layer.addSublayer(shapeLayer)
         }
         layer.mask = mask
-    }
-    
-    func removeBorderLayer() {
-        layer.sublayers?.forEach {
-            if $0.name == CommonBubbleView.kBubbleLayerName {
-                $0.removeFromSuperlayer()
-            }
-        }
     }
     
     func addShadow(location: VerticalLocation, color: UIColor = UIColor.Sphinx.Shadow, opacity: Float = 0.5, radius: CGFloat = 5.0, bottomhHeight: CGFloat = 3) {
@@ -114,32 +112,6 @@ extension UIView {
         self.layer.shadowColor = UIColor.clear.cgColor
         self.layer.shadowOpacity = 0.0
         self.layer.shadowRadius = 0.0
-    }
-    
-    func addDashedBorder(color: UIColor, size: CGSize) {
-        self.layer.sublayers?.forEach {
-            if $0.name == CommonBubbleView.kInvoiceDashedLayerName {
-                $0.removeFromSuperlayer()
-            }
-        }
-        
-        let color = color.resolvedCGColor(with: self)
-        
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
-        let frameSize = size
-        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
-        
-        shapeLayer.bounds = shapeRect
-        shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
-        shapeLayer.fillColor = UIColor.clear.resolvedCGColor(with: self)
-        shapeLayer.strokeColor = color
-        shapeLayer.lineWidth = 1.5
-        shapeLayer.lineJoin = .round
-        shapeLayer.lineDashPattern = [8,4]
-        shapeLayer.name = CommonBubbleView.kInvoiceDashedLayerName
-        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 10).cgPath
-        
-        self.layer.addSublayer(shapeLayer)
     }
     
     private static let kRotationAnimationKey = "rotationanimationkey"
@@ -244,5 +216,105 @@ extension UIView {
             frame.size.width,
             frame.size.height
         ) / 2
+    }
+    
+    func drawReceivedBubbleArrow(
+        color: UIColor,
+        arrowWidth: CGFloat = 4
+    ) {
+        let arrowBezierPath = UIBezierPath()
+        
+        arrowBezierPath.move(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: arrowWidth, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.close()
+        
+        let messageArrowLayer = CAShapeLayer()
+        messageArrowLayer.path = arrowBezierPath.cgPath
+        
+        messageArrowLayer.frame = self.bounds
+        messageArrowLayer.fillColor = color.cgColor
+        messageArrowLayer.name = "arrow"
+        
+        self.layer.addSublayer(messageArrowLayer)
+    }
+    
+    func setArrowColorTo(
+        color: UIColor
+    ) {
+        ((self.layer.sublayers?.filter { $0.name == "arrow" })?.first as? CAShapeLayer)?.fillColor = color.cgColor
+    }
+    
+    func drawSentBubbleArrow(
+        color: UIColor,
+        arrowWidth: CGFloat = 7
+    ) {
+        let arrowBezierPath = UIBezierPath()
+        
+        arrowBezierPath.move(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width, y: 0))
+        arrowBezierPath.addLine(to: CGPoint(x: self.frame.width - arrowWidth, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: self.frame.height))
+        arrowBezierPath.addLine(to: CGPoint(x: 0, y: 0))
+        arrowBezierPath.close()
+        
+        let messageArrowLayer = CAShapeLayer()
+        messageArrowLayer.path = arrowBezierPath.cgPath
+        
+        messageArrowLayer.frame = self.bounds
+        messageArrowLayer.fillColor = color.cgColor
+        messageArrowLayer.name = "arrow"
+        
+        self.layer.addSublayer(messageArrowLayer)
+    }
+    
+    func addDashedLineBorder(
+        color: UIColor,
+        rect: CGRect,
+        roundedBottom: Bool,
+        roundedTop: Bool,
+        name: String
+    ) {
+        let shapeLayer:CAShapeLayer = CAShapeLayer()
+        shapeLayer.cornerRadius = 8.0
+        
+        var rounded: UIRectCorner! = nil
+        
+        if roundedBottom && roundedTop {
+            rounded = [.bottomLeft, .bottomRight, .topRight, .topLeft]
+        } else if roundedBottom {
+            rounded = [.bottomLeft, .bottomRight]
+        } else if roundedTop {
+            rounded = [.topLeft, .topRight]
+        } else {
+            rounded = []
+        }
+        
+        shapeLayer.path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: rounded,
+            cornerRadii: CGSize(width: 8.0, height: 8.0)
+        ).cgPath
+        
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = color.resolvedCGColor(with: self)
+        shapeLayer.lineWidth = 1.5
+        shapeLayer.lineJoin = .round
+        shapeLayer.lineDashPattern = [8,4]
+        shapeLayer.name = name
+
+        self.layer.addSublayer(shapeLayer)
+    }
+
+    func removeDashedLineBorderWith(
+        name: String
+    ) {
+        for sublayer in self.layer.sublayers ?? [] {
+            if sublayer.name == name {
+                sublayer.removeFromSuperlayer()
+            }
+        }
     }
 }

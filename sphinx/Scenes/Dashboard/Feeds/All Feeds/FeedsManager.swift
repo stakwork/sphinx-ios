@@ -20,22 +20,19 @@ class FeedsManager : NSObject {
     }
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
-    
+
     // MARK: - Content Feed fetch requests
     
     func fetchFeeds(
         context: NSManagedObjectContext? = nil
-    ) -> [ContentFeed]{
-        var feeds: [ContentFeed] = []
-        let fetchRequest = ContentFeed.FetchRequests.default()
-        let managedContext = context ?? CoreDataManager.sharedManager.persistentContainer.viewContext
-        
-        do {
-            feeds = try managedContext.fetch(fetchRequest)
-            return feeds
-        } catch {
-            return []
-        }
+    ) -> [ContentFeed] {
+        let feeds: [ContentFeed] = CoreDataManager.sharedManager.getAllOfType(
+            entityName: "ContentFeed",
+            sortDescriptors: [ContentFeed.SortDescriptors.nameAscending],
+            context: context
+        )
+
+        return feeds
     }
     
     func updateLastConsumedWithFeedID(feedID: String) {
@@ -376,7 +373,7 @@ class FeedsManager : NSObject {
                     
                     ContentFeed.fetchFeedItems(
                         feedUrl: url.absoluteString,
-                        contentFeedObjectID: feed.objectID,
+                        contentFeedId: feed.id,
                         context: context,
                         completion: { _ in
                             dispatchSemaphore.signal()
@@ -394,7 +391,7 @@ class FeedsManager : NSObject {
     
     func fetchItemsFor(
         feedUrl: String,
-        objectID: NSManagedObjectID
+        feedId: String
     ) {
         DispatchQueue.global(qos: .userInitiated).async {
             let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
@@ -402,7 +399,7 @@ class FeedsManager : NSObject {
             bgContext.perform {
                 ContentFeed.fetchFeedItems(
                     feedUrl: feedUrl,
-                    contentFeedObjectID: objectID,
+                    contentFeedId: feedId,
                     context: bgContext,
                     completion: { result in
                         if case .success(_) = result {
@@ -494,7 +491,7 @@ class FeedsManager : NSObject {
     }
     
     //Navigate methods
-    func goToContentFeed(vc: UIViewController, rootViewController: RootViewController) -> Bool {
+    func goToContentFeed(vc: UIViewController) -> Bool {
         if let shareContentQuery = UserDefaults.Keys.shareContentQuery.get(defaultValue: ""), shareContentQuery != "" {
             UserDefaults.Keys.shareContentQuery.removeValue()
             
@@ -512,16 +509,19 @@ class FeedsManager : NSObject {
                 lookupContentFeedAndItem(feedID: feedID, itemID: itemID, feedURL: feedURL, completion: { feed,item in
                     if let valid_feed = feed as? PodcastFeed,
                        let valid_episode = item as? PodcastEpisode,
-                        let drvc = vc as? DashboardRootViewController{
+                        let drvc = vc as? DashboardRootViewController {
+                        
                         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
                             podcast: valid_feed,
                             delegate: drvc,
                             boostDelegate: drvc,
                             fromDashboard: true
                         )
+                        
                         if let currentTime = self.extractContentDeepLinkMetaData(forKey: "atTime", components: components) {
                             valid_episode.currentTime = Int(currentTime)
                         }
+                        
                         valid_feed.currentEpisodeId = valid_episode.itemID
                         
                         let navController = UINavigationController()
@@ -533,7 +533,8 @@ class FeedsManager : NSObject {
                     }
                     else if let _ = feed as? VideoFeed,
                     let video = item as? Video,
-                    let drvc = vc as? DashboardRootViewController{
+                    let drvc = vc as? DashboardRootViewController {
+                        
                         let viewController = VideoFeedEpisodePlayerContainerViewController
                             .instantiate(
                                 videoPlayerEpisode: video,
@@ -555,7 +556,6 @@ class FeedsManager : NSObject {
                         drvc.presentItemWebView(for: newsletter)
                     }
                     else{
-                        //error message
                         AlertHelper.showAlert(title: "Error", message: "There was an issue with the link.")
                     }
                 })

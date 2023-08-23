@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -54,20 +53,19 @@
                     </connections>
                 </button>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="jWk-hx-QNH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8jk-CG-Z3Y"/>
-                <constraint firstItem="jWk-hx-QNH" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="GPw-b0-Q1r"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="GPw-b0-Q1r"/>
                 <constraint firstItem="8St-VU-ZJS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="I5S-zc-1cj"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="trailing" secondItem="8St-VU-ZJS" secondAttribute="trailing" id="LBT-e7-y1m"/>
                 <constraint firstAttribute="trailing" secondItem="8St-VU-ZJS" secondAttribute="trailing" id="UhW-wN-pwR"/>
-                <constraint firstItem="8St-VU-ZJS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="WBj-vf-s44"/>
+                <constraint firstItem="8St-VU-ZJS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="WBj-vf-s44"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="top" secondItem="8St-VU-ZJS" secondAttribute="top" id="Yvq-Pg-BkM"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="eYc-I3-yPA"/>
+                <constraint firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="eYc-I3-yPA"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="bottom" secondItem="8St-VU-ZJS" secondAttribute="bottom" id="mdW-eG-PAB"/>
-                <constraint firstItem="jWk-hx-QNH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="pdC-CL-aBf"/>
-                <constraint firstItem="jWk-hx-QNH" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="tBm-Pt-Qrz"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="pdC-CL-aBf"/>
+                <constraint firstItem="jWk-hx-QNH" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="tBm-Pt-Qrz"/>
                 <constraint firstItem="tZr-Gc-AKU" firstAttribute="leading" secondItem="8St-VU-ZJS" secondAttribute="leading" id="toB-bg-hnx"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

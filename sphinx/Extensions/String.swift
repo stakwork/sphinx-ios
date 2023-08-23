@@ -24,6 +24,11 @@ extension String {
         }
     }
     
+    var nsRange : NSRange {
+        return NSRange(self.startIndex..., in: self)
+    }
+
+    
     var length: Int {
       return count
     }
@@ -56,6 +61,14 @@ extension String {
     
     func substring(fromIndex: Int, toIndexIncluded: Int) -> String {
       return self[fromIndex ..< toIndexIncluded]
+    }
+    
+    func substringAfterLastOccurenceOf(_ char: Character) -> String? {
+        if let lastIndex = self.lastIndex(of: char) {
+            let index: Int = self.distance(from: self.startIndex, to: lastIndex) + 1
+            return substring(fromIndex: index)
+        }
+        return nil
     }
 
     subscript (r: Range<Int>) -> String {
@@ -154,7 +167,7 @@ extension String {
         get {
             return self.length > 3000
         }
-    }
+    }    
     
     func getRestoreKeys() -> String? {
         if let decodedString = self.base64Decoded, decodedString.starts(with: "keys::") {
@@ -230,7 +243,7 @@ extension String {
     var stringLinks: [NSTextCheckingResult] {
         let types: NSTextCheckingResult.CheckingType = .link
         let detector = try? NSDataDetector(types: types.rawValue)
-        let matches = detector!.matches(in: self, options: .reportCompletion, range: NSMakeRange(0, self.utf16.count))
+        let matches = detector!.matches(in: self, options: [], range: NSMakeRange(0, self.utf16.count))
         return matches
     }
     
@@ -258,7 +271,7 @@ extension String {
         return ""
     }
     
-    var stringFirstTribeLink : String {
+    var stringFirstTribeLink : String? {
         for link in self.stringLinks {
             let range = link.range
             let matchString = (self as NSString).substring(with: range) as String
@@ -266,15 +279,15 @@ extension String {
                 return matchString
             }
         }
-        return ""
+        return nil
     }
     
-    var stringFirstPubKey : String {
+    var stringFirstPubKey : String? {
         if let range = self.pubKeyMatches.first?.range {
             let matchString = (self as NSString).substring(with: range) as String
             return matchString
         }
-        return ""
+        return nil
     }
     
     func withProtocol(protocolString: String) -> String {
@@ -349,13 +362,14 @@ extension String {
     }
     
     func isExistingContactPubkey() -> (Bool, UserContact?) {
-        let pubkey = self.stringFirstPubKey
-        let (pk, _) = pubkey.pubkeyComponents
-        if let contact = UserContact.getContactWith(pubkey: pk), !contact.fromGroup {
-           return (true, contact)
-        }
-        if let owner = UserContact.getOwner(), owner.publicKey == pk {
-            return (true, owner)
+        if let pubkey = self.stringFirstPubKey {
+            let (pk, _) = pubkey.pubkeyComponents
+            if let contact = UserContact.getContactWith(pubkey: pk), !contact.fromGroup {
+               return (true, contact)
+            }
+            if let owner = UserContact.getOwner(), owner.publicKey == pk {
+                return (true, owner)
+            }
         }
         return (false, nil)
    }
@@ -660,6 +674,29 @@ extension String {
 
         return result
     }
+    
+    func getLinkComponentWith(key: String) -> String? {
+        let components = self.components(separatedBy: "&")
+        
+        if components.count > 0 {
+            for component in components {
+                let elements = component.components(separatedBy: "=")
+                if elements.count > 1 {
+                    let componentKey = elements[0]
+                    let value = component.replacingOccurrences(of: "\(componentKey)=", with: "")
+                    
+                    switch(componentKey) {
+                    case key:
+                        return value
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
 }
 
 extension Character {
@@ -790,5 +827,13 @@ extension String {
     
     var isEmptyPinnedMessage : Bool {
         return self.isEmpty || self == "_"
+    }
+    
+    var isNotEmpty: Bool {
+        return !isEmpty
+    }
+    
+    func isNotEmptyField(with placeHolder: String) -> Bool {
+        return !isEmpty && self != placeHolder
     }
 }

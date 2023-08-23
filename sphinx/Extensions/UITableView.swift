@@ -41,37 +41,58 @@ extension UITableView {
     
     func scrollToBottom(animated: Bool = true){
         DispatchQueue.main.async {
-            if self.numberOfRows(inSection:  self.numberOfSections - 1) == 0 {
+            if self.numberOfSections == 0 {
                 return
             }
             
-            let indexPath = IndexPath(
-                row: self.numberOfRows(inSection:  self.numberOfSections - 1) - 1,
-                section: self.numberOfSections - 1)
-            self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+            self.scrollToRow(
+                index: self.numberOfRows(inSection:  self.numberOfSections - 1) - 1,
+                animated: animated
+            )
         }
     }
     
-    func isPositionAtBottom(
-        yPosition: CGFloat,
-        accessoryViewHeight: CGFloat
-    ) -> Bool {
-        let tableViewHeight = UIScreen.main.bounds.height
-        let bottomInset = getWindowInsets().bottom + accessoryViewHeight + ChatAccessoryView.kTableBottomPadding
-        let contentHeight = (self.contentSize.height - tableViewHeight + bottomInset)
-
-        let difference = contentHeight - yPosition
-        
-        return round(difference) <= 0
+    func scrollToTop(animated: Bool = true){
+        DispatchQueue.main.async {
+            if self.numberOfSections == 0 {
+                return
+            }
+            
+            self.scrollToRow(
+                index: 0,
+                animated: animated
+            )
+        }
     }
     
-    func scrollToRow(index:Int, animated:Bool = true){
+    func scrollToRow(
+        index: Int,
+        animated: Bool = true
+    ){
+        if self.numberOfRows(inSection: self.numberOfSections - 1) == 0 {
+            return
+        }
+        
         let indexPath = IndexPath(row: index, section: self.numberOfSections - 1)
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
     
     func scrollToOffset(yPosition: CGFloat) {
         self.contentOffset.y = yPosition
+    }
+    
+    func isCellOutOfBounds(indexPath: IndexPath) -> (Bool, Bool) {
+        let cellRect = rectForRow(at: indexPath)
+        
+        if bounds.contains(cellRect) {
+            return (false, false)
+        } else {
+            if cellRect.origin.y == 0 {
+                return (false, true)
+            } else {
+                return (true, true)
+            }
+        }
     }
 }
 

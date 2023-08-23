@@ -17,11 +17,8 @@ class AddFriendViewController: UIViewController {
     @IBOutlet weak var existingUserButton: UIButton!
     @IBOutlet weak var newUserButton: UIButton!
     
-    private var rootViewController : RootViewController!
-    
-    static func instantiate(rootViewController: RootViewController) -> AddFriendViewController {
+    static func instantiate() -> AddFriendViewController {
         let viewController = StoryboardScene.Invite.addFriendViewController.instantiate()
-        viewController.rootViewController = rootViewController
         return viewController
     }
 
@@ -45,7 +42,7 @@ class AddFriendViewController: UIViewController {
     }
     
     func goToAddContact() {
-        let newContactVC = NewContactViewController.instantiate(rootViewController: self.rootViewController)
+        let newContactVC = NewContactViewController.instantiate()
         newContactVC.delegate = self
         self.navigationController?.pushViewController(newContactVC, animated: true)
     }
@@ -54,7 +51,7 @@ class AddFriendViewController: UIViewController {
         UIView.animate(withDuration: 0.2, animations: {
             self.buttonContainer.alpha = 0.0
         }, completion: { _ in
-            let confirmAddfriendVC = ConfirmAddFriendViewController.instantiate(rootViewController: self.rootViewController)
+            let confirmAddfriendVC = ConfirmAddFriendViewController.instantiate()
             confirmAddfriendVC.delegate = self
             self.navigationController?.pushViewController(confirmAddfriendVC, animated: false)
         })

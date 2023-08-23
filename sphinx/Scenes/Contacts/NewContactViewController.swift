@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @objc protocol NewContactVCDelegate: class {
     @objc optional func shouldReloadContacts(reload: Bool)
@@ -38,8 +39,6 @@ class NewContactViewController: KeyboardEventsViewController {
     @IBOutlet weak var nameFieldRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var groupPinContainer: GroupPinView!
     
-    var rootViewController : RootViewController!
-    var contactsService : ContactsService!
     var contact : UserContact? = nil
     var pubkey : String? = nil
     
@@ -69,12 +68,18 @@ class NewContactViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(rootViewController: RootViewController, contact: UserContact? = nil, pubkey: String? = nil) -> NewContactViewController {
+    static func instantiate(
+        contactId: Int? = nil,
+        pubkey: String? = nil
+    ) -> NewContactViewController {
         let viewController = StoryboardScene.Contacts.newContactViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contact = contact
+        
+        if let contactId = contactId {
+            viewController.contact = UserContact.getContactWith(id: contactId)
+        }
+        
         viewController.pubkey = pubkey
-        viewController.contactsService = rootViewController.contactsService
+        
         return viewController
     }
     
@@ -159,7 +164,7 @@ class NewContactViewController: KeyboardEventsViewController {
         if let contact = contact {
             setContactInfo(contact: contact)
             
-            contactsService.reloadSubscriptions(contact: contact, callback: { _ in
+            UserContactsHelper.reloadSubscriptions(contact: contact, callback: { _ in
                 self.setContactInfo(contact: contact)
             })
         } else if let pubkey = pubkey {
@@ -230,7 +235,7 @@ class NewContactViewController: KeyboardEventsViewController {
         SubscriptionManager.sharedInstance.resetValues()
         SubscriptionManager.sharedInstance.contact = contact
         
-        let viewController = SubscriptionFormViewController.instantiate(rootViewController: rootViewController)
+        let viewController = SubscriptionFormViewController.instantiate()
         viewController.delegate = self
         navigationController?.pushViewController(viewController, animated: true)
     }

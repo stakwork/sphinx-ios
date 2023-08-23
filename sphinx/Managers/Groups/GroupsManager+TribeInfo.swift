@@ -9,7 +9,8 @@
 import Foundation
 
 extension GroupsManager {
-    struct TribeInfo {
+    
+    struct TribeInfo: Equatable {
         var name : String? = nil
         var description : String? = nil
         var img : String? = nil
@@ -34,6 +35,14 @@ extension GroupsManager {
         var bots : [Bot] = []
         var badgeIds: [Int] = []
         
+        static func == (lhs: TribeInfo, rhs: TribeInfo) -> Bool {
+            return lhs.name           == rhs.name &&
+                   lhs.description    == rhs.description &&
+                   lhs.uuid           == rhs.uuid &&
+                   lhs.host           == rhs.host &&
+                   lhs.groupKey       == rhs.groupKey
+        }
+        
         var hasLoopoutBot : Bool {
             get {
                 for bot in bots {
@@ -42,6 +51,12 @@ extension GroupsManager {
                     }
                 }
                 return false
+            }
+        }
+        
+        var isValid: Bool {
+            get {
+                return name != nil && description != nil && groupKey != nil
             }
         }
     }

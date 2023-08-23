@@ -13,16 +13,8 @@ class WelcomeCompleteViewController: UIViewController {
     @IBOutlet weak var continueButton: UIButton!
     @IBOutlet weak var continueButtonContainer: UIView!
     
-    private var rootViewController: RootViewController!
-
-    
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> WelcomeCompleteViewController {
+    static func instantiate() -> WelcomeCompleteViewController {
         let viewController = StoryboardScene.Welcome.welcomeCompleteViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 
@@ -45,8 +37,10 @@ class WelcomeCompleteViewController: UIViewController {
         SignupHelper.completeSignup()
         UserDefaults.Keys.lastPinDate.set(Date())
         
-        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
-        mainCoordinator.presentInitialDrawer()
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let rootVC = appDelegate.getRootViewController() {
+            let mainCoordinator = MainCoordinator(rootViewController: rootVC)
+            mainCoordinator.presentInitialDrawer()
+        }
     }
 }
 

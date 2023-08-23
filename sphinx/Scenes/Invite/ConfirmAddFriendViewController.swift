@@ -32,9 +32,6 @@ class ConfirmAddFriendViewController: UIViewController {
     let kPlaceHolderColor = UIColor.Sphinx.PlaceholderText
     let kTextViewColor = UIColor.Sphinx.Text
     
-    private var rootViewController : RootViewController!
-    private var contactsService : ContactsService!
-    
     private var lowestPrice : Int?
     
     var loading = false {
@@ -45,10 +42,8 @@ class ConfirmAddFriendViewController: UIViewController {
     
     let walletBalanceService = WalletBalanceService()
     
-    static func instantiate(rootViewController: RootViewController) -> ConfirmAddFriendViewController {
+    static func instantiate() -> ConfirmAddFriendViewController {
         let viewController = StoryboardScene.Invite.confirmAddFriendViewController.instantiate()
-        viewController.rootViewController = rootViewController
-        viewController.contactsService = rootViewController.contactsService
         return viewController
     }
 
@@ -145,7 +140,7 @@ class ConfirmAddFriendViewController: UIViewController {
             loading = true
 
             API.sharedInstance.createUserInvite(parameters: parameters, callback: { contact in
-                let _ = self.contactsService.insertContact(contact: contact)
+                let _ = UserContactsHelper.insertContact(contact: contact)
 
                 if let invite = contact["invite"].dictionary, let inviteString = invite["invite_string"]?.string, inviteString != "" {
                     self.delegate?.shouldDismissView?()

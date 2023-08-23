@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FileInfoView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="TFC-2b-VmL"/>
+                <outlet property="downloadButton" destination="wFL-ME-Acn" id="5ff-YA-uVY"/>
+                <outlet property="fileNameLabel" destination="kPF-gY-rtu" id="hZz-fz-e3Y"/>
+                <outlet property="iconLabel" destination="QFn-Qh-wRF" id="8dI-Ce-YXd"/>
+                <outlet property="pagesLabel" destination="0Qx-Nm-c51" id="aln-Au-y8g"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="210" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="picture_as_pdf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFn-Qh-wRF">
+                    <rect key="frame" x="16" y="15.5" width="25" height="25"/>
+                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                    <color key="textColor" name="Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="file_with_large_name.pdf" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPF-gY-rtu">
+                    <rect key="frame" x="51" y="15.5" width="109" height="14"/>
+                    <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
+                    <color key="textColor" name="Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- pages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Qx-Nm-c51">
+                    <rect key="frame" x="51" y="28.5" width="34.5" height="12"/>
+                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
+                    <color key="textColor" name="Text"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFL-ME-Acn">
+                    <rect key="frame" x="165" y="9.5" width="30" height="37"/>
+                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="25"/>
+                    <state key="normal" title="">
+                        <color key="titleColor" name="Text"/>
+                    </state>
+                    <connections>
+                        <action selector="downloadButtonTouched" destination="-1" eventType="touchUpInside" id="Pxx-TR-wsx"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="QFn-Qh-wRF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="7Lx-jh-7nw"/>
+                <constraint firstItem="0Qx-Nm-c51" firstAttribute="bottom" secondItem="QFn-Qh-wRF" secondAttribute="bottom" id="BRR-4z-T4S"/>
+                <constraint firstItem="0Qx-Nm-c51" firstAttribute="leading" secondItem="QFn-Qh-wRF" secondAttribute="trailing" constant="10" id="IU2-JS-3e7"/>
+                <constraint firstItem="kPF-gY-rtu" firstAttribute="leading" secondItem="QFn-Qh-wRF" secondAttribute="trailing" constant="10" id="VrP-d1-P3r"/>
+                <constraint firstItem="QFn-Qh-wRF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-2" id="WN6-wI-lKb"/>
+                <constraint firstItem="wFL-ME-Acn" firstAttribute="centerY" secondItem="QFn-Qh-wRF" secondAttribute="centerY" id="nvZ-ox-GXT"/>
+                <constraint firstItem="wFL-ME-Acn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kPF-gY-rtu" secondAttribute="trailing" constant="5" id="oH6-Oy-0eP"/>
+                <constraint firstItem="kPF-gY-rtu" firstAttribute="top" secondItem="QFn-Qh-wRF" secondAttribute="top" id="wTa-0k-Vtp"/>
+                <constraint firstAttribute="trailing" secondItem="wFL-ME-Acn" secondAttribute="trailing" constant="15" id="zHm-vx-s0m"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="102"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -59,6 +59,8 @@ class CustomSegmentedControl: UIView {
         self.init(frame: frame)
         
         self.buttonTitles = buttonTitles
+        
+        setupInitialViews()
     }
 }
 
@@ -70,8 +72,6 @@ extension CustomSegmentedControl {
         super.draw(rect)
         
         backgroundColor = buttonBackgroundColor
-        
-        setupInitialViews()
     }
 }
 
@@ -215,16 +215,15 @@ extension CustomSegmentedControl {
     
     
     private func updateTitleBadges() {
-        buttonTitleBadges.enumerated().forEach { (badgeIndex, badge) in
+        buttonTitleBadges.enumerated().forEach { (index, badge) in
             badge.frame = .init(
-                x: (buttons[badgeIndex].titleLabel?.frame.maxX ?? 0) + 2.5,
-                y: (buttons[badgeIndex].titleLabel?.frame.minY ?? 0) - 2.5,
+                x: (buttons[index].titleLabel?.frame.maxX ?? 0) + 2.5,
+                y: (buttons[index].titleLabel?.frame.minY ?? 0) - 2.5,
                 width: 5.0,
                 height: 5.0
             )
             badge.makeCircular()
-            
-            badge.isHidden = indicesOfTitlesWithBadge.contains(badgeIndex) == false
+            badge.isHidden = !indicesOfTitlesWithBadge.contains(index)
         }
     }
         
@@ -240,6 +239,7 @@ extension CustomSegmentedControl {
         }
         
         buttonTitleBadges.enumerated().forEach { (index, badge) in
+            badge.isHidden = !indicesOfTitlesWithBadge.contains(index)
             buttons[index].insertSubview(badge, at: 0)
         }
     }

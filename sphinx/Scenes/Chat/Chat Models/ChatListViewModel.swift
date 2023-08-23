@@ -7,121 +7,94 @@
 
 import Foundation
 import SwiftyJSON
-import ObjectMapper
 
-final class ChatListViewModel: NSObject {
+final class ChatListViewModel {
     
-    var contactsService: ContactsService!
-    var chatLeaderboard : [ChatLeaderboardEntry] = [ChatLeaderboardEntry]()
-    var availableBadges : [Badge] = [Badge]()
-    var tribeUUID : String? = nil
+    init() {}
     
     public static let kMessagesPerPage: Int = 200
     
-    init(contactsService: ContactsService) {
-        self.contactsService = contactsService
-    }
-    
-    var contactChats: [ChatListCommonObject] {
-        contactsService.reload()
-        
-        return contactsService
-            .getChatListObjects()
-            .filter { $0.isConversation() }
-    }
-    
-    var tribeChats: [ChatListCommonObject] {
-        contactsService.reload()
-        
-        return contactsService
-            .getChatListObjects()
-            .filter { $0.isPublicGroup() }
-    }
-    
-    func contactChats(
-        fromSearchQuery searchQuery: String
-    ) -> [ChatListCommonObject] {
-        
-        if searchQuery.isEmpty {
-            return contactChats
-        }
-        
-        return contactsService
-            .getChatListObjects()
-            .filter {
-                $0.isConversation() &&
-                $0.getName()
-                    .lowercased()
-                    .contains(searchQuery.lowercased())
-            }
-    }
-    
-    func tribeChats(
-        fromSearchQuery searchQuery: String
-    ) -> [ChatListCommonObject] {
-        
-        if searchQuery.isEmpty {
-            return tribeChats
-        }
-        
-        return contactsService
-            .getChatListObjects()
-            .filter {
-                $0.isPublicGroup() &&
-                $0.getName()
-                    .lowercased()
-                    .contains(searchQuery.lowercased())
-            }
-    }
-    
-    
     func loadFriends(
-        fromPush: Bool = false,
+        progressCompletion: ((Bool) -> ())? = nil,
         completion: @escaping (Bool) -> ()
     ) {
-        if let contactsService = contactsService {
+        let restoring = self.isRestoring()
+        
+        restoreContacts(
+            page: 1,
+            restoring: restoring,
+            progressCompletion: progressCompletion,
+            completion: completion
+        )
+    }
             
-            let restoring = self.isRestoring()
-            
-            API.sharedInstance.getLatestContacts(
-                date: Date(),
-                callback: {(contacts, chats, subscriptions, invites) -> () in
-                
-                contactsService.insertObjects(
+    func restoreContacts(
+        page: Int,
+        restoring: Bool,
+        progressCompletion: ((Bool) -> ())? = nil,
+        completion: @escaping (Bool) -> ()
+    ) {
+        API.sharedInstance.getLatestContacts(
+            page: page,
+            date: Date(),
+            nextPageCallback: {(contacts, chats, subscriptions, invites) -> () in
+                self.saveObjects(
                     contacts: contacts,
                     chats: chats,
                     subscriptions: subscriptions,
                     invites: invites
                 )
                 
+                self.restoreContacts(
+                    page: page + 1,
+                    restoring: restoring,
+                    progressCompletion: progressCompletion,
+                    completion: completion
+                )
+                
+                progressCompletion?(restoring)
+            },
+            callback: {(contacts, chats, subscriptions, invites) -> () in
+            
+                self.saveObjects(
+                    contacts: contacts,
+                    chats: chats,
+                    subscriptions: subscriptions,
+                    invites: invites
+                )
+                
+                CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
+                    
                 self.forceKeychainSync()
+                self.authenticateWithMemesServer()
                 
                 completion(restoring)
-            })
-            return
-        }
-        completion(false)
+            }
+        )
     }
     
-    func getChatListObjectsCount() -> Int {
-        if let contactsService = contactsService {
-            return contactsService.chatListObjects.count
-        }
-        return 0
-    }
-    
-    func updateContactsAndChats() {
-        guard let contactsService = contactsService else {
-            return
-        }
-        contactsService.updateContacts()
-        contactsService.updateChats()
+    func saveObjects(
+        contacts: [JSON],
+        chats: [JSON],
+        subscriptions: [JSON],
+        invites: [JSON]
+    ) {
+        UserContactsHelper.insertObjects(
+            contacts: contacts,
+            chats: chats,
+            subscriptions: subscriptions,
+            invites: invites
+        )
     }
     
     func forceKeychainSync() {
         UserData.sharedInstance.forcePINSyncOnKeychain()
         UserData.sharedInstance.saveNewNodeOnKeychain()
         EncryptionManager.sharedInstance.saveKeysOnKeychain()
+    }
+    
+    func authenticateWithMemesServer() {
+        AttachmentsManager.sharedInstance.runAuthentication()
     }
     
     func askForNotificationPermissions() {
@@ -174,50 +147,12 @@ final class ChatListViewModel: NSObject {
 
                     UserDefaults.Keys.messagesFetchPage.removeValue()
                     
-                    Chat.updateLastMessageForChats(
-                        self.newMessagesChatIds
-                    )
                     self.syncing = false
                     completion(chatNewMessagesCount, newMessagesCount)
                 }
             )
         }
         syncMessagesTask?.perform()
-        
-        getChatLeaderboards()
-        
-    }
-    
-    func getChatLeaderboards(){
-        if let valid_uuid = tribeUUID{
-            DispatchQueue.main.async {
-                API.sharedInstance.getTribeLeaderboard(
-                    tribeUUID: valid_uuid,
-                    callback: { results in
-                        if var chatLeaderboardEntries = Mapper<ChatLeaderboardEntry>().mapArray(JSONObject: Array(results)){
-                            
-                            self.chatLeaderboard = chatLeaderboardEntries
-                        }
-                    },
-                    errorCallback: {
-                        
-                    })
-            }
-            
-        }
-    }
-    
-    func getChatBadges(chat:Chat?){
-        if let valid_chat = chat,
-           let valid_tribe = valid_chat.tribeInfo {
-            API.sharedInstance.getAssetsByID(
-                assetIDs: valid_tribe.badgeIds,
-                callback: { results in
-                    self.availableBadges = results
-            }, errorCallback: {
-                
-            })
-        }
     }
     
     func finishRestoring() {
@@ -258,40 +193,43 @@ final class ChatListViewModel: NSObject {
                 )
                     
                 if newMessages.count > 0 {
-                    self.addMessages(
-                        messages: newMessages,
-                        chatId: chatId,
-                        completion: { (newMessagesCount, allMessagesCount) in
-                            
-                            if self.syncMessagesTask?.isCancelled == true {
-                                return
-                            }
-                            
-                            if newMessages.count < ChatListViewModel.kMessagesPerPage {
+                    CoreDataManager.sharedManager.persistentContainer.viewContext.performAndWait({
+                        self.addMessages(
+                            messages: newMessages,
+                            chatId: chatId,
+                            completion: { (newMessagesCount, allMessagesCount) in
                                 
-                                CoreDataManager.sharedManager.saveContext()
-                                
-                                if restoring {
-                                    SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+                                if self.syncMessagesTask?.isCancelled == true {
+                                    return
                                 }
                                 
-                                completion(newMessagesCount, allMessagesCount)
-                                
-                            } else {
-                                
-                                CoreDataManager.sharedManager.saveContext()
-                                UserDefaults.Keys.messagesFetchPage.set(page + 1)
-                                
-                                self.getMessagesPaginated(
-                                    restoring: restoring,
-                                    prevPageNewMessages: newMessagesCount + prevPageNewMessages,
-                                    chatId: chatId,
-                                    date: date,
-                                    progressCallback: progressCallback,
-                                    completion: completion
-                                )
-                                
+                                if newMessages.count < ChatListViewModel.kMessagesPerPage {
+                                    
+                                    CoreDataManager.sharedManager.saveContext()
+                                    
+                                    if restoring {
+                                        SphinxSocketManager.sharedInstance.connectWebsocket(forceConnect: true)
+                                    }
+                                    
+                                    completion(newMessagesCount, allMessagesCount)
+                                    
+                                } else {
+                                    
+                                    CoreDataManager.sharedManager.saveContext()
+                                    UserDefaults.Keys.messagesFetchPage.set(page + 1)
+                                    
+                                    self.getMessagesPaginated(
+                                        restoring: restoring,
+                                        prevPageNewMessages: newMessagesCount + prevPageNewMessages,
+                                        chatId: chatId,
+                                        date: date,
+                                        progressCallback: progressCallback,
+                                        completion: completion
+                                    )
+                                    
+                                }
                             }
+                        )
                     })
                 } else {
                     completion(0, 0)

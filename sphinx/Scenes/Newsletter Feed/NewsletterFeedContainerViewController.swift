@@ -13,7 +13,7 @@ protocol NewsletterFeedContainerViewControllerDelegate: AnyObject {
 
     func viewController(
         _ viewController: UIViewController,
-        didSelectNewsletterItemWithID newsletterItemId: NSManagedObjectID
+        didSelectNewsletterItemWithID newsletterItemId: String
     )
 }
 
@@ -121,28 +121,28 @@ extension NewsletterFeedContainerViewController {
 extension NewsletterFeedContainerViewController {
     
     private func handleNewsletterItemCellSelection(
-        _ managedObjectID: NSManagedObjectID
+        _ feedItemId: String
     ) {
         let context = CoreDataManager.sharedManager.persistentContainer.viewContext
         
         guard
-            let selectedItem = context.object(with: managedObjectID) as? ContentFeedItem,
+            let selectedItem = ContentFeedItem.getItemWith(itemID: feedItemId),
             selectedItem.contentFeed?.isNewsletter == true
         else {
             return
         }
 
         self.dismiss(animated: false, completion: {
-            self.delegate?.viewController(self, didSelectNewsletterItemWithID: selectedItem.objectID)
+            self.delegate?.viewController(self, didSelectNewsletterItemWithID: feedItemId)
         })
     }
     
     
     private func updateFeed() {
-        if let objectID = self.newsletterFeed?.objectID,
+        if let feedId = self.newsletterFeed?.id,
            let feedUrl = self.newsletterFeed?.feedURL?.absoluteString {
             
-            FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, objectID: objectID)
+            FeedsManager.sharedInstance.fetchItemsFor(feedUrl: feedUrl, feedId: feedId)
         }
     }
 }

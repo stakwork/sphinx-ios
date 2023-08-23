@@ -27,14 +27,15 @@ class SubscriptionDetailsViewController: UIViewController {
         }
     }
     
-    var rootViewController : RootViewController!
     var subscription : SubscriptionManager.SubscriptionQR!
     
     let subscriptionManager = SubscriptionManager.sharedInstance
     
-    static func instantiate(rootViewController : RootViewController? = nil, subscriptionQR: SubscriptionManager.SubscriptionQR, delegate: QRCodeScannerDelegate? = nil) -> SubscriptionDetailsViewController {
+    static func instantiate(
+        subscriptionQR: SubscriptionManager.SubscriptionQR,
+        delegate: QRCodeScannerDelegate? = nil
+    ) -> SubscriptionDetailsViewController {
         let viewController = StoryboardScene.Subscription.subscriptionDeatilsViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.subscription = subscriptionQR
         viewController.delegate = delegate
         return viewController
@@ -43,7 +44,7 @@ class SubscriptionDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        rootViewController.setStatusBarColor(light: false)
+        setStatusBarColor()
         
         subscribeButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .highlighted)
         subscribeButton.setBackgroundColor(color: UIColor.Sphinx.PrimaryBlueBorder, forUIControlState: .selected)
@@ -92,8 +93,7 @@ class SubscriptionDetailsViewController: UIViewController {
         }
         
         guard let contact = UserContact.getContactWith(pubkey: pubkey) else {
-            let contactsService = ContactsService()
-            contactsService.createContact(nickname: subscription.nickname ?? "name.unknown".localized, pubKey: pubkey, photoUrl: subscription.imgurl, callback: { (success, _) in
+            UserContactsHelper.createContact(nickname: subscription.nickname ?? "name.unknown".localized, pubKey: pubkey, photoUrl: subscription.imgurl, callback: { (success, _) in
                 if success {
                     self.subscribe()
                 } else {
@@ -116,7 +116,7 @@ class SubscriptionDetailsViewController: UIViewController {
         subscriptionManager.createOrEditSubscription(completion: { subscription, message in
             if let _ = subscription {
                 DelayPerformedHelper.performAfterDelay(seconds: 1.0) {
-                    self.goToChat()
+                    self.dismissView()
                 }
             } else if message != "" {
                 self.showErrorAlert(message: message)
@@ -124,17 +124,9 @@ class SubscriptionDetailsViewController: UIViewController {
         })
     }
     
-    func goToChat() {
-       if let contact = subscriptionManager.contact {
-            if let chat = contact.getChat() {
-                UserDefaults.Keys.chatId.set(chat.id)
-            }
-            
-            delegate?.willDismissPresentedView?(paymentCreated: false)
-            self.dismiss(animated: true, completion: {
-                self.delegate?.shouldGoToChat?()
-            })
-        }
+    func dismissView() {
+        delegate?.willDismissPresentedView?(paymentCreated: false)
+        self.dismiss(animated: true)
     }
     
     @IBAction func subscribeButtonTouched() {

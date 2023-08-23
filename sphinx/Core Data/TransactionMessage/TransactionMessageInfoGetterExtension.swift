@@ -25,6 +25,7 @@ extension TransactionMessage {
         case CopyPubKey
         case CopyCallLink
         case Reply
+        case ShowThread
         case Save
         case Boost
         case Resend
@@ -57,20 +58,24 @@ extension TransactionMessage {
         return nil
     }
     
-    func getMessageReceiverNickname() -> String {
-        if let receiver = getMessageReceiver() {
-            return receiver.getName()
-        }
-        return "name.unknown".localized
-    }
-    
-    func getMessageSenderNickname(minimized: Bool = false, forceNickname: Bool = false) -> String {
+    func getMessageSenderNickname(
+        minimized: Bool = false,
+        forceNickname: Bool = false,
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
         var alias = "name.unknown".localized
         
         if let senderAlias = senderAlias {
             alias = senderAlias
-        } else if let sender = getMessageSender() {
-            alias = sender.getUserName(forceNickname: forceNickname)
+        } else {
+            if isIncoming(ownerId: owner.id) {
+                if let sender = (contact ?? getMessageSender()) {
+                    alias = sender.getUserName(forceNickname: forceNickname)
+                }
+            } else {
+                alias = owner.getUserName(forceNickname: forceNickname)
+            }
         }
         
         if let first = alias.components(separatedBy: " ").first, minimized {
@@ -120,14 +125,6 @@ extension TransactionMessage {
         return messageEncrypted
     }
     
-    func canBeDecrypted() -> Bool {
-        if let messageC = self.messageContent, messageC.isEncryptedString() {
-            return false
-        }
-        
-        return true
-    }
-    
     func hasMessageContent() -> Bool {
         let messageC = (messageContent ?? "")
         
@@ -138,8 +135,7 @@ extension TransactionMessage {
         }
         
         if isPodcastComment() {
-            self.processPodcastComment()
-            return self.podcastComment?.text != nil
+            return self.getPodcastComment()?.text != nil
         }
         
         if isPodcastBoost() {
@@ -149,19 +145,15 @@ extension TransactionMessage {
         return messageC != ""
     }
     
-    func getMessageContent(dashboard: Bool = false) -> String {
+    func getMessageDescription() -> String {
         var adjustedMC = self.messageContent ?? ""
         
         if isGiphy(), let message = GiphyHelper.getMessageFrom(message: adjustedMC) {
             return message
         }
         
-        if isPodcastComment() {
-            self.processPodcastComment()
-            
-            if let text = self.podcastComment?.text, !text.isEmpty {
-                return text
-            }
+        if isPodcastComment(), let podcastComment = self.getPodcastComment() {
+            return podcastComment.text ?? ""
         }
         
         if isPodcastBoost() {
@@ -172,57 +164,18 @@ extension TransactionMessage {
             adjustedMC = "join.call".localized
         }
         
-        if let messageC = self.messageContent {
-            if messageC.isEncryptedString() {
-                adjustedMC = getDecrytedMessage(dashboard: dashboard)
-            }
-        }
-        
-        if self.isPaidMessage() {
-            adjustedMC = getPaidMessageContent()
-        }
-        
         return adjustedMC
     }
     
     func getReplyMessageContent() -> String {
         if hasMessageContent() {
-            let messageContent = getMessageContent()
+            let messageContent = bubbleMessageContentString ?? ""
             return messageContent.isValidHTML ? "bot.response.preview".localized : messageContent
         }
         if let fileName = self.mediaFileName {
             return fileName
         }
         return ""
-    }
-    
-    func getDecrytedMessage(dashboard: Bool = false) -> String {
-        if let messageC = self.messageContent, UIApplication.shared.isActive() {
-            if messageC.isEncryptedString() {
-                let (decrypted, message) = EncryptionManager.sharedInstance.decryptMessage(message: messageC)
-                if decrypted {
-                    self.messageContent = message
-                    return message
-                }
-            }
-        }
-        return dashboard ? "decrypting.message".localized : "encryption.error".localized.uppercased()
-    }
-    
-    func getPaidMessageContent() -> String {
-        var adjustedMC = self.messageContent ?? ""
-        
-        if self.isPendingPaidMessage() {
-            if paidMessageError {
-                adjustedMC = "cannot.load.message.data".localized.uppercased()
-            } else {
-                adjustedMC = "pay.to.unlock.msg".localized.uppercased()
-            }
-        } else if self.isLoadingPaidMessage() {
-            adjustedMC = "loading.paid.message".localized.uppercased()
-        }
-        
-        return adjustedMC
     }
     
     //Direction
@@ -234,20 +187,31 @@ extension TransactionMessage {
         }
     }
     
-    func isIncoming() -> Bool {
-        return getDirection(id: UserData.sharedInstance.getUserId()) == TransactionMessageDirection.incoming
+    func isIncoming(
+        ownerId: Int? = nil
+    ) -> Bool {
+        return getDirection(id: ownerId ?? UserData.sharedInstance.getUserId()) == TransactionMessageDirection.incoming
     }
     
-    func isOutgoing() -> Bool {
-        return getDirection(id: UserData.sharedInstance.getUserId()) == TransactionMessageDirection.outgoing
+    func isOutgoing(
+        ownerId: Int? = nil
+    ) -> Bool {
+        return getDirection(id: ownerId ?? UserData.sharedInstance.getUserId()) == TransactionMessageDirection.outgoing
     }
     
     //Statues
-    func isFailedOrMediaExpired() -> Bool {
-        let failed = self.failed()
-        let expired = self.isMediaExpired()
-        
-        return failed || expired
+    func isSeen(
+        ownerId: Int
+    ) -> Bool {
+        return self.isOutgoing(ownerId: ownerId) || self.seen
+    }
+    
+    func isProvisional() -> Bool {
+        return id < 0
+    }
+    
+    func pending() -> Bool {
+        return status == TransactionMessageStatus.pending.rawValue
     }
     
     func received() -> Bool {
@@ -272,7 +236,15 @@ extension TransactionMessage {
     }
     
     public func isConfirmedAsReceived() -> Bool {
-        return self.status == TransactionMessageStatus.received.rawValue
+        return
+            self.status == TransactionMessageStatus.received.rawValue ||
+            (
+                self.status == TransactionMessageStatus.confirmed.rawValue &&
+                (
+                    self.type == TransactionMessageType.payment.rawValue ||
+                    self.type == TransactionMessageType.invoice.rawValue
+                )
+            )
     }
     
     //Message type
@@ -288,26 +260,21 @@ extension TransactionMessage {
     }
     
     func isMediaAttachment() -> Bool {
-        return (isAttachment() && getType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
+        let mediaAttachmentTypes = [
+            TransactionMessageType.imageAttachment.rawValue,
+            TransactionMessageType.videoAttachment.rawValue,
+            TransactionMessageType.pdfAttachment.rawValue,
+        ]
+        
+        return mediaAttachmentTypes.contains(getType() ?? -1)
     }
     
     func isPaidMessage() -> Bool {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue
     }
     
-    func isPendingPaidMessage() -> Bool {
-        return isPaidMessage() && isIncoming() && getMediaUrl(queryDB: false) == nil && (messageContent?.isEmpty ?? true)
-    }
-    
-    func isLoadingPaidMessage() -> Bool {
-        if let _ = getMediaUrl(), (messageContent?.isEmpty ?? true) && isPaidMessage() {
-            return true
-        }
-        return false
-    }
-    
-    func isMessageUploadingAttachment() -> Bool {
-        return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && messageContent == nil && !isIncoming()
+    func isPaidPendingMessage() -> Bool {
+        return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && mediaKey == nil
     }
     
     func isAttachment() -> Bool {
@@ -318,12 +285,31 @@ extension TransactionMessage {
         return getMediaType() == TransactionMessage.TransactionMessageType.videoAttachment.rawValue
     }
     
+    func isImage() -> Bool {
+        return getMediaType() == TransactionMessage.TransactionMessageType.imageAttachment.rawValue
+    }
+    
     func isAudio() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.audioAttachment.rawValue
     }
     
     func isPDF() -> Bool {
         return getMediaType() == TransactionMessage.TransactionMessageType.pdfAttachment.rawValue
+    }
+    
+    func isDoc() -> Bool {
+        let fileName = getFileName().lowercased()
+        return fileName.contains(".doc")
+    }
+    
+    func isSpreadsheet() -> Bool {
+        let fileName = getFileName().lowercased()
+        return fileName.contains(".xls") || fileName.contains(".csv")
+    }
+    
+    func getFileExtension() -> String {
+        let fileName = getFileName().lowercased()
+        return fileName.substringAfterLastOccurenceOf(".") ?? "txt"
     }
     
     func isFileAttachment() -> Bool {
@@ -363,8 +349,12 @@ extension TransactionMessage {
         return type == TransactionMessageType.botResponse.rawValue
     }
     
-    func isBoosted() -> Bool {
-        return self.reactions != nil && (self.reactions?.totalSats ?? 0) > 0
+    func isBotHTMLResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue && self.messageContent?.isValidHTML == true
+    }
+    
+    func isBotTextResponse() -> Bool {
+        return type == TransactionMessageType.botResponse.rawValue && self.messageContent?.isValidHTML == false
     }
     
     func isUnknownType() -> Bool {
@@ -374,6 +364,10 @@ extension TransactionMessage {
     func isMessageReaction() -> Bool {
         return type == TransactionMessageType.boost.rawValue &&
                (!(replyUUID ?? "").isEmpty || (messageContent?.isEmpty ?? true))
+    }
+    
+    func isMemberRequest() -> Bool {
+        return type == TransactionMessageType.memberRequest.rawValue
     }
     
     func isApprovedRequest() -> Bool {
@@ -388,9 +382,31 @@ extension TransactionMessage {
         return type == TransactionMessageType.groupJoin.rawValue ||
                type == TransactionMessageType.groupLeave.rawValue ||
                type == TransactionMessageType.groupKick.rawValue ||
+               type == TransactionMessageType.groupDelete.rawValue ||
                type == TransactionMessageType.memberRequest.rawValue ||
                type == TransactionMessageType.memberApprove.rawValue ||
                type == TransactionMessageType.memberReject.rawValue
+    }
+    
+    func isGroupLeaveMessage() -> Bool {
+        return type == TransactionMessageType.groupLeave.rawValue
+    }
+    
+    func isGroupJoinMessage() -> Bool {
+        return type == TransactionMessageType.groupJoin.rawValue
+    }
+    
+    func isGroupKickMessage() -> Bool {
+        return type == TransactionMessageType.groupKick.rawValue
+    }
+    
+    func isGroupDeletedMessage() -> Bool {
+        return type == TransactionMessageType.groupDelete.rawValue
+    }
+    
+    func isGroupLeaveOrJoinMessage() -> Bool {
+        return type == TransactionMessageType.groupJoin.rawValue ||
+               type == TransactionMessageType.groupLeave.rawValue
     }
     
     func isDeleted() -> Bool {
@@ -415,6 +431,10 @@ extension TransactionMessage {
         return type == TransactionMessageType.directPayment.rawValue
     }
     
+    func isPurchaseAccept() -> Bool {
+        return type == TransactionMessageType.purchaseAccept.rawValue
+    }
+    
     func isPodcastPayment() -> Bool {
         let feedIDString1 = "{\"feedID\":"
         let feedIDString2 = "{\"feedID\":"
@@ -424,7 +444,11 @@ extension TransactionMessage {
     }
     
     func isCallLink() -> Bool {
-        return type == TransactionMessageType.call.rawValue || messageContent?.isCallLink == true
+        return isCallMessageType() || messageContent?.isCallLink == true
+    }
+    
+    func isCallMessageType() -> Bool {
+        return type == TransactionMessageType.call.rawValue
     }
     
     func canBeDeleted() -> Bool {
@@ -438,17 +462,6 @@ extension TransactionMessage {
         return false
     }
     
-    func getReplyingTo() -> TransactionMessage? {
-        if let replyUUID = replyUUID, !replyUUID.isEmpty {
-            if let replyingMessage = replyingMessage {
-                return replyingMessage
-            }
-            replyingMessage = TransactionMessage.getMessageWith(uuid: replyUUID)
-            return replyingMessage
-        }
-        return nil
-    }
-    
     func getAmountString() -> String {
         let result = self.amount ?? NSDecimalNumber(value: 0)
         let amountString = Int(truncating: result).formattedWithSeparator
@@ -460,7 +473,9 @@ extension TransactionMessage {
         return invoice?.getAmountString() ?? "0"
     }
     
-    func getActionsMenuOptions() -> [ActionsMenuOption] {
+    func getActionsMenuOptions(
+        isThreadRow: Bool = false
+    ) -> [ActionsMenuOption] {
         var options = [ActionsMenuOption]()
         
         if isPodcastBoost() {
@@ -514,13 +529,24 @@ extension TransactionMessage {
             }
         }
         
-        if isReplyActionAllowed {
+        if isReplyActionAllowed  {
             options.append(
                 .init(
                     tag: MessageActionsItem.Reply,
                     materialIconName: "",
                     iconImage: nil,
                     label:  "reply".localized
+                )
+            )
+        }
+        
+        if isThreadRow {
+            options.append(
+                .init(
+                    tag: MessageActionsItem.ShowThread,
+                    materialIconName: "forum",
+                    iconImage: nil,
+                    label: "show.thread".localized
                 )
             )
         }
@@ -606,12 +632,12 @@ extension TransactionMessage {
     }
     
     func messageContainText() -> Bool {
-        return messageContent != nil && messageContent != "" && !isGiphy()
+        return bubbleMessageContentString != nil && bubbleMessageContentString != ""
     }
     
     var isCopyTextActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
+            if let messageContent = bubbleMessageContentString {
                 return !self.isCallLink() && !messageContent.isEncryptedString()
             }
             return false
@@ -620,8 +646,8 @@ extension TransactionMessage {
     
     var isCopyLinkActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
-                return !self.isCallLink() && messageContent.stringLinks.count > 0
+            if let messageContent = bubbleMessageContentString {
+                return messageContent.stringLinks.count > 0
             }
             return false
         }
@@ -629,7 +655,7 @@ extension TransactionMessage {
     
     var isCopyPublicKeyActionAllowed: Bool {
         get {
-            if let messageContent = messageContent {
+            if let messageContent = bubbleMessageContentString {
                 return messageContent.pubKeyMatches.count > 0
             }
             return false
@@ -644,7 +670,7 @@ extension TransactionMessage {
     
     var isReplyActionAllowed: Bool {
         get {
-            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty
+            return (isTextMessage() || (isAttachment() && !isAudio())) && !(uuid ?? "").isEmpty
         }
     }
     
@@ -652,15 +678,6 @@ extension TransactionMessage {
         get {
             return (type == TransactionMessageType.attachment.rawValue && getMediaType() != TransactionMessageType.textAttachment.rawValue) || isGiphy()
         }
-    }
-    
-    var shouldInitiateCallAlert : Bool{
-        if let content = self.messageContent,
-           self.chat?.isGroup() == false,
-           content.contains("https://jitsi"){
-            return true
-        }
-        return false
     }
     
     var isResendActionAllowed: Bool {
@@ -699,6 +716,34 @@ extension TransactionMessage {
         }
     }
     
+    var bubbleMessageContentString: String? {
+        get {
+            if isGiphy(), let message = GiphyHelper.getMessageFrom(message: messageContent ?? "") {
+                return message
+            }
+            
+            if isPodcastComment(), let podcastComment = self.getPodcastComment() {
+                return podcastComment.text
+            }
+            
+            if isPodcastBoost() {
+                return nil
+            }
+            
+            if isCallLink() {
+                return nil
+            }
+            
+            if let messageC = messageContent {
+                if messageC.isEncryptedString() {
+                    return "encryption.error".localized
+                }
+            }
+            
+            return self.messageContent
+        }
+    }
+    
     var isBoostActionAllowed: Bool {
         get {
             return isIncoming() &&
@@ -709,44 +754,17 @@ extension TransactionMessage {
         }
     }
     
-    func isNewUnseenMessage() -> Bool {
-        let chatSeen = (self.chat?.seen ?? false)
-        var newMessage = !chatSeen && !seen && !failed() && isIncoming()
-        
-        let (purchaseStateItem, seen) = getPurchaseStateItem()
-        if let _ = purchaseStateItem {
-            newMessage = !seen
-        }
-        
-        return newMessage
-    }
-    
-    func isUniqueOnChat() -> Bool {
-        return (self.chat?.messages?.count ?? 0) == 1
-    }
-    
-    func save(webViewHeight height: CGFloat) {
-        if var heighs: [Int: CGFloat] = UserDefaults.Keys.webViewsHeight.getObject() {
-            heighs[self.id] = height
-            UserDefaults.Keys.webViewsHeight.setObject(heighs)
-        } else {
-            UserDefaults.Keys.webViewsHeight.setObject([self.id: height])
-        }
-    }
-    
-    func getWebViewHeight() -> CGFloat? {
-        if let heighs: [Int: CGFloat] = UserDefaults.Keys.webViewsHeight.getObject() {
-            return heighs[self.id]
-        }
-        return nil
-    }
-    
     //Message description
-    func getMessageDescription(dashboard: Bool = false) -> String {
+    func getMessageContentPreview(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
         let amount = self.amount ?? NSDecimalNumber(value: 0)
         let amountString = Int(truncating: amount).formattedWithSeparator
-        let incoming = self.isIncoming()
+        
+        let incoming = self.isIncoming(ownerId: owner.id)
         let directionString = incoming ? "received".localized : "sent".localized
+        let senderAlias = self.getMessageSenderNickname(minimized: true, owner: owner, contact: contact)
         
         if isDeleted() {
             return "message.x.deleted".localized
@@ -758,7 +776,7 @@ extension TransactionMessage {
             if self.isGiphy() {
                 return "\("gif.capitalize".localized) \(directionString)"
             } else {
-                return "\(self.getMessageSenderNickname(minimized: true)): \(self.getMessageContent(dashboard: dashboard))"
+                return "\(senderAlias): \(self.getMessageDescription())"
             }
         case TransactionMessage.TransactionMessageType.invoice.rawValue:
             return  "\("invoice".localized) \(directionString): \(amountString) sats"
@@ -804,81 +822,114 @@ extension TransactionMessage {
              TransactionMessage.TransactionMessageType.memberRequest.rawValue,
              TransactionMessage.TransactionMessageType.memberApprove.rawValue,
              TransactionMessage.TransactionMessageType.memberReject.rawValue:
-            return self.getGroupMessageText().withoutBreaklines
+            return self.getGroupMessageText(owner: owner, contact: contact).withoutBreaklines
         case TransactionMessage.TransactionMessageType.boost.rawValue:
-            return "\(self.getMessageSenderNickname(minimized: true)): Boost"
+            return "\(self.getMessageSenderNickname(minimized: true, owner: owner, contact: contact)): Boost"
+        case TransactionMessage.TransactionMessageType.purchase.rawValue:
+            return "\("purchase.item.description".localized) \(directionString)"
+        case TransactionMessage.TransactionMessageType.purchaseAccept.rawValue:
+            return "item.purchased".localized
+        case TransactionMessage.TransactionMessageType.purchaseDeny.rawValue:
+            return "item.purchase.denied".localized
         default: break
         }
         return "\("message.not.supported".localized) \(directionString)"
     }
     
-    func getGroupMessageText() -> String {
+    func getGroupMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
         var message = "message.not.supported"
         
         switch(type) {
         case TransactionMessageType.groupJoin.rawValue:
-            message = getGroupJoinMessageText()
+            message = getGroupJoinMessageText(owner: owner, contact: contact)
         case TransactionMessageType.groupLeave.rawValue:
-            message = getGroupLeaveMessageText()
+            message = getGroupLeaveMessageText(owner: owner, contact: contact)
         case TransactionMessageType.groupKick.rawValue:
             message = "tribe.kick".localized
         case TransactionMessageType.groupDelete.rawValue:
             message = "tribe.deleted".localized
         case TransactionMessageType.memberRequest.rawValue:
-            message = String(format: "member.request".localized, getMessageSenderNickname())
+            message = String(format: "member.request".localized, getMessageSenderNickname(owner: owner, contact: contact))
         case TransactionMessageType.memberApprove.rawValue:
-            message = getMemberApprovedMessageText()
+            message = getMemberApprovedMessageText(owner: owner, contact: contact)
         case TransactionMessageType.memberReject.rawValue:
-            message = getMemberDeclinedMessageText()
+            message = getMemberDeclinedMessageText(owner: owner, contact: contact)
         default:
             break
         }
         return message
     }
     
-    func getMemberDeclinedMessageText() -> String {
-        if self.chat?.isMyPublicGroup() ?? false {
-            return String(format: "admin.request.rejected".localized, getMessageSenderNickname())
+    func getMemberDeclinedMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
+        if self.chat?.isMyPublicGroup(ownerPubKey: owner.publicKey) ?? false {
+            return String(format: "admin.request.rejected".localized, getMessageSenderNickname(owner: owner, contact: contact))
         } else {
             return "member.request.rejected".localized
         }
     }
     
-    func getMemberApprovedMessageText() -> String {
-        if self.chat?.isMyPublicGroup() ?? false {
-            return String(format: "admin.request.approved".localized, getMessageSenderNickname())
+    func getMemberApprovedMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
+        if self.chat?.isMyPublicGroup(ownerPubKey: owner.publicKey) ?? false {
+            return String(format: "admin.request.approved".localized, getMessageSenderNickname(owner: owner, contact: contact))
         } else {
             return "member.request.approved".localized
         }
     }
     
-    func getGroupJoinMessageText() -> String {
-        if (self.chat?.isPublicGroup() ?? false) {
-            return String(format: "has.joined.tribe".localized, getMessageSenderNickname())
-        } else {
-            return String(format: "added.to.group".localized, getMessageSenderNickname())
-        }
+    func getGroupJoinMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
+        return getGroupJoinMessageText(
+            senderAlias: getMessageSenderNickname(
+                owner: owner,
+                contact: contact
+            )
+        )
     }
     
-    func getGroupLeaveMessageText() -> String {
-        if (self.chat?.isPublicGroup() ?? false) {
-            return String(format: "just.left.tribe".localized, getMessageSenderNickname())
-        } else {
-            return String(format: "just.left.group".localized, getMessageSenderNickname())
-        }
+    func getGroupLeaveMessageText(
+        owner: UserContact,
+        contact: UserContact?
+    ) -> String {
+        return getGroupLeaveMessageText(
+            senderAlias: getMessageSenderNickname(
+                owner: owner,
+                contact: contact
+            )
+        )
     }
     
-    func processPodcastComment() {
-        if let _ = self.podcastComment {
-            return
-        }
-        
+    func getGroupJoinMessageText(senderAlias: String) -> String {
+        return String(format: "has.joined.tribe".localized, senderAlias)
+    }
+    
+    func getGroupLeaveMessageText(senderAlias: String) -> String {
+        return String(format: "just.left.tribe".localized, senderAlias)
+    }
+    
+    func getPodcastComment() -> PodcastComment? {
         let messageC = (messageContent ?? "")
         
         if messageC.isPodcastComment {
-            let stringWithoutPrefix = messageC.replacingOccurrences(of: PodcastFeed.kClipPrefix, with: "")
+            let stringWithoutPrefix = messageC.replacingOccurrences(
+                of: PodcastFeed.kClipPrefix,
+                with: ""
+            )
+            
             if let data = stringWithoutPrefix.data(using: .utf8) {
+                
                 if let jsonObject = try? JSON(data: data) {
+                    
                     var podcastComment = PodcastComment()
                     podcastComment.feedId = jsonObject["feedID"].stringValue
                     podcastComment.itemId = jsonObject["itemID"].stringValue
@@ -889,10 +940,14 @@ extension TransactionMessage {
                     podcastComment.pubkey = jsonObject["pubkey"].stringValue
                     podcastComment.uuid = self.uuid ?? ""
                     
-                    self.podcastComment = podcastComment
+                    if podcastComment.isValid() {
+                        return podcastComment
+                    }
                 }
             }
         }
+        
+        return nil
     }
     
     func getBoostAmount() -> Int {
@@ -928,16 +983,25 @@ extension TransactionMessage {
         let messageSender = getMessageSender()
         
         if isPrivateConversation {
-            
             return (isStandardPIN && !(messageSender?.pin ?? "").isEmpty) ||
                    (!isStandardPIN && (messageSender?.pin ?? "").isEmpty) ||
                    messageSender?.isBlocked() == true
-            
         } else {
-            
             return (isStandardPIN && !(chat?.pin ?? "").isEmpty) ||
                    (!isStandardPIN && (chat?.pin ?? "").isEmpty)
-            
         }
+    }
+    
+    //Grouping Logic
+    func shouldAvoidGrouping() -> Bool {
+        return pending() || failed() || isDeleted() || isInvoice() || isPayment() || isGroupActionMessage() || isFlagged()
+    }
+    
+    func hasSameSenderThanMessage(_ message: TransactionMessage) -> Bool {
+        let hasSameSenderId = senderId == message.senderId
+        let hasSameSenderAlias = (senderAlias ?? "") == (message.senderAlias ?? "")
+        let hasSameSenderPicture = (senderPic ?? "") == (message.senderPic ?? "")
+
+        return hasSameSenderId && hasSameSenderAlias && hasSameSenderPicture
     }
 }

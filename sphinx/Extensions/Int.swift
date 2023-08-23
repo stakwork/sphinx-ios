@@ -75,6 +75,16 @@ extension Int {
         }
         return self
     }
+    
+    var searchMatchesString : String {
+        get {
+            if self == 1 {
+                return "\(self) \("match".localized)"
+            } else {
+                return "\(self) \("matches".localized)"
+            }
+        }
+    }
 }
 
 extension Formatter {

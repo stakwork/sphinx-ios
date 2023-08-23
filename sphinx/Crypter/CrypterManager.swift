@@ -14,9 +14,36 @@ import CoreLocation
 
 class CrypterManager : NSObject {
     
+    struct HardwareLink {
+        var mqtt: String? = nil
+        var network: String? = nil
+        
+        init(
+            mqtt: String,
+            network: String
+        ) {
+            self.mqtt = mqtt
+            self.network = network
+        }
+        
+        static func getHardwareLinkFrom(query: String) -> HardwareLink? {
+            guard let mqtt = query.getLinkComponentWith(key: "mqtt"), mqtt.isNotEmpty else {
+                return nil
+            }
+            
+            guard let network = query.getLinkComponentWith(key: "network"), network.isNotEmpty else {
+                return nil
+            }
+            
+            return HardwareLink(
+                mqtt: mqtt,
+                network: network
+            )
+        }
+    }
+    
     struct HardwarePostDto {
-        var lightningNodePort:String? = nil
-        var lightningNodeIP:String? = nil
+        var lightningNodeUrl:String? = nil
         var networkName:String? = nil
         var networkPassword:String? = nil
         var publicKey: String? = nil
@@ -32,12 +59,18 @@ class CrypterManager : NSObject {
     
     func setupSigningDevice(
         vc: UIViewController,
+        hardwareLink: HardwareLink? = nil,
         callback: @escaping () -> ()
     ) {
         self.vc = vc
         self.endCallback = callback
-        
         self.hardwarePostDto = HardwarePostDto()
+        
+        if let hardwareLink = hardwareLink {
+            hardwarePostDto.lightningNodeUrl = hardwareLink.mqtt
+            hardwarePostDto.bitcoinNetwork = hardwareLink.network
+        }
+        
         self.setupSigningDevice()
     }
     
@@ -45,11 +78,9 @@ class CrypterManager : NSObject {
         self.checkNetwork {
             self.promptForNetworkName() { networkName in
                 self.promptForNetworkPassword(networkName) {
-                    self.promptForHardwareIP() {
-                        self.promptForHardwarePort {
-                            self.promptForBitcoinNetwork {
-                                self.testCrypter()
-                            }
+                    self.promptForHardwareUrl() {
+                        self.promptForBitcoinNetwork {
+                            self.testCrypter()
                         }
                     }
                 }
@@ -101,39 +132,36 @@ class CrypterManager : NSObject {
         )
     }
     
-    func promptForHardwareIP(callback: @escaping () -> ()) {
+    func promptForHardwareUrl(callback: @escaping () -> ()) {
+        if let url = self.hardwarePostDto.lightningNodeUrl, url.isNotEmpty {
+            callback()
+            return
+        }
+        
         promptFor(
-            "profile.lightning-ip-title".localized,
-            message: "profile.lightning-ip-message".localized,
-            errorMessage: "profile.lightning-ip-error".localized,
+            "profile.lightning-url-title".localized,
+            message: "profile.lightning-url-message".localized,
+            errorMessage: "profile.lightning-url-error".localized,
             callback: { value in
-                self.hardwarePostDto.lightningNodeIP = value
-                callback()
-            }
-        )
-    }
-    
-    func promptForHardwarePort(callback: @escaping () -> ()) {
-        promptFor(
-            "profile.lightning-port-title".localized,
-            message: "profile.lightning-port-message".localized,
-            errorMessage: "profile.lightning-port-error".localized,
-            textFieldText: "1883",
-            callback: { value in
-                self.hardwarePostDto.lightningNodePort = value
+                self.hardwarePostDto.lightningNodeUrl = value
                 callback()
             }
         )
     }
     
     func promptForBitcoinNetwork(callback: @escaping () -> ()) {
+        if let net = self.hardwarePostDto.bitcoinNetwork, net.isNotEmpty {
+            callback()
+            return
+        }
+        
         let regtestCallbak: (() -> ()) = {
             self.hardwarePostDto.bitcoinNetwork = "regtest"
             callback()
         }
         
         let mainnetCallback: (() -> ()) = {
-            self.hardwarePostDto.bitcoinNetwork = "mainnet"
+            self.hardwarePostDto.bitcoinNetwork = "bitcoin"
             callback()
         }
         
@@ -170,108 +198,171 @@ class CrypterManager : NSObject {
             },
             cancel: {}
         )
-        
     }
     
-    public func generateAndPersistWalletMnemonic() -> String {
-        let mnemonic = UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
-        UserData.sharedInstance.save(walletMnemonic: mnemonic)
+    func promptForSeedGeneration(
+        callback: @escaping ((String, String)) -> ()
+    ) {
+        let generateMnemonicCallbak: (() -> ()) = {
+            self.newMessageBubbleHelper.showLoadingWheel()
+            let (mnemonic, seed) = self.generateAndPersistWalletMnemonic()
+            callback((mnemonic, seed))
+        }
         
+        let enterMnemonicCallback: (() -> ()) = {
+            self.promptForSeedEnter(callback: callback)
+        }
+        
+        AlertHelper.showOptionsPopup(
+            title: "profile.mnemonic-generation-title".localized,
+            message: "profile.mnemonic-generation-description".localized,
+            options: [
+                "profile.mnemonic-generate".localized,
+                "profile.mnemonic-enter".localized
+            ],
+            callbacks: [generateMnemonicCallbak, enterMnemonicCallback],
+            sourceView: self.vc.view,
+            vc: self.vc
+        )
+    }
+    
+    func promptForSeedEnter(
+        callback: @escaping ((String, String)) -> ()
+    ) {
+        promptFor(
+            "profile.mnemonic-enter-title".localized,
+            message: "profile.mnemonic-enter-description".localized,
+            errorMessage: "profile.mnemonic-enter-error".localized,
+            callback: { value in
+                let wordsCount = value.split(separator: " ").count
+                
+                if wordsCount == 12 || wordsCount == 24 {
+                    self.newMessageBubbleHelper.showLoadingWheel()
+                    
+                    let words = value.split(separator: " ").map { String($0).trim() }
+                    let fixedWords = words.joined(separator: " ")
+                    
+                    let (mnemonic, seed) = self.generateAndPersistWalletMnemonic(
+                        mnemonic: fixedWords
+                    )
+                    callback((mnemonic, seed))
+                } else {
+                    self.showErrorWithMessage("profile.mnemonic-enter-error".localized)
+                }
+            }
+        )
+    }
+    
+    public func generateAndPersistWalletMnemonic(
+        mnemonic: String? = nil
+    ) -> (String, String) {
+        let mnemonic = mnemonic ?? Mnemonic.create()
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = seed.bytes[0..<32]
         
-        return seed32Bytes.hexString
+        return (mnemonic, seed32Bytes.hexString)
     }
     
     func testCrypter() {
         let sk1 = Nonce(length: 32).description.hexEncoded
-        
+
         var pk1: String? = nil
         do {
             pk1 = try pubkeyFromSecretKey(mySecretKey: sk1)
         } catch {
             print(error.localizedDescription)
         }
-        
+
         guard let pk1 = pk1 else {
             self.showSuccessWithMessage("There was an error. Please try again later")
             return
         }
-        
-        guard let _ = hardwarePostDto.lightningNodeIP, let _ = hardwarePostDto.lightningNodePort else {
+
+        guard let _ = hardwarePostDto.lightningNodeUrl else {
             self.showSuccessWithMessage("There was an error. Please try again later")
             return
         }
         
         self.newMessageBubbleHelper.showLoadingWheel()
-        
+
         API.sharedInstance.getHardwarePublicKey(callback: { pubKey in
-            
+
             var sec1: String? = nil
             do {
                 sec1 = try deriveSharedSecret(theirPubkey: pubKey, mySecretKey: sk1)
             } catch {
                 print(error.localizedDescription)
             }
-            
-            let seed = self.generateAndPersistWalletMnemonic()
-            
-            self.showMnemonicToUser() {
-                guard let sec1 = sec1 else {
-                    self.showSuccessWithMessage("There was an error. Please try again later")
-                    return
-                }
-                
-                // encrypt plaintext with sec1
-                let nonce = Nonce(length: 12).description.hexEncoded
-                var cipher: String? = nil
-                
-                do {
-                    cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
-                } catch {
-                    print(error.localizedDescription)
-                }
 
-                guard let cipher = cipher else {
-                    self.showSuccessWithMessage("There was an error. Please try again later")
-                    return
-                }
-                
-                self.hardwarePostDto.publicKey = pk1
-                self.hardwarePostDto.encryptedSeed = cipher
+            self.newMessageBubbleHelper.hideLoadingWheel()
 
-                API.sharedInstance.sendSeedToHardware(
-                    hardwarePostDto: self.hardwarePostDto,
-                    callback: { success in
-                        
-                    if (success) {
-                        UserDefaults.Keys.setupSigningDevice.set(true)
-                        
-                        self.showSuccessWithMessage("profile.seed-sent-successfully".localized)
-                    } else {
-                        self.showErrorWithMessage("profile.error-sending-seed".localized)
+            self.promptForSeedGeneration() { (mnemonic, seed) in
+                
+                self.newMessageBubbleHelper.hideLoadingWheel()
+
+                self.showMnemonicToUser(mnemonic: mnemonic) {
+                    guard let sec1 = sec1 else {
+                        self.showSuccessWithMessage("There was an error. Please try again later")
+                        return
                     }
-                        
-                    self.endCallback()
-                })
+
+                    // encrypt plaintext with sec1
+                    let nonce = Nonce(length: 12).description.hexEncoded
+                    var cipher: String? = nil
+
+                    do {
+                        cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+
+                    guard let cipher = cipher else {
+                        self.showSuccessWithMessage("There was an error. Please try again later")
+                        return
+                    }
+
+                    self.hardwarePostDto.publicKey = pk1
+                    self.hardwarePostDto.encryptedSeed = cipher
+
+                    API.sharedInstance.sendSeedToHardware(
+                        hardwarePostDto: self.hardwarePostDto,
+                        callback: { success in
+
+                        if (success) {
+                            UserDefaults.Keys.setupSigningDevice.set(true)
+
+                            self.showSuccessWithMessage("profile.seed-sent-successfully".localized)
+                        } else {
+                            self.showErrorWithMessage("profile.error-sending-seed".localized)
+                        }
+
+                        self.endCallback()
+                    })
+                }
             }
         }, errorCallback: {
             self.showErrorWithMessage("profile.error-getting-hardware-public-key".localized)
         })
     }
     
-    func showMnemonicToUser(callback: @escaping () -> ()) {
-        self.newMessageBubbleHelper.hideLoadingWheel()
-        
-        if let mnemonic = UserData.sharedInstance.getMnemonic() {
-            let copyAction = UIAlertAction(title: "Copy", style: .default, handler: { _ in
+    func showMnemonicToUser(mnemonic: String, callback: @escaping () -> ()) {
+        let copyAction = UIAlertAction(
+            title: "Copy",
+            style: .default,
+            handler: { _ in
                 ClipboardHelper.copyToClipboard(text: mnemonic, message: "profile.mnemonic-copied".localized)
                 callback()
-            })
-            AlertHelper.showAlert(title: "profile.store-mnemonic".localized, message: mnemonic, on: vc, additionAlertAction: copyAction, completion: {
+            }
+        )
+        AlertHelper.showAlert(
+            title: "profile.store-mnemonic".localized,
+            message: mnemonic,
+            on: vc,
+            additionAlertAction: copyAction,
+            completion: {
                 callback()
-            })
-        }
+            }
+        )
     }
     
     func getUrl(route: String) -> String {

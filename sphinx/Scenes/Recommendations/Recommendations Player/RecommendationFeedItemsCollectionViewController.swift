@@ -378,8 +378,7 @@ extension RecommendationFeedItemsCollectionViewController : FeedItemRowDelegate 
 extension RecommendationFeedItemsCollectionViewController : PodcastEpisodesDSDelegate {
     func didDismiss() {}
     func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
-    func didTapForDescriptionAt(index: Int) {}
-    func didTapEpisodeAt(index: Int) {}
+    func didTapEpisodeWith(episodeId: String) {}
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func deleteTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {}
     func shouldToggleTopView(show: Bool) {}

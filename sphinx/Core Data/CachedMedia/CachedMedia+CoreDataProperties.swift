@@ -22,4 +22,5 @@ extension CachedMedia {
     @NSManaged public var filePath: String?
     @NSManaged public var key: String?
     @NSManaged public var creationDate: Date?
+    @NSManaged public var fileName: String?
 }

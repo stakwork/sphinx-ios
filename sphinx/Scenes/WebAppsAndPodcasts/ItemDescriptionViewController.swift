@@ -291,7 +291,7 @@ extension ItemDescriptionViewController : UITableViewDelegate, UITableViewDataSo
     }
     
     @IBAction func navBarTapped(){
-        self.tableView.scrollToRow(index: 0,animated: true)
+        self.tableView.scrollToTop()
     }
     
     @IBAction func tappedPlay(){
@@ -354,14 +354,14 @@ extension ItemDescriptionViewController : ItemDescriptionTableViewHeaderCellDele
     
 }
 
-extension ItemDescriptionViewController:PodcastEpisodesDSDelegate{
+extension ItemDescriptionViewController: PodcastEpisodesDSDelegate {
     func didDismiss() {
         self.tableView.reloadData()
     }
     
     func didTapForDescriptionAt(episode: PodcastEpisode,cell:UITableViewCell) {}
     
-    func didTapEpisodeAt(index: Int) {}
+    func didTapEpisodeWith(episodeId: String) {}
     
     func downloadTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {
         itemDownloadTapped(episode: episode)

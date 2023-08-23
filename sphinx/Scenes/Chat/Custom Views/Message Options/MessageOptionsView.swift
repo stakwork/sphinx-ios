@@ -11,7 +11,8 @@ import UIKit
 @objc protocol MessageOptionsDelegate: class {
     func shouldDismiss(completion: @escaping (() -> ()))
     func shouldDeleteMessage()
-    func shouldReplayToMessage()
+    func shouldReplyToMessage()
+    func shouldShowThread()
     func shouldSaveFile()
     func shouldBoostMessage()
     func shouldResendMessage()
@@ -45,7 +46,13 @@ class MessageOptionsView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(message: TransactionMessage?, leftTopCorner: CGPoint, rightBottomCorner: CGPoint, delegate: MessageOptionsDelegate) {
+    init(
+        message: TransactionMessage?,
+        leftTopCorner: CGPoint,
+        rightBottomCorner: CGPoint,
+        isThreadRow: Bool,
+        delegate: MessageOptionsDelegate
+    ) {
         super.init(frame: CGRect.zero)
         
         self.delegate = delegate
@@ -57,13 +64,13 @@ class MessageOptionsView : UIView {
         
         let incoming = message.isIncoming()
         let coordinates = getCoordinates(leftTopCorner: leftTopCorner, rightBottomCorner: rightBottomCorner)
-        let messageOptions = getActionsMenuOptions()
+        let messageOptions = getActionsMenuOptions(isThreadRow: isThreadRow)
         let optionsCount = messageOptions.count
 
         let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(coordinates: coordinates, optionsCount: optionsCount, incoming: incoming)
         self.frame = menuRect
         
-        let backColor = incoming ? UIColor.Sphinx.OldReceivedMsgBG : UIColor.Sphinx.OldSentMsgBG
+        let backColor = incoming ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG
         addBackLayer(frame: menuRect, backColor: backColor, verticalPosition: verticalPosition, horizontalPosition: horizontalPosition)
         addMenuOptions(options: messageOptions)
     }
@@ -95,7 +102,7 @@ class MessageOptionsView : UIView {
         
         var verticalPosition = VerticalPosition.Top
         
-        if screenSize.height - coordinates.y2 > coordinates.y1 && !KeyboardHandlerViewController.keyboardVisible {
+        if screenSize.height - coordinates.y2 > coordinates.y1 {
             y = coordinates.y2
             verticalPosition = VerticalPosition.Bottom
         } else {
@@ -107,11 +114,13 @@ class MessageOptionsView : UIView {
         return (menuRect, verticalPosition, horizontalPosition)
     }
     
-    func getActionsMenuOptions() -> [TransactionMessage.ActionsMenuOption] {
+    func getActionsMenuOptions(
+        isThreadRow: Bool
+    ) -> [TransactionMessage.ActionsMenuOption] {
         guard let message = message else {
             return []
         }
-        return message.getActionsMenuOptions()
+        return message.getActionsMenuOptions(isThreadRow: isThreadRow)
     }
     
     func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {
@@ -235,11 +244,11 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         
         switch(option) {
         case .Copy:
-            ClipboardHelper.copyToClipboard(text: message.getMessageContent(), message: "text.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString ?? "", message: "text.copied.clipboard".localized)
         case .CopyLink:
-            ClipboardHelper.copyToClipboard(text: message.messageContent?.stringFirstLink ?? "", message: "link.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstLink ?? "", message: "link.copied.clipboard".localized)
         case .CopyPubKey:
-            ClipboardHelper.copyToClipboard(text: message.messageContent?.stringFirstPubKey ?? "", message: "pub.key.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstPubKey ?? "", message: "pub.key.copied.clipboard".localized)
         case .CopyCallLink:
             if let link = message.messageContent {
                 let link_url = VoIPRequestMessage.getFromString(link)?.link ?? link
@@ -248,7 +257,9 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .Delete:
             delegate?.shouldDeleteMessage()
         case .Reply:
-            delegate?.shouldReplayToMessage()
+            delegate?.shouldReplyToMessage()
+        case .ShowThread:
+            delegate?.shouldShowThread()
         case .Save:
             delegate?.shouldSaveFile()
         case .Boost:

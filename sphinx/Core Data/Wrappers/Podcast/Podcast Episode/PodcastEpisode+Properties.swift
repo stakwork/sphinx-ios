@@ -9,7 +9,6 @@ import CoreData
 
 public class PodcastEpisode: NSObject {
     
-    public var objectID: NSManagedObjectID?
     public var itemID: String
     public var title: String?
     public var author: String?
@@ -30,8 +29,7 @@ public class PodcastEpisode: NSObject {
     //For recommendations podcast
     public var type: String?
     
-    init(_ objectID: NSManagedObjectID?, _ itemID: String) {
-        self.objectID = objectID
+    init(_ itemID: String) {
         self.itemID = itemID
     }
     
@@ -120,7 +118,6 @@ extension PodcastEpisode {
     ) -> PodcastEpisode {
         
         let podcastEpisode = PodcastEpisode(
-            contentFeedItem.objectID,
             contentFeedItem.itemID
         )
         

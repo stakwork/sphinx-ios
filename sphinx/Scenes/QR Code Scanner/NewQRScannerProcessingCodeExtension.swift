@@ -117,7 +117,10 @@ extension NewQRScannerViewController {
     }
     
     func goToSubscriptionDetailsView(subscription: SubscriptionManager.SubscriptionQR) {
-        let subscriptionDetailsVC = SubscriptionDetailsViewController.instantiate(rootViewController: rootViewController, subscriptionQR: subscription, delegate: delegate)
+        let subscriptionDetailsVC = SubscriptionDetailsViewController.instantiate(
+            subscriptionQR: subscription,
+            delegate: delegate
+        )
         self.navigationController?.pushViewController(subscriptionDetailsVC, animated: true)
     }
     

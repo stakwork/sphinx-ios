@@ -11,7 +11,6 @@ import CoreData
 
 class NewsletterItem: NSObject {
     
-    public var objectID: NSManagedObjectID
     public var itemID: String
     public var title: String?
     public var itemDescription: String?
@@ -22,8 +21,9 @@ class NewsletterItem: NSObject {
     public var dateUpdated: Date?
     public var newsletterFeed: NewsletterFeed?
     
-    init(_ objectID: NSManagedObjectID, _ itemID: String) {
-        self.objectID = objectID
+    init(
+        _ itemID: String
+    ) {
         self.itemID = itemID
     }
     
@@ -60,7 +60,6 @@ extension NewsletterItem {
     ) -> NewsletterItem {
         
         let newsletterItem = NewsletterItem(
-            contentFeedItem.objectID,
             contentFeedItem.itemID
         )
         

@@ -91,9 +91,7 @@ class PodcastPlayerView: UIView {
         self.boostDelegate = boostDelegate
         self.podcast = podcast
         
-        if let objectID = podcast.objectID {
-            feedBoostHelper.configure(with: objectID, and: chat)
-        }
+        feedBoostHelper.configure(with: podcast.feedID, and: chat)
         
         setupView()
         setupActions(fromDashboard)
@@ -279,16 +277,14 @@ class PodcastPlayerView: UIView {
         delegate?.shouldReloadEpisodesTable()
     }
     
-    func didTapForDescriptionAt(index: Int) {
-        
-    }
-    
-    func didTapEpisodeAt(index: Int) {
-        audioLoading = true
-        
-        guard let episode = podcast.getEpisodeWith(index: index) else {
+    func didTapEpisodeWith(
+        episodeId: String
+    ) {
+        guard let episode = podcast.getEpisodeWith(id: episodeId) else {
             return
         }
+        audioLoading = true
+        
         playEpisode(episode: episode)
     }
     

@@ -24,10 +24,7 @@ class WindowsManager {
     weak var delegate : WindowsManagerDelegate?
     
     public static func getWindowSize() -> CGSize {
-        guard let window = UIApplication.shared.keyWindow else {
-            return UIScreen.main.bounds.size
-        }
-        return window.frame.size
+        return UIScreen.main.bounds.size
     }
     
     public static func getWindowWidth() -> CGFloat {
@@ -64,36 +61,6 @@ class WindowsManager {
         coveringWindow?.resignKey()
         coveringWindow = nil
         delegate?.didDismissCoveringWindows()
-    }
-    
-    func showFullScreenImage(message: TransactionMessage) {
-        let imageViewController = ImageFullScreenViewController.instantiate(transactionMessage: message)
-        showConveringWindowWith(rootVC: imageViewController)
-    }
-    
-    func showMessageOptions(_ notification:Notification, delegate: MessageOptionsVCDelegate) {
-        if let bubbleShapeLayers = notification.userInfo?["bubbleShapeLayers"] as? [(CGRect, CAShapeLayer)], bubbleShapeLayers.count > 0 {
-            if let messageId = notification.userInfo?["messageId"] as? Int,
-               let message = TransactionMessage.getMessageWith(id: messageId), message.getActionsMenuOptions().count > 0 {
-                
-                SoundsPlayer.playHaptic()
-                NotificationCenter.default.post(name: .onMessageMenuShow, object: nil)
-                
-                let messageOptionsVC = MessageOptionsViewController.instantiate(message: message, delegate: delegate)
-                messageOptionsVC.setBubbleShapesData(bubbleShapeLayers: bubbleShapeLayers)
-                showConveringWindowWith(rootVC: messageOptionsVC)
-            }
-        }
-    }
-    
-    func removeMessageOptions() {
-        if let coveringWindow = coveringWindow, let rootVC = coveringWindow.rootViewController, rootVC.isKind(of: MessageOptionsViewController.self) {
-            NotificationCenter.default.post(name: .onMessageMenuHide, object: nil)
-            
-            coveringWindow.isHidden = true
-            coveringWindow.resignKey()
-            self.coveringWindow = nil
-        }
     }
     
     func showStakworkAuthorizeWith() -> Bool {
@@ -161,13 +128,6 @@ class WindowsManager {
         
         let coveringWindow = getCoveringWindowWith(rootVC: rootVC)
         coveringWindow?.isHidden = false
-    }
-    
-    func isOnMessageOptionsMenu() -> Bool {
-        if let coveringWindow = coveringWindow, let rootVC = coveringWindow.rootViewController, rootVC.isKind(of: MessageOptionsViewController.self) {
-            return true
-        }
-        return false
     }
     
     func shouldRotateOrientation() -> Bool {

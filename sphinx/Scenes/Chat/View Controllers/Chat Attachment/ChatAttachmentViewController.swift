@@ -11,13 +11,14 @@ import AVKit
 import GiphyUISDK
 import SDWebImageFLPlugin
 import MobileCoreServices
+import CoreData
 
 protocol BackCameraVC {}
 
 protocol AttachmentsDelegate: class {
     func willDismissPresentedVC()
     func shouldStartUploading(attachmentObject: AttachmentObject)
-    func shouldSendGiphy(message: String)
+    func shouldSendGiphy(message: String, data: Data)
     func didCloseReplyView()
     func didTapSendButton()
     func didTapReceiveButton()
@@ -28,19 +29,15 @@ public enum ChatAttachmentVCPresentationContext{
     case fromBadgeCreateUpdate
 }
 
-class ChatAttachmentViewController: UIViewController, BackCameraVC {
+class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCameraVC {
     
     weak var delegate: AttachmentsDelegate?
     
-    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var headerContainer: UIView!
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var previewImageView: SDAnimatedImageView!
-    @IBOutlet weak var containerBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var accessoryViewContainer: UIView!
     @IBOutlet weak var optionsContainer: UIView!
     @IBOutlet weak var optionsContainerBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var accessoryViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var paidMessageOptionContainer: UIView!
     @IBOutlet weak var requestOptionContainer: UIView!
     @IBOutlet weak var sendOptionContainer: UIView!
@@ -56,17 +53,20 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     @IBOutlet weak var fileInfoView: FileInfoView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
+    @IBOutlet weak var contentStackView: UIStackView!
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var newChatAccessoryView: NewChatAccessoryView!
+    
     public static let kFieldPlaceHolder = "optional.message.placeholder".localized
     
     var priceVC : AttachmentPriceViewController!
     var previewVC : PaidMessagePreviewViewController?
-    let accessoryView = ChatAccessoryView(frame: CGRect(x: 0, y: 0, width: WindowsManager.getWindowWidth(), height: ChatAccessoryView.kAccessoryViewDefaultHeight))
     let giphyHelper = GiphyHelper()
     
     var selectedImage: UIImage?
     var selectedAnimatedImage: SDAnimatedImage?
     var selectedVideo: Data?
-    var selectedGiphy: GiphyUISDK.GPHMedia?
+    var selectedGiphy: (GiphyUISDK.GPHMedia, Data)?
     var selectedFileData: Data?
     var fileName: String?
     
@@ -98,12 +98,25 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         }
     }
     
-    static func instantiate(delegate: AttachmentsDelegate, chat: Chat?, text: String? = nil, replyingMessage: TransactionMessage? = nil) -> ChatAttachmentViewController {
+    static func instantiate(
+        delegate: AttachmentsDelegate,
+        chatId: Int? = nil,
+        text: String? = nil,
+        replyingMessageId: Int? = nil
+    ) -> ChatAttachmentViewController {
+        
         let viewController = StoryboardScene.Chat.chatAttachmentViewController.instantiate()
-        viewController.replyingMessage = replyingMessage
+        
+        if let replyingMessageId = replyingMessageId {
+            viewController.replyingMessage = TransactionMessage.getMessageWith(id: replyingMessageId)
+        }
+        
         viewController.text = text
         viewController.delegate = delegate
-        viewController.chat = chat
+        
+        if let chatId = chatId {
+            viewController.chat = Chat.getChatWith(id: chatId)
+        }
         
         return viewController
     }
@@ -115,8 +128,7 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         self.view.alpha = 0.0
         viewTitle.addTextSpacing(value: 2)
         
-//        setupPriceViews()
-        disablePriceFunctionality()
+        setupPriceViews()
         
         headerContainer.addShadow(offset: CGSize(width: 0, height: 3), opacity: 0.2)
 
@@ -124,24 +136,16 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         requestOptionContainer.alpha = isButtonDisabled(option: .Request) ? 0.4 : 1.0
         sendOptionContainer.alpha = isButtonDisabled(option: .Send) ? 0.4 : 1.0
         
-        addAccessoryView()
+        setupAccessoryView()
         addSwipeToDismiss()
-        
         imagePickerManager.configurePicker(vc: self)
-        
-        if(presentationContext == .fromBadgeCreateUpdate){
-            setupForBadges()
-        }
+        setupForBadges()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.alpha = 1.0
-        }, completion: { _ in
-            self.toggleOptionsContainer(show: true)
-        })
+        animateView()
     }
     
     func addSwipeToDismiss() {
@@ -151,87 +155,30 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     }
     
     @objc func handleSwipe(_ sender: UISwipeGestureRecognizer? = nil) {
-        accessoryView.shouldDismissKeyboard()
+        view.endEditing(true)
     }
     
-    func addAccessoryView() {
-        accessoryView.delegate = self
-        accessoryView.setupForAttachments(with: self.text)
-        accessoryView.configureReplyFor(message: replyingMessage)
-        accessoryView.animateElements(active: true)
-        accessoryView.hide()
-        
-        accessoryViewHeightConstraint.constant = accessoryView.viewContentSize().height
-        
-        accessoryView.translatesAutoresizingMaskIntoConstraints = false
-        let bottomConstraint = NSLayoutConstraint(item: accessoryView, attribute: .bottom, relatedBy: .equal, toItem: accessoryViewContainer, attribute: .bottom, multiplier: 1, constant: 0.0)
-        let leftConstraint = NSLayoutConstraint(item: accessoryView, attribute: .left, relatedBy: .equal, toItem: accessoryViewContainer, attribute: .left, multiplier: 1, constant: 0.0)
-        let rightConstraint = NSLayoutConstraint(item: accessoryView, attribute: .right, relatedBy: .equal, toItem: accessoryViewContainer, attribute: .right, multiplier: 1, constant: 0.0)
-        accessoryViewContainer.addSubview(accessoryView)
-        accessoryViewContainer.addConstraints([bottomConstraint, leftConstraint, rightConstraint])
-        accessoryViewContainer.layoutIfNeeded()
+    func setupAccessoryView() {
+        newChatAccessoryView.setupForAttachments(with: self.text, andDelegate: self)
+        newChatAccessoryView.configureReplyViewFor(message: replyingMessage, withDelegate: self)
     }
-    
     
     func showPriceContainer() {
-    //  ⚠️ Tentatively disabled in order to comply with our current App Store review approval needs.
-//        setPriceContainer.isHidden = false
+        setPriceContainer.isHidden = false
     }
     
     func setupForBadges(){
+        if (presentationContext != .fromBadgeCreateUpdate) {
+            return
+        }
         self.paidMessageOptionContainer.isHidden = true
         self.requestOptionContainer.isHidden = true
         self.sendOptionContainer.isHidden = true
-        self.accessoryView.sendButton.setTitle("publish", for: .normal)
-        self.accessoryView.textView.text = "Upload this badge icon"
-        self.accessoryView.textView.isUserInteractionEnabled = false
         self.viewTitle.attributedText = NSAttributedString(string: "Upload an Icon")
     }
     
     func showFileInfoContainer() {
         fileInfoContainer.isHidden = false
-    }
-    
-    func toggleOptionsContainer(show: Bool, withCompletion completion: (() -> ())? = nil) {
-        let finalBottomConstraint:CGFloat = show ? 0 : kOptionsBottomViewConstant
-        
-        if finalBottomConstraint == optionsContainerBottomConstraint.constant {
-            dismissView(withCompletion: completion)
-            return
-        }
-        
-        optionsContainerBottomConstraint.constant = finalBottomConstraint
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.bottomView.alpha = show ? 1.0 : 0.0
-            self.optionsContainer.superview?.layoutIfNeeded()
-        }, completion: { _ in
-            completion?()
-        })
-    }
-    
-    func hideOptionsContainer() {
-        bottomView.alpha = 0.0
-        optionsContainerBottomConstraint.constant = kOptionsBottomViewConstant
-        optionsContainer.superview?.layoutIfNeeded()
-    }
-    
-    func dismissView(withCompletion completion: (() -> ())? = nil) {
-        previewVC?.removeProvisionalMessage()
-        accessoryView.removeKeyboardObservers()
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.view.alpha = 0.0
-        }, completion: { _ in
-            if let completion = completion {
-                self.dismiss(animated: false, completion: {
-                    completion()
-                })
-            } else {
-                self.delegate?.willDismissPresentedVC()
-                self.dismiss(animated: false, completion: {})
-            }
-        })
     }
     
     func isValidAttachment(type: AttachmentsManager.AttachmentType, text: String?) -> (Bool, String) {
@@ -245,21 +192,36 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
         return (true, "")
     }
     
-    func uploadAndSend(message: String? = nil) {
+    func uploadAndSend(
+        message: String? = nil,
+        completion: ((Bool) -> ())? = nil
+    ) {
         let fixedImage = selectedImage?.fixedOrientation()
         let (data, type, messageContent, paidMessage) = getDataAndType(text: message)
         let isValid = isValidAttachment(type: type, text: paidMessage)
         
         if let data = data, isValid.0 {
             let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
+            
             if let encryptedData = encryptedData {
-                let attachmentObject = AttachmentObject(data: encryptedData, fileName: fileName, mediaKey: key, type: type, text: messageContent, paidMessage: paidMessage, image: fixedImage, price: price)
+                
+                let attachmentObject = AttachmentObject(
+                    data: encryptedData,
+                    fileName: fileName,
+                    mediaKey: key,
+                    type: type,
+                    text: messageContent,
+                    paidMessage: paidMessage,
+                    image: fixedImage,
+                    price: price
+                )
                 
                 delegate?.shouldStartUploading(attachmentObject: attachmentObject)
                 dismissView()
+                completion?(true)
             }
         } else {
-            accessoryView.setTextBackAndDismissKeyboard(text: message ?? "")
+            completion?(false)
             NewMessageBubbleHelper().showGenericMessageView(text: isValid.1)
         }
     }
@@ -292,7 +254,7 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     }
     
     @IBAction func setPriceButtonTouched() {
-        accessoryView.shouldDismissKeyboard()
+        view.endEditing(true)
         showPriceVC()
     }
     
@@ -364,15 +326,6 @@ class ChatAttachmentViewController: UIViewController, BackCameraVC {
     
     @IBAction func closeButtonTouched() {
         dismissView()
-    }
-    
-    
-    /// Tentatively disables the visibility and functionality of the "Set Price"
-    /// button in order to comply with our current App Store review approval needs.
-    private func disablePriceFunctionality() {
-        attachmentPriceVCContainer.isHidden = true
-        setPriceContainer.isHidden = true
-        setPriceContainer.subviews.forEach { $0.isHidden = true }
     }
     
     private func setupPriceViews() {

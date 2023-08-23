@@ -59,7 +59,10 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(qrString: String, delegate: NewContactVCDelegate) -> JoinGroupDetailsViewController {
+    static func instantiate(
+        qrString: String,
+        delegate: NewContactVCDelegate? = nil
+    ) -> JoinGroupDetailsViewController {
         let viewController = StoryboardScene.Groups.joinGroupDetailsViewController.instantiate()
         viewController.qrString = qrString
         viewController.delegate = delegate
@@ -186,7 +189,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
                     
                     
                     if let feedUrl = tribeInfo.feedUrl {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatObjectID: chat.objectID, completion: { feedId in
+                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: chat.id, completion: { feedId in
                             
                             if let feedId = feedId {
                                 chat.contentFeed = ContentFeed.getFeedById(feedId: feedId)

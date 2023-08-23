@@ -9,17 +9,21 @@
 import UIKit
 import AVFoundation
 
+protocol AudioPlayerHelperDelegate: class {
+    func progressCallback(messageId: Int?, rowIndex: Int?, duration: Double, currentTime: Double)
+    func pauseCallback(messageId: Int?, rowIndex: Int?)
+    func endCallback(messageId: Int?, rowIndex: Int?)
+}
+
 class AudioPlayerHelper : NSObject {
     
-    var currentTime : TimeInterval = 0
+    weak var delegate: AudioPlayerHelperDelegate?
+    
     var playingTimer : Timer? = nil
     var playing = false
     
-    var progressCallback: (Double, Double) -> Void = { (_, _) in }
-    var endCallback: () -> Void = {}
-    var pauseCallback: () -> Void = {}
-    
     var messageId : Int? = nil
+    var rowIndex : Int? = nil
     
     let customAudioPlayer = CustomAudioPlayer.sharedInstance
     
@@ -30,12 +34,6 @@ class AudioPlayerHelper : NSObject {
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
-    }
-    
-    func setInitialTime(messageId: Int, data: Data, startTimePercentage: Double) {
-        let duration = getAudioDuration(data:data) ?? 0
-        let startTime = duration / 100 * startTimePercentage
-        currentTime = startTime
     }
     
     func getAudioDuration(data: Data) -> Double? {
@@ -57,10 +55,14 @@ class AudioPlayerHelper : NSObject {
         return lengthAudioPlayer?.duration
     }
     
-    func playAudioFrom(data: Data, messageId: Int,
-                       progressCallback: @escaping (Double, Double) -> (),
-                       endCallback: @escaping () -> (),
-                       pauseCallback: @escaping () -> ()) {
+    func playAudioFrom(
+        data: Data,
+        messageId: Int,
+        rowIndex: Int,
+        atTime: Double? = nil,
+        delegate: AudioPlayerHelperDelegate?
+    ) {
+        self.delegate = delegate
         
         customAudioPlayer.setDelegate(delegate: self)
         customAudioPlayer.toggleProximitySensor(active: true)
@@ -68,16 +70,13 @@ class AudioPlayerHelper : NSObject {
         
         if playing {
             pausePlayingAudio()
-            return
         }
         
         playingTimer?.invalidate()
-        playingTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(updateCurrentTime), userInfo: nil, repeats: true)
+        playingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateCurrentTime), userInfo: nil, repeats: true)
         
         self.messageId = messageId
-        self.progressCallback = progressCallback
-        self.endCallback = endCallback
-        self.pauseCallback = pauseCallback
+        self.rowIndex = rowIndex
         
         let fileURL = getDocumentsDirectory().appendingPathComponent("playing.wav")
         
@@ -89,14 +88,17 @@ class AudioPlayerHelper : NSObject {
         
         playing = true
         customAudioPlayer.prepareAudioPlayer(url: fileURL)
-        setResumingTime()
-        customAudioPlayer.play()
+        customAudioPlayer.play(atTime: atTime)
     }
     
     func pausePlayingAudio() {
         customAudioPlayer.toggleProximitySensor(active: false)
         stopPlaying()
-        pauseCallback()
+        
+        delegate?.pauseCallback(
+            messageId: messageId,
+            rowIndex: rowIndex
+        )
     }
     
     func stopPlaying() {
@@ -106,19 +108,19 @@ class AudioPlayerHelper : NSObject {
         playingTimer = nil
     }
     
-    func setResumingTime() {
-        if currentTime > 0 {
-            customAudioPlayer.setCurrentTime(currentTime: currentTime)
-        }
-    }
-    
     @objc func updateCurrentTime() {
-        if let audioPlayerDuration = customAudioPlayer.getDuration(), let audioPlayerCurrentTime = customAudioPlayer.getCurrentTime(), audioPlayerDuration > 0 {
-            currentTime = audioPlayerCurrentTime
+        if let audioPlayerDuration = customAudioPlayer.getDuration(),
+            let audioPlayerCurrentTime = customAudioPlayer.getCurrentTime(), audioPlayerDuration > 0 {
             
             if audioPlayerCurrentTime > 0 {
-                progressCallback(audioPlayerDuration, audioPlayerCurrentTime)
+                delegate?.progressCallback(
+                    messageId: messageId,
+                    rowIndex: rowIndex,
+                    duration: audioPlayerDuration,
+                    currentTime: audioPlayerCurrentTime
+                )
             }
+            
         } else {
             audioDidFinishPlaying()
         }
@@ -126,9 +128,12 @@ class AudioPlayerHelper : NSObject {
     
     func resetCurrentAudio() {
         playing = false
-        currentTime = 0
         playingTimer?.invalidate()
         playingTimer = nil
+    }
+    
+    func isPlayingMessageWith(_ messageId: Int) -> Bool {
+        return playing && self.messageId == messageId
     }
 }
 
@@ -136,6 +141,10 @@ extension AudioPlayerHelper  : CustomAudioPlayerDelegate {
     func audioDidFinishPlaying() {
         resetCurrentAudio()
         customAudioPlayer.toggleProximitySensor(active: false)
-        endCallback()
+        
+        delegate?.endCallback(
+            messageId: messageId,
+            rowIndex: rowIndex
+        )
     }
 }

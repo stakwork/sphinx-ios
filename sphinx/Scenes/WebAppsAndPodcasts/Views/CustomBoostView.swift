@@ -56,8 +56,7 @@ class CustomBoostView: UIView {
         
         if let amountString = amountTextField.text, let amount = Int(amountString), amount > 0 {
             delegate?.didTouchBoostButton(withAmount: amount)
-        }
-        else{
+        } else{
             delegate?.didFailToBoost(message:"Please enter non-zero boost amount.")
         }
     }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Medium.ttf">
+            <string>Roboto-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewMessagesIndicatorView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="arrowCircleView" destination="awz-Gf-GaT" id="eiu-Ox-ACB"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="aps-in-HWP"/>
+                <outlet property="countLabel" destination="Hti-9w-0Zy" id="d0e-gb-4zG"/>
+                <outlet property="countView" destination="JEp-m9-vsD" id="bcH-kk-mGU"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="46"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="awz-Gf-GaT">
+                    <rect key="frame" x="31" y="7" width="39" height="39"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="expand_more" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jjz-gP-TSJ">
+                            <rect key="frame" x="2" y="2" width="35" height="35"/>
+                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="35"/>
+                            <color key="textColor" name="MainBottomIcons"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="NewMessageIndicator"/>
+                    <constraints>
+                        <constraint firstItem="Jjz-gP-TSJ" firstAttribute="centerX" secondItem="awz-Gf-GaT" secondAttribute="centerX" id="B3H-0x-nK5"/>
+                        <constraint firstAttribute="width" constant="39" id="PVL-lR-HnO"/>
+                        <constraint firstAttribute="height" constant="39" id="dVU-aw-B5Z"/>
+                        <constraint firstItem="Jjz-gP-TSJ" firstAttribute="centerY" secondItem="awz-Gf-GaT" secondAttribute="centerY" id="iDc-6W-vBJ"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEp-m9-vsD">
+                    <rect key="frame" x="27" y="0.0" width="17" height="17"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hti-9w-0Zy">
+                            <rect key="frame" x="5" y="2" width="7" height="13"/>
+                            <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="11"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" name="PrimaryBlue"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Hti-9w-0Zy" secondAttribute="trailing" constant="5" id="HCT-rt-Oab"/>
+                        <constraint firstItem="Hti-9w-0Zy" firstAttribute="leading" secondItem="JEp-m9-vsD" secondAttribute="leading" constant="5" id="UYt-5o-X2e"/>
+                        <constraint firstItem="Hti-9w-0Zy" firstAttribute="top" secondItem="JEp-m9-vsD" secondAttribute="top" constant="2" id="aaz-gD-rsO"/>
+                        <constraint firstAttribute="bottom" secondItem="Hti-9w-0Zy" secondAttribute="bottom" constant="2" id="tGQ-ii-lR6"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ae7-q0-qK1">
+                    <rect key="frame" x="27" y="0.0" width="53" height="46"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <connections>
+                        <action selector="buttonTouched" destination="-1" eventType="touchUpInside" id="VFq-jf-Gcm"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="awz-Gf-GaT" secondAttribute="bottom" id="CH6-dP-sgl"/>
+                <constraint firstAttribute="trailing" secondItem="awz-Gf-GaT" secondAttribute="trailing" constant="10" id="Cui-ul-aX9"/>
+                <constraint firstItem="JEp-m9-vsD" firstAttribute="centerX" secondItem="awz-Gf-GaT" secondAttribute="centerX" constant="-15" id="F0P-6O-QoX"/>
+                <constraint firstItem="JEp-m9-vsD" firstAttribute="top" secondItem="awz-Gf-GaT" secondAttribute="top" constant="-7" id="UgH-4O-hck"/>
+                <constraint firstItem="ae7-q0-qK1" firstAttribute="leading" secondItem="JEp-m9-vsD" secondAttribute="leading" id="i2q-Bn-X1s"/>
+                <constraint firstAttribute="bottom" secondItem="ae7-q0-qK1" secondAttribute="bottom" id="kaG-hW-3e6"/>
+                <constraint firstItem="ae7-q0-qK1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="wuC-AQ-Y2f"/>
+                <constraint firstAttribute="trailing" secondItem="ae7-q0-qK1" secondAttribute="trailing" id="zzg-Vu-Oaz"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="157.25190839694656" y="20.422535211267608"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="MainBottomIcons">
+            <color red="0.37254901960784315" green="0.38823529411764707" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NewMessageIndicator">
+            <color red="0.90980392156862744" green="0.9137254901960784" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryBlue">
+            <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

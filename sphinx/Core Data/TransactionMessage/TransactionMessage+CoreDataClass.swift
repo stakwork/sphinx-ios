@@ -13,15 +13,6 @@ import SwiftyJSON
 @objc(TransactionMessage)
 public class TransactionMessage: NSManagedObject {
     
-    enum TransactionMessageRowType {
-        case incomingMessage
-        case outgoingMessage
-        case incomingPayment
-        case outgoingPayment
-        case incomingInvoice
-        case outgoingInvoice
-    }
-    
     enum TransactionMessageType: Int {
         case message = 0
         case confirmation = 1
@@ -97,66 +88,37 @@ public class TransactionMessage: NSManagedObject {
     
     static let kCallRoomName = "/sphinx.call"
     
-    var uploadingObject: AttachmentObject? = nil
-    var uploadingProgress: Int? = nil
-    
-    var purchaseItems: [TransactionMessage] = []
-    var paidMessageError = false
-    
-    var replyingMessage: TransactionMessage? = nil
-    var linkHasPreview: Bool = false
-    var podcastComment: PodcastComment? = nil
-    var tribeInfo: GroupsManager.TribeInfo? = nil
-    
-    var reactions: Reactions? = nil
-       
-    public struct Reactions {
-        var boosted: Bool = false
-        var totalSats: Int? = nil
-        var messageIds: [Int] = []
-        var users: [String: (UIColor, String?)] = [:]
-       
-        init(totalSats: Int, users: [String: (UIColor, String?)], boosted: Bool, id: Int) {
-            self.totalSats = totalSats
-            self.users = users
-            self.boosted = boosted
-            self.messageIds = [id]
-        }
-       
-        mutating func add(sats: Int, user: (String, UIColor, String?)?, id: Int) {
-            if !self.messageIds.contains(id) {
-                self.messageIds.append(id)
-                
-                self.totalSats = (self.totalSats ?? 0) + sats
-                
-                if let user = user {
-                    self.users[user.0] = (user.1, user.2)
-                }
-            }
-        }
-    }
-    
-    public struct ConsecutiveMessages {
-        var previousMessage: Bool
-        var nextMessage: Bool
+    func getCMExtensionAssignment() -> String {
+        var fileExtension: String = "txt"
         
-        init(previousMessage: Bool, nextMessage: Bool) {
-            self.previousMessage = previousMessage
-            self.nextMessage = nextMessage
+        if(self.isPicture()){
+            fileExtension = "png"
         }
-    }
-    
-    var consecutiveMessages = ConsecutiveMessages(previousMessage: false, nextMessage: false)
-    
-    func resetNextConsecutiveMessages() {
-        consecutiveMessages.nextMessage = false
-    }
-    
-    func resetPreviousConsecutiveMessages() {
-        consecutiveMessages.previousMessage = false
+        else if(self.isVideo()){
+            fileExtension = "mp4"
+        }
+        else if(self.isAudio()){
+            fileExtension = "wav"
+        }
+        else if(self.isGif()){
+            fileExtension = "gif"
+        }
+        else if(self.isPDF()){
+            fileExtension = "pdf"
+        }
+        else if(self.isDoc()){
+            fileExtension = "doc"
+        }
+        else if(self.isSpreadsheet()){
+            fileExtension = "xls"
+        }
+        else if(self.isAttachment()){
+            fileExtension = self.getFileExtension()
+        }
+        
+        return fileExtension
     }
 
-    
     static func insertMessage(
         m: JSON,
         existingMessage: TransactionMessage? = nil
@@ -179,6 +141,7 @@ public class TransactionMessage: NSManagedObject {
         let receiver = m["contact_id"].intValue
         let uuid:String? = m["uuid"].string
         let replyUUID:String? = m["reply_uuid"].string
+        let threadUUID:String? = m["thread_uuid"].string
         
         var amount:NSDecimalNumber? = nil
         if let a = m["amount"].double, abs(a) > 0 {
@@ -204,10 +167,12 @@ public class TransactionMessage: NSManagedObject {
             let _ = UserContact.getOrCreateContact(contact: JSON(contact))
         }
         
-        let (messageChat, chatError) = TransactionMessage.getChat(m: m)
-        if chatError && messageChat != nil {
+        guard let messageChat = TransactionMessage.getChat(m: m) else  {
             return (nil, false)
         }
+        
+        messageChat.seen = (m["chat"].dictionary)?["seen"]?.boolValue ?? messageChat.seen
+
         
         let (messageEncrypted, messageContent) = encryptionManager.decryptMessage(message: m["message_content"].stringValue)
         let status = TransactionMessage.TransactionMessageStatus(fromRawValue: (m["status"].intValue))
@@ -231,6 +196,7 @@ public class TransactionMessage: NSManagedObject {
             id: id,
             uuid: uuid,
             replyUUID: replyUUID,
+            threadUUID: threadUUID,
             type: type,
             sender: sender,
             senderAlias: senderAlias,
@@ -262,34 +228,22 @@ public class TransactionMessage: NSManagedObject {
     
     static func getChat(
         m: JSON
-    ) -> (Chat?, Bool) {
-        
-        var messageChatId : Int? = nil
-        var messageChat : Chat!
+    ) -> Chat? {
         
         if let chatId = m["chat_id"].int, let chatObject = Chat.getChatWith(id: chatId) {
-            messageChatId = chatId
-            messageChat = chatObject
+            return chatObject
         } else if let ch = m["chat"].dictionary, let chatObject = Chat.getOrCreateChat(chat: JSON(ch)) {
-            messageChatId = m["chat_id"].int
-            messageChat = chatObject
+            return chatObject
         }
         
-        if messageChat == nil {
-            return (nil, true)
-        } else if messageChat != nil && messageChatId != nil {
-            if messageChat.id != messageChatId {
-                return (messageChat, true)
-            }
-        }
-        
-        return (messageChat, false)
+        return nil
     }
     
     static func createObject(
         id: Int,
         uuid: String? = nil,
         replyUUID: String? = nil,
+        threadUUID:String? = nil,
         type: Int,
         sender: Int,
         senderAlias: String?,
@@ -321,6 +275,7 @@ public class TransactionMessage: NSManagedObject {
         message.id = id
         message.uuid = uuid
         message.replyUUID = replyUUID
+        message.threadUUID = threadUUID
         message.type = type
         message.senderId = sender
         message.senderAlias = senderAlias
@@ -349,12 +304,8 @@ public class TransactionMessage: NSManagedObject {
         }
         
         if let chat = chat {
-            if let chat = message.chat {
-                chat.setLastMessage(message)
-            } else {
-                message.chat = chat
-                chat.setLastMessage(message)
-            }
+            message.chat = chat
+            chat.setLastMessage(message)
         }
         
         return message
@@ -365,7 +316,8 @@ public class TransactionMessage: NSManagedObject {
         type: Int,
         date: Date,
         chat: Chat?,
-        replyUUID: String? = nil
+        replyUUID: String? = nil,
+        threadUUID: String? = nil
     ) -> TransactionMessage? {
         
         let messageType = TransactionMessageType(fromRawValue: type)
@@ -374,8 +326,9 @@ public class TransactionMessage: NSManagedObject {
             messageContent: messageContent,
             date: date,
             chat: chat,
-            type: messageType,
-            replyUUID: replyUUID
+            replyUUID: replyUUID,
+            threadUUID: threadUUID,
+            type: messageType
         )
     }
     
@@ -383,16 +336,18 @@ public class TransactionMessage: NSManagedObject {
         attachmentObject: AttachmentObject,
         date: Date,
         chat: Chat?,
-        replyUUID: String? = nil
+        replyUUID: String? = nil,
+        threadUUID: String? = nil
     ) -> TransactionMessage? {
         
         return createProvisional(
             messageContent: attachmentObject.text,
             date: date,
             chat: chat,
+            replyUUID: replyUUID,
+            threadUUID: threadUUID,
             type: TransactionMessageType.attachment,
-            attachmentObject: attachmentObject,
-            replyUUID: replyUUID
+            attachmentObject: attachmentObject
         )
     }
     
@@ -400,9 +355,10 @@ public class TransactionMessage: NSManagedObject {
         messageContent: String?,
         date: Date,
         chat: Chat?,
+        replyUUID: String? = nil,
+        threadUUID: String? = nil,
         type: TransactionMessageType,
-        attachmentObject: AttachmentObject? = nil,
-        replyUUID: String? = nil
+        attachmentObject: AttachmentObject? = nil
     ) -> TransactionMessage? {
         
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
@@ -416,12 +372,17 @@ public class TransactionMessage: NSManagedObject {
         message.status = TransactionMessageStatus.pending.rawValue
         message.date = date
         message.replyUUID = replyUUID
+        message.threadUUID = threadUUID
         
         if let attachmentObject = attachmentObject {
             message.mediaType = attachmentObject.getMimeType()
             message.mediaFileName = attachmentObject.getFileName()
             message.mediaFileSize = attachmentObject.getDecryptedData()?.count ?? 0
-            message.uploadingObject = attachmentObject
+            
+            if attachmentObject.price > 0 {
+                let mediaTokenPrice = "amt=\(attachmentObject.price)&ttl=undefined".base64Encoded ?? ""
+                message.mediaToken = "x.x.x.x.\(mediaTokenPrice)"
+            }
         }
         
         if let chat = chat {
@@ -429,37 +390,6 @@ public class TransactionMessage: NSManagedObject {
         }
         
         return message
-    }
-    
-    static func isDifferentDayMessage(
-        lastMessage: TransactionMessage?,
-        newMessage: TransactionMessage?
-    ) -> Bool {
-        
-        if let newMessageDate = newMessage?.date as Date? {
-            return isDifferentDay(
-                lastMessage: lastMessage,
-                newMessageDate: newMessageDate
-            )
-        }
-        return false
-    }
-    
-    static func isDifferentDay(
-        lastMessage: TransactionMessage?,
-        newMessageDate: Date?
-    ) -> Bool {
-        
-        guard let lastMessage = lastMessage else {
-            return true
-        }
-        if let newMessageDate = newMessageDate,
-            let lastMessageDate = lastMessage.date as Date?,
-            Date.isDifferentDay(firstDate: lastMessageDate, secondDate: newMessageDate) {
-            
-            return true
-        }
-        return false
     }
     
     func setPaymentInvoiceAsPaid() {

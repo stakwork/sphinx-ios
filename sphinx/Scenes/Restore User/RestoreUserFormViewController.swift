@@ -25,16 +25,8 @@ class RestoreUserFormViewController: UIViewController {
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
-    
-    var rootViewController: RootViewController!
-    
-    static func instantiate(
-        rootViewController: RootViewController
-    ) -> RestoreUserFormViewController {
+    static func instantiate() -> RestoreUserFormViewController {
         let viewController = StoryboardScene.RestoreUser.restoreUserFormViewController.instantiate()
-        
-        viewController.rootViewController = rootViewController
-        
         return viewController
     }
 

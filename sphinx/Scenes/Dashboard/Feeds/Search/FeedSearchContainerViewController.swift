@@ -249,7 +249,11 @@ extension FeedSearchContainerViewController {
             .FetchRequests
             .matching(feedID: searchResult.feedId)
         
-        let fetchRequestResult = try! managedObjectContext.fetch(existingFeedsFetchRequest)
+        var fetchRequestResult: [ContentFeed] = []
+        
+        managedObjectContext.performAndWait {
+            fetchRequestResult = try! managedObjectContext.fetch(existingFeedsFetchRequest)
+        }
             
         if let existingFeed = fetchRequestResult.first {
             resultsDelegate?.viewController(

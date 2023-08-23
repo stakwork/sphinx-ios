@@ -11,8 +11,8 @@ import UIKit
 
 
 protocol MediaDeletionConfirmationViewDelegate : NSObject{
-    func cancelTapped()
-    func deleteTapped()
+    func mediaDeletionCancelTapped()
+    func mediaDeletionConfirmTapped()
 }
 
 public enum MediaDeletionConfirmationViewState{
@@ -98,6 +98,9 @@ class MediaDeletionConfirmationView: UIView {
             case .photo:
                 typeString = NSLocalizedString("storage.management.images", comment: "")
                 break
+            case .file:
+                typeString = NSLocalizedString("storage.management.files", comment: "")
+                break
             }
         }
         return typeString
@@ -169,7 +172,7 @@ class MediaDeletionConfirmationView: UIView {
         imageViewWidth.constant = 68
         gotItButton.isHidden = false
         gotItButton.layer.borderWidth = cancelButton.layer.borderWidth
-        gotItButton.layer.borderColor = gotItButton.layer.borderColor
+        gotItButton.layer.borderColor = UIColor.Sphinx.Text.cgColor
         gotItButton.layer.cornerRadius = gotItButton.frame.height/2.0
         layoutIfNeeded()
         if let source = source,
@@ -204,12 +207,12 @@ class MediaDeletionConfirmationView: UIView {
     
     @IBAction func deleteTapped(_ sender: Any) {
         self.state = .loading
-        delegate?.deleteTapped()
+        delegate?.mediaDeletionConfirmTapped()
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
         if let delegate = delegate{
-            delegate.cancelTapped()
+            delegate.mediaDeletionCancelTapped()
             self.state = .awaitingApproval
         }
     }

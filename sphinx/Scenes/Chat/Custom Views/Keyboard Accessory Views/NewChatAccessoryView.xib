@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewChatAccessoryView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="chatSearchView" destination="TMk-zV-V4x" id="gOu-Lx-VrC"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="mka-sh-oYS"/>
+                <outlet property="messageFieldView" destination="yPr-Da-BCU" id="bSB-rF-Tgp"/>
+                <outlet property="messageReplyView" destination="25U-yU-kV3" id="SkT-B8-AkP"/>
+                <outlet property="normalModeStackView" destination="92V-n5-HQg" id="1HY-qI-GfR"/>
+                <outlet property="podcastPlayerView" destination="9yx-ly-PmR" id="r1W-38-tP5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qJG-pA-fnp">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="92V-n5-HQg">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                            <subviews>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yx-ly-PmR" customClass="PodcastSmallPlayer" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                    <color key="backgroundColor" name="HeaderBG"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="64" id="eQw-bL-eAA"/>
+                                    </constraints>
+                                </view>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25U-yU-kV3" customClass="MessageReplyView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <color key="backgroundColor" name="HeaderBG"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="TZQ-tz-DDq"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPr-Da-BCU" customClass="ChatMessageTextFieldView" customModule="sphinx" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                    <color key="backgroundColor" name="HeaderBG"/>
+                                </view>
+                            </subviews>
+                        </stackView>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMk-zV-V4x" customClass="ChatSearchResultsBar" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="58"/>
+                            <color key="backgroundColor" name="HeaderBG"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="58" id="VA7-31-6Kz"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="TMk-zV-V4x" firstAttribute="leading" secondItem="qJG-pA-fnp" secondAttribute="leading" id="10j-dJ-BUd"/>
+                        <constraint firstItem="92V-n5-HQg" firstAttribute="leading" secondItem="qJG-pA-fnp" secondAttribute="leading" id="2KZ-M8-X6z"/>
+                        <constraint firstAttribute="trailing" secondItem="92V-n5-HQg" secondAttribute="trailing" id="B2o-gQ-KIi"/>
+                        <constraint firstAttribute="trailing" secondItem="TMk-zV-V4x" secondAttribute="trailing" id="nBz-e1-zsQ"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="qJG-pA-fnp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KVi-N2-Zxq"/>
+                <constraint firstAttribute="trailing" secondItem="qJG-pA-fnp" secondAttribute="trailing" id="ZXu-FD-Mna"/>
+                <constraint firstAttribute="bottom" secondItem="qJG-pA-fnp" secondAttribute="bottom" priority="750" id="a2B-hA-BGW"/>
+                <constraint firstItem="qJG-pA-fnp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="soP-fi-bwW"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-48.091603053435115" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -13,8 +13,6 @@ protocol GroupDetailsDelegate: class {
 }
 
 class GroupDetailsViewController: UIViewController {
-    var rootViewController : RootViewController!
-    
     weak var delegate: GroupDetailsDelegate?
 
     @IBOutlet weak var membersTableView: UITableView!
@@ -62,9 +60,8 @@ class GroupDetailsViewController: UIViewController {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController, chat: Chat, delegate: GroupDetailsDelegate? = nil) -> GroupDetailsViewController {
+    static func instantiate(chat: Chat, delegate: GroupDetailsDelegate? = nil) -> GroupDetailsViewController {
         let viewController = StoryboardScene.Groups.groupDetailsViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.chat = chat
         viewController.delegate = delegate
         
@@ -148,7 +145,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     @objc func didTapBadgeManagementView(){
-        let badgeManagementVC = BadgeAdminManagementListVC.instantiate(rootViewController: rootViewController,chatID: chat.id)
+        let badgeManagementVC = BadgeAdminManagementListVC.instantiate(chatID: chat.id)
         self.navigationController?.pushViewController(badgeManagementVC, animated: true)
     }
     
@@ -219,15 +216,16 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func goToEditGroup() {
-        let createGroupVC = NewPublicGroupViewController.instantiate(rootViewController: rootViewController, delegate: self, chat: chat)
+        let createGroupVC = NewPublicGroupViewController.instantiate(delegate: self, chat: chat)
         self.navigationController?.pushViewController(createGroupVC, animated: true)
     }
     
     func goToShare() {
-        let link = chat.getJoinChatLink()
-        let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
-        let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
-        self.present(viewController, animated: true, completion: nil)
+        if let link = chat.getJoinChatLink() {
+            let qrCodeDetailViewModel = QRCodeDetailViewModel(qrCodeString: link, amount: 0, viewTitle: "share.group.link".localized)
+            let viewController = QRCodeDetailViewController.instantiate(with: qrCodeDetailViewModel)
+            self.present(viewController, animated: true, completion: nil)
+        }
     }
     
     func goToAddMember() {
@@ -236,7 +234,7 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func goToNotificationsLevel() {
-        let notificationsVC = NotificationsLevelViewController.instantiate(chat: chat, delegate: nil)
+        let notificationsVC = NotificationsLevelViewController.instantiate(chatId: chat.id, delegate: nil)
         self.present(notificationsVC, animated: true, completion: nil)
     }
     
@@ -272,7 +270,7 @@ class GroupDetailsViewController: UIViewController {
             self.loading = false
             
             if let fileUrl = fileUrl, success {
-                MediaLoader.storeImageInCache(img: image, url: fileUrl, chat: self.chat)
+                MediaLoader.storeImageInCache(img: image, url: fileUrl, message: nil)
                 self.imageUploaded(photoUrl: fileUrl)
             } else {
                 self.imageUploaded(photoUrl: nil)
@@ -291,8 +289,9 @@ class GroupDetailsViewController: UIViewController {
     }
     
     func groupDeleted() {
-        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
-        mainCoordinator.presentInitialDrawer()
+        navigationController?.popToRootViewController(animated: true)
+//        let mainCoordinator = MainCoordinator(rootViewController: rootViewController)
+//        mainCoordinator.presentInitialDrawer()
     }
     
     @IBAction func groupPictureButtonTouched() {
@@ -348,15 +347,14 @@ extension GroupDetailsViewController : AddTribeMemberDelegate {
 
 extension GroupDetailsViewController : AddFriendRowButtonDelegate {
     func didTouchAddFriend() {
-        let groupContactVC = GroupContactsViewController.instantiate(rootViewController: rootViewController, delegate: self, chat: chat)
+        let groupContactVC = GroupContactsViewController.instantiate(delegate: self, chat: chat)
         self.present(groupContactVC, animated: true, completion: nil)
     }
 }
 
 extension GroupDetailsViewController : NewContactVCDelegate {
     func shouldReloadChat(chat: Chat) {
-        let contactsService = ContactsService()
-        let chatListViewModel = ChatListViewModel(contactsService: contactsService)
+        let chatListViewModel = ChatListViewModel()
         
         chatListViewModel.loadFriends { _ in
             self.chat = chat

@@ -23,7 +23,7 @@ class NotificationLevelTableViewCell: UITableViewCell {
     func configureCell(notificationLevel: NotificationsLevelViewController.NotificationLevel) {
         titleLabel.text = notificationLevel.title
         
-        contentView.backgroundColor = notificationLevel.selected ? UIColor.Sphinx.PrimaryBlue : UIColor.Sphinx.Body
+        contentView.backgroundColor = notificationLevel.selected ? UIColor.Sphinx.PrimaryBlue : UIColor.Sphinx.HeaderBG
     }
 
 }

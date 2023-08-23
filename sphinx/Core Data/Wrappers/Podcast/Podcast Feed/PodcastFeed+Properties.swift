@@ -10,7 +10,6 @@ import SwiftyJSON
 
 public class PodcastFeed: NSObject {
     
-    public var objectID: NSManagedObjectID?
     public var feedID: String
     public var title: String?
     public var podcastDescription: String?
@@ -29,11 +28,9 @@ public class PodcastFeed: NSObject {
     
     
     init(
-        _ objectID: NSManagedObjectID?,
         _ feedID: String,
-        _ isSubscribedToFromSearch: Bool) {
-        
-        self.objectID = objectID
+        _ isSubscribedToFromSearch: Bool
+    ) {
         self.feedID = feedID
         self.isSubscribedToFromSearch = isSubscribedToFromSearch
     }
@@ -49,7 +46,6 @@ extension PodcastFeed {
     ) -> PodcastFeed {
         
         let podcastFeed = PodcastFeed(
-            contentFeed.objectID,
             contentFeed.feedID,
             contentFeed.isSubscribedToFromSearch
         )
@@ -100,7 +96,6 @@ extension PodcastFeed {
     ) -> PodcastFeed {
         
         let podcastFeed = PodcastFeed(
-            NSManagedObjectID.init(),
             searchResult[ContentFeed.CodingKeys.feedID.rawValue].stringValue,
             false
         )
@@ -113,7 +108,13 @@ extension PodcastFeed {
         podcastFeed.generator = searchResult[ContentFeed.CodingKeys.generator.rawValue].stringValue
         
         return podcastFeed
-    }    
+    }
+    
+    public func updateLastDownloadedEpisodeWith(id: String?) {
+        if let feed = ContentFeed.getFeedById(feedId: feedID) {
+            feed.lastDownloadedEpisodeId = id
+        }
+    }
 }
 
 extension PodcastFeed: Identifiable {}

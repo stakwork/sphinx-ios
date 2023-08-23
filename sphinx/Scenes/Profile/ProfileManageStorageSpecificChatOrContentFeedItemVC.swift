@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate : NSObject{
-    func finishedDeleteAll()
+    func finishedDeleteAll(feedID:String)
 }
 
 public enum ProfileManageStorageSpecificChatOrContentFeedItemVCState{
@@ -22,14 +22,20 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var totalSizeLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var podcastListTableView: UITableView!
+    @IBOutlet weak var filesListTableView: UITableView!
+    
     @IBOutlet weak var deletionSummaryView: UIView!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var deletionSummaryCountLabel: UILabel!
     @IBOutlet weak var deletionSummarySizeLabel: UILabel!
     @IBOutlet weak var deletionSummaryButton: UIView!
     @IBOutlet weak var mediaDeletionConfirmationView: MediaDeletionConfirmationView!
-
+    @IBOutlet weak var mediaVsFilesSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var selectedIndexUnderlineView: UIView!
+    @IBOutlet weak var selectedIndexIndicatorLeadingEdge: NSLayoutConstraint!
+    @IBOutlet weak var segmentedControlHeight: NSLayoutConstraint!
+    
     fileprivate var state : ProfileManageStorageSpecificChatOrContentFeedItemVCState = .single
     var overlayView : UIView? = nil
     var sourceType : StorageManagerMediaSource = .chats
@@ -38,9 +44,10 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     var items : [StorageManagerItem] = []
     var delegate : ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate? = nil
     var isFirstLoad:Bool = true
+    var deleteAllInProcess : Bool = false
     
     lazy var vm : ProfileManageStorageSpecificChatOrContentFeedItemVM = {
-        ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.tableView,imageCollectionView: self.imageCollectionView, source: self.sourceType)
+        ProfileManageStorageSpecificChatOrContentFeedItemVM(vc: self, tableView: self.podcastListTableView,imageCollectionView: self.imageCollectionView, filesTableView: filesListTableView, source: self.sourceType)
     }()
     
     static func instantiate(
@@ -62,10 +69,12 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         super.viewDidLoad()
         setupViewAndModels()
         hideDeletionWarningAlert()
+        setupSegmentedControl()
     }
     
     func setupViewAndModels(){
-        
+        filesListTableView.isHidden = true
+        mediaVsFilesSegmentedControl.isHidden = (sourceType != .chats)
         if(isFirstLoad){
             vm.finishSetup(items: items)
             items = []
@@ -81,11 +90,16 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             headerTitleLabel.text = podcastFeed.title
         }
         
-        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: vm.items) * 1e6))
+        setTotalSizeLabel()
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleDeleteSelected))
         deletionSummaryButton.addGestureRecognizer(gesture)
         
+    }
+    
+    func setTotalSizeLabel(){
+        let allItems = (sourceType == .chats) ? (vm.mediaItems + vm.fileItems) : (vm.mediaItems)
+        totalSizeLabel.text = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: allItems) * 1e6))
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
@@ -102,16 +116,16 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     
     @IBAction func deleteAllTapped(_ sender: Any) {
-        print("deleteAllTapped")
-        
         state = .batch
         mediaDeletionConfirmationView.delegate = self
         mediaDeletionConfirmationView.source = self.sourceType
         showDeletionWarningAlert(type: .audio)
+        deleteAllInProcess = true
     }
     
     @IBAction func deletionSummaryCloseTap(_ sender: Any) {
-        vm.selectedStatus = vm.items.map({_ in return false})
+        vm.mediaSelectedStatus = vm.mediaItems.map({_ in return false})
+        vm.fileSelectedStatus = vm.fileItems.map({ _ in return false })
     }
     
     func updateDeletionSummaryLabel(){
@@ -122,15 +136,55 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         deletionSummarySizeLabel.text = formatBytes(Int(1e6 * vm.getSelectionSize()))
     }
     
-    func processDeleteSelected(completion: @escaping ()->()){
-        let cms = self.vm.getSelectedCachedMedia()
-        StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
-            completion()
-            self.vm.removeSelectedItems()
-            if (self.vm.items.count == 0){
+    func postProcessDeleteSelected(completion: @escaping ()->()){
+        self.vm.removeSelectedItems()
+        if (self.vm.mediaItems.count == 0){
+            StorageManager.sharedManager.refreshAllStoredData(completion: {
+                completion()
                 self.navigationController?.popViewController(animated: true)
+            })
+        }
+        else{
+            completion()
+        }
+    }
+    
+    func processDeleteSelected(completion: @escaping ()->()){
+        if(sourceType == .chats){
+            let cms = self.vm.getSelectedCachedMedia()
+            StorageManager.sharedManager.deleteCacheItems(cms: cms, completion: {
+                completion()
+                self.postProcessDeleteSelected(completion: {
+                    
+                })
+            })
+        }
+        else if (sourceType == .podcasts){
+            let podPaths = self.vm.getSelectedItems().compactMap({$0.sourceFilePath})
+            var podCount = podPaths.count
+            for podPath in podPaths{
+                StorageManager.sharedManager.deletePodEpisodeWithFileName(fileName: podPath,
+                successCompletion: {
+                    podCount -= 1
+                    if((podCount > 0) == false){
+                        completion()
+                        self.postProcessDeleteSelected(completion: {
+                            
+                        })
+                    }
+                },
+                failureCompletion: {
+                    podCount -= 1
+                    if((podCount > 0) == false){
+                        completion()
+                        self.postProcessDeleteSelected(completion: {
+
+                        })
+                    }
+                })
             }
-        })
+        }
+        
     }
     
     
@@ -165,13 +219,16 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
     
     func presentPodcastPlayerFor(
         _ podcast: PodcastFeed,
-        itemID:String?=nil
+        itemID: String? = nil
     ) {
+        if let itemID = itemID {
+            podcast.currentEpisodeId = itemID
+        }
+        
         let podcastFeedVC = NewPodcastPlayerViewController.instantiate(
             podcast: podcast,
             delegate: self,
-            boostDelegate: self,
-            fromDashboard: true
+            boostDelegate: self
         )
         
         let navController = UINavigationController()
@@ -179,14 +236,7 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         navController.viewControllers = [podcastFeedVC]
         navController.modalPresentationStyle = .automatic
         navController.isNavigationBarHidden = true
-        navigationController?.present(navController, animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75, execute: {
-            if let itemID = itemID{
-                podcastFeedVC.loadEpisode(withID: itemID)
-            }
-        })
-        
+        navigationController?.present(navController, animated: true)        
     }
     
     func showDeletionWarningAlert(type:StorageManagerMediaType){
@@ -203,14 +253,13 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.isHidden = false
-            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
             self.mediaDeletionConfirmationView.batchState = self.state
             if(self.mediaDeletionConfirmationView.state == .awaitingApproval){
                 self.mediaDeletionConfirmationView.type = type
             }
             
             if(self.state == .batch){
-                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.items) * 1e6))
+                self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.mediaItems) * 1e6))
             }
             else if(self.state == .single && self.sourceType == .chats){
                 self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSelectedItems()) * 1e6))
@@ -225,15 +274,82 @@ class ProfileManageStorageSpecificChatOrContentFeedItemVC : UIViewController{
         self.mediaDeletionConfirmationView.isHidden = true
     }
     
+    func setupSegmentedControl(){
+        // Set the background color for the selected segment
+        mediaVsFilesSegmentedControl.setLayout(tintColor: UIColor.Sphinx.HeaderBG)
+
+        // Customize the title attributes for the selected segment
+        let selectedSegmentAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.Sphinx.PrimaryText,
+            .font: UIFont(name: "Roboto-Bold", size: 16.0)!
+        ]
+        
+        let deSelectedSegmentAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.Sphinx.WashedOutReceivedText,
+            .font: UIFont(name: "Roboto-Bold", size: 16.0)!
+        ]
+
+        mediaVsFilesSegmentedControl.setTitleTextAttributes(selectedSegmentAttributes, for: .selected)
+        mediaVsFilesSegmentedControl.setTitleTextAttributes(deSelectedSegmentAttributes, for: .normal)
+
+        // Create a CALayer for the underline
+        let underlineLayer = CALayer()
+        underlineLayer.backgroundColor = UIColor.Sphinx.PrimaryBlue.cgColor  // Set the underline color
+
+        // Set the initial frame for the underline
+        let initialSelectedSegmentIndex = 0  // Replace with the desired initial selected segment index
+        let initialSegmentFrame = mediaVsFilesSegmentedControl.subviews[initialSelectedSegmentIndex].frame
+        let underlineHeight: CGFloat = 2.0  // Set the underline height
+
+        underlineLayer.frame = CGRect(
+            x: initialSegmentFrame.minX,
+            y: mediaVsFilesSegmentedControl.frame.height - underlineHeight,
+            width: initialSegmentFrame.width,
+            height: underlineHeight
+        )
+
+        // Add the underline layer to the segmented control's layer
+        mediaVsFilesSegmentedControl.layer.addSublayer(underlineLayer)
+
+        // Update the underline position when the selected segment changes
+        mediaVsFilesSegmentedControl.addTarget(self, action: #selector(segmentedControlChanged(_:)), for: .valueChanged)
+
+    }
+    
+    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
+        selectedIndexUnderlineView.translatesAutoresizingMaskIntoConstraints = false
+        let wasOnIndexZero = filesListTableView.isHidden == true
+        if (sender.selectedSegmentIndex == 0) {
+            filesListTableView.isHidden = true
+            imageCollectionView.isHidden = false
+            UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+                self.selectedIndexIndicatorLeadingEdge.constant = 0
+            })
+        } else {
+            filesListTableView.isHidden = false
+            imageCollectionView.isHidden = true
+            UIView.animate(withDuration: 0.5, delay: 0.0, animations: {
+                self.selectedIndexIndicatorLeadingEdge.constant = self.selectedIndexUnderlineView.frame.width
+            })
+        }
+        
+        if((sender.selectedSegmentIndex == 0 && wasOnIndexZero == false) ||
+           (sender.selectedSegmentIndex != 0 && wasOnIndexZero == true)){
+            deletionSummaryView.isHidden = true
+            vm.mediaSelectedStatus = vm.mediaItems.map({ _ in return false })
+            vm.fileSelectedStatus = vm.fileItems.map({ _ in return false })
+        }
+    }
 }
 
 extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionConfirmationViewDelegate{
-    func cancelTapped() {
+    func mediaDeletionCancelTapped() {
         self.hideDeletionWarningAlert()
+        self.setTotalSizeLabel()
         let existingState = mediaDeletionConfirmationView.state
         mediaDeletionConfirmationView.state = .awaitingApproval
         if(existingState == .finished){
-            if(self.vm.items.count > 0){
+            if(self.vm.mediaItems.count > 0){
                 
             }
             else{
@@ -242,13 +358,17 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
         }
     }
     
-    func deleteTapped() {
+    func mediaDeletionConfirmTapped() {
         if(state == .batch){
             self.processDeleteAll {
                 self.mediaDeletionConfirmationView.state = .finished
-                //TODO update loading label here
-                //self.delegate?.finishedDeleteAll()
-                //self.navigationController?.popViewController(animated: true)
+                if(self.deleteAllInProcess){
+                    self.deleteAllInProcess = false
+                    self.navigationController?.popViewController(animated: true)
+                    if let feedID = self.podcastFeed?.feedID{
+                        self.delegate?.finishedDeleteAll(feedID: feedID)
+                    }
+                }
             }
         }
         else if sourceType == .chats{
@@ -257,7 +377,14 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
             }
         }
         else if sourceType == .podcasts{
-            vm.finalizeEpisodeDelete()
+            if(vm.getIsSelectingImagesOrPodcasts()){
+                self.processDeleteSelected(completion: {
+                    self.mediaDeletionConfirmationView.state = .finished
+                })
+            }
+            else{
+                vm.finalizeEpisodeDelete()
+            }
         }
         
     }
@@ -265,7 +392,7 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : MediaDeletionCon
     
 }
 
-extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCDelegate, CustomBoostDelegate{
+extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCDelegate, CustomBoostDelegate {
     func willDismissPlayer() {
         
     }
@@ -285,6 +412,4 @@ extension ProfileManageStorageSpecificChatOrContentFeedItemVC : PodcastPlayerVCD
     func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
         
     }
-    
-    
 }

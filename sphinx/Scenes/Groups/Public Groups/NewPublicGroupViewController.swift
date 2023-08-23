@@ -11,7 +11,6 @@ import UIKit
 class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     
     weak var delegate: NewContactVCDelegate?
-    var rootViewController : RootViewController!
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var formScrollView: UIScrollView!
@@ -82,9 +81,8 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         }
     }
     
-    static func instantiate(rootViewController : RootViewController, delegate: NewContactVCDelegate?, chat: Chat? = nil) -> NewPublicGroupViewController {
+    static func instantiate(delegate: NewContactVCDelegate?, chat: Chat? = nil) -> NewPublicGroupViewController {
         let viewController = StoryboardScene.Groups.newPublicGroupViewController.instantiate()
-        viewController.rootViewController = rootViewController
         viewController.delegate = delegate
         viewController.chat = chat
 

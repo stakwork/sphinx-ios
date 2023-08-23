@@ -46,7 +46,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //view.backgroundColor = .magenta
         if(isFirstLoad == true){
             setupView()
             vm.finishSetup()
@@ -108,7 +107,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
     }
     
     func setupDeletionWarningAlert(){
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.15, execute: {
             self.overlayView = UIView(frame: self.view.frame)
             if let overlayView = self.overlayView{
@@ -122,9 +120,6 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
             self.mediaDeletionConfirmationView.layer.zPosition = 1000
             self.mediaDeletionConfirmationView.delegate = self
             self.mediaDeletionConfirmationView.isHidden = false
-//            let size = StorageManager.sharedManager.getItemGroupTotalSize(items: self.vm.getSourceItems().filter({$0.type == type}))
-//            self.mediaDeletionConfirmationView.spaceFreedString = formatBytes(Int(1e6 * size))
-            //self.mediaDeletionConfirmationView.contentView.backgroundColor = .black
         })
     }
     
@@ -173,13 +168,28 @@ class ProfileManageStorageSourceDetailsVC : UIViewController{
 
 
 extension ProfileManageStorageSourceDetailsVC : ProfileManageStorageSpecificChatOrContentFeedItemVCDelegate{
-    func finishedDeleteAll() {
-        self.navigationController?.popViewController(animated: true)
+    func finishedDeleteAll(feedID:String) {
+        if let podIndex = vm.podsArray.firstIndex(where: {$0.feedID == feedID})
+           {
+            let pod = vm.podsArray[podIndex]
+            self.vm.podsArray.remove(at: podIndex)
+            if let podDict = vm.podsDict,
+                let podItem = podDict[pod]{
+                vm.podsDict?.removeValue(forKey: pod)
+                totalSize -= StorageManager.sharedManager.getItemGroupTotalSize(items: podItem)
+                mediaSourceTotalSizeLabel.text = formatBytes(Int(totalSize*1e6))
+            }
+            isFirstLoad = true//override reload
+            vm.tableView.reloadData()
+        }
+        if(vm.podsArray.count == 0){
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 
 extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDelegate{
-    func cancelTapped() {
+    func mediaDeletionCancelTapped() {
         print("CANCEL TAPPED")
         self.hideDeletionWarningAlert()
         if(mediaDeletionConfirmationView.state == .finished){
@@ -189,7 +199,7 @@ extension ProfileManageStorageSourceDetailsVC : MediaDeletionConfirmationViewDel
         
     }
     
-    func deleteTapped() {
+    func mediaDeletionConfirmTapped() {
         mediaDeletionConfirmationView.state = .loading
         switch(source){
         case .chats:

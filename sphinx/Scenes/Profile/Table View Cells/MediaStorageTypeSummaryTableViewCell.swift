@@ -80,6 +80,10 @@ class MediaStorageTypeSummaryTableViewCell: UITableViewCell {
             dotView.backgroundColor = UIColor.Sphinx.PrimaryBlue
             mediaTypeLabel.text = "Images"
             break
+        case .file:
+            dotView.backgroundColor = UIColor.Sphinx.PrimaryGreen
+            mediaTypeLabel.text = "Files"
+            break
         }
     }
     

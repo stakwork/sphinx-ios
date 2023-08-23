@@ -19,6 +19,21 @@ public class UserContact: NSManagedObject {
     }
     
     public var lastMessage : TransactionMessage? = nil
+    
+    func getFakeChat() -> Chat {
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.parent = CoreDataManager.sharedManager.persistentContainer.viewContext
+        
+        let chat = Chat(context: context)
+        chat.name = self.getName()
+        chat.id = -1
+        chat.photoUrl = self.avatarUrl
+        chat.type = Chat.ChatType.conversation.rawValue
+        chat.status = Chat.ChatStatus.approved.rawValue
+        
+        return chat
+    }
+    
     public var image : UIImage? = nil
     
     public static var kTipAmount : Int {
@@ -166,6 +181,13 @@ public class UserContact: NSManagedObject {
         return contacts
     }
     
+    public static func chatList() -> [UserContact] {
+        let predicate: NSPredicate = UserContact.Predicates.chatList()
+        let sortDescriptors = [NSSortDescriptor(key: "status", ascending: true), NSSortDescriptor(key: "nickname", ascending: true)]
+        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
+        return contacts
+    }
+    
     public static func getAllExcluding(ids: [Int]) -> [UserContact] {
         var predicate: NSPredicate! = nil
         
@@ -254,10 +276,26 @@ public class UserContact: NSManagedObject {
         return contact
     }
     
+    public static func getContactsWith(pubkeys: [String]) -> [UserContact] {
+        var predicate = NSPredicate(format: "publicKey IN %@ AND isOwner == %@", pubkeys, NSNumber(value: false))
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "UserContact"
+        )
+        
+        return contacts
+    }
+    
     public static func getOwner() -> UserContact? {
         let predicate = NSPredicate(format: "isOwner == %@", NSNumber(value: true))
-        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
+        let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: [],
+            entityName: "UserContact"
+        )
         return contact
     }
     
@@ -326,10 +364,18 @@ public class UserContact: NSManagedObject {
     
     public func shouldBeExcluded() -> Bool {
         if fromGroup { return true }
+        
         if let invite = self.invite {
             return self.status != UserContact.Status.Confirmed.rawValue && invite.status == UserInvite.Status.Expired.rawValue
         }
+        
         return false
+    }
+    
+    func isExpiredInvite() -> Bool {
+        return
+            self.status != UserContact.Status.Confirmed.rawValue &&
+            self.invite?.status == UserInvite.Status.Expired.rawValue
     }
 
     func isVirtualNode() -> Bool {

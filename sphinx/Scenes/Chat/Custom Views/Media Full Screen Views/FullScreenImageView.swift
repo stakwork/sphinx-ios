@@ -104,7 +104,7 @@ class FullScreenImageView: UIView {
             return
         }
         
-        if let nsUrl = message.getMediaUrl() {
+        if let nsUrl = message.getPurchaseAcceptItem()?.getMediaUrlFromMediaToken() ?? message.getMediaUrlFromMediaToken() {
             if message.isGif() {
                 if let cachedGif = MediaLoader.getMediaDataFromCachedUrl(url:nsUrl.absoluteString) {
                     if let animated = SDAnimatedImage(data: cachedGif) {

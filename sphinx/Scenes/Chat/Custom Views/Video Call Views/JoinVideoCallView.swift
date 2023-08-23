@@ -21,10 +21,6 @@ class JoinVideoCallView: UIView {
     @IBOutlet private var contentView: UIView!
     @IBOutlet weak var audioButtonContainer: UIView!
     @IBOutlet weak var videoButtonContainer: UIView!
-    @IBOutlet weak var buttonsContainerHeight: NSLayoutConstraint!
-    
-    let kOneButtonHeight: CGFloat = 38
-    let kTwoButtonsHeight: CGFloat = 90
     
     public enum CallButton: Int {
         case Audio
@@ -54,6 +50,15 @@ class JoinVideoCallView: UIView {
         videoButtonContainer.addShadow(location: VerticalLocation.bottom, color: UIColor.Sphinx.GreenBorder, opacity: 1, radius: 0.5, bottomhHeight: 1.5)
     }
     
+    func configureWith(
+        callLink: BubbleMessageLayoutState.CallLink,
+        and delegate: JoinCallViewDelegate
+    ) {
+        self.delegate = delegate
+        
+        videoButtonContainer.isHidden = callLink.callMode == .Audio
+    }
+    
     func configure(delegate: JoinCallViewDelegate, link: String) {
         self.delegate = delegate
         
@@ -63,21 +68,16 @@ class JoinVideoCallView: UIView {
     func configureWith(link: String) {
         let mode = VideoCallHelper.getCallMode(link: link)
         
-        var containerHeight: CGFloat = kTwoButtonsHeight
         audioButtonContainer.isHidden = false
         videoButtonContainer.isHidden = false
         
         switch (mode) {
         case .Audio:
-            containerHeight = kOneButtonHeight
             videoButtonContainer.isHidden = true
             break
         default:
             break
         }
-        
-        buttonsContainerHeight.constant = containerHeight
-        self.layoutIfNeeded()
     }
     
     @IBAction func callButtonTouched(_ sender: Any) {

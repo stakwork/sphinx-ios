@@ -15,14 +15,19 @@ extension PodcastPlayerController {
         episodeId: String? = nil,
         currentTime: Int? = nil,
         duration: Int? = nil,
-        playerSpeed: Float? = nil
+        playerSpeed: Float? = nil,
+        clipInfo: PodcastData.ClipInfo? = nil
     ) {
+        if let _ = clipInfo {
+            ///Avoid persisting state data when playing chat clips
+            return
+        }
+        
         guard let podcast = getPodcastWith(podcastId: podcastId) else {
             return
         }
         
         ///Updates attributes on podcast object to be persisted in UserDeftaults
-        
         if let episodeId = episodeId {
             podcast.currentEpisodeId = episodeId
         }
@@ -142,7 +147,8 @@ extension PodcastPlayerController {
         updatePodcastObject(
             podcastId: podcastData.podcastId,
             currentTime: roundedCurrentTime,
-            duration: duration
+            duration: duration,
+            clipInfo: podcastData.clipInfo
         )
 
         runPlayingStateUpdate()
@@ -164,7 +170,8 @@ extension PodcastPlayerController {
         
         updatePodcastObject(
             podcastId: podcastData.podcastId,
-            currentTime: 0
+            currentTime: 0,
+            clipInfo: podcastData.clipInfo
         )
         
         markEpisodeAsPlayed()
@@ -209,13 +216,27 @@ extension PodcastPlayerController {
     func isPlaying(
         podcastId: String
     ) -> Bool {
+        if let _ = podcastData?.clipInfo {
+            return false
+        }
+        
         return isPlaying && podcastData?.podcastId == podcastId
     }
     
     func isPlaying(
         episodeId: String
     ) -> Bool {
+        if let _ = podcastData?.clipInfo {
+            return false
+        }
+        
         return isPlaying && podcastData?.episodeId == episodeId
+    }
+    
+    func isPlaying(
+        messageId: Int
+    ) -> Bool {
+        return isPlaying && podcastData?.clipInfo?.messageId == messageId
     }
     
     func isPlayerItemSetWith(

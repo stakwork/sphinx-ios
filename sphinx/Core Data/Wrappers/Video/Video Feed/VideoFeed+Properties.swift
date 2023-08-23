@@ -12,7 +12,6 @@ import SwiftyJSON
 
 public class VideoFeed: NSObject {
     
-    public var objectID: NSManagedObjectID
     public var author: String?
     public var feedDescription: String?
     public var feedURL: URL?
@@ -29,8 +28,10 @@ public class VideoFeed: NSObject {
     public var chat: Chat?
     public var videos: Array<Video>?
     
-    init(_ objectID: NSManagedObjectID, _ feedID: String, _ isSubscribedToFromSearch: Bool) {
-        self.objectID = objectID
+    init(
+        _ feedID: String,
+        _ isSubscribedToFromSearch: Bool
+    ) {
         self.feedID = feedID
         self.isSubscribedToFromSearch = isSubscribedToFromSearch
     }
@@ -60,7 +61,6 @@ extension VideoFeed {
     ) -> VideoFeed {
         
         let videoFeed = VideoFeed(
-            contentFeed.objectID,
             contentFeed.feedID,
             contentFeed.isSubscribedToFromSearch
         )
@@ -95,7 +95,6 @@ extension VideoFeed {
     ) -> VideoFeed {
         
         let videoFeed = VideoFeed(
-            NSManagedObjectID.init(),
             searchResult[ContentFeed.CodingKeys.feedID.rawValue].stringValue,
             false
         )

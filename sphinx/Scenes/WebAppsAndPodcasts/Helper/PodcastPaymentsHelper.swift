@@ -12,7 +12,9 @@ import CoreData
 
 class PodcastPaymentsHelper {
     
-    public static func getSatsEarnedFor(_ feedId: String) -> Int {
+    public static func getSatsEarnedFor(
+        _ feedId: String
+    ) -> Int {
         let pmts = TransactionMessage.getPaymentsFor(feedId: feedId)
         var satsEarned = 0
         
@@ -22,14 +24,14 @@ class PodcastPaymentsHelper {
         return satsEarned
     }
     
-    func processPaymentsFor(podcastFeed: PodcastFeed?,
-                            boostAmount: Int? = nil,
-                            itemId: String,
-                            currentTime: Int,
-                            clipSenderPubKey: String? = nil,
-                            uuid: String? = nil) {
-        
-        
+    func processPaymentsFor(
+        podcastFeed: PodcastFeed?,
+        boostAmount: Int? = nil,
+        itemId: String,
+        currentTime: Int,
+        clipSenderPubKey: String? = nil,
+        uuid: String? = nil
+    ) {
         let suggestedAmount = getPodcastAmount(podcastFeed)
         let satsAmt = boostAmount ?? suggestedAmount
         let myPubKey = UserData.sharedInstance.getUserPubKey()
@@ -40,7 +42,7 @@ class PodcastPaymentsHelper {
             let clipSenderPubKey = clipSenderPubKey,
             clipSenderPubKey != myPubKey
         {
-            clipSenderDestination = PodcastDestination(NSManagedObjectID.init())
+            clipSenderDestination = PodcastDestination()
             
             if let clipSenderDestination = clipSenderDestination {
                 clipSenderDestination.address = clipSenderPubKey
@@ -68,28 +70,37 @@ class PodcastPaymentsHelper {
         }
     }
     
-    func getPodcastAmount(_ podcastFeed: PodcastFeed?) -> Int {
+    func getPodcastAmount(
+        _ podcastFeed: PodcastFeed?
+    ) -> Int {
         return podcastFeed?.satsPerMinute ?? podcastFeed?.model?.suggestedSats ?? 5
     }
     
     
-    func getAmountFrom(sats: Double, split: Double) -> Int {
+    func getAmountFrom(
+        sats: Double,
+        split: Double
+    ) -> Int {
         max(1, Int(round(sats * (split/100))))
     }
     
-    func getClipSenderAmt(sats: Double) -> Int {
+    func getClipSenderAmt(
+        sats: Double
+    ) -> Int {
         let amt = Int(round(sats * 0.01))
         return amt < 1 ? 1 : amt
     }
     
-    func streamSats(podcastId: String,
-                    podcastDestinations: [PodcastDestination],
-                    updateMeta: Bool,
-                    amount: Int,
-                    chatId: Int,
-                    itemId: String,
-                    currentTime: Int,
-                    uuid: String? = nil) {
+    func streamSats(
+        podcastId: String,
+        podcastDestinations: [PodcastDestination],
+        updateMeta: Bool,
+        amount: Int,
+        chatId: Int,
+        itemId: String,
+        currentTime: Int,
+        uuid: String? = nil
+    ) {
         
         var destinations = [[String: AnyObject]]()
         

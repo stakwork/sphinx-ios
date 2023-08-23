@@ -9,7 +9,12 @@
 import UIKit
 
 extension UILabel {
-    public static func getLabelSize(width: CGFloat? = nil, height: CGFloat? = nil, text: String, font: UIFont) -> CGSize {
+    public static func getLabelSize(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        text: String,
+        font: UIFont
+    ) -> CGSize {
         let label =  UILabel()
         label.numberOfLines = 0
         label.font = font
@@ -24,6 +29,34 @@ extension UILabel {
                                   height: ceil(boundingBox.height))
         
         return label.frame.size
+    }
+    
+    public static func getTextSize(
+        width: CGFloat? = nil,
+        height: CGFloat? = nil,
+        text: String,
+        font: UIFont
+    ) -> CGSize {
+
+        let constraintRect = CGSize(
+            width: width ?? .greatestFiniteMagnitude,
+            height: height ?? .greatestFiniteMagnitude
+        )
+        
+        let boundingBox = text.boundingRect(
+            with: constraintRect,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        )
+        
+        return (
+            CGSize(
+                width: ceil(boundingBox.width),
+                height: ceil(boundingBox.height)
+            )
+        )
+            
     }
     
     func addTextSpacing(value: Double) {
@@ -47,7 +80,7 @@ extension UILabel {
                 
                 for match in linkMatches {
                     URLRanges.append(match.range)
-                    
+
                     attributedString.setAttributes([NSAttributedString.Key.foregroundColor: linkColor, NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue], range: match.range)
                 }
                 
@@ -98,5 +131,25 @@ extension UILabel {
         }
         
         return nil
+    }
+    
+    var numberOfLinesVisible : Int {
+        
+        if let text = text{
+            // cast text to NSString so we can use sizeWithAttributes
+            let myText = text as NSString
+            
+            //Set attributes
+            let attributes = [NSAttributedString.Key.font : font!]
+            
+            //Calculate the size of your UILabel by using the systemfont and the paragraph we created before. Edit the font and replace it with yours if you use another
+            let labelSize = myText.boundingRect(with: CGSize(width: bounds.width,height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+            
+            //Now we return the amount of lines using the ceil method
+            let lines = ceil(CGFloat(labelSize.height) / font.lineHeight)
+            return Int(lines)
+        }
+        
+        return 0
     }
 }

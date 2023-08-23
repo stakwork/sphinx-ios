@@ -14,7 +14,6 @@ import CoreData
 struct PodcastComment {
     var feedId:String? = nil
     var itemId:String? = nil
-    var feedItemObjectId: NSManagedObjectID? = nil
     var timestamp:Int? = nil
     var title: String? = nil
     var text: String? = nil
@@ -55,5 +54,9 @@ struct PodcastComment {
             }
         }
         return nil
+    }
+    
+    func isValid() -> Bool {
+        return timestamp != nil && title != nil && url != nil
     }
 }

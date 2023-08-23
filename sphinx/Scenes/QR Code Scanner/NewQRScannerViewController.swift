@@ -10,15 +10,12 @@ import AVFoundation
 
 @objc protocol QRCodeScannerDelegate: class {
     @objc optional func didScanQRCode(string: String)
-    @objc optional func shouldGoToChat()
     @objc optional func willDismissPresentedView(paymentCreated: Bool)
     @objc optional func didScanDeepLink()
     @objc optional func didScanPublicKey(string: String)
 }
 
 class NewQRScannerViewController: KeyboardEventsViewController {
-    
-    var rootViewController : RootViewController!
     
     weak var delegate: QRCodeScannerDelegate?
 
@@ -75,10 +72,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         }
     }
     
-    static func instantiate(
-        rootViewController : RootViewController? = nil,
-        currentMode: Mode
-    ) -> NewQRScannerViewController {
+    static func instantiate(currentMode: Mode) -> NewQRScannerViewController {
         let viewController = StoryboardScene.QRCodeScanner.newQrCodeScannerViewController.instantiate()
         viewController.currentMode = currentMode
         return viewController
@@ -201,7 +195,9 @@ class NewQRScannerViewController: KeyboardEventsViewController {
             let fixedCode = code.fixInvoiceString().trim()
             confirmButton.isHidden = fixedCode == ""
             
-            if currentMode == .ScanAndProcessPayment || currentMode == .ScanAndProcessGeneric {
+            if currentMode == .ScanAndProcessPayment ||
+                currentMode == .ScanAndProcessGeneric
+            {
                 validateQRString(string: fixedCode)
             } else {
                 delegate?.didScanQRCode?(string: code)

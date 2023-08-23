@@ -191,8 +191,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         
         // Set the aspect ratio to 16:9
         let aspectRatio = 16.0 / 9.0
-        let width = localVideoPlayerContainer.bounds.width
-        let height = width / CGFloat(aspectRatio)
+        let height = 100.0
+        let width = height * aspectRatio
+        
         playerViewController.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
         
         // Add the video player view as a subview of localVideoPlayerContainer

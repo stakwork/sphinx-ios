@@ -223,8 +223,11 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vov-Hw-Tbm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="891"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="212"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="212" id="XYe-CT-jvR"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ANf-hC-GBf"/>
@@ -235,7 +238,6 @@
                             <constraint firstItem="Vov-Hw-Tbm" firstAttribute="leading" secondItem="Xgb-0h-roT" secondAttribute="leading" id="Dfi-i6-9S8"/>
                             <constraint firstItem="ANf-hC-GBf" firstAttribute="bottom" secondItem="SSC-f1-dNg" secondAttribute="bottom" constant="758" id="F6Y-R5-qoY"/>
                             <constraint firstItem="Vov-Hw-Tbm" firstAttribute="top" secondItem="Xgb-0h-roT" secondAttribute="top" id="FzE-7o-6zN"/>
-                            <constraint firstAttribute="bottom" secondItem="Vov-Hw-Tbm" secondAttribute="bottom" id="LBq-mc-CNh"/>
                             <constraint firstItem="ANf-hC-GBf" firstAttribute="trailing" secondItem="4XN-jb-3A8" secondAttribute="trailing" id="NBi-6h-4Fo"/>
                             <constraint firstItem="ANf-hC-GBf" firstAttribute="trailing" secondItem="SSC-f1-dNg" secondAttribute="trailing" constant="344" id="Wh4-G9-vYv"/>
                             <constraint firstItem="Zfq-pw-lha" firstAttribute="top" secondItem="4XN-jb-3A8" secondAttribute="bottom" id="frw-1R-FLc"/>

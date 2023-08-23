@@ -102,6 +102,11 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         videoPlayerView.stopVideo()
         podcastPlayerController.finishAndSaveContentConsumed()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removePlayerView()
+    }
 }
 
 
@@ -151,9 +156,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         }
         else{
             //example vid id = tADAlisn4HA
-            API.sharedInstance.getVideoRemoteStorageStatus(videoID: videoPlayerEpisode.youtubeVideoID, callback: { doesExist in
-                if doesExist,
-                   let url = URL(string: API.sharedInstance.getRemoteVideoCachePath(videoID:   self.videoPlayerEpisode.youtubeVideoID)){
+            API.sharedInstance.getVideoRemoteStorageStatus(videoID: videoPlayerEpisode.youtubeVideoID, callback: { filePath in
+                if let validPath = filePath,
+                   let url = URL(string: validPath){
                     DispatchQueue.main.sync {
                         self.localVideoPlayerContainer.isHidden = false
                         self.avPlayer = self.createVideoPlayerView(withVideoURL: url)
@@ -204,6 +209,11 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         player.play()
         
         return playerViewController
+    }
+    
+    func removePlayerView(){
+        avPlayer?.player?.pause()
+        avPlayer = nil
     }
 
     

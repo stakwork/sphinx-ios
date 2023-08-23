@@ -223,6 +223,7 @@ extension API {
         callback: @escaping EmptyCallback,
         errorCallback: @escaping EmptyCallback
     ){
+
         let videoURLPaths = getYoutubeVideoURLPaths(videoIDs: videoIDs)
         var requestPath = API.getUrl(route: "\(API.kTribesServerBaseURL)/feed/download")
         let params = [
@@ -247,6 +248,11 @@ extension API {
         
     }
     
+    func getFullCachedFilePath(partialPath:String)->String{
+        let convertedPath = partialPath.replacingOccurrences(of: ".mp3", with: ".mp4")
+        return "https://stakwork-uploads.s3.amazonaws.com/" + convertedPath
+    }
+    
     func getYoutubeVideoURLPaths(videoIDs:[String])->[String]{
         var videoURLsArray = [String]()
         for id in videoIDs{
@@ -256,7 +262,7 @@ extension API {
     }
     
     func getRemoteVideoCachePath(videoID:String)->String{
-        return "https://stakwork-uploads.s3.amazonaws.com/uploads/customers/6040/media_to_local/00002e82-6911-4aea-a214-62c9d88740e0/\(videoID).mp4"
+        return "https://knowledge-graph.sphinx.chat/video?id=\(videoID)"//"https://knowledge-graph.sphinx.chat/video?id=\(videoID)/"
     }
     
     func getVideoRemoteStorageStatus(
@@ -271,15 +277,46 @@ extension API {
             return
         }
         
-        getFileSize(url: url, completion: { size in
-            if let size = size,
-               size > 100{
-                callback(true)
+        getFileStatusAndLocation(url: url, completion: { status, location in
+            if let status = status,
+               status.lowercased()  == "completed" ,
+            let validPartialPath = location{
+                callback(self.getFullCachedFilePath(partialPath: validPartialPath))
             }
             else{
-                callback(false)
+                callback(nil)
             }
         })
+    }
+    
+    func getFileStatusAndLocation(url: URL, completion: @escaping (String?, String?) -> Void) {
+        let request = URLRequest(url: url)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse, error == nil else {
+                completion(nil, nil)
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    if let jsonDict = json as? [String: Any],
+                       let dataDict = jsonDict["data"] as? [String: Any],
+                       let status = dataDict["status"] as? String,
+                       let finalDestination = dataDict["finalDestination"] as? String {
+                        completion(status, finalDestination)
+                        return
+                    }
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }
+            
+            completion(nil, nil)
+        }
+        
+        task.resume()
     }
     
     func getFileSize(url: URL, completion: @escaping (Int64?) -> Void) {

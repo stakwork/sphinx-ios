@@ -18,6 +18,8 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
     @IBOutlet weak var localVideoPlayerContainer: UIView!
+    @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
+
     var avPlayer : AVPlayerViewController? = nil
     
     let actionsManager = ActionsManager.sharedInstance
@@ -138,6 +140,10 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         
         setupDismissButton()
         setupNativeVsYTPlayer()
+        
+        loadingIndicator.style = .large
+        loadingIndicator.color = .gray
+        loadingIndicator.hidesWhenStopped = true
     }
     
     func setupNativeVsYTPlayer(){
@@ -206,6 +212,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
             playerViewController.view.bottomAnchor.constraint(equalTo: localVideoPlayerContainer.bottomAnchor)
         ])
         
+        Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkForVideoLoad), userInfo: nil, repeats: true)
+        loadingIndicator.startAnimating()
+        localVideoPlayerContainer.bringSubviewToFront(loadingIndicator)
         // Play the video
         player.play()
         
@@ -216,7 +225,14 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         avPlayer?.player?.pause()
         avPlayer = nil
     }
-
+    
+    @objc func checkForVideoLoad(){
+        if let item = avPlayer?.player?.currentItem{
+            let status = item.status
+            let isPlaying = status == .readyToPlay
+            isPlaying ? (loadingIndicator.stopAnimating()) : ()
+        }
+    }
     
     
     private func setupDismissButton() {

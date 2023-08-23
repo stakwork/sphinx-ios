@@ -224,8 +224,15 @@
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vov-Hw-Tbm">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="212"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-fH-QWL">
+                                        <rect key="frame" x="197" y="96" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
+                                    <constraint firstItem="i9h-fH-QWL" firstAttribute="centerY" secondItem="Vov-Hw-Tbm" secondAttribute="centerY" id="BOb-fa-M1F"/>
+                                    <constraint firstItem="i9h-fH-QWL" firstAttribute="centerX" secondItem="Vov-Hw-Tbm" secondAttribute="centerX" id="SKV-6T-0so"/>
                                     <constraint firstAttribute="height" constant="212" id="XYe-CT-jvR"/>
                                 </constraints>
                             </view>
@@ -254,6 +261,7 @@
                         <outlet property="episodeSubtitleCircularDivider" destination="c1P-JV-5jY" id="FUq-MQ-CBb"/>
                         <outlet property="episodeTitleLabel" destination="WWG-xL-NX5" id="ky2-3N-b4r"/>
                         <outlet property="episodeViewCountLabel" destination="z4A-6q-Ons" id="83j-ut-abS"/>
+                        <outlet property="loadingIndicator" destination="i9h-fH-QWL" id="uHp-7I-R2W"/>
                         <outlet property="localVideoPlayerContainer" destination="Vov-Hw-Tbm" id="zVE-Nb-MnV"/>
                         <outlet property="videoPlayerView" destination="4XN-jb-3A8" id="xWE-Kb-8ai"/>
                     </connections>

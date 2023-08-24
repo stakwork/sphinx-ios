@@ -22,6 +22,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
 
     var avPlayer : AVPlayerViewController? = nil
     var videoLoadingTimer : Timer? = nil
+    var playerViewController : AVPlayerViewController? = nil
     
     let actionsManager = ActionsManager.sharedInstance
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -191,34 +192,35 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     
     func createVideoPlayerView(withVideoURL videoURL: URL) -> AVPlayerViewController {
         let player = AVPlayer(url: videoURL)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-        playerViewController.videoGravity = .resizeAspectFill
-        playerViewController.showsPlaybackControls = true
+        playerViewController = AVPlayerViewController()
+        playerViewController?.player = player
+        playerViewController?.videoGravity = .resizeAspectFill
+        playerViewController?.showsPlaybackControls = true
         
         // Set the aspect ratio to 16:9
         let aspectRatio = 16.0 / 9.0
         let height = 100.0
         let width = height * aspectRatio
         
-        playerViewController.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        playerViewController?.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
         
         // Add the video player view as a subview of localVideoPlayerContainer
-        localVideoPlayerContainer.addSubview(playerViewController.view)
-        playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            playerViewController.view.topAnchor.constraint(equalTo: localVideoPlayerContainer.topAnchor),
-            playerViewController.view.leadingAnchor.constraint(equalTo: localVideoPlayerContainer.leadingAnchor),
-            playerViewController.view.trailingAnchor.constraint(equalTo: localVideoPlayerContainer.trailingAnchor),
-            playerViewController.view.bottomAnchor.constraint(equalTo: localVideoPlayerContainer.bottomAnchor)
-        ])
-        videoLoadingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkForVideoLoad), userInfo: nil, repeats: true)
-        loadingIndicator.startAnimating()
-        localVideoPlayerContainer.bringSubviewToFront(loadingIndicator)
+        if let playerViewController = playerViewController{
+            localVideoPlayerContainer.addSubview((playerViewController.view))
+            playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                playerViewController.view.topAnchor.constraint(equalTo: localVideoPlayerContainer.topAnchor),
+                playerViewController.view.leadingAnchor.constraint(equalTo: localVideoPlayerContainer.leadingAnchor),
+                playerViewController.view.trailingAnchor.constraint(equalTo: localVideoPlayerContainer.trailingAnchor),
+                playerViewController.view.bottomAnchor.constraint(equalTo: localVideoPlayerContainer.bottomAnchor)
+            ])
+        }
+        
+        setupLoadingTimer()
         // Play the video
         player.play()
         
-        return playerViewController
+        return playerViewController!
     }
     
     func removePlayerView(){
@@ -232,7 +234,25 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
             let status = item.status
             let isPlaying = status == .readyToPlay
             isPlaying ? (cleanupVideoLoadingTimer()) : ()
+            let asset = item.asset
+            let assetTrack = asset.tracks(withMediaType: .video).first
+            
+            if let assetTrack = assetTrack {
+                let videoSize = assetTrack.naturalSize
+                let aspectRatio = videoSize.width / videoSize.height
+                print("Video Aspect Ratio: \(aspectRatio)")
+                if(aspectRatio < 1.0){
+                    playerViewController?.videoGravity = .resizeAspect
+                }
+
+            }
         }
+    }
+    
+    func setupLoadingTimer(){
+        videoLoadingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkForVideoLoad), userInfo: nil, repeats: true)
+        loadingIndicator.startAnimating()
+        localVideoPlayerContainer.bringSubviewToFront(loadingIndicator)
     }
     
     func cleanupVideoLoadingTimer(){

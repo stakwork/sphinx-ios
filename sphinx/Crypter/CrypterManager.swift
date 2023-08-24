@@ -83,7 +83,7 @@ class CrypterManager : NSObject {
     
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
-    var shouldDisconnect = false
+    var didDisconnect = false
     
     var clientID: String {
         get {
@@ -207,7 +207,7 @@ class CrypterManager : NSObject {
             return
         }
         
-        shouldDisconnect = true
+        didDisconnect = true
         
         UserDefaults.Keys.phoneSignerHost.removeValue()
         UserDefaults.Keys.phoneSignerNetwork.removeValue()
@@ -221,7 +221,7 @@ class CrypterManager : NSObject {
         showSuccessWithMessage("MQTT disconnected")
         
         DelayPerformedHelper.performAfterDelay(seconds: 2, completion: {
-            self.shouldDisconnect = false
+            self.didDisconnect = false
         })
     }
     
@@ -277,8 +277,8 @@ class CrypterManager : NSObject {
         keys: Keys,
         and password: String
     ) {
-        if shouldDisconnect {
-            shouldDisconnect = false
+        if didDisconnect {
+            didDisconnect = false
             return
         }
         

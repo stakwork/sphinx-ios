@@ -83,7 +83,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     var notificationSoundHelper = NotificationSoundHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var walletBalanceService = WalletBalanceService()
-    let cryptedManager = CrypterManager()
+    let cryptedManager = CrypterManager.sharedInstance
     
     public enum ProfileFields: Int {
         case Name
@@ -464,5 +464,9 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         ) {
             self.configureSigningDeviceButton()
         }
+    }
+    
+    @IBAction func disconnectMQTT() {
+        cryptedManager.resetMQTTConnection()
     }
 }

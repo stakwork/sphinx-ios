@@ -65,7 +65,7 @@ class DeepLinksHandlerHelper {
             if let hardwareLink = CrypterManager.HardwareLink.getHardwareLinkFrom(
                 query: glyphQuery
             ) {
-                let cryptedManager = CrypterManager()
+                let cryptedManager = CrypterManager.sharedInstance
                 cryptedManager.setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: {})
             }
 

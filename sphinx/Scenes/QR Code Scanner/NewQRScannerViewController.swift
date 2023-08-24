@@ -200,8 +200,9 @@ class NewQRScannerViewController: KeyboardEventsViewController {
             {
                 validateQRString(string: fixedCode)
             } else {
-                delegate?.didScanQRCode?(string: code)
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: {
+                    self.delegate?.didScanQRCode?(string: code)
+                })
             }
         }
     }

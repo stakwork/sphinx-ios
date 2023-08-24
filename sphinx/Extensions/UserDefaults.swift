@@ -69,9 +69,18 @@ extension UserDefaults {
         public static let messagesSize = DefaultKey<Int>("messagesSize")
         public static let webViewsHeight = DefaultKey<Int>("webViewsHeight")
         
-        public static let setupSigningDevice = DefaultKey<Bool>("setupSigningDevice")
         public static let shouldTrackActions = DefaultKey<Bool>("shouldTrackActions")
         public static let shouldAutoDownloadSubscribedPods = DefaultKey<Bool>("shouldAutoDownloadSubscribedPods")
+        
+        public static let setupSigningDevice = DefaultKey<Bool>("setupSigningDevice")
+        public static let setupPhoneSigner = DefaultKey<Bool>("setupPhoneSigner")
+        public static let phoneSignerHost = DefaultKey<String>("phoneSignerHost")
+        public static let phoneSignerNetwork = DefaultKey<String>("phoneSignerNetwork")
+        public static let mnemonic = DefaultKey<String>("mnemonic")
+        public static let clientID = DefaultKey<String>("clientID")
+        public static let lssNonce = DefaultKey<String>("lssNonce")
+        public static let signerKeys = DefaultKey<String>("signerKeys")
+        public static let sequence = DefaultKey<String>("sequence")
     }
     
     class func resetUserDefaults() {

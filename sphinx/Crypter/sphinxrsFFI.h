@@ -4,6 +4,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 // The following structs are used to implement the lowest level
@@ -28,7 +29,19 @@ typedef struct RustBuffer
     uint8_t *_Nullable data;
 } RustBuffer;
 
-typedef int32_t (*ForeignCallback)(uint64_t, int32_t, RustBuffer, RustBuffer *_Nonnull);
+typedef int32_t (*ForeignCallback)(uint64_t, int32_t, const uint8_t *_Nonnull, int32_t, RustBuffer *_Nonnull);
+
+// Task defined in Rust that Swift executes
+typedef void (*UniFfiRustTaskCallback)(const void * _Nullable);
+
+// Callback to execute Rust tasks using a Swift Task
+//
+// Args:
+//   executor: ForeignExecutor lowered into a size_t value
+//   delay: Delay in MS
+//   task: UniFfiRustTaskCallback to call
+//   task_data: data to pass the task callback
+typedef void (*UniFfiForeignExecutorCallback)(size_t, uint32_t, UniFfiRustTaskCallback _Nullable, const void * _Nullable);
 
 typedef struct ForeignBytes
 {
@@ -46,119 +59,74 @@ typedef struct RustCallStatus {
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
 
-RustBuffer sphinx_c775_pubkey_from_secret_key(
-      RustBuffer my_secret_key,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_derive_shared_secret(
-      RustBuffer their_pubkey,RustBuffer my_secret_key,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_encrypt(
-      RustBuffer plaintext,RustBuffer secret,RustBuffer nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_decrypt(
-      RustBuffer ciphertext,RustBuffer secret,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_node_keys(
-      RustBuffer net,RustBuffer seed,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_mnemonic_from_entropy(
-      RustBuffer seed,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_entropy_from_mnemonic(
-      RustBuffer mnemonic,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_get_nonce_request(
-      RustBuffer secret,uint64_t nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-uint64_t sphinx_c775_get_nonce_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_reset_wifi_request(
-      RustBuffer secret,uint64_t nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-void sphinx_c775_reset_wifi_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_reset_keys_request(
-      RustBuffer secret,uint64_t nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-void sphinx_c775_reset_keys_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_reset_all_request(
-      RustBuffer secret,uint64_t nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-void sphinx_c775_reset_all_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_get_policy_request(
-      RustBuffer secret,uint64_t nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_get_policy_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_update_policy_request(
-      RustBuffer secret,uint64_t nonce,RustBuffer policy,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_update_policy_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_get_allowlist_request(
-      RustBuffer secret,uint64_t nonce,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_get_allowlist_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_update_allowlist_request(
-      RustBuffer secret,uint64_t nonce,RustBuffer allowlist,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_update_allowlist_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer sphinx_c775_ota_request(
-      RustBuffer secret,uint64_t nonce,uint64_t version,RustBuffer url,
-    RustCallStatus *_Nonnull out_status
-    );
-uint64_t sphinx_c775_ota_response(
-      RustBuffer bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_sphinx_c775_rustbuffer_alloc(
-      int32_t size,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_sphinx_c775_rustbuffer_from_bytes(
-      ForeignBytes bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_sphinx_c775_rustbuffer_free(
-      RustBuffer buf,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_sphinx_c775_rustbuffer_reserve(
-      RustBuffer buf,int32_t additional,
-    RustCallStatus *_Nonnull out_status
-    );
+// Callbacks for UniFFI Futures
+typedef void (*UniFfiFutureCallbackRustBuffer)(const void * _Nonnull, RustBuffer, RustCallStatus);
+
+// Scaffolding functions
+RustBuffer uniffi_sphinxrs_fn_func_pubkey_from_secret_key(RustBuffer my_secret_key, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_derive_shared_secret(RustBuffer their_pubkey, RustBuffer my_secret_key, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_encrypt(RustBuffer plaintext, RustBuffer secret, RustBuffer nonce, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_decrypt(RustBuffer ciphertext, RustBuffer secret, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_node_keys(RustBuffer net, RustBuffer seed, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_mnemonic_from_entropy(RustBuffer seed, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_entropy_from_mnemonic(RustBuffer mnemonic, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_build_request(RustBuffer msg, RustBuffer secret, uint64_t nonce, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_parse_response(RustBuffer res, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_make_auth_token(uint32_t ts, RustBuffer secret, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_run(RustBuffer topic, RustBuffer args, RustBuffer state, RustBuffer msg1, RustBuffer expected_sequence, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_sphinxrs_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_sphinxrs_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
+);
+void ffi_sphinxrs_rustbuffer_free(RustBuffer buf, RustCallStatus *_Nonnull out_status
+);
+RustBuffer ffi_sphinxrs_rustbuffer_reserve(RustBuffer buf, int32_t additional, RustCallStatus *_Nonnull out_status
+);
+uint16_t uniffi_sphinxrs_checksum_func_pubkey_from_secret_key(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_derive_shared_secret(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_encrypt(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_decrypt(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_node_keys(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_mnemonic_from_entropy(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_entropy_from_mnemonic(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_build_request(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_parse_response(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_make_auth_token(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_run(void
+    
+);
+uint32_t ffi_sphinxrs_uniffi_contract_version(void
+    
+);
+

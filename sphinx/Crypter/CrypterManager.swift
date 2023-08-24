@@ -83,6 +83,7 @@ class CrypterManager : NSObject {
     
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
+    var shouldDisconnect = false
     
     var clientID: String {
         get {
@@ -206,6 +207,8 @@ class CrypterManager : NSObject {
             return
         }
         
+        shouldDisconnect = true
+        
         UserDefaults.Keys.phoneSignerHost.removeValue()
         UserDefaults.Keys.phoneSignerNetwork.removeValue()
         UserDefaults.Keys.setupPhoneSigner.removeValue()
@@ -216,6 +219,10 @@ class CrypterManager : NSObject {
         mqtt = nil
         
         showSuccessWithMessage("MQTT disconnected")
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 2, completion: {
+            self.shouldDisconnect = false
+        })
     }
     
     func startMQTTSetup() {
@@ -270,6 +277,11 @@ class CrypterManager : NSObject {
         keys: Keys,
         and password: String
     ) {
+        if shouldDisconnect {
+            shouldDisconnect = false
+            return
+        }
+        
         let (actualHost, actualPort, ssl) = host.getHostAndPort(defaultPort: 1883)
         
         mqtt = CocoaMQTT(
@@ -281,8 +293,6 @@ class CrypterManager : NSObject {
         mqtt.username = keys.pubkey
         mqtt.password = password
         mqtt.enableSSL = ssl
-//        mqtt.allowUntrustCACertificate = true
-//        mqtt.sslSettings = [kCFStreamSSLPeerName as String: "cocoamqtt.rnd7.de" as NSObject]
         
         showSuccessWithMessage("Connecting to MQTT")
 
@@ -331,7 +341,7 @@ class CrypterManager : NSObject {
                     ("\(self.clientID)/\(Topics.INIT_2_MSG.rawValue)", CocoaMQTTQoS.qos1),
                     ("\(self.clientID)/\(Topics.LSS_MSG.rawValue)", CocoaMQTTQoS.qos1)
                 ])
-                
+
                 self.mqtt.publish(
                     CocoaMQTTMessage(
                         topic: "\(self.clientID)/\(Topics.HELLO.rawValue)",

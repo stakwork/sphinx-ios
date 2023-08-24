@@ -19,6 +19,8 @@ protocol ThreadHeaderTableViewCellDelegate: class {
     
     func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
     func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int)
+    
+    func didTapOnLink(_ link: String)
 }
 
 class ThreadHeaderTableViewCell: UITableViewCell {
@@ -39,6 +41,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var showMoreContainer: UIView!
     @IBOutlet weak var bottomMarginView: UIView!
     @IBOutlet weak var differenceViewHeightConstraint: NSLayoutConstraint!
+    
+    var urlRanges = [NSRange]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -103,7 +107,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             messageContainer.isHidden = false
         }
         
-        messageLabel.text = threadOriginalMessage.text
+        addLinksToLabel(threadOriginalMessage: threadOriginalMessage)
+        
         messageLabel.numberOfLines = isHeaderExpanded ? 0 : 12
         
         timestampLabel.text = threadOriginalMessage.timestamp
@@ -119,6 +124,67 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         bottomMarginView.isHidden = !showMoreVisible(isHeaderExpanded)
         
         differenceViewHeightConstraint.constant = headerDifference ?? 0
+    }
+    
+    func addLinksToLabel(
+        threadOriginalMessage: NoBubbleMessageLayoutState.ThreadOriginalMessage
+    ) {
+        urlRanges = []
+        
+        let font = UIFont(name: "Roboto-Regular", size: 17.0)!
+        
+        if threadOriginalMessage.linkMatches.isEmpty {
+            messageLabel.attributedText = nil
+            messageLabel.text = threadOriginalMessage.text
+            messageLabel.font = font
+        } else {
+            let messageContent = threadOriginalMessage.text
+            let attributedString = NSMutableAttributedString(string: messageContent)
+            attributedString.addAttributes([NSAttributedString.Key.font: font], range: messageContent.nsRange)
+            
+            for match in threadOriginalMessage.linkMatches {
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
+                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                        NSAttributedString.Key.font: font
+                    ],
+                    range: match.range
+                )
+                
+                urlRanges.append(match.range)
+            }
+            
+            messageLabel.attributedText = attributedString
+            messageLabel.isUserInteractionEnabled = true
+        }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
+        
+        if urlRanges.isEmpty {
+            messageLabel.removeGestureRecognizer(tap)
+        } else {
+            messageLabel.addGestureRecognizer(tap)
+        }
+        
+        urlRanges = ChatHelper.removeDuplicatedContainedFrom(urlRanges: urlRanges)
+    }
+    
+    @objc func labelTapped(
+        gesture: UITapGestureRecognizer
+    ) {
+        if let label = gesture.view as? UILabel, let text = label.text {
+            for range in urlRanges {
+                if gesture.didTapAttributedTextInLabel(
+                    label,
+                    inRange: range
+                ) {
+                    let link = (text as NSString).substring(with: range)
+                    delegate?.didTapOnLink(link)
+                }
+            }
+        }
     }
     
     func configureWith(

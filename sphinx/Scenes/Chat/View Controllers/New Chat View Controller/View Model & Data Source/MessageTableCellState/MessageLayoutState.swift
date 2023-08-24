@@ -564,6 +564,7 @@ struct NoBubbleMessageLayoutState {
     
     struct ThreadOriginalMessage {
         var text: String
+        var linkMatches: [NSTextCheckingResult]
         var senderPic: String?
         var senderAlias: String
         var senderColor: UIColor
@@ -571,12 +572,14 @@ struct NoBubbleMessageLayoutState {
         
         init(
             text: String,
+            linkMatches: [NSTextCheckingResult],
             senderPic: String?,
             senderAlias: String,
             senderColor: UIColor,
             timestamp: String
         ) {
             self.text = text
+            self.linkMatches = linkMatches
             self.senderPic = senderPic
             self.senderAlias = senderAlias
             self.senderColor = senderColor

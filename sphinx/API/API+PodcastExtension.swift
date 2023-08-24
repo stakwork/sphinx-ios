@@ -130,6 +130,7 @@ extension API {
         }
     }
     
+    
     func getContentFeedStatusFor(
         feedId: String,
         callback: @escaping ContentFeedStatusCallback,
@@ -216,4 +217,127 @@ extension API {
             }
         }
     }
+    
+    func requestToCacheVideoRemotely(
+        for videoIDs: [String],
+        callback: @escaping EmptyCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+
+        let videoURLPaths = getYoutubeVideoURLPaths(videoIDs: videoIDs)
+        var requestPath = API.getUrl(route: "\(API.kTribesServerBaseURL)/feed/download")
+        let params = [
+            "youtube_urls" : videoURLPaths
+        ]
+        
+        guard let request = createRequest(requestPath.percentEscaped ?? requestPath, bodyParams: params as NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        AF.request(request).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                print(data)
+                callback()
+            case .failure(let error):
+                print(error)
+                errorCallback()
+            }
+        }
+        
+    }
+    
+    func getFullCachedFilePath(partialPath:String)->String{
+        let convertedPath = partialPath.replacingOccurrences(of: ".mp3", with: ".mp4")
+        return "https://stakwork-uploads.s3.amazonaws.com/" + convertedPath
+    }
+    
+    func getYoutubeVideoURLPaths(videoIDs:[String])->[String]{
+        var videoURLsArray = [String]()
+        for id in videoIDs{
+            videoURLsArray.append("https://www.youtube.com/watch?v=\(id)")
+        }
+        return videoURLsArray
+    }
+    
+    func getRemoteVideoCachePath(videoID:String)->String{
+        return "https://knowledge-graph.sphinx.chat/video?id=\(videoID)"//"https://knowledge-graph.sphinx.chat/video?id=\(videoID)/"
+    }
+    
+    func getVideoRemoteStorageStatus(
+        videoID:String,
+        callback: @escaping VideoFileExistsCallback,
+        errorCallback: @escaping EmptyCallback
+    ){
+        let urlPath = getRemoteVideoCachePath(videoID: videoID)
+        
+        guard let url = URL(string: urlPath) else{
+            errorCallback()
+            return
+        }
+        
+        getFileStatusAndLocation(url: url, completion: { status, location in
+            if let status = status,
+               status.lowercased()  == "completed" ,
+            let validPartialPath = location{
+                callback(self.getFullCachedFilePath(partialPath: validPartialPath))
+            }
+            else{
+                callback(nil)
+            }
+        })
+    }
+    
+    func getFileStatusAndLocation(url: URL, completion: @escaping (String?, String?) -> Void) {
+        let request = URLRequest(url: url)
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse, error == nil else {
+                completion(nil, nil)
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    if let jsonDict = json as? [String: Any],
+                       let dataDict = jsonDict["data"] as? [String: Any],
+                       let status = dataDict["status"] as? String,
+                       let finalDestination = dataDict["finalDestination"] as? String {
+                        completion(status, finalDestination)
+                        return
+                    }
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }
+            
+            completion(nil, nil)
+        }
+        
+        task.resume()
+    }
+    
+    func getFileSize(url: URL, completion: @escaping (Int64?) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let httpResponse = response as? HTTPURLResponse, error == nil else {
+                completion(nil)
+                return
+            }
+            
+            if let contentLengthString = httpResponse.allHeaderFields["Content-Length"] as? String,
+               let contentLength = Int64(contentLengthString) {
+                completion(contentLength)
+            } else {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
+    }
+
 }

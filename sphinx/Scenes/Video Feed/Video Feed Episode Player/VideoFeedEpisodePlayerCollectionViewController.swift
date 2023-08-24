@@ -22,6 +22,7 @@ class VideoFeedEpisodePlayerCollectionViewController: UICollectionViewController
     
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
+    let downloadService : DownloadService = DownloadService.sharedInstance
     
     weak var boostDelegate: CustomBoostDelegate?
     var delegate:VideoFeedEpisodePlayerCollectionViewControllerDelegate? = nil
@@ -263,6 +264,11 @@ extension VideoFeedEpisodePlayerCollectionViewController {
         let snapshot = makeSnapshotForCurrentState()
 
         dataSource.apply(snapshot, animatingDifferences: false)
+        
+        downloadService.setDelegate(
+            delegate: self,
+            forKey: DownloadServiceDelegateKeys.VideoFeedDelegate
+        )
     }
 }
 
@@ -513,5 +519,30 @@ extension VideoFeedEpisodePlayerCollectionViewController:ItemDescriptionViewCont
     
     func didDismissDescriptionView(index:Int) {
         
+    }
+    
+    func shouldDownloadVideo(video: Video) {
+        downloadService.startDownload(video: video)
+        refreshCellForVideo(video: video)
+    }
+
+    func refreshCellForVideo(video:Video){
+        // Update the data source snapshot with the new state
+        var snapshot = dataSource.snapshot()
+        if let _ = videoFeedEpisodes.firstIndex(of: video) {
+            let itemIdentifier = DataSourceItem.videoFeedEpisode(video)
+            snapshot.reloadItems([itemIdentifier])
+            dataSource.apply(snapshot, animatingDifferences: true)
+        }
+    }
+    
+}
+
+
+extension VideoFeedEpisodePlayerCollectionViewController : DownloadServiceDelegate{
+    func shouldReloadRowFor(video: VideoDownload) {
+        //TODO: reload row
+        print("shouldReloadRowFor from VideoFeedEpisodePlayerCollectionViewController")
+        refreshCellForVideo(video: video.video)
     }
 }

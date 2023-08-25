@@ -239,36 +239,38 @@ class CrypterManager : NSObject {
             return
         }
         
-        let (_, seed) = getOrCreateWalletMnemonic()
+        let (mnemonic, seed) = getOrCreateWalletMnemonic()
         
-        var keys: Keys? = nil
-        do {
-            keys = try nodeKeys(net: network, seed: seed.hexString)
-        } catch {
-            print(error.localizedDescription)
+        self.showMnemonicToUser(mnemonic: mnemonic) {
+            var keys: Keys? = nil
+            do {
+                keys = try nodeKeys(net: network, seed: seed.hexString)
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            guard let keys = keys else {
+                return
+            }
+            
+            var password: String? = nil
+            do {
+                password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
+            } catch {
+                print(error.localizedDescription)
+            }
+            
+            guard let password = password else {
+                return
+            }
+            
+            self.connectToMQTTWith(
+                host: host,
+                network: network,
+                keys: keys,
+                and: password
+            )
         }
-        
-        guard let keys = keys else {
-            return
-        }
-        
-        var password: String? = nil
-        do {
-            password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        guard let password = password else {
-            return
-        }
-        
-        connectToMQTTWith(
-            host: host,
-            network: network,
-            keys: keys,
-            and: password
-        )
     }
     
     func connectToMQTTWith(
@@ -886,6 +888,11 @@ class CrypterManager : NSObject {
     }
     
     func showMnemonicToUser(mnemonic: String, callback: @escaping () -> ()) {
+        guard let vc = vc else {
+            callback()
+            return
+        }
+        
         let copyAction = UIAlertAction(
             title: "Copy",
             style: .default,
@@ -894,6 +901,7 @@ class CrypterManager : NSObject {
                 callback()
             }
         )
+        
         AlertHelper.showAlert(
             title: "profile.store-mnemonic".localized,
             message: mnemonic,

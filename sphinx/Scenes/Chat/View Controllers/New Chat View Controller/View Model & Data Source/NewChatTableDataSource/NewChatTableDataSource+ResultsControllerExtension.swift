@@ -251,6 +251,7 @@ extension NewChatTableDataSource {
         messages: [TransactionMessage],
         threadMessagesMap: [String: [TransactionMessage]]
     ) -> [TransactionMessage] {
+        
         var filteredThreadMessages: [TransactionMessage] = []
         
         for message in messages {
@@ -275,6 +276,8 @@ extension NewChatTableDataSource {
                     ///More than 1 reply, show thread on last reply place
                     filteredThreadMessages.append(message)
                 }
+            } else {
+                filteredThreadMessages.append(message)
             }
         }
         
@@ -488,6 +491,10 @@ extension NewChatTableDataSource {
             return [:]
         }
         
+        if !chat.isPublicGroup() {
+            return [:]
+        }
+        
         let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
         let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
         
@@ -512,6 +519,10 @@ extension NewChatTableDataSource {
     ) -> [String: TransactionMessage] {
         
         guard let chat = chat else {
+            return [:]
+        }
+        
+        if !chat.isPublicGroup() {
             return [:]
         }
         

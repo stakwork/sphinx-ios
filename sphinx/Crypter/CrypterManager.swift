@@ -14,6 +14,11 @@ import CoreLocation
 import CocoaMQTT
 import MessagePack
 
+enum SeedValidationError : String, Error {
+    case incorrectWordNumber = "Your seed phrase must be exactly 12 words."
+    case invalidWord = "It appears you've typed an invalid word: word #"
+}
+
 class CrypterManager : NSObject {
     
     class var sharedInstance : CrypterManager {
@@ -269,6 +274,17 @@ class CrypterManager : NSObject {
             print("ProfileViewController")
             vc.showImportSeedView()
         }
+    }
+    
+    func validateSeed(textViewText:String)->SeedValidationError?{
+        let words = textViewText.split(separator: " ")
+        if(words.count != 12){
+            return SeedValidationError.incorrectWordNumber
+        }
+        else if false{
+            return SeedValidationError.invalidWord
+        }
+        return nil
     }
     
     func performWalletFinalization(

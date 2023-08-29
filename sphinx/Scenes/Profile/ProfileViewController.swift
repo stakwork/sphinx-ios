@@ -472,6 +472,27 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     func showImportSeedView(){
         self.importSeedView.isHidden = false
+        self.importSeedView.layer.cornerRadius = 100.0
+        self.importSeedView.delegate = self
         self.view.bringSubviewToFront(importSeedView)
+        
+        importSeedView.layer.zPosition = 999
+    }
+}
+
+
+extension ProfileViewController : ImportSeedViewDelegate{
+    func didTapCancel() {
+        self.importSeedView.textView.text = ""
+        self.importSeedView.isHidden = true
+    }
+    
+    func didTapConfirm() {
+        print("Confirming")
+        if let error = CrypterManager.sharedInstance.validateSeed(textViewText: importSeedView.textView.text){
+            AlertHelper.showAlert(title: "Seed Validation Error", message: error.rawValue)
+            return
+        }
+        
     }
 }

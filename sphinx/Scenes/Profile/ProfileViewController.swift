@@ -52,7 +52,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var storageSumaryLabel: UILabel!
     @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
+    @IBOutlet weak var importSeedView: ImportSeedView!
     
     @IBOutlet var tabContainers: [UIScrollView]!
     
@@ -468,5 +468,10 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     @IBAction func disconnectMQTT() {
         cryptedManager.resetMQTTConnection()
+    }
+    
+    func showImportSeedView(){
+        self.importSeedView.isHidden = false
+        self.view.bringSubviewToFront(importSeedView)
     }
 }

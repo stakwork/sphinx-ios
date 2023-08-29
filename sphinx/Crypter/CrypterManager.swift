@@ -226,6 +226,8 @@ class CrypterManager : NSObject {
     }
     
     func startMQTTSetup() {
+        importSeedPhrase()
+        return
         if mqtt?.connState == .connected || mqtt?.connState == .connecting {
             showSuccessWithMessage("MQTT already connected or connecting")
             return
@@ -239,7 +241,42 @@ class CrypterManager : NSObject {
             return
         }
         
-        let (mnemonic, seed) = getOrCreateWalletMnemonic()
+        chooseImportOrGenerateSeed(network: network, host: host)
+    }
+    
+    func chooseImportOrGenerateSeed(network:String,host:String){
+        let requestEnteredMneumonicCallback: (() -> ()) = {
+            self.importSeedPhrase()
+        }
+        
+        let generateSeedCallback: (() -> ()) = {
+            self.performWalletFinalization(network: network, host: host)
+        }
+        
+        AlertHelper.showTwoOptionsAlert(
+            title: "Choose Your Seed Method",
+            message: "Would you like to generate a new seed phrase or import an existing one?",
+            confirmButtonTitle: "Generate",
+            cancelButtonTitle: "Import",
+            confirm: generateSeedCallback,
+            cancel: requestEnteredMneumonicCallback
+        )
+    }
+    
+    func importSeedPhrase(){
+        print("importing seed phrase")
+        if let vc = self.vc as? ProfileViewController{
+            print("ProfileViewController")
+            vc.showImportSeedView()
+        }
+    }
+    
+    func performWalletFinalization(
+        network:String,
+        host:String,
+        enteredMnemonic:String?=nil
+    ){
+        let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic)
         
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil
@@ -272,6 +309,8 @@ class CrypterManager : NSObject {
             )
         }
     }
+    
+    
     
     func connectToMQTTWith(
         host: String,

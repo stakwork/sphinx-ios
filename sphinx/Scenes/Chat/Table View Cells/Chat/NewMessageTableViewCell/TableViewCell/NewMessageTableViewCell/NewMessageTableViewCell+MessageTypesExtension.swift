@@ -189,6 +189,52 @@ extension NewMessageTableViewCell {
     }
     
     func configureWith(
+        lastThreadMessageMedia: BubbleMessageLayoutState.MessageMedia?,
+        mediaData: MessageTableCellState.MediaData?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        
+        lastThreadMessageMediaContentView.isHidden = true
+        if let messageMedia = lastThreadMessageMedia {
+            
+            lastThreadMessageMediaContentView.configureWith(
+                messageMedia: messageMedia,
+                mediaData: mediaData,
+                bubble: bubble,
+                and: self
+            )
+            
+            
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    if messageMedia.isImage {
+                        self.delegate?.shouldLoadImageDataFor(
+                            messageId: messageId,
+                            and: self.rowIndex
+                        )
+                    } else if messageMedia.isPdf {
+                        self.delegate?.shouldLoadPdfDataFor(
+                            messageId: messageId,
+                            and: self.rowIndex
+                        )
+                    } else if messageMedia.isVideo {
+                        self.delegate?.shouldLoadVideoDataFor(
+                            messageId: messageId,
+                            and: self.rowIndex
+                        )
+                    } else if messageMedia.isGiphy {
+                        self.delegate?.shouldLoadGiphyDataFor(
+                            messageId: messageId,
+                            and: self.rowIndex
+                        )
+                    }
+                }
+            }
+        }
+    }
+    
+    func configureWith(
         genericFile: BubbleMessageLayoutState.GenericFile?,
         mediaData: MessageTableCellState.MediaData?
     ) {

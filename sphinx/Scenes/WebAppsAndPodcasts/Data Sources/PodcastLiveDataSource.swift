@@ -127,6 +127,7 @@ extension PodcastLiveDataSource : UITableViewDataSource, UITableViewDelegate {
         cell.configureWith(
             messageCellState: tableCellState,
             mediaData: nil,
+            lastThreadMessageMediaData: nil,
             tribeData: nil,
             linkData: nil,
             botWebViewData: nil,

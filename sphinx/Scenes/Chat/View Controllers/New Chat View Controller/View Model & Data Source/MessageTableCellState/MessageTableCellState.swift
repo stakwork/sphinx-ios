@@ -24,6 +24,7 @@ struct MessageTableCellState {
     ///Messages Data
     var message: TransactionMessage? = nil
     var threadOriginalMessage: TransactionMessage? = nil
+    var threadLastMessage : TransactionMessage? = nil
     var messageId: Int? = nil
     var messageString: String? = nil
     var messageType: Int? = nil
@@ -73,6 +74,7 @@ struct MessageTableCellState {
     ) {
         self.message = message
         self.threadOriginalMessage = threadOriginalMessage
+        self.threadLastMessage = threadMessages.last
         self.messageId = message?.id
         self.messageType = message?.type
         self.messageStatus = message?.status
@@ -352,6 +354,30 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var threadLastMessageMedia: BubbleMessageLayoutState.MessageMedia? = {
+        guard let message = threadLastMessage, message.isMediaAttachment() || message.isGiphy() else {
+            return nil
+        }
+        
+        var urlAndKey = threadLastMessageMediaUrlAndKey
+        
+        return BubbleMessageLayoutState.MessageMedia(
+            url: urlAndKey.0,
+            mediaKey: urlAndKey.1,
+            isImage: message.isImage() || message.isDirectPayment(),
+            isVideo: message.isVideo(),
+            isGif: message.isGif(),
+            isPdf: message.isPDF(),
+            isGiphy: message.isGiphy(),
+            isPaid: message.isPaidAttachment(),
+            isPaymentTemplate: message.isDirectPayment()
+        )
+    }()
+    
+    func getMessageLayoutStateWithMedia(message:TransactionMessage){
+        
+    }
+    
     lazy var audio: BubbleMessageLayoutState.Audio? = {
         guard let message = messageToShow, message.isAudio() else {
             return nil
@@ -393,8 +419,19 @@ struct MessageTableCellState {
             return (nil, nil)
         }
         
-        var urlAndKey: (URL?, String?) = (nil, nil)
+        return getMessageMediaUrlAndKey(message: message)
+    }()
+    
+    lazy var threadLastMessageMediaUrlAndKey: (URL?, String?) = {
+        guard let message = threadLastMessage else {
+            return (nil, nil)
+        }
         
+        return getMessageMediaUrlAndKey(message: message)
+    }()
+    
+    func getMessageMediaUrlAndKey(message:TransactionMessage) -> (URL?,String?){
+        var urlAndKey: (URL?, String?) = (nil, nil)
         if message.isMediaAttachment() {
             urlAndKey = (message.getMediaUrlFromMediaToken(), message.mediaKey)
         } else if message.isGiphy() {
@@ -402,7 +439,7 @@ struct MessageTableCellState {
         }
         
         return urlAndKey
-    }()
+    }
     
     lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
         guard let message = message, message.isFileAttachment() else {
@@ -417,6 +454,17 @@ struct MessageTableCellState {
     
     lazy var threadOriginalMessageGenericFile: BubbleMessageLayoutState.GenericFile? = {
         guard let message = threadOriginalMessage, message.isFileAttachment() else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.GenericFile(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var threadLastMessageGenericFile: BubbleMessageLayoutState.GenericFile? = {
+        guard let message = threadLastMessage, message.isFileAttachment() else {
             return nil
         }
         

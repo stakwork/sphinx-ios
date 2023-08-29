@@ -91,6 +91,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         )
         
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
+        
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
     }
     

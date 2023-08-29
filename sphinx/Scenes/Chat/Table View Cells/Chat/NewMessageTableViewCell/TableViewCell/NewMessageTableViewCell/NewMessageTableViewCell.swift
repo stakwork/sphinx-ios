@@ -29,6 +29,7 @@ protocol ChatTableViewCellProtocol: class {
     func configureWith(
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
+        lastThreadMessageMediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
@@ -121,6 +122,8 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     @IBOutlet weak var paidTextMessageView: UIView!
     @IBOutlet weak var directPaymentView: DirectPaymentView!
     @IBOutlet weak var mediaContentView: MediaMessageView!
+    @IBOutlet weak var lastThreadMessageMediaContentView: MediaMessageView!
+    
     @IBOutlet weak var mediaContentHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView!
@@ -162,6 +165,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     func configureWith(
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
+        lastThreadMessageMediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
@@ -199,6 +203,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
             searchingTerm: searchingTerm
         )
         
+        
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
         configureWith(
@@ -221,6 +226,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         configureWith(callLink: mutableMessageCellState.callLink)
         configureWith(podcastBoost: mutableMessageCellState.podcastBoost)
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData, and: bubble)
+        configureWith(lastThreadMessageMedia: mutableMessageCellState.threadLastMessageMedia, mediaData: lastThreadMessageMediaData, and: bubble)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(botHTMLContent: mutableMessageCellState.botHTMLContent, botWebViewData: botWebViewData)
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData, and: bubble)

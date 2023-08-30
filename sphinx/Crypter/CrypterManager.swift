@@ -403,7 +403,8 @@ class CrypterManager : NSObject {
                 
                 self.processMessage(
                     topic: message.topic.replacingOccurrences(of: "\(self.clientID)/", with: ""),
-                    payload: message.payload
+                    payload: message.payload,
+                    network:network
                 )
             }
 
@@ -465,9 +466,10 @@ class CrypterManager : NSObject {
     
     func processMessage(
         topic: String,
-        payload: [UInt8]
+        payload: [UInt8],
+        network: String
     ) {
-        let a = argsAndState()
+        let a = argsAndState(network: network)
         
         var ret: VlsResponse? = nil
         do {
@@ -479,6 +481,7 @@ class CrypterManager : NSObject {
                 expectedSequence: sequence
             )
         } catch {
+            print("catch statement in processMessage with error: \(error)")
             if (error.localizedDescription.contains("Error: VLS Failed: invalid sequence")) {
                 restart()
                 return
@@ -486,6 +489,7 @@ class CrypterManager : NSObject {
         }
         
         guard let ret = ret else {
+            print("guard let ret = ret else statement")
             return
         }
         
@@ -496,6 +500,7 @@ class CrypterManager : NSObject {
 //                cmds.update((cs) => [...cs, ret.cmd]);
 //            }
             // update expected sequence
+            print("topic in topic.hasSuffix \(topic)")
             sequence = ret.sequence + 1
         }
     }
@@ -503,10 +508,11 @@ class CrypterManager : NSObject {
     func processVlsResult(ret: VlsResponse) {
         let _ =  storeMutations(inc: ret.state.bytes)
         publish(topic: ret.topic, payload: ret.bytes.bytes)
+        print("processVlsResult publishing topic:\(ret.topic), bytes:\(ret.bytes.bytes)")
     }
     
-    func argsAndState() -> (String, [UInt8]) {
-        let args = makeArgs()
+    func argsAndState(network:String) -> (String, [UInt8]) {
+        let args = makeArgs(network: network)
         let stringArgs = asString(jsonDictionary: args)
         
         let sta: [String: [UInt8]] = load_muts()
@@ -542,8 +548,9 @@ class CrypterManager : NSObject {
        return result
     }
     
-    func makeArgs() -> [String: AnyObject] {
+    func makeArgs(network:String) -> [String: AnyObject] {
         let seedHexString = seed.hexString
+        print("makeArgs network:\(network)")
         
         guard let seedBytes = stringToBytes(seedHexString) else {
             return [:]
@@ -561,7 +568,7 @@ class CrypterManager : NSObject {
         
         let args: [String: AnyObject] = [
             "seed": seedBytes as NSArray,
-            "network": "regtest" as NSString,
+            "network": network as NSString,
             "policy": defaultPolicy as NSDictionary,
             "allowlist": [] as NSArray,
             "timestamp": UInt32(Date().timeIntervalSince1970) as NSNumber,

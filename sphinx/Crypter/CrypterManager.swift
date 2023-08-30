@@ -269,39 +269,45 @@ class CrypterManager : NSObject {
             return
         }
         
-        promptForSeedOptions(callback: { (mnemonic, seed) in
-            self.showMnemonicToUser(mnemonic: mnemonic) {
-                var keys: Keys? = nil
-                do {
-                    keys = try nodeKeys(net: network, seed: seed.hexString)
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
-                guard let keys = keys else {
-                    return
-                }
-                
-                var password: String? = nil
-                do {
-                    password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
-                } catch {
-                    print(error.localizedDescription)
-                }
-                
-                guard let password = password else {
-                    return
-                }
-                
-                self.connectToMQTTWith(
-                    host: host,
-                    network: network,
-                    keys: keys,
-                    and: password
-                )
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            self.promptForSeedOptions(callback: { (mnemonic, seed) in
+                self.showMnemonicToUser(mnemonic: mnemonic, callback: {
+                    print("done!")
+                    self.finalizeMQTT(host:host,network:network,seed:seed)
+                })
+            })
         })
-        
+    }
+    
+    func finalizeMQTT(host:String,network:String,seed:Data){
+        var keys: Keys? = nil
+        do {
+            keys = try nodeKeys(net: network, seed: seed.hexString)
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        guard let keys = keys else {
+            return
+        }
+
+        var password: String? = nil
+        do {
+            password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        guard let password = password else {
+            return
+        }
+
+        self.connectToMQTTWith(
+            host: host,
+            network: network,
+            keys: keys,
+            and: password
+        )
     }
     
     func connectToMQTTWith(
@@ -751,6 +757,9 @@ class CrypterManager : NSObject {
     func promptForSeedOptions(
         callback: @escaping ((String, Data)) -> ()
     ) {
+        guard let vc = vc else{
+            return
+        }
         var callbacksArray = [(() -> ())]()
         if let (mnemonic, seed) = getStoredMnemonicAndSeed() {
             let pullStoredMnemonicCallback:(() -> ()) = {
@@ -763,8 +772,7 @@ class CrypterManager : NSObject {
         
         let generateMnemonicCallbak: (() -> ()) = {
             self.newMessageBubbleHelper.showLoadingWheel()
-            let (mnemonic, seed) = self.getOrCreateWalletMnemonic(shouldGenerateFromScratch:true)
-            callback((mnemonic, seed))
+            callback(self.getOrCreateWalletMnemonic(shouldGenerateFromScratch:true))
         }
         
         let enterMnemonicCallback: (() -> ()) = {
@@ -795,7 +803,6 @@ class CrypterManager : NSObject {
             message: "profile.mnemonic-enter-description".localized,
             errorMessage: "profile.mnemonic-enter-error".localized,
             callback: { value in
-                let wordsCount = value.split(separator: " ").count
                 let words = value.split(separator: " ").map { String($0).trim().lowercased() }
                 let fixedWords = words.joined(separator: " ")
                 let (error, additionalString) = self.validateSeed(words: words)
@@ -967,8 +974,10 @@ class CrypterManager : NSObject {
             title: "Copy",
             style: .default,
             handler: { _ in
-                ClipboardHelper.copyToClipboard(text: mnemonic, message: "profile.mnemonic-copied".localized)
-                callback()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    ClipboardHelper.copyToClipboard(text: mnemonic, message: "profile.mnemonic-copied".localized)
+                    callback()
+                })
             }
         )
         
@@ -978,7 +987,9 @@ class CrypterManager : NSObject {
             on: vc,
             additionAlertAction: copyAction,
             completion: {
-                callback()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    callback()
+                })
             }
         )
     }

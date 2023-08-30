@@ -79,6 +79,23 @@ extension ConnectionCodeSignupHandling {
         }
     }
     
+    func signUp(withSwarmMqttCode connectionCode:String){
+        presentConnectingLoadingScreenVC()
+        if let url = URL(string: connectionCode),
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems {
+            
+            if let action = queryItems.first(where: { $0.name == "action" })?.value,
+               let mqtt = queryItems.first(where: { $0.name == "mqtt" })?.value,
+               let network = queryItems.first(where: { $0.name == "network" })?.value,
+               let relay = queryItems.first(where: { $0.name == "relay" })?.value
+            {
+                self.connectToSwarm(mqtt: mqtt, network: network, relay: relay)
+            }
+
+        }
+    }
+    
     func signUp(withSwarmClaimCode connectionCode:String){
         presentConnectingLoadingScreenVC()
         
@@ -184,6 +201,14 @@ extension ConnectionCodeSignupHandling {
             connectingVC,
             animated: true
         )
+    }
+    
+    func connectToSwarm(
+        mqtt:String,
+        network:String,
+        relay:String
+    ){
+        
     }
     
     

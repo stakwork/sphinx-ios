@@ -145,6 +145,12 @@ extension String {
         }
     }
     
+    var isSwarmMqttCode : Bool {
+        get {
+            return self.localizedStandardContains("mqtt=")
+        }
+    }
+    
     func getIPAndPassword() -> (String?, String?) {
         if let decodedString = self.base64Decoded, decodedString.starts(with: "ip::") {
             let stringWithoutPrefix = decodedString.replacingOccurrences(of: "ip::", with: "")

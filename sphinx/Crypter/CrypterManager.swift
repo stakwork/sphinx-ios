@@ -25,9 +25,23 @@ var wordsListPossibilities : [WordList] = [
     .french,
     .italian
 ]
-enum SeedValidationError : String, Error {
-    case incorrectWordNumber = "profile.mnemonic-incorrect-length".localized
-    case invalidWord = "profile.mnemonic-invalid-word".localized
+
+func localizedString(_ key: String) -> String {
+    return NSLocalizedString(key, comment: "")
+}
+
+enum SeedValidationError: Error {
+    case incorrectWordNumber
+    case invalidWord
+    
+    var localizedDescription: String {
+        switch self {
+        case .incorrectWordNumber:
+            return localizedString("profile.mnemonic-incorrect-length")
+        case .invalidWord:
+            return localizedString("profile.mnemonic-invalid-word")
+        }
+    }
 }
 
 class CrypterManager : NSObject {
@@ -794,7 +808,7 @@ class CrypterManager : NSObject {
                     callback((mnemonic, seed))
                 }
                 else if let error = error {
-                    let message = error.rawValue + (additionalString ?? "")
+                    let message = error.localizedDescription + (additionalString ?? "")
                     self.showErrorWithMessage(message)
                 }
             }
@@ -808,7 +822,7 @@ class CrypterManager : NSObject {
         if let languageList = findListForWord(words[0]){
             for i in 1..<words.count{
                 if languageList.words.contains(words[i]) == false{
-                    return (SeedValidationError.invalidWord,"\(i + 1) -\(words[i])")
+                    return (SeedValidationError.invalidWord,"\(i + 1) - \(words[i])")
                 }
             }
         }

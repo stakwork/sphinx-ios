@@ -294,6 +294,7 @@
 "profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-enter-format-error" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-generate" = "Generate random mnemonic words";
+"profile.mnemonic-pull-stored" = "Pull stored mnemonic words from memory";
 "profile.signer-setup-title" = "Setup";
 "profile.signer-setup-message" = "Setup hardware device or phone signer";
 "profile.harware-option" = "Hardware";

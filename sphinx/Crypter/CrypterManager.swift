@@ -239,38 +239,39 @@ class CrypterManager : NSObject {
             return
         }
         
-        let (mnemonic, seed) = getOrCreateWalletMnemonic()
+        promptForSeedOptions(callback: { (mnemonic, seed) in
+            self.showMnemonicToUser(mnemonic: mnemonic) {
+                var keys: Keys? = nil
+                do {
+                    keys = try nodeKeys(net: network, seed: seed.hexString)
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                guard let keys = keys else {
+                    return
+                }
+                
+                var password: String? = nil
+                do {
+                    password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                guard let password = password else {
+                    return
+                }
+                
+                self.connectToMQTTWith(
+                    host: host,
+                    network: network,
+                    keys: keys,
+                    and: password
+                )
+            }
+        })
         
-        self.showMnemonicToUser(mnemonic: mnemonic) {
-            var keys: Keys? = nil
-            do {
-                keys = try nodeKeys(net: network, seed: seed.hexString)
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            guard let keys = keys else {
-                return
-            }
-            
-            var password: String? = nil
-            do {
-                password = try makeAuthToken(ts: UInt32(Date().timeIntervalSince1970), secret: keys.secret)
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            guard let password = password else {
-                return
-            }
-            
-            self.connectToMQTTWith(
-                host: host,
-                network: network,
-                keys: keys,
-                and: password
-            )
-        }
     }
     
     func connectToMQTTWith(
@@ -717,13 +718,18 @@ class CrypterManager : NSObject {
         )
     }
     
-    func promptForSeedGeneration(
+    func promptForSeedOptions(
         callback: @escaping ((String, Data)) -> ()
     ) {
+        var callbacksArray = [(() -> ())]()
         if let (mnemonic, seed) = getStoredMnemonicAndSeed() {
-            callback((mnemonic, seed))
-            return
+            let pullStoredMnemonicCallback:(() -> ()) = {
+                callback((mnemonic, seed))
+            }
+            callbacksArray.append(pullStoredMnemonicCallback)
         }
+        
+        
         
         let generateMnemonicCallbak: (() -> ()) = {
             self.newMessageBubbleHelper.showLoadingWheel()
@@ -735,14 +741,17 @@ class CrypterManager : NSObject {
             self.promptForSeedEnter(callback: callback)
         }
         
+        callbacksArray += [generateMnemonicCallbak, enterMnemonicCallback]
+        
         AlertHelper.showOptionsPopup(
             title: "profile.mnemonic-generation-title".localized,
             message: "profile.mnemonic-generation-description".localized,
             options: [
+                "profile.mnemonic-pull-stored".localized,
                 "profile.mnemonic-generate".localized,
                 "profile.mnemonic-enter".localized
             ],
-            callbacks: [generateMnemonicCallbak, enterMnemonicCallback],
+            callbacks: callbacksArray,
             sourceView: self.vc.view,
             vc: self.vc
         )
@@ -838,7 +847,7 @@ class CrypterManager : NSObject {
 
             self.newMessageBubbleHelper.hideLoadingWheel()
 
-            self.promptForSeedGeneration() { (mnemonic, seed) in
+            self.promptForSeedOptions() { (mnemonic, seed) in
                 
                 self.newMessageBubbleHelper.hideLoadingWheel()
 

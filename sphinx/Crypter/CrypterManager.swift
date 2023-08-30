@@ -14,6 +14,22 @@ import CoreLocation
 import CocoaMQTT
 import MessagePack
 
+
+var wordsListPossibilities : [WordList] = [
+    .english,
+    .japanese,
+    .korean,
+    .spanish,
+    .simplifiedChinese,
+    .traditionalChinese,
+    .french,
+    .italian
+]
+enum SeedValidationError : String, Error {
+    case incorrectWordNumber = "profile.mnemonic-incorrect-length".localized
+    case invalidWord = "profile.mnemonic-invalid-word".localized
+}
+
 class CrypterManager : NSObject {
     
     class var sharedInstance : CrypterManager {
@@ -733,7 +749,7 @@ class CrypterManager : NSObject {
         
         let generateMnemonicCallbak: (() -> ()) = {
             self.newMessageBubbleHelper.showLoadingWheel()
-            let (mnemonic, seed) = self.getOrCreateWalletMnemonic()
+            let (mnemonic, seed) = self.getOrCreateWalletMnemonic(shouldGenerateFromScratch:true)
             callback((mnemonic, seed))
         }
         
@@ -766,28 +782,59 @@ class CrypterManager : NSObject {
             errorMessage: "profile.mnemonic-enter-error".localized,
             callback: { value in
                 let wordsCount = value.split(separator: " ").count
-                
-                if wordsCount == 12 || wordsCount == 24 {
+                let words = value.split(separator: " ").map { String($0).trim().lowercased() }
+                let fixedWords = words.joined(separator: " ")
+                let (error, additionalString) = self.validateSeed(words: words)
+                if error == nil {
                     self.newMessageBubbleHelper.showLoadingWheel()
-                    
-                    let words = value.split(separator: " ").map { String($0).trim() }
-                    let fixedWords = words.joined(separator: " ")
-                    
+                                        
                     let (mnemonic, seed) = self.getOrCreateWalletMnemonic(
                         enteredMnemonic: fixedWords
                     )
                     callback((mnemonic, seed))
-                } else {
-                    self.showErrorWithMessage("profile.mnemonic-enter-error".localized)
+                }
+                else if let error = error {
+                    let message = error.rawValue + (additionalString ?? "")
+                    self.showErrorWithMessage(message)
                 }
             }
         )
     }
     
+    func validateSeed(words:[String])->(SeedValidationError?,String?){
+        if(words.count != 12 && words.count != 24){
+            return (SeedValidationError.incorrectWordNumber,nil)
+        }
+        if let languageList = findListForWord(words[0]){
+            for i in 1..<words.count{
+                if languageList.words.contains(words[i]) == false{
+                    return (SeedValidationError.invalidWord,"\(i + 1) -\(words[i])")
+                }
+            }
+        }
+        else{
+            return (SeedValidationError.invalidWord,"1 -\(words[0])")
+        }
+        
+        return (nil,nil)
+    }
+    
+    func findListForWord(_ word: String) -> WordList? {
+        for language in wordsListPossibilities {
+            if language.words.contains(word) {
+                return language
+            }
+        }
+        return nil
+    }
+
+    
     public func getOrCreateWalletMnemonic(
-        enteredMnemonic: String? = nil
+        enteredMnemonic: String? = nil,
+        shouldGenerateFromScratch : Bool = false
     ) -> (String, Data) {
-        let mnemonic = enteredMnemonic ?? UserDefaults.Keys.mnemonic.get() ?? Mnemonic.create()
+        let storedMneumonic : String? = (shouldGenerateFromScratch) ? nil : UserDefaults.Keys.mnemonic.get()
+        let mnemonic = enteredMnemonic ?? storedMneumonic ?? Mnemonic.create()
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = Data(seed.bytes[0..<32])
 

@@ -307,6 +307,8 @@
 "profile.mnemonic-enter" = "Ingresá tus 12/24 palabras de seguridad";
 "profile.mnemonic-generate" = "Generar palabras de seguridad al azar";
 "profile.mnemonic-pull-stored" = "Obtener palabras de la memoria.";
+"profile.mnemonic-incorrect-length" = "Tu frase de recuperación debe tener exactamente 12 o 24 palabras.";
+"profile.mnemonic-invalid-word" = "Parece que has ingresado una palabra no válida: palabra #";
 "profile.signer-setup-title" = "Configuración";
 "profile.signer-setup-message" = "Configurar hardware o phone signer";
 "profile.harware-option" = "Hardware";

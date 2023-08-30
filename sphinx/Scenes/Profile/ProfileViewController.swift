@@ -472,7 +472,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     func showImportSeedView(){
         self.importSeedView.isHidden = false
-        self.importSeedView.layer.cornerRadius = 100.0
         self.importSeedView.delegate = self
         self.view.bringSubviewToFront(importSeedView)
         

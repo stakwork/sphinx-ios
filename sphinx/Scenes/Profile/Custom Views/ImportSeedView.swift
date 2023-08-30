@@ -36,9 +36,12 @@ class ImportSeedView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        self.backgroundColor = .clear
         
         confirmButton.layer.cornerRadius = confirmButton.frame.height/2.0
         cancelButton.layer.cornerRadius = cancelButton.frame.height/2.0
+        contentView.layer.cornerRadius = 34.0
+        textView.layer.cornerRadius = 4.0
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
            // self.summaryDict = self.getDebugValues()

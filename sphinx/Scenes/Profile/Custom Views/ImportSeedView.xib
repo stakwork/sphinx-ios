@@ -75,7 +75,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" name="BodyInverted"/>
+            <color key="backgroundColor" name="PrimaryText"/>
             <constraints>
                 <constraint firstItem="3A8-zd-aha" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="40" id="I58-3O-CEP"/>
                 <constraint firstItem="JzB-8b-6M6" firstAttribute="leading" secondItem="3A8-zd-aha" secondAttribute="leading" id="Imz-N0-dfp"/>
@@ -90,11 +90,11 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="BodyInverted">
-            <color red="0.082352941176470587" green="0.11764705882352941" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="PrimaryBlue">
             <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryText">
+            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

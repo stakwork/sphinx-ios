@@ -17,6 +17,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
             <connections>
+                <outlet property="activityView" destination="gPH-0x-4NC" id="6K8-2I-ujH"/>
                 <outlet property="cancelButton" destination="omm-KQ-xIa" id="qu6-nS-NRM"/>
                 <outlet property="confirmButton" destination="EDJ-TI-seS" id="ELr-TQ-8IR"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="ZlL-P9-5gb"/>
@@ -28,13 +29,20 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="249"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="pond frog dog ham piglet tornado tweed engage erosion burger dumptruck" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3A8-zd-aha">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3A8-zd-aha">
                     <rect key="frame" x="36" y="99" width="248" height="70"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <color key="textColor" systemColor="labelColor"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gPH-0x-4NC">
+                    <rect key="frame" x="150" y="114" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Wfo-6x-sVB"/>
+                        <constraint firstAttribute="width" constant="20" id="aTZ-2S-fZP"/>
+                    </constraints>
+                </activityIndicatorView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzB-8b-6M6">
                     <rect key="frame" x="36" y="182" width="248" height="50"/>
                     <subviews>
@@ -75,7 +83,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" name="PrimaryText"/>
+            <color key="backgroundColor" name="ReceivedBubbleBorder"/>
             <constraints>
                 <constraint firstItem="3A8-zd-aha" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="40" id="I58-3O-CEP"/>
                 <constraint firstItem="JzB-8b-6M6" firstAttribute="leading" secondItem="3A8-zd-aha" secondAttribute="leading" id="Imz-N0-dfp"/>
@@ -83,6 +91,8 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="3A8-zd-aha" secondAttribute="trailing" constant="36" id="ek1-aG-T2J"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="3A8-zd-aha" secondAttribute="bottom" constant="80" id="iaj-zy-ktU"/>
                 <constraint firstItem="JzB-8b-6M6" firstAttribute="trailing" secondItem="3A8-zd-aha" secondAttribute="trailing" id="k9V-c7-8h9"/>
+                <constraint firstItem="gPH-0x-4NC" firstAttribute="centerX" secondItem="3A8-zd-aha" secondAttribute="centerX" id="nHn-T3-ANE"/>
+                <constraint firstItem="gPH-0x-4NC" firstAttribute="centerY" secondItem="3A8-zd-aha" secondAttribute="centerY" id="q4n-fz-MZn"/>
                 <constraint firstItem="JzB-8b-6M6" firstAttribute="top" secondItem="3A8-zd-aha" secondAttribute="bottom" constant="13" id="zlk-eV-Vos"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -93,8 +103,8 @@
         <namedColor name="PrimaryBlue">
             <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="PrimaryText">
-            <color red="0.16078431372549021" green="0.17254901960784313" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ReceivedBubbleBorder">
+            <color red="0.87450980392156863" green="0.88235294117647056" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

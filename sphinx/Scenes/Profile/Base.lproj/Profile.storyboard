@@ -1100,10 +1100,10 @@
                                 <color key="backgroundColor" name="Body"/>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsK-o4-sqc" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="20" y="570" width="374" height="310"/>
+                                <rect key="frame" x="20" y="595" width="374" height="260"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="310" id="AW8-oK-iZQ"/>
+                                    <constraint firstAttribute="height" constant="260" id="AW8-oK-iZQ"/>
                                 </constraints>
                             </view>
                         </subviews>

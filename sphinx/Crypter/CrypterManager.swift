@@ -14,9 +14,33 @@ import CoreLocation
 import CocoaMQTT
 import MessagePack
 
-enum SeedValidationError : String, Error {
-    case incorrectWordNumber = "Your seed phrase must be exactly 12 words."
-    case invalidWord = "It appears you've typed an invalid word: word #"
+var wordsListPossibilities : [WordList] = [
+    .english,
+    .japanese,
+    .korean,
+    .spanish,
+    .simplifiedChinese,
+    .traditionalChinese,
+    .french,
+    .italian
+]
+
+func localizedString(_ key: String) -> String {
+    return NSLocalizedString(key, comment: "")
+}
+
+enum SeedValidationError: Error {
+    case incorrectWordNumber
+    case invalidWord
+    
+    var localizedDescription: String {
+        switch self {
+        case .incorrectWordNumber:
+            return localizedString("profile.mnemonic-incorrect-length")
+        case .invalidWord:
+            return localizedString("profile.mnemonic-invalid-word")
+        }
+    }
 }
 
 class CrypterManager : NSObject {
@@ -231,8 +255,6 @@ class CrypterManager : NSObject {
     }
     
     func startMQTTSetup() {
-        importSeedPhrase()
-        return
         if mqtt?.connState == .connected || mqtt?.connState == .connecting {
             showSuccessWithMessage("MQTT already connected or connecting")
             return
@@ -251,7 +273,7 @@ class CrypterManager : NSObject {
     
     func chooseImportOrGenerateSeed(network:String,host:String){
         let requestEnteredMneumonicCallback: (() -> ()) = {
-            self.importSeedPhrase()
+            self.importSeedPhrase(network: network, host: host)
         }
         
         let generateSeedCallback: (() -> ()) = {
@@ -268,21 +290,37 @@ class CrypterManager : NSObject {
         )
     }
     
-    func importSeedPhrase(){
+    func importSeedPhrase(network:String,host:String){
         print("importing seed phrase")
         if let vc = self.vc as? ProfileViewController{
             print("ProfileViewController")
-            vc.showImportSeedView()
+            vc.showImportSeedView(network:network,host:host)
         }
     }
     
-    func validateSeed(textViewText:String)->SeedValidationError?{
-        let words = textViewText.split(separator: " ")
-        if(words.count != 12){
-            return SeedValidationError.incorrectWordNumber
+    func validateSeed(words:[String])->(SeedValidationError?,String?){
+        if(words.count != 12 && words.count != 24){
+            return (SeedValidationError.incorrectWordNumber,nil)
         }
-        else if false{
-            return SeedValidationError.invalidWord
+        if let languageList = findListForWord(words[0]){
+            for i in 1..<words.count{
+                if languageList.words.contains(words[i]) == false{
+                    return (SeedValidationError.invalidWord,"\(i + 1) - \(words[i])")
+                }
+            }
+        }
+        else{
+            return (SeedValidationError.invalidWord,"1 -\(words[0])")
+        }
+        
+        return (nil,nil)
+    }
+    
+    func findListForWord(_ word: String) -> WordList? {
+        for language in wordsListPossibilities {
+            if language.words.contains(word) {
+                return language
+            }
         }
         return nil
     }
@@ -966,6 +1004,9 @@ class CrypterManager : NSObject {
                 callback()
             }
         )
+        if let pvc = vc as? ProfileViewController{
+            pvc.didTapCancelImportSeed()
+        }
     }
     
     func getUrl(route: String) -> String {

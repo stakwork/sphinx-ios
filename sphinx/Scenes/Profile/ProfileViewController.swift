@@ -60,7 +60,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     var currentField : UITextField?
     var previousFieldValue : String?
     
-    
     var uploading = false {
         didSet {
             uploadLoadingWheel.color = UIColor.Sphinx.PrimaryText
@@ -470,9 +469,11 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         cryptedManager.resetMQTTConnection()
     }
     
-    func showImportSeedView(){
+    func showImportSeedView(network:String,host:String){
         self.importSeedView.isHidden = false
         self.importSeedView.delegate = self
+        importSeedView.network = network
+        importSeedView.host = host
         self.view.bringSubviewToFront(importSeedView)
         
         importSeedView.layer.zPosition = 999
@@ -481,17 +482,22 @@ class ProfileViewController: NewKeyboardHandlerViewController {
 
 
 extension ProfileViewController : ImportSeedViewDelegate{
-    func didTapCancel() {
+    func didTapCancelImportSeed() {
         self.importSeedView.textView.text = ""
         self.importSeedView.isHidden = true
+        self.importSeedView.activityView.stopAnimating()
     }
     
     func didTapConfirm() {
-        print("Confirming")
-        if let error = CrypterManager.sharedInstance.validateSeed(textViewText: importSeedView.textView.text){
-            AlertHelper.showAlert(title: "Seed Validation Error", message: error.rawValue)
+        let words = importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
+        let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
+        if let error = error {
+            AlertHelper.showAlert(title: "Seed Validation Error", message: error.localizedDescription + (additionalString ?? ""))
             return
         }
-        
+        self.importSeedView.activityView.startAnimating()
+        self.importSeedView.activityView.isHidden = false
+        self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
+        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host,enteredMnemonic: importSeedView.textView.text)
     }
 }

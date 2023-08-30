@@ -699,6 +699,8 @@
 		CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */; };
 		CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
+		CED7F9AF2A9EA002008F77BA /* ImportSeedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED7F9AE2A9EA002008F77BA /* ImportSeedView.xib */; };
+		CED7F9B12A9EA03D008F77BA /* ImportSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED7F9B02A9EA03D008F77BA /* ImportSeedView.swift */; };
 		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
 		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
 		CEE49BF02A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */; };
@@ -1731,6 +1733,8 @@
 		CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoverTribesTableViewCell.xib; sourceTree = "<group>"; };
 		CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribeData.swift; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
+		CED7F9AE2A9EA002008F77BA /* ImportSeedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportSeedView.xib; sourceTree = "<group>"; };
+		CED7F9B02A9EA03D008F77BA /* ImportSeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSeedView.swift; sourceTree = "<group>"; };
 		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
 		CEE49BEF2A1BB88F009E0EC4 /* ProfileManageStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageViewModel.swift; sourceTree = "<group>"; };
@@ -3584,6 +3588,8 @@
 				CE30D95C2A0C09EB00C83555 /* MaxMemorySlider.xib */,
 				CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */,
 				CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */,
+				CED7F9B02A9EA03D008F77BA /* ImportSeedView.swift */,
+				CED7F9AE2A9EA002008F77BA /* ImportSeedView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4646,6 +4652,7 @@
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
+				CED7F9AF2A9EA002008F77BA /* ImportSeedView.xib in Resources */,
 				47DE1C4B2A6ED0CA0029597B /* ThreadLastMessageHeader.xib in Resources */,
 				47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */,
 				CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */,
@@ -5373,6 +5380,7 @@
 				47468FD723353C880072124A /* LeftMenuOptionTableViewCell.swift in Sources */,
 				4779247E2A28D1D200CD3CF1 /* StatusHeaderView.swift in Sources */,
 				47FA44172374B6F7005D8C63 /* SubscriptionEndRuleView.swift in Sources */,
+				CED7F9B12A9EA03D008F77BA /* ImportSeedView.swift in Sources */,
 				478DCFA02344E5EF009A03D6 /* CameraHelper.swift in Sources */,
 				F39F2C8126E2805D00D357F6 /* FeedSearchResultCollectionViewCell.swift in Sources */,
 				4754FA8F2729DD38006295A5 /* DashboardNewsletterFeedCollectionViewController.swift in Sources */,

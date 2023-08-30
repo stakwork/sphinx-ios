@@ -14,6 +14,35 @@ import CoreLocation
 import CocoaMQTT
 import MessagePack
 
+var wordsListPossibilities : [WordList] = [
+    .english,
+    .japanese,
+    .korean,
+    .spanish,
+    .simplifiedChinese,
+    .traditionalChinese,
+    .french,
+    .italian
+]
+
+func localizedString(_ key: String) -> String {
+    return NSLocalizedString(key, comment: "")
+}
+
+enum SeedValidationError: Error {
+    case incorrectWordNumber
+    case invalidWord
+    
+    var localizedDescription: String {
+        switch self {
+        case .incorrectWordNumber:
+            return localizedString("profile.mnemonic-incorrect-length")
+        case .invalidWord:
+            return localizedString("profile.mnemonic-invalid-word")
+        }
+    }
+}
+
 class CrypterManager : NSObject {
     
     class var sharedInstance : CrypterManager {
@@ -239,7 +268,69 @@ class CrypterManager : NSObject {
             return
         }
         
-        let (mnemonic, seed) = getOrCreateWalletMnemonic()
+        chooseImportOrGenerateSeed(network: network, host: host)
+    }
+    
+    func chooseImportOrGenerateSeed(network:String,host:String){
+        let requestEnteredMneumonicCallback: (() -> ()) = {
+            self.importSeedPhrase(network: network, host: host)
+        }
+        
+        let generateSeedCallback: (() -> ()) = {
+            self.performWalletFinalization(network: network, host: host)
+        }
+        
+        AlertHelper.showTwoOptionsAlert(
+            title: "profile.mnemonic-generate-or-import-title".localized,
+            message: "profile.mnemonic-generate-or-import-prompt".localized,
+            confirmButtonTitle: "profile.mnemonic-generate-prompt".localized,
+            cancelButtonTitle: "profile.mnemonic-import-prompt".localized,
+            confirm: generateSeedCallback,
+            cancel: requestEnteredMneumonicCallback
+        )
+    }
+    
+    func importSeedPhrase(network:String,host:String){
+        print("importing seed phrase")
+        if let vc = self.vc as? ProfileViewController{
+            print("ProfileViewController")
+            vc.showImportSeedView(network:network,host:host)
+        }
+    }
+    
+    func validateSeed(words:[String])->(SeedValidationError?,String?){
+        if(words.count != 12 && words.count != 24){
+            return (SeedValidationError.incorrectWordNumber,nil)
+        }
+        if let languageList = findListForWord(words[0]){
+            for i in 1..<words.count{
+                if languageList.words.contains(words[i]) == false{
+                    return (SeedValidationError.invalidWord,"\(i + 1) - \(words[i])")
+                }
+            }
+        }
+        else{
+            return (SeedValidationError.invalidWord,"1 -\(words[0])")
+        }
+        
+        return (nil,nil)
+    }
+    
+    func findListForWord(_ word: String) -> WordList? {
+        for language in wordsListPossibilities {
+            if language.words.contains(word) {
+                return language
+            }
+        }
+        return nil
+    }
+    
+    func performWalletFinalization(
+        network:String,
+        host:String,
+        enteredMnemonic:String?=nil
+    ){
+        let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic)
         
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil
@@ -272,6 +363,8 @@ class CrypterManager : NSObject {
             )
         }
     }
+    
+    
     
     func connectToMQTTWith(
         host: String,
@@ -911,6 +1004,9 @@ class CrypterManager : NSObject {
                 callback()
             }
         )
+        if let pvc = vc as? ProfileViewController{
+            pvc.didTapCancelImportSeed()
+        }
     }
     
     func getUrl(route: String) -> String {

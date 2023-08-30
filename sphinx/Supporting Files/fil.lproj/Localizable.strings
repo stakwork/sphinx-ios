@@ -294,6 +294,13 @@
 "profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-enter-format-error" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-generate" = "Generate random mnemonic words";
+"profile.mnemonic-pull-stored" = "Pull stored mnemonic words from memory";
+"profile.mnemonic-incorrect-length" = "Your seed phrase must be exactly 12 or 24 words.";
+"profile.mnemonic-invalid-word" = "It appears you've typed an invalid word: word #";
+"profile.mnemonic-generate-or-import-title" = "Choose Your Seed Method";
+"profile.mnemonic-generate-or-import-prompt" = "Would you like to generate a new seed phrase or import an existing one?";
+"profile.mnemonic-generate-prompt" = "Generate";
+"profile.mnemonic-import-prompt" = "Import";
 "profile.signer-setup-title" = "Setup";
 "profile.signer-setup-message" = "Setup hardware device or phone signer";
 "profile.harware-option" = "Hardware";

@@ -281,10 +281,10 @@ class CrypterManager : NSObject {
         }
         
         AlertHelper.showTwoOptionsAlert(
-            title: "Choose Your Seed Method",
-            message: "Would you like to generate a new seed phrase or import an existing one?",
-            confirmButtonTitle: "Generate",
-            cancelButtonTitle: "Import",
+            title: "profile.mnemonic-generate-or-import-title".localized,
+            message: "profile.mnemonic-generate-or-import-prompt".localized,
+            confirmButtonTitle: "profile.mnemonic-generate-prompt".localized,
+            cancelButtonTitle: "profile.mnemonic-import-prompt".localized,
             confirm: generateSeedCallback,
             cancel: requestEnteredMneumonicCallback
         )

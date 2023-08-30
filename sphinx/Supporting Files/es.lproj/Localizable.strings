@@ -309,6 +309,10 @@
 "profile.mnemonic-pull-stored" = "Obtener palabras de la memoria.";
 "profile.mnemonic-incorrect-length" = "Tu frase de recuperación debe tener exactamente 12 o 24 palabras.";
 "profile.mnemonic-invalid-word" = "Parece que has ingresado una palabra no válida: palabra #";
+"profile.mnemonic-generate-or-import-title" = "Elige tu método de semilla";
+"profile.mnemonic-generate-prompt" = "Generar";
+"profile.mnemonic-import-prompt" = "Importar";
+"profile.mnemonic-generate-or-import-prompt" = "¿Deseas generar una nueva frase mnemotécnica o importar una existente?";
 "profile.signer-setup-title" = "Configuración";
 "profile.signer-setup-message" = "Configurar hardware o phone signer";
 "profile.harware-option" = "Hardware";

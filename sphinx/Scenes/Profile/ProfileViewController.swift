@@ -483,6 +483,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
 
 extension ProfileViewController : ImportSeedViewDelegate{
     func didTapCancelImportSeed() {
+        self.importSeedView.textView.resignFirstResponder()
         self.importSeedView.textView.text = ""
         self.importSeedView.isHidden = true
         self.importSeedView.activityView.stopAnimating()

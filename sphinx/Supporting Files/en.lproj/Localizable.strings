@@ -311,6 +311,8 @@
 "profile.mnemonic-generate" = "Generate random mnemonic words";
 "profile.mnemonic-pull-stored" = "Pull stored mnemonic words from memory";
 "profile.seed-validation-error-title" = "Seed Validation Error";
+"signup.setup-swarm-admin-error-title" = "Connecting to Swarm Failed";
+"signup.setup-swarm-admin-error-prompt" = "There was an error connecting to swarm. Please try again.";
 "profile.mnemonic-incorrect-length" = "Your seed phrase must be exactly 12 or 24 words.";
 "profile.mnemonic-invalid-word" = "It appears you've typed an invalid word: word #";
 "profile.mnemonic-generate-or-import-title" = "Choose Your Seed Method";

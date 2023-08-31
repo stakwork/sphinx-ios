@@ -231,6 +231,9 @@
 "signup.products-fetch-failed" = "Productos In App Purchases no disponibles";
 "signup.signer-required-title" = "Configuración de Firmante Requerida";
 "signup.signer-required-prompt" = "Para usar Sphinx, debes escanear tu código de conexión y configurar un dispositivo de firma móvil o hardware";
+"signup.setup-swarm-admin-error-title" = "Error al conectar con Swarm";
+"signup.setup-swarm-admin-error-prompt" = "Hubo un error al conectar con Swarm. Por favor, intenta nuevamente.";
+
 
 
 //INVITE

@@ -106,12 +106,14 @@ extension NewUserSignupOptionsViewController {
         CrypterManager.sharedInstance.setupSigningDevice(
             vc: self
         ) { relay in
+            UserData.sharedInstance.save(ip: "https://\(relay ?? "")")
             self.didTapCancelImportSeed()
             self.importSeedView.textView.resignFirstResponder()
-            print("done!")
             self.hasAdminRetries = 0
             self.checkForAdmin(relay: relay ?? "", completion: {
-                print("succeeded")
+                self.postToGenerateToken(callback: {
+                    //TODO: send to next screen
+                })
             })
         }
     }
@@ -122,19 +124,28 @@ extension NewUserSignupOptionsViewController {
             API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
                 switch result {
                 case .success(let success):
-                    if success {
-                        print("success!!")
-                        completion()
-                    } else {
-                        self.checkForAdmin(relay: relay, completion: completion)
-                    }
+                    success ? completion() : self.checkForAdmin(relay: relay, completion: completion)
                 case .failure(let error):
                     // Handle the error here if needed
-                    print("Error: \(error)")
+                    self.checkForAdmin(relay: relay, completion: completion)
                 }
             })
         } else {
             AlertHelper.showAlert(title: "signup.setup-swarm-admin-error-title".localized, message: "signup.setup-swarm-admin-error-prompt".localized)
+        }
+    }
+    
+    func postToGenerateToken(callback: @escaping ()->()){
+        do{
+            let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
+            let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
+            let keys = try nodeKeys(net: network, seed: seed.hexString)
+            let token = EncryptionManager.randomString(length: 20)
+            
+            self.generateTokenAndProceed(pubkey: keys.pubkey, token: token, password: nil)
+        }
+        catch{
+            print("catch statement in postToGenerateToken with error: \(error)")
         }
     }
 
@@ -363,15 +374,17 @@ extension NewUserSignupOptionsViewController : ImportSeedViewDelegate{
     
     func didTapConfirm() {
         self.importSeedView.activityView.startAnimating()
-        let words = importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
-        let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
-        if let error = error {
-            AlertHelper.showAlert(title: "profile.seed-validation-error-title".localized, message: error.localizedDescription + (additionalString ?? ""))
-            return
-        }
-        self.importSeedView.activityView.isHidden = false
-        self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host, relay: importSeedView.relay,enteredMnemonic: importSeedView.textView.text)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+            let words = self.importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
+            let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
+            if let error = error {
+                AlertHelper.showAlert(title: "profile.seed-validation-error-title".localized, message: error.localizedDescription + (additionalString ?? ""))
+                return
+            }
+            self.importSeedView.activityView.isHidden = false
+            self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
+            CrypterManager.sharedInstance.performWalletFinalization(network: self.importSeedView.network, host: self.importSeedView.host, relay: importSeedView.relay,enteredMnemonic: self.importSeedView.textView.text)
+        })
     }
     
 }

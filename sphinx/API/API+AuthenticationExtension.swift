@@ -225,7 +225,8 @@ extension API {
         completionHandler: @escaping GetHasAdminCompletionHandler
     ){
         let route = "has_admin"
-        let urlPath = "https://\(relay)/\(route)"
+        let baseURL = UserData.sharedInstance.getNodeIP()
+        let urlPath = "\(baseURL)/\(route)"
         
         var urlComponents = URLComponents(string: urlPath)!
         urlComponents.queryItems = []

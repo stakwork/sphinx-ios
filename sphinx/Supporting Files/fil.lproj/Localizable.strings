@@ -218,6 +218,8 @@
 "signup.products-fetch-failed" = "Hindi available ang mga produkto ng In App Purchases";
 "signup.signer-required-title" = "Signer Setup Required";
 "signup.signer-required-prompt" = "In order to use Sphinx you must scan your connection code and set up a mobile or hardware signing device";
+"signup.setup-swarm-admin-error-title" = "Connecting to Swarm Failed";
+"signup.setup-swarm-admin-error-prompt" = "There was an error connecting to swarm. Please try again.";
 
 //INVITE
 "add.people" = "Magdagdag ng mga Tao";

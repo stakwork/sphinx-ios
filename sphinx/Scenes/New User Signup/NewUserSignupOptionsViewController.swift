@@ -26,6 +26,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     let storeKitService = StoreKitService.shared
 
     var generateTokenRetries = 0
+    var hasAdminRetries = 0
     
     
     var isPurchaseProcessing: Bool = false {
@@ -104,13 +105,39 @@ extension NewUserSignupOptionsViewController {
         importSeedView.delegate = self
         CrypterManager.sharedInstance.setupSigningDevice(
             vc: self
-        ) {
+        ) { relay in
             self.didTapCancelImportSeed()
             self.importSeedView.textView.resignFirstResponder()
             print("done!")
-            //self.configureSigningDeviceButton()
+            self.hasAdminRetries = 0
+            self.checkForAdmin(relay: relay ?? "", completion: {
+                print("succeeded")
+            })
         }
     }
+    
+    func checkForAdmin(relay: String,completion: @escaping ()->()) {
+        if hasAdminRetries < 100 {
+            hasAdminRetries += 1
+            API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
+                switch result {
+                case .success(let success):
+                    if success {
+                        print("success!!")
+                        completion()
+                    } else {
+                        self.checkForAdmin(relay: relay, completion: completion)
+                    }
+                case .failure(let error):
+                    // Handle the error here if needed
+                    print("Error: \(error)")
+                }
+            })
+        } else {
+            AlertHelper.showAlert(title: "signup.setup-swarm-admin-error-title".localized, message: "signup.setup-swarm-admin-error-prompt".localized)
+        }
+    }
+
 }
 
 
@@ -316,11 +343,12 @@ extension NewUserSignupOptionsViewController {
 
 
 extension NewUserSignupOptionsViewController : ImportSeedViewDelegate{
-    func showImportSeedView(network:String,host:String){
+    func showImportSeedView(network:String,host:String,relay:String){
         self.importSeedView.isHidden = false
         self.importSeedView.delegate = self
         importSeedView.network = network
         importSeedView.host = host
+        importSeedView.relay = relay
         self.view.bringSubviewToFront(importSeedView)
         
         importSeedView.layer.zPosition = 999
@@ -343,7 +371,7 @@ extension NewUserSignupOptionsViewController : ImportSeedViewDelegate{
         }
         self.importSeedView.activityView.isHidden = false
         self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host,enteredMnemonic: importSeedView.textView.text)
+        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host, relay: importSeedView.relay,enteredMnemonic: importSeedView.textView.text)
     }
     
 }

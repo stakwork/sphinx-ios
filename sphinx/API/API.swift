@@ -78,6 +78,9 @@ typealias FeedSearchCompletionHandler = (
     Result<[FeedSearchResult], API.RequestError>
 ) -> ()
 
+typealias GetHasAdminCompletionHandler = (
+    Result<Bool, API.RequestError>
+) -> ()
 
 typealias PodcastEpisodeSearchCompletionHandler = (
     Result<[ContentFeedItem], API.RequestError>
@@ -99,6 +102,7 @@ class API {
     var onionConnector = SphinxOnionConnector.sharedInstance
     var cancellableRequest: DataRequest?
     var podcastSearchRequest: DataRequest?
+    var getHasAdminRequest: DataRequest?
     var currentRequestType : API.CancellableRequestType = API.CancellableRequestType.messages
     var uploadRequest: UploadRequest?
 

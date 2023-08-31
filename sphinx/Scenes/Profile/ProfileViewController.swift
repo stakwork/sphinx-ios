@@ -460,7 +460,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBAction func setupSigningDevice() {
         cryptedManager.setupSigningDevice(
             vc: self
-        ) {
+        ) { _ in //TODO: review with @Tom, do we need to do the same workflow where we query the relay here? If so this is where to do it
             self.configureSigningDeviceButton()
         }
     }
@@ -474,11 +474,12 @@ class ProfileViewController: NewKeyboardHandlerViewController {
 
 extension ProfileViewController : ImportSeedViewDelegate{
     
-    func showImportSeedView(network:String,host:String){
+    func showImportSeedView(network:String,host:String,relay:String){
         self.importSeedView.isHidden = false
         self.importSeedView.delegate = self
         importSeedView.network = network
         importSeedView.host = host
+        importSeedView.relay = relay
         self.view.bringSubviewToFront(importSeedView)
         
         importSeedView.layer.zPosition = 999
@@ -501,6 +502,6 @@ extension ProfileViewController : ImportSeedViewDelegate{
         self.importSeedView.activityView.startAnimating()
         self.importSeedView.activityView.isHidden = false
         self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host,enteredMnemonic: importSeedView.textView.text)
+        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host, relay: importSeedView.relay,enteredMnemonic: importSeedView.textView.text)
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 extension API {
     
@@ -215,6 +216,48 @@ extension API {
                 }
             case .failure(_):
                 errorCallback()
+            }
+        }
+    }
+    
+    public func getHasAdmin(
+        relay:String,
+        completionHandler: @escaping GetHasAdminCompletionHandler
+    ){
+        let route = "has_admin"
+        let urlPath = "https://\(relay)/\(route)"
+        
+        var urlComponents = URLComponents(string: urlPath)!
+        urlComponents.queryItems = []
+
+        guard let urlString = urlComponents.url?.absoluteString else {
+            completionHandler(.failure(.failedToCreateRequestURL))
+            return
+        }
+
+        guard let request = createRequest(
+            urlString,
+            bodyParams: nil,
+            method: "GET"
+        ) else {
+            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
+            return
+        }
+
+        getHasAdminRequest?.cancel()
+        
+        getHasAdminRequest = AF.request(request).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    if let success = json["response"] as? Bool, success {
+                        completionHandler(.success(true))
+                    } else {
+                        completionHandler(.success(false))
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(.networkError(error)))
             }
         }
     }

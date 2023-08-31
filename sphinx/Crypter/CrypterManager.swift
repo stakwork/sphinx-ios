@@ -73,13 +73,16 @@ class CrypterManager : NSObject {
     struct HardwareLink {
         var mqtt: String? = nil
         var network: String? = nil
+        var relay: String? = nil
         
         init(
             mqtt: String,
-            network: String
+            network: String,
+            relay:String
         ) {
             self.mqtt = mqtt
             self.network = network
+            self.relay = relay
         }
         
         static func getHardwareLinkFrom(query: String) -> HardwareLink? {
@@ -91,9 +94,14 @@ class CrypterManager : NSObject {
                 return nil
             }
             
+            guard let relay = query.getLinkComponentWith(key: "relay"), network.isNotEmpty else {
+                return nil
+            }
+            
             return HardwareLink(
                 mqtt: mqtt,
-                network: network
+                network: network,
+                relay: relay
             )
         }
     }
@@ -105,10 +113,11 @@ class CrypterManager : NSObject {
         var publicKey: String? = nil
         var bitcoinNetwork: String? = nil
         var encryptedSeed: String? = nil
+        var relay:String? = nil
     }
     
     var vc: UIViewController! = nil
-    var endCallback: () -> Void = {}
+    var endCallback: ((String?) -> ()) = {_ in }
     
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
@@ -179,7 +188,7 @@ class CrypterManager : NSObject {
     func setupSigningDevice(
         vc: UIViewController,
         hardwareLink: HardwareLink? = nil,
-        callback: @escaping () -> ()
+        callback: @escaping ((String?) -> ())
     ) {
         self.vc = vc
         self.endCallback = callback
@@ -262,22 +271,23 @@ class CrypterManager : NSObject {
         
         let host = hardwarePostDto.lightningNodeUrl ?? UserDefaults.Keys.phoneSignerHost.get()
         let network = hardwarePostDto.bitcoinNetwork ?? UserDefaults.Keys.phoneSignerNetwork.get()
+        let relay = hardwarePostDto.relay ?? "" //TODO: add to user defaults
         
         guard let host = host, let network = network else {
             showQRScanner()
             return
         }
         
-        chooseImportOrGenerateSeed(network: network, host: host)
+        chooseImportOrGenerateSeed(network: network, host: host,relay: relay)
     }
     
-    func chooseImportOrGenerateSeed(network:String,host:String){
+    func chooseImportOrGenerateSeed(network:String,host:String,relay:String){
         let requestEnteredMneumonicCallback: (() -> ()) = {
-            self.importSeedPhrase(network: network, host: host)
+            self.importSeedPhrase(network: network, host: host,relay:relay)
         }
         
         let generateSeedCallback: (() -> ()) = {
-            self.performWalletFinalization(network: network, host: host)
+            self.performWalletFinalization(network: network, host: host,relay:relay)
         }
         
         AlertHelper.showTwoOptionsAlert(
@@ -290,11 +300,11 @@ class CrypterManager : NSObject {
         )
     }
     
-    func importSeedPhrase(network:String,host:String){
+    func importSeedPhrase(network:String,host:String,relay:String){
         print("importing seed phrase")
         if let vc = self.vc as? ImportSeedViewDelegate{
             print("ProfileViewController")
-            vc.showImportSeedView(network:network,host:host)
+            vc.showImportSeedView(network:network,host:host,relay:relay)
         }
     }
     
@@ -328,6 +338,7 @@ class CrypterManager : NSObject {
     func performWalletFinalization(
         network:String,
         host:String,
+        relay:String,
         enteredMnemonic:String?=nil
     ){
         let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic)
@@ -361,7 +372,7 @@ class CrypterManager : NSObject {
                 keys: keys,
                 and: password
             )
-            self.endCallback()
+            self.endCallback(relay)
         }
     }
     
@@ -979,7 +990,7 @@ class CrypterManager : NSObject {
                             self.showErrorWithMessage("profile.error-sending-seed".localized)
                         }
 
-                        self.endCallback()
+                            self.endCallback(self.hardwarePostDto.relay)
                     })
                 }
             }
@@ -1055,6 +1066,7 @@ extension CrypterManager : QRCodeScannerDelegate {
         ) {
             hardwarePostDto.lightningNodeUrl = hardwareLink.mqtt
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
+            hardwarePostDto.relay = hardwareLink.relay
             
             startMQTTSetup()
         } else {

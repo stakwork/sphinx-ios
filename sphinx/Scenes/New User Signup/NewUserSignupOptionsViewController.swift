@@ -111,8 +111,8 @@ extension NewUserSignupOptionsViewController {
             self.importSeedView.textView.resignFirstResponder()
             self.hasAdminRetries = 0
             self.checkForAdmin(relay: relay ?? "", completion: {
+                //self.presentConnectingLoadingScreenVC()
                 self.postToGenerateToken(callback: {
-                    //TODO: send to next screen
                 })
             })
         }
@@ -143,6 +143,7 @@ extension NewUserSignupOptionsViewController {
             let token = EncryptionManager.randomString(length: 20)
             
             self.generateTokenAndProceed(pubkey: keys.pubkey, token: token, password: nil)
+            callback()
         }
         catch{
             print("catch statement in postToGenerateToken with error: \(error)")

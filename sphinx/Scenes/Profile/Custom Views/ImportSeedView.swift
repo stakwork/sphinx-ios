@@ -9,6 +9,7 @@
 import UIKit
 
 protocol ImportSeedViewDelegate : NSObject{
+    func showImportSeedView(network:String,host:String)
     func didTapCancelImportSeed()
     func didTapConfirm()
 }

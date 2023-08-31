@@ -292,7 +292,7 @@ class CrypterManager : NSObject {
     
     func importSeedPhrase(network:String,host:String){
         print("importing seed phrase")
-        if let vc = self.vc as? ProfileViewController{
+        if let vc = self.vc as? ImportSeedViewDelegate{
             print("ProfileViewController")
             vc.showImportSeedView(network:network,host:host)
         }
@@ -361,6 +361,7 @@ class CrypterManager : NSObject {
                 keys: keys,
                 and: password
             )
+            self.endCallback()
         }
     }
     

@@ -37,11 +37,10 @@ class InitialWelcomeViewController: UIViewController {
     
     
     @IBAction func newUserButtonTapped(_ sender: UIButton) {
-        CrypterManager.sharedInstance.setupSigningDevice(
-            vc: self
-        ) {
-            //self.configureSigningDeviceButton()
-        }
+        let nextVC = NewUserSignupOptionsViewController.instantiate()
+        
+        navigationController?
+            .pushViewController(nextVC, animated: true)
     }
     
     
@@ -52,12 +51,6 @@ class InitialWelcomeViewController: UIViewController {
             .pushViewController(restoreExistingUserDescriptionVC, animated: true)
     }
     
-    func pushToNewUser(){
-        let nextVC = NewUserSignupOptionsViewController.instantiate()
-        
-        navigationController?
-            .pushViewController(nextVC, animated: true)
-    }
 }
 
 

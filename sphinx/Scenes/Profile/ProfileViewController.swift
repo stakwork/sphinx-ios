@@ -469,6 +469,11 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         cryptedManager.resetMQTTConnection()
     }
     
+}
+
+
+extension ProfileViewController : ImportSeedViewDelegate{
+    
     func showImportSeedView(network:String,host:String){
         self.importSeedView.isHidden = false
         self.importSeedView.delegate = self
@@ -478,10 +483,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         
         importSeedView.layer.zPosition = 999
     }
-}
-
-
-extension ProfileViewController : ImportSeedViewDelegate{
+    
     func didTapCancelImportSeed() {
         self.importSeedView.textView.resignFirstResponder()
         self.importSeedView.textView.text = ""

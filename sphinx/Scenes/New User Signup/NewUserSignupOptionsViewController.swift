@@ -114,7 +114,6 @@ extension NewUserSignupOptionsViewController {
             self.importSeedView.textView.resignFirstResponder()
             self.hasAdminRetries = 0
             self.checkForAdmin(relay: relay ?? "", completion: {
-                //self.presentConnectingLoadingScreenVC()
                 self.postToGenerateToken(callback: {
                 })
             })
@@ -133,7 +132,9 @@ extension NewUserSignupOptionsViewController {
                 case .failure(let error):
                     // Handle the error here if needed
                     print("checkForAdmin error:\(error)")
-                    self.checkForAdmin(relay: relay, completion: completion)
+                    DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+                        self.checkForAdmin(relay: relay, completion: completion)
+                    })
                 }
             })
         } else {

@@ -44,12 +44,18 @@ extension API {
                 if let json = data as? NSDictionary {
                     if let success = json["success"] as? Bool, success {
                         callback(success)
+                        print("generateTokenUnauthenticated success json:\(json)")
+                        print("generateTokenUnauthenticated success status:\(String(describing: response.response?.statusCode))")
                     } else {
                         errorCallback()
+                        print("generateTokenUnauthenticated failure json:\(json)")
+                        print("generateTokenUnauthenticated failure status:\(String(describing: response.response?.statusCode))")
                     }
                 }
-            case .failure(_):
+            case .failure(let error):
                 errorCallback()
+                print("generateTokenUnauthenticated request failure:\(error)")
+                print("generateTokenUnauthenticated failure status:\(String(describing: response.response?.statusCode))")
             }
         }
     }
@@ -84,12 +90,18 @@ extension API {
                 if let json = data as? NSDictionary {
                     if let success = json["success"] as? Bool, success {
                         callback(success)
+                        print("generateToken success json:\(json)")
+                        print("generateToken success status:\(String(describing: response.response?.statusCode))")
                     } else {
                         errorCallback()
+                        print("generateToken failure json:\(json)")
+                        print("generateToken failure status:\(String(describing: response.response?.statusCode))")
                     }
                 }
-            case .failure(_):
+            case .failure(let error):
                 errorCallback()
+                print("generateTokenAuthenticated request failure:\(error)")
+                print("generateTokenAuthenticated failure status:\(String(describing: response.response?.statusCode))")
             }
         }
     }

@@ -704,17 +704,20 @@ class CrypterManager : NSObject {
     
     ///Signer setup
     func setupSigningDevice() {
-        self.checkNetwork {
-            self.promptForNetworkName() { networkName in
-                self.promptForNetworkPassword(networkName) {
-                    self.promptForHardwareUrl() {
-                        self.promptForBitcoinNetwork {
-                            self.testCrypter()
+        API.sharedInstance.getHardwarePublicKey(callback: {_ in}, errorCallback: {})//force request for LAN access
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            self.checkNetwork {
+                self.promptForNetworkName() { networkName in
+                    self.promptForNetworkPassword(networkName) {
+                        self.promptForHardwareUrl() {
+                            self.promptForBitcoinNetwork {
+                                self.testCrypter()
+                            }
                         }
                     }
                 }
             }
-        }
+        })
     }
     
     func checkNetwork(callback: @escaping () -> ()) {

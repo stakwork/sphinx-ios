@@ -229,7 +229,10 @@ class CrypterManager : NSObject {
         )
     }
     
-    func showQRScanner() {
+    func showQRScanner(presentingVC:UIViewController?=nil) {
+        if(presentingVC != nil){
+            self.vc = presentingVC
+        }
         guard let vc = self.vc else {
             return
         }

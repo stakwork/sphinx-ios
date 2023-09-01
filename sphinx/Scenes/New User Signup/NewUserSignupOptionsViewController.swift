@@ -87,7 +87,7 @@ extension NewUserSignupOptionsViewController {
     
     @IBAction func connectionCodeButtonTapped(_ sender: UIButton) {
         AlertHelper.showAlert(title: "signup.signer-required-title".localized, message: "signup.signer-required-prompt".localized,completion: {
-            self.setupWallet()
+            CrypterManager.sharedInstance.showQRScanner(presentingVC: self)
         })
     }
     

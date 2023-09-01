@@ -145,9 +145,9 @@ extension String {
         }
     }
     
-    var isSwarmMqttCode : Bool {
+    var isSwarmGlyphAction : Bool {//if they're signing up with their own signing device
         get {
-            return self.localizedStandardContains("mqtt=")
+            return self.localizedStandardContains("glyph")
         }
     }
     

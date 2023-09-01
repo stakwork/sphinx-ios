@@ -10,6 +10,7 @@ import StoreKit
 
 
 class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignupHandling {
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var screenHeadlineLabel: UILabel!
     @IBOutlet weak var connectionCodeButtonContainer: UIView!
@@ -27,6 +28,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
 
     var generateTokenRetries = 0
     var hasAdminRetries = 0
+    var generateTokenSuccess: Bool = false
     
     
     var isPurchaseProcessing: Bool = false {
@@ -104,7 +106,8 @@ extension NewUserSignupOptionsViewController {
     func setupWallet(){
         importSeedView.delegate = self
         CrypterManager.sharedInstance.setupSigningDevice(
-            vc: self
+            vc: self,
+            overrideMessages:true//quietly disconnect MQTT if we need a restart
         ) { relay in
             UserData.sharedInstance.save(ip: "https://\(relay ?? "")")
             self.didTapCancelImportSeed()
@@ -119,18 +122,18 @@ extension NewUserSignupOptionsViewController {
     }
     
     func checkForAdmin(relay: String,completion: @escaping ()->()) {
-        if hasAdminRetries < 300 {
+        if hasAdminRetries < 50 {
             hasAdminRetries += 1
             API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
                 switch result {
                 case .success(let success):
-                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 0.25, completion: {
+                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
                         self.checkForAdmin(relay: relay, completion: completion)
                     })
                 case .failure(let error):
                     // Handle the error here if needed
-                    print("")
-                    //self.checkForAdmin(relay: relay, completion: completion)
+                    print("checkForAdmin error:\(error)")
+                    self.checkForAdmin(relay: relay, completion: completion)
                 }
             })
         } else {
@@ -145,7 +148,7 @@ extension NewUserSignupOptionsViewController {
             let keys = try nodeKeys(net: network, seed: seed.hexString)
             let token = EncryptionManager.randomString(length: 20)
             
-            self.generateTokenAndProceed(pubkey: keys.pubkey, token: token, password: nil)
+            self.generateTokenAndProceed(pubkey: keys.pubkey, password: nil)
             callback()
         }
         catch{

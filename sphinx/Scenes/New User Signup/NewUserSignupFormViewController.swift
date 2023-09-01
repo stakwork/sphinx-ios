@@ -9,6 +9,7 @@ import UIKit
 
 
 class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHandling {
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var codeTextField: UITextField!
@@ -21,6 +22,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
     var generateTokenRetries = 0
+    var generateTokenSuccess: Bool = false
 
     
     static func instantiate() -> NewUserSignupFormViewController {

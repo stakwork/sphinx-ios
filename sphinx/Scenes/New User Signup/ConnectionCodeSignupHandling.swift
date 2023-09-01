@@ -13,6 +13,7 @@ protocol ConnectionCodeSignupHandling: UIViewController, SphinxOnionConnectorDel
     var userData: UserData { get }
     var onionConnector: SphinxOnionConnector { get }
     var generateTokenRetries: Int { get set }
+    var generateTokenSuccess : Bool {get set}
     
     func signup(withConnectionCode connectionCode: String)
     
@@ -153,26 +154,23 @@ extension ConnectionCodeSignupHandling {
     
     func generateTokenAndProceed(pubkey: String, password: String? = nil) {
         let token = EncryptionManager.randomString(length: 20)
-        
         generateTokenAndProceed(pubkey: pubkey, token: token, password: password)
     }
     
     
     func generateTokenAndProceed(pubkey: String, token: String, password: String? = nil) {
         generateTokenRetries += 1
-        
         userData.generateToken(
             token: token,
             pubkey: pubkey,
             password: password,
             completion: { [weak self] in
                 guard let self = self else { return }
-                
+                self.generateTokenSuccess = true
                 self.proceedToNewUserWelcome()
             },
             errorCompletion: { [weak self] in
                 guard let self = self else { return }
-                
                 self.generateTokenError(pubkey: pubkey, token: token, password: password)
             }
         )
@@ -184,7 +182,7 @@ extension ConnectionCodeSignupHandling {
         token: String,
         password: String? = nil
     ) {
-        if generateTokenRetries < 4 {
+        if generateTokenRetries < 4  && generateTokenSuccess == false{
             DelayPerformedHelper.performAfterDelay(seconds: 0.5) { [weak self] in
                 self?.generateTokenAndProceed(pubkey: pubkey, token: token, password: password)
             }

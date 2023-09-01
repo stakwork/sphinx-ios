@@ -187,6 +187,7 @@ class CrypterManager : NSObject {
     
     func setupSigningDevice(
         vc: UIViewController,
+        overrideMessages:Bool=false,
         hardwareLink: HardwareLink? = nil,
         callback: @escaping ((String?) -> ())
     ) {
@@ -199,10 +200,11 @@ class CrypterManager : NSObject {
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
         }
         
-        chooseConnectionType()
+        chooseConnectionType(overrideMessages: overrideMessages)
     }
     
-    func chooseConnectionType() {
+    func chooseConnectionType(overrideMessages:Bool=false) {
+        overrideMessages ? (self.resetMQTTConnection(overrideMessages: overrideMessages)) : ()//disconnect MQTT if it is connected
         let setupHardwareCallback: (() -> ()) = {
             self.setupSigningDevice()
         }
@@ -239,8 +241,8 @@ class CrypterManager : NSObject {
         vc.present(viewController, animated: true)
     }
     
-    func resetMQTTConnection() {
-        if mqtt?.connState != .connected && mqtt?.connState != .connecting {
+    func resetMQTTConnection(overrideMessages:Bool=false) {
+        if mqtt?.connState != .connected && mqtt?.connState != .connecting && overrideMessages == false {
             showErrorWithMessage("MQTT not connected yet")
             return
         }
@@ -256,7 +258,9 @@ class CrypterManager : NSObject {
         mqtt?.disconnect()
         mqtt = nil
         
-        showSuccessWithMessage("MQTT disconnected")
+        if(overrideMessages == false){
+            showSuccessWithMessage("MQTT disconnected")
+        }
         
         DelayPerformedHelper.performAfterDelay(seconds: 2, completion: {
             self.didDisconnect = false

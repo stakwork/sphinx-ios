@@ -95,6 +95,8 @@ extension API {
                     } else {
                         errorCallback()
                         print("generateToken failure json:\(json)")
+                        print("generateToken failure request:\(String(describing: response.request))")
+                        print("generateToken failure response: \(String(describing: response.response))")
                         print("generateToken failure status:\(String(describing: response.response?.statusCode))")
                     }
                 }
@@ -240,7 +242,7 @@ extension API {
         let baseURL = UserData.sharedInstance.getNodeIP()
         let urlPath = "\(baseURL)/\(route)"
         
-        var urlComponents = URLComponents(string: urlPath)!
+        let urlComponents = URLComponents(string: urlPath)!
 
         guard let urlString = urlComponents.url?.absoluteString else {
             completionHandler(.failure(.failedToCreateRequestURL))
@@ -259,6 +261,7 @@ extension API {
         getHasAdminRequest?.cancel()
         
         getHasAdminRequest = AF.request(request).responseJSON { response in
+            print("getHasAdminRequest request: \(String(describing: self.getHasAdminRequest))")
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {

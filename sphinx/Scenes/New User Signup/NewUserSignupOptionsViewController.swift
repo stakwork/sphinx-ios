@@ -10,6 +10,7 @@ import StoreKit
 
 
 class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignupHandling {
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var screenHeadlineLabel: UILabel!
     @IBOutlet weak var connectionCodeButtonContainer: UIView!
@@ -17,6 +18,8 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     @IBOutlet weak var purchaseLiteNodeButtonContainer: UIView!
     @IBOutlet weak var purchaseLiteNodeButton: UIButton!
     @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var importSeedView: ImportSeedView!
+    
     
     internal var hubNodeInvoice: API.HUBNodeInvoice?
 
@@ -24,6 +27,8 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     let storeKitService = StoreKitService.shared
 
     var generateTokenRetries = 0
+    var hasAdminRetries = 0
+    var generateTokenSuccess: Bool = false
     
     
     var isPurchaseProcessing: Bool = false {
@@ -81,8 +86,9 @@ extension NewUserSignupOptionsViewController {
     
     
     @IBAction func connectionCodeButtonTapped(_ sender: UIButton) {
-        let nextVC = NewUserSignupDescriptionViewController.instantiate()
-        navigationController?.pushViewController(nextVC, animated: true)
+        AlertHelper.showAlert(title: "signup.signer-required-title".localized, message: "signup.signer-required-prompt".localized,completion: {
+            self.setupWallet()
+        })
     }
     
     
@@ -96,6 +102,60 @@ extension NewUserSignupOptionsViewController {
         }
         startPurchase(for: product)
     }
+    
+    func setupWallet(){
+        importSeedView.delegate = self
+        CrypterManager.sharedInstance.setupSigningDevice(
+            vc: self,
+            overrideMessages:true//quietly disconnect MQTT if we need a restart
+        ) { relay in
+            UserData.sharedInstance.save(ip: "https://\(relay ?? "")")
+            self.didTapCancelImportSeed()
+            self.importSeedView.textView.resignFirstResponder()
+            self.hasAdminRetries = 0
+            self.checkForAdmin(relay: relay ?? "", completion: {
+                //self.presentConnectingLoadingScreenVC()
+                self.postToGenerateToken(callback: {
+                })
+            })
+        }
+    }
+    
+    func checkForAdmin(relay: String,completion: @escaping ()->()) {
+        if hasAdminRetries < 50 {
+            hasAdminRetries += 1
+            API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
+                switch result {
+                case .success(let success):
+                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+                        self.checkForAdmin(relay: relay, completion: completion)
+                    })
+                case .failure(let error):
+                    // Handle the error here if needed
+                    print("checkForAdmin error:\(error)")
+                    self.checkForAdmin(relay: relay, completion: completion)
+                }
+            })
+        } else {
+            AlertHelper.showAlert(title: "signup.setup-swarm-admin-error-title".localized, message: "signup.setup-swarm-admin-error-prompt".localized)
+        }
+    }
+    
+    func postToGenerateToken(callback: @escaping ()->()){
+        do{
+            let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
+            let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
+            let keys = try nodeKeys(net: network, seed: seed.hexString)
+            let token = EncryptionManager.randomString(length: 20)
+            
+            self.generateTokenAndProceed(pubkey: keys.pubkey, password: nil)
+            callback()
+        }
+        catch{
+            print("catch statement in postToGenerateToken with error: \(error)")
+        }
+    }
+
 }
 
 
@@ -297,4 +357,41 @@ extension NewUserSignupOptionsViewController {
 
         newMessageBubbleHelper.showGenericMessageView(text: message)
     }
+}
+
+
+extension NewUserSignupOptionsViewController : ImportSeedViewDelegate{
+    func showImportSeedView(network:String,host:String,relay:String){
+        self.importSeedView.isHidden = false
+        self.importSeedView.delegate = self
+        importSeedView.network = network
+        importSeedView.host = host
+        importSeedView.relay = relay
+        self.view.bringSubviewToFront(importSeedView)
+        
+        importSeedView.layer.zPosition = 999
+    }
+    
+    func didTapCancelImportSeed() {
+        self.importSeedView.textView.resignFirstResponder()
+        self.importSeedView.textView.text = ""
+        self.importSeedView.isHidden = true
+        self.importSeedView.activityView.stopAnimating()
+    }
+    
+    func didTapConfirm() {
+        self.importSeedView.activityView.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
+            let words = self.importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
+            let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
+            if let error = error {
+                AlertHelper.showAlert(title: "profile.seed-validation-error-title".localized, message: error.localizedDescription + (additionalString ?? ""))
+                return
+            }
+            self.importSeedView.activityView.isHidden = false
+            self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
+            CrypterManager.sharedInstance.performWalletFinalization(network: self.importSeedView.network, host: self.importSeedView.host, relay: importSeedView.relay,enteredMnemonic: self.importSeedView.textView.text)
+        })
+    }
+    
 }

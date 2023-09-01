@@ -66,7 +66,7 @@ class DeepLinksHandlerHelper {
                 query: glyphQuery
             ) {
                 let cryptedManager = CrypterManager.sharedInstance
-                cryptedManager.setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: {})
+                cryptedManager.setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: {_ in }) //TODO: review with @Tom, do we need to do the same workflow where we query the relay here? If so this is where to do it
             }
 
         }

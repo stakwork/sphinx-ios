@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -42,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LIl-wz-9W7">
-                                <rect key="frame" x="0.0" y="44" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="48" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="jKb-eD-eNd"/>
@@ -131,6 +132,13 @@
                                 </constraints>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfD-01-34C" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="14" y="325" width="386" height="260"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="260" id="UXp-Bw-zQH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ddQ-Tj-FpK"/>
                         <color key="backgroundColor" name="OnboardingBG"/>
@@ -139,11 +147,14 @@
                             <constraint firstItem="LIl-wz-9W7" firstAttribute="top" secondItem="ddQ-Tj-FpK" secondAttribute="top" id="4BX-zl-aHS"/>
                             <constraint firstItem="MvN-Zq-v0Y" firstAttribute="top" secondItem="lJe-dQ-jeM" secondAttribute="bottom" constant="30" id="AoL-R2-LQw"/>
                             <constraint firstItem="lJe-dQ-jeM" firstAttribute="centerY" secondItem="rex-6b-D9n" secondAttribute="centerY" id="Gm2-3X-ZfC"/>
+                            <constraint firstItem="wfD-01-34C" firstAttribute="centerY" secondItem="ddQ-Tj-FpK" secondAttribute="centerY" id="ILp-3n-3cK"/>
                             <constraint firstItem="MvN-Zq-v0Y" firstAttribute="centerX" secondItem="rex-6b-D9n" secondAttribute="centerX" id="JZY-qp-xcr"/>
                             <constraint firstItem="ddQ-Tj-FpK" firstAttribute="trailing" secondItem="lJe-dQ-jeM" secondAttribute="trailing" constant="30" id="OUx-gh-5hP"/>
                             <constraint firstItem="m0C-Kj-OMc" firstAttribute="centerX" secondItem="rex-6b-D9n" secondAttribute="centerX" id="PcP-km-wKu"/>
                             <constraint firstItem="LIl-wz-9W7" firstAttribute="leading" secondItem="ddQ-Tj-FpK" secondAttribute="leading" id="gXv-W5-txa"/>
+                            <constraint firstItem="wfD-01-34C" firstAttribute="leading" secondItem="ddQ-Tj-FpK" secondAttribute="leading" constant="14" id="h9Y-7j-HP3"/>
                             <constraint firstItem="lJe-dQ-jeM" firstAttribute="leading" secondItem="ddQ-Tj-FpK" secondAttribute="leading" constant="30" id="has-h1-REg"/>
+                            <constraint firstItem="wfD-01-34C" firstAttribute="centerX" secondItem="ddQ-Tj-FpK" secondAttribute="centerX" id="lHq-Ov-3Vl"/>
                             <constraint firstItem="ddQ-Tj-FpK" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="m0C-Kj-OMc" secondAttribute="trailing" id="uhZ-Hs-iHR"/>
                             <constraint firstItem="m0C-Kj-OMc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ddQ-Tj-FpK" secondAttribute="leading" id="wpQ-Rv-NRw"/>
                             <constraint firstItem="m0C-Kj-OMc" firstAttribute="bottom" secondItem="lJe-dQ-jeM" secondAttribute="top" constant="-80" id="zgq-uu-d7a"/>
@@ -153,6 +164,7 @@
                         <outlet property="backButton" destination="LIl-wz-9W7" id="zuy-Hc-mNz"/>
                         <outlet property="connectionCodeButton" destination="7aQ-xQ-TUr" id="PRa-Ml-ETi"/>
                         <outlet property="connectionCodeButtonContainer" destination="7aQ-xQ-TUr" id="cic-wW-OfV"/>
+                        <outlet property="importSeedView" destination="wfD-01-34C" id="hvQ-lx-7n4"/>
                         <outlet property="purchaseLiteNodeButton" destination="bJQ-St-2xn" id="nMs-YP-5VQ"/>
                         <outlet property="purchaseLiteNodeButtonContainer" destination="bJQ-St-2xn" id="rZo-v9-vUO"/>
                         <outlet property="purchaseLoadingSpinner" destination="MvN-Zq-v0Y" id="94i-oJ-Q67"/>
@@ -249,7 +261,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGk-nq-mPF">
-                                <rect key="frame" x="0.0" y="44" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="48" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="34R-ND-5c7"/>
@@ -595,5 +607,8 @@ Lightning Network!</string>
         <namedColor name="WashedOutReceivedText">
             <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol ImportSeedViewDelegate : NSObject{
+    func showImportSeedView(network:String,host:String,relay:String)
     func didTapCancelImportSeed()
     func didTapConfirm()
 }
@@ -27,6 +28,7 @@ class ImportSeedView: UIView {
     var isKeyboardShown = false
     var network:String = ""
     var host:String = ""
+    var relay:String = ""
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -216,6 +216,10 @@
 "signup.purchase-eligibility-failed" = "Nabigo ang Pagiging Kwalipikado sa Pagbili";
 "signup.lite-node-purchase-failed" = "Nabigo ang Pagbili ng Lite Node";
 "signup.products-fetch-failed" = "Hindi available ang mga produkto ng In App Purchases";
+"signup.signer-required-title" = "Signer Setup Required";
+"signup.signer-required-prompt" = "In order to use Sphinx you must scan your connection code and set up a mobile or hardware signing device";
+"signup.setup-swarm-admin-error-title" = "Connecting to Swarm Failed";
+"signup.setup-swarm-admin-error-prompt" = "There was an error connecting to swarm. Please try again.";
 
 //INVITE
 "add.people" = "Magdagdag ng mga Tao";
@@ -288,6 +292,7 @@
 "profile.select-bitcoin-network" = "Piliin ang Bitcoin Network";
 "profile.mnemonic-generation-title" = "Mnemonic generation";
 "profile.mnemonic-generation-description" = "Choose the option of your preference";
+"profile.seed-validation-error-title" = "Seed Validation Error";
 "profile.mnemonic-enter-title" = "Mnemonic words";
 "profile.mnemonic-enter-description" = "Enter your 12 or 24 mnemonic words separated by a space";
 "profile.mnemonic-enter-error" = "The entered words are not valid";
@@ -305,6 +310,7 @@
 "profile.signer-setup-message" = "Setup hardware device or phone signer";
 "profile.harware-option" = "Hardware";
 "profile.phone-signer-option" = "Phone Signer";
+
 
 //PIN
 "choose.pin.upper" = "PUMILI NG PIN";

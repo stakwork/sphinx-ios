@@ -230,6 +230,8 @@
 "signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
 "signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
 "signup.products-fetch-failed" = "In App Purchases products not available";
+"signup.signer-required-title" = "Signer Setup Required";
+"signup.signer-required-prompt" = "In order to use Sphinx you must scan your connection code and set up a mobile or hardware signing device";
 
 //INVITE
 "add.people" = "Add People";
@@ -308,6 +310,9 @@
 "profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-generate" = "Generate random mnemonic words";
 "profile.mnemonic-pull-stored" = "Pull stored mnemonic words from memory";
+"profile.seed-validation-error-title" = "Seed Validation Error";
+"signup.setup-swarm-admin-error-title" = "Connecting to Swarm Failed";
+"signup.setup-swarm-admin-error-prompt" = "There was an error connecting to swarm. Please try again.";
 "profile.mnemonic-incorrect-length" = "Your seed phrase must be exactly 12 or 24 words.";
 "profile.mnemonic-invalid-word" = "It appears you've typed an invalid word: word #";
 "profile.mnemonic-generate-or-import-title" = "Choose Your Seed Method";

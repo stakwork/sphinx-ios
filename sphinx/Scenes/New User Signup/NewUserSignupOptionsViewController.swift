@@ -119,15 +119,18 @@ extension NewUserSignupOptionsViewController {
     }
     
     func checkForAdmin(relay: String,completion: @escaping ()->()) {
-        if hasAdminRetries < 100 {
+        if hasAdminRetries < 300 {
             hasAdminRetries += 1
             API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
                 switch result {
                 case .success(let success):
-                    success ? completion() : self.checkForAdmin(relay: relay, completion: completion)
+                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 0.25, completion: {
+                        self.checkForAdmin(relay: relay, completion: completion)
+                    })
                 case .failure(let error):
                     // Handle the error here if needed
-                    self.checkForAdmin(relay: relay, completion: completion)
+                    print("")
+                    //self.checkForAdmin(relay: relay, completion: completion)
                 }
             })
         } else {

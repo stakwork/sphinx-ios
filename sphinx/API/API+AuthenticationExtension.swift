@@ -229,7 +229,6 @@ extension API {
         let urlPath = "\(baseURL)/\(route)"
         
         var urlComponents = URLComponents(string: urlPath)!
-        urlComponents.queryItems = []
 
         guard let urlString = urlComponents.url?.absoluteString else {
             completionHandler(.failure(.failedToCreateRequestURL))
@@ -251,14 +250,20 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["response"] as? Bool, success {
+                    if let success = json["response"] as? Bool,
+                        success {
                         completionHandler(.success(true))
+                        print("getHasAdminRequest success: \(json.descriptionInStringsFileFormat)")
                     } else {
                         completionHandler(.success(false))
+                        print("getHasAdminRequest request success but response shows failure: \(json.descriptionInStringsFileFormat)")
+                        print("getHasAdminStatus status: \(String(describing: response.response?.statusCode))")
                     }
                 }
             case .failure(let error):
                 completionHandler(.failure(.networkError(error)))
+                print("getHasAdminRequest error: \(error)")
+                print("getHasAdminRequest status: \(String(describing: response.response?.statusCode))")
             }
         }
     }

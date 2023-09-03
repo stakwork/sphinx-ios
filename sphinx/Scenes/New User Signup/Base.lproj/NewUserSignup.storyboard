@@ -132,13 +132,6 @@
                                 </constraints>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfD-01-34C" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="14" y="325" width="386" height="260"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="260" id="UXp-Bw-zQH"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ddQ-Tj-FpK"/>
                         <color key="backgroundColor" name="OnboardingBG"/>
@@ -147,14 +140,11 @@
                             <constraint firstItem="LIl-wz-9W7" firstAttribute="top" secondItem="ddQ-Tj-FpK" secondAttribute="top" id="4BX-zl-aHS"/>
                             <constraint firstItem="MvN-Zq-v0Y" firstAttribute="top" secondItem="lJe-dQ-jeM" secondAttribute="bottom" constant="30" id="AoL-R2-LQw"/>
                             <constraint firstItem="lJe-dQ-jeM" firstAttribute="centerY" secondItem="rex-6b-D9n" secondAttribute="centerY" id="Gm2-3X-ZfC"/>
-                            <constraint firstItem="wfD-01-34C" firstAttribute="centerY" secondItem="ddQ-Tj-FpK" secondAttribute="centerY" id="ILp-3n-3cK"/>
                             <constraint firstItem="MvN-Zq-v0Y" firstAttribute="centerX" secondItem="rex-6b-D9n" secondAttribute="centerX" id="JZY-qp-xcr"/>
                             <constraint firstItem="ddQ-Tj-FpK" firstAttribute="trailing" secondItem="lJe-dQ-jeM" secondAttribute="trailing" constant="30" id="OUx-gh-5hP"/>
                             <constraint firstItem="m0C-Kj-OMc" firstAttribute="centerX" secondItem="rex-6b-D9n" secondAttribute="centerX" id="PcP-km-wKu"/>
                             <constraint firstItem="LIl-wz-9W7" firstAttribute="leading" secondItem="ddQ-Tj-FpK" secondAttribute="leading" id="gXv-W5-txa"/>
-                            <constraint firstItem="wfD-01-34C" firstAttribute="leading" secondItem="ddQ-Tj-FpK" secondAttribute="leading" constant="14" id="h9Y-7j-HP3"/>
                             <constraint firstItem="lJe-dQ-jeM" firstAttribute="leading" secondItem="ddQ-Tj-FpK" secondAttribute="leading" constant="30" id="has-h1-REg"/>
-                            <constraint firstItem="wfD-01-34C" firstAttribute="centerX" secondItem="ddQ-Tj-FpK" secondAttribute="centerX" id="lHq-Ov-3Vl"/>
                             <constraint firstItem="ddQ-Tj-FpK" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="m0C-Kj-OMc" secondAttribute="trailing" id="uhZ-Hs-iHR"/>
                             <constraint firstItem="m0C-Kj-OMc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ddQ-Tj-FpK" secondAttribute="leading" id="wpQ-Rv-NRw"/>
                             <constraint firstItem="m0C-Kj-OMc" firstAttribute="bottom" secondItem="lJe-dQ-jeM" secondAttribute="top" constant="-80" id="zgq-uu-d7a"/>
@@ -164,7 +154,6 @@
                         <outlet property="backButton" destination="LIl-wz-9W7" id="zuy-Hc-mNz"/>
                         <outlet property="connectionCodeButton" destination="7aQ-xQ-TUr" id="PRa-Ml-ETi"/>
                         <outlet property="connectionCodeButtonContainer" destination="7aQ-xQ-TUr" id="cic-wW-OfV"/>
-                        <outlet property="importSeedView" destination="wfD-01-34C" id="hvQ-lx-7n4"/>
                         <outlet property="purchaseLiteNodeButton" destination="bJQ-St-2xn" id="nMs-YP-5VQ"/>
                         <outlet property="purchaseLiteNodeButtonContainer" destination="bJQ-St-2xn" id="rZo-v9-vUO"/>
                         <outlet property="purchaseLoadingSpinner" destination="MvN-Zq-v0Y" id="94i-oJ-Q67"/>
@@ -254,6 +243,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVt-DT-WnS" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="20" y="325" width="374" height="260"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="260" id="ltW-Fi-vyL"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW USER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxp-4g-tGX">
                                 <rect key="frame" x="124" y="265" width="166.5" height="37"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="30"/>
@@ -377,15 +373,19 @@
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="bottom" secondItem="P8m-Lu-MG0" secondAttribute="top" constant="-80" id="adc-42-Qze"/>
                             <constraint firstItem="DKm-Ne-Dvk" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sxp-4g-tGX" secondAttribute="trailing" id="b9a-j6-ZF6"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" constant="30" id="cKY-a8-a0T"/>
+                            <constraint firstItem="eVt-DT-WnS" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" constant="20" id="f2k-xa-HAB"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="centerX" secondItem="iC8-Z6-lJs" secondAttribute="centerX" id="g2D-aY-0lV"/>
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="j8b-of-U7L"/>
                             <constraint firstItem="hGk-nq-mPF" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="rP5-dO-7Q6"/>
+                            <constraint firstItem="eVt-DT-WnS" firstAttribute="centerY" secondItem="DKm-Ne-Dvk" secondAttribute="centerY" id="sXZ-xe-1hg"/>
+                            <constraint firstItem="eVt-DT-WnS" firstAttribute="centerX" secondItem="DKm-Ne-Dvk" secondAttribute="centerX" id="unw-mo-Ddd"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="hGk-nq-mPF" id="a0v-0H-GJU"/>
                         <outlet property="codeTextField" destination="6Ax-pV-KVk" id="QaX-Ij-Z5u"/>
                         <outlet property="codeTextFieldContainer" destination="Awg-RS-jhR" id="QLH-q0-ZHG"/>
+                        <outlet property="importSeedView" destination="eVt-DT-WnS" id="RtO-lt-5Yw"/>
                         <outlet property="submitButton" destination="n1x-Nd-XT6" id="znz-ni-Dfl"/>
                         <outlet property="submitButtonArrow" destination="ngQ-ql-U0M" id="AMN-AE-o9S"/>
                         <outlet property="submitButtonContainer" destination="bEH-EM-lm0" id="4O5-d0-TBI"/>

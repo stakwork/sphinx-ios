@@ -198,6 +198,7 @@ class CrypterManager : NSObject {
         if let hardwareLink = hardwareLink {
             hardwarePostDto.lightningNodeUrl = hardwareLink.mqtt
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
+            hardwarePostDto.relay = hardwareLink.relay
         }
         
         chooseConnectionType(overrideMessages: overrideMessages)
@@ -229,7 +230,10 @@ class CrypterManager : NSObject {
         )
     }
     
-    func showQRScanner() {
+    func showQRScanner(presentingVC:UIViewController?=nil) {
+        if(presentingVC != nil){
+            self.vc = presentingVC
+        }
         guard let vc = self.vc else {
             return
         }

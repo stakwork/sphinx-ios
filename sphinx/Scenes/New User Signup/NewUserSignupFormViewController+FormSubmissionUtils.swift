@@ -57,7 +57,7 @@ extension NewUserSignupFormViewController {
         else if code.isSwarmClaimCode{
             signUp(withSwarmClaimCode: code)
         }
-        else if code.isSwarmMqttCode{
+        else if code.isSwarmGlyphAction{
             signUp(withSwarmMqttCode: code)
         }
         else {
@@ -67,7 +67,7 @@ extension NewUserSignupFormViewController {
     
     
     func isCodeValid(_ code: String) -> Bool {
-        return code.isRelayQRCode || code.isInviteCode || code.isSwarmClaimCode || code.isSwarmConnectCode || code.isSwarmMqttCode
+        return code.isRelayQRCode || code.isInviteCode || code.isSwarmClaimCode || code.isSwarmConnectCode || code.isSwarmGlyphAction
     }
     
     

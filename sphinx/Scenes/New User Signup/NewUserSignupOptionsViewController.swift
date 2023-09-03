@@ -18,7 +18,7 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     @IBOutlet weak var purchaseLiteNodeButtonContainer: UIView!
     @IBOutlet weak var purchaseLiteNodeButton: UIButton!
     @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
-    @IBOutlet weak var importSeedView: ImportSeedView!
+
     
     
     internal var hubNodeInvoice: API.HUBNodeInvoice?
@@ -101,23 +101,6 @@ extension NewUserSignupOptionsViewController {
         }
         startPurchase(for: product)
     }
-    
-//    func setupWallet(){
-//        importSeedView.delegate = self
-//        CrypterManager.sharedInstance.setupSigningDevice(
-//            vc: self,
-//            overrideMessages:true//quietly disconnect MQTT if we need a restart
-//        ) { relay in
-//            UserData.sharedInstance.save(ip: "https://\(relay ?? "")")
-//            self.didTapCancelImportSeed()
-//            self.importSeedView.textView.resignFirstResponder()
-//            self.hasAdminRetries = 0
-//            self.checkForAdmin(relay: relay ?? "", completion: {
-//                self.postToGenerateToken(callback: {
-//                })
-//            })
-//        }
-//    }
 
 }
 
@@ -320,41 +303,4 @@ extension NewUserSignupOptionsViewController {
 
         newMessageBubbleHelper.showGenericMessageView(text: message)
     }
-}
-
-
-extension NewUserSignupOptionsViewController : ImportSeedViewDelegate{
-    func showImportSeedView(network:String,host:String,relay:String){
-        self.importSeedView.isHidden = false
-        self.importSeedView.delegate = self
-        importSeedView.network = network
-        importSeedView.host = host
-        importSeedView.relay = relay
-        self.view.bringSubviewToFront(importSeedView)
-        
-        importSeedView.layer.zPosition = 999
-    }
-    
-    func didTapCancelImportSeed() {
-        self.importSeedView.textView.resignFirstResponder()
-        self.importSeedView.textView.text = ""
-        self.importSeedView.isHidden = true
-        self.importSeedView.activityView.stopAnimating()
-    }
-    
-    func didTapConfirm() {
-        self.importSeedView.activityView.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-            let words = self.importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
-            let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
-            if let error = error {
-                AlertHelper.showAlert(title: "profile.seed-validation-error-title".localized, message: error.localizedDescription + (additionalString ?? ""))
-                return
-            }
-            self.importSeedView.activityView.isHidden = false
-            self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-            CrypterManager.sharedInstance.performWalletFinalization(network: self.importSeedView.network, host: self.importSeedView.host, relay: importSeedView.relay,enteredMnemonic: self.importSeedView.textView.text)
-        })
-    }
-    
 }

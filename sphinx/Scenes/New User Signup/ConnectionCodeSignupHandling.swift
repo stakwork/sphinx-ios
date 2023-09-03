@@ -82,7 +82,6 @@ extension ConnectionCodeSignupHandling {
     }
     
     func signUp(withSwarmMqttCode connectionCode:String){
-        presentConnectingLoadingScreenVC()
         if let url = URL(string: connectionCode),
            let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
            let queryItems = components.queryItems {
@@ -214,6 +213,7 @@ extension ConnectionCodeSignupHandling {
         )
         UserData.sharedInstance.save(ip: "https://\(relay)")
         CrypterManager.sharedInstance.setupSigningDevice(vc: self, hardwareLink: hwl) { _ in
+            self.presentConnectingLoadingScreenVC()
             self.hasAdminRetries = 0
             self.checkForAdmin(relay: relay) {
                 self.postToGenerateToken {

@@ -198,6 +198,7 @@ class CrypterManager : NSObject {
         if let hardwareLink = hardwareLink {
             hardwarePostDto.lightningNodeUrl = hardwareLink.mqtt
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
+            hardwarePostDto.relay = hardwareLink.relay
         }
         
         chooseConnectionType(overrideMessages: overrideMessages)

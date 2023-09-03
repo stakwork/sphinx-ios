@@ -10,6 +10,7 @@ import UIKit
 
 class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHandling {
     
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var codeTextField: UITextField!
@@ -23,6 +24,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     
     var generateTokenRetries = 0
     var generateTokenSuccess: Bool = false
+    var hasAdminRetries: Int = 0
 
     
     static func instantiate() -> NewUserSignupFormViewController {

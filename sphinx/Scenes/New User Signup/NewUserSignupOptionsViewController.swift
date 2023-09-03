@@ -86,9 +86,8 @@ extension NewUserSignupOptionsViewController {
     
     
     @IBAction func connectionCodeButtonTapped(_ sender: UIButton) {
-        AlertHelper.showAlert(title: "signup.signer-required-title".localized, message: "signup.signer-required-prompt".localized,completion: {
-            CrypterManager.sharedInstance.showQRScanner(presentingVC: self)
-        })
+        let nextVC = NewUserSignupDescriptionViewController.instantiate()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     
     
@@ -103,59 +102,22 @@ extension NewUserSignupOptionsViewController {
         startPurchase(for: product)
     }
     
-    func setupWallet(){
-        importSeedView.delegate = self
-        CrypterManager.sharedInstance.setupSigningDevice(
-            vc: self,
-            overrideMessages:true//quietly disconnect MQTT if we need a restart
-        ) { relay in
-            UserData.sharedInstance.save(ip: "https://\(relay ?? "")")
-            self.didTapCancelImportSeed()
-            self.importSeedView.textView.resignFirstResponder()
-            self.hasAdminRetries = 0
-            self.checkForAdmin(relay: relay ?? "", completion: {
-                self.postToGenerateToken(callback: {
-                })
-            })
-        }
-    }
-    
-    func checkForAdmin(relay: String,completion: @escaping ()->()) {
-        if hasAdminRetries < 50 {
-            hasAdminRetries += 1
-            API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
-                switch result {
-                case .success(let success):
-                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-                        self.checkForAdmin(relay: relay, completion: completion)
-                    })
-                case .failure(let error):
-                    // Handle the error here if needed
-                    print("checkForAdmin error:\(error)")
-                    DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-                        self.checkForAdmin(relay: relay, completion: completion)
-                    })
-                }
-            })
-        } else {
-            AlertHelper.showAlert(title: "signup.setup-swarm-admin-error-title".localized, message: "signup.setup-swarm-admin-error-prompt".localized)
-        }
-    }
-    
-    func postToGenerateToken(callback: @escaping ()->()){
-        do{
-            let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
-            let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
-            let keys = try nodeKeys(net: network, seed: seed.hexString)
-            let token = EncryptionManager.randomString(length: 20)
-            
-            self.generateTokenAndProceed(pubkey: keys.pubkey, password: nil)
-            callback()
-        }
-        catch{
-            print("catch statement in postToGenerateToken with error: \(error)")
-        }
-    }
+//    func setupWallet(){
+//        importSeedView.delegate = self
+//        CrypterManager.sharedInstance.setupSigningDevice(
+//            vc: self,
+//            overrideMessages:true//quietly disconnect MQTT if we need a restart
+//        ) { relay in
+//            UserData.sharedInstance.save(ip: "https://\(relay ?? "")")
+//            self.didTapCancelImportSeed()
+//            self.importSeedView.textView.resignFirstResponder()
+//            self.hasAdminRetries = 0
+//            self.checkForAdmin(relay: relay ?? "", completion: {
+//                self.postToGenerateToken(callback: {
+//                })
+//            })
+//        }
+//    }
 
 }
 

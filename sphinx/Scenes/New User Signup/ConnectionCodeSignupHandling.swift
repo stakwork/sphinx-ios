@@ -14,6 +14,7 @@ protocol ConnectionCodeSignupHandling: UIViewController, SphinxOnionConnectorDel
     var onionConnector: SphinxOnionConnector { get }
     var generateTokenRetries: Int { get set }
     var generateTokenSuccess : Bool {get set}
+    var hasAdminRetries : Int {get set}
     
     func signup(withConnectionCode connectionCode: String)
     
@@ -202,12 +203,27 @@ extension ConnectionCodeSignupHandling {
     }
     
     func connectToSwarm(
-        mqtt:String,
-        network:String,
-        relay:String
-    ){
+        mqtt: String,
+        network: String,
+        relay: String
+    ) {
+        let hwl = CrypterManager.HardwareLink(
+            mqtt: mqtt,
+            network: network,
+            relay:relay
+        )
+        UserData.sharedInstance.save(ip: "https://\(relay)")
+        CrypterManager.sharedInstance.setupSigningDevice(vc: self, hardwareLink: hwl) { _ in
+            self.hasAdminRetries = 0
+            self.checkForAdmin(relay: relay) {
+                self.postToGenerateToken {
+                    // Optional code to execute after postToGenerateToken
+                }
+            }
+        }
         
     }
+
     
     
     func connectToNode(ip: String, password: String = "", pubkey: String = "") {
@@ -257,6 +273,43 @@ extension ConnectionCodeSignupHandling {
             )
 
             self.navigationController?.pushViewController(inviteWelcomeVC, animated: true)
+        }
+    }
+    
+    func checkForAdmin(relay: String,completion: @escaping ()->()) {
+        if hasAdminRetries < 50 {
+            hasAdminRetries += 1
+            API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
+                switch result {
+                case .success(let success):
+                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+                        self.checkForAdmin(relay: relay, completion: completion)
+                    })
+                case .failure(let error):
+                    // Handle the error here if needed
+                    print("checkForAdmin error:\(error)")
+                    DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+                        self.checkForAdmin(relay: relay, completion: completion)
+                    })
+                }
+            })
+        } else {
+            AlertHelper.showAlert(title: "signup.setup-swarm-admin-error-title".localized, message: "signup.setup-swarm-admin-error-prompt".localized)
+        }
+    }
+    
+    func postToGenerateToken(callback: @escaping ()->()){
+        do{
+            let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
+            let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
+            let keys = try nodeKeys(net: network, seed: seed.hexString)
+            let token = EncryptionManager.randomString(length: 20)
+            
+            self.generateTokenAndProceed(pubkey: keys.pubkey, password: nil)
+            callback()
+        }
+        catch{
+            print("catch statement in postToGenerateToken with error: \(error)")
         }
     }
 }

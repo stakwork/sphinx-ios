@@ -777,16 +777,18 @@ class CrypterManager : NSObject {
             callback()
             return
         }
-        
-        promptFor(
-            "profile.lightning-url-title".localized,
-            message: "profile.lightning-url-message".localized,
-            errorMessage: "profile.lightning-url-error".localized,
-            callback: { value in
-                self.hardwarePostDto.lightningNodeUrl = value
-                callback()
-            }
-        )
+        else{
+            self.showQRScanner()
+        }
+//        promptFor(
+//            "profile.lightning-url-title".localized,
+//            message: "profile.lightning-url-message".localized,
+//            errorMessage: "profile.lightning-url-error".localized,
+//            callback: { value in
+//                self.hardwarePostDto.lightningNodeUrl = value
+//                callback()
+//            }
+//        )
     }
     
     func promptForBitcoinNetwork(callback: @escaping () -> ()) {

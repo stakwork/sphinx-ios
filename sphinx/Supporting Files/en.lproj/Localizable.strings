@@ -40,6 +40,9 @@
 "unable.to.connect" = "Unable to connect to Node";
 "unauthorized.error.message" = "Something went wrong, please contact support";
 "network.connection.lost" = "The network connection is lost.\nPlease check your network and try again later.";
+"signer.connected" = "Signer connected to Swarm";
+"signer.connecting" = "Signer connecting to Swarm";
+"signer.not.connected" = "Signer disconnected from Swarm";
 "reverting.ip" = "New URL test failed, restoring previous setting...";
 "verifying.new.ip" = "Testing new URL...";
 "error.url.request.creation.failed" = "URL Request Creation Failed";

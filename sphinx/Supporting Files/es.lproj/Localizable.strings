@@ -40,6 +40,9 @@
 "unable.to.connect" = "No es posible conectarse al Nodo";
 "unauthorized.error.message" = "Ha habido un problema. Por favor contacta con soporte.";
 "network.connection.lost" = "No hay conexión de red.\nPor favor verifique su red y vuelva a intentarlo.";
+"signer.connected" = "Firmante conectado a Swarm";
+"signer.connecting" = "Firmante conectándose a Swarm";
+"signer.not.connected" = "Firmante desconectado de Swarm";
 "reverting.ip" = "La verificación de la nueva URL ha fallado, restaurando configuración previa...";
 "verifying.new.ip" = "Verificando la nueva URL...";
 "error.url.request.creation.failed" = "Solicitud de creación de URL fallida";

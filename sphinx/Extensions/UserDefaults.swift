@@ -77,7 +77,6 @@ extension UserDefaults {
         public static let phoneSignerHost = DefaultKey<String>("phoneSignerHost")
         public static let phoneSignerNetwork = DefaultKey<String>("phoneSignerNetwork")
         public static let phoneSignerRelay = DefaultKey<String>("phoneSignerRelay")
-        public static let mnemonic = DefaultKey<String>("mnemonic")
         public static let clientID = DefaultKey<String>("clientID")
         public static let lssNonce = DefaultKey<String>("lssNonce")
         public static let signerKeys = DefaultKey<String>("signerKeys")

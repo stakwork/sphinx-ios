@@ -920,18 +920,18 @@ class CrypterManager : NSObject {
     public func getOrCreateWalletMnemonic(
         enteredMnemonic: String? = nil
     ) -> (String, Data) {
-        let mnemonic = enteredMnemonic ?? UserDefaults.Keys.mnemonic.get() ?? Mnemonic.create()
+        let mnemonic = enteredMnemonic ?? UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = Data(seed.bytes[0..<32])
 
         self.seed = seed32Bytes
-        UserDefaults.Keys.mnemonic.set(mnemonic)
+        UserData.sharedInstance.save(walletMnemonic: mnemonic)
         
         return (mnemonic, seed32Bytes)
     }
     
     func getStoredMnemonicAndSeed() -> (String, Data)? {
-        if let mnemonic: String = UserDefaults.Keys.mnemonic.get() {
+        if let mnemonic: String = UserData.sharedInstance.getMnemonic() {
             let seed = Mnemonic.createSeed(mnemonic: mnemonic)
             let seed32Bytes = Data(seed.bytes[0..<32])
             

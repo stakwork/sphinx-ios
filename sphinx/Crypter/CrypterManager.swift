@@ -122,6 +122,7 @@ class CrypterManager : NSObject {
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var didDisconnect = false
+    var scannerVC : NewQRScannerViewController? = nil
     
     var clientID: String {
         get {
@@ -177,7 +178,11 @@ class CrypterManager : NSObject {
     }
     
     var seed: Data! = nil
-    var mqtt: CocoaMQTT! = nil
+    var mqtt: CocoaMQTT! = nil{
+        didSet{
+            API.sharedInstance.postMQTTStatusChange()
+        }
+    }
     
     override init() {
         super.init()
@@ -238,11 +243,13 @@ class CrypterManager : NSObject {
             return
         }
         
-        let viewController = NewQRScannerViewController.instantiate(
+        scannerVC = NewQRScannerViewController.instantiate(
             currentMode: NewQRScannerViewController.Mode.ScanAndDismiss
         )
-        viewController.delegate = self
-        vc.present(viewController, animated: true)
+        if let scannerVC = scannerVC{
+            scannerVC.delegate = self
+            vc.present(scannerVC, animated: true)
+        }
     }
     
     func resetMQTTConnection(overrideMessages:Bool=false) {
@@ -269,6 +276,8 @@ class CrypterManager : NSObject {
         DelayPerformedHelper.performAfterDelay(seconds: 2, completion: {
             self.didDisconnect = false
         })
+        
+        API.sharedInstance.postMQTTStatusChange()
     }
     
     func startMQTTSetup() {
@@ -279,14 +288,18 @@ class CrypterManager : NSObject {
         
         let host = hardwarePostDto.lightningNodeUrl ?? UserDefaults.Keys.phoneSignerHost.get()
         let network = hardwarePostDto.bitcoinNetwork ?? UserDefaults.Keys.phoneSignerNetwork.get()
-        let relay = hardwarePostDto.relay ?? "" //TODO: add to user defaults
+        let relay = hardwarePostDto.relay ?? UserDefaults.Keys.phoneSignerRelay.get()
         
-        guard let host = host, let network = network else {
+        guard let host = host, let network = network , let relay = relay else {
             showQRScanner()
             return
         }
         
-        chooseImportOrGenerateSeed(network: network, host: host,relay: relay)
+        DelayPerformedHelper.performAfterDelay(seconds: 0.05, completion: {
+            self.chooseImportOrGenerateSeed(network: network, host: host,relay: relay)
+        })
+        
+        API.sharedInstance.postMQTTStatusChange()
     }
     
     func chooseImportOrGenerateSeed(network:String,host:String,relay:String){
@@ -377,6 +390,7 @@ class CrypterManager : NSObject {
             self.connectToMQTTWith(
                 host: host,
                 network: network,
+                relay:relay,
                 keys: keys,
                 and: password
             )
@@ -389,6 +403,7 @@ class CrypterManager : NSObject {
     func connectToMQTTWith(
         host: String,
         network: String,
+        relay:String,
         keys: Keys,
         and password: String
     ) {
@@ -417,6 +432,7 @@ class CrypterManager : NSObject {
             UserDefaults.Keys.setupPhoneSigner.set(true)
             UserDefaults.Keys.phoneSignerHost.set(host)
             UserDefaults.Keys.phoneSignerNetwork.set(network)
+            UserDefaults.Keys.phoneSignerRelay.set(relay)
             
             mqtt.didReceiveMessage = { mqtt, message, id in
                 print("Message received in topic \(message.topic) with payload \(message.payload)")
@@ -430,6 +446,7 @@ class CrypterManager : NSObject {
 
             mqtt.didDisconnect =  { cocaMQTT2, error in
                 self.showErrorWithMessage("MQTT disconnected. Trying to reconnect...")
+                API.sharedInstance.postMQTTStatusChange()
                 
                 self.mqtt.didDisconnect = { _, _ in }
                 self.sequence = nil
@@ -442,6 +459,7 @@ class CrypterManager : NSObject {
                     self.connectToMQTTWith(
                         host: host,
                         network: network,
+                        relay: relay,
                         keys: keys,
                         and: password
                     )
@@ -450,6 +468,7 @@ class CrypterManager : NSObject {
             
             mqtt.didConnectAck = { _, _ in
                 self.showSuccessWithMessage("MQTT connected")
+                API.sharedInstance.postMQTTStatusChange()
                 
                 self.mqtt.subscribe([
                     ("\(self.clientID)/\(Topics.VLS.rawValue)", CocoaMQTTQoS.qos1),
@@ -1080,6 +1099,8 @@ extension CrypterManager : QRCodeScannerDelegate {
             hardwarePostDto.relay = hardwareLink.relay
             
             startMQTTSetup()
+            scannerVC?.dismiss(animated: true)
+            scannerVC = nil
         } else {
             self.newMessageBubbleHelper.showGenericMessageView(
                 text: "code.not.recognized".localized,

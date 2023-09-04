@@ -31,6 +31,9 @@
 "unable.to.connect" = "HIndi makakunekta sa Node";
 "unauthorized.error.message" = "May nangyaring kamalian, Paki contact ang suporta";
 "network.connection.lost" = "Nawala ang koneksyon sa network.\nPakisuri ang iyong network at subukan muli sa ilang sandali";
+"signer.connected" = "Signer connected to Swarm";
+"signer.connecting" = "Signer connecting to Swarm";
+"signer.not.connected" = "Signer disconnected from Swarm";
 "reverting.ip" = "Nabigo ang bagong pagsubok sa URL, ibinabalik ang dating setting...";
 "verifying.new.ip" = "Sinusubukan ang bagong URL...";
 "error.url.request.creation.failed" = "Nabigo ang kahilingang paggawa ng URL";

@@ -229,8 +229,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func connectMQTT() {
-        if let phoneSignerSetup: Bool = UserDefaults.Keys.setupPhoneSigner.get(), phoneSignerSetup {
-            CrypterManager.sharedInstance.startMQTTSetup()
+        if let phoneSignerSetup: Bool = UserDefaults.Keys.setupPhoneSigner.get(),
+            phoneSignerSetup,
+           let network : String = UserDefaults.Keys.phoneSignerNetwork.get(),
+           let host : String = UserDefaults.Keys.phoneSignerHost.get(),
+           let relay : String = UserDefaults.Keys.phoneSignerRelay.get(){
+            CrypterManager.sharedInstance.performWalletFinalization(network: network, host: host, relay: relay)
         }
     }
     

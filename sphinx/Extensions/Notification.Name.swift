@@ -16,6 +16,7 @@ extension Notification.Name {
     static let onMessageMenuShow = Notification.Name("onMessageMenuShow")
     static let onMessageMenuHide = Notification.Name("onMessageMenuHide")
     static let onConnectionStatusChanged = Notification.Name("onConnectionStatusChanged")
+    static let onMQTTConnectionStatusChanged = Notification.Name("onMQTTConnectionStatusChanged")
     static let autocompleteMention = Notification.Name("autocompleteMention")
     static let refreshFeedUI = Notification.Name(rawValue: "refreshFeedUI")
     static let onContactsAndChatsChanged = Notification.Name("onContactsAndChatsChanged")

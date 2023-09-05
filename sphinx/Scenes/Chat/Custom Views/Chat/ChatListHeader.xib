@@ -28,6 +28,7 @@
                 <outlet property="contentView" destination="iN0-l3-epB" id="YrN-o4-cIK"/>
                 <outlet property="healthCheckButton" destination="Bv6-Rn-kPA" id="c5l-rD-Dxl"/>
                 <outlet property="loadingWheel" destination="yrh-sT-wlc" id="PLc-V6-RoK"/>
+                <outlet property="mqttCheckButton" destination="YpZ-HB-0dg" id="8Xx-v4-7Zm"/>
                 <outlet property="smallBalanceLabel" destination="Gpu-Jm-JpQ" id="tSD-gM-cXA"/>
                 <outlet property="smallUnitLabel" destination="O5Z-ta-QgZ" id="oQe-vq-gA4"/>
                 <outlet property="upgradeAppButton" destination="isv-XB-uSZ" id="AYS-HC-V5R"/>
@@ -91,12 +92,26 @@
                         <action selector="healthCheckButtonTouched" destination="-1" eventType="touchUpInside" id="Geg-Ee-NtV"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YpZ-HB-0dg">
+                    <rect key="frame" x="339" y="0.0" width="25" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="bjD-09-x7Y"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="history_edu">
+                        <color key="titleColor" name="SecondaryText"/>
+                    </state>
+                    <connections>
+                        <action selector="signStatusCheckButtonTouched" destination="-1" eventType="touchUpInside" id="2uv-Pk-xFf"/>
+                    </connections>
+                </button>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrh-sT-wlc" customClass="UIActivityIndicatorView">
-                    <rect key="frame" x="364" y="0.0" width="50" height="50"/>
+                    <rect key="frame" x="379" y="0.0" width="35" height="50"/>
                     <viewLayoutGuide key="safeArea" id="4YX-oE-w1g"/>
                     <color key="backgroundColor" name="DashboardHeader"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="XiD-rf-uOi"/>
+                        <constraint firstAttribute="width" constant="35" id="XiD-rf-uOi"/>
                     </constraints>
                 </view>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isv-XB-uSZ">
@@ -116,6 +131,7 @@
             </subviews>
             <color key="backgroundColor" name="DashboardHeader"/>
             <constraints>
+                <constraint firstItem="yrh-sT-wlc" firstAttribute="top" secondItem="YpZ-HB-0dg" secondAttribute="top" id="4kx-d8-RL3"/>
                 <constraint firstItem="xgc-Ie-Ybe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Gx-py-o6Z"/>
                 <constraint firstItem="yrh-sT-wlc" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="8PJ-Rw-ND6"/>
                 <constraint firstItem="xgc-Ie-Ybe" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="C7O-x8-5T3"/>
@@ -127,9 +143,11 @@
                 <constraint firstItem="3Qz-My-7s3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="bOq-u7-VHR"/>
                 <constraint firstItem="3Qz-My-7s3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cCt-bD-QlI"/>
                 <constraint firstItem="yrh-sT-wlc" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="fnr-nC-oH2"/>
+                <constraint firstItem="yrh-sT-wlc" firstAttribute="bottom" secondItem="YpZ-HB-0dg" secondAttribute="bottom" id="hSm-Hk-n3A"/>
                 <constraint firstItem="isv-XB-uSZ" firstAttribute="leading" secondItem="3Qz-My-7s3" secondAttribute="trailing" id="lGd-wL-B0C"/>
                 <constraint firstItem="xgc-Ie-Ybe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qoK-Fe-Wrd"/>
                 <constraint firstItem="Bv6-Rn-kPA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rB5-iH-XJC"/>
+                <constraint firstItem="Bv6-Rn-kPA" firstAttribute="leading" secondItem="YpZ-HB-0dg" secondAttribute="trailing" id="vSE-To-H7a"/>
                 <constraint firstItem="Bv6-Rn-kPA" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="yQk-Pn-ch7"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

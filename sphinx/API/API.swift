@@ -375,6 +375,10 @@ class API {
     func postConnectionStatusChange() {
         NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
     }
+    
+    func postMQTTStatusChange(){
+        NotificationCenter.default.post(name: .onMQTTConnectionStatusChanged, object: nil)
+    }
 
     func getIPFromHUB() {
         self.errorCounter = 0

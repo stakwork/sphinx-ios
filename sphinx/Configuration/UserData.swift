@@ -391,10 +391,6 @@ class UserData {
         saveValueFor(value: transportKey, for: KeychainManager.KeychainKeys.transportKey, userDefaultKey: UserDefaults.Keys.transportKey)
     }
     
-    func save(walletMnemonic: String) {
-        saveValueFor(value: walletMnemonic, for: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
-    }
-    
     func save(hmacKey: String) {
         saveValueFor(value: hmacKey, for: KeychainManager.KeychainKeys.hmacKey, userDefaultKey: UserDefaults.Keys.hmacKey)
     }
@@ -435,15 +431,6 @@ class UserData {
     
     func getAuthToken() -> String {
         return getValueFor(keychainKey: KeychainManager.KeychainKeys.authToken, userDefaultKey: UserDefaults.Keys.authToken)
-    }
-    
-    func getMnemonic() -> String? {
-        let mnemonic = getValueFor(keychainKey: KeychainManager.KeychainKeys.walletMnemonic, userDefaultKey: nil)
-        
-        if !mnemonic.isEmpty {
-            return mnemonic
-        }
-        return nil
     }
     
     func getTransportKey() -> String? {
@@ -538,11 +525,27 @@ class UserData {
         let _ = getAppPin()
     }
     
+    func save(walletMnemonic: String) {
+        let _ = keychainManager.save(value: walletMnemonic, forComposedKey: KeychainManager.KeychainKeys.walletMnemonic.rawValue)
+    }
+    
+    func getMnemonic() -> String? {
+        if let value = keychainManager.getValueFor(composedKey: KeychainManager.KeychainKeys.walletMnemonic.rawValue), !value.isEmpty {
+            return value
+        }
+        return nil
+    }
+    
     //Clear User Data
     func clearData() {
         SphinxSocketManager.sharedInstance.disconnectWebsocket()
         EncryptionManager.sharedInstance.deleteOldKeys()
         CoreDataManager.sharedManager.clearCoreDataStore()
+        clearMnemonic()
         UserDefaults.resetUserDefaults()
+    }
+    
+    func clearMnemonic() {
+        let _ = keychainManager.deleteValueFor(key: KeychainManager.KeychainKeys.walletMnemonic.rawValue)
     }
 }

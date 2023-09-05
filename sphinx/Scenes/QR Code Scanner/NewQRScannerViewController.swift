@@ -87,11 +87,11 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         
         configureViewForMode()
         
-        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
-            self.dismiss(animated: true, completion: {
-                self.delegate?.didScanQRCode?(string: "sphinx.chat://?action=glyph&mqtt=54.81.240.62:1883&network=bitcoin&relay=relay.swarm14.sphinx.chat")
-            })
-        })
+        //DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+        //    self.dismiss(animated: true, completion: {
+        //        self.delegate?.didScanQRCode?(string: "sphinx.chat://?action=glyph&mqtt=54.81.240.62:1883&network=bitcoin&relay=relay.swarm14.sphinx.chat")
+        //    })
+        //})
     }
     
     func codeScanned(code: String) {

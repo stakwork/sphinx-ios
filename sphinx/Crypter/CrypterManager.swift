@@ -422,6 +422,7 @@ class CrypterManager : NSObject {
         mqtt.username = keys.pubkey
         mqtt.password = password
         mqtt.enableSSL = ssl
+        mqtt.allowUntrustCACertificate = true
         
         showSuccessWithMessage("Connecting to MQTT")
 

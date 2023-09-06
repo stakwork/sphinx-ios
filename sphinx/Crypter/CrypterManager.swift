@@ -206,6 +206,15 @@ class CrypterManager : NSObject {
             hardwarePostDto.relay = hardwareLink.relay
         }
         
+        let host = hardwarePostDto.lightningNodeUrl ?? UserDefaults.Keys.phoneSignerHost.get()
+        let network = hardwarePostDto.bitcoinNetwork ?? UserDefaults.Keys.phoneSignerNetwork.get()
+        let relay = hardwarePostDto.relay ?? "" //TODO: add to user defaults
+        
+        guard let host = host, let network = network else {
+            showQRScanner()
+            return
+        }
+        
         chooseConnectionType(overrideMessages: overrideMessages)
     }
     
@@ -732,7 +741,7 @@ class CrypterManager : NSObject {
     ///Signer setup
     func setupSigningDevice() {
         API.sharedInstance.getHardwarePublicKey(callback: {_ in}, errorCallback: {})//force request for LAN access
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
             self.checkNetwork {
                 self.promptForNetworkName() { networkName in
                     self.promptForNetworkPassword(networkName) {
@@ -796,7 +805,6 @@ class CrypterManager : NSObject {
             callback()
             return
         }
-        
         promptFor(
             "profile.lightning-url-title".localized,
             message: "profile.lightning-url-message".localized,
@@ -1098,7 +1106,8 @@ extension CrypterManager : QRCodeScannerDelegate {
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
             hardwarePostDto.relay = hardwareLink.relay
             
-            startMQTTSetup()
+
+            setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: endCallback)
             scannerVC?.dismiss(animated: true)
             scannerVC = nil
         } else {

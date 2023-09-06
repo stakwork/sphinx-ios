@@ -19,6 +19,7 @@ import SDWebImage
     @objc optional func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
     @objc optional func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     @objc optional func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
+    @objc optional func shouldLoadAudioDataFor(messageId: Int, and rowIndex: Int)
 }
 
 class ThreadHeaderView : UIView {
@@ -79,6 +80,7 @@ class ThreadHeaderView : UIView {
         configureWith(threadOriginalMessage: mutableMessageCellState.threadOriginalMessageHeader)
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
+        configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData)
     }
     
     func configureWith(
@@ -160,6 +162,28 @@ class ThreadHeaderView : UIView {
                 let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 DispatchQueue.global().asyncAfter(deadline: delayTime) {
                     self.delegate?.shouldLoadFileDataFor?(
+                        messageId: messageId,
+                        and: -1
+                    )
+                }
+            }
+        }
+    }
+    
+    func configureWith(
+        audio: BubbleMessageLayoutState.Audio?,
+        mediaData: MessageTableCellState.MediaData?
+    ) {
+        if let _ = audio {
+            
+            viewToShow = messageAndMediaContainer
+            
+            mediaView.configureForAudio()
+            
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadAudioDataFor?(
                         messageId: messageId,
                         and: -1
                     )

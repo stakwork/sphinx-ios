@@ -16,9 +16,11 @@ protocol ThreadHeaderTableViewCellDelegate: class {
     func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadAudioDataFor(messageId: Int, and rowIndex: Int)
     
-    func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapMediaButtonFor(messageId: Int, and rowIndex: Int, isThreadOriginalMsg: Bool)
     func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     
     func didTapOnLink(_ link: String)
 }
@@ -32,6 +34,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     
     @IBOutlet weak var mediaMessageView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
+    @IBOutlet weak var audioMessageView: AudioMessageView!
     @IBOutlet weak var messageContainer: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var senderNameLabel: UILabel!
@@ -55,6 +58,9 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         fileDetailsView.layer.cornerRadius = 9
         fileDetailsView.clipsToBounds = true
         
+        audioMessageView.layer.cornerRadius = 9
+        audioMessageView.clipsToBounds = true
+        
         mediaMessageView.removeMargin()
     }
 
@@ -66,6 +72,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         mediaMessageView.isHidden = true
         fileDetailsView.isHidden = true
         messageContainer.isHidden = true
+        audioMessageView.isHidden = true
     }
     
     func configureWith(
@@ -92,6 +99,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
+        configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData)
     }
     
     func configureWith(
@@ -196,6 +204,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             mediaMessageView.configureWith(
                 messageMedia: messageMedia,
                 mediaData: mediaData,
+                isThreadOriginalMsg: false,
                 bubble: BubbleMessageLayoutState.Bubble(direction: .Incoming, grouping: .Isolated),
                 and: self
             )
@@ -256,6 +265,34 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         }
     }
     
+    func configureWith(
+        audio: BubbleMessageLayoutState.Audio?,
+        mediaData: MessageTableCellState.MediaData?
+    ) {
+        if let audio = audio {
+            
+            audioMessageView.configureWith(
+                audio: audio,
+                mediaData: mediaData,
+                isThreadOriginalMsg: false,
+                bubble: BubbleMessageLayoutState.Bubble(direction: .Incoming, grouping: .Isolated),
+                and: self
+            )
+            
+            audioMessageView.isHidden = false
+            
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadAudioDataFor(
+                        messageId: messageId,
+                        and: self.rowIndex
+                    )
+                }
+            }
+        }
+    }
+    
     func showMoreVisible(
         _ isHeaderExpanded: Bool
     ) -> Bool {
@@ -287,9 +324,9 @@ class ThreadHeaderTableViewCell: UITableViewCell {
 }
 
 extension ThreadHeaderTableViewCell : MediaMessageViewDelegate {
-    func didTapMediaButton() {
+    func didTapMediaButton(isThreadOriginalMsg: Bool) {
         if let messageId = messageId {
-            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex)
+            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex, isThreadOriginalMsg: isThreadOriginalMsg)
         }
     }
     
@@ -303,4 +340,14 @@ extension ThreadHeaderTableViewCell : FileDetailsViewDelegate {
             delegate?.didTapFileDownloadButtonFor(messageId: messageId, and: rowIndex)
         }
     }
+}
+
+extension ThreadHeaderTableViewCell : AudioMessageViewDelegate {
+    func didTapPlayPauseButton(isThreadOriginalMsg: Bool) {
+        if let messageId = messageId {
+            delegate?.didTapPlayPauseButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+    
+    func shouldLoadOriginalMessageAudioDataFrom(originalMessageAudio: BubbleMessageLayoutState.Audio) {}
 }

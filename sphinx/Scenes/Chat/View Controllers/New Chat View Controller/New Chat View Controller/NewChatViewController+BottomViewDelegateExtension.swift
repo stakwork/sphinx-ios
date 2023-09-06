@@ -66,11 +66,13 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     func getChatAttachmentVC(
         text: String?
     ) -> ChatAttachmentViewController {
+        
         let viewController = ChatAttachmentViewController.instantiate(
             delegate: self,
-            chatId: self.chat?.id,
+            chatId: chat?.id,
             text: text,
-            replyingMessageId: self.chatViewModel.replyingTo?.id
+            replyingMessageId: chatViewModel.replyingTo?.id,
+            isThread: isThread
         )
         
         viewController.modalPresentationStyle = .overCurrentContext

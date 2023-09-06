@@ -86,8 +86,6 @@ class ChatAvatarView: UIView {
     ) {
         self.delegate = delegate
         
-        profileImageView.sd_cancelCurrentImageLoad()
-        
         profileImageView.isHidden = true
         profileInitialContainer.isHidden = true
         profileImageView.layer.borderWidth = 0
@@ -114,10 +112,14 @@ class ChatAvatarView: UIView {
             scaleMode: .aspectFill
         )
         
+        self.profileInitialContainer.isHidden = true
+        self.profileImageView.isHidden = false
+        
+        profileImageView.sd_cancelCurrentImageLoad()
         profileImageView.sd_setImage(
             with: url,
             placeholderImage: UIImage(named: "profile_avatar"),
-            options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .lowPriority],
+            options: [.scaleDownLargeImages, .decodeFirstFrameOnly, .progressiveLoad],
             context: [.imageTransformer: transformer],
             progress: nil,
             completed: { (image, error, _, _) in
@@ -125,6 +127,9 @@ class ChatAvatarView: UIView {
                     self.profileInitialContainer.isHidden = true
                     self.profileImageView.isHidden = false
                     self.profileImageView.image = image
+                } else {
+                    self.profileInitialContainer.isHidden = false
+                    self.profileImageView.isHidden = true
                 }
             }
         )

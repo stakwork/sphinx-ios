@@ -34,8 +34,6 @@ extension ThreadTableDataSource {
         }
         
         toggleHeader()
-        
-        delegate?.didScroll()
     }
     
     override func didMoveOutOfBottomArea() {

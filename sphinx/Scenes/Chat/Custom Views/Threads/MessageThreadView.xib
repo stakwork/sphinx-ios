@@ -32,6 +32,7 @@
                 <outlet property="moreRepliesCountLabel" destination="lLb-gP-hg2" id="ORJ-MW-vlA"/>
                 <outlet property="moreRepliesCountView" destination="STg-CK-1mE" id="jis-vE-iAh"/>
                 <outlet property="moreRepliesLabel" destination="I0E-vS-bRu" id="B9U-Qf-97f"/>
+                <outlet property="originalMessageAudioView" destination="I2R-M7-BqB" id="eFG-Er-cbO"/>
                 <outlet property="originalMessageBubbleView" destination="LEz-09-WKf" id="rGf-Oy-wTj"/>
                 <outlet property="originalMessageContainer" destination="Yyz-03-k2n" id="XpG-M3-Xia"/>
                 <outlet property="originalMessageFileDetails" destination="AkV-ph-vTs" id="YdO-SJ-VtX"/>
@@ -56,8 +57,8 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lOY-J0-M4B">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="385"/>
                     <subviews>
-                        <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-0O-AcM">
-                            <rect key="frame" x="0.0" y="-170" width="393" height="170"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-0O-AcM">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UTo-xP-9yc" customClass="MediaMessageView" customModule="sphinx" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
@@ -74,17 +75,24 @@
                             </constraints>
                         </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AkV-ph-vTs" customClass="FileDetailsView" customModule="sphinx" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="-60" width="393" height="60"/>
+                            <rect key="frame" x="0.0" y="170" width="393" height="60"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="PjL-HN-NCg"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I2R-M7-BqB" customClass="AudioMessageView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="170" width="393" height="60"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="plF-1S-KMp"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yyz-03-k2n">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="310"/>
+                            <rect key="frame" x="0.0" y="230" width="393" height="80"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text message to see how it works with more than one line" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZo-P2-gjT">
-                                    <rect key="frame" x="16" y="16" width="361" height="278"/>
+                                    <rect key="frame" x="16" y="16" width="361" height="48"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <color key="textColor" name="MainBottomIcons"/>
@@ -236,7 +244,9 @@
                         <constraint firstItem="VLf-a3-FTa" firstAttribute="leading" secondItem="lOY-J0-M4B" secondAttribute="leading" id="1rU-W5-0Xe"/>
                         <constraint firstAttribute="trailing" secondItem="2Mc-hi-fEg" secondAttribute="trailing" id="2QH-Af-ZHO"/>
                         <constraint firstItem="9ay-3A-NxK" firstAttribute="leading" secondItem="lOY-J0-M4B" secondAttribute="leading" id="5aZ-6V-5LU"/>
+                        <constraint firstItem="I2R-M7-BqB" firstAttribute="leading" secondItem="lOY-J0-M4B" secondAttribute="leading" id="F5l-73-wI3"/>
                         <constraint firstAttribute="trailing" secondItem="VLf-a3-FTa" secondAttribute="trailing" id="PzL-T4-QQy"/>
+                        <constraint firstAttribute="trailing" secondItem="I2R-M7-BqB" secondAttribute="trailing" id="iQy-Up-EsH"/>
                         <constraint firstAttribute="trailing" secondItem="9ay-3A-NxK" secondAttribute="trailing" id="xYV-ua-gfD"/>
                         <constraint firstItem="2Mc-hi-fEg" firstAttribute="leading" secondItem="lOY-J0-M4B" secondAttribute="leading" id="z7E-zA-crd"/>
                     </constraints>

@@ -109,8 +109,6 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
         headerView.toggleThreadHeaderView(expanded: expanded)
     }
     
-    func didScroll() {}
-    
     func shouldGoToAttachmentViewFor(
         messageId: Int,
         isPdf: Bool

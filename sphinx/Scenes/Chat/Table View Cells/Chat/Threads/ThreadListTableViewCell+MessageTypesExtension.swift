@@ -138,6 +138,7 @@ extension ThreadListTableViewCell {
             mediaMessageView.configureWith(
                 messageMedia: messageMedia,
                 mediaData: mediaData,
+                isThreadOriginalMsg: false,
                 bubble: BubbleMessageLayoutState.Bubble(direction: .Incoming, grouping: .Isolated),
                 and: self
             )
@@ -200,7 +201,7 @@ extension ThreadListTableViewCell {
 }
 
 extension ThreadListTableViewCell : MediaMessageViewDelegate {
-    func didTapMediaButton() {
+    func didTapMediaButton(isThreadOriginalMsg: Bool) {
         if let messageId = messageId {
             delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex)
         }

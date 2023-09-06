@@ -63,6 +63,7 @@ class NewOnlyTextMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableV
     func configureWith(
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
+        threadOriginalMsgMediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,

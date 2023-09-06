@@ -19,6 +19,7 @@ class MessageThreadView: UIView {
     @IBOutlet weak var originalMessageMediaViewContainer: UIView!
     @IBOutlet weak var originalMessageMediaView: MediaMessageView!
     @IBOutlet weak var originalMessageFileDetails: FileDetailsView!
+    @IBOutlet weak var originalMessageAudioView: AudioMessageView!
     
     @IBOutlet weak var firstReplyContainer: UIView!
     @IBOutlet weak var firstReplyBubbleView: UIView!
@@ -101,15 +102,18 @@ class MessageThreadView: UIView {
         originalMessageMediaViewContainer.isHidden = true
         originalMessageFileDetails.isHidden = true
         originalMessageContainer.isHidden = true
+        originalMessageAudioView.isHidden = true
     }
     
     func configureWith(
         threadMessages: BubbleMessageLayoutState.ThreadMessages,
         originalMessageMedia: BubbleMessageLayoutState.MessageMedia?,
         originalMessageGenericFile: BubbleMessageLayoutState.GenericFile?,
+        originalMessageAudio: BubbleMessageLayoutState.Audio?,
         mediaData: MessageTableCellState.MediaData?,
         bubble: BubbleMessageLayoutState.Bubble,
-        and delegate: MediaMessageViewDelegate
+        mediaDelegate: MediaMessageViewDelegate,
+        audioDelegate: AudioMessageViewDelegate
     ) {
         hideAllSubviews()
         
@@ -127,6 +131,7 @@ class MessageThreadView: UIView {
         originalMessageContainer.isHidden = threadMessages.originalMessage.text == nil || threadMessages.originalMessage.text?.isEmpty == true
         
         let firstReplySenderInfo = threadMessages.firstReplySenderIndo
+        
         firstReplyAvatarView.configureForUserWith(
             color: firstReplySenderInfo.0,
             alias: firstReplySenderInfo.1,
@@ -155,14 +160,21 @@ class MessageThreadView: UIView {
             originalMessageMedia: originalMessageMedia,
             mediaData: mediaData,
             bubble: bubble,
-            and: delegate
+            and: mediaDelegate
         )
         
         configureFileWith(
             originalMessageGenericFile: originalMessageGenericFile,
             mediaData: mediaData,
             bubble: bubble,
-            and: delegate
+            and: mediaDelegate
+        )
+        
+        configureAudioWith(
+            audio: originalMessageAudio,
+            mediaData: mediaData,
+            bubble: bubble,
+            and: audioDelegate
         )
     }
     
@@ -178,6 +190,7 @@ class MessageThreadView: UIView {
             originalMessageMediaView.configureWith(
                 messageMedia: originalMessageMedia,
                 mediaData: mediaData,
+                isThreadOriginalMsg: true,
                 bubble: bubble,
                 and: delegate
             )
@@ -207,5 +220,26 @@ class MessageThreadView: UIView {
             }
         }
     }
-
+    
+    func configureAudioWith(
+        audio: BubbleMessageLayoutState.Audio?,
+        mediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        and delegate: AudioMessageViewDelegate
+    ) {
+        if let audio = audio {
+            originalMessageAudioView.configureWith(
+                audio: audio,
+                mediaData: mediaData,
+                isThreadOriginalMsg: true,
+                bubble: bubble,
+                and: delegate
+            )
+            originalMessageAudioView.isHidden = false
+            
+            if mediaData == nil {
+                delegate.shouldLoadOriginalMessageAudioDataFrom(originalMessageAudio: audio)
+            }
+        }
+    }
 }

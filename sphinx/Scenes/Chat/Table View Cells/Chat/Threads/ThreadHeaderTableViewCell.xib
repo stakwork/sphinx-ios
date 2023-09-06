@@ -94,11 +94,18 @@
                                                     <constraint firstAttribute="height" constant="60" id="FCO-hS-t6C"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UdD-w8-jqP" customClass="AudioMessageView" customModule="sphinx" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="341" width="376" height="60"/>
+                                                <color key="backgroundColor" name="ReceivedMsgBG"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="u2V-Ok-vzU"/>
+                                                </constraints>
+                                            </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51d-af-xpA">
-                                                <rect key="frame" x="0.0" y="341" width="376" height="321"/>
+                                                <rect key="frame" x="0.0" y="413" width="376" height="249"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NmQ-7f-GFw" customClass="ExpandableLabel" customModule="ExpandableLabel">
-                                                        <rect key="frame" x="0.0" y="0.0" width="376" height="317"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="376" height="245"/>
                                                         <string key="text">Are there any updates? At vero eos et accu amus et iusto odio dignis simos ducimus qui blanditiis prae sentium volu ptatum deleniti. Character Counter is a 100% free online character count calculator that's simple to use. Sometimes users prefer simplicity over all of the detailed writing information Word Counter provides, and this is exactly what this tool offers. It displays character count and word count which is often the only information a person needs to know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece know about their writing. Best of all, you rece often the only information a person needs to know about their writing. Best of all, you rece </string>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                                         <color key="textColor" name="TextMessages"/>
@@ -202,6 +209,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" name="HeaderBG"/>
             <connections>
+                <outlet property="audioMessageView" destination="UdD-w8-jqP" id="Ipv-6D-csk"/>
                 <outlet property="bottomMarginView" destination="uDu-S2-CM1" id="S57-mK-v9z"/>
                 <outlet property="differenceViewHeightConstraint" destination="KwA-we-rpb" id="xBA-ce-2ja"/>
                 <outlet property="fileDetailsView" destination="Bp1-26-g13" id="4a0-kz-cZ9"/>

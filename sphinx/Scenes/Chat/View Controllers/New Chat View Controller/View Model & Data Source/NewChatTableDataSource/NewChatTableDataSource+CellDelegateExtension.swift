@@ -117,10 +117,20 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ),
-           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
-           let imageUrl = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url
-        {
+        ) {
+            
+            var message = tableCellState.1.message
+            var imageUrl = tableCellState.1.messageMedia?.url
+            
+            if messageId == tableCellState.1.threadOriginalMessage?.id {
+                message = tableCellState.1.threadOriginalMessage
+                imageUrl = tableCellState.1.threadOriginalMessageMedia?.url
+            }
+            
+            guard let message = message, let imageUrl = imageUrl else {
+                return
+            }
+            
             if message.isDirectPayment() {
                 MediaLoader.loadPaymentTemplateImage(url: imageUrl, message: message, completion: { messageId, image in
                     let updatedMediaData = MessageTableCellState.MediaData(
@@ -134,7 +144,11 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                     self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
                 })
             } else {
-                let mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey ?? tableCellState.1.messageMedia?.mediaKey
+                var mediaKey = tableCellState.1.messageMedia?.mediaKey
+                
+                if messageId == tableCellState.1.threadOriginalMessage?.id {
+                    mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey
+                }
                 
                 MediaLoader.loadImage(url: imageUrl, message: message, mediaKey: mediaKey, completion: { messageId, image in
                     let updatedMediaData = MessageTableCellState.MediaData(
@@ -158,11 +172,22 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ),
-           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
-           let url = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url,
-           let mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey ?? tableCellState.1.messageMedia?.mediaKey
-        {
+        ) {
+            
+            var message = tableCellState.1.message
+            var url = tableCellState.1.messageMedia?.url
+            var mediaKey = tableCellState.1.messageMedia?.mediaKey
+            
+            if messageId == tableCellState.1.threadOriginalMessage?.id {
+                message = tableCellState.1.threadOriginalMessage
+                url = tableCellState.1.threadOriginalMessageMedia?.url
+                mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey
+            }
+            
+            guard let message = message, let url = url, let mediaKey = mediaKey else {
+                return
+            }
+            
             shouldLoadFileDataFor(
                 messageId: messageId,
                 and: rowIndex,
@@ -178,11 +203,21 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ),
-           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
-           let url = tableCellState.1.threadOriginalMessageGenericFile?.url ?? tableCellState.1.genericFile?.url,
-           let mediaKey = tableCellState.1.threadOriginalMessageGenericFile?.mediaKey ?? tableCellState.1.genericFile?.mediaKey
-        {
+        ) {
+            var message = tableCellState.1.message
+            var url = tableCellState.1.genericFile?.url
+            var mediaKey = tableCellState.1.genericFile?.mediaKey
+            
+            if messageId == tableCellState.1.threadOriginalMessage?.id {
+                message = tableCellState.1.threadOriginalMessage
+                url = tableCellState.1.threadOriginalMessageGenericFile?.url
+                mediaKey = tableCellState.1.threadOriginalMessageGenericFile?.mediaKey
+            }
+            
+            guard let message = message, let url = url, let mediaKey = mediaKey  else {
+                return
+            }
+            
             shouldLoadFileDataFor(
                 messageId: messageId,
                 and: rowIndex,
@@ -201,11 +236,22 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ),
-           let message = tableCellState.1.message,
-           let url = tableCellState.1.audio?.url,
-           let mediaKey = tableCellState.1.audio?.mediaKey
-        {
+        ) {
+            
+            var message = tableCellState.1.message
+            var url = tableCellState.1.audio?.url
+            var mediaKey = tableCellState.1.audio?.mediaKey
+            
+            if messageId == tableCellState.1.threadOriginalMessage?.id {
+                message = tableCellState.1.threadOriginalMessage
+                url = tableCellState.1.threadOriginalMessageAudio?.url
+                mediaKey = tableCellState.1.threadOriginalMessageAudio?.mediaKey
+            }
+            
+            guard let message = message, let url = url, let mediaKey = mediaKey else {
+                return
+            }
+            
             MediaLoader.loadFileData(
                 url: url,
                 isPdf: false,
@@ -597,17 +643,21 @@ extension NewChatTableDataSource {
     
     func didTapMediaButtonFor(
         messageId: Int,
-        and rowIndex: Int
+        and rowIndex: Int,
+        isThreadOriginalMsg: Bool
     ) {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ), let messageMedia = tableCellState.1.messageMedia, let mediaCached = mediaCached[messageId] {
+        ) {
+            let messageMedia = isThreadOriginalMsg ? tableCellState.1.threadOriginalMessageMedia : tableCellState.1.messageMedia
             
-            if messageMedia.isVideo, let data = mediaCached.data {
-                delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
-            } else {
-                delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
+            if let messageMedia = messageMedia, let mediaCached = mediaCached[messageId] {
+                if messageMedia.isVideo, let data = mediaCached.data {
+                    delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
+                } else {
+                    delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
+                }
             }
         }
     }
@@ -728,7 +778,10 @@ extension NewChatTableDataSource {
         }
     }
     
-    func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int) {
+    func didTapPlayPauseButtonFor(
+        messageId: Int,
+        and rowIndex: Int
+    ) {
         if audioPlayerHelper.isPlayingMessageWith(messageId) {
             audioPlayerHelper.pausePlayingAudio()
         } else {
@@ -820,7 +873,6 @@ extension NewChatTableDataSource {
                 let episodeId = podcastComment.itemId,
                 let feed = ContentFeed.getFeedById(feedId: feedId)
             {
-//                let audioInfo = mediaCached[messageId]?.audioInfo
                 let podcast = PodcastFeed.convertFrom(contentFeed: feed)
                 
                 let clipInfo = PodcastData.ClipInfo(

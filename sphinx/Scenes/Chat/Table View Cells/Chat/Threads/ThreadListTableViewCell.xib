@@ -83,8 +83,15 @@
                                             <constraint firstAttribute="height" constant="60" id="dMO-mM-hPd"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tac-H5-0pU" customClass="AudioMessageView" customModule="sphinx" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="369" width="408" height="60"/>
+                                        <color key="backgroundColor" name="ReceivedMsgBG"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="aeS-Bu-3M5"/>
+                                        </constraints>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-wv-7n5">
-                                        <rect key="frame" x="0.0" y="369" width="408" height="133"/>
+                                        <rect key="frame" x="0.0" y="441" width="408" height="61"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <string key="text">Are there any updates?
 </string>
@@ -312,6 +319,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="audioMessageView" destination="tac-H5-0pU" id="HS4-uN-Eko"/>
                 <outlet property="fileDetailsView" destination="pD5-dZ-KQh" id="Koc-YN-H6Q"/>
                 <outlet property="lastReplyDateLabel" destination="rD7-X8-Btw" id="BuW-EC-6PQ"/>
                 <outlet property="mediaMessageView" destination="FPx-9o-SdS" id="YhQ-1y-RX0"/>

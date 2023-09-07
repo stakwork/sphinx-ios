@@ -161,6 +161,50 @@ extension ThreadsListDataSource : ThreadListTableViewCellDelegate {
         }
     }
     
+    func shouldLoadAudioDataFor(messageId: Int, and rowIndex: Int) {
+        if var tableCellState = getTableCellStateFor(
+            messageId: messageId,
+            and: rowIndex
+        ),
+           let message = tableCellState.1.originalMessage,
+           let url = tableCellState.1.audio?.url,
+           let mediaKey = tableCellState.1.audio?.mediaKey
+        {
+            
+            MediaLoader.loadFileData(
+                url: url,
+                isPdf: false,
+                message: message,
+                mediaKey: mediaKey,
+                completion: { (messageId, data, fileInfo) in
+                    
+                    if let duration = self.audioPlayerHelper.getAudioDuration(data: data) {
+                        
+                        let updatedMediaData = MessageTableCellState.MediaData(
+                            image: nil,
+                            data: data,
+                            fileInfo: fileInfo,
+                            audioInfo: MessageTableCellState.AudioInfo(
+                                loading: false,
+                                playing: false,
+                                duration: duration,
+                                currentTime: 0
+                            )
+                        )
+                        
+                        self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                    }
+                },
+                errorCompletion: { messageId in
+                    let updatedMediaData = MessageTableCellState.MediaData(
+                        failed: true
+                    )
+                    self.updateMessageTableCellStateFor(rowIndex: rowIndex, messageId: messageId, with: updatedMediaData)
+                }
+            )
+        }
+    }
+    
     func didTapMediaButtonFor(
         messageId: Int,
         and rowIndex: Int

@@ -198,23 +198,47 @@ extension ThreadListTableViewCell {
             }
         }
     }
+    
+    func configureWith(
+        audio: BubbleMessageLayoutState.Audio?,
+        mediaData: MessageTableCellState.MediaData?
+    ) {
+        if let audio = audio {
+
+            audioMessageView.configureWith(
+                audio: audio,
+                mediaData: mediaData,
+                isThreadOriginalMsg: false,
+                bubble: BubbleMessageLayoutState.Bubble(direction: .Incoming, grouping: .Isolated),
+                and: self
+            )
+
+            audioMessageView.isHidden = false
+
+            if let messageId = messageId, mediaData == nil {
+                let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                    self.delegate?.shouldLoadAudioDataFor(
+                        messageId: messageId,
+                        and: self.rowIndex
+                    )
+                }
+            }
+        }
+    }
 }
 
 extension ThreadListTableViewCell : MediaMessageViewDelegate {
-    func didTapMediaButton(isThreadOriginalMsg: Bool) {
-        if let messageId = messageId {
-            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex)
-        }
-    }
-    
+    func didTapMediaButton(isThreadOriginalMsg: Bool) {}
     func shouldLoadOriginalMessageMediaDataFrom(originalMessageMedia: BubbleMessageLayoutState.MessageMedia) {}
     func shouldLoadOriginalMessageFileDataFrom(originalMessageFile: BubbleMessageLayoutState.GenericFile) {}
 }
 
 extension ThreadListTableViewCell : FileDetailsViewDelegate {
-    func didTapDownloadButton() {
-        if let messageId = messageId {
-            delegate?.didTapFileDownloadButtonFor(messageId: messageId, and: rowIndex)
-        }
-    }
+    func didTapDownloadButton() {}
+}
+
+extension ThreadListTableViewCell : AudioMessageViewDelegate {
+    func didTapPlayPauseButton(isThreadOriginalMsg: Bool) {}
+    func shouldLoadOriginalMessageAudioDataFrom(originalMessageAudio: BubbleMessageLayoutState.Audio) {}
 }

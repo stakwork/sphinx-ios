@@ -23,6 +23,8 @@ class ChatAvatarView: UIView {
     @IBOutlet weak var profileInitialContainer: UIView!
     @IBOutlet weak var initialsLabel: UILabel!
     
+    var imageUrl: String? = nil
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -107,13 +109,17 @@ class ChatAvatarView: UIView {
     func showImageWith(
         url: URL
     ) {
+        self.profileInitialContainer.isHidden = true
+        self.profileImageView.isHidden = false
+        
+        if let imageUrl = imageUrl, imageUrl == url.absoluteString {
+            return
+        }
+        
         let transformer = SDImageResizingTransformer(
             size: CGSize(width: bounds.size.width * 3, height: bounds.size.height * 3),
             scaleMode: .aspectFill
         )
-        
-        self.profileInitialContainer.isHidden = true
-        self.profileImageView.isHidden = false
         
         profileImageView.sd_cancelCurrentImageLoad()
         profileImageView.sd_setImage(
@@ -124,6 +130,7 @@ class ChatAvatarView: UIView {
             progress: nil,
             completed: { (image, error, _, _) in
                 if (error == nil) {
+                    self.imageUrl = url.absoluteString
                     self.profileInitialContainer.isHidden = true
                     self.profileImageView.isHidden = false
                     self.profileImageView.image = image
@@ -139,8 +146,6 @@ class ChatAvatarView: UIView {
         alias: String,
         color: UIColor
     ) {
-        profileImageView.image = nil
-        
         profileInitialContainer.isHidden = false
         profileInitialContainer.backgroundColor = color
         initialsLabel.textColor = UIColor.white

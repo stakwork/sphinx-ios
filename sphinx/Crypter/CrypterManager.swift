@@ -732,7 +732,7 @@ class CrypterManager : NSObject {
     ///Signer setup
     func setupSigningDevice() {
         API.sharedInstance.getHardwarePublicKey(callback: {_ in}, errorCallback: {})//force request for LAN access
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
             self.checkNetwork {
                 self.promptForNetworkName() { networkName in
                     self.promptForNetworkPassword(networkName) {

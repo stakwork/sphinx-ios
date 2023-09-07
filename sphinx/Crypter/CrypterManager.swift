@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import HDWalletKit
 import NetworkExtension
 import CoreLocation
 import CocoaMQTT
@@ -204,15 +203,6 @@ class CrypterManager : NSObject {
             hardwarePostDto.lightningNodeUrl = hardwareLink.mqtt
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
             hardwarePostDto.relay = hardwareLink.relay
-        }
-        
-        let host = hardwarePostDto.lightningNodeUrl ?? UserDefaults.Keys.phoneSignerHost.get()
-        let network = hardwarePostDto.bitcoinNetwork ?? UserDefaults.Keys.phoneSignerNetwork.get()
-        let relay = hardwarePostDto.relay ?? "" //TODO: add to user defaults
-        
-        guard let host = host, let network = network else {
-            showQRScanner()
-            return
         }
         
         chooseConnectionType(overrideMessages: overrideMessages)
@@ -432,6 +422,7 @@ class CrypterManager : NSObject {
         mqtt.username = keys.pubkey
         mqtt.password = password
         mqtt.enableSSL = ssl
+        mqtt.allowUntrustCACertificate = true
         
         showSuccessWithMessage("Connecting to MQTT")
 
@@ -805,6 +796,7 @@ class CrypterManager : NSObject {
             callback()
             return
         }
+        
         promptFor(
             "profile.lightning-url-title".localized,
             message: "profile.lightning-url-message".localized,
@@ -925,31 +917,51 @@ class CrypterManager : NSObject {
         )
     }
     
+    func generateMnemonic()->String?{
+        var result : String? = nil
+        do{
+            let mnemonic = try mnemonicFromEntropy(seed: Data.randomBytes(length: 32).hexString)
+            return mnemonic
+        }
+        catch let error{
+            print("error getting seed\(error)")
+        }
+        return result
+    }
+    
     public func getOrCreateWalletMnemonic(
         enteredMnemonic: String? = nil
     ) -> (String, Data) {
-        var forceCreate = false
-        if let _ = self.vc as? NewUserSignupFormViewController{
-            forceCreate = true
+        guard let mnemonic = enteredMnemonic ?? UserData.sharedInstance.getMnemonic() ?? generateMnemonic() else{
+            AlertHelper.showAlert(title: "Error generating seed", message: "Please try again.")
+            return ("",Data())
         }
-        let mnemonic = (forceCreate) ? Mnemonic.create() : enteredMnemonic ?? UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
-        let seed = Mnemonic.createSeed(mnemonic: mnemonic)
-        let seed32Bytes = Data(seed.bytes[0..<32])
-
-        self.seed = seed32Bytes
-        UserData.sharedInstance.save(walletMnemonic: mnemonic)
-        
-        return (mnemonic, seed32Bytes)
+        do{
+            let seed = try Data(entropyFromMnemonic(mnemonic: mnemonic).data(using: .utf8)!)
+            let seed32Bytes = Data(seed.bytes[0..<32])
+            self.seed = seed32Bytes
+            UserData.sharedInstance.save(walletMnemonic: mnemonic)
+            
+            return (mnemonic, seed32Bytes)
+        }
+        catch{
+            return("",Data())
+        }
     }
     
     func getStoredMnemonicAndSeed() -> (String, Data)? {
         if let mnemonic: String = UserData.sharedInstance.getMnemonic() {
-            let seed = Mnemonic.createSeed(mnemonic: mnemonic)
-            let seed32Bytes = Data(seed.bytes[0..<32])
-            
-            self.seed = seed32Bytes
-            
-            return (mnemonic, seed32Bytes)
+            do{
+                let seed = try Data(entropyFromMnemonic(mnemonic: mnemonic).data(using: .utf8)!)
+                let seed32Bytes = Data(seed.bytes[0..<32])
+                
+                self.seed = seed32Bytes
+                
+                return (mnemonic, seed32Bytes)
+            }
+            catch{
+                return nil
+            }
         }
         
         return nil
@@ -1110,8 +1122,7 @@ extension CrypterManager : QRCodeScannerDelegate {
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
             hardwarePostDto.relay = hardwareLink.relay
             
-
-            setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: endCallback)
+            startMQTTSetup()
             scannerVC?.dismiss(animated: true)
             scannerVC = nil
         } else {
@@ -1124,4 +1135,18 @@ extension CrypterManager : QRCodeScannerDelegate {
             )
         }
     }
+}
+
+
+extension Data {
+    static func randomBytes(length: Int) -> Data {
+        var bytes = Data(count: length)
+        _ = bytes.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, length, $0.baseAddress!) }
+        return bytes
+    }
+
+    public var bytes: Array<UInt8> {
+        return Array(self)
+    }
+
 }

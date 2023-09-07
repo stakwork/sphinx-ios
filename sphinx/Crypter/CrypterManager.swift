@@ -205,15 +205,6 @@ class CrypterManager : NSObject {
             hardwarePostDto.relay = hardwareLink.relay
         }
         
-        let host = hardwarePostDto.lightningNodeUrl ?? UserDefaults.Keys.phoneSignerHost.get()
-        let network = hardwarePostDto.bitcoinNetwork ?? UserDefaults.Keys.phoneSignerNetwork.get()
-        let relay = hardwarePostDto.relay ?? "" //TODO: add to user defaults
-        
-        guard let host = host, let network = network else {
-            showQRScanner()
-            return
-        }
-        
         chooseConnectionType(overrideMessages: overrideMessages)
     }
     
@@ -805,6 +796,7 @@ class CrypterManager : NSObject {
             callback()
             return
         }
+        
         promptFor(
             "profile.lightning-url-title".localized,
             message: "profile.lightning-url-message".localized,
@@ -928,11 +920,11 @@ class CrypterManager : NSObject {
     func generateMnemonic()->String?{
         var result : String? = nil
         do{
-            let mnemonic = try mnemonicFromEntropy(seed: Data.randomBytes(length: 128).hexString)
+            let mnemonic = try mnemonicFromEntropy(seed: Data.randomBytes(length: 32).hexString)
             return mnemonic
         }
-        catch{
-            print("error getting seed")
+        catch let error{
+            print("error getting seed\(error)")
         }
         return result
     }
@@ -1130,8 +1122,7 @@ extension CrypterManager : QRCodeScannerDelegate {
             hardwarePostDto.bitcoinNetwork = hardwareLink.network
             hardwarePostDto.relay = hardwareLink.relay
             
-
-            setupSigningDevice(vc: vc, hardwareLink: hardwareLink, callback: endCallback)
+            startMQTTSetup()
             scannerVC?.dismiss(animated: true)
             scannerVC = nil
         } else {

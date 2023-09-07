@@ -920,11 +920,11 @@ class CrypterManager : NSObject {
     func generateMnemonic()->String?{
         var result : String? = nil
         do{
-            let mnemonic = try mnemonicFromEntropy(seed: Data.randomBytes(length: 128).hexString)
+            let mnemonic = try mnemonicFromEntropy(seed: Data.randomBytes(length: 32).hexString)
             return mnemonic
         }
-        catch{
-            print("error getting seed")
+        catch let error{
+            print("error getting seed\(error)")
         }
         return result
     }

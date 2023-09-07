@@ -928,7 +928,11 @@ class CrypterManager : NSObject {
     public func getOrCreateWalletMnemonic(
         enteredMnemonic: String? = nil
     ) -> (String, Data) {
-        let mnemonic = enteredMnemonic ?? UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
+        var forceCreate = false
+        if let _ = self.vc as? NewUserSignupFormViewController{
+            forceCreate = true
+        }
+        let mnemonic = (forceCreate) ? Mnemonic.create() : enteredMnemonic ?? UserData.sharedInstance.getMnemonic() ?? Mnemonic.create()
         let seed = Mnemonic.createSeed(mnemonic: mnemonic)
         let seed32Bytes = Data(seed.bytes[0..<32])
 

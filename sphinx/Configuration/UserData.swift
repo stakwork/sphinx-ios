@@ -546,6 +546,6 @@ class UserData {
     }
     
     func clearMnemonic() {
-        let _ = keychainManager.deleteValueFor(key: KeychainManager.KeychainKeys.walletMnemonic.rawValue)
+        let _ = keychainManager.deleteValueFor(composedKey: KeychainManager.KeychainKeys.walletMnemonic.rawValue)
     }
 }

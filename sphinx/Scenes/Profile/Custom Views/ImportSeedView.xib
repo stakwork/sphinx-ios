@@ -5,8 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -29,25 +27,37 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="249"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3A8-zd-aha">
-                    <rect key="frame" x="36" y="99" width="248" height="70"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <color key="textColor" systemColor="labelColor"/>
-                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gPH-0x-4NC">
-                    <rect key="frame" x="150" y="114" width="20" height="20"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1tH-XC-QDX">
+                    <rect key="frame" x="32" y="32" width="256" height="103"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3A8-zd-aha">
+                            <rect key="frame" x="8" y="8" width="240" height="87"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" name="Text"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <color key="backgroundColor" name="OnboardingBG"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="3A8-zd-aha" secondAttribute="bottom" constant="8" id="APQ-Wz-vih"/>
+                        <constraint firstItem="3A8-zd-aha" firstAttribute="leading" secondItem="1tH-XC-QDX" secondAttribute="leading" constant="8" id="BYc-pl-lz3"/>
+                        <constraint firstAttribute="trailing" secondItem="3A8-zd-aha" secondAttribute="trailing" constant="8" id="sVz-Rg-LWj"/>
+                        <constraint firstItem="3A8-zd-aha" firstAttribute="top" secondItem="1tH-XC-QDX" secondAttribute="top" constant="8" id="v4A-z4-dgW"/>
+                    </constraints>
+                </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gPH-0x-4NC">
+                    <rect key="frame" x="150" y="73.666666666666671" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Wfo-6x-sVB"/>
                         <constraint firstAttribute="width" constant="20" id="aTZ-2S-fZP"/>
                     </constraints>
                 </activityIndicatorView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzB-8b-6M6">
-                    <rect key="frame" x="36" y="182" width="248" height="50"/>
+                    <rect key="frame" x="32" y="167" width="256" height="50"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="omm-KQ-xIa">
-                            <rect key="frame" x="0.0" y="0.0" width="111.66666666666667" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="120" height="50"/>
                             <color key="backgroundColor" name="PrimaryBlue"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                             <state key="normal" title="Cancel">
@@ -58,7 +68,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDJ-TI-seS">
-                            <rect key="frame" x="136.33333333333334" y="0.0" width="111.66666666666666" height="50"/>
+                            <rect key="frame" x="136" y="0.0" width="120" height="50"/>
                             <color key="backgroundColor" name="PrimaryBlue"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                             <state key="normal" title="Confirm">
@@ -76,41 +86,40 @@
                         <constraint firstAttribute="bottom" secondItem="omm-KQ-xIa" secondAttribute="bottom" id="iFA-04-BJY"/>
                         <constraint firstItem="omm-KQ-xIa" firstAttribute="top" secondItem="JzB-8b-6M6" secondAttribute="top" id="myi-Pu-q37"/>
                         <constraint firstItem="EDJ-TI-seS" firstAttribute="top" secondItem="JzB-8b-6M6" secondAttribute="top" id="qH6-qg-xZd"/>
-                        <constraint firstItem="EDJ-TI-seS" firstAttribute="width" secondItem="JzB-8b-6M6" secondAttribute="width" multiplier="0.45" id="sBV-81-S3X"/>
+                        <constraint firstItem="EDJ-TI-seS" firstAttribute="width" secondItem="JzB-8b-6M6" secondAttribute="width" multiplier="0.5" constant="-8" id="sBV-81-S3X"/>
                         <constraint firstAttribute="trailing" secondItem="EDJ-TI-seS" secondAttribute="trailing" id="vBv-2x-yOY"/>
-                        <constraint firstItem="omm-KQ-xIa" firstAttribute="width" secondItem="JzB-8b-6M6" secondAttribute="width" multiplier="0.45" id="ziZ-RG-FHd"/>
+                        <constraint firstItem="omm-KQ-xIa" firstAttribute="width" secondItem="JzB-8b-6M6" secondAttribute="width" multiplier="0.5" constant="-8" id="ziZ-RG-FHd"/>
                     </constraints>
                 </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="ReceivedBubbleBorder"/>
             <constraints>
-                <constraint firstItem="3A8-zd-aha" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="40" id="I58-3O-CEP"/>
-                <constraint firstItem="JzB-8b-6M6" firstAttribute="leading" secondItem="3A8-zd-aha" secondAttribute="leading" id="Imz-N0-dfp"/>
-                <constraint firstItem="3A8-zd-aha" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="awF-dd-yFo"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="3A8-zd-aha" secondAttribute="trailing" constant="36" id="ek1-aG-T2J"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="3A8-zd-aha" secondAttribute="bottom" constant="80" id="iaj-zy-ktU"/>
-                <constraint firstItem="JzB-8b-6M6" firstAttribute="trailing" secondItem="3A8-zd-aha" secondAttribute="trailing" id="k9V-c7-8h9"/>
-                <constraint firstItem="gPH-0x-4NC" firstAttribute="centerX" secondItem="3A8-zd-aha" secondAttribute="centerX" id="nHn-T3-ANE"/>
-                <constraint firstItem="gPH-0x-4NC" firstAttribute="centerY" secondItem="3A8-zd-aha" secondAttribute="centerY" id="q4n-fz-MZn"/>
-                <constraint firstItem="JzB-8b-6M6" firstAttribute="top" secondItem="3A8-zd-aha" secondAttribute="bottom" constant="13" id="zlk-eV-Vos"/>
+                <constraint firstItem="1tH-XC-QDX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="32" id="0zp-6u-heM"/>
+                <constraint firstItem="JzB-8b-6M6" firstAttribute="top" secondItem="1tH-XC-QDX" secondAttribute="bottom" constant="32" id="7kT-2C-Pxq"/>
+                <constraint firstItem="1tH-XC-QDX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="85k-OL-Uj0"/>
+                <constraint firstItem="gPH-0x-4NC" firstAttribute="centerX" secondItem="1tH-XC-QDX" secondAttribute="centerX" id="J3z-43-svo"/>
+                <constraint firstItem="JzB-8b-6M6" firstAttribute="leading" secondItem="1tH-XC-QDX" secondAttribute="leading" id="Sd3-Sy-iOx"/>
+                <constraint firstAttribute="bottom" secondItem="JzB-8b-6M6" secondAttribute="bottom" constant="32" id="dDa-sY-LHr"/>
+                <constraint firstItem="gPH-0x-4NC" firstAttribute="centerY" secondItem="1tH-XC-QDX" secondAttribute="centerY" id="gzd-ze-Q5c"/>
+                <constraint firstItem="JzB-8b-6M6" firstAttribute="trailing" secondItem="1tH-XC-QDX" secondAttribute="trailing" id="iSt-7i-ad9"/>
+                <constraint firstAttribute="trailing" secondItem="1tH-XC-QDX" secondAttribute="trailing" constant="32" id="yc8-wu-7uf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="-64.122137404580144" y="-207.3943661971831"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="OnboardingBG">
+            <color red="0.078000001609325409" green="0.11800000071525574" blue="0.15299999713897705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="PrimaryBlue">
             <color red="0.38039215686274508" green="0.54117647058823526" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ReceivedBubbleBorder">
             <color red="0.87450980392156863" green="0.88235294117647056" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="Text">
+            <color red="0.23529411764705882" green="0.24705882352941178" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

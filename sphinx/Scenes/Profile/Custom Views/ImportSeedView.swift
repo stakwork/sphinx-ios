@@ -22,8 +22,8 @@ class ImportSeedView: UIView {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
-    
     var delegate : ImportSeedViewDelegate? = nil
+    
     var originalFrame: CGRect = .zero
     var isKeyboardShown = false
     var network:String = ""
@@ -55,19 +55,33 @@ class ImportSeedView: UIView {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         textView.delegate = self
         
+        textView.layer.cornerRadius = 10
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.Sphinx.Divider.cgColor
+        textView.clipsToBounds = true
         
         confirmButton.layer.cornerRadius = confirmButton.frame.height/2.0
         cancelButton.layer.cornerRadius = cancelButton.frame.height/2.0
         contentView.layer.cornerRadius = 34.0
         textView.layer.cornerRadius = 4.0
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-           // self.summaryDict = self.getDebugValues()
-        })
     }
     
+    func showWith(
+        delegate: ImportSeedViewDelegate?,
+        network: String,
+        host: String,
+        relay: String
+    ) {
+        self.delegate = delegate
+        self.network = network
+        self.host = host
+        self.relay = relay
+        
+        self.isHidden = false
+    }
     
     @IBAction func cancelTapped(_ sender: Any) {
         delegate?.didTapCancelImportSeed()
@@ -76,7 +90,6 @@ class ImportSeedView: UIView {
     @IBAction func confirmTapped(_ sender: Any) {
         delegate?.didTapConfirm()
     }
-
 }
 
 

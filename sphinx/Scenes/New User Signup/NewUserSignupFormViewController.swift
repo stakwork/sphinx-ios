@@ -38,7 +38,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
         super.viewDidLoad()
         
         newMessageBubbleHelper.genericMessageY = (
-            UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 60
+            UIApplication.shared.windows.first?.safeAreaInsets.top ?? 60
         ) + 60
 
         setupCodeField()
@@ -144,36 +144,49 @@ extension NewUserSignupFormViewController: UITextFieldDelegate {
 
 
 extension NewUserSignupFormViewController : ImportSeedViewDelegate{
-    func showImportSeedView(network:String,host:String,relay:String){
-        self.importSeedView.isHidden = false
-        self.importSeedView.delegate = self
-        importSeedView.network = network
-        importSeedView.host = host
-        importSeedView.relay = relay
-        self.view.bringSubviewToFront(importSeedView)
-        
-        importSeedView.layer.zPosition = 999
+    
+    func showImportSeedView(
+        network: String,
+        host: String,
+        relay: String
+    ){
+        importSeedView.showWith(
+            delegate: self,
+            network: network,
+            host: host,
+            relay: relay
+        )
     }
     
     func didTapCancelImportSeed() {
-        self.importSeedView.textView.resignFirstResponder()
-        self.importSeedView.textView.text = ""
-        self.importSeedView.isHidden = true
-        self.importSeedView.activityView.stopAnimating()
+        importSeedView.textView.resignFirstResponder()
+        importSeedView.textView.text = ""
+        importSeedView.isHidden = true
+        importSeedView.activityView.stopAnimating()
     }
     
     func didTapConfirm() {
-        self.importSeedView.activityView.startAnimating()
+        importSeedView.activityView.startAnimating()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-            let words = self.importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
+            
+            let words = importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
             let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
+            
             if let error = error {
                 AlertHelper.showAlert(title: "profile.seed-validation-error-title".localized, message: error.localizedDescription + (additionalString ?? ""))
                 return
             }
+            
             self.importSeedView.activityView.isHidden = false
             self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-            CrypterManager.sharedInstance.performWalletFinalization(network: self.importSeedView.network, host: self.importSeedView.host, relay: importSeedView.relay,enteredMnemonic: self.importSeedView.textView.text)
+            
+            CrypterManager.sharedInstance.performWalletFinalization(
+                network: importSeedView.network,
+                host: importSeedView.host,
+                relay: importSeedView.relay,
+                enteredMnemonic: importSeedView.textView.text
+            )
         })
     }
     

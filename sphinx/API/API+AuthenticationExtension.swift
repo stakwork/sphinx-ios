@@ -235,50 +235,29 @@ extension API {
     }
     
     public func getHasAdmin(
-        relay:String,
         completionHandler: @escaping GetHasAdminCompletionHandler
-    ){
-        let route = "has_admin"
-        let baseURL = UserData.sharedInstance.getNodeIP()
-        let urlPath = "\(baseURL)/\(route)"
-        
-        let urlComponents = URLComponents(string: urlPath)!
-
-        guard let urlString = urlComponents.url?.absoluteString else {
+    ){  
+        guard let request = getURLRequest(
+                route: "/has_admin",
+                params: nil,
+                method: "GET"
+        ) else {
             completionHandler(.failure(.failedToCreateRequestURL))
             return
         }
-
-        guard let request = createRequest(
-            urlString,
-            bodyParams: nil,
-            method: "GET"
-        ) else {
-            completionHandler(.failure(.failedToCreateRequest(urlPath: urlPath)))
-            return
-        }
-
-        getHasAdminRequest?.cancel()
         
-        getHasAdminRequest = AF.request(request).responseJSON { response in
-            print("getHasAdminRequest request: \(String(describing: self.getHasAdminRequest))")
+        sphinxRequest(request) { response in
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["response"] as? Bool,
-                        success {
+                    if let success = json["response"] as? Bool, success {
                         completionHandler(.success(true))
-                        print("getHasAdminRequest success: \(json.descriptionInStringsFileFormat)")
                     } else {
                         completionHandler(.success(false))
-                        print("getHasAdminRequest request success but response shows failure: \(json.descriptionInStringsFileFormat)")
-                        print("getHasAdminStatus status: \(String(describing: response.response?.statusCode))")
                     }
                 }
-            case .failure(let error):
+            case .failure(_):
                 completionHandler(.failure(.networkError(error)))
-                print("getHasAdminRequest error: \(error)")
-                print("getHasAdminRequest status: \(String(describing: response.response?.statusCode))")
             }
         }
     }

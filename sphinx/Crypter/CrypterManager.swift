@@ -191,7 +191,7 @@ class CrypterManager : NSObject {
     
     func setupSigningDevice(
         vc: UIViewController,
-        overrideMessages:Bool=false,
+        overrideMessages: Bool = false,
         hardwareLink: HardwareLink? = nil,
         callback: @escaping ((String?) -> ())
     ) {
@@ -208,8 +208,11 @@ class CrypterManager : NSObject {
         chooseConnectionType(overrideMessages: overrideMessages)
     }
     
-    func chooseConnectionType(overrideMessages:Bool=false) {
+    func chooseConnectionType(
+        overrideMessages: Bool = false
+    ) {
         overrideMessages ? (self.resetMQTTConnection(overrideMessages: overrideMessages)) : ()//disconnect MQTT if it is connected
+        
         let setupHardwareCallback: (() -> ()) = {
             self.setupSigningDevice()
         }
@@ -303,11 +306,11 @@ class CrypterManager : NSObject {
     
     func chooseImportOrGenerateSeed(network:String,host:String,relay:String){
         let requestEnteredMneumonicCallback: (() -> ()) = {
-            self.importSeedPhrase(network: network, host: host,relay:relay)
+            self.importSeedPhrase(network: network, host: host, relay: relay)
         }
         
         let generateSeedCallback: (() -> ()) = {
-            self.performWalletFinalization(network: network, host: host,relay:relay)
+            self.performWalletFinalization(network: network, host: host, relay: relay)
         }
         
         AlertHelper.showTwoOptionsAlert(
@@ -320,30 +323,38 @@ class CrypterManager : NSObject {
         )
     }
     
-    func importSeedPhrase(network:String,host:String,relay:String){
-        print("importing seed phrase")
-        if let vc = self.vc as? ImportSeedViewDelegate{
-            print("ProfileViewController")
-            vc.showImportSeedView(network:network,host:host,relay:relay)
+    func importSeedPhrase(
+        network: String,
+        host: String,
+        relay: String
+    ){
+        if let vc = self.vc as? ImportSeedViewDelegate {
+            vc.showImportSeedView(
+                network: network,
+                host: host,
+                relay: relay
+            )
         }
     }
     
-    func validateSeed(words:[String])->(SeedValidationError?,String?){
-        if(words.count != 12 && words.count != 24){
+    func validateSeed(
+        words: [String]
+    ) -> (SeedValidationError?, String?) {
+        if (words.count != 12 && words.count != 24) {
             return (SeedValidationError.incorrectWordNumber,nil)
         }
         if let languageList = findListForWord(words[0]){
             for i in 1..<words.count{
-                if languageList.words.contains(words[i]) == false{
-                    return (SeedValidationError.invalidWord,"\(i + 1) - \(words[i])")
+                if languageList.words.contains(words[i]) == false {
+                    return (SeedValidationError.invalidWord, "\(i + 1) - \(words[i])")
                 }
             }
         }
-        else{
-            return (SeedValidationError.invalidWord,"1 -\(words[0])")
+        else {
+            return (SeedValidationError.invalidWord, "1 -\(words[0])")
         }
         
-        return (nil,nil)
+        return (nil, nil)
     }
     
     func findListForWord(_ word: String) -> WordList? {
@@ -356,10 +367,10 @@ class CrypterManager : NSObject {
     }
     
     func performWalletFinalization(
-        network:String,
-        host:String,
-        relay:String,
-        enteredMnemonic:String?=nil
+        network: String,
+        host: String,
+        relay: String,
+        enteredMnemonic: String? = nil
     ){
         let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic)
         
@@ -732,6 +743,7 @@ class CrypterManager : NSObject {
     ///Signer setup
     func setupSigningDevice() {
         API.sharedInstance.getHardwarePublicKey(callback: {_ in}, errorCallback: {})//force request for LAN access
+        
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
             self.checkNetwork {
                 self.promptForNetworkName() { networkName in
@@ -919,9 +931,8 @@ class CrypterManager : NSObject {
     
     func generateMnemonic()->String?{
         var result : String? = nil
-        do{
-            let mnemonic = try mnemonicFromEntropy(seed: Data.randomBytes(length: 32).hexString)
-            return mnemonic
+        do {
+            result = try mnemonicFromEntropy(seed: Data.randomBytes(length: 32).hexString)
         }
         catch let error{
             print("error getting seed\(error)")

@@ -246,7 +246,7 @@ extension API {
             return
         }
         
-        sphinxRequest(request) { response in
+        AF.request(request).responseJSON { response in
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {

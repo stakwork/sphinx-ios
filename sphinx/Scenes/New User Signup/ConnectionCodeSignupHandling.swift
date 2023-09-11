@@ -227,7 +227,7 @@ extension ConnectionCodeSignupHandling {
             
             self.checkForAdmin() {
                 self.postToGenerateToken {
-                    // Optional code to execute after postToGenerateToken
+                    UserDefaults.Keys.setupPhoneSigner.set(true)
                 }
             }
         }

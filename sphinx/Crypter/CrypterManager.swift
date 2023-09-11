@@ -214,7 +214,7 @@ class CrypterManager : NSObject {
         overrideMessages ? (self.resetMQTTConnection(overrideMessages: overrideMessages)) : ()//disconnect MQTT if it is connected
         
         let setupHardwareCallback: (() -> ()) = {
-            self.setupSigningDevice()
+            self.startSigningDeviceSetup()
         }
         
         let setupPhoneDeviceCallback: (() -> ()) = {
@@ -440,7 +440,6 @@ class CrypterManager : NSObject {
         let success = mqtt.connect()
 
         if success {
-            UserDefaults.Keys.setupPhoneSigner.set(true)
             UserDefaults.Keys.phoneSignerHost.set(host)
             UserDefaults.Keys.phoneSignerNetwork.set(network)
             UserDefaults.Keys.phoneSignerRelay.set(relay)
@@ -741,7 +740,7 @@ class CrypterManager : NSObject {
     }
     
     ///Signer setup
-    func setupSigningDevice() {
+    func startSigningDeviceSetup() {
         API.sharedInstance.getHardwarePublicKey(callback: {_ in}, errorCallback: {})//force request for LAN access
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
@@ -750,7 +749,7 @@ class CrypterManager : NSObject {
                     self.promptForNetworkPassword(networkName) {
                         self.promptForHardwareUrl() {
                             self.promptForBitcoinNetwork {
-                                self.testCrypter()
+                                self.setupSigningDevice()
                             }
                         }
                     }
@@ -977,7 +976,7 @@ class CrypterManager : NSObject {
         return nil
     }
     
-    func testCrypter() {
+    func setupSigningDevice() {
         guard let lssNonceBytes = stringToBytes(lssNonce) else {
             return
         }

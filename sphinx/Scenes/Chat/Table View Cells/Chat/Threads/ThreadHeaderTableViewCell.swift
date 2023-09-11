@@ -178,7 +178,8 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             for range in urlRanges {
                 if gesture.didTapAttributedTextInLabel(
                     label,
-                    inRange: range
+                    inRange: range,
+                    isThreadHeader: true
                 ) {
                     let link = (text as NSString).substring(with: range)
                     delegate?.didTapOnLink(link)

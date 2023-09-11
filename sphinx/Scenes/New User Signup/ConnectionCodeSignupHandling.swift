@@ -210,7 +210,6 @@ extension ConnectionCodeSignupHandling {
         network: String,
         relay: String
     ) {
-        
         let hwl = CrypterManager.HardwareLink(
             mqtt: mqtt,
             network: network,

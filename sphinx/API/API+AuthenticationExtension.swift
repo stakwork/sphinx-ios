@@ -256,7 +256,7 @@ extension API {
                         completionHandler(.success(false))
                     }
                 }
-            case .failure(_):
+            case .failure(let error):
                 completionHandler(.failure(.networkError(error)))
             }
         }

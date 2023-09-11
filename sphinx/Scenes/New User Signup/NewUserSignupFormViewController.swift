@@ -18,6 +18,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var submitButtonContainer: UIView!
     @IBOutlet weak var submitButtonArrow: UILabel!
+    @IBOutlet weak var importSeedContainer: UIView!
     @IBOutlet weak var importSeedView : ImportSeedView!
 
     let authenticationHelper = BiometricAuthenticationHelper()
@@ -156,38 +157,20 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
             host: host,
             relay: relay
         )
+        importSeedContainer.isHidden = false
     }
     
     func didTapCancelImportSeed() {
-        importSeedView.textView.resignFirstResponder()
-        importSeedView.textView.text = ""
-        importSeedView.isHidden = true
-        importSeedView.activityView.stopAnimating()
+        importSeedContainer.isHidden = true
     }
     
     func didTapConfirm() {
-        importSeedView.activityView.startAnimating()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-            
-            let words = importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
-            let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
-            
-            if let error = error {
-                AlertHelper.showAlert(title: "profile.seed-validation-error-title".localized, message: error.localizedDescription + (additionalString ?? ""))
-                return
-            }
-            
-            self.importSeedView.activityView.isHidden = false
-            self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-            
-            CrypterManager.sharedInstance.performWalletFinalization(
-                network: importSeedView.network,
-                host: importSeedView.host,
-                relay: importSeedView.relay,
-                enteredMnemonic: importSeedView.textView.text
-            )
-        })
+        CrypterManager.sharedInstance.performWalletFinalization(
+            network: importSeedView.network,
+            host: importSeedView.host,
+            relay: importSeedView.relay,
+            enteredMnemonic: importSeedView.textView.text
+        )
     }
     
 }

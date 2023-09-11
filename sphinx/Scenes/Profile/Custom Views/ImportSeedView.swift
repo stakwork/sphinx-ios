@@ -19,7 +19,9 @@ class ImportSeedView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var textViewContainer: UIView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var activityViewContainer: UIView!
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     var delegate : ImportSeedViewDelegate? = nil
@@ -56,12 +58,13 @@ class ImportSeedView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        activityView.color = UIColor.Sphinx.Text
+        
         textView.delegate = self
         
-        textView.layer.cornerRadius = 10
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.Sphinx.Divider.cgColor
-        textView.clipsToBounds = true
+        textViewContainer.layer.cornerRadius = 10
+        textViewContainer.layer.borderWidth = 1
+        textViewContainer.layer.borderColor = UIColor.Sphinx.LightDivider.cgColor
         
         confirmButton.layer.cornerRadius = confirmButton.frame.height/2.0
         cancelButton.layer.cornerRadius = cancelButton.frame.height/2.0
@@ -80,14 +83,35 @@ class ImportSeedView: UIView {
         self.host = host
         self.relay = relay
         
-        self.isHidden = false
+        textView.becomeFirstResponder()
     }
     
     @IBAction func cancelTapped(_ sender: Any) {
+        textView.resignFirstResponder()
+        textView.text = ""
+        
+        activityView.stopAnimating()
+        activityViewContainer.isHidden = true
+        
         delegate?.didTapCancelImportSeed()
     }
     
     @IBAction func confirmTapped(_ sender: Any) {
+        let words = textView.text.split(separator: " ").map { String($0).trim().lowercased() }
+        let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
+        
+        if let error = error {
+            AlertHelper.showAlert(
+                title: "profile.seed-validation-error-title".localized,
+                message: error.localizedDescription + (additionalString ?? "")
+            )
+            return
+        }
+        
+        textView.resignFirstResponder()
+        activityViewContainer.isHidden = false
+        activityView.startAnimating()
+        
         delegate?.didTapConfirm()
     }
 }
@@ -100,7 +124,13 @@ extension ImportSeedView:UITextViewDelegate {
         if !isKeyboardShown {
             originalFrame = frame
             isKeyboardShown = true
-            frame = CGRect(x: originalFrame.minX, y: originalFrame.minY - keyboardFrame.height/2.0, width: originalFrame.width, height: originalFrame.height)
+            
+            frame = CGRect(
+                x: originalFrame.minX,
+                y: originalFrame.minY - keyboardFrame.height/2.0,
+                width: originalFrame.width,
+                height: originalFrame.height
+            )
         }
     }
     

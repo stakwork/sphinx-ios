@@ -354,17 +354,29 @@
                                     <constraint firstItem="bEH-EM-lm0" firstAttribute="leading" secondItem="P8m-Lu-MG0" secondAttribute="leading" id="dxv-d2-paK"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVt-DT-WnS" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="20" y="325" width="374" height="260"/>
-                                <color key="backgroundColor" name="HeaderBG"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBm-gx-JCP">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVt-DT-WnS" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="318" width="374" height="260"/>
+                                        <color key="backgroundColor" name="HeaderBG"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="260" id="ltW-Fi-vyL"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" name="OnboardingBG"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="260" id="ltW-Fi-vyL"/>
+                                    <constraint firstAttribute="trailing" secondItem="eVt-DT-WnS" secondAttribute="trailing" constant="20" symbolic="YES" id="WZB-5X-un1"/>
+                                    <constraint firstItem="eVt-DT-WnS" firstAttribute="centerY" secondItem="mBm-gx-JCP" secondAttribute="centerY" id="ZmZ-6Q-Dzd"/>
+                                    <constraint firstItem="eVt-DT-WnS" firstAttribute="leading" secondItem="mBm-gx-JCP" secondAttribute="leading" constant="20" symbolic="YES" id="kbE-sz-lKe"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DKm-Ne-Dvk"/>
                         <color key="backgroundColor" name="OnboardingBG"/>
                         <constraints>
+                            <constraint firstItem="mBm-gx-JCP" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="2Te-bo-4AD"/>
                             <constraint firstItem="hGk-nq-mPF" firstAttribute="top" secondItem="DKm-Ne-Dvk" secondAttribute="top" id="9lB-o3-pnN"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="centerY" secondItem="iC8-Z6-lJs" secondAttribute="centerY" id="Eoe-u5-5Vb"/>
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="centerX" secondItem="iC8-Z6-lJs" secondAttribute="centerX" id="How-Io-Lpw"/>
@@ -372,18 +384,19 @@
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="bottom" secondItem="P8m-Lu-MG0" secondAttribute="top" constant="-80" id="adc-42-Qze"/>
                             <constraint firstItem="DKm-Ne-Dvk" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sxp-4g-tGX" secondAttribute="trailing" id="b9a-j6-ZF6"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" constant="30" id="cKY-a8-a0T"/>
-                            <constraint firstItem="eVt-DT-WnS" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" constant="20" id="f2k-xa-HAB"/>
+                            <constraint firstItem="mBm-gx-JCP" firstAttribute="trailing" secondItem="DKm-Ne-Dvk" secondAttribute="trailing" id="eUc-aQ-ghs"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="centerX" secondItem="iC8-Z6-lJs" secondAttribute="centerX" id="g2D-aY-0lV"/>
+                            <constraint firstAttribute="bottom" secondItem="mBm-gx-JCP" secondAttribute="bottom" id="hzr-0b-3pM"/>
+                            <constraint firstItem="mBm-gx-JCP" firstAttribute="top" secondItem="iC8-Z6-lJs" secondAttribute="top" id="imP-V1-aXY"/>
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="j8b-of-U7L"/>
                             <constraint firstItem="hGk-nq-mPF" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="rP5-dO-7Q6"/>
-                            <constraint firstItem="eVt-DT-WnS" firstAttribute="centerY" secondItem="DKm-Ne-Dvk" secondAttribute="centerY" id="sXZ-xe-1hg"/>
-                            <constraint firstItem="eVt-DT-WnS" firstAttribute="centerX" secondItem="DKm-Ne-Dvk" secondAttribute="centerX" id="unw-mo-Ddd"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="hGk-nq-mPF" id="a0v-0H-GJU"/>
                         <outlet property="codeTextField" destination="6Ax-pV-KVk" id="QaX-Ij-Z5u"/>
                         <outlet property="codeTextFieldContainer" destination="Awg-RS-jhR" id="QLH-q0-ZHG"/>
+                        <outlet property="importSeedContainer" destination="mBm-gx-JCP" id="bkW-jl-Qv2"/>
                         <outlet property="importSeedView" destination="eVt-DT-WnS" id="RtO-lt-5Yw"/>
                         <outlet property="submitButton" destination="n1x-Nd-XT6" id="znz-ni-Dfl"/>
                         <outlet property="submitButtonArrow" destination="ngQ-ql-U0M" id="AMN-AE-o9S"/>

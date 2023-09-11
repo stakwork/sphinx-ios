@@ -308,7 +308,7 @@ extension ConnectionCodeSignupHandling {
     }
     
     func postToGenerateToken(callback: @escaping ()->()){
-        do{
+        do {
             let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
             let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
             let keys = try nodeKeys(net: network, seed: seed.hexString)
@@ -319,8 +319,7 @@ extension ConnectionCodeSignupHandling {
             )
             
             callback()
-        }
-        catch{
+        } catch {
             print("catch statement in postToGenerateToken with error: \(error)")
         }
     }

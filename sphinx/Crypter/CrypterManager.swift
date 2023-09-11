@@ -947,15 +947,14 @@ class CrypterManager : NSObject {
             AlertHelper.showAlert(title: "Error generating seed", message: "Please try again.")
             return ("",Data())
         }
-        do{
+        do {
             let seed = try Data(entropyFromMnemonic(mnemonic: mnemonic).data(using: .utf8)!)
             let seed32Bytes = Data(seed.bytes[0..<32])
             self.seed = seed32Bytes
             UserData.sharedInstance.save(walletMnemonic: mnemonic)
             
             return (mnemonic, seed32Bytes)
-        }
-        catch{
+        } catch {
             return("",Data())
         }
     }
@@ -1051,11 +1050,11 @@ class CrypterManager : NSObject {
                             UserDefaults.Keys.setupSigningDevice.set(true)
 
                             self.showSuccessWithMessage("profile.seed-sent-successfully".localized)
+                            
+                            self.endCallback(self.hardwarePostDto.relay)
                         } else {
                             self.showErrorWithMessage("profile.error-sending-seed".localized)
                         }
-
-                            self.endCallback(self.hardwarePostDto.relay)
                     })
                 }
             }

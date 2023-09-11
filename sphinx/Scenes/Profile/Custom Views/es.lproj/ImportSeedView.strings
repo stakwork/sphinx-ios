@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "EDJ-TI-seS"; */
+"EDJ-TI-seS.normalTitle" = "Confirmar";
+
+/* Class = "UILabel"; text = "Loading, please wait..."; ObjectID = "Upv-aH-hZm"; */
+"Upv-aH-hZm.text" = "Cargando, por favor espera...";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "omm-KQ-xIa"; */
+"omm-KQ-xIa.normalTitle" = "Cancelar";
+
+/* Class = "UILabel"; text = "Enter your mnemonic"; ObjectID = "zjZ-yj-uN0"; */
+"zjZ-yj-uN0.text" = "Ingresá tus palabras de seguridad";

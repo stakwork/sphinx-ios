@@ -372,7 +372,7 @@ class CrypterManager : NSObject {
         relay: String,
         enteredMnemonic: String? = nil
     ){
-        let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic)
+        let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic?.lowercased())
         
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil

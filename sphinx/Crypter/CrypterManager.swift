@@ -377,7 +377,7 @@ class CrypterManager : NSObject {
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil
             do {
-                keys = try nodeKeys(net: network, seed: seed.hexString)
+                keys = try nodeKeys(net: network, seed: seed[0..<32].hexString)
             } catch {
                 print(error.localizedDescription)
             }
@@ -931,7 +931,7 @@ class CrypterManager : NSObject {
     func generateMnemonic()->String?{
         var result : String? = nil
         do {
-            result = try mnemonicFromEntropy(seed: Data.randomBytes(length: 32).hexString)
+            result = try mnemonicFromEntropy(entropy: Data.randomBytes(length: 16).hexString)
         }
         catch let error{
             print("error getting seed\(error)")
@@ -947,12 +947,11 @@ class CrypterManager : NSObject {
             return ("",Data())
         }
         do {
-            let seed = try Data(entropyFromMnemonic(mnemonic: mnemonic).data(using: .utf8)!)
-            let seed32Bytes = Data(seed.bytes[0..<32])
-            self.seed = seed32Bytes
+            let seed = try Data(mnemonicToSeed(mnemonic: mnemonic).data(using: .utf8)!)
+            self.seed = seed
             UserData.sharedInstance.save(walletMnemonic: mnemonic)
             
-            return (mnemonic, seed32Bytes)
+            return (mnemonic, seed)
         } catch {
             return("",Data())
         }
@@ -961,12 +960,10 @@ class CrypterManager : NSObject {
     func getStoredMnemonicAndSeed() -> (String, Data)? {
         if let mnemonic: String = UserData.sharedInstance.getMnemonic() {
             do{
-                let seed = try Data(entropyFromMnemonic(mnemonic: mnemonic).data(using: .utf8)!)
-                let seed32Bytes = Data(seed.bytes[0..<32])
+                let seed = try Data(mnemonicToSeed(mnemonic: mnemonic).data(using: .utf8)!)
+                self.seed = seed
                 
-                self.seed = seed32Bytes
-                
-                return (mnemonic, seed32Bytes)
+                return (mnemonic, seed)
             }
             catch{
                 return nil

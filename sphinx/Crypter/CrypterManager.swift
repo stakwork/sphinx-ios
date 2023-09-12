@@ -377,7 +377,7 @@ class CrypterManager : NSObject {
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil
             do {
-                keys = try nodeKeys(net: network, seed: seed[0..<32].hexString)
+                keys = try nodeKeys(net: network, seed: mnemonicToSeed(mnemonic: mnemonic))
             } catch {
                 print(error.localizedDescription)
             }
@@ -871,7 +871,7 @@ class CrypterManager : NSObject {
     }
     
     func promptForSeedGeneration(
-        callback: @escaping ((String, Data)) -> ()
+        callback: @escaping ((String, String)) -> ()
     ) {
         if let (mnemonic, seed) = getStoredMnemonicAndSeed() {
             callback((mnemonic, seed))
@@ -902,7 +902,7 @@ class CrypterManager : NSObject {
     }
     
     func promptForSeedEnter(
-        callback: @escaping ((String, Data)) -> ()
+        callback: @escaping ((String, String)) -> ()
     ) {
         promptFor(
             "profile.mnemonic-enter-title".localized,
@@ -941,27 +941,27 @@ class CrypterManager : NSObject {
     
     public func getOrCreateWalletMnemonic(
         enteredMnemonic: String? = nil
-    ) -> (String, Data) {
+    ) -> (String, String) {
         guard let mnemonic = enteredMnemonic ?? UserData.sharedInstance.getMnemonic() ?? generateMnemonic() else{
             AlertHelper.showAlert(title: "Error generating seed", message: "Please try again.")
-            return ("",Data())
+            return ("","")
         }
         do {
-            let seed = try Data(mnemonicToSeed(mnemonic: mnemonic).data(using: .utf8)!)
-            self.seed = seed
+            let seed = try mnemonicToSeed(mnemonic: mnemonic)
+            self.seed = Data(seed.data(using: .utf8)!)
             UserData.sharedInstance.save(walletMnemonic: mnemonic)
             
             return (mnemonic, seed)
         } catch {
-            return("",Data())
+            return("","")
         }
     }
     
-    func getStoredMnemonicAndSeed() -> (String, Data)? {
+    func getStoredMnemonicAndSeed() -> (String, String)? {
         if let mnemonic: String = UserData.sharedInstance.getMnemonic() {
             do{
-                let seed = try Data(mnemonicToSeed(mnemonic: mnemonic).data(using: .utf8)!)
-                self.seed = seed
+                let seed = try mnemonicToSeed(mnemonic: mnemonic)
+                self.seed = Data(seed.data(using: .utf8)!)
                 
                 return (mnemonic, seed)
             }
@@ -1025,7 +1025,7 @@ class CrypterManager : NSObject {
                     var cipher: String? = nil
 
                     do {
-                        cipher = try encrypt(plaintext: seed.hexString, secret: sec1, nonce: nonce)
+                        cipher = try encrypt(plaintext: seed, secret: sec1, nonce: nonce)
                     } catch {
                         print(error.localizedDescription)
                     }

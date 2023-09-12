@@ -311,7 +311,7 @@ extension ConnectionCodeSignupHandling {
         do {
             let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
             let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
-            let keys = try nodeKeys(net: network, seed: seed.hexString)
+            let keys = try nodeKeys(net: network, seed: seed)
             
             self.generateTokenAndProceed(
                 pubkey: keys.pubkey,

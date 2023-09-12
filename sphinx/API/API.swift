@@ -103,6 +103,7 @@ class API {
     var cancellableRequest: DataRequest?
     var podcastSearchRequest: DataRequest?
     var currentRequestType : API.CancellableRequestType = API.CancellableRequestType.messages
+    var getHasAdminRequest: DataRequest?
     var uploadRequest: UploadRequest?
 
     let messageBubbleHelper = NewMessageBubbleHelper()

@@ -176,7 +176,7 @@ class CrypterManager : NSObject {
         }
     }
     
-    var seed: Data! = nil
+    var seed: String! = nil
     var mqtt: CocoaMQTT! = nil{
         didSet{
             API.sharedInstance.postMQTTStatusChange()
@@ -593,37 +593,10 @@ class CrypterManager : NSObject {
     }
     
     func makeArgs(network:String) -> [String: AnyObject] {
-        let truncatedSeed = seed[0..<32]
-        print(truncatedSeed.hexString)
-        let seedHexString = truncatedSeed.hexString
-        let untruncatedHexString = seed.hexString
-        
         print("makeArgs network:\(network)")
-        
-        print("seedHexString (truncated):\(seedHexString)")
-        print("untruncatedHexString:\(untruncatedHexString)")
-        
-        let (mneomnic,_) = getStoredMnemonicAndSeed()!
-        var finalHexString : String? = nil
-        do{
-            let seedFromMemory = try mnemonicToSeed(mnemonic: mneomnic)
-            let seedStringFromMemory = seedFromMemory[0..<32]
-            print("seedHexStringFromMemory:\(seedStringFromMemory)")
-            finalHexString = seedFromMemory
-        }
-        catch{
-            print("error seedStringFromMemory")
+        guard let hexString = seed,let seedBytes = stringToBytes(hexString) else {
             return [:]
         }
-        
-        guard let hexString = finalHexString,let seedBytes = stringToBytes(hexString) else {
-            return [:]
-        }
-        
-        let untruncatedSeedBytes = stringToBytes(untruncatedHexString)
-        
-        print("seedBytes:\(String(describing: seedBytes))")
-        print("untruncatedSeedBytes:\(String(describing: untruncatedHexString))")
         
         guard let lssN = stringToBytes(lssNonce) else {
             return [:]
@@ -968,7 +941,7 @@ class CrypterManager : NSObject {
         }
         do {
             let seed = try mnemonicToSeed(mnemonic: mnemonic)
-            self.seed = Data(seed.data(using: .utf8)!)
+            self.seed = seed
             UserData.sharedInstance.save(walletMnemonic: mnemonic)
             
             return (mnemonic, seed)
@@ -981,7 +954,7 @@ class CrypterManager : NSObject {
         if let mnemonic: String = UserData.sharedInstance.getMnemonic() {
             do{
                 let seed = try mnemonicToSeed(mnemonic: mnemonic)
-                self.seed = Data(seed.data(using: .utf8)!)
+                self.seed = seed
                 
                 return (mnemonic, seed)
             }

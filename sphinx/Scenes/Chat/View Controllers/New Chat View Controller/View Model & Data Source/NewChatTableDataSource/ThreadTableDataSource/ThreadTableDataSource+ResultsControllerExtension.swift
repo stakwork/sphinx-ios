@@ -68,6 +68,7 @@ extension ThreadTableDataSource {
         let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
         let linkContactsArray = getLinkContactsArrayFor(messages: messages)
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
+        let webLinksArray = getWebLinksArrayFor(messages: messages)
         
         var groupingDate: Date? = nil
         var invoiceData: (Int, Int) = (0, 0)
@@ -108,7 +109,7 @@ extension ThreadTableDataSource {
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
             let linkContact = linkContactsArray[message.id]
             let linkTribe = linkTribesArray[message.id]
-            let linkWeb = getLinkWebFor(message: message)
+            let linkWeb = webLinksArray[message.id]
             
             let messageTableCellState = MessageTableCellState(
                 message: message,

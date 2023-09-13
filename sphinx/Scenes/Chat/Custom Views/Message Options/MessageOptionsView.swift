@@ -248,7 +248,7 @@ extension MessageOptionsView : MessageOptionViewDelegate {
         case .CopyLink:
             ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstLink ?? "", message: "link.copied.clipboard".localized)
         case .CopyPubKey:
-            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstPubKey ?? "", message: "pub.key.copied.clipboard".localized)
+            ClipboardHelper.copyToClipboard(text: message.bubbleMessageContentString?.stringFirstPubKey?.0 ?? "", message: "pub.key.copied.clipboard".localized)
         case .CopyCallLink:
             if let link = message.messageContent {
                 let link_url = VoIPRequestMessage.getFromString(link)?.link ?? link

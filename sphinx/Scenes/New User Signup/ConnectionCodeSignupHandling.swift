@@ -309,9 +309,9 @@ extension ConnectionCodeSignupHandling {
     
     func postToGenerateToken(callback: @escaping ()->()){
         do {
-            let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
+            let (mneomnic, _) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
             let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
-            let keys = try nodeKeys(net: network, seed: seed)
+            let keys = try nodeKeys(net: network, seed: mnemonicToSeed(mnemonic: mneomnic))
             
             self.generateTokenAndProceed(
                 pubkey: keys.pubkey,

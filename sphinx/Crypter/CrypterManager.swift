@@ -372,7 +372,7 @@ class CrypterManager : NSObject {
         relay: String,
         enteredMnemonic: String? = nil
     ){
-        let (mnemonic, seed) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic?.lowercased())
+        let (mnemonic, _) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic?.lowercased())
         
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil
@@ -381,7 +381,6 @@ class CrypterManager : NSObject {
             } catch {
                 print(error.localizedDescription)
             }
-            
             guard let keys = keys else {
                 return
             }
@@ -434,7 +433,6 @@ class CrypterManager : NSObject {
         mqtt.password = password
         mqtt.enableSSL = ssl
         mqtt.allowUntrustCACertificate = true
-        
         showSuccessWithMessage("Connecting to MQTT")
 
         let success = mqtt.connect()
@@ -445,7 +443,6 @@ class CrypterManager : NSObject {
             UserDefaults.Keys.phoneSignerRelay.set(relay)
             
             mqtt.didReceiveMessage = { mqtt, message, id in
-                print("Message received in topic \(message.topic) with payload \(message.payload)")
                 
                 self.processMessage(
                     topic: message.topic.replacingOccurrences(of: "\(self.clientID)/", with: ""),
@@ -453,7 +450,6 @@ class CrypterManager : NSObject {
                     network:network
                 )
             }
-
             mqtt.didDisconnect =  { cocaMQTT2, error in
                 self.showErrorWithMessage("MQTT disconnected. Trying to reconnect...")
                 API.sharedInstance.postMQTTStatusChange()
@@ -530,7 +526,6 @@ class CrypterManager : NSObject {
                 expectedSequence: sequence
             )
         } catch {
-            print("catch statement in processMessage with error: \(error)")
             if (error.localizedDescription.contains("Error: VLS Failed: invalid sequence")) {
                 restart()
                 return
@@ -598,7 +593,7 @@ class CrypterManager : NSObject {
     }
     
     func makeArgs(network:String) -> [String: AnyObject] {
-        let seedHexString = seed.hexString
+        let seedHexString = seed[0..<32].hexString
         print("makeArgs network:\(network)")
         
         guard let seedBytes = stringToBytes(seedHexString) else {

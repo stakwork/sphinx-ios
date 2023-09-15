@@ -22,7 +22,7 @@ extension NewMessageTableViewCell {
                 sentPaidDetailsView.isHidden = false
             }
             
-            paidTextMessageView.isHidden = !paidContent.isSentTextMessage
+            paidTextMessageView.isHidden = !paidContent.shouldAddPadding
         }
     }
 }

@@ -273,6 +273,10 @@ extension TransactionMessage {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue
     }
     
+    func isPaidGenericFile() -> Bool {
+        return isAttachment() && getType() == TransactionMessageType.fileAttachment.rawValue
+    }
+    
     func isPaidPendingMessage() -> Bool {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && mediaKey == nil
     }

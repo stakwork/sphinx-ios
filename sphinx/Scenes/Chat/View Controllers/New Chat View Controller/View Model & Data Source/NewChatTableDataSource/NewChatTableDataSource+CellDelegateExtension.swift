@@ -743,19 +743,21 @@ extension NewChatTableDataSource {
             !link.stringLinks.isEmpty ||
             !link.pubKeyMatches.isEmpty
         {
-            if let joinLink = link.stringFirstTribeLink {
-                delegate?.didTapOnTribeWith(joinLink: joinLink)
-            } else if let contactLink = link.stringFirstPubKey {
-                delegate?.didTapOnContactWith(
-                    pubkey: contactLink.pubkeyComponents.0,
-                    and: contactLink.pubkeyComponents.1
-                )
-            } else if let url = URL(string: link.withProtocol(protocolString: "http")) {
-                UIApplication.shared.open(
-                    url,
-                    options: [:],
-                    completionHandler: nil
-                )
+            if let link = link.stringFirstLink {
+                if link.isPubKey {
+                    delegate?.didTapOnContactWith(
+                        pubkey: link.pubkeyComponents.0,
+                        and: link.pubkeyComponents.1
+                    )
+                } else if link.isTribeJoinLink {
+                    delegate?.didTapOnTribeWith(joinLink: link)
+                } else if let url = URL(string: link.withProtocol(protocolString: "http")) {
+                    UIApplication.shared.open(
+                        url,
+                        options: [:],
+                        completionHandler: nil
+                    )
+                }
             }
         }
     }

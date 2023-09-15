@@ -176,7 +176,6 @@ class CrypterManager : NSObject {
         }
     }
     
-    var seed: String! = nil
     var mqtt: CocoaMQTT! = nil{
         didSet{
             API.sharedInstance.postMQTTStatusChange()
@@ -594,6 +593,15 @@ class CrypterManager : NSObject {
     
     func makeArgs(network:String) -> [String: AnyObject] {
         print("makeArgs network:\(network)")
+        var seed : String?
+        do {
+            guard let mnemonic = UserData.sharedInstance.getMnemonic() else{
+                return [:]
+            }
+            seed = try mnemonicToSeed(mnemonic: mnemonic)
+        } catch {
+            return [:]
+        }
         guard let hexString = seed,let seedBytes = stringToBytes(hexString) else {
             return [:]
         }
@@ -941,7 +949,6 @@ class CrypterManager : NSObject {
         }
         do {
             let seed = try mnemonicToSeed(mnemonic: mnemonic)
-            self.seed = seed
             UserData.sharedInstance.save(walletMnemonic: mnemonic)
             
             return (mnemonic, seed)
@@ -954,7 +961,6 @@ class CrypterManager : NSObject {
         if let mnemonic: String = UserData.sharedInstance.getMnemonic() {
             do{
                 let seed = try mnemonicToSeed(mnemonic: mnemonic)
-                self.seed = seed
                 
                 return (mnemonic, seed)
             }

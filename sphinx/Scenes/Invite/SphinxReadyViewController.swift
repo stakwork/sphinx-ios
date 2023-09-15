@@ -78,13 +78,13 @@ class SphinxReadyViewController: UIViewController {
         if let inviteString: String = UserDefaults.Keys.inviteString.get() {
             API.sharedInstance.finishInvite(inviteString: inviteString, callback: { success in
                 if success {
-                    self.joinDefaultTribe()
+                    self.finishSignup()
                 } else {
                     self.nextButtonTouched()
                 }
             })
         } else {
-            self.joinDefaultTribe()
+            self.finishSignup()
         }
     }
     
@@ -95,11 +95,9 @@ class SphinxReadyViewController: UIViewController {
         UserDefaults.Keys.welcomeMessage.removeValue()
     }
     
-    func joinDefaultTribe() {
+    func finishSignup() {
         let (_, _) = EncryptionManager.sharedInstance.getOrCreateKeys() {
-            GroupsManager.sharedInstance.getAndJoinDefaultTribe {
-                self.handleInviteActions()
-            }
+            self.handleInviteActions()
         }
     }
     

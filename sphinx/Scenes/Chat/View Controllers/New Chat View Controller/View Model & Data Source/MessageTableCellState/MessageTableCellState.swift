@@ -615,7 +615,7 @@ struct MessageTableCellState {
             price: message.getAttachmentPrice() ?? 0,
             statusTitle: statusAndLabel.1,
             status: statusAndLabel.0,
-            isSentTextMessage: message.isPaidMessage() && bubble?.direction.isOutgoing() == true
+            shouldAddPadding: (message.isPaidMessage() || message.isPaidGenericFile()) && bubble?.direction.isOutgoing() == true
         )
     }()
     

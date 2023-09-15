@@ -255,7 +255,7 @@ struct MessageTableCellState {
                 text: paidMessageContent,
                 font: UIFont.getEncryptionErrorFont(),
                 linkMatches: [],
-                shouldLoadPaidText: message.messageContent == nil && paidContent?.isPurchaseAccepted() == true
+                shouldLoadPaidText: message.messageContent == nil && (paidContent?.isPurchaseAccepted() == true || bubble?.direction.isOutgoing() == true)
             )
         }
         
@@ -267,7 +267,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        if paidContent?.isPurchaseAccepted() == true {
+        if paidContent?.isPurchaseAccepted() == true || bubble?.direction.isOutgoing() == true {
             return "loading.paid.message".localized.uppercased()
         } else if paidContent?.isPurchaseDenied() == true {
             return "cannot.load.message.data".localized.uppercased()

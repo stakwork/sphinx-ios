@@ -127,6 +127,8 @@ extension NewUserSignupFormViewController: QRCodeScannerDelegate {
     func didScanQRCode(string: String) {
         codeTextField.text = string
         
+        textFieldDidEndEditing(codeTextField)
+        
         handleSubmit()
     }
 }

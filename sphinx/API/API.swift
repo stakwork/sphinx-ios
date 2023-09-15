@@ -102,7 +102,6 @@ class API {
     var onionConnector = SphinxOnionConnector.sharedInstance
     var cancellableRequest: DataRequest?
     var podcastSearchRequest: DataRequest?
-    var getHasAdminRequest: DataRequest?
     var currentRequestType : API.CancellableRequestType = API.CancellableRequestType.messages
     var uploadRequest: UploadRequest?
 

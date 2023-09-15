@@ -793,11 +793,11 @@ public func `nodeKeys`(`net`: String, `seed`: String) throws -> Keys {
     )
 }
 
-public func `mnemonicFromEntropy`(`seed`: String) throws -> String {
+public func `mnemonicFromEntropy`(`entropy`: String) throws -> String {
     return try  FfiConverterString.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_mnemonic_from_entropy(
-        FfiConverterString.lower(`seed`),$0)
+        FfiConverterString.lower(`entropy`),$0)
 }
     )
 }
@@ -807,6 +807,24 @@ public func `entropyFromMnemonic`(`mnemonic`: String) throws -> String {
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_entropy_from_mnemonic(
         FfiConverterString.lower(`mnemonic`),$0)
+}
+    )
+}
+
+public func `mnemonicToSeed`(`mnemonic`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_mnemonic_to_seed(
+        FfiConverterString.lower(`mnemonic`),$0)
+}
+    )
+}
+
+public func `entropyToSeed`(`entropy`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_entropy_to_seed(
+        FfiConverterString.lower(`entropy`),$0)
 }
     )
 }
@@ -884,10 +902,16 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_node_keys() != 21192) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_mnemonic_from_entropy() != 16221) {
+    if (uniffi_sphinxrs_checksum_func_mnemonic_from_entropy() != 32309) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_entropy_from_mnemonic() != 33294) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_mnemonic_to_seed() != 23084) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_entropy_to_seed() != 33710) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_build_request() != 31264) {

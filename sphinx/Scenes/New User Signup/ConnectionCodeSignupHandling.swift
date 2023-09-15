@@ -68,6 +68,7 @@ extension ConnectionCodeSignupHandling {
     
     func signUp(withSwarmConnectCode connectionCode:String){
         presentConnectingLoadingScreenVC()
+        
         let splitString = connectionCode.components(separatedBy: "::")
         if splitString.count > 2{
             let ip = splitString[1]
@@ -86,12 +87,15 @@ extension ConnectionCodeSignupHandling {
            let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
            let queryItems = components.queryItems {
             
-            if let action = queryItems.first(where: { $0.name == "action" })?.value,
-               let mqtt = queryItems.first(where: { $0.name == "mqtt" })?.value,
+            if let mqtt = queryItems.first(where: { $0.name == "mqtt" })?.value,
                let network = queryItems.first(where: { $0.name == "network" })?.value,
                let relay = queryItems.first(where: { $0.name == "relay" })?.value
             {
-                self.connectToSwarm(mqtt: mqtt, network: network, relay: relay)
+                self.connectToSwarm(
+                    mqtt: mqtt,
+                    network: network,
+                    relay: relay
+                )
             }
 
         }
@@ -209,15 +213,21 @@ extension ConnectionCodeSignupHandling {
         let hwl = CrypterManager.HardwareLink(
             mqtt: mqtt,
             network: network,
-            relay:relay
+            relay: relay
         )
+        
         UserData.sharedInstance.save(ip: "https://\(relay)")
-        CrypterManager.sharedInstance.setupSigningDevice(vc: self, hardwareLink: hwl) { _ in
+        
+        CrypterManager.sharedInstance.setupSigningDevice(
+            vc: self,
+            hardwareLink: hwl
+        ) { _ in
             self.presentConnectingLoadingScreenVC()
             self.hasAdminRetries = 0
-            self.checkForAdmin(relay: relay) {
+            
+            self.checkForAdmin() {
                 self.postToGenerateToken {
-                    // Optional code to execute after postToGenerateToken
+                    UserDefaults.Keys.setupPhoneSigner.set(true)
                 }
             }
         }
@@ -276,20 +286,19 @@ extension ConnectionCodeSignupHandling {
         }
     }
     
-    func checkForAdmin(relay: String,completion: @escaping ()->()) {
+    func checkForAdmin(completion: @escaping ()->()) {
         if hasAdminRetries < 50 {
             hasAdminRetries += 1
-            API.sharedInstance.getHasAdmin(relay: relay, completionHandler: { result in
+            
+            API.sharedInstance.getHasAdmin(completionHandler: { result in
                 switch result {
                 case .success(let success):
                     success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-                        self.checkForAdmin(relay: relay, completion: completion)
+                        self.checkForAdmin(completion: completion)
                     })
-                case .failure(let error):
-                    // Handle the error here if needed
-                    print("checkForAdmin error:\(error)")
+                case .failure(_):
                     DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-                        self.checkForAdmin(relay: relay, completion: completion)
+                        self.checkForAdmin(completion: completion)
                     })
                 }
             })
@@ -299,16 +308,18 @@ extension ConnectionCodeSignupHandling {
     }
     
     func postToGenerateToken(callback: @escaping ()->()){
-        do{
-            let (_, seed) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
+        do {
+            let (mneomnic, _) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
             let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
-            let keys = try nodeKeys(net: network, seed: seed.hexString)
-            let token = EncryptionManager.randomString(length: 20)
+            let keys = try nodeKeys(net: network, seed: mnemonicToSeed(mnemonic: mneomnic))
             
-            self.generateTokenAndProceed(pubkey: keys.pubkey, password: nil)
+            self.generateTokenAndProceed(
+                pubkey: keys.pubkey,
+                password: nil
+            )
+            
             callback()
-        }
-        catch{
+        } catch {
             print("catch statement in postToGenerateToken with error: \(error)")
         }
     }

@@ -73,9 +73,13 @@ RustBuffer uniffi_sphinxrs_fn_func_decrypt(RustBuffer ciphertext, RustBuffer sec
 );
 RustBuffer uniffi_sphinxrs_fn_func_node_keys(RustBuffer net, RustBuffer seed, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_sphinxrs_fn_func_mnemonic_from_entropy(RustBuffer seed, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_sphinxrs_fn_func_mnemonic_from_entropy(RustBuffer entropy, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_entropy_from_mnemonic(RustBuffer mnemonic, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_mnemonic_to_seed(RustBuffer mnemonic, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_entropy_to_seed(RustBuffer entropy, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_build_request(RustBuffer msg, RustBuffer secret, uint64_t nonce, RustCallStatus *_Nonnull out_status
 );
@@ -112,6 +116,12 @@ uint16_t uniffi_sphinxrs_checksum_func_mnemonic_from_entropy(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_entropy_from_mnemonic(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_mnemonic_to_seed(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_entropy_to_seed(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_build_request(void

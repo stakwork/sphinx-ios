@@ -216,6 +216,7 @@
 		474C7A5528D3A7A2007A3E17 /* sphinxrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */; };
 		474CCFAA291562180037E1D4 /* API+ActionsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474CCFA9291562180037E1D4 /* API+ActionsExtension.swift */; };
 		474CCFAF291562E90037E1D4 /* ContentBoostAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474CCFAE291562E90037E1D4 /* ContentBoostAction.swift */; };
+		474E465A2AAF8FC80098AD24 /* ImportSeedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474E465C2AAF8FC80098AD24 /* ImportSeedView.xib */; };
 		474FE33123F5A07700C06FC8 /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FE33023F5A07700C06FC8 /* CachingPlayerItem.swift */; };
 		474FE33323F5A22A00C06FC8 /* AVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474FE33223F5A22A00C06FC8 /* AVViewController.swift */; };
 		475043C82971956D00830E9E /* PodcastPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475043C72971956D00830E9E /* PodcastPlayerController.swift */; };
@@ -700,7 +701,6 @@
 		CECFBF022965C85B00BAD935 /* DiscoverTribesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */; };
 		CECFBF062965C8E600BAD935 /* DiscoverTribeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */; };
 		CED14D78293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */; };
-		CED7F9AF2A9EA002008F77BA /* ImportSeedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CED7F9AE2A9EA002008F77BA /* ImportSeedView.xib */; };
 		CED7F9B12A9EA03D008F77BA /* ImportSeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED7F9B02A9EA03D008F77BA /* ImportSeedView.swift */; };
 		CEE433B229AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */; };
 		CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */; };
@@ -1110,6 +1110,10 @@
 		474CCFA8291560DA0037E1D4 /* sphinx 36.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 36.xcdatamodel"; sourceTree = "<group>"; };
 		474CCFA9291562180037E1D4 /* API+ActionsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+ActionsExtension.swift"; sourceTree = "<group>"; };
 		474CCFAE291562E90037E1D4 /* ContentBoostAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBoostAction.swift; sourceTree = "<group>"; };
+		474E465B2AAF8FC80098AD24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ImportSeedView.xib; sourceTree = "<group>"; };
+		474E465E2AAF8FCA0098AD24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ImportSeedView.strings; sourceTree = "<group>"; };
+		474E46602AAF8FCA0098AD24 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/ImportSeedView.strings; sourceTree = "<group>"; };
+		474E46622AAF8FCB0098AD24 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ImportSeedView.strings; sourceTree = "<group>"; };
 		474F67682486DDA400CE6016 /* sphinx 14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 14.xcdatamodel"; sourceTree = "<group>"; };
 		474FE32323F324C900C06FC8 /* sphinx 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 8.xcdatamodel"; sourceTree = "<group>"; };
 		474FE33023F5A07700C06FC8 /* CachingPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
@@ -1735,7 +1739,6 @@
 		CECFBF002965C85B00BAD935 /* DiscoverTribesTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiscoverTribesTableViewCell.xib; sourceTree = "<group>"; };
 		CECFBF052965C8E600BAD935 /* DiscoverTribeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribeData.swift; sourceTree = "<group>"; };
 		CED14D77293CF683004B8B25 /* ChatMentionAutocompleteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteDataSource.swift; sourceTree = "<group>"; };
-		CED7F9AE2A9EA002008F77BA /* ImportSeedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportSeedView.xib; sourceTree = "<group>"; };
 		CED7F9B02A9EA03D008F77BA /* ImportSeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportSeedView.swift; sourceTree = "<group>"; };
 		CEE433B029AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedEpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		CEE433B129AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedEpisodeTableViewCell.xib; sourceTree = "<group>"; };
@@ -3591,7 +3594,7 @@
 				CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */,
 				CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */,
 				CED7F9B02A9EA03D008F77BA /* ImportSeedView.swift */,
-				CED7F9AE2A9EA002008F77BA /* ImportSeedView.xib */,
+				474E465C2AAF8FC80098AD24 /* ImportSeedView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4655,7 +4658,7 @@
 				47D46A29237B1D030005A548 /* SubscriptionFormTableViewCell.xib in Resources */,
 				F34BFEDF267B3C30003F6D55 /* RestoreUser.storyboard in Resources */,
 				F39F2C8626E2840500D357F6 /* FeedSearchResultsCollectionViewSectionHeader.xib in Resources */,
-				CED7F9AF2A9EA002008F77BA /* ImportSeedView.xib in Resources */,
+				474E465A2AAF8FC80098AD24 /* ImportSeedView.xib in Resources */,
 				47DE1C4B2A6ED0CA0029597B /* ThreadLastMessageHeader.xib in Resources */,
 				47C7D704278749CF006D2809 /* PeopleTorActionsView.xib in Resources */,
 				CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */,
@@ -5666,6 +5669,17 @@
 				CE9985CA29D70CD1007CDE01 /* fil */,
 			);
 			name = Dashboard.storyboard;
+			sourceTree = "<group>";
+		};
+		474E465C2AAF8FC80098AD24 /* ImportSeedView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				474E465B2AAF8FC80098AD24 /* Base */,
+				474E465E2AAF8FCA0098AD24 /* en */,
+				474E46602AAF8FCA0098AD24 /* fil */,
+				474E46622AAF8FCB0098AD24 /* es */,
+			);
+			name = ImportSeedView.xib;
 			sourceTree = "<group>";
 		};
 		47771C75259B9B9400990467 /* GroupPinView.xib */ = {

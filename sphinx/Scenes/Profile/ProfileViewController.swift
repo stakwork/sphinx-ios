@@ -46,7 +46,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var advanceScrollView: UIScrollView!
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
-    @IBOutlet weak var signingDeviceLabel: UILabel!
     @IBOutlet weak var manageStorageChevronLabel: UILabel!
     @IBOutlet weak var manageStorageView: UIView!
     @IBOutlet weak var storageSumaryLabel: UILabel!
@@ -82,7 +81,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     var notificationSoundHelper = NotificationSoundHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var walletBalanceService = WalletBalanceService()
-    let cryptedManager = CrypterManager.sharedInstance
     
     public enum ProfileFields: Int {
         case Name
@@ -121,7 +119,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         configureFields()
         configureProfile()
         configureServers()
-        configureSigningDeviceButton()
         showStorageSpinner()
     }
     
@@ -176,11 +173,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         meetingAmountTextField.inputAccessoryView = keyboardAccessoryView
         nameTextField.inputAccessoryView = keyboardAccessoryView
         relayUrlTextField.inputAccessoryView = keyboardAccessoryView
-    }
-    
-    func configureSigningDeviceButton() {
-        let didSetupSigningDevice = UserDefaults.Keys.setupSigningDevice.get(defaultValue: false)
-        signingDeviceLabel.text = (didSetupSigningDevice ? "profile.configure-signing-device" : "profile.setup-signing-device").localized
     }
     
     func configureProfile() {
@@ -331,7 +323,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     }
     
     @IBAction func trackRecommendationsSwitchChanged(_ sender: Any) {
-        print("Changed")
         UserDefaults.Keys.shouldTrackActions.set(trackRecommendationsSwitch.isOn)
     }
     
@@ -456,19 +447,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
             }
         }
     }
-    
-    @IBAction func setupSigningDevice() {
-        cryptedManager.setupSigningDevice(
-            vc: self
-        ) { _ in //TODO: review with @Tom, do we need to do the same workflow where we query the relay here? If so this is where to do it
-            self.configureSigningDeviceButton()
-        }
-    }
-    
-    @IBAction func disconnectMQTT() {
-        cryptedManager.resetMQTTConnection()
-    }
-    
 }
 
 

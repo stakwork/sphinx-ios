@@ -17,7 +17,6 @@ protocol NewChatTableDataSourceDelegate : class {
     ///Scrolling
     func didScrollToBottom()
     func didScrollOutOfBottomArea()
-    func didScroll()
     
     ///Attachments
     func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)

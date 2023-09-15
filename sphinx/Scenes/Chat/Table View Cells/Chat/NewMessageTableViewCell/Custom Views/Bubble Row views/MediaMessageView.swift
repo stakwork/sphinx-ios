@@ -9,7 +9,8 @@
 import UIKit
 
 protocol MediaMessageViewDelegate: class {
-    func didTapMediaButton()
+    func didTapMediaButton(isThreadOriginalMsg: Bool)
+    
     func shouldLoadOriginalMessageMediaDataFrom(originalMessageMedia: BubbleMessageLayoutState.MessageMedia)
     func shouldLoadOriginalMessageFileDataFrom(originalMessageFile: BubbleMessageLayoutState.GenericFile)
 }
@@ -37,6 +38,7 @@ class MediaMessageView: UIView {
     @IBOutlet weak var leadingMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
     
+    var isThreadOriginalMsg = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,10 +78,12 @@ class MediaMessageView: UIView {
     func configureWith(
         messageMedia: BubbleMessageLayoutState.MessageMedia,
         mediaData: MessageTableCellState.MediaData?,
+        isThreadOriginalMsg: Bool,
         bubble: BubbleMessageLayoutState.Bubble,
         and delegate: MediaMessageViewDelegate?
     ) {
         self.delegate = delegate
+        self.isThreadOriginalMsg = isThreadOriginalMsg
         
         configureMediaNotAvailableIconWith(messageMedia: messageMedia)
         
@@ -143,6 +147,6 @@ class MediaMessageView: UIView {
     }
     
     @IBAction func mediaButtonTouched() {
-        delegate?.didTapMediaButton()
+        delegate?.didTapMediaButton(isThreadOriginalMsg: isThreadOriginalMsg)
     }
 }

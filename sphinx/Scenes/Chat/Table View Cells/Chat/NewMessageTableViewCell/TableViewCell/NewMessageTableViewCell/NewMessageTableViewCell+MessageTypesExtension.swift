@@ -79,19 +79,26 @@ extension NewMessageTableViewCell {
         threadMessages: BubbleMessageLayoutState.ThreadMessages?,
         originalMessageMedia: BubbleMessageLayoutState.MessageMedia?,
         originalMessageGenericFile: BubbleMessageLayoutState.GenericFile?,
-        mediaData: MessageTableCellState.MediaData?,
+        originalMessageAudio: BubbleMessageLayoutState.Audio?,
+        threadOriginalMsgMediaData: MessageTableCellState.MediaData?,
         bubble: BubbleMessageLayoutState.Bubble,
-        and delegate: MediaMessageViewDelegate
+        mediaDelegate: MediaMessageViewDelegate,
+        audioDelegate: AudioMessageViewDelegate
     ) {
         if let threadMessages = threadMessages {
+            mediaContentHeightConstraint.constant = 170.0
+            
             messageThreadView.configureWith(
                 threadMessages: threadMessages,
                 originalMessageMedia: originalMessageMedia,
                 originalMessageGenericFile: originalMessageGenericFile,
-                mediaData: mediaData,
+                originalMessageAudio: originalMessageAudio,
+                mediaData: threadOriginalMsgMediaData,
                 bubble: bubble,
-                and: delegate
+                mediaDelegate: mediaDelegate,
+                audioDelegate: audioDelegate
             )
+            
             messageThreadViewContainer.isHidden = false
         }
     }
@@ -154,9 +161,11 @@ extension NewMessageTableViewCell {
             mediaContentView.configureWith(
                 messageMedia: messageMedia,
                 mediaData: mediaData,
+                isThreadOriginalMsg: false,
                 bubble: bubble,
                 and: self
             )
+            
             mediaContentView.isHidden = false
             
             if let messageId = messageId, mediaData == nil {
@@ -249,6 +258,7 @@ extension NewMessageTableViewCell {
             audioMessageView.configureWith(
                 audio: audio,
                 mediaData: mediaData,
+                isThreadOriginalMsg: false,
                 bubble: bubble,
                 and: self
             )

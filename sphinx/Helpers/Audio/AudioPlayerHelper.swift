@@ -73,7 +73,7 @@ class AudioPlayerHelper : NSObject {
         }
         
         playingTimer?.invalidate()
-        playingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateCurrentTime), userInfo: nil, repeats: true)
+        playingTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateCurrentTime), userInfo: nil, repeats: true)
         
         self.messageId = messageId
         self.rowIndex = rowIndex

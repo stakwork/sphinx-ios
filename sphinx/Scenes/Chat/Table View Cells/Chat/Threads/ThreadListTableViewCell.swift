@@ -14,6 +14,7 @@ protocol ThreadListTableViewCellDelegate: class {
     func shouldLoadFileDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadVideoDataFor(messageId: Int, and rowIndex: Int)
     func shouldLoadGiphyDataFor(messageId: Int, and rowIndex: Int)
+    func shouldLoadAudioDataFor(messageId: Int, and rowIndex: Int)
     
     func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
     func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int)
@@ -33,6 +34,7 @@ class ThreadListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var mediaMessageView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
+    @IBOutlet weak var audioMessageView: AudioMessageView!
     
     @IBOutlet weak var reply1Container: UIView!
     @IBOutlet weak var reply1AvatarView: ChatAvatarView!
@@ -88,11 +90,16 @@ class ThreadListTableViewCell: UITableViewCell {
         fileDetailsView.layer.cornerRadius = 9
         fileDetailsView.clipsToBounds = true
         fileDetailsView.isUserInteractionEnabled = false
+        
+        audioMessageView.layer.cornerRadius = 9
+        audioMessageView.clipsToBounds = true
+        audioMessageView.isUserInteractionEnabled = false
     }
     
     func hideAllSubviews() {
         mediaMessageView.isHidden = true
         fileDetailsView.isHidden = true
+        audioMessageView.isHidden = true
         originalMessageTextLabel.isHidden = true
     }
     
@@ -113,5 +120,6 @@ class ThreadListTableViewCell: UITableViewCell {
         configureWith(threadLayoutState: mutableThreadCellState.threadMessagesState)
         configureWith(messageMedia: mutableThreadCellState.messageMedia, mediaData: mediaData)
         configureWith(genericFile: mutableThreadCellState.genericFile, mediaData: mediaData)
+        configureWith(audio: mutableThreadCellState.audio, mediaData: mediaData)
     }
 }

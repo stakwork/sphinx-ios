@@ -41,6 +41,8 @@ class ThreadsListDataSource : NSObject {
     var currentDataSnapshot: DataSourceSnapshot!
     var dataSource: DataSource!
     
+    let audioPlayerHelper = AudioPlayerHelper()
+    
     typealias DataSource = UITableViewDiffableDataSource<CollectionViewSection, ThreadTableCellState>
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<CollectionViewSection, ThreadTableCellState>
     

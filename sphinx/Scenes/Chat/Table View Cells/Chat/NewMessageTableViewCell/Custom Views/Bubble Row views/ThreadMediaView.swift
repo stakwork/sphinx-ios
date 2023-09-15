@@ -88,6 +88,11 @@ class ThreadMediaView: UIView {
         fileIcon.text = "picture_as_pdf"
     }
     
+    func configureForAudio() {
+        fileContainer.isHidden = false
+        fileIcon.text = ""
+    }
+    
     func configureMediaNotAvailableIconWith(
         messageMedia: BubbleMessageLayoutState.MessageMedia
     ) {

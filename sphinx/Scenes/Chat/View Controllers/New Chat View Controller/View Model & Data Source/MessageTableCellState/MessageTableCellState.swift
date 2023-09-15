@@ -49,6 +49,8 @@ struct MessageTableCellState {
     
     let bubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
     
+    let threadHeaderBubbleWidth = (UIScreen.main.bounds.width - (kLabelMargin * 2))
+    
     let podcastClipBubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kPodcastClipBubbleWidthPercentage)
     
     init(
@@ -357,6 +359,8 @@ struct MessageTableCellState {
             return nil
         }
         
+        let bubbleWidth = isThreadHeaderMessage ? threadHeaderBubbleWidth : bubbleWidth
+        
         return BubbleMessageLayoutState.Audio(
             url: message.getMediaUrlFromMediaToken(),
             mediaKey: message.mediaKey,
@@ -423,6 +427,18 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.GenericFile(
             url: message.getMediaUrlFromMediaToken(),
             mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var threadOriginalMessageAudio: BubbleMessageLayoutState.Audio? = {
+        guard let message = threadOriginalMessage, message.isAudio() else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.Audio(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey,
+            bubbleWidth: bubbleWidth
         )
     }()
     

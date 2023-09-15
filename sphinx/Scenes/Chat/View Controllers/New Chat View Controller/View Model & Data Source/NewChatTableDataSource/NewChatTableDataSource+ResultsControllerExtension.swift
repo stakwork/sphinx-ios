@@ -100,7 +100,8 @@ extension NewChatTableDataSource {
         
         cell?.configureWith(
             messageCellState: dataSourceItem,
-            mediaData: mediaData ?? threadOriginalMessageMediaData,
+            mediaData: mediaData,
+            threadOriginalMsgMediaData: threadOriginalMessageMediaData,
             tribeData: tribeData,
             linkData: linkData,
             botWebViewData: botWebViewData,

@@ -11,7 +11,7 @@ import UIKit
 struct ThreadTableCellState {
     
     ///Constants
-    static let kRowHeight: CGFloat = 128.0
+    let kAudioBubbleMargings: CGFloat = 78
     
     ///Messages Data
     var originalMessage: TransactionMessage! = nil
@@ -66,7 +66,10 @@ struct ThreadTableCellState {
     }()
     
     lazy var messageMedia: BubbleMessageLayoutState.MessageMedia? = {
-        guard let message = originalMessage, message.isMediaAttachment() || message.isGiphy() else {
+        guard let message = originalMessage,
+                message.isMediaAttachment() ||
+                message.isGiphy() else
+        {
             return nil
         }
         
@@ -93,6 +96,20 @@ struct ThreadTableCellState {
         return BubbleMessageLayoutState.GenericFile(
             url: message.getMediaUrlFromMediaToken(),
             mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var audio: BubbleMessageLayoutState.Audio? = {
+        guard let message = originalMessage, message.isAudio() else {
+            return nil
+        }
+        
+        let bubbleWidth = (UIScreen.main.bounds.width - kAudioBubbleMargings)
+        
+        return BubbleMessageLayoutState.Audio(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey,
+            bubbleWidth: bubbleWidth
         )
     }()
     

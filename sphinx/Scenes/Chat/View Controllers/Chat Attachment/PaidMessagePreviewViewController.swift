@@ -123,6 +123,7 @@ extension PaidMessagePreviewViewController : UITableViewDataSource, UITableViewD
             cell.configureWith(
                 messageCellState: messageTableCellState,
                 mediaData: nil,
+                threadOriginalMsgMediaData: nil,
                 tribeData: nil,
                 linkData: nil,
                 botWebViewData: nil,

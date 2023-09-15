@@ -37,9 +37,11 @@ extension NewMessageTableViewCell : JoinCallViewDelegate {
 }
 
 extension NewMessageTableViewCell : MediaMessageViewDelegate {
-    func didTapMediaButton() {
-        if let messageId = messageId {
-            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex)
+    func didTapMediaButton(isThreadOriginalMsg: Bool) {
+        if let messageId = originalMessageId, isThreadOriginalMsg {
+            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex, isThreadOriginalMsg: isThreadOriginalMsg)
+        } else if let messageId = messageId {
+            delegate?.didTapMediaButtonFor(messageId: messageId, and: rowIndex, isThreadOriginalMsg: isThreadOriginalMsg)
         }
     }
     
@@ -134,9 +136,25 @@ extension NewMessageTableViewCell : PaidAttachmentViewDelegate {
 }
 
 extension NewMessageTableViewCell : AudioMessageViewDelegate {
-    func didTapPlayPauseButton() {
-        if let messageId = messageId {
+    func didTapPlayPauseButton(
+        isThreadOriginalMsg: Bool
+    ) {
+        if let messageId = originalMessageId, isThreadOriginalMsg {
             delegate?.didTapPlayPauseButtonFor(messageId: messageId, and: rowIndex)
+        } else if let messageId = messageId {
+            delegate?.didTapPlayPauseButtonFor(messageId: messageId, and: rowIndex)
+        }
+    }
+    
+    func shouldLoadOriginalMessageAudioDataFrom(originalMessageAudio: BubbleMessageLayoutState.Audio) {
+        if let originalMessageId = originalMessageId {
+            let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            DispatchQueue.global().asyncAfter(deadline: delayTime) {
+                self.delegate?.shouldLoadAudioDataFor(
+                    messageId: originalMessageId,
+                    and: self.rowIndex
+                )
+            }
         }
     }
 }

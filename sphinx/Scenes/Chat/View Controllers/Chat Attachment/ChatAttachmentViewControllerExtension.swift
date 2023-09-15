@@ -38,6 +38,8 @@ extension ChatAttachmentViewController {
                 return false
             }
             return true
+        case OptionsButton.Message:
+            return isThread
         default:
             break
         }

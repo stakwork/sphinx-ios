@@ -9,7 +9,7 @@
 import UIKit
 
 extension UITapGestureRecognizer {
-    func didTapAttributedTextInLabel(_ label: UILabel, inRange targetRange: NSRange) -> Bool {
+    func didTapAttributedTextInLabel(_ label: UILabel, inRange targetRange: NSRange,isThreadHeader:Bool=false) -> Bool {
         guard let attributedString = label.attributedText else { return false }
         
         let layoutManager = NSLayoutManager()
@@ -35,6 +35,7 @@ extension UITapGestureRecognizer {
 
         let locationOfTouchInTextContainer = CGPoint(x: locationOfTouchInLabel.x - textContainerOffset.x, y: locationOfTouchInLabel.y - textContainerOffset.y)
         let indexOfCharacter = layoutManager.characterIndex(for: locationOfTouchInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        return NSLocationInRange(indexOfCharacter, targetRange)
+        
+        return isThreadHeader ? indexOfCharacter > 0 : NSLocationInRange(indexOfCharacter, targetRange)
     }
 }

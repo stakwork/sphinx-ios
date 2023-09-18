@@ -74,12 +74,12 @@ class FeedItemDetailActionCell: UITableViewCell {
             break
         case .addToQueue:
             actionLabel.text = "add.to.queue".localized
-            actionIconImage.image = UIImage(named: "add_to_queue")
+            actionIconImage.image = UIImage(named: "playlist_add")
             actionIconImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         case .removeFromQueue:
             actionLabel.text = "remove.from.queue".localized
-            actionIconImage.image = UIImage(named: "remove_from_queue")
+            actionIconImage.image = UIImage(named: "playlist_remove")
             actionIconImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
             break
         }

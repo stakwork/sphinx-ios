@@ -57,6 +57,9 @@ extension NewUserSignupFormViewController {
         else if code.isSwarmClaimCode{
             signUp(withSwarmClaimCode: code)
         }
+        else if code.isSwarmGlyphAction{
+            signUp(withSwarmMqttCode: code)
+        }
         else {
             preconditionFailure("Attempted to start sign up without a valid code.")
         }
@@ -64,7 +67,7 @@ extension NewUserSignupFormViewController {
     
     
     func isCodeValid(_ code: String) -> Bool {
-        return code.isRelayQRCode || code.isInviteCode || code.isSwarmClaimCode || code.isSwarmConnectCode
+        return code.isRelayQRCode || code.isInviteCode || code.isSwarmClaimCode || code.isSwarmConnectCode || code.isSwarmGlyphAction
     }
     
     
@@ -123,6 +126,8 @@ extension NewUserSignupFormViewController: QRCodeScannerDelegate {
     
     func didScanQRCode(string: String) {
         codeTextField.text = string
+        
+        textFieldDidEndEditing(codeTextField)
         
         handleSubmit()
     }

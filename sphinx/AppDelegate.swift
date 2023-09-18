@@ -74,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureStoreKit()
         configureSVGRendering()
         connectTor()
+        connectMQTT()
         registerForVoIP()
         
         setInitialVC()
@@ -225,6 +226,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             registry.delegate = UIApplication.shared.delegate as! AppDelegate
         }
         registry.desiredPushTypes = [PKPushType.voIP]
+    }
+    
+    func connectMQTT() {
+        if let phoneSignerSetup: Bool = UserDefaults.Keys.setupPhoneSigner.get(),
+            phoneSignerSetup,
+           let network : String = UserDefaults.Keys.phoneSignerNetwork.get(),
+           let host : String = UserDefaults.Keys.phoneSignerHost.get(),
+           let relay : String = UserDefaults.Keys.phoneSignerRelay.get(){
+            CrypterManager.sharedInstance.performWalletFinalization(network: network, host: host, relay: relay)
+        }
     }
     
     func connectTor() {

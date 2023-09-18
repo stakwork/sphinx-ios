@@ -29,6 +29,7 @@ protocol ChatTableViewCellProtocol: class {
     func configureWith(
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
+        threadOriginalMsgMediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
@@ -63,7 +64,7 @@ protocol NewMessageTableViewCellDelegate: class {
     func didTapCallJoinAudioFor(messageId: Int, and rowIndex: Int)
     func didTapCallJoinVideoFor(messageId: Int, and rowIndex: Int)
     ///Media
-    func didTapMediaButtonFor(messageId: Int, and rowIndex: Int)
+    func didTapMediaButtonFor(messageId: Int, and rowIndex: Int, isThreadOriginalMsg: Bool)
     func didTapFileDownloadButtonFor(messageId: Int, and rowIndex: Int)
     ///Link Previews
     func didTapTribeButtonFor(messageId: Int, and rowIndex: Int)
@@ -162,6 +163,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
     func configureWith(
         messageCellState: MessageTableCellState,
         mediaData: MessageTableCellState.MediaData?,
+        threadOriginalMsgMediaData: MessageTableCellState.MediaData?,
         tribeData: MessageTableCellState.TribeData?,
         linkData: MessageTableCellState.LinkData?,
         botWebViewData: MessageTableCellState.BotWebViewData?,
@@ -181,6 +183,7 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         self.rowIndex = indexPath.row
         self.messageId = mutableMessageCellState.message?.id
+        self.originalMessageId = mutableMessageCellState.threadOriginalMessage?.id
         self.delegate = delegate
         
         ///Swipe Reply
@@ -200,7 +203,18 @@ class NewMessageTableViewCell: CommonNewMessageTableViewCell, ChatTableViewCellP
         
         ///Message Reply
         configureWith(messageReply: mutableMessageCellState.messageReply, and: bubble)
-        configureWith(threadMessages: mutableMessageCellState.threadMessagesState, and: bubble)
+        
+        ///Thread
+        configureWith(
+            threadMessages: mutableMessageCellState.threadMessagesState,
+            originalMessageMedia: mutableMessageCellState.threadOriginalMessageMedia,
+            originalMessageGenericFile: mutableMessageCellState.threadOriginalMessageGenericFile,
+            originalMessageAudio: mutableMessageCellState.threadOriginalMessageAudio,
+            threadOriginalMsgMediaData: threadOriginalMsgMediaData,
+            bubble: bubble,
+            mediaDelegate: self,
+            audioDelegate: self
+        )
         configureWith(threadLastReply: mutableMessageCellState.threadLastReplyHeader, and: bubble)
         
         ///Paid Content

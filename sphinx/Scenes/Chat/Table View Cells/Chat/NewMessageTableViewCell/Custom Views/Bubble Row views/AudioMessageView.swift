@@ -9,7 +9,9 @@
 import UIKit
 
 protocol AudioMessageViewDelegate: class {
-    func didTapPlayPauseButton()
+    func didTapPlayPauseButton(isThreadOriginalMsg: Bool)
+    
+    func shouldLoadOriginalMessageAudioDataFrom(originalMessageAudio: BubbleMessageLayoutState.Audio)
 }
 
 class AudioMessageView: UIView {
@@ -30,6 +32,8 @@ class AudioMessageView: UIView {
     
     let kProgressBarLeftMargin: CGFloat = 60
     let kProgressBarRightMargin: CGFloat = 66
+    
+    var isThreadOriginalMsg = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,11 +61,12 @@ class AudioMessageView: UIView {
     func configureWith(
         audio: BubbleMessageLayoutState.Audio,
         mediaData: MessageTableCellState.MediaData?,
+        isThreadOriginalMsg: Bool,
         bubble: BubbleMessageLayoutState.Bubble,
         and delegate: AudioMessageViewDelegate
     ) {
-        
         self.delegate = delegate
+        self.isThreadOriginalMsg = isThreadOriginalMsg
         
         durationView.backgroundColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
         
@@ -119,6 +124,6 @@ class AudioMessageView: UIView {
 //    }
 
     @IBAction func playPauseButtonTouched() {
-        delegate?.didTapPlayPauseButton()
+        delegate?.didTapPlayPauseButton(isThreadOriginalMsg: isThreadOriginalMsg)
     }
 }

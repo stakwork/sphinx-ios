@@ -77,10 +77,28 @@ extension NewMessageTableViewCell {
     
     func configureWith(
         threadMessages: BubbleMessageLayoutState.ThreadMessages?,
-        and bubble: BubbleMessageLayoutState.Bubble
+        originalMessageMedia: BubbleMessageLayoutState.MessageMedia?,
+        originalMessageGenericFile: BubbleMessageLayoutState.GenericFile?,
+        originalMessageAudio: BubbleMessageLayoutState.Audio?,
+        threadOriginalMsgMediaData: MessageTableCellState.MediaData?,
+        bubble: BubbleMessageLayoutState.Bubble,
+        mediaDelegate: MediaMessageViewDelegate,
+        audioDelegate: AudioMessageViewDelegate
     ) {
         if let threadMessages = threadMessages {
-            messageThreadView.configureWith(threadMessages: threadMessages, and: bubble)
+            mediaContentHeightConstraint.constant = 170.0
+            
+            messageThreadView.configureWith(
+                threadMessages: threadMessages,
+                originalMessageMedia: originalMessageMedia,
+                originalMessageGenericFile: originalMessageGenericFile,
+                originalMessageAudio: originalMessageAudio,
+                mediaData: threadOriginalMsgMediaData,
+                bubble: bubble,
+                mediaDelegate: mediaDelegate,
+                audioDelegate: audioDelegate
+            )
+            
             messageThreadViewContainer.isHidden = false
         }
     }
@@ -143,9 +161,11 @@ extension NewMessageTableViewCell {
             mediaContentView.configureWith(
                 messageMedia: messageMedia,
                 mediaData: mediaData,
+                isThreadOriginalMsg: false,
                 bubble: bubble,
                 and: self
             )
+            
             mediaContentView.isHidden = false
             
             if let messageId = messageId, mediaData == nil {
@@ -181,10 +201,9 @@ extension NewMessageTableViewCell {
         genericFile: BubbleMessageLayoutState.GenericFile?,
         mediaData: MessageTableCellState.MediaData?
     ) {
-        if let genericFile = genericFile {
+        if let _ = genericFile {
             
             fileDetailsView.configureWith(
-                genericFile: genericFile,
                 mediaData: mediaData,
                 and: self
             )
@@ -239,6 +258,7 @@ extension NewMessageTableViewCell {
             audioMessageView.configureWith(
                 audio: audio,
                 mediaData: mediaData,
+                isThreadOriginalMsg: false,
                 bubble: bubble,
                 and: self
             )

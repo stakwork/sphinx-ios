@@ -24,7 +24,6 @@ import UIKit
 enum MessagesFieldMode: Int {
     case Chat
     case Attachment
-    case Thread
 }
 
 class ChatMessageTextFieldView: UIView {

@@ -172,6 +172,7 @@ public class TransactionMessage: NSManagedObject {
         }
         
         messageChat.seen = (m["chat"].dictionary)?["seen"]?.boolValue ?? messageChat.seen
+
         
         let (messageEncrypted, messageContent) = encryptionManager.decryptMessage(message: m["message_content"].stringValue)
         let status = TransactionMessage.TransactionMessageStatus(fromRawValue: (m["status"].intValue))

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaMQTT
 
 protocol ChatListHeaderDelegate: class {
     func leftMenuButtonTouched()
@@ -21,6 +22,7 @@ class ChatListHeader: UIView {
     @IBOutlet weak var smallBalanceLabel: UILabel!
     @IBOutlet weak var smallUnitLabel: UILabel!
     @IBOutlet weak var healthCheckButton: UIButton!
+    @IBOutlet weak var mqttCheckButton: UIButton!
     @IBOutlet weak var upgradeAppButton: UIButton!
     
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
@@ -58,6 +60,10 @@ class ChatListHeader: UIView {
         NotificationCenter.default.addObserver(forName: .onConnectionStatusChanged, object: nil, queue: OperationQueue.main) { (n: Notification) in
             self.updateConnectionSign()
         }
+        
+        NotificationCenter.default.addObserver(forName: .onMQTTConnectionStatusChanged, object: nil, queue: OperationQueue.main) { (n: Notification) in
+            self.updateSigningStatusSign()
+        }
     }
     
     func shouldCheckAppVersions() {
@@ -77,6 +83,18 @@ class ChatListHeader: UIView {
         healthCheckButton.setTitleColor(connected ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor, for: .normal)
     }
     
+    func updateSigningStatusSign(){
+        if let mqtt = CrypterManager.sharedInstance.mqtt{
+            let status = mqtt.connState
+            let connected = status == CocoaMQTTConnState.connected
+            mqttCheckButton.setTitleColor(connected ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor, for: .normal)
+        }
+        else{
+            mqttCheckButton.setTitleColor(ChatListHeader.kNotConnectedColor, for: .normal)
+        }
+        
+    }
+    
     func showBalance() {
         smallUnitLabel.text = "chat-header.balance.unit".localized
         smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
@@ -92,6 +110,32 @@ class ChatListHeader: UIView {
     func takeUserToSupport() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.goToSupport()
+    }
+    
+    @IBAction func signStatusCheckButtonTouched(){
+        var message = "signer.not.connected".localized
+        if let mqtt = CrypterManager.sharedInstance.mqtt{
+            let status = mqtt.connState
+            let connected = status == CocoaMQTTConnState.connected
+            mqttCheckButton.setTitleColor(connected ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor, for: .normal)
+            switch(status) {
+            case .connected:
+                message = "signer.connected".localized
+                break
+            case .connecting:
+                message = "signer.connecting".localized
+                break
+            case .disconnected:
+                message = "signer.not.connected".localized
+                break
+            default:
+                message = "signer.not.connected".localized
+                break
+            }
+        }
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
+        })
     }
     
     @IBAction func healthCheckButtonTouched() {

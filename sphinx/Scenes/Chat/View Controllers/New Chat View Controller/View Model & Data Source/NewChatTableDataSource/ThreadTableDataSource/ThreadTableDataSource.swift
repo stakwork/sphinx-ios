@@ -15,6 +15,7 @@ class ThreadTableDataSource : NewChatTableDataSource {
     var threadUUID: String!
     var isHeaderExpanded = false
     var headerDifference: CGFloat = 0
+    var numberOfRows: Int = 0
     
     init(
         chat: Chat?,
@@ -42,27 +43,6 @@ class ThreadTableDataSource : NewChatTableDataSource {
         )
     }
     
-    lazy var threadHeaderHeight: CGFloat? = {
-        guard let headerMessageCellState = messageTableCellStateArray.last else {
-            return nil
-        }
-        
-        let kDifference:CGFloat = 56.0
-        
-        return ThreadHeaderTableViewCell.getCellHeightWith(
-            messageCellState: headerMessageCellState,
-            mediaData: nil
-        ) - kDifference
-    }()
-    
-    func getHeaderHeight() -> CGFloat? {
-        guard let _ = messageTableCellStateArray.last else {
-            return nil
-        }
-        
-        return threadHeaderHeight
-    }
-    
     override func configureTableTransformAndInsets() {
         tableView.contentInset.top = Constants.kMargin
         tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
@@ -87,34 +67,74 @@ class ThreadTableDataSource : NewChatTableDataSource {
     override func saveSnapshotCurrentState() {
     }
     
-    override func restoreScrollLastPosition() {        
+    override func restoreScrollLastPosition() {
         DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
             
             self.calculateHeightAndReloadHeader()
             
             DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
-                self.toggleHeader()
                 self.tableView.alpha = 1.0
+                self.toggleHeader()
             })
        })
     }
     
+    func didChangeTableContent() -> Bool {
+        if numberOfRows != tableView.numberOfRows(inSection: 0) {
+            numberOfRows = tableView.numberOfRows(inSection: 0)
+            return true
+        }
+        return false
+    }
+    
     func calculateHeightAndReloadHeader() {
-        let headerHeightDifference = round(tableView.frame.height - tableView.contentSize.height - tableView.contentInset.top + headerDifference)
-        
-        if headerHeightDifference > 0 {
-            self.headerDifference = headerHeightDifference
-        } else if headerHeightDifference < 0 {
-            self.headerDifference = 0
+        if !didChangeTableContent() {
+            return
         }
         
-        self.reloadHeaderRow()
+        let contentSizeHeight = (tableView.contentSize.height - headerDifference) + tableView.contentInset.top
+        let headerHeightDifference = round(tableView.frame.height - contentSizeHeight)
+        
+        if headerHeightDifference > 0 && headerDifference != headerHeightDifference {
+            headerDifference = headerHeightDifference
+            reloadHeaderRow()
+        }
     }
     
     func toggleHeader() {
-        let headerHeight = getHeaderHeight() ?? 0
-        let headerExpanded = tableView.contentOffset.y < tableView.contentSize.height - tableView.frame.size.height - headerHeight
-        self.delegate?.shouldToggleThreadHeader(expanded: headerExpanded)
+        if let lastVisibleRow = tableView.indexPathsForVisibleRows?.last {
+            let lastRow = tableView.numberOfRows(inSection: 0) - 1
+            
+            if let threadeHeaderMessageState = messageTableCellStateArray.last, threadeHeaderMessageState.isThreadHeaderMessage {
+                
+                let mediaData = (threadeHeaderMessageState.messageId != nil) ? self.mediaCached[threadeHeaderMessageState.messageId!] : nil
+                
+                if lastVisibleRow.row < lastRow {
+                    delegate?.shouldToggleThreadHeader(
+                        expanded: true,
+                        messageCellState: threadeHeaderMessageState,
+                        mediaData: mediaData
+                    )
+                } else {
+                    let topOffset = tableView.contentSize.height - tableView.contentOffset.y - tableView.frame.height
+                    let headerRowOffset = (tableView.cellForRow(at: lastVisibleRow)?.frame.height ?? 0) - topOffset
+                    
+                    if headerRowOffset < 56 {
+                        delegate?.shouldToggleThreadHeader(
+                            expanded: true,
+                            messageCellState: threadeHeaderMessageState,
+                            mediaData: mediaData
+                        )
+                    } else {
+                        delegate?.shouldToggleThreadHeader(
+                            expanded: false,
+                            messageCellState: threadeHeaderMessageState,
+                            mediaData: mediaData
+                        )
+                    }
+                }
+            }
+        }
     }
     
     override func makeCellProvider(

@@ -9,7 +9,10 @@
 import UIKit
 
 protocol MediaMessageViewDelegate: class {
-    func didTapMediaButton()
+    func didTapMediaButton(isThreadOriginalMsg: Bool)
+    
+    func shouldLoadOriginalMessageMediaDataFrom(originalMessageMedia: BubbleMessageLayoutState.MessageMedia)
+    func shouldLoadOriginalMessageFileDataFrom(originalMessageFile: BubbleMessageLayoutState.GenericFile)
 }
 
 class MediaMessageView: UIView {
@@ -29,6 +32,13 @@ class MediaMessageView: UIView {
     @IBOutlet weak var videoOverlay: UIView!
     @IBOutlet weak var mediaNotAvailableView: UIView!
     @IBOutlet weak var mediaNotAvailableIcon: UILabel!
+    
+    @IBOutlet weak var topMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var leadingMarginConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomMarginConstraint: NSLayoutConstraint!
+    
+    var isThreadOriginalMsg = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,13 +60,30 @@ class MediaMessageView: UIView {
         mediaContainer.clipsToBounds = true
     }
     
+    func removeMargin() {
+        setMarginTo(0)
+    }
+    
+    func setMarginTo(
+        _ margin: CGFloat
+    ) {
+        topMarginConstraint.constant = margin
+        trailingMarginConstraint.constant = margin
+        leadingMarginConstraint.constant = margin
+        bottomMarginConstraint.constant = margin
+        
+        self.layoutIfNeeded()
+    }
+    
     func configureWith(
         messageMedia: BubbleMessageLayoutState.MessageMedia,
         mediaData: MessageTableCellState.MediaData?,
+        isThreadOriginalMsg: Bool,
         bubble: BubbleMessageLayoutState.Bubble,
         and delegate: MediaMessageViewDelegate?
     ) {
         self.delegate = delegate
+        self.isThreadOriginalMsg = isThreadOriginalMsg
         
         configureMediaNotAvailableIconWith(messageMedia: messageMedia)
         
@@ -120,6 +147,6 @@ class MediaMessageView: UIView {
     }
     
     @IBAction func mediaButtonTouched() {
-        delegate?.didTapMediaButton()
+        delegate?.didTapMediaButton(isThreadOriginalMsg: isThreadOriginalMsg)
     }
 }

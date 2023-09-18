@@ -469,10 +469,46 @@ extension DashboardRootViewController {
         isLoading = true
         headerView.updateBalance()
         
-        chatsListViewModel.loadFriends() { [weak self] restoring in
+        if chatsListViewModel.isRestoring() {
+            DispatchQueue.main.async {
+                self.restoreProgressView.showRestoreProgressView(
+                    with: 1,
+                    label: "restoring-contacts".localized,
+                    buttonEnabled: false
+                )
+            }
+        }
+        
+        var contactsProgressShare : Float = 0.01
+        
+        chatsListViewModel.loadFriends(
+            progressCompletion: { restoring in
+                if restoring {
+                    
+                    contactsProgressShare += 0.01
+                    
+                    DispatchQueue.main.async {
+                        self.restoreProgressView.showRestoreProgressView(
+                            with: Int(contactsProgressShare * 100),
+                            label: "restoring-contacts".localized,
+                            buttonEnabled: false
+                        )
+                    }
+                }
+            }
+        ) { [weak self] restoring in
             guard let self = self else { return }
             
             if restoring {
+                
+                DispatchQueue.main.async {
+                    self.restoreProgressView.showRestoreProgressView(
+                        with: Int(contactsProgressShare * 100),
+                        label: "restoring-contacts".localized,
+                        buttonEnabled: false
+                    )
+                }
+                
                 self.chatsListViewModel.askForNotificationPermissions()
                 self.contactsService.forceUpdate()
             } else {
@@ -487,10 +523,13 @@ extension DashboardRootViewController {
                     contentProgressShare = 0.1
                     
                     if (contentProgress >= 0 && restoring) {
+                        let contentProgress = Int(contentProgressShare * Float(contentProgress))
+                        
                         DispatchQueue.main.async {
                             self.restoreProgressView.showRestoreProgressView(
-                                with: Int(contentProgressShare * Float(contentProgress)),
-                                messagesStartProgress: Int(contentProgressShare * Float(100))
+                                with: contentProgress + Int(contactsProgressShare * 100),
+                                label: "restoring-content".localized,
+                                buttonEnabled: false
                             )
                         }
                     }
@@ -500,13 +539,16 @@ extension DashboardRootViewController {
                         progressCallback: { progress in
                             if (restoring) {
                                 self.isLoading = false
-                                let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare))
+                                let messagesProgress : Int = Int(Float(progress) * (1.0 - contentProgressShare - contactsProgressShare))
                                 
                                 if (progress >= 0) {
-                                    self.restoreProgressView.showRestoreProgressView(
-                                        with: messagesProgress + Int(contentProgressShare * 100),
-                                        messagesStartProgress: Int(contentProgressShare * Float(100))
-                                    )
+                                    DispatchQueue.main.async {
+                                        self.restoreProgressView.showRestoreProgressView(
+                                            with: messagesProgress + Int(contentProgressShare * 100) + Int(contactsProgressShare * 100),
+                                            label: "restoring-messages".localized,
+                                            buttonEnabled: true
+                                        )
+                                    }
                                 } else {
                                     self.newBubbleHelper.showLoadingWheel(text: "fetching.old.messages".localized)
                                 }

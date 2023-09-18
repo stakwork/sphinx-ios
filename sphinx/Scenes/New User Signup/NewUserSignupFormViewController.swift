@@ -9,6 +9,8 @@ import UIKit
 
 
 class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHandling {
+    
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var codeTextField: UITextField!
@@ -16,11 +18,15 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var submitButtonContainer: UIView!
     @IBOutlet weak var submitButtonArrow: UILabel!
+    @IBOutlet weak var importSeedContainer: UIView!
+    @IBOutlet weak var importSeedView : ImportSeedView!
 
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
     var generateTokenRetries = 0
+    var generateTokenSuccess: Bool = false
+    var hasAdminRetries: Int = 0
 
     
     static func instantiate() -> NewUserSignupFormViewController {
@@ -33,7 +39,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
         super.viewDidLoad()
         
         newMessageBubbleHelper.genericMessageY = (
-            UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 60
+            UIApplication.shared.windows.first?.safeAreaInsets.top ?? 60
         ) + 60
 
         setupCodeField()
@@ -135,4 +141,36 @@ extension NewUserSignupFormViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+
+
+extension NewUserSignupFormViewController : ImportSeedViewDelegate{
+    
+    func showImportSeedView(
+        network: String,
+        host: String,
+        relay: String
+    ){
+        importSeedView.showWith(
+            delegate: self,
+            network: network,
+            host: host,
+            relay: relay
+        )
+        importSeedContainer.isHidden = false
+    }
+    
+    func didTapCancelImportSeed() {
+        importSeedContainer.isHidden = true
+    }
+    
+    func didTapConfirm() {
+        CrypterManager.sharedInstance.performWalletFinalization(
+            network: importSeedView.network,
+            host: importSeedView.host,
+            relay: importSeedView.relay,
+            enteredMnemonic: importSeedView.textView.text
+        )
+    }
+    
 }

@@ -6,6 +6,7 @@
     
 import UIKit
 import youtube_ios_player_helper
+import AVKit
 
 
 class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEpisodePlayerViewController {
@@ -16,6 +17,12 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet private weak var episodeViewCountLabel: UILabel!
     @IBOutlet weak var episodeSubtitleCircularDivider: UIView!
     @IBOutlet private weak var episodePublishDateLabel: UILabel!
+    @IBOutlet weak var localVideoPlayerContainer: UIView!
+    @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
+
+    var avPlayer : AVPlayerViewController? = nil
+    var videoLoadingTimer : Timer? = nil
+    var playerViewController : AVPlayerViewController? = nil
     
     let actionsManager = ActionsManager.sharedInstance
     let podcastPlayerController = PodcastPlayerController.sharedInstance
@@ -49,7 +56,11 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     }
     
     public func startPlay(){
-        videoPlayerView.playVideo()
+        setupNativeVsYTPlayer()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            (self.localVideoPlayerContainer.isHidden == true) ? (self.videoPlayerView.playVideo()) : ()
+        })
+        
     }
 }
 
@@ -95,6 +106,11 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         videoPlayerView.stopVideo()
         podcastPlayerController.finishAndSaveContentConsumed()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removePlayerView()
+    }
 }
 
 
@@ -125,6 +141,124 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         episodePublishDateLabel.text = videoPlayerEpisode.publishDateText
         
         setupDismissButton()
+        setupNativeVsYTPlayer()
+        
+        loadingIndicator.style = .large
+        loadingIndicator.color = .gray
+        loadingIndicator.hidesWhenStopped = true
+    }
+    
+    func setupNativeVsYTPlayer(){
+        self.avPlayer?.player?.pause()
+        self.localVideoPlayerContainer.isHidden = true
+        if videoPlayerEpisode.isDownloaded{
+            if let url =
+            videoPlayerEpisode.getVideoUrl()
+            {
+                DispatchQueue.main.sync {
+                    localVideoPlayerContainer.isHidden = false
+                    avPlayer = createVideoPlayerView(withVideoURL: url)
+                    avPlayer?.delegate = self
+                }
+            }
+        }
+        else{
+            //example vid id = tADAlisn4HA
+            API.sharedInstance.getVideoRemoteStorageStatus(videoID: videoPlayerEpisode.youtubeVideoID, callback: { filePath in
+                if let validPath = filePath,
+                   let url = URL(string: validPath){
+                    DispatchQueue.main.sync {
+                        self.localVideoPlayerContainer.isHidden = false
+                        self.avPlayer = self.createVideoPlayerView(withVideoURL: url)
+                        self.avPlayer?.delegate = self
+                    }
+                }
+                else{//cache the video for posterity
+                    API.sharedInstance.requestToCacheVideoRemotely(
+                        for: [(self.videoPlayerEpisode.youtubeVideoID)],
+                        callback: {
+                            //success
+                        },
+                        errorCallback: {
+                            //failure
+                        }
+                    )
+                }
+            }, errorCallback: {
+                
+            })
+        }
+    }
+    
+    func createVideoPlayerView(withVideoURL videoURL: URL) -> AVPlayerViewController {
+        let player = AVPlayer(url: videoURL)
+        playerViewController = AVPlayerViewController()
+        playerViewController?.player = player
+        playerViewController?.videoGravity = .resizeAspectFill
+        playerViewController?.showsPlaybackControls = true
+        
+        // Set the aspect ratio to 16:9
+        let aspectRatio = 16.0 / 9.0
+        let height = 100.0
+        let width = height * aspectRatio
+        
+        playerViewController?.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        // Add the video player view as a subview of localVideoPlayerContainer
+        if let playerViewController = playerViewController{
+            localVideoPlayerContainer.addSubview((playerViewController.view))
+            playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                playerViewController.view.topAnchor.constraint(equalTo: localVideoPlayerContainer.topAnchor),
+                playerViewController.view.leadingAnchor.constraint(equalTo: localVideoPlayerContainer.leadingAnchor),
+                playerViewController.view.trailingAnchor.constraint(equalTo: localVideoPlayerContainer.trailingAnchor),
+                playerViewController.view.bottomAnchor.constraint(equalTo: localVideoPlayerContainer.bottomAnchor)
+            ])
+        }
+        
+        setupLoadingTimer()
+        // Play the video
+        player.play()
+        
+        return playerViewController!
+    }
+    
+    func removePlayerView(){
+        avPlayer?.player?.pause()
+        avPlayer = nil
+        cleanupVideoLoadingTimer()
+    }
+    
+    @objc func checkForVideoLoad(){
+        if let item = avPlayer?.player?.currentItem{
+            let status = item.status
+            let isPlaying = status == .readyToPlay
+            isPlaying ? (cleanupVideoLoadingTimer()) : ()
+            let asset = item.asset
+            let assetTrack = asset.tracks(withMediaType: .video).first
+            
+            if let assetTrack = assetTrack {
+                let videoSize = assetTrack.naturalSize
+                let aspectRatio = videoSize.width / videoSize.height
+                print("Video Aspect Ratio: \(aspectRatio)")
+                if(aspectRatio < 1.0){
+                    playerViewController?.videoGravity = .resizeAspect
+                }
+
+            }
+        }
+    }
+    
+    func setupLoadingTimer(){
+        videoLoadingTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkForVideoLoad), userInfo: nil, repeats: true)
+        loadingIndicator.startAnimating()
+        localVideoPlayerContainer.bringSubviewToFront(loadingIndicator)
+    }
+    
+    func cleanupVideoLoadingTimer(){
+        loadingIndicator.stopAnimating()
+        videoLoadingTimer?.invalidate()
+        videoLoadingTimer = nil
     }
     
     
@@ -225,5 +359,15 @@ extension YouTubeVideoFeedEpisodePlayerViewController: YTPlayerViewDelegate {
             let time = Int(round(currentTime)) * 1000
             actionsManager.trackItemFinished(item: feedItem, timestamp: time, shouldSaveAction: shouldSaveAction)
         }
+    }
+}
+
+
+extension YouTubeVideoFeedEpisodePlayerViewController : AVPlayerViewControllerDelegate{
+    func playerViewController(
+        _ playerViewController: AVPlayerViewController,
+        willBeginFullScreenPresentationWithAnimationCoordinator coordinator: UIViewControllerTransitionCoordinator
+    ) {
+        playerViewController.player = avPlayer?.player
     }
 }

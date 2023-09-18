@@ -44,7 +44,7 @@ class FileInfoView: UIView {
     func configure(
         fileInfo: MessageTableCellState.FileInfo
     ) {
-        contentView.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        contentView.backgroundColor = UIColor.Sphinx.ReceivedMsgBG.withAlphaComponent(0.95)
         iconLabel.text = "insert_drive_file"
         
         fileNameLabel.text = fileInfo.fileName

@@ -49,6 +49,8 @@ struct MessageTableCellState {
     
     let bubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kBubbleWidthPercentage)
     
+    let threadHeaderBubbleWidth = (UIScreen.main.bounds.width - (kLabelMargin * 2))
+    
     let podcastClipBubbleWidth = (UIScreen.main.bounds.width - (MessageTableCellState.kRowLeftMargin + MessageTableCellState.kRowRightMargin)) * (MessageTableCellState.kPodcastClipBubbleWidthPercentage)
     
     init(
@@ -110,7 +112,7 @@ struct MessageTableCellState {
     ///Bubble States
     lazy var bubble: BubbleMessageLayoutState.Bubble? = {
         
-        guard let message = threadOriginalMessage ?? message, let bubbleState = self.bubbleState else {
+        guard let message = headerAndBubbleMessage, let bubbleState = self.bubbleState else {
             return nil
         }
         
@@ -146,7 +148,7 @@ struct MessageTableCellState {
     
     lazy var avatarImage: BubbleMessageLayoutState.AvatarImage? = {
         
-        guard let message = threadOriginalMessage ?? message else {
+        guard let message = headerAndBubbleMessage else {
             return nil
         }
         
@@ -178,7 +180,7 @@ struct MessageTableCellState {
     
     lazy var statusHeader: BubbleMessageLayoutState.StatusHeader? = {
         
-        guard let message = threadOriginalMessage ?? message else {
+        guard let message = headerAndBubbleMessage else {
             return nil
         }
         
@@ -255,7 +257,7 @@ struct MessageTableCellState {
                 text: paidMessageContent,
                 font: UIFont.getEncryptionErrorFont(),
                 linkMatches: [],
-                shouldLoadPaidText: message.messageContent == nil && paidContent?.isPurchaseAccepted() == true
+                shouldLoadPaidText: message.messageContent == nil && (paidContent?.isPurchaseAccepted() == true || bubble?.direction.isOutgoing() == true)
             )
         }
         
@@ -267,7 +269,7 @@ struct MessageTableCellState {
             return nil
         }
         
-        if paidContent?.isPurchaseAccepted() == true {
+        if paidContent?.isPurchaseAccepted() == true || bubble?.direction.isOutgoing() == true {
             return "loading.paid.message".localized.uppercased()
         } else if paidContent?.isPurchaseDenied() == true {
             return "cannot.load.message.data".localized.uppercased()
@@ -332,10 +334,32 @@ struct MessageTableCellState {
         )
     }()
     
+    lazy var threadOriginalMessageMedia: BubbleMessageLayoutState.MessageMedia? = {
+        guard let message = threadOriginalMessage, message.isMediaAttachment() || message.isGiphy() else {
+            return nil
+        }
+        
+        var urlAndKey = threadOriginalMessageMediaUrlAndKey
+        
+        return BubbleMessageLayoutState.MessageMedia(
+            url: urlAndKey.0,
+            mediaKey: urlAndKey.1,
+            isImage: message.isImage() || message.isDirectPayment(),
+            isVideo: message.isVideo(),
+            isGif: message.isGif(),
+            isPdf: message.isPDF(),
+            isGiphy: message.isGiphy(),
+            isPaid: message.isPaidAttachment(),
+            isPaymentTemplate: message.isDirectPayment()
+        )
+    }()
+    
     lazy var audio: BubbleMessageLayoutState.Audio? = {
         guard let message = messageToShow, message.isAudio() else {
             return nil
         }
+        
+        let bubbleWidth = isThreadHeaderMessage ? threadHeaderBubbleWidth : bubbleWidth
         
         return BubbleMessageLayoutState.Audio(
             url: message.getMediaUrlFromMediaToken(),
@@ -368,6 +392,22 @@ struct MessageTableCellState {
         return urlAndKey
     }()
     
+    lazy var threadOriginalMessageMediaUrlAndKey: (URL?, String?) = {
+        guard let message = threadOriginalMessage else {
+            return (nil, nil)
+        }
+        
+        var urlAndKey: (URL?, String?) = (nil, nil)
+        
+        if message.isMediaAttachment() {
+            urlAndKey = (message.getMediaUrlFromMediaToken(), message.mediaKey)
+        } else if message.isGiphy() {
+            urlAndKey = (message.getGiphyUrl(), nil)
+        }
+        
+        return urlAndKey
+    }()
+    
     lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
         guard let message = message, message.isFileAttachment() else {
             return nil
@@ -376,6 +416,29 @@ struct MessageTableCellState {
         return BubbleMessageLayoutState.GenericFile(
             url: message.getMediaUrlFromMediaToken(),
             mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var threadOriginalMessageGenericFile: BubbleMessageLayoutState.GenericFile? = {
+        guard let message = threadOriginalMessage, message.isFileAttachment() else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.GenericFile(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey
+        )
+    }()
+    
+    lazy var threadOriginalMessageAudio: BubbleMessageLayoutState.Audio? = {
+        guard let message = threadOriginalMessage, message.isAudio() else {
+            return nil
+        }
+        
+        return BubbleMessageLayoutState.Audio(
+            url: message.getMediaUrlFromMediaToken(),
+            mediaKey: message.mediaKey,
+            bubbleWidth: bubbleWidth
         )
     }()
     
@@ -406,10 +469,6 @@ struct MessageTableCellState {
             return nil
         }
         
-        guard let lastReplyMessage = threadMessages.last else {
-            return nil
-        }
-        
         let originalMessageSenderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
         let originalThreadMessage = BubbleMessageLayoutState.ThreadMessage(
             text: message.bubbleMessageContentString,
@@ -418,16 +477,6 @@ struct MessageTableCellState {
             senderAlias: originalMessageSenderInfo.1,
             senderColor: originalMessageSenderInfo.0,
             sendDate: message.date
-        )
-        
-        let lastReplySenderInfo: (UIColor, String, String?) = getSenderInfo(message: lastReplyMessage)
-        let lastReplyThreadMessage = BubbleMessageLayoutState.ThreadMessage(
-            text: lastReplyMessage.bubbleMessageContentString,
-            font: UIFont.getMessageFont(),
-            senderPic: lastReplySenderInfo.2,
-            senderAlias: lastReplySenderInfo.1,
-            senderColor: lastReplySenderInfo.0,
-            sendDate: lastReplyMessage.date
         )
         
         var secondReplySenderInfo: (UIColor, String, String?)? = nil
@@ -440,7 +489,6 @@ struct MessageTableCellState {
             originalMessage: originalThreadMessage,
             firstReplySenderIndo: getSenderInfo(message: firstReplyMessage),
             secondReplySenderInfo: secondReplySenderInfo,
-            lastReply: lastReplyThreadMessage,
             moreRepliesCount: threadMessages.count - 3
         )
     }()
@@ -583,7 +631,7 @@ struct MessageTableCellState {
             price: message.getAttachmentPrice() ?? 0,
             statusTitle: statusAndLabel.1,
             status: statusAndLabel.0,
-            isSentTextMessage: message.isPaidMessage() && bubble?.direction.isOutgoing() == true
+            shouldAddPadding: (message.isPaidMessage() || message.isPaidGenericFile()) && bubble?.direction.isOutgoing() == true
         )
     }()
     
@@ -756,9 +804,11 @@ struct MessageTableCellState {
         }
         
         let senderInfo: (UIColor, String, String?) = getSenderInfo(message: message)
+        let messageContent = message.bubbleMessageContentString ?? ""
         
         return NoBubbleMessageLayoutState.ThreadOriginalMessage(
-            text: message.bubbleMessageContentString ?? "",
+            text: messageContent,
+            linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
             senderPic: senderInfo.2,
             senderAlias: senderInfo.1,
             senderColor: senderInfo.0,
@@ -772,6 +822,16 @@ struct MessageTableCellState {
                 return threadMessages.last
             }
             return self.message
+        }
+    }
+    
+    ///Message to decide bubble direction and status info - sender name, date
+    var headerAndBubbleMessage: TransactionMessage? {
+        get {
+            if isThread, let threadOriginalMessage = threadOriginalMessage {
+                return threadOriginalMessage
+            }
+            return message
         }
     }
     
@@ -796,8 +856,8 @@ struct MessageTableCellState {
     }
     
     var isThread: Bool {
-        mutating get {
-            return threadMessagesState != nil
+        get {
+            return threadOriginalMessage != nil && threadMessages.count > 1
         }
     }
     

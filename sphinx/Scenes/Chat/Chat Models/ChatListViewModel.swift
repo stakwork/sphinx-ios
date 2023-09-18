@@ -12,25 +12,57 @@ final class ChatListViewModel {
     
     init() {}
     
-    public static let kMessagesPerPage: Int = 100
+    public static let kMessagesPerPage: Int = 200
     
     func loadFriends(
-        fromPush: Bool = false,
+        progressCompletion: ((Bool) -> ())? = nil,
         completion: @escaping (Bool) -> ()
     ) {
         let restoring = self.isRestoring()
         
-        API.sharedInstance.getLatestContacts(
-            date: Date(),
-            callback: {(contacts, chats, subscriptions, invites) -> () in
+        restoreContacts(
+            page: 1,
+            restoring: restoring,
+            progressCompletion: progressCompletion,
+            completion: completion
+        )
+    }
             
-                UserContactsHelper.insertObjects(
+    func restoreContacts(
+        page: Int,
+        restoring: Bool,
+        progressCompletion: ((Bool) -> ())? = nil,
+        completion: @escaping (Bool) -> ()
+    ) {
+        API.sharedInstance.getLatestContacts(
+            page: page,
+            date: Date(),
+            nextPageCallback: {(contacts, chats, subscriptions, invites) -> () in
+                self.saveObjects(
                     contacts: contacts,
                     chats: chats,
                     subscriptions: subscriptions,
                     invites: invites
                 )
-                    
+                
+                self.restoreContacts(
+                    page: page + 1,
+                    restoring: restoring,
+                    progressCompletion: progressCompletion,
+                    completion: completion
+                )
+                
+                progressCompletion?(restoring)
+            },
+            callback: {(contacts, chats, subscriptions, invites) -> () in
+            
+                self.saveObjects(
+                    contacts: contacts,
+                    chats: chats,
+                    subscriptions: subscriptions,
+                    invites: invites
+                )
+                
                 CoreDataManager.sharedManager.persistentContainer.viewContext.saveContext()
                     
                 self.forceKeychainSync()
@@ -38,6 +70,20 @@ final class ChatListViewModel {
                 
                 completion(restoring)
             }
+        )
+    }
+    
+    func saveObjects(
+        contacts: [JSON],
+        chats: [JSON],
+        subscriptions: [JSON],
+        invites: [JSON]
+    ) {
+        UserContactsHelper.insertObjects(
+            contacts: contacts,
+            chats: chats,
+            subscriptions: subscriptions,
+            invites: invites
         )
     }
     

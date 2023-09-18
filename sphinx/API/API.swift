@@ -17,6 +17,7 @@ typealias SphinxMessagesResultsCallback = ((JSON) -> ())
 typealias SphinxHistoryResultsCallback = (([JSON]) -> ())
 typealias DirectPaymentResultsCallback = ((JSON?) -> ())
 typealias EmptyCallback = (() -> ())
+typealias VideoFileExistsCallback = ((String?) -> ())
 typealias GetBadgeCallback = (([Badge]) -> ())
 typealias BalanceCallback = ((Int) -> ())
 typealias BalancesCallback = ((Int, Int) -> ())
@@ -77,6 +78,9 @@ typealias FeedSearchCompletionHandler = (
     Result<[FeedSearchResult], API.RequestError>
 ) -> ()
 
+typealias GetHasAdminCompletionHandler = (
+    Result<Bool, API.RequestError>
+) -> ()
 
 typealias PodcastEpisodeSearchCompletionHandler = (
     Result<[ContentFeedItem], API.RequestError>
@@ -369,6 +373,10 @@ class API {
 
     func postConnectionStatusChange() {
         NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
+    }
+    
+    func postMQTTStatusChange(){
+        NotificationCenter.default.post(name: .onMQTTConnectionStatusChanged, object: nil)
     }
 
     func getIPFromHUB() {

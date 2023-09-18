@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -42,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LIl-wz-9W7">
-                                <rect key="frame" x="0.0" y="44" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="48" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="jKb-eD-eNd"/>
@@ -249,7 +249,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGk-nq-mPF">
-                                <rect key="frame" x="0.0" y="44" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="48" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="34R-ND-5c7"/>
@@ -354,10 +354,29 @@
                                     <constraint firstItem="bEH-EM-lm0" firstAttribute="leading" secondItem="P8m-Lu-MG0" secondAttribute="leading" id="dxv-d2-paK"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBm-gx-JCP">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVt-DT-WnS" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="318" width="374" height="260"/>
+                                        <color key="backgroundColor" name="HeaderBG"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="260" id="ltW-Fi-vyL"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" name="OnboardingBG"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="eVt-DT-WnS" secondAttribute="trailing" constant="20" symbolic="YES" id="WZB-5X-un1"/>
+                                    <constraint firstItem="eVt-DT-WnS" firstAttribute="centerY" secondItem="mBm-gx-JCP" secondAttribute="centerY" id="ZmZ-6Q-Dzd"/>
+                                    <constraint firstItem="eVt-DT-WnS" firstAttribute="leading" secondItem="mBm-gx-JCP" secondAttribute="leading" constant="20" symbolic="YES" id="kbE-sz-lKe"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DKm-Ne-Dvk"/>
                         <color key="backgroundColor" name="OnboardingBG"/>
                         <constraints>
+                            <constraint firstItem="mBm-gx-JCP" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="2Te-bo-4AD"/>
                             <constraint firstItem="hGk-nq-mPF" firstAttribute="top" secondItem="DKm-Ne-Dvk" secondAttribute="top" id="9lB-o3-pnN"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="centerY" secondItem="iC8-Z6-lJs" secondAttribute="centerY" id="Eoe-u5-5Vb"/>
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="centerX" secondItem="iC8-Z6-lJs" secondAttribute="centerX" id="How-Io-Lpw"/>
@@ -365,7 +384,10 @@
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="bottom" secondItem="P8m-Lu-MG0" secondAttribute="top" constant="-80" id="adc-42-Qze"/>
                             <constraint firstItem="DKm-Ne-Dvk" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sxp-4g-tGX" secondAttribute="trailing" id="b9a-j6-ZF6"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" constant="30" id="cKY-a8-a0T"/>
+                            <constraint firstItem="mBm-gx-JCP" firstAttribute="trailing" secondItem="DKm-Ne-Dvk" secondAttribute="trailing" id="eUc-aQ-ghs"/>
                             <constraint firstItem="P8m-Lu-MG0" firstAttribute="centerX" secondItem="iC8-Z6-lJs" secondAttribute="centerX" id="g2D-aY-0lV"/>
+                            <constraint firstAttribute="bottom" secondItem="mBm-gx-JCP" secondAttribute="bottom" id="hzr-0b-3pM"/>
+                            <constraint firstItem="mBm-gx-JCP" firstAttribute="top" secondItem="iC8-Z6-lJs" secondAttribute="top" id="imP-V1-aXY"/>
                             <constraint firstItem="sxp-4g-tGX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="j8b-of-U7L"/>
                             <constraint firstItem="hGk-nq-mPF" firstAttribute="leading" secondItem="DKm-Ne-Dvk" secondAttribute="leading" id="rP5-dO-7Q6"/>
                         </constraints>
@@ -374,6 +396,8 @@
                         <outlet property="backButton" destination="hGk-nq-mPF" id="a0v-0H-GJU"/>
                         <outlet property="codeTextField" destination="6Ax-pV-KVk" id="QaX-Ij-Z5u"/>
                         <outlet property="codeTextFieldContainer" destination="Awg-RS-jhR" id="QLH-q0-ZHG"/>
+                        <outlet property="importSeedContainer" destination="mBm-gx-JCP" id="bkW-jl-Qv2"/>
+                        <outlet property="importSeedView" destination="eVt-DT-WnS" id="RtO-lt-5Yw"/>
                         <outlet property="submitButton" destination="n1x-Nd-XT6" id="znz-ni-Dfl"/>
                         <outlet property="submitButtonArrow" destination="ngQ-ql-U0M" id="AMN-AE-o9S"/>
                         <outlet property="submitButtonContainer" destination="bEH-EM-lm0" id="4O5-d0-TBI"/>
@@ -577,6 +601,9 @@ Lightning Network!</string>
         <image name="newUserImage" width="512" height="640"/>
         <image name="scannerIcon" width="26" height="20.5"/>
         <image name="sphinxPhoneView" width="1516.5" height="1047"/>
+        <namedColor name="HeaderBG">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="OnboardingBG">
             <color red="0.078000001609325409" green="0.11800000071525574" blue="0.15299999713897705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

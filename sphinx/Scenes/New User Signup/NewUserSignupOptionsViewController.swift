@@ -10,6 +10,7 @@ import StoreKit
 
 
 class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignupHandling {
+    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var screenHeadlineLabel: UILabel!
     @IBOutlet weak var connectionCodeButtonContainer: UIView!
@@ -17,6 +18,8 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     @IBOutlet weak var purchaseLiteNodeButtonContainer: UIView!
     @IBOutlet weak var purchaseLiteNodeButton: UIButton!
     @IBOutlet weak var purchaseLoadingSpinner: UIActivityIndicatorView!
+
+    
     
     internal var hubNodeInvoice: API.HUBNodeInvoice?
 
@@ -24,6 +27,8 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
     let storeKitService = StoreKitService.shared
 
     var generateTokenRetries = 0
+    var hasAdminRetries = 0
+    var generateTokenSuccess: Bool = false
     
     
     var isPurchaseProcessing: Bool = false {
@@ -96,6 +101,7 @@ extension NewUserSignupOptionsViewController {
         }
         startPurchase(for: product)
     }
+
 }
 
 

@@ -14,6 +14,7 @@ class CommonNewMessageTableViewCell : SwipableReplyCell {
     
     var rowIndex: Int!
     var messageId: Int?
+    var originalMessageId: Int?
     
     var urlRanges = [NSRange]()
     

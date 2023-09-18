@@ -92,6 +92,7 @@ extension NewChatTableDataSource {
         }
         
         let mediaData = (dataSourceItem.messageId != nil) ? self.mediaCached[dataSourceItem.messageId!] : nil
+        let threadOriginalMessageMediaData = (dataSourceItem.threadOriginalMessage?.id != nil) ? self.mediaCached[dataSourceItem.threadOriginalMessage!.id] : nil
         let tribeData = (dataSourceItem.linkTribe?.uuid != nil) ? self.preloaderHelper.tribesData[dataSourceItem.linkTribe!.uuid] : nil
         let linkData = (dataSourceItem.linkWeb?.link != nil) ? self.preloaderHelper.linksData[dataSourceItem.linkWeb!.link] : nil
         let botWebViewData = (dataSourceItem.messageId != nil) ? self.botsWebViewData[dataSourceItem.messageId!] : nil
@@ -100,6 +101,7 @@ extension NewChatTableDataSource {
         cell?.configureWith(
             messageCellState: dataSourceItem,
             mediaData: mediaData,
+            threadOriginalMsgMediaData: threadOriginalMessageMediaData,
             tribeData: tribeData,
             linkData: linkData,
             botWebViewData: botWebViewData,
@@ -142,6 +144,7 @@ extension NewChatTableDataSource {
         let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
         let linkContactsArray = getLinkContactsArrayFor(messages: messages)
         let linkTribesArray = getLinkTribesArrayFor(messages: messages)
+        let webLinksArray = getWebLinksArrayFor(messages: messages)
         
         var groupingDate: Date? = nil
         var invoiceData: (Int, Int) = (0, 0)
@@ -151,7 +154,10 @@ extension NewChatTableDataSource {
             threadMessagesMap: threadMessagesMap
         )
         
-        let originalMessagesMap = getOriginalMessagesFor(threadMessages: filteredThreadMessages)
+        let originalMessagesMap = getOriginalMessagesFor(
+            threadMessages: filteredThreadMessages,
+            threadMessagesMap: threadMessagesMap
+        )
 
         for (index, message) in filteredThreadMessages.enumerated() {
             
@@ -167,7 +173,7 @@ extension NewChatTableDataSource {
             let purchaseMessages = purchaseMessagesMap[message.getMUID()] ?? [:]
             let linkContact = linkContactsArray[message.id]
             let linkTribe = linkTribesArray[message.id]
-            let linkWeb = getLinkWebFor(message: message)
+            let linkWeb = webLinksArray[message.id]
             
             let bubbleStateAndDate = getBubbleBackgroundForMessage(
                 msg: threadMessages.last ?? message,
@@ -175,7 +181,7 @@ extension NewChatTableDataSource {
                 in: filteredThreadMessages,
                 and: originalMessagesMap,
                 groupingDate: &groupingDate,
-                isThreadRow: !threadMessages.isEmpty
+                isThreadRow: threadMessages.count > 1
             )
             
             if let separatorDate = bubbleStateAndDate.1 {
@@ -247,6 +253,7 @@ extension NewChatTableDataSource {
         messages: [TransactionMessage],
         threadMessagesMap: [String: [TransactionMessage]]
     ) -> [TransactionMessage] {
+        
         var filteredThreadMessages: [TransactionMessage] = []
         
         for message in messages {
@@ -271,6 +278,8 @@ extension NewChatTableDataSource {
                     ///More than 1 reply, show thread on last reply place
                     filteredThreadMessages.append(message)
                 }
+            } else {
+                filteredThreadMessages.append(message)
             }
         }
         
@@ -484,6 +493,10 @@ extension NewChatTableDataSource {
             return [:]
         }
         
+        if !chat.isPublicGroup() {
+            return [:]
+        }
+        
         let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
         let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
         
@@ -503,10 +516,15 @@ extension NewChatTableDataSource {
     }
     
     @objc func getOriginalMessagesFor(
-        threadMessages: [TransactionMessage]
+        threadMessages: [TransactionMessage],
+        threadMessagesMap: [String: [TransactionMessage]]
     ) -> [String: TransactionMessage] {
         
         guard let chat = chat else {
+            return [:]
+        }
+        
+        if !chat.isPublicGroup() {
             return [:]
         }
         
@@ -517,7 +535,9 @@ extension NewChatTableDataSource {
         
         for originalMessage in originalMessages {
             if let uuid = originalMessage.uuid {
-                originalMessagesMap[uuid] = originalMessage
+                if let threadMessages = threadMessagesMap[uuid], threadMessages.count > 1 {
+                    originalMessagesMap[uuid] = originalMessage
+                }
             }
         }
         
@@ -532,10 +552,12 @@ extension NewChatTableDataSource {
         
         messages.forEach({
             if $0.bubbleMessageContentString?.hasPubkeyLinks == true {
-                pubkeys[$0.id] = (
-                    $0.messageContent?.stringFirstPubKey?.pubkeyComponents.0 ?? "",
-                    $0.messageContent?.stringFirstPubKey?.pubkeyComponents.1
-                )
+                if let link = $0.messageContent?.stringFirstLink, link.isPubKey {
+                    pubkeys[$0.id] = (
+                        link.pubkeyComponents.0,
+                        link.pubkeyComponents.1
+                    )
+                }
             }
         })
         
@@ -562,7 +584,7 @@ extension NewChatTableDataSource {
         
         messages.forEach({
             if $0.bubbleMessageContentString?.hasTribeLinks == true {
-                if let link = $0.messageContent?.stringFirstTribeLink {
+                if let link = $0.messageContent?.stringFirstLink, link.isTribeJoinLink {
                     if let uuid = GroupsManager.sharedInstance.getGroupInfo(query: link)?.uuid {
                         linksAndUUIDs[$0.id] = (link, uuid)
                     }
@@ -585,16 +607,27 @@ extension NewChatTableDataSource {
         return linkTribesMap
     }
     
-    func getLinkWebFor(
-        message: TransactionMessage
-    ) -> MessageTableCellState.LinkWeb? {
+    func getWebLinksArrayFor(
+        messages: [TransactionMessage]
+    ) -> [Int: MessageTableCellState.LinkWeb] {
         
-        if message.messageContent?.hasLinks == true {
-            if let link = message.messageContent?.stringFirstLink {
-                return MessageTableCellState.LinkWeb(link: link)
+        var links: [Int: String] = [:]
+        
+        messages.forEach({
+            if $0.bubbleMessageContentString?.hasLinks == true {
+                if let link = $0.messageContent?.stringFirstLink, !link.isTribeJoinLink && !link.isPubKey {
+                    links[$0.id] = link
+                }
             }
-        }
-        return nil
+        })
+        
+        var webLinkMap: [Int: MessageTableCellState.LinkWeb] = [:]
+        
+        links.forEach({ (key, value) in
+            webLinkMap[key] = MessageTableCellState.LinkWeb(link: value)
+        })
+        
+        return webLinkMap
     }
 }
 

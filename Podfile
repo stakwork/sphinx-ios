@@ -24,9 +24,10 @@ target 'sphinx' do
     pod "SwiftyXMLParser", :git => 'https://github.com/yahoojapan/SwiftyXMLParser.git'
     pod "youtube-ios-player-helper", "~> 1.0.3"
     pod 'MarqueeLabel'
-    pod 'HDWalletKit'
     pod 'ObjectMapper'
     pod 'UIView-Shimmer', '~> 1.0'
+    pod 'CocoaMQTT', :git => 'https://github.com/emqx/CocoaMQTT.git'
+    pod 'MessagePack.swift', '~> 4.0'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|

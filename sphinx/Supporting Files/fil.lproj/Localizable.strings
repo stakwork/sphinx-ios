@@ -31,6 +31,9 @@
 "unable.to.connect" = "HIndi makakunekta sa Node";
 "unauthorized.error.message" = "May nangyaring kamalian, Paki contact ang suporta";
 "network.connection.lost" = "Nawala ang koneksyon sa network.\nPakisuri ang iyong network at subukan muli sa ilang sandali";
+"signer.connected" = "Signer connected to Swarm";
+"signer.connecting" = "Signer connecting to Swarm";
+"signer.not.connected" = "Signer disconnected from Swarm";
 "reverting.ip" = "Nabigo ang bagong pagsubok sa URL, ibinabalik ang dating setting...";
 "verifying.new.ip" = "Sinusubukan ang bagong URL...";
 "error.url.request.creation.failed" = "Nabigo ang kahilingang paggawa ng URL";
@@ -193,6 +196,7 @@
 "restoring-progress" = "Ibinabalik:";
 "restoring-content" = "Pagpapanumbalik ng nilalaman:";
 "restoring-messages" = "Pagpapanumbalik ng mga mensahe:";
+"restoring-contacts" = "Restoring contacts:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "Mayroon akong Connection Code";
@@ -215,6 +219,10 @@
 "signup.purchase-eligibility-failed" = "Nabigo ang Pagiging Kwalipikado sa Pagbili";
 "signup.lite-node-purchase-failed" = "Nabigo ang Pagbili ng Lite Node";
 "signup.products-fetch-failed" = "Hindi available ang mga produkto ng In App Purchases";
+"signup.signer-required-title" = "Signer Setup Required";
+"signup.signer-required-prompt" = "In order to use Sphinx you must scan your connection code and set up a mobile or hardware signing device";
+"signup.setup-swarm-admin-error-title" = "Connecting to Swarm Failed";
+"signup.setup-swarm-admin-error-prompt" = "There was an error connecting to swarm. Please try again.";
 
 //INVITE
 "add.people" = "Magdagdag ng mga Tao";
@@ -287,12 +295,25 @@
 "profile.select-bitcoin-network" = "Piliin ang Bitcoin Network";
 "profile.mnemonic-generation-title" = "Mnemonic generation";
 "profile.mnemonic-generation-description" = "Choose the option of your preference";
+"profile.seed-validation-error-title" = "Seed Validation Error";
 "profile.mnemonic-enter-title" = "Mnemonic words";
 "profile.mnemonic-enter-description" = "Enter your 12 or 24 mnemonic words separated by a space";
 "profile.mnemonic-enter-error" = "The entered words are not valid";
 "profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-enter-format-error" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-generate" = "Generate random mnemonic words";
+"profile.mnemonic-pull-stored" = "Pull stored mnemonic words from memory";
+"profile.mnemonic-incorrect-length" = "Your seed phrase must be exactly 12 or 24 words.";
+"profile.mnemonic-invalid-word" = "It appears you've typed an invalid word: word #";
+"profile.mnemonic-generate-or-import-title" = "Choose Your Seed Method";
+"profile.mnemonic-generate-or-import-prompt" = "Would you like to generate a new seed phrase or import an existing one?";
+"profile.mnemonic-generate-prompt" = "Generate";
+"profile.mnemonic-import-prompt" = "Import";
+"profile.signer-setup-title" = "Setup";
+"profile.signer-setup-message" = "Setup hardware device or phone signer";
+"profile.harware-option" = "Hardware";
+"profile.phone-signer-option" = "Phone Signer";
+
 
 //PIN
 "choose.pin.upper" = "PUMILI NG PIN";

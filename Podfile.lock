@@ -1,13 +1,13 @@
 PODS:
   - Alamofire (5.6.4)
-  - CryptoSwift (1.0.0)
+  - CocoaMQTT (2.1.6):
+    - CocoaMQTT/Core (= 2.1.6)
+  - CocoaMQTT/Core (2.1.6):
+    - MqttCocoaAsyncSocket (~> 1.0.8)
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.1):
     - libwebp
     - PINCache
-  - HDWalletKit (0.3.6):
-    - CryptoSwift (~> 1.0.0)
-    - secp256k1.swift (~> 0.1.4)
   - JitsiMeetSDK (3.6.0)
   - KeychainAccess (4.2.2)
   - KYDrawerController (2.1.0)
@@ -22,6 +22,8 @@ PODS:
   - libwebp/webp (1.2.0)
   - lottie-ios (3.2.3)
   - MarqueeLabel (4.3.0)
+  - MessagePack.swift (4.0.0)
+  - MqttCocoaAsyncSocket (1.0.8)
   - ObjectMapper (4.2.0)
   - PINCache (3.0.3):
     - PINCache/Arc-exception-safe (= 3.0.3)
@@ -41,7 +43,6 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SDWebImageSVGCoder (1.5.2):
     - SDWebImage/Core (~> 5.6)
-  - secp256k1.swift (0.1.4)
   - Starscream (3.1.1)
   - SwiftLinkPreview (3.4.0)
   - SwiftyJSON (4.3.0)
@@ -55,13 +56,14 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.6.4)
+  - CocoaMQTT (from `https://github.com/emqx/CocoaMQTT.git`)
   - Giphy (= 2.1.1)
-  - HDWalletKit
   - JitsiMeetSDK (~> 3.6.0)
   - KeychainAccess
   - KYDrawerController
   - lottie-ios
   - MarqueeLabel
+  - MessagePack.swift (~> 4.0)
   - ObjectMapper
   - ReachabilitySwift
   - RNCryptor (~> 5.0)
@@ -80,16 +82,16 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - CryptoSwift
     - FLAnimatedImage
     - Giphy
-    - HDWalletKit
     - JitsiMeetSDK
     - KeychainAccess
     - KYDrawerController
     - libwebp
     - lottie-ios
     - MarqueeLabel
+    - MessagePack.swift
+    - MqttCocoaAsyncSocket
     - ObjectMapper
     - PINCache
     - PINOperation
@@ -98,7 +100,6 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageFLPlugin
     - SDWebImageSVGCoder
-    - secp256k1.swift
     - Starscream
     - SwiftLinkPreview
     - SwiftyJSON
@@ -107,28 +108,34 @@ SPEC REPOS:
     - youtube-ios-player-helper
 
 EXTERNAL SOURCES:
+  CocoaMQTT:
+    :git: https://github.com/emqx/CocoaMQTT.git
   SwiftyXMLParser:
     :git: https://github.com/yahoojapan/SwiftyXMLParser.git
   Tor:
     :podspec: https://raw.githubusercontent.com/iCepa/Tor.framework/v405.8.1/Tor.podspec
 
 CHECKOUT OPTIONS:
+  CocoaMQTT:
+    :commit: 990303d3549d4284fadd6c83ff8480e6ab0b4d42
+    :git: https://github.com/emqx/CocoaMQTT.git
   SwiftyXMLParser:
     :commit: 41900bb1882e704a25d4946f2dbad71b4bb02b8f
     :git: https://github.com/yahoojapan/SwiftyXMLParser.git
 
 SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
-  CryptoSwift: d81eeaa59dc5a8d03720fe919a6fd07b51f7439f
+  CocoaMQTT: 1f206228b29318eabdacad0c2e4e88575922c27a
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
-  HDWalletKit: 6d97a15404b2edfe3418e3dc064faa967e51dac4
   JitsiMeetSDK: 476329f72a866f714d2802bafe1729de6d644ccf
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
+  MessagePack.swift: 417f6b6e27a86ad4f19a0ee47093b3985cd77323
+  MqttCocoaAsyncSocket: 77d3b74f76228dd5a05d1f9526eab101d415b30c
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
   PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
@@ -137,7 +144,6 @@ SPEC CHECKSUMS:
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   SDWebImageFLPlugin: 245c7ce1e77028b6ef415240847b3f8aa4b106b7
   SDWebImageSVGCoder: b0258f66521c222aba5c13ab29bdf35520d5d536
-  secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLinkPreview: c1bc5b2cb3cd42f2865137c1a61f5d788dcf5c9c
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
@@ -147,6 +153,6 @@ SPEC CHECKSUMS:
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 7c5d735ed1bcb08f0ffabeb3b119ddb04debba46
+PODFILE CHECKSUM: 2e8b2d53fa47b9e2748bff7a9fd1c61384c875b2
 
 COCOAPODS: 1.12.1

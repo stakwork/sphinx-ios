@@ -13,6 +13,8 @@ protocol ConnectionCodeSignupHandling: UIViewController, SphinxOnionConnectorDel
     var userData: UserData { get }
     var onionConnector: SphinxOnionConnector { get }
     var generateTokenRetries: Int { get set }
+    var generateTokenSuccess : Bool {get set}
+    var hasAdminRetries : Int {get set}
     
     func signup(withConnectionCode connectionCode: String)
     
@@ -66,6 +68,7 @@ extension ConnectionCodeSignupHandling {
     
     func signUp(withSwarmConnectCode connectionCode:String){
         presentConnectingLoadingScreenVC()
+        
         let splitString = connectionCode.components(separatedBy: "::")
         if splitString.count > 2{
             let ip = splitString[1]
@@ -76,6 +79,25 @@ extension ConnectionCodeSignupHandling {
             self.handleSignupConnectionError(
                 message: "signup.error-validation-invite-code".localized
             )
+        }
+    }
+    
+    func signUp(withSwarmMqttCode connectionCode:String){
+        if let url = URL(string: connectionCode),
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+           let queryItems = components.queryItems {
+            
+            if let mqtt = queryItems.first(where: { $0.name == "mqtt" })?.value,
+               let network = queryItems.first(where: { $0.name == "network" })?.value,
+               let relay = queryItems.first(where: { $0.name == "relay" })?.value
+            {
+                self.connectToSwarm(
+                    mqtt: mqtt,
+                    network: network,
+                    relay: relay
+                )
+            }
+
         }
     }
     
@@ -136,26 +158,23 @@ extension ConnectionCodeSignupHandling {
     
     func generateTokenAndProceed(pubkey: String, password: String? = nil) {
         let token = EncryptionManager.randomString(length: 20)
-        
         generateTokenAndProceed(pubkey: pubkey, token: token, password: password)
     }
     
     
     func generateTokenAndProceed(pubkey: String, token: String, password: String? = nil) {
         generateTokenRetries += 1
-        
         userData.generateToken(
             token: token,
             pubkey: pubkey,
             password: password,
             completion: { [weak self] in
                 guard let self = self else { return }
-                
+                self.generateTokenSuccess = true
                 self.proceedToNewUserWelcome()
             },
             errorCompletion: { [weak self] in
                 guard let self = self else { return }
-                
                 self.generateTokenError(pubkey: pubkey, token: token, password: password)
             }
         )
@@ -167,7 +186,7 @@ extension ConnectionCodeSignupHandling {
         token: String,
         password: String? = nil
     ) {
-        if generateTokenRetries < 4 {
+        if generateTokenRetries < 4  && generateTokenSuccess == false{
             DelayPerformedHelper.performAfterDelay(seconds: 0.5) { [weak self] in
                 self?.generateTokenAndProceed(pubkey: pubkey, token: token, password: password)
             }
@@ -185,6 +204,36 @@ extension ConnectionCodeSignupHandling {
             animated: true
         )
     }
+    
+    func connectToSwarm(
+        mqtt: String,
+        network: String,
+        relay: String
+    ) {
+        let hwl = CrypterManager.HardwareLink(
+            mqtt: mqtt,
+            network: network,
+            relay: relay
+        )
+        
+        UserData.sharedInstance.save(ip: "https://\(relay)")
+        
+        CrypterManager.sharedInstance.setupSigningDevice(
+            vc: self,
+            hardwareLink: hwl
+        ) { _ in
+            self.presentConnectingLoadingScreenVC()
+            self.hasAdminRetries = 0
+            
+            self.checkForAdmin() {
+                self.postToGenerateToken {
+                    UserDefaults.Keys.setupPhoneSigner.set(true)
+                }
+            }
+        }
+        
+    }
+
     
     
     func connectToNode(ip: String, password: String = "", pubkey: String = "") {
@@ -234,6 +283,44 @@ extension ConnectionCodeSignupHandling {
             )
 
             self.navigationController?.pushViewController(inviteWelcomeVC, animated: true)
+        }
+    }
+    
+    func checkForAdmin(completion: @escaping ()->()) {
+        if hasAdminRetries < 50 {
+            hasAdminRetries += 1
+            
+            API.sharedInstance.getHasAdmin(completionHandler: { result in
+                switch result {
+                case .success(let success):
+                    success ? completion() : DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+                        self.checkForAdmin(completion: completion)
+                    })
+                case .failure(_):
+                    DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+                        self.checkForAdmin(completion: completion)
+                    })
+                }
+            })
+        } else {
+            AlertHelper.showAlert(title: "signup.setup-swarm-admin-error-title".localized, message: "signup.setup-swarm-admin-error-prompt".localized)
+        }
+    }
+    
+    func postToGenerateToken(callback: @escaping ()->()){
+        do {
+            let (mneomnic, _) = CrypterManager.sharedInstance.getOrCreateWalletMnemonic()
+            let network = CrypterManager.sharedInstance.hardwarePostDto.bitcoinNetwork ?? ""
+            let keys = try nodeKeys(net: network, seed: mnemonicToSeed(mnemonic: mneomnic))
+            
+            self.generateTokenAndProceed(
+                pubkey: keys.pubkey,
+                password: nil
+            )
+            
+            callback()
+        } catch {
+            print("catch statement in postToGenerateToken with error: \(error)")
         }
     }
 }

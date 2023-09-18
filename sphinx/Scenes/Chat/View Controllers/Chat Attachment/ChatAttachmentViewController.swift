@@ -79,6 +79,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
     
     var price: Int = 0
     var chat: Chat? = nil
+    var isThread: Bool = false
     
     var presentationContext : ChatAttachmentVCPresentationContext = .fromMessages
     
@@ -102,7 +103,8 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
         delegate: AttachmentsDelegate,
         chatId: Int? = nil,
         text: String? = nil,
-        replyingMessageId: Int? = nil
+        replyingMessageId: Int? = nil,
+        isThread: Bool = false
     ) -> ChatAttachmentViewController {
         
         let viewController = StoryboardScene.Chat.chatAttachmentViewController.instantiate()
@@ -113,6 +115,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
         
         viewController.text = text
         viewController.delegate = delegate
+        viewController.isThread = isThread
         
         if let chatId = chatId {
             viewController.chat = Chat.getChatWith(id: chatId)
@@ -272,7 +275,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
             case OptionsButton.PDF:
                 showFilesBrowser()
             case OptionsButton.Message:
-                showMessageLabel()
+                optionButtonsTouched(option: OptionsButton.Message)
             case OptionsButton.Request:
                 optionButtonsTouched(option: OptionsButton.Request)
             case OptionsButton.Send:
@@ -305,6 +308,8 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
                     self.delegate?.didTapReceiveButton()
                 case OptionsButton.Send:
                     self.delegate?.didTapSendButton()
+                case OptionsButton.Message:
+                    self.showMessageLabel()
                 default:
                     break
                 }

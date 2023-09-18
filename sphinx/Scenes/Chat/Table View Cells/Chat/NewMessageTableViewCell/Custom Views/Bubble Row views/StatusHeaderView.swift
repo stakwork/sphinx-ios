@@ -90,7 +90,7 @@ class StatusHeaderView: UIView {
         expiredInvoiceReceivedHeader.isHidden = !statusHeader.showExpiredReceived
         configureWith(expirationTimestamp: statusHeader.expirationTimestamp)
         
-        if let uploadProgressData = uploadProgressData {
+        if let uploadProgressData = uploadProgressData, uploadProgressData.progress < 100 {
             uploadingHeader.isHidden = false
             uploadingLabel.text = String(format: "uploaded.progress".localized, uploadProgressData.progress)
         } else {

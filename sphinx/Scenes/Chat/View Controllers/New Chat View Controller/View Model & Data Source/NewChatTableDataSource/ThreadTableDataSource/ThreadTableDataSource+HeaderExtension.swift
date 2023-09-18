@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension ThreadTableDataSource : ThreadHeaderTableViewCellDelegate {
+extension ThreadTableDataSource : ThreadHeaderTableViewCellDelegate {    
     func shouldExpandHeaderMessage() {
         guard isHeaderExpanded == false else {
             return

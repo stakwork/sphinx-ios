@@ -86,6 +86,12 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         addressField.delegate = self
         
         configureViewForMode()
+        //Note: planning to remove when signer code is stable and we don't need as much testing :)
+//        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+//            self.dismiss(animated: true,completion: {
+//                self.delegate?.didScanQRCode?(string: "sphinx.chat://?action=glyph&mqtt=54.81.240.62:1883&network=bitcoin&relay=relay.swarm14.sphinx.chat")
+//            })
+//        })
     }
     
     func codeScanned(code: String) {
@@ -200,8 +206,9 @@ class NewQRScannerViewController: KeyboardEventsViewController {
             {
                 validateQRString(string: fixedCode)
             } else {
-                delegate?.didScanQRCode?(string: code)
-                self.dismiss(animated: true, completion: nil)
+                self.dismiss(animated: true, completion: {
+                    self.delegate?.didScanQRCode?(string: code)
+                })
             }
         }
     }

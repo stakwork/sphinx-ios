@@ -40,6 +40,9 @@
 "unable.to.connect" = "Unable to connect to Node";
 "unauthorized.error.message" = "Something went wrong, please contact support";
 "network.connection.lost" = "The network connection is lost.\nPlease check your network and try again later.";
+"signer.connected" = "Signer connected to Swarm";
+"signer.connecting" = "Signer connecting to Swarm";
+"signer.not.connected" = "Signer disconnected from Swarm";
 "reverting.ip" = "New URL test failed, restoring previous setting...";
 "verifying.new.ip" = "Testing new URL...";
 "error.url.request.creation.failed" = "URL Request Creation Failed";
@@ -207,6 +210,7 @@
 "restoring-progress" = "Restoring:";
 "restoring-content" = "Restoring content:";
 "restoring-messages" = "Restoring messages:";
+"restoring-contacts" = "Restoring contacts:";
 
 //SIGNUP NEW USER
 "signup.signup-options.connection-code-button" = "I Have a Connection Code";
@@ -229,6 +233,8 @@
 "signup.purchase-eligibility-failed" = "Purchase Eligibility Failed";
 "signup.lite-node-purchase-failed" = "Lite Node Purchase Failed";
 "signup.products-fetch-failed" = "In App Purchases products not available";
+"signup.signer-required-title" = "Signer Setup Required";
+"signup.signer-required-prompt" = "In order to use Sphinx you must scan your connection code and set up a mobile or hardware signing device";
 
 //INVITE
 "add.people" = "Add People";
@@ -306,6 +312,20 @@
 "profile.mnemonic-enter-error" = "The entered words are not valid";
 "profile.mnemonic-enter" = "Enter your 12/24 mnemonic words";
 "profile.mnemonic-generate" = "Generate random mnemonic words";
+"profile.mnemonic-pull-stored" = "Pull stored mnemonic words from memory";
+"profile.seed-validation-error-title" = "Seed Validation Error";
+"signup.setup-swarm-admin-error-title" = "Connecting to Swarm Failed";
+"signup.setup-swarm-admin-error-prompt" = "There was an error connecting to swarm. Please try again.";
+"profile.mnemonic-incorrect-length" = "Your seed phrase must be exactly 12 or 24 words.";
+"profile.mnemonic-invalid-word" = "It appears you've typed an invalid word: word #";
+"profile.mnemonic-generate-or-import-title" = "Choose Your Seed Method";
+"profile.mnemonic-generate-or-import-prompt" = "Would you like to generate a new seed phrase or import an existing one?";
+"profile.mnemonic-generate-prompt" = "Generate";
+"profile.mnemonic-import-prompt" = "Import";
+"profile.signer-setup-title" = "Setup";
+"profile.signer-setup-message" = "Setup hardware device or phone signer";
+"profile.harware-option" = "Hardware";
+"profile.phone-signer-option" = "Phone Signer";
 
 //PIN
 "choose.pin.upper" = "CHOOSE PIN";

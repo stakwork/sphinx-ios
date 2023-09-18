@@ -145,6 +145,12 @@ extension String {
         }
     }
     
+    var isSwarmGlyphAction : Bool {//if they're signing up with their own signing device
+        get {
+            return self.localizedStandardContains("glyph")
+        }
+    }
+    
     func getIPAndPassword() -> (String?, String?) {
         if let decodedString = self.base64Decoded, decodedString.starts(with: "ip::") {
             let stringWithoutPrefix = decodedString.replacingOccurrences(of: "ip::", with: "")
@@ -263,30 +269,58 @@ extension String {
         return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
-    var stringFirstLink : String {
+    var stringFirstWebLink : (String, NSRange)? {
         if let range = self.stringLinks.first?.range {
             let matchString = (self as NSString).substring(with: range) as String
-            return matchString
+            return (matchString, range)
         }
-        return ""
+        return nil
     }
     
-    var stringFirstTribeLink : String? {
+    var stringFirstTribeLink : (String, NSRange)? {
         for link in self.stringLinks {
             let range = link.range
             let matchString = (self as NSString).substring(with: range) as String
             if matchString.starts(with: "sphinx.chat://?action=tribe") {
-                return matchString
+                return (matchString, range)
             }
         }
         return nil
     }
     
-    var stringFirstPubKey : String? {
+    var stringFirstPubKey : (String, NSRange)? {
         if let range = self.pubKeyMatches.first?.range {
             let matchString = (self as NSString).substring(with: range) as String
-            return matchString
+            return (matchString, range)
         }
+        return nil
+    }
+    
+    var stringFirstLink: String? {
+        let firstWebLink = stringFirstWebLink
+        let firstContactLink = stringFirstPubKey
+        let firstTribeJoinLink = stringFirstTribeLink
+        
+        var ranges = [NSRange]()
+
+        if let firstWebLinkRange = firstWebLink?.1 {
+            ranges.append(firstWebLinkRange)
+        }
+        
+        if let firstContactLinkRange = firstContactLink?.1 {
+            ranges.append(firstContactLinkRange)
+        }
+        
+        if let firstTribeJoinLinkRange = firstTribeJoinLink?.1 {
+            ranges.append(firstTribeJoinLinkRange)
+        }
+        
+        ranges = ChatHelper.removeDuplicatedContainedFrom(urlRanges: ranges)
+        
+        if let firstLinkRange = ranges.first {
+            return (self as NSString).substring(with: firstLinkRange) as String
+        }
+        
         return nil
     }
     
@@ -330,6 +364,12 @@ extension String {
         return pubKeyMatches.count > 0 && !hasTribeLinks
     }
     
+    var isTribeJoinLink : Bool {
+        get {
+            return self.starts(with: "sphinx.chat://?action=tribe")
+        }
+    }
+    
     var isPubKey : Bool {
         get {
             let pubkeyRegex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{66}$")
@@ -362,7 +402,7 @@ extension String {
     }
     
     func isExistingContactPubkey() -> (Bool, UserContact?) {
-        if let pubkey = self.stringFirstPubKey {
+        if let pubkey = self.stringFirstPubKey?.0 {
             let (pk, _) = pubkey.pubkeyComponents
             if let contact = UserContact.getContactWith(pubkey: pk), !contact.fromGroup {
                return (true, contact)
@@ -696,6 +736,26 @@ extension String {
         }
         
         return nil
+    }
+    
+    func getHostAndPort(
+        defaultPort: UInt16
+    ) -> (String, UInt16, Bool) {
+        
+        var port: UInt16 = defaultPort
+        
+        if let portIndex = self.lastIndex(of: ":") {
+            let portString = String(self[portIndex...]).replacingOccurrences(of: ":", with: "")
+            
+            if let portInt = UInt16(portString) {
+                port = portInt
+            }
+        }
+        
+        let actualHost = self.replacingOccurrences(of: ":\(port)", with: "")
+        let ssl = port == 8883
+        
+        return (actualHost, port, ssl)
     }
 }
 

@@ -38,6 +38,7 @@ protocol VideoRowDelegate : class {
     func shouldShowMore(video: Video)
     func shouldShare(video: Video)
     func shouldShowDescription(video:Video)
+    func shouldStartDownloading(video:Video)
 }
 
 class UnifiedEpisodeView : UIView {
@@ -125,6 +126,7 @@ class UnifiedEpisodeView : UIView {
     
     func configure(
         withVideoEpisode videoEpisode: Video,
+        download: VideoDownload?,
         and delegate: VideoRowDelegate
     ) {
         self.videoEpisode = videoEpisode
@@ -162,6 +164,11 @@ class UnifiedEpisodeView : UIView {
         } else {
             episodeImageView.image = UIImage(named: "videoPlaceholder")
         }
+        
+        downloadButton.isEnabled = true
+        downloadButton.isHidden = false
+        
+        configureDownload(video: videoEpisode, download: download)
 
         
         descriptionLabel.text = videoEpisode.videoDescription
@@ -214,7 +221,8 @@ class UnifiedEpisodeView : UIView {
         
         dateLabel.text = episode.dateString
         
-        if let playedStatus = episode.wasPlayed, playedStatus == true {
+        if let playedStatus = episode.wasPlayed,
+            playedStatus == true {
             setAsPlayed()
         } else {
             let duration = episode.duration ?? 0
@@ -289,7 +297,9 @@ class UnifiedEpisodeView : UIView {
         durationView.isHidden = true
         progressView.isHidden = true
         
-        if let valid_duration = episode.duration, let valid_time = episode.currentTime, valid_time > 0 {
+        if let episode = episode,
+            let valid_duration = episode.duration,
+            let valid_time = episode.currentTime, valid_time > 0 {
             let percentage = max(Float(valid_time) / Float(valid_duration), Float(0.075))
             let newProgressWidth = (percentage * Float(fullWidth))
             DispatchQueue.main.async {
@@ -322,7 +332,34 @@ class UnifiedEpisodeView : UIView {
         downloadButton.tintColorDidChange()
     }
     
+    func configureDownload(video: Video, download: VideoDownload?) {
+        downloadButtonImage.isHidden = true
+        downloadProgressBar.isHidden = true
+        
+        if video.isDownloaded {
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownloaded")
+            downloadButtonImage.tintColor = UIColor.Sphinx.ReceivedIcon
+        } else if let download = download {
+            downloadProgressBar.isHidden = false
+            updateDownloadState(download)
+        } else {
+            downloadButtonImage.isHidden = false
+            downloadButtonImage.image = UIImage(named: "playerListDownload")
+            downloadButtonImage.tintColor = UIColor.Sphinx.Text.withAlphaComponent(0.5)
+        }
+        
+        downloadButton.tintColorDidChange()
+    }
+    
+    //End Networking
+    
     func updateDownloadState(_ download: Download) {
+        let progress = CGFloat(download.progress) / CGFloat(100)
+        downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
+    }
+    
+    func updateDownloadState(_ download: VideoDownload) {
         let progress = CGFloat(download.progress) / CGFloat(100)
         downloadProgressBar.progressAnimation(to: progress, active: download.isDownloading)
     }
@@ -337,9 +374,17 @@ class UnifiedEpisodeView : UIView {
     }
     
     @IBAction func downloadButtonTouched() {
-        if !episode.isDownloaded {
+        print("touched!")
+        if let episode = episode,
+           !episode.isDownloaded {
             downloadProgressBar.progressAnimation(to: 0, active: true)
             podcastDelegate?.shouldStartDownloading(episode: episode)
+        }
+        else if let video = videoEpisode,
+                !video.isDownloaded,
+            let vd = videoDelegate as? RecommendationItemWUnifiedViewCollectionViewCell{
+            print("downloading video!")
+            vd.shouldStartDownloading(video: video)
         }
     }
     

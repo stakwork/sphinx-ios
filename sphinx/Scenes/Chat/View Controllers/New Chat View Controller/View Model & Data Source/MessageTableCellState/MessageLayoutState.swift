@@ -123,20 +123,17 @@ struct BubbleMessageLayoutState {
         var originalMessage: ThreadMessage
         var firstReplySenderIndo: (UIColor, String, String?)
         var secondReplySenderInfo: (UIColor, String, String?)?
-        var lastReply: ThreadMessage
         var moreRepliesCount: Int
         
         init(
             originalMessage: ThreadMessage,
             firstReplySenderIndo: (UIColor, String, String?),
             secondReplySenderInfo: (UIColor, String, String?)?,
-            lastReply: ThreadMessage,
             moreRepliesCount: Int
         ) {
             self.originalMessage = originalMessage
             self.firstReplySenderIndo = firstReplySenderIndo
             self.secondReplySenderInfo = secondReplySenderInfo
-            self.lastReply = lastReply
             self.moreRepliesCount = moreRepliesCount
         }
     }
@@ -405,18 +402,18 @@ struct BubbleMessageLayoutState {
         var price: Int
         var statusTitle: String
         var status: TransactionMessage.TransactionMessageType
-        var isSentTextMessage: Bool
+        var shouldAddPadding: Bool
         
         init(
             price: Int,
             statusTitle: String,
             status: TransactionMessage.TransactionMessageType,
-            isSentTextMessage: Bool
+            shouldAddPadding: Bool
         ) {
             self.price = price
             self.statusTitle = statusTitle
             self.status = status
-            self.isSentTextMessage = isSentTextMessage
+            self.shouldAddPadding = shouldAddPadding
         }
         
         func isPurchaseAccepted() -> Bool {
@@ -567,6 +564,7 @@ struct NoBubbleMessageLayoutState {
     
     struct ThreadOriginalMessage {
         var text: String
+        var linkMatches: [NSTextCheckingResult]
         var senderPic: String?
         var senderAlias: String
         var senderColor: UIColor
@@ -574,12 +572,14 @@ struct NoBubbleMessageLayoutState {
         
         init(
             text: String,
+            linkMatches: [NSTextCheckingResult],
             senderPic: String?,
             senderAlias: String,
             senderColor: UIColor,
             timestamp: String
         ) {
             self.text = text
+            self.linkMatches = linkMatches
             self.senderPic = senderPic
             self.senderAlias = senderAlias
             self.senderColor = senderColor

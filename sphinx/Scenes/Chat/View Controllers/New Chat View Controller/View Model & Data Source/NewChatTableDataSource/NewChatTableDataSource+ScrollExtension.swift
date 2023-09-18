@@ -38,8 +38,6 @@ extension NewChatTableDataSource: UITableViewDelegate {
         if didMoveOutOfBottom {
             didMoveOutOfBottomArea()
         }
-        
-        delegate?.didScroll()
     }
     
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {

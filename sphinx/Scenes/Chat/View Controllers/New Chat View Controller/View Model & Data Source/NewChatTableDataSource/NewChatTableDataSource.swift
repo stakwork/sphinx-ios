@@ -17,7 +17,6 @@ protocol NewChatTableDataSourceDelegate : class {
     ///Scrolling
     func didScrollToBottom()
     func didScrollOutOfBottomArea()
-    func didScroll()
     
     ///Attachments
     func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)
@@ -55,7 +54,13 @@ protocol NewChatTableDataSourceDelegate : class {
     
     ///Threads
     func shouldShowThreadFor(message: TransactionMessage)
-    func shouldToggleThreadHeader(expanded: Bool)
+    func shouldReloadThreadHeaderView()
+    
+    func shouldToggleThreadHeader(
+        expanded: Bool,
+        messageCellState: MessageTableCellState,
+        mediaData: MessageTableCellState.MediaData?
+    )
 }
 
 class NewChatTableDataSource : NSObject {
@@ -169,6 +174,13 @@ class NewChatTableDataSource : NSObject {
     
     func configureTableCellTransformOn(cell: ChatTableViewCellProtocol?) {
         cell?.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+    }
+    
+    func getMediaDataFor(messageId: Int?) -> MessageTableCellState.MediaData? {
+        guard let messageId = messageId else {
+            return nil
+        }
+        return self.mediaCached[messageId]
     }
     
     func makeCellProvider(

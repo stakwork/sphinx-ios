@@ -46,20 +46,18 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var advanceScrollView: UIScrollView!
     @IBOutlet weak var privacyPinLabel: UILabel!
     @IBOutlet weak var privacyPinGroupContainer: UIView!
-    @IBOutlet weak var signingDeviceLabel: UILabel!
     @IBOutlet weak var manageStorageChevronLabel: UILabel!
     @IBOutlet weak var manageStorageView: UIView!
     @IBOutlet weak var storageSumaryLabel: UILabel!
     @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
+    @IBOutlet weak var importSeedView: ImportSeedView!
     
     @IBOutlet var tabContainers: [UIScrollView]!
     
     @IBOutlet var keyboardAccessoryView: UIView!
     var currentField : UITextField?
     var previousFieldValue : String?
-    
     
     var uploading = false {
         didSet {
@@ -83,7 +81,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     var notificationSoundHelper = NotificationSoundHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var walletBalanceService = WalletBalanceService()
-    let cryptedManager = CrypterManager()
     
     public enum ProfileFields: Int {
         case Name
@@ -122,7 +119,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         configureFields()
         configureProfile()
         configureServers()
-        configureSigningDeviceButton()
         showStorageSpinner()
     }
     
@@ -177,11 +173,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         meetingAmountTextField.inputAccessoryView = keyboardAccessoryView
         nameTextField.inputAccessoryView = keyboardAccessoryView
         relayUrlTextField.inputAccessoryView = keyboardAccessoryView
-    }
-    
-    func configureSigningDeviceButton() {
-        let didSetupSigningDevice = UserDefaults.Keys.setupSigningDevice.get(defaultValue: false)
-        signingDeviceLabel.text = (didSetupSigningDevice ? "profile.configure-signing-device" : "profile.setup-signing-device").localized
     }
     
     func configureProfile() {
@@ -332,7 +323,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     }
     
     @IBAction func trackRecommendationsSwitchChanged(_ sender: Any) {
-        print("Changed")
         UserDefaults.Keys.shouldTrackActions.set(trackRecommendationsSwitch.isOn)
     }
     
@@ -457,12 +447,39 @@ class ProfileViewController: NewKeyboardHandlerViewController {
             }
         }
     }
+}
+
+
+extension ProfileViewController : ImportSeedViewDelegate{
     
-    @IBAction func setupSigningDevice() {
-        cryptedManager.setupSigningDevice(
-            vc: self
-        ) {
-            self.configureSigningDeviceButton()
+    func showImportSeedView(network:String,host:String,relay:String){
+        self.importSeedView.isHidden = false
+        self.importSeedView.delegate = self
+        importSeedView.network = network
+        importSeedView.host = host
+        importSeedView.relay = relay
+        self.view.bringSubviewToFront(importSeedView)
+        
+        importSeedView.layer.zPosition = 999
+    }
+    
+    func didTapCancelImportSeed() {
+        self.importSeedView.textView.resignFirstResponder()
+        self.importSeedView.textView.text = ""
+        self.importSeedView.isHidden = true
+        self.importSeedView.activityView.stopAnimating()
+    }
+    
+    func didTapConfirm() {
+        let words = importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
+        let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
+        if let error = error {
+            AlertHelper.showAlert(title: "Seed Validation Error", message: error.localizedDescription + (additionalString ?? ""))
+            return
         }
+        self.importSeedView.activityView.startAnimating()
+        self.importSeedView.activityView.isHidden = false
+        self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
+        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host, relay: importSeedView.relay,enteredMnemonic: importSeedView.textView.text)
     }
 }

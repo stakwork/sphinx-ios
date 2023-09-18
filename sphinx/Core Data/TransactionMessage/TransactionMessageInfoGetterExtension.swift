@@ -273,6 +273,10 @@ extension TransactionMessage {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue
     }
     
+    func isPaidGenericFile() -> Bool {
+        return isAttachment() && getType() == TransactionMessageType.fileAttachment.rawValue
+    }
+    
     func isPaidPendingMessage() -> Bool {
         return isAttachment() && getType() == TransactionMessageType.textAttachment.rawValue && mediaKey == nil
     }
@@ -670,7 +674,7 @@ extension TransactionMessage {
     
     var isReplyActionAllowed: Bool {
         get {
-            return (isTextMessage() || isAttachment() || isBotResponse()) && !(uuid ?? "").isEmpty
+            return (isTextMessage() || (isAttachment() && !isAudio())) && !(uuid ?? "").isEmpty
         }
     }
     

@@ -89,13 +89,5 @@ extension NewChatViewController : PodcastPlayerVCDelegate {
 }
 
 extension NewChatViewController : CustomBoostDelegate {
-    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {
-//        guard let message = message, success else {
-//            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-//                self.didFailSendingMessage(provisionalMessage: message)
-//            })
-//            return
-//        }
-//        self.insertSentMessage(message: message, completion: { _ in })
-    }
+    func didSendBoostMessage(success: Bool, message: TransactionMessage?) {}
 }

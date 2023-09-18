@@ -38,6 +38,10 @@ private let ALLOWED_BYTES: [UInt8] = [
 public struct Nonce: CustomStringConvertible {
     private let bytes: [UInt8]
     
+    public init(bytes: [UInt8]) {
+        self.bytes = bytes
+    }
+    
     /// Creates a new random `Nonce` of the specified length in bytes.
     ///
     /// - parameter length: The number of random bytes.

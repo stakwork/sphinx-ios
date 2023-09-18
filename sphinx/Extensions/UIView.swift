@@ -272,6 +272,7 @@ extension UIView {
     
     func addDashedLineBorder(
         color: UIColor,
+        fillColor: UIColor? = nil,
         rect: CGRect,
         roundedBottom: Bool,
         roundedTop: Bool,
@@ -298,7 +299,7 @@ extension UIView {
             cornerRadii: CGSize(width: 8.0, height: 8.0)
         ).cgPath
         
-        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.fillColor = fillColor?.cgColor ?? UIColor.clear.cgColor
         shapeLayer.strokeColor = color.resolvedCGColor(with: self)
         shapeLayer.lineWidth = 1.5
         shapeLayer.lineJoin = .round

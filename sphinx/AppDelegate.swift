@@ -66,7 +66,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         try? AVAudioSession.sharedInstance().setCategory(.playback)
-        try? AVAudioSession.sharedInstance().setActive(true)
         
         setAppConfiguration()
         registerAppRefresh()

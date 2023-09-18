@@ -63,20 +63,6 @@ extension PodcastPlayerController {
         return podcast
     }
     
-    override func remoteControlReceived(with event: UIEvent?) {
-            guard let event = event else { return }
-
-            if event.type == .remoteControl {
-                switch event.subtype {
-                case .remoteControlPlay, .remoteControlPause, .remoteControlTogglePlayPause:
-                    // Handle play/pause button tap from the lock screen or Control Center
-                    // Based on your playback state, pause or resume playback
-                default:
-                    break
-                }
-            }
-        }
-    
     func getDuration(playerItem: AVPlayerItem) -> Int {
         var duration : Int
         

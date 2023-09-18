@@ -54,6 +54,11 @@ class DeepLinksHandlerHelper {
             return true
         }
         
+        if WindowsManager.sharedInstance.showJitsiCall(delegate: vc as? WindowsManagerDelegate){
+            return false
+        }
+        
+        
         return false
     }
     
@@ -114,6 +119,9 @@ class DeepLinksHandlerHelper {
                 case "glyph":
                     UserDefaults.Keys.glyphQuery.set(query)
                     shouldSetVC = true
+                    break
+                case "join_call":
+                    UserDefaults.Keys.joinCallQuery.set(query)
                     break
                 default:
                     break

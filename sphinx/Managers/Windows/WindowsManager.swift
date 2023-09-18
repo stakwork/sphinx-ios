@@ -121,6 +121,47 @@ class WindowsManager {
         return false
     }
     
+    func showJitsiCall(delegate: WindowsManagerDelegate? = nil) -> Bool {
+        if let saveQuery = UserDefaults.Keys.joinCallQuery.get(defaultValue: ""),
+            saveQuery != "",
+            let callURL = getJitsiCallLink(deeplink: saveQuery){
+            UserDefaults.Keys.joinCallQuery.removeValue()
+            
+            self.delegate = delegate
+            print("Save Query:", saveQuery)
+            
+            // Split the query string into key-value pairs
+            let queryItems = saveQuery.components(separatedBy: "&")
+            
+            // Iterate through the key-value pairs to find the callURL
+            for item in queryItems {
+                let keyValue = item.components(separatedBy: "=")
+                if keyValue.count == 2, keyValue[0] == "callURL" {
+                    let callURL = keyValue[1]
+                    VideoCallManager.sharedInstance.startVideoCall(link: callURL)
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    func getJitsiCallLink(deeplink:String)->String?{
+        let queryItems = deeplink.components(separatedBy: "&")
+        
+        // Iterate through the key-value pairs to find the callURL
+        for item in queryItems {
+            let keyValue = item.components(separatedBy: "=")
+            if let keyIndex = keyValue.firstIndex(where: {$0 == "callURL"}){
+                let callURL = keyValue[keyIndex + 1]
+                
+                return callURL
+            }
+        }
+        return nil
+    }
+
+    
     func showConveringWindowWith(rootVC: UIViewController) {
         if let rootVController = rootVC as? RootViewController, let currentVC = rootVController.getLastCenterViewController() {
             currentVC.view.endEditing(true)

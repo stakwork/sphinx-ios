@@ -45,10 +45,15 @@ class VideoCallManager : NSObject {
         if activeCall {
             return
         }
+        
+        var callLink = link
+        if let deeplinkedCallLink = WindowsManager.sharedInstance.getJitsiCallLink(deeplink: link){
+            callLink = deeplinkedCallLink
+        }
 
         if let owner = UserContact.getOwner() {
             
-            let linkUrl = VoIPRequestMessage.getFromString(link)?.link ?? link
+            let linkUrl = VoIPRequestMessage.getFromString(link)?.link ?? callLink
             
             cleanUp()
 

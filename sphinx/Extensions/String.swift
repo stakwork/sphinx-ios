@@ -479,7 +479,7 @@ extension String {
     
     var isCallLink: Bool {
         get {
-            return self.lowerClean.starts(with: "http") && self.lowerClean.contains(TransactionMessage.kCallRoomName)
+            return self.lowerClean.starts(with: "http") && self.lowerClean.contains(TransactionMessage.kCallRoomName) || self.lowerClean.starts(with: "sphinx.chat://?action=join_call") && self.lowerClean.contains(TransactionMessage.kCallRoomName)
         }
     }
     

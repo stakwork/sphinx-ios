@@ -150,7 +150,7 @@ class API {
             if let meetingServerURL = UserDefaults.Keys.meetingServerURL.get(defaultValue: ""), meetingServerURL != "" {
                 return meetingServerURL
             }
-            return "https://jitsi.sphinx.chat"
+            return "sphinx.chat://?action=join_call&callURL=https://jitsi.sphinx.chat"
         }
         set {
             UserDefaults.Keys.meetingServerURL.set(newValue)

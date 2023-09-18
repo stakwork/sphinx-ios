@@ -48,6 +48,7 @@ extension UserDefaults {
         public static let shareContentQuery = DefaultKey<String>("shareContentQuery")
         public static let stashedQuery = DefaultKey<String>("stashedQuery")
         public static let glyphQuery = DefaultKey<String>("glyphQuery")
+        public static let joinCallQuery = DefaultKey<String>("joinCallQuery")
         
         public static let previousIP = DefaultKey<String>("previousIP")
         

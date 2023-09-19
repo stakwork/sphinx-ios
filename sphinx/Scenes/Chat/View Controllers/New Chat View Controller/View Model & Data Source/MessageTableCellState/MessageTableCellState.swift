@@ -190,8 +190,8 @@ struct MessageTableCellState {
         
         if let expiryDate = message.expirationDate, Date().timeIntervalSince1970 < expiryDate.timeIntervalSince1970 {
             let secondsDiff = expiryDate.timeIntervalSince1970 - Date().timeIntervalSince1970
-            let minutes = (Int(secondsDiff) % 3600) / 60
-            expirationTimestamp = String(format: "expires.in".localized, minutes)
+            let timeElements = Int(secondsDiff).getTimeElements(zeroPrefix: false)
+            expirationTimestamp = String(format: "expires.in.elements".localized, timeElements.0, timeElements.1)
         }
         
         let timestampFormat = isThread ? "EEE dd, hh:mm a" : "hh:mm a"

@@ -7,7 +7,7 @@
 import UIKit
 import youtube_ios_player_helper
 import AVKit
-
+import MediaPlayer
 
 class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEpisodePlayerViewController {
     
@@ -21,6 +21,7 @@ class YouTubeVideoFeedEpisodePlayerViewController: UIViewController, VideoFeedEp
     @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
 
     var avPlayer : AVPlayerViewController? = nil
+    var localPlayer: AVPlayer? = nil
     var videoLoadingTimer : Timer? = nil
     var playerViewController : AVPlayerViewController? = nil
     
@@ -97,6 +98,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         podcastPlayerController.finishAndSaveContentConsumed()
 
         setupViews()
+        
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     
@@ -191,9 +195,10 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
     }
     
     func createVideoPlayerView(withVideoURL videoURL: URL) -> AVPlayerViewController {
-        let player = AVPlayer(url: videoURL)
+        localPlayer = AVPlayer(url: videoURL)
         playerViewController = AVPlayerViewController()
-        playerViewController?.player = player
+        playerViewController?.updatesNowPlayingInfoCenter = true
+        playerViewController?.player = localPlayer
         playerViewController?.videoGravity = .resizeAspectFill
         playerViewController?.showsPlaybackControls = true
         
@@ -218,7 +223,22 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         
         setupLoadingTimer()
         // Play the video
-        player.play()
+        localPlayer?.play()
+        
+        if let localPlayer = localPlayer {
+            MPNowPlayingInfoCenter.default().playbackState = MPNowPlayingPlaybackState.playing
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                MPMediaItemPropertyMediaType: MPMediaType.movie.rawValue,
+                MPMediaItemPropertyPodcastTitle: "Your Podcast Title",
+                MPMediaItemPropertyTitle: "Your Video Title",
+                MPMediaItemPropertyArtist: "Your Artist Name",
+                MPMediaItemPropertyAssetURL: videoURL
+            ]
+            setupNowPlayingInfoCenter()
+            print(MPNowPlayingInfoCenter.default().nowPlayingInfo)
+        }
+
+        
         
         return playerViewController!
     }
@@ -227,6 +247,56 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
         avPlayer?.player?.pause()
         avPlayer = nil
         cleanupVideoLoadingTimer()
+    }
+    
+    func setupNowPlayingInfoCenter() {
+        MPRemoteCommandCenter.shared().seekForwardCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().seekBackwardCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().playCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().pauseCommand.isEnabled = true
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = true
+        
+//        MPRemoteCommandCenter.shared().skipBackwardCommand.preferredIntervals = [NSNumber(value: kSkipBackSeconds)]
+//        MPRemoteCommandCenter.shared().skipForwardCommand.preferredIntervals = [NSNumber(value: kSkipForwardSeconds)]
+        
+        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            if let changePlaybackPositionCommandEvent = event as? MPChangePlaybackPositionCommandEvent
+            {
+//                let positionTime = changePlaybackPositionCommandEvent.positionTime
+//
+//                self.podcastData?.currentTime = Int(positionTime)
+//                self.podcast?.currentTime = Int(positionTime)
+//
+//                if let podcastData = self.podcastData {
+//                    self.seek(podcastData)
+//                }
+
+                return .success
+            } else {
+                return .commandFailed
+            }
+        }
+        
+        MPRemoteCommandCenter.shared().playCommand.addTarget {event in
+            self.localPlayer?.play()
+            return .success
+        }
+        
+        MPRemoteCommandCenter.shared().pauseCommand.addTarget {event in
+            self.localPlayer?.pause()
+            return .success
+        }
+        
+//        MPRemoteCommandCenter.shared().skipBackwardCommand.addTarget {event in
+//            self.shouldSkip15Back()
+//            return .success
+//        }
+//        MPRemoteCommandCenter.shared().skipForwardCommand.addTarget {event in
+//            self.shouldSkip30Forward()
+//            return .success
+//        }
+        
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     @objc func checkForVideoLoad(){

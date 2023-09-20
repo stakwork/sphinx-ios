@@ -356,6 +356,8 @@
 
 // CHAT
 "payment.failed.upper" = "NABIGO ANG PAGBAYAD";
+"microphone.permission.required" = "Microphone Access Required";
+"microphone.permission.denied.jitsi" = "Tinanggihan mo ang mga pahintulot sa mikropono. Pumunta sa Mga Setting -> Sphinx at paganahin silang mag-record ng mga mensaheng Jitsi call.";
 "microphone.permission.denied" = "Tinanggihan mo ang mga pahintulot sa mikropono. Pumunta sa Mga Setting -> Sphinx at paganahin silang mag-record ng mga mensaheng audio.";
 "chat.muted.message" = "Naka-mute na ang chat. Hindi ka makakatanggap ng mga push notipikasyon para sa mga papasok na mensahe sa chat na ito";
 "pay.invitation" = "Magbayad para sa imbitasyon";

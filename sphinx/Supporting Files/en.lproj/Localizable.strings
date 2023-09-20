@@ -372,6 +372,8 @@
 
 // CHAT
 "payment.failed.upper" = "PAYMENT FAILED";
+"microphone.permission.required" = "Microphone Access Required";
+"microphone.permission.denied.jitsi" = "You have denied microphone permissions. Go to Settings -> Sphinx and enable them to join a Jitsi call.";
 "microphone.permission.denied" = "You have denied microphone permissions. Go to Settings -> Sphinx and enable them to record audio messages.";
 "chat.muted.message" = "Chat is now muted. You won't get push notifications for incoming messages on this chat";
 "pay.invitation" = "Pay for invitation";

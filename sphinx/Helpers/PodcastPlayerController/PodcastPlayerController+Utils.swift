@@ -156,6 +156,15 @@ extension PodcastPlayerController {
         if roundedCurrentTime >= duration {
             didEndEpisode()
         }
+        
+        if let adEndTime = checkForAds(){
+            self.podcastData?.currentTime = Int(adEndTime)
+            self.podcast?.currentTime = Int(adEndTime)
+            
+            if let podcastData = self.podcastData {
+                player.seek(to: CMTime(seconds: adEndTime, preferredTimescale: 1))
+            }
+        }
     }
     
     func didEndEpisode() {

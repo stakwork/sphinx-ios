@@ -78,9 +78,12 @@ class PodcastPlayerController {
             }
             self.podcast = getPodcastFrom(podcastData: podcastData)
             
+            updateContentTagTimestamps()
+            
             self.resetPlayedSeconds()
         }
     }
+    var contentTagTimestamps = [ContentTagTimestamp]()
     
     class var sharedInstance : PodcastPlayerController {
         

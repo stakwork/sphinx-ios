@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import ObjectMapper
 
 extension PodcastPlayerController {
     
@@ -387,6 +388,39 @@ extension PodcastPlayerController {
             
             d.loadingState(podcastData)
         }
+    }
+    
+    func updateContentTagTimestamps(){
+        guard let pd = podcastData else{
+            return
+        }
+        API.sharedInstance.requestContentTimestamps(
+            contentID: pd.episodeId,
+            callback: {results in
+                self.contentTagTimestamps = results
+            },
+            errorCallback: {
+                
+            })
+    }
+    
+    func checkForAds()->Double?{
+        guard let player = player else{
+            return nil
+        }
+        let currentTime = Double(player.currentTime().value) / Double(player.currentTime().timescale)
+        
+        for tagTimestamp in contentTagTimestamps {
+            print("checkForAds Tag: \(tagTimestamp.tag)")
+            print("checkForAds Start: \(tagTimestamp.start)")
+            print("checkForAds End: \(tagTimestamp.end)")
+            print("checkForAds currentTime:\(currentTime)")
+            if((tagTimestamp.tag.lowercased().contains("advertisement") || tagTimestamp.tag.lowercased().contains("ad")) && (currentTime > tagTimestamp.start && currentTime < tagTimestamp.end)){
+                return tagTimestamp.end
+            }
+        }
+        
+        return nil
     }
     
     func runPlayingStateUpdate() {

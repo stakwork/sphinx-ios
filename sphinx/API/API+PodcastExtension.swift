@@ -218,6 +218,39 @@ extension API {
         }
     }
     
+    func requestContentTimestamps(
+        contentID: String,
+        callback: @escaping ([ContentTagTimestamp])->(),
+        errorCallback: @escaping EmptyCallback
+    ){
+        let mockURL = "https://jimbeauxtest.free.beeceptor.com/todos"
+        let params = [
+            "content_id" : contentID
+        ]
+        
+        guard let request = createRequest(mockURL.percentEscaped ?? mockURL, bodyParams: params as NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        AF.request(request).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                print(data)
+                if let json = data as? NSDictionary,
+                   let topics = json["topics"] as? [[String:Any]]
+                {
+                    let contentTags = Mapper<ContentTagTimestamp>().mapArray(JSONArray: topics)
+                    callback(contentTags)
+                    return
+                }
+            case .failure(let error):
+                print(error)
+                errorCallback()
+            }
+        }
+    }
+    
     func requestToCacheVideoRemotely(
         for videoIDs: [String],
         callback: @escaping EmptyCallback,

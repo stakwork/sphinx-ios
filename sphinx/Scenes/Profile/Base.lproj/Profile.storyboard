@@ -1039,13 +1039,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
                                 <color key="backgroundColor" name="Body"/>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsK-o4-sqc" customClass="ImportSeedView" customModule="sphinx" customModuleProvider="target">
-                                <rect key="frame" x="20" y="595" width="374" height="260"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="260" id="AW8-oK-iZQ"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yd1-x3-o5f"/>
                         <color key="backgroundColor" name="ProfileBG"/>
@@ -1053,7 +1046,6 @@
                             <constraint firstItem="PKI-vy-i6e" firstAttribute="top" secondItem="kyE-f9-OWJ" secondAttribute="top" id="2GL-0u-SDE"/>
                             <constraint firstItem="W3p-W4-OyK" firstAttribute="leading" secondItem="yd1-x3-o5f" secondAttribute="leading" id="2X0-fI-ry6"/>
                             <constraint firstItem="pcb-2d-jdl" firstAttribute="top" secondItem="kyE-f9-OWJ" secondAttribute="top" id="6fO-SH-qQr"/>
-                            <constraint firstItem="HsK-o4-sqc" firstAttribute="centerY" secondItem="yd1-x3-o5f" secondAttribute="centerY" id="6y3-gW-ih0"/>
                             <constraint firstItem="W3p-W4-OyK" firstAttribute="trailing" secondItem="yd1-x3-o5f" secondAttribute="trailing" id="80a-Kn-DSU"/>
                             <constraint firstItem="l9e-k6-7m9" firstAttribute="top" secondItem="36z-hJ-x0i" secondAttribute="bottom" id="8p4-eJ-nRF"/>
                             <constraint firstItem="l9e-k6-7m9" firstAttribute="leading" secondItem="yd1-x3-o5f" secondAttribute="leading" id="9oR-hH-beL"/>
@@ -1061,12 +1053,10 @@
                             <constraint firstAttribute="trailing" secondItem="PKI-vy-i6e" secondAttribute="trailing" id="GyY-qj-9Rc"/>
                             <constraint firstItem="36z-hJ-x0i" firstAttribute="trailing" secondItem="yd1-x3-o5f" secondAttribute="trailing" id="HP9-C9-drr"/>
                             <constraint firstItem="36z-hJ-x0i" firstAttribute="top" secondItem="pcb-2d-jdl" secondAttribute="bottom" id="Hvh-pi-4vS"/>
-                            <constraint firstItem="HsK-o4-sqc" firstAttribute="centerX" secondItem="yd1-x3-o5f" secondAttribute="centerX" id="MGg-IT-Ew1"/>
                             <constraint firstItem="36z-hJ-x0i" firstAttribute="top" secondItem="yd1-x3-o5f" secondAttribute="top" id="Ock-vY-tbq"/>
                             <constraint firstItem="l9e-k6-7m9" firstAttribute="trailing" secondItem="yd1-x3-o5f" secondAttribute="trailing" id="Oiw-Eo-mTV"/>
                             <constraint firstItem="W3p-W4-OyK" firstAttribute="bottom" secondItem="kyE-f9-OWJ" secondAttribute="bottom" id="PFq-X1-iWs"/>
                             <constraint firstItem="W3p-W4-OyK" firstAttribute="top" secondItem="36z-hJ-x0i" secondAttribute="bottom" id="VIH-6o-6MB"/>
-                            <constraint firstItem="HsK-o4-sqc" firstAttribute="leading" secondItem="yd1-x3-o5f" secondAttribute="leading" constant="20" id="b3E-GH-orU"/>
                             <constraint firstItem="36z-hJ-x0i" firstAttribute="top" secondItem="PKI-vy-i6e" secondAttribute="bottom" id="j01-bL-rn5"/>
                             <constraint firstItem="l9e-k6-7m9" firstAttribute="bottom" secondItem="kyE-f9-OWJ" secondAttribute="bottom" id="mct-kc-Uch"/>
                             <constraint firstAttribute="trailing" secondItem="pcb-2d-jdl" secondAttribute="trailing" id="r1W-wD-Req"/>
@@ -1086,7 +1076,6 @@
                         <outlet property="contentScrollView" destination="l9e-k6-7m9" id="nsv-cB-24f"/>
                         <outlet property="exportKeyButton" destination="sX0-os-LQi" id="ieu-vq-UPU"/>
                         <outlet property="exportKeysContainer" destination="9IK-kw-3J3" id="ovO-Qu-39r"/>
-                        <outlet property="importSeedView" destination="HsK-o4-sqc" id="6OX-EK-sUP"/>
                         <outlet property="inviteServerTextField" destination="X0I-XW-Ay8" id="jgY-Yv-w0m"/>
                         <outlet property="keyboardAccessoryView" destination="uQ5-92-gBu" id="MI3-86-sD3"/>
                         <outlet property="manageStorageChevronLabel" destination="UO6-iY-Vsy" id="7ff-d8-vNc"/>

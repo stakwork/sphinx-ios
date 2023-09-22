@@ -51,7 +51,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     @IBOutlet weak var storageSumaryLabel: UILabel!
     @IBOutlet weak var storageSummaryBarView: StorageSummaryView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var importSeedView: ImportSeedView!
     
     @IBOutlet var tabContainers: [UIScrollView]!
     
@@ -446,40 +445,5 @@ class ProfileViewController: NewKeyboardHandlerViewController {
                 setShadows()
             }
         }
-    }
-}
-
-
-extension ProfileViewController : ImportSeedViewDelegate{
-    
-    func showImportSeedView(network:String,host:String,relay:String){
-        self.importSeedView.isHidden = false
-        self.importSeedView.delegate = self
-        importSeedView.network = network
-        importSeedView.host = host
-        importSeedView.relay = relay
-        self.view.bringSubviewToFront(importSeedView)
-        
-        importSeedView.layer.zPosition = 999
-    }
-    
-    func didTapCancelImportSeed() {
-        self.importSeedView.textView.resignFirstResponder()
-        self.importSeedView.textView.text = ""
-        self.importSeedView.isHidden = true
-        self.importSeedView.activityView.stopAnimating()
-    }
-    
-    func didTapConfirm() {
-        let words = importSeedView.textView.text.split(separator: " ").map { String($0).trim().lowercased() }
-        let (error, additionalString) = CrypterManager.sharedInstance.validateSeed(words: words)
-        if let error = error {
-            AlertHelper.showAlert(title: "Seed Validation Error", message: error.localizedDescription + (additionalString ?? ""))
-            return
-        }
-        self.importSeedView.activityView.startAnimating()
-        self.importSeedView.activityView.isHidden = false
-        self.importSeedView.activityView.backgroundColor = UIColor.Sphinx.PrimaryBlue
-        CrypterManager.sharedInstance.performWalletFinalization(network: importSeedView.network, host: importSeedView.host, relay: importSeedView.relay,enteredMnemonic: importSeedView.textView.text)
     }
 }

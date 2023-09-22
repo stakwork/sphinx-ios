@@ -165,12 +165,14 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
     }
     
     func didTapConfirm() {
-        CrypterManager.sharedInstance.performWalletFinalization(
+        let success = CrypterManager.sharedInstance.performWalletFinalization(
             network: importSeedView.network,
             host: importSeedView.host,
             relay: importSeedView.relay,
             enteredMnemonic: importSeedView.textView.text
         )
+        
+        importSeedContainer.isHidden = !success
     }
     
 }

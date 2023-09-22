@@ -234,7 +234,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
            let network : String = UserDefaults.Keys.phoneSignerNetwork.get(),
            let host : String = UserDefaults.Keys.phoneSignerHost.get(),
            let relay : String = UserDefaults.Keys.phoneSignerRelay.get(){
-            CrypterManager.sharedInstance.performWalletFinalization(network: network, host: host, relay: relay)
+            let _ = CrypterManager.sharedInstance.performWalletFinalization(network: network, host: host, relay: relay)
         }
     }
     

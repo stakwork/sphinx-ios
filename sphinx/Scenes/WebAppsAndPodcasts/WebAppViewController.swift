@@ -64,6 +64,7 @@ class WebAppViewController: KeyboardEventsViewController {
         let rect = CGRect(x: 0, y: 0, width: 700, height: 500)
         webView = WKWebView(frame: rect, configuration: configuration)
         webView.customUserAgent = "Sphinx"
+        webView.navigationDelegate = self
         
         self.view.addSubview(webView)
         addWebViewConstraints()
@@ -104,6 +105,24 @@ class WebAppViewController: KeyboardEventsViewController {
     func stopWebView() {
         webView.configuration.userContentController.removeAllUserScripts()
         webView.loadHTMLString("", baseURL: Bundle.main.bundleURL)
+    }
+}
+
+extension WebAppViewController : WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated  {
+            if let url = navigationAction.request.url, url.absoluteString.contains("open=system") {
+                NSWorkspace.shared.open(url)
+                decisionHandler(.cancel)
+                return
+            } else {
+                decisionHandler(.allow)
+                return
+            }
+        } else {
+            decisionHandler(.allow)
+            return
+        }
     }
 }
 

@@ -302,14 +302,18 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
         }
         
         toggleOptionsContainer(show: false, withCompletion: {
+            
+            if option == OptionsButton.Message {
+                self.showMessageLabel()
+                return
+            }
+            
             self.dismissView(withCompletion: {
                 switch(option) {
                 case OptionsButton.Request:
                     self.delegate?.didTapReceiveButton()
                 case OptionsButton.Send:
                     self.delegate?.didTapSendButton()
-                case OptionsButton.Message:
-                    self.showMessageLabel()
                 default:
                     break
                 }

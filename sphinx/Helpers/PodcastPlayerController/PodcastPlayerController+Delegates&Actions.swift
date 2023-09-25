@@ -457,6 +457,7 @@ extension PodcastPlayerController {
         }
         
         shouldSyncPodcast()
+        handlePodcastQueue()
     }
     
     func runErrorStateUpdate() {
@@ -474,6 +475,16 @@ extension PodcastPlayerController {
             }
             
             d.errorState(podcastData)
+        }
+    }
+    
+    func handlePodcastQueue(){
+        if let nextTrack = FeedsManager.sharedInstance.queuedPodcastEpisodes.first,
+           let data = nextTrack.feed?.getPodcastData(episodeId: nextTrack.itemID){
+            FeedsManager.sharedInstance.queuedPodcastEpisodes.removeAll(where: {$0.itemID == nextTrack.itemID})
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                self.play(data)
+            })
         }
     }
 }

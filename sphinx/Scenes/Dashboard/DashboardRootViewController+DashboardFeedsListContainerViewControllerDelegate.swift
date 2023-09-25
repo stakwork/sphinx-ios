@@ -164,6 +164,7 @@ extension DashboardRootViewController {
     
     func presentPodcastPlayerFor(
         _ podcast: PodcastFeed,
+        queuedEpisode : PodcastEpisode? = nil,
         fromDownloadedSection: Bool = false
     ) {
         if (podcast.isRecommendationsPodcast) {
@@ -174,7 +175,8 @@ extension DashboardRootViewController {
                 delegate: self,
                 boostDelegate: self,
                 fromDashboard: true,
-                fromDownloadedSection: fromDownloadedSection
+                fromDownloadedSection: fromDownloadedSection,
+                queuedEpisode: queuedEpisode
             )
             
             let navController = UINavigationController()

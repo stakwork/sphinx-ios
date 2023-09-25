@@ -20,6 +20,7 @@ class FeedsManager : NSObject {
     }
     
     let podcastPlayerController = PodcastPlayerController.sharedInstance
+    var queuedPodcastEpisodes = [PodcastEpisode]()
 
     // MARK: - Content Feed fetch requests
     

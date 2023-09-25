@@ -379,6 +379,7 @@
 "pay.invitation" = "Pay for invitation";
 "payment.failed" = "Payment failed, try again later";
 "expires.in" = "Expires in %d minutes";
+"expires.in.elements" = "Expires in %@ hours and %@ minutes";
 "invoice.paid.on" = "Invoice Paid on %@";
 "invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Media terms expired";

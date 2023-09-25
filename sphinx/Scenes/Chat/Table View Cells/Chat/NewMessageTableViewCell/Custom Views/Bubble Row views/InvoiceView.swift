@@ -66,6 +66,7 @@ class InvoiceView: UIView {
         if let borderColor = borderColor, shouldDrawBorder {
             borderView.addDashedLineBorder(
                 color: borderColor,
+                fillColor: UIColor.Sphinx.Body,
                 rect: CGRect(
                     x: 0,
                     y: 0,
@@ -90,7 +91,6 @@ class InvoiceView: UIView {
         
         borderColor = bubble.direction.isIncoming() ? UIColor.Sphinx.PrimaryGreen : UIColor.Sphinx.SecondaryText
         shouldDrawBorder = !invoice.isPaid && !invoice.isExpired
-        buildDashesBorder()
         
         memoLabel.font = invoice.font
         unitLabel.textColor = bubble.direction.isIncoming() ? UIColor.Sphinx.WashedOutReceivedText : UIColor.Sphinx.WashedOutSentText
@@ -118,6 +118,8 @@ class InvoiceView: UIView {
             icon.image = UIImage(named: "qr_code")
             icon.tintColor = UIColor.Sphinx.Text
         }
+        
+        self.layoutIfNeeded()
     }
 
     @IBAction func payButtonTouched() {

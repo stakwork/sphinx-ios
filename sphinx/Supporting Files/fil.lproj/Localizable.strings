@@ -363,6 +363,7 @@
 "pay.invitation" = "Magbayad para sa imbitasyon";
 "payment.failed" = "Nabigo ang pagbabayad, subukang muli sa ibang pagkakataon";
 "expires.in" = "Mag-e-expire sa %d minuto";
+"expires.in.elements" = "Expires in %@ hours and %@ minutes";
 "invoice.paid.on" = "Nagbayad ng Invoice sa %@";
 "invoice.amount.paid.on" = "Invoice of %@ sats Paid on %@";
 "media.terms.expired" = "Nag-expire ang mga termino ng media";

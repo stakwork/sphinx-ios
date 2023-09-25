@@ -17,6 +17,26 @@ extension Int {
         }
     }
     
+    func getTimeString(
+        zeroPrefix: Bool = true
+    ) -> String {
+        if zeroPrefix {
+            return timeString
+        } else {
+            return "\(self)"
+        }
+    }
+    
+    func getTimeElements(
+        zeroPrefix: Bool = true
+    ) -> (String, String, String) {
+        let hours = Int((self % 86400) / 3600).getTimeString(zeroPrefix: zeroPrefix)
+        let minutes = Int((self % 3600) / 60).getTimeString(zeroPrefix: zeroPrefix)
+        let seconds = Int((self % 3600) % 60).getTimeString(zeroPrefix: zeroPrefix)
+        
+        return (hours, minutes, seconds)
+    }
+    
     func getEpisodeTimeString(
         isOnProgress: Bool
     ) -> String {

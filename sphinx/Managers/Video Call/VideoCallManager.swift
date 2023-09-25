@@ -8,6 +8,7 @@
 
 import Foundation
 import JitsiMeetSDK
+import AVKit
 
 class VideoCallManager : NSObject {
 
@@ -44,6 +45,20 @@ class VideoCallManager : NSObject {
     ) {
         if activeCall {
             return
+        }
+        
+        switch(AVAudioSession.sharedInstance().recordPermission){
+        case .denied://show alert
+            AlertHelper.showAlert(title: "microphone.permission.required".localized, message: "microphone.permission.denied.jitsi" .localized)
+            return
+        case .undetermined://request access & preempt starting video
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+                let _ = AudioRecorderHelper().configureAudioSession(delegate: self)
+            })
+            return
+            break
+        case .granted://continue
+            break
         }
 
         if let owner = UserContact.getOwner() {
@@ -179,4 +194,16 @@ extension VideoCallManager : CustomPipViewCoordinatorDelegate {
         let centerVC = appDelegate.getCurrentVC()
         centerVC?.view.endEditing(true)
     }
+}
+
+extension VideoCallManager : AudioHelperDelegate{
+    func didStartRecording(_ success: Bool) {}
+    
+    func didFinishRecording(_ success: Bool) {}
+    
+    func audioTooShort() {}
+    
+    func recordingProgress(minutes: String, seconds: String) {}
+    
+    
 }

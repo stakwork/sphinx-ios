@@ -233,6 +233,7 @@ extension NewMessageTableViewCell {
                 botWebViewData: botWebViewData
             )
             botResponseView.isHidden = false
+            botResponseView.messageId = self.messageId
             
             if let botWebViewData = botWebViewData {
                 botResponseViewHeightConstraint.constant = botWebViewData.height

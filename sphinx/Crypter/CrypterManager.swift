@@ -451,10 +451,6 @@ class CrypterManager : NSObject {
             
             mqtt.didReceiveMessage = { mqtt, message, id in
                 
-                if message.topic.contains("vls") {
-                    print("test")
-                }
-                
                 self.processMessage(
                     topic: message.topic.replacingOccurrences(of: "\(self.clientID)/", with: ""),
                     payload: message.payload,

@@ -309,7 +309,7 @@ class CrypterManager : NSObject {
         }
         
         let generateSeedCallback: (() -> ()) = {
-            self.performWalletFinalization(network: network, host: host, relay: relay)
+            let _ = self.performWalletFinalization(network: network, host: host, relay: relay)
         }
         
         AlertHelper.showTwoOptionsAlert(
@@ -370,8 +370,13 @@ class CrypterManager : NSObject {
         host: String,
         relay: String,
         enteredMnemonic: String? = nil
-    ){
+    ) -> Bool {
         let (mnemonic, _) = getOrCreateWalletMnemonic(enteredMnemonic: enteredMnemonic?.lowercased())
+        
+        if mnemonic.isEmpty {
+            showErrorWithMessage("Entered mnemonic is not valid")
+            return false
+        }
         
         self.showMnemonicToUser(mnemonic: mnemonic) {
             var keys: Keys? = nil
@@ -402,8 +407,11 @@ class CrypterManager : NSObject {
                 keys: keys,
                 and: password
             )
+            
             self.endCallback(relay)
         }
+        
+        return true
     }
     
     
@@ -602,7 +610,7 @@ class CrypterManager : NSObject {
         } catch {
             return [:]
         }
-        guard let hexString = seed,let seedBytes = stringToBytes(hexString) else {
+        guard let hexString = seed, let seedBytes = stringToBytes(hexString) else {
             return [:]
         }
         
@@ -1082,9 +1090,6 @@ class CrypterManager : NSObject {
                 callback()
             }
         )
-        if let pvc = vc as? ProfileViewController{
-            pvc.didTapCancelImportSeed()
-        }
     }
     
     func getUrl(route: String) -> String {

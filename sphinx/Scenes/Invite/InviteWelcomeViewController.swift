@@ -66,7 +66,7 @@ class InviteWelcomeViewController: UIViewController {
         loading = true
         
         if let inviter = currentInviter, let pubkey = inviter.pubkey {
-            UserContactsHelper.createContact(nickname: inviter.nickname, pubKey: pubkey, routeHint: inviter.routeHint, callback: { (success, _) in
+            UserContactsHelper.createContact(nickname: inviter.nickname, pubKey: pubkey, routeHint: inviter.routeHint, callback: { (success, _, _) in
                 if success {
                     self.continueToPinView()
                 } else {

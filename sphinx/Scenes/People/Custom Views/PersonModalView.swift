@@ -109,14 +109,21 @@ class PersonModalView: CommonModalView {
             let routeHint = authInfo?.jsonBody["owner_route_hint"].string ?? ""
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
-            UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
+            UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _, id) in
                 if success {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
-                        self.sendInitialMessage()
-                    })
-                    return
+                    var retriesRemaining = 100
+                    while retriesRemaining > 0{
+                        if let id = id,
+                           let _ = UserContact.getContactWith(id: id){
+                            self.sendInitialMessage()
+                        }
+                        retriesRemaining -= 1
+                    }
                 }
-                self.showErrorMessage()
+                else{
+                    self.showErrorMessage()
+                }
+                
             })
         }
     }

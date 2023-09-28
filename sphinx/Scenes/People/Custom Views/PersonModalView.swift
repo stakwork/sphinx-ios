@@ -90,16 +90,6 @@ class PersonModalView: CommonModalView {
         super.modalDidShow()
     }
     
-    func didFinalizeContact(id:Int?)->Bool{
-        guard let id = id,
-                let _ = UserContact.getContactWith(id: id)
-        else{
-            return false
-        }
-        
-        return true
-    }
-    
     @IBAction func connectButtonTouched() {
         buttonLoading = true
         
@@ -121,10 +111,19 @@ class PersonModalView: CommonModalView {
             
             UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _, id) in
                 if success {
-                    self.sendInitialMessage()
-                    return
+                    var retriesRemaining = 100
+                    while retriesRemaining > 0{
+                        if let id = id,
+                           let _ = UserContact.getContactWith(id: id){
+                            self.sendInitialMessage()
+                        }
+                        retriesRemaining -= 1
+                    }
                 }
-                self.showErrorMessage()
+                else{
+                    self.showErrorMessage()
+                }
+                
             })
         }
     }

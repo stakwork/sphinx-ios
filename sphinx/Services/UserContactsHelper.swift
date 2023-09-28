@@ -149,8 +149,21 @@ class UserContactsHelper {
 
         API.sharedInstance.createContact(params: parameters, callback: { contact in
             let c = self.insertContact(contact: contact, pin: pin)
-            let id = contact.getJSONId()
-            callback(true, c,id)
+            if let id = contact.getJSONId(){
+                var retriesCount = 100
+                while(UserContact.getContactWith(id: id) == nil && retriesCount > 0){
+                    let hash = retriesCount.hashValue
+                    print("hash:\(hash)")
+                    retriesCount -= 1
+                }
+                retriesCount > 0 ?
+                callback(true, c,id):
+                callback(false,nil,nil)
+            }
+            else{
+                callback(false,nil,nil)
+            }
+            
         }, errorCallback: {
             callback(false, nil,nil)
         })

@@ -90,7 +90,8 @@ class NewQRScannerViewController: KeyboardEventsViewController {
 //        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
 //            self.dismiss(animated: true,completion: {
 //                //self.delegate?.didScanQRCode?(string: "sphinx.chat://?action=glyph&mqtt=54.81.240.62:1883&network=bitcoin&relay=relay.swarm14.sphinx.chat")
-//                self.validateQRString(string: "sphinx.chat://?action=person&host=community.sphinx.chat&pubkey=03bf736b7fc9966b6755cb3514f70e0a0bd8ec8f4c5d613f142e714a0348001d85")
+//               // self.validateQRString(string: "sphinx.chat://?action=person&host=community.sphinx.chat&pubkey=03bf736b7fc9966b6755cb3514f70e0a0bd8ec8f4c5d613f142e714a0348001d85")
+//                self.validateQRString(string: "sphinx.chat://?action=person&host=community.sphinx.chat&pubkey=021ae436bcd40ca21396e59be8cdb5a707ceacdb35c1d2c5f23be7584cab29c40b")
 //            })
 //        })
     }

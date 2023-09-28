@@ -111,7 +111,9 @@ class PersonModalView: CommonModalView {
             
             UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
                 if success {
-                    self.sendInitialMessage()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+                        self.sendInitialMessage()
+                    })
                     return
                 }
                 self.showErrorMessage()

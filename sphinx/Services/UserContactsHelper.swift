@@ -127,7 +127,7 @@ class UserContactsHelper {
         photoUrl: String? = nil,
         pin: String? = nil,
         contactKey: String? = nil,
-        callback: @escaping (Bool, UserContact?,Int?) -> ()
+        callback: @escaping (Bool, UserContact?) -> ()
     ) {
 
         var parameters = [String : AnyObject]()
@@ -149,10 +149,9 @@ class UserContactsHelper {
 
         API.sharedInstance.createContact(params: parameters, callback: { contact in
             let c = self.insertContact(contact: contact, pin: pin)
-            let id = contact.getJSONId()
-            callback(true, c,id)
+            callback(true, c)
         }, errorCallback: {
-            callback(false, nil,nil)
+            callback(false, nil)
         })
     }
 

@@ -90,6 +90,11 @@ class PersonModalView: CommonModalView {
         super.modalDidShow()
     }
     
+    @objc func handleKeyExchangeCompletion(){
+        self.sendInitialMessage()
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+    }
+    
     @IBAction func connectButtonTouched() {
         buttonLoading = true
         
@@ -109,11 +114,9 @@ class PersonModalView: CommonModalView {
             let routeHint = authInfo?.jsonBody["owner_route_hint"].string ?? ""
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
+            NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeCompletion), name: Notification.Name.didReceiveContactKeyExchange, object: nil)
             UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
                 if success {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
-                        self.sendInitialMessage()
-                    })
                     return
                 }
                 self.showErrorMessage()

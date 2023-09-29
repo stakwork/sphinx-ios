@@ -18,6 +18,7 @@ class PersonModalView: CommonModalView {
     @IBOutlet weak var initialMessageField: UITextField!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    var keyExchangeWDT : Timer? = nil
     
     var loading = false {
         didSet {
@@ -91,8 +92,14 @@ class PersonModalView: CommonModalView {
     }
     
     @objc func handleKeyExchangeCompletion(){
-        self.sendInitialMessage()
         NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+        self.sendInitialMessage()
+    }
+    
+    @objc func handleKeyExchangeTimeout(){
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+        keyExchangeWDT = nil
+        showErrorMessage()
     }
     
     @IBAction func connectButtonTouched() {
@@ -115,6 +122,7 @@ class PersonModalView: CommonModalView {
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeCompletion), name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+            keyExchangeWDT = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleKeyExchangeTimeout), userInfo: nil, repeats: false)
             UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
                 if success {
                     return

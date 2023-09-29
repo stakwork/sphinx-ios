@@ -270,7 +270,6 @@ extension SphinxSocketManager {
     
     func didReceiveContact(contactJson: JSON) {
         let _ = UserContact.insertContact(contact: contactJson)
-        NotificationCenter.default.post(name: Notification.Name.didReceiveContactKeyExchange, object: nil)
     }
     
     func didReceiveGroup(groupJson: JSON) {

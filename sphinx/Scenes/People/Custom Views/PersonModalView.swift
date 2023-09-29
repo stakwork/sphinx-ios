@@ -93,6 +93,7 @@ class PersonModalView: CommonModalView {
     
     @objc func handleKeyExchangeCompletion(){
         NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+        keyExchangeWDT = nil
         self.sendInitialMessage()
     }
     
@@ -122,8 +123,8 @@ class PersonModalView: CommonModalView {
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeCompletion), name: Notification.Name.didReceiveContactKeyExchange, object: nil)
-            keyExchangeWDT = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleKeyExchangeTimeout), userInfo: nil, repeats: false)
             UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
+                self.keyExchangeWDT = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.handleKeyExchangeTimeout), userInfo: nil, repeats: false)
                 if success {
                     return
                 }

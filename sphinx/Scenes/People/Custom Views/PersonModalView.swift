@@ -101,16 +101,20 @@ class PersonModalView: CommonModalView {
         
         // Check if the notification's pubkey matches the desired pubkey
         if pubkey == desiredPubkey {
-            NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+            cleanUpKeyExchange()
             self.sendInitialMessage()
         }
     }
     
     @objc func handleKeyExchangeTimeout(){
+        cleanUpKeyExchange()
+        showErrorMessage()
+    }
+    
+    func cleanUpKeyExchange(){
         NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
         keyExchangeWDT = nil
         desiredPubkey = nil
-        showErrorMessage()
     }
     
     @IBAction func connectButtonTouched() {

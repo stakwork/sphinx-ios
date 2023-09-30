@@ -98,7 +98,7 @@ public class UserContact: NSManagedObject {
             }
             
             let contact = UserContact.createObject(id: id, publicKey: publicKey, nodeAlias: nodeAlias, nickname: nickname, avatarUrl: avatarUrl, isOwner: isOwner, fromGroup: fromGroup, blocked: blocked, status: status, contactKey: contactKey, notificationSound: notificationSound, privatePhoto: privatePhoto, tipAmount: tipAmount, routeHint: routeHint, inviteString: inviteString, welcomeMessage: welcomeMessage, inviteStatus: inviteStatus, invitePrice: invitePrice, date: date)
-            NotificationCenter.default.post(name: Notification.Name.didReceiveContactKeyExchange, object: ["contactKey" : contactKey])
+            NotificationCenter.default.post(name: Notification.Name.didReceiveContactKeyExchange, object: ["pubkey" : publicKey])
             return contact
         }
         

@@ -19,6 +19,7 @@ class PersonModalView: CommonModalView {
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     var keyExchangeWDT : Timer? = nil
+    var desiredPubkey: String? = nil
     
     var loading = false {
         didSet {
@@ -91,14 +92,24 @@ class PersonModalView: CommonModalView {
         super.modalDidShow()
     }
     
-    @objc func handleKeyExchangeCompletion(){
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
-        self.sendInitialMessage()
+    @objc func handleKeyExchangeCompletion(notification: Notification) {
+        guard let userInfo = notification.object as? [String:String],
+            let pubkey = userInfo["pubkey"] as? String,
+            let desiredPubkey = desiredPubkey else {
+            return
+        }
+        
+        // Check if the notification's pubkey matches the desired pubkey
+        if pubkey == desiredPubkey {
+            NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
+            self.sendInitialMessage()
+        }
     }
     
     @objc func handleKeyExchangeTimeout(){
         NotificationCenter.default.removeObserver(self, name: Notification.Name.didReceiveContactKeyExchange, object: nil)
         keyExchangeWDT = nil
+        desiredPubkey = nil
         showErrorMessage()
     }
     
@@ -121,6 +132,7 @@ class PersonModalView: CommonModalView {
             let routeHint = authInfo?.jsonBody["owner_route_hint"].string ?? ""
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
+            desiredPubkey = pubkey
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeCompletion), name: Notification.Name.didReceiveContactKeyExchange, object: nil)
             keyExchangeWDT = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(handleKeyExchangeTimeout), userInfo: nil, repeats: false)
             UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in

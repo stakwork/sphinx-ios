@@ -393,6 +393,8 @@
 "pay.to.unlock.video" = "Magbayad para i-unlock ang Video";
 "paid-message.payment-not-supported" = "Hindi available ang mga bayad na item sa aparato na ito";
 "loading.paid.message" = "Naglo-load ng mensahe...";
+"mark.as.read" = "Markahan bilang nabasa";
+"mark.as.unread" = "Markahan bilang hindi nabasa";
 "copy.text" = "Kopyahin ang Text";
 "copy.link" = "Kopyahin ang Link";
 "copy.pub.key" = "Kopyahin ang Pampublikong susi";

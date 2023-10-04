@@ -375,6 +375,22 @@ extension ChatsCollectionViewController {
 extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate{
     func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact) {
         print(chatListObject)
+        if let lastMessage = chatListObject.lastMessage
+            {
+            let bubbleRectAndPath: (CGRect, CGPath) = (collectionView.frame, CGPath(rect: CGRect.zero, transform: nil))
+            let messageOptionsVC = MessageOptionsViewController.instantiate(
+                message: lastMessage,
+                purchaseAcceptMessage: nil,
+                delegate: nil,
+                isThreadRow: false,
+                contactsViewIsRead: lastMessage.isSeen(ownerId: owner.id)
+            )
+            
+            messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
+            messageOptionsVC.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(messageOptionsVC, animated: false)
+        }
+        
         //chatListObject.resetAsUnseen(ownerId: owner.id)
     }
 }

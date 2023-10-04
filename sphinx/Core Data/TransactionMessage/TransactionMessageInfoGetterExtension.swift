@@ -32,6 +32,7 @@ extension TransactionMessage {
         case Flag
         case Pin
         case Unpin
+        case ToggleReadUnread
     }
     
     
@@ -478,11 +479,23 @@ extension TransactionMessage {
     }
     
     func getActionsMenuOptions(
-        isThreadRow: Bool = false
+        isThreadRow: Bool = false,
+        contactsViewIsRead: Bool? = nil
     ) -> [ActionsMenuOption] {
         var options = [ActionsMenuOption]()
         
         if isPodcastBoost() {
+            return options
+        }
+        else if let isRead = contactsViewIsRead{
+            let options = [
+                ActionsMenuOption.init(
+                    tag: MessageActionsItem.ToggleReadUnread,
+                    materialIconName: isRead ? "" : "",
+                    iconImage: nil,
+                    label: isRead ? "mark.as.unread".localized : "mark.as.read".localized
+                )
+            ]
             return options
         }
         

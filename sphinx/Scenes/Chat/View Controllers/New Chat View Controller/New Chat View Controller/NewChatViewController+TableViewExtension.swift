@@ -276,7 +276,8 @@ extension NewChatViewController {
         messageId: Int,
         indexPath: IndexPath,
         bubbleViewRect: CGRect,
-        isThreadRow: Bool
+        isThreadRow: Bool,
+        contactsViewIsRead:Bool? = nil
     ) {
         if let bubbleRectAndPath = ChatHelper.getMessageBubbleRectAndPath(
             tableView: self.chatTableView,
@@ -286,7 +287,8 @@ extension NewChatViewController {
         ), let message = TransactionMessage.getMessageWith(id: messageId)
         {
             if message.getActionsMenuOptions(
-                isThreadRow: isThreadRow
+                isThreadRow: isThreadRow,
+                contactsViewIsRead: contactsViewIsRead
             ).isEmpty {
                 return
             }

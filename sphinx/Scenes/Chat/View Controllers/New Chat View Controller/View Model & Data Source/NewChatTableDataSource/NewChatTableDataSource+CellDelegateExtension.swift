@@ -392,7 +392,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                         DispatchQueue.main.async {
                             var snapshot = self.dataSource.snapshot()
                             snapshot.reloadItems([tableCellState.1])
-                            self.dataSource.apply(snapshot, animatingDifferences: false)
+                            self.dataSource.apply(snapshot, animatingDifferences: true)
                         }
                     }
                     
@@ -510,7 +510,7 @@ extension NewChatTableDataSource {
                 DispatchQueue.main.async {
                     var snapshot = self.dataSource.snapshot()
                     snapshot.reloadItems([tableCellState.1])
-                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                    self.dataSource.apply(snapshot, animatingDifferences: true)
                 }
             }
         }
@@ -538,7 +538,7 @@ extension NewChatTableDataSource {
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
                 snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }
@@ -557,7 +557,7 @@ extension NewChatTableDataSource {
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
                 snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }
@@ -577,7 +577,7 @@ extension NewChatTableDataSource {
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
                 snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }

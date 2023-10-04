@@ -167,7 +167,7 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
     }
     
     func showPriceContainer() {
-        setPriceContainer.isHidden = false
+        setPriceContainer.isHidden = isThread
     }
     
     func setupForBadges(){

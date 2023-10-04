@@ -171,7 +171,7 @@ class PersonModalView: CommonModalView {
     }
     
     func showErrorMessage() {
-        showMessage(message: "generic.error".localized, color: UIColor.Sphinx.BadgeRed)
+        showMessage(message: "generic.error.message".localized, color: UIColor.Sphinx.BadgeRed)
     }
     
     func showMessage(message: String, color: UIColor) {

@@ -24,17 +24,20 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
     var purchaseAcceptMessage: TransactionMessage?
     
     var pdfDocument: PDFDocument? = nil
+    var webViewImageURL:URL? = nil
     
     var animated = true
     
     static func instantiate(
         messageId: Int,
-        animated: Bool = true
+        animated: Bool = true,
+        webViewImageUrl:URL?=nil
     ) -> AttachmentFullScreenViewController? {
         
         if let message = TransactionMessage.getMessageWith(id: messageId) {
             
             let viewController = StoryboardScene.Chat.attachmentFullScreenViewController.instantiate()
+            viewController.webViewImageURL = webViewImageUrl
             viewController.message = message
             viewController.animated = animated
             viewController.purchaseAcceptMessage = message.getPurchaseAcceptItem()
@@ -49,9 +52,28 @@ class AttachmentFullScreenViewController: UIViewController, CanRotate {
         
         if message.isPDF() {
             showPDF()
-        } else {
+        }
+        else if let _ = webViewImageURL{
+            showWebViewImage()
+        }
+        else {
             showImage()
         }
+    }
+    
+    func showWebViewImage() {
+        guard let webViewImageURL = webViewImageURL else{
+            return
+        }
+        fullScreenImageView.isHidden = false
+        pdfHeaderView.isHidden = true
+        
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        fullScreenImageView.configureImageScrollView()
+        fullScreenImageView.showWebViewImage(url: webViewImageURL )
+        
+        let tap = TouchUpGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        self.view.addGestureRecognizer(tap)
     }
     
     func showImage() {

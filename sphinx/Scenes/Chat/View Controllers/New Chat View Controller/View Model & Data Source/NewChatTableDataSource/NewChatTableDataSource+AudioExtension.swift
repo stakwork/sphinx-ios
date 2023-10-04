@@ -80,7 +80,7 @@ extension NewChatTableDataSource : AudioPlayerHelperDelegate {
                 DispatchQueue.main.async {
                     var snapshot = self.dataSource.snapshot()
                     snapshot.reloadItems([tableCellState.1])
-                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                    self.dataSource.apply(snapshot, animatingDifferences: true)
                 }
             }
         }
@@ -201,7 +201,7 @@ extension NewChatTableDataSource : PlayerDelegate {
                 DispatchQueue.main.async {
                     var snapshot = self.dataSource.snapshot()
                     snapshot.reloadItems([tableCellState.1])
-                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                    self.dataSource.apply(snapshot, animatingDifferences: true)
                 }
             }
         }

@@ -88,8 +88,8 @@ struct MessageTableCellState {
         self.bubbleState = bubbleState
         self.contactImage = contactImage
         self.replyingMessage = replyingMessage
-        self.boostMessages = boostMessages
         self.threadMessages = threadMessages
+        self.boostMessages = boostMessages
         self.purchaseMessages = purchaseMessages
         self.linkContact = linkContact
         self.linkTribe = linkTribe
@@ -218,7 +218,6 @@ struct MessageTableCellState {
         
         if threadMessages.count > 1 {
             return nil
-            
         }
         
         guard let message = message, let replyingMessage = replyingMessage else {
@@ -227,12 +226,18 @@ struct MessageTableCellState {
         
         let senderInfo: (UIColor, String, String?) = getSenderInfo(message: replyingMessage)
         
+        var mediaType = replyingMessage.getMediaType()
+        
+        if replyingMessage.isGiphy() {
+            mediaType = TransactionMessage.TransactionMessageType.imageAttachment.rawValue
+        }
+        
         return BubbleMessageLayoutState.MessageReply(
             messageId: replyingMessage.id,
             color: senderInfo.0,
             alias: senderInfo.1,
             message: replyingMessage.bubbleMessageContentString,
-            mediaType: replyingMessage.getMediaType()
+            mediaType: mediaType
         )
     }()
     
@@ -409,7 +414,7 @@ struct MessageTableCellState {
     }()
     
     lazy var genericFile: BubbleMessageLayoutState.GenericFile? = {
-        guard let message = message, message.isFileAttachment() else {
+        guard let message = messageToShow, message.isFileAttachment() else {
             return nil
         }
         

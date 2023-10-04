@@ -19,7 +19,11 @@ protocol NewChatTableDataSourceDelegate : class {
     func didScrollOutOfBottomArea()
     
     ///Attachments
-    func shouldGoToAttachmentViewFor(messageId: Int, isPdf: Bool)
+    func shouldGoToAttachmentViewFor(
+        messageId: Int,
+        isPdf: Bool,
+        webViewImageURL:URL?
+    )
     func shouldGoToVideoPlayerFor(messageId: Int, with data: Data)
     
     ///LinkPreviews

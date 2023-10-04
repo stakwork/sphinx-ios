@@ -53,7 +53,6 @@ extension ThreadTableDataSource {
             return
         }
         
-        var newMsgCount = 0
         var array: [MessageTableCellState] = []
         
         let admin = chat.getAdmin()
@@ -136,8 +135,6 @@ extension ThreadTableDataSource {
                 invoiceData.0 + ((message.isInvoice() && message.isPaid() && message.isOutgoing(ownerId: owner.id)) ? 1 : 0),
                 invoiceData.1 + ((message.isInvoice() && message.isPaid() && message.isIncoming(ownerId: owner.id)) ? 1 : 0)
             )
-            
-            newMsgCount += getNewMessageCountFor(message: message, and: owner)
         }
         
         if let threadOriginalMessage = threadOriginalMessage {

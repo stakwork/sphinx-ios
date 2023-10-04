@@ -656,7 +656,7 @@ extension NewChatTableDataSource {
                 if messageMedia.isVideo, let data = mediaCached.data {
                     delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
                 } else {
-                    delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
+                    delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf, webViewImageURL: nil)
                 }
             }
         }

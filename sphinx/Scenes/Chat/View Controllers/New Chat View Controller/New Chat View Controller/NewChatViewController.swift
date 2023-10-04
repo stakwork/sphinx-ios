@@ -131,6 +131,8 @@ class NewChatViewController: NewKeyboardHandlerViewController {
 
             stopPlayingClip()
         }
+        
+        NotificationCenter.default.removeObserver(self, name: .webViewImageClicked, object: nil)
     }
     
     func stopPlayingClip() {

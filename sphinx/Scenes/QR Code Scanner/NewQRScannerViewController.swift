@@ -89,7 +89,8 @@ class NewQRScannerViewController: KeyboardEventsViewController {
         //Note: planning to remove when signer code is stable and we don't need as much testing :)
 //        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
 //            self.dismiss(animated: true,completion: {
-//                self.delegate?.didScanQRCode?(string: "sphinx.chat://?action=glyph&mqtt=54.81.240.62:1883&network=bitcoin&relay=relay.swarm14.sphinx.chat")
+//                //self.delegate?.didScanQRCode?(string: "sphinx.chat://?action=glyph&mqtt=54.81.240.62:1883&network=bitcoin&relay=relay.swarm14.sphinx.chat")
+//                self.validateQRString(string: "sphinx.chat://?action=person&host=community.sphinx.chat&pubkey=03bf736b7fc9966b6755cb3514f70e0a0bd8ec8f4c5d613f142e714a0348001d85")
 //            })
 //        })
     }

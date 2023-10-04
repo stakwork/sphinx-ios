@@ -286,15 +286,15 @@ extension NewChatTableDataSource {
         return filteredThreadMessages
     }
     
+    func forceReload() {
+        processMessages(messages: messagesArray)
+    }
+    
     func getMessagesCount() -> Int {
         return (messageTableCellStateArray.filter {
             var mutableState = $0
             return mutableState.isMessageRow
         }).count
-    }
-    
-    func forceReload() {
-        processMessages(messages: messagesArray)
     }
     
     func getNewMessageCountFor(

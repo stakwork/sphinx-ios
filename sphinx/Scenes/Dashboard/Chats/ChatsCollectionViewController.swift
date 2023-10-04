@@ -288,6 +288,7 @@ extension ChatsCollectionViewController {
 
                 cell.owner = self.owner
                 cell.chatListObject = self.chatListObjects[indexPath.row]
+                cell.delegate = self
 
                 return cell
             }
@@ -367,5 +368,13 @@ extension ChatsCollectionViewController {
         
         let selectedChatObject = chatListObjects[indexPath.row]
         onChatSelected?(selectedChatObject)
+    }
+}
+
+
+extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate{
+    func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact) {
+        print(chatListObject)
+        //chatListObject.resetAsUnseen(ownerId: owner.id)
     }
 }

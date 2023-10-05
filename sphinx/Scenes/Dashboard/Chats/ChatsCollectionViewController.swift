@@ -289,6 +289,7 @@ extension ChatsCollectionViewController {
                 cell.owner = self.owner
                 cell.chatListObject = self.chatListObjects[indexPath.row]
                 cell.delegate = self
+                cell.indexPath = indexPath
 
                 return cell
             }
@@ -373,11 +374,22 @@ extension ChatsCollectionViewController {
 
 
 extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate{
-    func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact) {
+    func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact, indexPath: IndexPath) {
         print(chatListObject)
-        if let lastMessage = chatListObject.lastMessage
-            {
-            let bubbleRectAndPath: (CGRect, CGPath) = (collectionView.frame, CGPath(rect: CGRect.zero, transform: nil))
+        if let lastMessage = chatListObject.lastMessage,
+           let cell = collectionView.cellForItem(at: indexPath) {
+            
+            // Calculate the modifiedCellFrame using the collection view's frame and cell's frame
+            let xOffset = collectionView.contentOffset.x
+            let yOffset = collectionView.contentOffset.y - 178.0
+            let modifiedCellFrame = CGRect(
+                x: cell.frame.minX - xOffset,
+                y: cell.frame.minY - yOffset,
+                width: cell.frame.width,
+                height: cell.frame.height
+            )
+            
+            let bubbleRectAndPath: (CGRect, CGPath) = (modifiedCellFrame, CGPath(rect: CGRect.zero, transform: nil))
             let messageOptionsVC = MessageOptionsViewController.instantiate(
                 message: lastMessage,
                 purchaseAcceptMessage: nil,
@@ -390,7 +402,7 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate{
             messageOptionsVC.modalPresentationStyle = .overCurrentContext
             self.navigationController?.present(messageOptionsVC, animated: false)
         }
-        
-        //chatListObject.resetAsUnseen(ownerId: owner.id)
     }
+
+
 }

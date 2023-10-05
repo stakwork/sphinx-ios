@@ -17,6 +17,7 @@ import UIKit
     func shouldShowThreadFor(message:TransactionMessage)
     func shouldTogglePinState(message: TransactionMessage, pin: Bool)
     func shouldReloadChat()
+    func shouldToggleReadUnread()
 }
 
 class MessageOptionsViewController: UIViewController {
@@ -251,4 +252,10 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
             delegate?.shouldShowThreadFor(message: message)
         }
     }
+    
+    //Unused Methods
+    func shouldToggleReadUnread() {
+        delegate?.shouldToggleReadUnread()
+    }
+    
 }

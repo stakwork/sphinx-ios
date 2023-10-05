@@ -12,6 +12,7 @@ class ChatsCollectionViewController: UICollectionViewController {
     private var dataSource: DataSource!
     
     private var owner: UserContact!
+    var currentToolTipChatListObject : ChatListCommonObject? = nil
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
@@ -373,7 +374,8 @@ extension ChatsCollectionViewController {
 }
 
 
-extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate{
+extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, MessageOptionsVCDelegate{
+    
     func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact, indexPath: IndexPath) {
         print(chatListObject)
         if let lastMessage = chatListObject.lastMessage,
@@ -397,12 +399,49 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate{
                 isThreadRow: false,
                 contactsViewIsRead: lastMessage.isSeen(ownerId: owner.id)
             )
-            
+            messageOptionsVC.delegate = self
+            currentToolTipChatListObject = chatListObject
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
             messageOptionsVC.modalPresentationStyle = .overCurrentContext
             self.navigationController?.present(messageOptionsVC, animated: false)
         }
     }
-
+    
+    func shouldToggleReadUnread(){
+        guard let currentToolTipChatListObject = currentToolTipChatListObject else{
+            return
+        }
+        toggleReadUnread(tooltipChatListObject: currentToolTipChatListObject)
+        self.currentToolTipChatListObject = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.loadChatsList()
+        })
+    }
+    
+    func toggleReadUnread(tooltipChatListObject:ChatListCommonObject){
+        guard let lastMessage = tooltipChatListObject.lastMessage else{
+            return
+        }
+        lastMessage.seen = !lastMessage.seen
+        tooltipChatListObject.getChat()?.saveChat()
+    }
+    
+    //Unused methods:
+    
+    func shouldDeleteMessage(message: TransactionMessage) {}
+    
+    func shouldReplyToMessage(message: TransactionMessage) {}
+    
+    func shouldBoostMessage(message: TransactionMessage) {}
+    
+    func shouldResendMessage(message: TransactionMessage) {}
+    
+    func shouldFlagMessage(message: TransactionMessage) {}
+    
+    func shouldShowThreadFor(message: TransactionMessage) {}
+    
+    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {}
+    
+    func shouldReloadChat() {}
 
 }

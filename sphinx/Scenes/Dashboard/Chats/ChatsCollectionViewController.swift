@@ -381,6 +381,10 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, Me
         if let lastMessage = chatListObject.lastMessage,
            let cell = collectionView.cellForItem(at: indexPath) {
             
+            if lastMessage.isOutgoing(ownerId: owner.id){
+                return
+            }
+            
             // Calculate the modifiedCellFrame using the collection view's frame and cell's frame
             let xOffset = collectionView.contentOffset.x
             let yOffset = collectionView.contentOffset.y - 178.0
@@ -413,16 +417,16 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, Me
         }
         toggleReadUnread(tooltipChatListObject: currentToolTipChatListObject)
         self.currentToolTipChatListObject = nil
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.loadChatsList()
-        })
     }
     
     func toggleReadUnread(tooltipChatListObject:ChatListCommonObject){
-        guard let lastMessage = tooltipChatListObject.lastMessage else{
+        guard let lastMessage = tooltipChatListObject.lastMessage,
+        let chat = tooltipChatListObject.getChat()
+        else{
             return
         }
         lastMessage.seen = !lastMessage.seen
+        chat.seen = !chat.seen
         tooltipChatListObject.getChat()?.saveChat()
     }
     

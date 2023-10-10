@@ -255,7 +255,7 @@ extension API {
     ){
         let requestPath = "http://ec2-18-222-19-129.us-east-2.compute.amazonaws.com:5001/YTDL"
         let params = [
-            "videoId" : videoID
+            "videoId" : videoID.replacingOccurrences(of: "yt:video:", with: "")
         ]
         
         guard let request = createRequest(requestPath.percentEscaped ?? requestPath, bodyParams: params as NSDictionary, method: "POST") else {
@@ -309,7 +309,7 @@ extension API {
             //errorCallback()
             return
         }
-        while(streamableLinkPollCountdown > 0){
+        if(streamableLinkPollCountdown > 0){
             AF.request(request).responseJSON { response in
                 switch response.result {
                 case .success(let data):
@@ -322,6 +322,7 @@ extension API {
                         return
                     }
                     else{
+                        self.streamableLinkPollCountdown -= 1
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
                             self.pollForStreamableLink(successActionLink: successActionLink, callback: callback, errorCallback: errorCallback)
                         })
@@ -329,12 +330,12 @@ extension API {
                     return
                 case .failure(let error):
                     print(error)
+                    self.streamableLinkPollCountdown -= 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
                         self.pollForStreamableLink(successActionLink: successActionLink, callback: callback, errorCallback: errorCallback)
                     })
                 }
             }
-            streamableLinkPollCountdown -= 1
         }
         errorCallback()
     }

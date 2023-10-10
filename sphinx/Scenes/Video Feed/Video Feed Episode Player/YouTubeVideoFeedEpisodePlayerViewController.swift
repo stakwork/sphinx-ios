@@ -183,9 +183,9 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
                             //failure
                         }
                     )
-                    
+                    //get streamable link instead
                     API.sharedInstance.requestStreamableLink(
-                        for: "yZH1Flc9w5Q",
+                        for: self.videoPlayerEpisode.id,
                         callback: { urlString in
                             print(urlString)
                             if let url = URL(string: urlString){

@@ -104,6 +104,7 @@ class API {
     var podcastSearchRequest: DataRequest?
     var currentRequestType : API.CancellableRequestType = API.CancellableRequestType.messages
     var uploadRequest: UploadRequest?
+    var streamableLinkPollCountdown: Int = 0
 
     let messageBubbleHelper = NewMessageBubbleHelper()
 

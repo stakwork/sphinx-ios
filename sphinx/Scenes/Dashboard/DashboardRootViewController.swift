@@ -311,6 +311,7 @@ extension DashboardRootViewController {
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
             self.handleLinkQueries()
         }
+        
     }
     
 }

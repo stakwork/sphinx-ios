@@ -248,6 +248,99 @@ extension API {
         
     }
     
+    func requestStreamableLink(
+        for videoID: String,
+        callback: @escaping ((String) -> ()),
+        errorCallback: @escaping EmptyCallback
+    ){
+        let requestPath = "http://ec2-18-222-19-129.us-east-2.compute.amazonaws.com:5001/YTDL"
+        let params = [
+            "videoId" : videoID
+        ]
+        
+        guard let request = createRequest(requestPath.percentEscaped ?? requestPath, bodyParams: params as NSDictionary, method: "POST") else {
+            errorCallback()
+            return
+        }
+        
+        AF.request(request).responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                print(data)
+                self.streamableLinkPollCountdown = 100
+                if let json = data as? NSDictionary {
+                    if let successAction = json["successAction"] as? [String:Any],
+                        let url = successAction["url"] as? String,
+                        let invoice = json["pr"] as? String{
+                        var parameters = [String : AnyObject]()
+                        parameters["payment_request"] = invoice as AnyObject?
+                        self.payInvoice(
+                            parameters: parameters,
+                            callback: {_ in
+                                self.pollForStreamableLink(
+                                    successActionLink: url,
+                                    callback: { videoURL in
+                                        callback(videoURL)
+                                    },
+                                    errorCallback: {
+                                        errorCallback()
+                                    }
+                                )
+                            },
+                            errorCallback: {
+                                errorCallback()
+                            }
+                        )
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                errorCallback()
+            }
+        }
+    }
+    
+    func pollForStreamableLink(
+        successActionLink:String,
+        callback: @escaping ((String) -> ()),
+        errorCallback: @escaping EmptyCallback
+    ){
+        guard let request = createRequest(successActionLink.percentEscaped ?? successActionLink, bodyParams: nil, method: "GET") else {
+            //errorCallback()
+            return
+        }
+        while(streamableLinkPollCountdown > 0){
+            AF.request(request).responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    print(data)
+                    //callback()
+                    if let json = data as? NSDictionary,
+                        let video_url = json["video_url"] as? String{
+                        print("yt_video_url:\(video_url)")
+                        callback(video_url)
+                        return
+                    }
+                    else{
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+                            self.pollForStreamableLink(successActionLink: successActionLink, callback: callback, errorCallback: errorCallback)
+                        })
+                    }
+                    return
+                case .failure(let error):
+                    print(error)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+                        self.pollForStreamableLink(successActionLink: successActionLink, callback: callback, errorCallback: errorCallback)
+                    })
+                }
+            }
+            streamableLinkPollCountdown -= 1
+        }
+        errorCallback()
+    }
+    
+    
+    
     func getFullCachedFilePath(partialPath:String)->String{
         let convertedPath = partialPath.replacingOccurrences(of: ".mp3", with: ".mp4")
         return "https://stakwork-uploads.s3.amazonaws.com/" + convertedPath

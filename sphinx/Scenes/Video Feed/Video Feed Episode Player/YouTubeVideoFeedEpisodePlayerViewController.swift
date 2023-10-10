@@ -183,6 +183,20 @@ extension YouTubeVideoFeedEpisodePlayerViewController {
                             //failure
                         }
                     )
+                    
+                    API.sharedInstance.requestStreamableLink(
+                        for: "yZH1Flc9w5Q",
+                        callback: { urlString in
+                            print(urlString)
+                            if let url = URL(string: urlString){
+                                self.localVideoPlayerContainer.isHidden = false
+                                self.avPlayer = self.createVideoPlayerView(withVideoURL: url)
+                                self.avPlayer?.delegate = self
+                            }
+                        },
+                        errorCallback: {
+                            print("error")
+                        })
                 }
             }, errorCallback: {
                 

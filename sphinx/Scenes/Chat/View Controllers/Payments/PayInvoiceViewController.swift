@@ -116,8 +116,8 @@ class PayInvoiceViewController: UIViewController {
 
         API.sharedInstance.payInvoice(parameters: parameters, callback: { payment in
             self.createLocalPayment(payment: payment)
-        }, errorCallback: {
-            self.showErrorAlert()
+        }, errorCallback: { error in
+            self.showErrorAlert(errorMessage: error)
         })
     }
     
@@ -132,9 +132,12 @@ class PayInvoiceViewController: UIViewController {
         }
     }
     
-    func showErrorAlert() {
+    func showErrorAlert(
+        errorMessage: String? = nil
+    ) {
         loading = false
-        AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
+        
+        AlertHelper.showAlert(title: "generic.error.title".localized, message: errorMessage ?? "generic.error.message".localized, completion: {
             self.shouldDismiss(paymentCreated: false)
         })
     }

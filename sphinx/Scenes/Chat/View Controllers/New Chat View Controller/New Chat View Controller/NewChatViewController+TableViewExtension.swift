@@ -219,16 +219,14 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 self.messageMenuData = MessageTableCellState.MessageMenuData(
                     messageId: messageId,
                     bubbleRect: bubbleViewRect,
-                    indexPath: indexPath,
-                    isThreadRow: isThreadRow
+                    indexPath: indexPath
                 )
                 self.view.endEditing(true)
             } else {
                 self.showMessageMenuFor(
                     messageId: messageId,
                     indexPath: indexPath,
-                    bubbleViewRect: bubbleViewRect,
-                    isThreadRow: isThreadRow
+                    bubbleViewRect: bubbleViewRect
                 )
             }
         })
@@ -288,8 +286,7 @@ extension NewChatViewController {
     func showMessageMenuFor(
         messageId: Int,
         indexPath: IndexPath,
-        bubbleViewRect: CGRect,
-        isThreadRow: Bool
+        bubbleViewRect: CGRect
     ) {
         if let bubbleRectAndPath = ChatHelper.getMessageBubbleRectAndPath(
             tableView: self.chatTableView,
@@ -298,9 +295,7 @@ extension NewChatViewController {
             bubbleViewRect: bubbleViewRect
         ), let message = TransactionMessage.getMessageWith(id: messageId)
         {
-            if message.getActionsMenuOptions(
-                isThreadRow: isThreadRow
-            ).isEmpty {
+            if message.getActionsMenuOptions().isEmpty {
                 return
             }
             
@@ -309,8 +304,7 @@ extension NewChatViewController {
             let messageOptionsVC = MessageOptionsViewController.instantiate(
                 message: message,
                 purchaseAcceptMessage: message.getPurchaseAcceptItem(),
-                delegate: self,
-                isThreadRow: isThreadRow
+                delegate: self
             )
             
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)

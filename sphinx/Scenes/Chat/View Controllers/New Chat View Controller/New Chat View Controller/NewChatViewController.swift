@@ -148,8 +148,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             showMessageMenuFor(
                 messageId: messageMenuData.messageId,
                 indexPath: messageMenuData.indexPath,
-                bubbleViewRect: messageMenuData.bubbleRect,
-                isThreadRow: messageMenuData.isThreadRow
+                bubbleViewRect: messageMenuData.bubbleRect
             )
             self.messageMenuData = nil
         }

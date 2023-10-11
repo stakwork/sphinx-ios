@@ -306,7 +306,7 @@ extension TransactionMessage {
         let deletedStatus = TransactionMessage.TransactionMessageStatus.deleted.rawValue
 
         let predicate = NSPredicate(
-            format: "chat == %@ AND type != %d AND (threadUUID != nil AND (threadUUID IN %@)) AND status != %d",
+            format: "chat == %@ AND type != %d AND (threadUUID != nil AND (threadUUID IN %@)) AND status != %d AND id > -1",
             chat,
             boostType,
             messages,

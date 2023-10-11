@@ -153,6 +153,9 @@ class ChatAvatarView: UIView {
     }
     
     @IBAction func avatarViewButtonTouched() {
+        if profileImageView.isHidden && profileInitialContainer.isHidden {
+            return
+        }
         delegate?.didTapAvatarView()
     }
 }

@@ -158,6 +158,7 @@ extension NewChatViewModel {
             }
             
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
+                message.managedObjectContext?.saveContext()
                 message.setPaymentInvoiceAsPaid()
                 
                 self.insertSentMessage(

@@ -18,9 +18,10 @@ extension NewMessageTableViewCell {
         
         if let messageContent = messageContent {
             
+            textMessageView.isHidden = false
+            
             if messageContent.linkMatches.isEmpty && searchingTerm == nil {
                 messageLabel.attributedText = nil
-                
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {
@@ -47,11 +48,10 @@ extension NewMessageTableViewCell {
                     urlRanges.append(match.range)
                 }
                 
+                messageLabel.text = ""
                 messageLabel.attributedText = attributedString
                 messageLabel.isUserInteractionEnabled = true
             }
-            
-            textMessageView.isHidden = false
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
             

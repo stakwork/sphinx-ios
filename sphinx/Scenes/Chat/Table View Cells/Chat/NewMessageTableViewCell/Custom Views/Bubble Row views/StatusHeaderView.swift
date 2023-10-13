@@ -59,7 +59,6 @@ class StatusHeaderView: UIView {
         
         receivedStatusHeader.isHidden = outgoing
         sentStatusHeader.isHidden = !outgoing
-        sentFailureHeader.isHidden = true
     }
     
     func configureWith(
@@ -82,6 +81,7 @@ class StatusHeaderView: UIView {
         receivedLockIcon.isHidden = !statusHeader.showLockIcon
         
         sentFailureHeader.isHidden = !statusHeader.showFailedContainer
+        sentErrorMessage.text = statusHeader.errorMessage
         
         receivedDateLabel.text = statusHeader.timestamp
         sentDateLabel.text = statusHeader.timestamp

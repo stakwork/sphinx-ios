@@ -154,6 +154,7 @@ public class TransactionMessage: NSManagedObject {
         let mediaType:String? = m["media_type"].string
         let originalMuid:String? = m["original_muid"].string
         let person:String? = m["person"].string
+        let errorMessage:String? = m["error_message"].string
         
         var mediaKey:String? = nil
         if let mk = m["media_key"].string, mk != "" {
@@ -216,6 +217,7 @@ public class TransactionMessage: NSManagedObject {
             mediaType: mediaType,
             originalMuid: originalMuid,
             person: person,
+            errorMessage: errorMessage,
             seen: messageSeen,
             push: push,
             messageEncrypted: messageEncrypted,
@@ -265,6 +267,7 @@ public class TransactionMessage: NSManagedObject {
         mediaType: String? = nil,
         originalMuid: String? = nil,
         person: String? = nil,
+        errorMessage: String? = nil,
         seen: Bool,
         push: Bool,
         messageEncrypted: Bool,
@@ -293,6 +296,7 @@ public class TransactionMessage: NSManagedObject {
         message.muid = TransactionMessage.getMUIDFrom(mediaToken: mediaToken)
         message.originalMuid = originalMuid
         message.person = person
+        message.errorMessage = errorMessage
         message.mediaKey = mediaKey
         message.mediaType = mediaType
         message.seen = seen

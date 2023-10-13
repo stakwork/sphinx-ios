@@ -204,6 +204,7 @@ struct MessageTableCellState {
             showSendingIcon: isSent && message.pending() && message.isProvisional(),
             showBoltIcon: isSent && message.isConfirmedAsReceived(),
             showFailedContainer: isSent && message.failed(),
+            errorMessage: message.errorMessage ?? "message.failed".localized,
             showLockIcon: true,
             showExpiredSent: message.isInvoice() && !message.isPaid() && !isSent,
             showExpiredReceived: message.isInvoice() && !message.isPaid() && isSent,

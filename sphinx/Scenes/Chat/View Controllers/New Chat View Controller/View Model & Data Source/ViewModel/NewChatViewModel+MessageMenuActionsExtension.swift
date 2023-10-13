@@ -29,6 +29,7 @@ extension NewChatViewModel {
         sendMessage(
             provisionalMessage: message,
             text: message.messageContent ?? "",
+            isResend: true,
             completion: { _ in }
         )
     }

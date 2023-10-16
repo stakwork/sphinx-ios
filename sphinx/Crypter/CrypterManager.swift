@@ -150,6 +150,20 @@ class CrypterManager : NSObject {
         }
     }
     
+    var signerIdNonce: String {
+        get {
+            if let signerIdNonce: String = UserDefaults.Keys.signerIdNonce.get() {
+                return signerIdNonce
+            }
+            let signerIdNonce = Nonce(length: 16).hexString
+            UserDefaults.Keys.lssNonce.set(signerIdNonce)
+            return signerIdNonce
+        }
+        set {
+            UserDefaults.Keys.signerIdNonce.set(newValue)
+        }
+    }
+    
     var mutationKeys: [String] {
         get {
             if let signerKeys: String = UserDefaults.Keys.signerKeys.get() {
@@ -500,6 +514,14 @@ class CrypterManager : NSObject {
         }
     }
     
+    func connectToMQTTWith(
+        clientId: String,
+        username:String,
+        password:String
+    ){
+        
+    }
+    
     func clear() {
         mutationKeys = []
         sequence = nil
@@ -618,6 +640,10 @@ class CrypterManager : NSObject {
             return [:]
         }
         
+        guard let signerIdNonce = stringToBytes(signerIdNonce) else{
+            return [:]
+        }
+        
         let defaultPolicy: [String: AnyObject] = [
           "msat_per_interval": 21000000000 as NSNumber,
           "interval": "daily" as NSString,
@@ -630,11 +656,31 @@ class CrypterManager : NSObject {
             "policy": defaultPolicy as NSDictionary,
             "allowlist": [] as NSArray,
             "timestamp": UInt32(Date().timeIntervalSince1970) as NSNumber,
-            "lss_nonce": lssN as NSArray
+            "lss_nonce": lssN as NSArray,
+            "signer_id": signerIdNonce as NSArray
         ]
         
         return args
     }
+    
+    func setupOnionMessengerMqtt(seed:String){
+        do{
+            let keys = try nodeKeys(net: "regtest", seed: seed)
+            let nowSeconds = Date().timeIntervalSince1970
+            let nowMilliseconds = Int64(nowSeconds * 1000)
+            let nowMsString = String(nowMilliseconds)
+            let sig = try signMs(seed: seed, time: String(nowMilliseconds))
+            print(sig)
+            let mqtt = CocoaMQTT(clientID: keys.pubkey)
+            mqtt.username = nowMsString
+            mqtt.password = sig
+        }
+        catch{
+            print("pubkey generatione error")
+        }
+        
+    }
+    
     
     func load_muts() -> [String: [UInt8]] {
         var state:[String: [UInt8]] = [:]

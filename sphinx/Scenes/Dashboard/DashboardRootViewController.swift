@@ -311,6 +311,25 @@ extension DashboardRootViewController {
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
             self.handleLinkQueries()
         }
+        
+        run_onion_message_sandbox_example()
+    }
+    
+    func run_onion_message_sandbox_example(){
+        let test_mnemonic1 = "grape memory stadium already soap vintage lend gospel actual also major goat"
+        var seed : String? = nil
+        do{
+            seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
+        }
+        catch{
+            
+        }
+        guard let seed = seed else{
+            AlertHelper.showAlert(title: "Onion Message Example Error:", message: "Failed to generate example seed.")
+            return
+        }
+        print(seed)
+        CrypterManager.sharedInstance.setupOnionMessengerMqtt(seed: seed)
     }
     
 }

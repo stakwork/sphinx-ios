@@ -89,6 +89,18 @@ RustBuffer uniffi_sphinxrs_fn_func_make_auth_token(uint32_t ts, RustBuffer secre
 );
 RustBuffer uniffi_sphinxrs_fn_func_run(RustBuffer topic, RustBuffer args, RustBuffer state, RustBuffer msg1, RustBuffer expected_sequence, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_sphinxrs_fn_func_sha_256(RustBuffer msg, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_create_onion(RustBuffer seed, RustBuffer time, RustBuffer hops, RustBuffer payload, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_create_keysend(RustBuffer seed, RustBuffer time, RustBuffer hops, uint64_t msat, RustBuffer rhash, RustBuffer payload, uint32_t curr_height, RustBuffer preimage, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_peel_onion(RustBuffer seed, RustBuffer time, RustBuffer payload, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_peel_payment(RustBuffer seed, RustBuffer time, RustBuffer payload, RustBuffer preimage, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_sign_ms(RustBuffer seed, RustBuffer time, RustCallStatus *_Nonnull out_status
+);
 RustBuffer ffi_sphinxrs_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
 );
 RustBuffer ffi_sphinxrs_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
@@ -134,6 +146,24 @@ uint16_t uniffi_sphinxrs_checksum_func_make_auth_token(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_run(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_sha_256(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_create_onion(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_create_keysend(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_peel_onion(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_peel_payment(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_sign_ms(void
     
 );
 uint32_t ffi_sphinxrs_uniffi_contract_version(void

@@ -872,6 +872,76 @@ public func `run`(`topic`: String, `args`: String, `state`: Data, `msg1`: Data, 
     )
 }
 
+public func `sha256`(`msg`: Data)  -> String {
+    return try!  FfiConverterString.lift(
+        try! rustCall() {
+    uniffi_sphinxrs_fn_func_sha_256(
+        FfiConverterData.lower(`msg`),$0)
+}
+    )
+}
+
+public func `createOnion`(`seed`: String, `time`: String, `hops`: String, `payload`: Data) throws -> Data {
+    return try  FfiConverterData.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_create_onion(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`time`),
+        FfiConverterString.lower(`hops`),
+        FfiConverterData.lower(`payload`),$0)
+}
+    )
+}
+
+public func `createKeysend`(`seed`: String, `time`: String, `hops`: String, `msat`: UInt64, `rhash`: String, `payload`: Data, `currHeight`: UInt32, `preimage`: String) throws -> Data {
+    return try  FfiConverterData.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_create_keysend(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`time`),
+        FfiConverterString.lower(`hops`),
+        FfiConverterUInt64.lower(`msat`),
+        FfiConverterString.lower(`rhash`),
+        FfiConverterData.lower(`payload`),
+        FfiConverterUInt32.lower(`currHeight`),
+        FfiConverterString.lower(`preimage`),$0)
+}
+    )
+}
+
+public func `peelOnion`(`seed`: String, `time`: String, `payload`: Data) throws -> Data {
+    return try  FfiConverterData.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_peel_onion(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`time`),
+        FfiConverterData.lower(`payload`),$0)
+}
+    )
+}
+
+public func `peelPayment`(`seed`: String, `time`: String, `payload`: Data, `preimage`: String) throws -> Data {
+    return try  FfiConverterData.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_peel_payment(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`time`),
+        FfiConverterData.lower(`payload`),
+        FfiConverterString.lower(`preimage`),$0)
+}
+    )
+}
+
+public func `signMs`(`seed`: String, `time`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_sign_ms(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`time`),$0)
+}
+    )
+}
+
 private enum InitializationResult {
     case ok
     case contractVersionMismatch
@@ -924,6 +994,24 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_run() != 47350) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_sha_256() != 54805) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_create_onion() != 39744) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_create_keysend() != 11203) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_peel_onion() != 54527) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_peel_payment() != 5916) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_sign_ms() != 65056) {
         return InitializationResult.apiChecksumMismatch
     }
 

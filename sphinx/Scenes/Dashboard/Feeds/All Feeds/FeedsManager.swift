@@ -397,6 +397,9 @@ class FeedsManager : NSObject {
         DispatchQueue.global(qos: .userInitiated).async {
             let bgContext = CoreDataManager.sharedManager.getBackgroundContext()
             
+            // Create a semaphore with an initial value of 0
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
+            
             bgContext.perform {
                 ContentFeed.fetchFeedItems(
                     feedUrl: feedUrl,
@@ -406,11 +409,18 @@ class FeedsManager : NSObject {
                         if case .success(_) = result {
                             bgContext.saveContext()
                         }
+                        
+                        // Signal the semaphore when the task is complete
+                        dispatchSemaphore.signal()
                     }
                 )
             }
+            
+            // Wait for the semaphore to be signaled before proceeding
+            dispatchSemaphore.wait()
         }
     }
+
     
     func loadEpisodesDurationFor(feed: ContentFeed) {
         DispatchQueue.global(qos: .utility).async {

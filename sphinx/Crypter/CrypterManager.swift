@@ -119,13 +119,20 @@ class CrypterManager : NSObject {
         var relay:String? = nil
     }
     
+    struct OnionData{
+        var serverPubkey:String? = nil
+        var destinationPubkey:String? = nil
+    }
+    
     var vc: UIViewController! = nil
     var endCallback: ((String?) -> ()) = {_ in }
     
+    var onionConfig = OnionData()
     var hardwarePostDto = HardwarePostDto()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var didDisconnect = false
     var scannerVC : NewQRScannerViewController? = nil
+    let test_mnemonic1 = "grape memory stadium already soap vintage lend gospel actual also major goat"
     
     var clientID: String {
         get {
@@ -675,7 +682,66 @@ class CrypterManager : NSObject {
     }
     
     func sendOnionMessage(message:String){
-        
+        let network = "regtest"
+        guard let serverPubkey = onionConfig.serverPubkey?.replacingOccurrences(of: "\"pubkey\":\"", with: ""),
+              let alicePubkey = onionConfig.destinationPubkey else{
+            return
+        }
+        do{
+            let time = self.getTimestampInMilliseconds()
+            //let alicePubkey = "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"//example destination pubkey
+            
+            let hops: [String] = [
+                serverPubkey, // Replace serverPubkey with the actual server pubkey
+                alicePubkey   // Replace alicePubkey with the actual alice pubkey
+            ]
+            
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .withoutEscapingSlashes
+            let contentString = message//"The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
+            if let hopsJSON = try? encoder.encode(hops),
+               let contentData = contentString.data(using: .utf8){
+                if let hopsJSONString = String(data: hopsJSON, encoding: .utf8) {
+                    print("Hops JSON String: \(hopsJSONString)")
+                    //Setting up like this for demo purposes bc hopsJSONString doesn't work
+                    let hopsJSONString2 = """
+                    [
+                        {"pubkey": "\(serverPubkey)"},
+                        {"pubkey": "\(alicePubkey)"}
+                    ]
+                    """
+                    let hopsJSONString3 = """
+                    [
+                        {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
+                        {"pubkey": "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"}
+                    ]
+                    """
+                    let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
+                    let pubkey = try pubkeyFromSeed(seed: seed, time: time, network: network)
+                    let onion = try! createOnion(seed: seed, time: time, network: hopsJSONString2, hops: network, payload: contentData)
+                    var onionAsArray = [UInt8](repeating: 0, count: onion.count)
+
+                    // Use withUnsafeBytes to copy the Data into the UInt8 array
+                    onion.withUnsafeBytes { bufferPointer in
+                        guard let baseAddress = bufferPointer.baseAddress else {
+                            fatalError("Failed to get base address")
+                        }
+                        memcpy(&onionAsArray, baseAddress, onion.count)
+                        self.mqtt.publish(
+                            CocoaMQTTMessage(
+                                topic: "\(pubkey)/req/send",
+                                payload: onionAsArray
+                            )
+                        )
+                    }
+                    
+                }
+            }
+            
+        }
+        catch{
+            print("mqtt error:\(error)")
+        }
     }
     
     func setupOnionMessengerMqtt(seed:String){
@@ -699,52 +765,8 @@ class CrypterManager : NSObject {
                         let payloadData = Data(receivedMessage.payload)
                         if let serverPubkey = String(data: payloadData, encoding: .utf8) {
                             print("MQTT Payload as String: \(serverPubkey)")
-                            do{
-                                let time = self.getTimestampInMilliseconds()
-                                let alicePubkey = "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"
-                                
-                                let hops: [String] = [
-                                    serverPubkey, // Replace serverPubkey with the actual server pubkey
-                                    alicePubkey   // Replace alicePubkey with the actual alice pubkey
-                                ]
-                                
-                                let encoder = JSONEncoder()
-                                encoder.outputFormatting = .withoutEscapingSlashes
-                                let contentString = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
-                                if let hopsJSON = try? encoder.encode(hops),
-                                   let contentData = contentString.data(using: .utf8){
-                                    if let hopsJSONString = String(data: hopsJSON, encoding: .utf8) {
-                                        print("Hops JSON String: \(hopsJSONString)")
-                                        let hopsJSONString2 = """
-                                        [
-                                            {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
-                                            {"pubkey": "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"}
-                                        ]
-                                        """
-                                        let onion = try! createOnion(seed: seed, time: time, network: hopsJSONString2, hops: network, payload: contentData)
-                                        var onionAsArray = [UInt8](repeating: 0, count: onion.count)
-
-                                        // Use withUnsafeBytes to copy the Data into the UInt8 array
-                                        onion.withUnsafeBytes { bufferPointer in
-                                            guard let baseAddress = bufferPointer.baseAddress else {
-                                                fatalError("Failed to get base address")
-                                            }
-                                            memcpy(&onionAsArray, baseAddress, onion.count)
-                                            self.mqtt.publish(
-                                                CocoaMQTTMessage(
-                                                    topic: "\(pubkey)/req/send",
-                                                    payload: onionAsArray
-                                                )
-                                            )
-                                        }
-                                        
-                                    }
-                                }
-                                
-                            }
-                            catch{
-                                print("mqtt error:\(error)")
-                            }
+                            self.onionConfig.serverPubkey = serverPubkey
+                            self.onionConfig.destinationPubkey = "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"
                         } else {
                             print("MQTT Unable to convert payload to a string")
                         }

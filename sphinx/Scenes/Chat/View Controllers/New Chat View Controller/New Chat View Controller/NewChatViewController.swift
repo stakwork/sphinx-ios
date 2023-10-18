@@ -128,7 +128,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
-        run_onion_message_sandbox_example()
+        isOnionChat ? run_onion_message_sandbox_example() : ()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -219,7 +219,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     }
     
     func run_onion_message_sandbox_example(){
-        let test_mnemonic1 = "grape memory stadium already soap vintage lend gospel actual also major goat"
+        let test_mnemonic1 = CrypterManager.sharedInstance.test_mnemonic1
         var seed : String? = nil
         do{
             seed = try mnemonicToSeed(mnemonic: test_mnemonic1)

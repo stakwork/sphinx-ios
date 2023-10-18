@@ -12,14 +12,31 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
         bottomView.resetReplyView()
         
-        chatViewModel.shouldSendMessage(text: text, type: type, completion: { success in
-            
-            if success {
-                self.scrollToBottomAfterSend()
-            }
-            
-            completion(success)
-        })
+        if(isOnionChat){
+            CrypterManager.sharedInstance.sendOnionMessage(message: text)
+            //TODO: update UI
+//            if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
+//                message.managedObjectContext?.saveContext()
+//                message.setPaymentInvoiceAsPaid()
+//
+//                self.insertSentMessage(
+//                    message: message,
+//                    completion: completion
+//                )
+//
+//                ActionsManager.sharedInstance.trackMessageSent(message: message)
+//            }
+        }
+        else{
+            chatViewModel.shouldSendMessage(text: text, type: type, completion: { success in
+                
+                if success {
+                    self.scrollToBottomAfterSend()
+                }
+                
+                completion(success)
+            })
+        }
     }
     
     func scrollToBottomAfterSend() {

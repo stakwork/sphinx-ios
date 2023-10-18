@@ -28,6 +28,10 @@ func localizedString(_ key: String) -> String {
     return NSLocalizedString(key, comment: "")
 }
 
+struct Hop: Codable {
+    let pubkey: String
+}
+
 enum SeedValidationError: Error {
     case incorrectWordNumber
     case invalidWord
@@ -663,20 +667,140 @@ class CrypterManager : NSObject {
         return args
     }
     
+    func getTimestampInMilliseconds()->String{
+        let nowSeconds = Date().timeIntervalSince1970
+        let nowMilliseconds = Int64(nowSeconds * 1000)
+        let nowMsString = String(nowMilliseconds)
+        return nowMsString
+    }
+    
+    func sendOnionMessage(message:String){
+        
+    }
+    
     func setupOnionMessengerMqtt(seed:String){
+        print("setupOnionMessengerMqtt")
         do{
-            let keys = try nodeKeys(net: "regtest", seed: seed)
-            let nowSeconds = Date().timeIntervalSince1970
-            let nowMilliseconds = Int64(nowSeconds * 1000)
-            let nowMsString = String(nowMilliseconds)
-            let sig = try signMs(seed: seed, time: String(nowMilliseconds))
+            let nowMsString = getTimestampInMilliseconds()
+            let network = "regtest"
+            let pubkey = try pubkeyFromSeed(seed: seed, time: nowMsString,network: network)
+            let sig = try signMs(seed: seed, time: nowMsString, network: network)
+            
             print(sig)
-            let mqtt = CocoaMQTT(clientID: keys.pubkey)
+            mqtt = CocoaMQTT(clientID: pubkey,host: "54.164.163.153",port: 1883)
             mqtt.username = nowMsString
             mqtt.password = sig
+            let success = mqtt.connect()
+            if success {
+                mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                    print("MQTT message received with id:\(id) message:\(receivedMessage)")
+                    print("MQTT Topic:\(receivedMessage.topic) Payload:\(receivedMessage.payload)")
+                    if receivedMessage.topic.contains("pubkey") {
+                        let payloadData = Data(receivedMessage.payload)
+                        if let serverPubkey = String(data: payloadData, encoding: .utf8) {
+                            print("MQTT Payload as String: \(serverPubkey)")
+                            do{
+                                let time = self.getTimestampInMilliseconds()
+                                let alicePubkey = "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"
+                                
+                                let hops: [String] = [
+                                    serverPubkey, // Replace serverPubkey with the actual server pubkey
+                                    alicePubkey   // Replace alicePubkey with the actual alice pubkey
+                                ]
+                                
+                                let encoder = JSONEncoder()
+                                encoder.outputFormatting = .withoutEscapingSlashes
+                                let contentString = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
+                                if let hopsJSON = try? encoder.encode(hops),
+                                   let contentData = contentString.data(using: .utf8){
+                                    if let hopsJSONString = String(data: hopsJSON, encoding: .utf8) {
+                                        print("Hops JSON String: \(hopsJSONString)")
+                                        let hopsJSONString2 = """
+                                        [
+                                            {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
+                                            {"pubkey": "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"}
+                                        ]
+                                        """
+                                        let onion = try! createOnion(seed: seed, time: time, network: hopsJSONString2, hops: network, payload: contentData)
+                                        var onionAsArray = [UInt8](repeating: 0, count: onion.count)
+
+                                        // Use withUnsafeBytes to copy the Data into the UInt8 array
+                                        onion.withUnsafeBytes { bufferPointer in
+                                            guard let baseAddress = bufferPointer.baseAddress else {
+                                                fatalError("Failed to get base address")
+                                            }
+                                            memcpy(&onionAsArray, baseAddress, onion.count)
+                                            self.mqtt.publish(
+                                                CocoaMQTTMessage(
+                                                    topic: "\(pubkey)/req/send",
+                                                    payload: onionAsArray
+                                                )
+                                            )
+                                        }
+                                        
+                                    }
+                                }
+                                
+                            }
+                            catch{
+                                print("mqtt error:\(error)")
+                            }
+                        } else {
+                            print("MQTT Unable to convert payload to a string")
+                        }
+                    }
+                }
+                
+                mqtt.didConnectAck = { _, _ in
+                    self.showSuccessWithMessage("MQTT connected")
+                    API.sharedInstance.postMQTTStatusChange()
+                    print("mqtt.didConnectAck")
+                    
+                    self.mqtt.subscribe([
+                        ("\(pubkey)/res/#", CocoaMQTTQoS.qos1)
+                    ])
+                    
+                    self.mqtt.publish(
+                        CocoaMQTTMessage(
+                            topic: "\(pubkey)/req/register",
+                            payload: []
+                        )
+                    )
+                    self.mqtt.publish(
+                        CocoaMQTTMessage(
+                            topic: "\(pubkey)/req/pubkey",
+                            payload: []
+                        )
+                    )
+                    self.mqtt.publish(
+                        CocoaMQTTMessage(
+                            topic: "\(pubkey)/req/balance",
+                            payload: []
+                        )
+                    )
+                    
+                }
+//                mqtt.didDisconnect =  { cocaMQTT2, error in
+//                    //self.showErrorWithMessage("MQTT disconnected. Trying to reconnect...")
+//                    API.sharedInstance.postMQTTStatusChange()
+//                    
+//                    self.mqtt.didDisconnect = { _, _ in }
+//                    self.sequence = nil
+//                    
+//                    DelayPerformedHelper.performAfterDelay(seconds: 2, completion: {
+//                        guard let _ = self.mqtt else {
+//                            return
+//                        }
+//                        
+//                    })
+//                }
+            }
+            else{
+                print("error connecting to mqtt")
+            }
         }
         catch{
-            print("pubkey generatione error")
+            print("pubkey generation error")
         }
         
     }

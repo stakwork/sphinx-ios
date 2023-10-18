@@ -223,6 +223,10 @@ extension DashboardRootViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: .onContactsAndChatsChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
+            self.presentDemoOnionChatVC(for: nil)
+        })
+        
     }
     
     func loadLastPlayedPod() {
@@ -312,24 +316,7 @@ extension DashboardRootViewController {
             self.handleLinkQueries()
         }
         
-        run_onion_message_sandbox_example()
-    }
-    
-    func run_onion_message_sandbox_example(){
-        let test_mnemonic1 = "grape memory stadium already soap vintage lend gospel actual also major goat"
-        var seed : String? = nil
-        do{
-            seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
-        }
-        catch{
-            
-        }
-        guard let seed = seed else{
-            AlertHelper.showAlert(title: "Onion Message Example Error:", message: "Failed to generate example seed.")
-            return
-        }
-        print(seed)
-        CrypterManager.sharedInstance.setupOnionMessengerMqtt(seed: seed)
+        
     }
     
 }
@@ -676,6 +663,23 @@ extension DashboardRootViewController {
             contactId: contact?.id,
             chatId: chat?.id,
             chatListViewModel: chatsListViewModel
+        )
+        
+        navigationController?.pushViewController(chatVC, animated: shouldAnimate)
+    }
+    
+    internal func presentDemoOnionChatVC(
+        for chat: Chat?,
+        contact: UserContact? = nil,
+        shouldAnimate: Bool = true,
+        didRetry:Bool = false
+    ) {
+        
+        let chatVC = NewChatViewController.instantiate(
+            contactId: contact?.id,
+            chatId: chat?.id,
+            chatListViewModel: chatsListViewModel,
+            isOnionChat: true
         )
         
         navigationController?.pushViewController(chatVC, animated: shouldAnimate)

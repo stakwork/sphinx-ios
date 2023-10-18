@@ -57,6 +57,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     
     var viewMode = ViewMode.Standard
     var macros = [MentionOrMacroItem]()
+    var isOnionChat : Bool = false
     
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         get {
@@ -64,11 +65,21 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         }
     }
     
+    func getDemoContact()->UserContact{
+        let contact = UserContact()
+        contact.id = 21000000
+        contact.nickname = "Satoshi Nakamoto"
+        contact.nodeAlias = "Satoshi Nakamoto"
+        contact.avatarUrl = "https://i.etsystatic.com/10433030/r/il/95cf98/2698300717/il_1080xN.2698300717_qt5w.jpg"
+        return contact
+    }
+    
     static func instantiate(
         contactId: Int? = nil,
         chatId: Int? = nil,
         chatListViewModel: ChatListViewModel? = nil,
-        threadUUID: String? = nil
+        threadUUID: String? = nil,
+        isOnionChat: Bool = false
     ) -> NewChatViewController {
         let viewController = StoryboardScene.Chat.newChatViewController.instantiate()
         
@@ -80,6 +91,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
             viewController.contact = UserContact.getContactWith(id: contactId)
         }
         
+        viewController.isOnionChat = isOnionChat
         viewController.threadUUID = threadUUID
         viewController.chatListViewModel = chatListViewModel
         
@@ -116,6 +128,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
+        run_onion_message_sandbox_example()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -205,13 +218,38 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         
     }
     
+    func run_onion_message_sandbox_example(){
+        let test_mnemonic1 = "grape memory stadium already soap vintage lend gospel actual also major goat"
+        var seed : String? = nil
+        do{
+            seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
+        }
+        catch{
+            
+        }
+        guard let seed = seed else{
+            AlertHelper.showAlert(title: "Onion Message Example Error:", message: "Failed to generate example seed.")
+            return
+        }
+        print(seed)
+        CrypterManager.sharedInstance.setupOnionMessengerMqtt(seed: seed)
+    }
+    
     func setupData() {
-        headerView.configureHeaderWith(
-            chat: chat,
-            contact: contact,
-            andDelegate: self,
-            searchDelegate: self
-        )
+        if(isOnionChat == true){
+//            let demoContact = getDemoContact()
+//            let demoChat = demoContact.getFakeChat()
+//            headerView.configureHeaderWith(chat: demoChat, contact: demoContact, andDelegate: self,searchDelegate: self)
+        }
+        else{
+            headerView.configureHeaderWith(
+                chat: chat,
+                contact: contact,
+                andDelegate: self,
+                searchDelegate: self
+            )
+        }
+        
         
         configurePinnedMessageView()
         configureThreadHeaderAndBottomView()

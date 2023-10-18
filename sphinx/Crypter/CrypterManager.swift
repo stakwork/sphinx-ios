@@ -674,6 +674,8 @@ class CrypterManager : NSObject {
         return args
     }
     
+    ///MARK: Onion Related///
+    
     func getTimestampInMilliseconds()->String{
         let nowSeconds = Date().timeIntervalSince1970
         let nowMilliseconds = Int64(nowSeconds * 1000)
@@ -718,7 +720,7 @@ class CrypterManager : NSObject {
                     """
                     let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
                     let pubkey = try pubkeyFromSeed(seed: seed, time: time, network: network)
-                    let onion = try! createOnion(seed: seed, time: time, network: hopsJSONString2, hops: network, payload: contentData)
+                    let onion = try! createOnion(seed: seed, time: time, network: hopsJSONString3, hops: network, payload: contentData)
                     var onionAsArray = [UInt8](repeating: 0, count: onion.count)
 
                     // Use withUnsafeBytes to copy the Data into the UInt8 array
@@ -742,6 +744,18 @@ class CrypterManager : NSObject {
         catch{
             print("mqtt error:\(error)")
         }
+    }
+    
+    func processReceivedOnionMessage(message:CocoaMQTTMessage){
+        let network = "regtest"
+        do{
+            let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
+            //let decrypted_json = peelOnion(seed: seed, time: getTimestampInMilliseconds(), network: network, payload: message.payload)
+        }
+        catch{
+            
+        }
+        
     }
     
     func setupOnionMessengerMqtt(seed:String){
@@ -770,6 +784,9 @@ class CrypterManager : NSObject {
                         } else {
                             print("MQTT Unable to convert payload to a string")
                         }
+                    }
+                    else{
+                        self.processReceivedOnionMessage(message: receivedMessage)
                     }
                 }
                 
@@ -826,7 +843,7 @@ class CrypterManager : NSObject {
         }
         
     }
-    
+    ///MARK: END Onion Related///
     
     func load_muts() -> [String: [UInt8]] {
         var state:[String: [UInt8]] = [:]

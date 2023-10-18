@@ -706,6 +706,7 @@ class CrypterManager : NSObject {
                 if let hopsJSONString = String(data: hopsJSON, encoding: .utf8) {
                     print("Hops JSON String: \(hopsJSONString)")
                     //Setting up like this for demo purposes bc hopsJSONString doesn't work
+                    //TODO: fix the fact that parsing isn't workingn of extracting pubkey value from key value pair. This is the hack for now
                     let hopsJSONString2 = """
                     [
                         {"pubkey": "\(serverPubkey)"},
@@ -750,10 +751,17 @@ class CrypterManager : NSObject {
         let network = "regtest"
         do{
             let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
-            //let decrypted_json = peelOnion(seed: seed, time: getTimestampInMilliseconds(), network: network, payload: message.payload)
+            let data = Data(message.payload)
+            let decrypted_json = try peelOnion(seed: seed, time: getTimestampInMilliseconds(), network: network, payload: data)
+            if let decrypted_string = String(data: decrypted_json, encoding: .utf8){
+                print("MQTT message received & decrypted: \(decrypted_string)")
+                let contentData = Data()
+                if let content =
+            }
+            
         }
         catch{
-            
+            print("error decrypting mqtt message")
         }
         
     }

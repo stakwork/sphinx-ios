@@ -307,7 +307,7 @@ class API {
             case self.successStatusCode:
                 self.connectionStatus = .Connected
             case self.unauthorizedStatusCode:
-                UserData.sharedInstance.fetchAndSaveTransportKey(completion: { _ in })
+                self.getRelaykeys()
                 
                 self.connectionStatus = .Unauthorize
             default:
@@ -339,6 +339,12 @@ class API {
             }
         }
         return request
+    }
+    
+    func getRelaykeys() {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.getRelayKeys()
+        }
     }
     
 //    func getHMACKeyAndRetry(

@@ -291,7 +291,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getRelayKeys() {
         UserData.sharedInstance.getAndSaveTransportKey()
-        UserData.sharedInstance.getOrCreateHMACKey()
+        UserData.sharedInstance.getOrCreateHMACKey(forceGet: true)
     }
     
     //Notifications

@@ -48,6 +48,7 @@ class ChatMessageTextFieldView: UIView {
     @IBOutlet weak var recordingTimeLabel: UILabel!
     @IBOutlet weak var recordingBlueCircle: UIView!
     @IBOutlet weak var animatedMicLabelView: IntermitentAlphaAnimatedView!
+    var isOnionChat:Bool = false
     
     let kCharacterLimit = 1000
     let kFieldPlaceHolder = "message.placeholder".localized

@@ -128,7 +128,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
-        isOnionChat ? run_onion_message_sandbox_example() : ()
+        do_onion_things()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -146,6 +146,46 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         }
         
         NotificationCenter.default.removeObserver(self, name: .webViewImageClicked, object: nil)
+    }
+    
+    func do_onion_things(){
+        isOnionChat ? run_onion_message_sandbox_example() : ()
+        bottomView.messageFieldView.isOnionChat = self.isOnionChat
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+            let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+            context.parent = CoreDataManager.sharedManager.persistentContainer.viewContext
+            
+            let chat = Chat(context: context)
+            chat.id = -1
+            self.chat = chat
+            let placeholderAvatar = "https://website.sphinx.chat/wp-content/uploads/2021/11/Sphinx-Logo-V1-600px.png"
+            let contact = UserContact.createObject(id: 0, publicKey: "0", nodeAlias: nil, nickname: nil, avatarUrl: placeholderAvatar, isOwner: true, fromGroup: false, blocked: false, status: 0, contactKey: nil, notificationSound: nil, privatePhoto: false, tipAmount: 0, routeHint: nil, inviteString: nil, welcomeMessage: nil, inviteStatus: 0, date: Date())
+            //contact.avatarUrl = "https://website.sphinx.chat/wp-content/uploads/2021/11/Sphinx-Logo-V1-600px.png"
+            chat.conversationContact = contact
+            chat.saveChat()
+            self.chatViewModel = NewChatViewModel(chat: chat, contact: contact)
+            let ds = NewChatTableDataSource(
+                chat: self.chat,
+                contact: self.contact,
+                tableView: self.chatTableView,
+                headerImageView: nil,
+                bottomView: self.bottomView,
+                headerView: self.headerView,
+                webView: self.botWebView,
+                delegate: self
+            )
+            self.chatViewModel.setDataSource(ds)
+            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: "Hello World!", type: TransactionMessage.TransactionMessageType.message.rawValue, date: Date(), chat: chat)
+            self.chatViewModel.sendMessage(provisionalMessage: provisionalMessage, params: [:], completion: {success in
+                print(success)
+                print("chatViewModel.sendMessage")
+                if let ds = self.chatViewModel.chatDataSource,
+                let message = provisionalMessage{
+                    ds.messagesArray = [message]
+                    ds.forceReload()
+                }
+            })
+        })
     }
     
     func stopPlayingClip() {

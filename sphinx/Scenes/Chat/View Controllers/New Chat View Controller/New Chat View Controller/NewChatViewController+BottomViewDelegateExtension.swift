@@ -14,6 +14,13 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
         
         if(isOnionChat){
             CrypterManager.sharedInstance.sendOnionMessage(message: text)
+            
+//            chatViewModel.sendMessage(
+//                provisionalMessage: provisionalMessage,
+//                text: text,
+//                botAmount: 0,
+//                completion: completion
+//            )
             //TODO: update UI
 //            if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
 //                message.managedObjectContext?.saveContext()

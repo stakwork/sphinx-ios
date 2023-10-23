@@ -80,7 +80,11 @@ class NewChatTableDataSource : NSObject {
     var webView: WKWebView!
     
     ///Chat
-    var chat: Chat?
+    var chat: Chat? {
+        didSet{
+            print("chat with id of \(chat?.id) set")
+        }
+    }
     var contact: UserContact?
     var owner: UserContact? = nil
     

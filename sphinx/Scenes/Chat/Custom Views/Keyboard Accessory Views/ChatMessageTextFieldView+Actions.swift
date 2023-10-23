@@ -16,7 +16,7 @@ extension ChatMessageTextFieldView {
     }
     
     @IBAction func sendButtonTouched() {
-        sendButton.isUserInteractionEnabled = false
+        sendButton.isUserInteractionEnabled = (self.isOnionChat)
 
         let currentString = (textView.text ?? "").trim()
 

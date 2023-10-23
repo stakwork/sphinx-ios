@@ -223,7 +223,7 @@ extension DashboardRootViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: .onContactsAndChatsChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 8.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
             self.presentDemoOnionChatVC(for: nil)
         })
         

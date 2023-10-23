@@ -22,4 +22,5 @@ extension Notification.Name {
     static let onContactsAndChatsChanged = Notification.Name("onContactsAndChatsChanged")
     static let onSizeConfigurationChanged = Notification.Name("onSizeConfigurationChanged")
     static let webViewImageClicked = Notification.Name("webViewImageClicked")
+    static let onOnionMessageReceived = Notification.Name("onOnionMessageReceived")
 }

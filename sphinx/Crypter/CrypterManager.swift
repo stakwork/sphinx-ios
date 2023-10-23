@@ -764,6 +764,9 @@ class CrypterManager : NSObject {
                         {
                         let contentString = contentArray.compactMap { UnicodeScalar($0) }.map { String($0) }.joined()
                         print("MQTT Content as UTF-8 string: \(contentString)")
+                        let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: contentString, type: TransactionMessage.TransactionMessageType.message.rawValue, date: Date(), chat: nil)
+                        let notification = Notification(name: .onOnionMessageReceived,object: provisionalMessage)
+                        NotificationCenter.default.post(notification)
                     }
                 }
             }

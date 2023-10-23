@@ -175,17 +175,20 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 delegate: self
             )
             self.chatViewModel.setDataSource(ds)
-//            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: "Hello World!", type: TransactionMessage.TransactionMessageType.message.rawValue, date: Date(), chat: chat)
-//            self.chatViewModel.sendMessage(provisionalMessage: provisionalMessage, params: [:], completion: {success in
-//                print(success)
-//                print("chatViewModel.sendMessage")
-//                if let ds = self.chatViewModel.chatDataSource,
-//                let message = provisionalMessage{
-//                    ds.messagesArray = [message]
-//                    ds.forceReload()
-//                }
-//            })
         })
+        
+        NotificationCenter.default.addObserver(forName: .onOnionMessageReceived, object: nil, queue: OperationQueue.main) { (n: Notification) in
+            let object = n.object
+            if let message = object as? TransactionMessage{
+                print(message)
+                if let ds = self.chatViewModel.chatDataSource{
+                    message.senderId = 402
+                    ds.messagesArray.append(message)
+                    ds.forceReload()
+                }
+            }
+            print("onion message received")
+        }
     }
     
     func stopPlayingClip() {

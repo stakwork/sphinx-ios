@@ -20,28 +20,11 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
                 print("chatViewModel.sendMessage")
                 if let ds = self.chatViewModel.chatDataSource,
                 let message = provisionalMessage{
+                    message.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
                     ds.messagesArray.append(message)
                     ds.forceReload()
                 }
             })
-//            chatViewModel.sendMessage(
-//                provisionalMessage: provisionalMessage,
-//                text: text,
-//                botAmount: 0,
-//                completion: completion
-//            )
-            //TODO: update UI
-//            if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
-//                message.managedObjectContext?.saveContext()
-//                message.setPaymentInvoiceAsPaid()
-//
-//                self.insertSentMessage(
-//                    message: message,
-//                    completion: completion
-//                )
-//
-//                ActionsManager.sharedInstance.trackMessageSent(message: message)
-//            }
         }
         else{
             chatViewModel.shouldSendMessage(text: text, type: type, completion: { success in

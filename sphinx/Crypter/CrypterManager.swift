@@ -747,24 +747,32 @@ class CrypterManager : NSObject {
         }
     }
     
-    func processReceivedOnionMessage(message:CocoaMQTTMessage){
+    func processReceivedOnionMessage(message: CocoaMQTTMessage) {
         let network = "regtest"
-        do{
+        do {
             let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
             let data = Data(message.payload)
             let decrypted_json = try peelOnion(seed: seed, time: getTimestampInMilliseconds(), network: network, payload: data)
-            if let decrypted_string = String(data: decrypted_json, encoding: .utf8){
+            if let decrypted_string = String(data: decrypted_json, encoding: .utf8) {
                 print("MQTT message received & decrypted: \(decrypted_string)")
-                let contentData = Data()
-                if let content =
+
+                // Parse the decrypted_string as JSON
+                if let jsonData = decrypted_string.data(using: .utf8),
+                   let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
+                    // Access the "content" key in the JSON dictionary
+                    if let contentArray = jsonObject["content"] as? [Int]
+                        {
+                        let contentString = contentArray.compactMap { UnicodeScalar($0) }.map { String($0) }.joined()
+                        print("MQTT Content as UTF-8 string: \(contentString)")
+                    }
+                }
             }
-            
-        }
-        catch{
+        } catch {
             print("error decrypting mqtt message")
         }
-        
     }
+
+
     
     func setupOnionMessengerMqtt(seed:String){
         print("setupOnionMessengerMqtt")

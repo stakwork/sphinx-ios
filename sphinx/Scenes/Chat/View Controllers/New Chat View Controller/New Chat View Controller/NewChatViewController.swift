@@ -151,7 +151,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     func do_onion_things(){
         isOnionChat ? run_onion_message_sandbox_example() : ()
         bottomView.messageFieldView.isOnionChat = self.isOnionChat
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             context.parent = CoreDataManager.sharedManager.persistentContainer.viewContext
             
@@ -175,16 +175,16 @@ class NewChatViewController: NewKeyboardHandlerViewController {
                 delegate: self
             )
             self.chatViewModel.setDataSource(ds)
-            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: "Hello World!", type: TransactionMessage.TransactionMessageType.message.rawValue, date: Date(), chat: chat)
-            self.chatViewModel.sendMessage(provisionalMessage: provisionalMessage, params: [:], completion: {success in
-                print(success)
-                print("chatViewModel.sendMessage")
-                if let ds = self.chatViewModel.chatDataSource,
-                let message = provisionalMessage{
-                    ds.messagesArray = [message]
-                    ds.forceReload()
-                }
-            })
+//            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: "Hello World!", type: TransactionMessage.TransactionMessageType.message.rawValue, date: Date(), chat: chat)
+//            self.chatViewModel.sendMessage(provisionalMessage: provisionalMessage, params: [:], completion: {success in
+//                print(success)
+//                print("chatViewModel.sendMessage")
+//                if let ds = self.chatViewModel.chatDataSource,
+//                let message = provisionalMessage{
+//                    ds.messagesArray = [message]
+//                    ds.forceReload()
+//                }
+//            })
         })
     }
     

@@ -14,7 +14,16 @@ extension NewChatViewController : ChatMessageTextFieldViewDelegate {
         
         if(isOnionChat){
             CrypterManager.sharedInstance.sendOnionMessage(message: text)
-            
+            let provisionalMessage = TransactionMessage.createProvisionalMessage(messageContent: text, type: TransactionMessage.TransactionMessageType.message.rawValue, date: Date(), chat: chat)
+            self.chatViewModel.sendMessage(provisionalMessage: provisionalMessage, params: [:], completion: {success in
+                print(success)
+                print("chatViewModel.sendMessage")
+                if let ds = self.chatViewModel.chatDataSource,
+                let message = provisionalMessage{
+                    ds.messagesArray.append(message)
+                    ds.forceReload()
+                }
+            })
 //            chatViewModel.sendMessage(
 //                provisionalMessage: provisionalMessage,
 //                text: text,

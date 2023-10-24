@@ -43,6 +43,7 @@ struct MessageTableCellState {
     var linkWeb: LinkWeb? = nil
     var invoiceData: (Bool, Bool) = (false, false)
     var isThreadHeaderMessage: Bool = false
+    let uid : Int
     
     ///Generic rows Data
     var separatorDate: Date? = nil
@@ -97,6 +98,11 @@ struct MessageTableCellState {
         self.invoiceData = invoiceData
         
         self.isThreadHeaderMessage = isThreadHeaderMessage
+        self.uid = self.chat.id.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uid)
     }
     
     ///Reply

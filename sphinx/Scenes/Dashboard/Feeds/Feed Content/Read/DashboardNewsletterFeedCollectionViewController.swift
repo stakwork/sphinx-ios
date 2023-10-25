@@ -118,14 +118,10 @@ extension DashboardNewsletterFeedCollectionViewController {
         func hash(into hasher: inout Hasher) {
             if let contentFeed = self.feedEntity {
                 hasher.combine(contentFeed.feedID)
-                hasher.combine(contentFeed.title)
-                hasher.combine(contentFeed.feedURL?.absoluteString)
-                hasher.combine(contentFeed.itemsArray.count)
             }
             
             if let episode = self.articleEntity {
                 hasher.combine(episode.itemID)
-                hasher.combine(episode.title)
             }
         }
     }

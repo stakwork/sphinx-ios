@@ -726,7 +726,7 @@ class CrypterManager : NSObject {
 
                     // Use withUnsafeBytes to copy the Data into the UInt8 array
                     onion.withUnsafeBytes { bufferPointer in
-                        guard let baseAddress = bufferPointer.baseAddress else {
+                        guard let baseAddress = bufferPointer.baseAddress else {//
                             fatalError("Failed to get base address")
                         }
                         memcpy(&onionAsArray, baseAddress, onion.count)

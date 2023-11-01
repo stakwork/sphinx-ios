@@ -425,7 +425,7 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, Me
             return
         }
         let desiredState = !lastMessage.seen
-        API.sharedInstance.toggleChatReadUnread(chatId: chat.id, params: params as NSDictionary, shouldMarkAsUnread: desiredState, callback: {success in
+        API.sharedInstance.toggleChatReadUnread(chatId: chat.id, params: params as NSDictionary, shouldMarkAsUnread: desiredState == false, callback: {success in
             print(success)
         })
         lastMessage.seen = desiredState

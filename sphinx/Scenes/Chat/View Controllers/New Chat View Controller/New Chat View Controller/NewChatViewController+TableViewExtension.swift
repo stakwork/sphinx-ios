@@ -226,7 +226,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 self.showMessageMenuFor(
                     messageId: messageId,
                     indexPath: indexPath,
-                    bubbleViewRect: bubbleViewRect
+                    bubbleViewRect: bubbleViewRect, isThreadRow: self.isThread
                 )
             }
         })
@@ -309,7 +309,7 @@ extension NewChatViewController {
             let messageOptionsVC = MessageOptionsViewController.instantiate(
                 message: message,
                 purchaseAcceptMessage: message.getPurchaseAcceptItem(),
-                delegate: self
+                delegate: self, isThreadRow: self.isThread
             )
             
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)

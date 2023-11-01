@@ -31,6 +31,8 @@ extension LAContext {
                 return .touchID
             case .faceID:
                 return .faceID
+            default:
+                return .none
             }
         } else {
             return  self.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) ? .touchID : .none

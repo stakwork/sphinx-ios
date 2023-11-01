@@ -255,15 +255,40 @@ final class ChatListViewModel {
         return progress
     }
     
+    func getExistingMessagesFor(
+        ids: [Int]
+    ) -> [Int: TransactionMessage] {
+        var messagesMap: [Int: TransactionMessage] = [:]
+        
+        for existingMessage in TransactionMessage.getMessagesWith(ids: ids) {
+            messagesMap[existingMessage.id] = existingMessage
+        }
+        
+        return messagesMap
+    }
+    
     func addMessages(
         messages: [JSON],
         chatId: Int? = nil,
         completion: @escaping (Int, Int) -> ()
     ) {
+        let ids: [Int] = messages.map({ $0["id"].intValue })
+        let existingMessagesMap = getExistingMessagesFor(ids: ids)
+        
         var newMessagesCount = 0
         
         for messageDictionary in messages {
-            let (message, isNew) = TransactionMessage.insertMessage(m: messageDictionary)
+            var existingMessage: TransactionMessage? = nil
+            
+            if let id = messageDictionary["id"].int {
+                existingMessage = existingMessagesMap[id]
+            }
+            
+            let (message, isNew) = TransactionMessage.insertMessage(
+                m: messageDictionary,
+                existingMessage: existingMessage
+            )
+
             if let message = message {
                 message.setPaymentInvoiceAsPaid()
                 

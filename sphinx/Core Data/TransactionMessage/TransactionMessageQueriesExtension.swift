@@ -46,6 +46,19 @@ extension TransactionMessage {
         return messages
     }
     
+    static func getMessagesWith(ids: [Int]) -> [TransactionMessage] {
+        let predicate = NSPredicate(format: "id IN %@", ids)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
+        
+        return messages
+    }
+    
     static func getAllMessagesFor(
         chat: Chat,
         limit: Int? = nil,

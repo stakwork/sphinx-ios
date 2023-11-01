@@ -262,7 +262,12 @@ extension GroupMembersDataSource : GroupMemberCellDelegate {
         messageBubbleHelper.showLoadingWheel()
         
         API.sharedInstance.requestAction(messageId: message.id, contactId: message.senderId, action: action, callback: { json in
-            if let chat = Chat.insertChat(chat: json["chat"]), let message = TransactionMessage.insertMessage(m: json["message"]).0 {
+            if let chat = Chat.insertChat(
+                chat: json["chat"]
+            ), let message = TransactionMessage.insertMessage(
+                m: json["message"],
+                existingMessage: TransactionMessage.getMessageWith(id: json["id"].intValue)
+            ).0 {
                 completion(chat, message)
                 return
             }

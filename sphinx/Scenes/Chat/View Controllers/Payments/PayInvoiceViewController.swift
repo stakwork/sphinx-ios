@@ -123,7 +123,10 @@ class PayInvoiceViewController: UIViewController {
     
     func createLocalPayment(payment: JSON?) {
         if let payment = payment {
-            if let message = TransactionMessage.insertMessage(m: payment).0 {
+            if let message = TransactionMessage.insertMessage(
+                m: payment,
+                existingMessage: TransactionMessage.getMessageWith(id: payment["id"].intValue)
+            ).0 {
                 message.setPaymentInvoiceAsPaid()
                 shouldDismiss(paymentCreated: true)
             }

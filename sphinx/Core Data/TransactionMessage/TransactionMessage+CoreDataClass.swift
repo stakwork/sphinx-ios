@@ -180,7 +180,6 @@ public class TransactionMessage: NSManagedObject {
         let date = Date.getDateFromString(dateString: m["date"].stringValue) ?? Date()
         let expirationDate = Date.getDateFromString(dateString: m["expiration_date"].stringValue) ?? nil
         
-        let existingMessage = existingMessage ?? getMessageWith(id: id)
         let userId = UserData.sharedInstance.getUserId()
         let incoming = userId != sender
         let messageSeen = (seen ? seen : (existingMessage?.seen ?? !incoming))

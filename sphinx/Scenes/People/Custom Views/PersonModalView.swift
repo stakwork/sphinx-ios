@@ -159,7 +159,10 @@ class PersonModalView: CommonModalView {
             }
             
             API.sharedInstance.sendMessage(params: params, callback: { m in
-                if let _ = TransactionMessage.insertMessage(m: m).0 {
+                if let _ = TransactionMessage.insertMessage(
+                    m: m,
+                    existingMessage: TransactionMessage.getMessageWith(id: m["id"].intValue)
+                ).0 {
                     self.delegate?.shouldDismissVC()
                 }
             }, errorCallback: {

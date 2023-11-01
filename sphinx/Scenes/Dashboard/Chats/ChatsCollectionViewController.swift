@@ -421,11 +421,19 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, Me
     
     func toggleReadUnread(tooltipChatListObject:ChatListCommonObject){
         guard let lastMessage = tooltipChatListObject.lastMessage,
-        let chat = tooltipChatListObject.getChat()
+              let chat = tooltipChatListObject.getChat(),
+              let params = TransactionMessage.getMessageParams(
+                chat: chat,
+                type: TransactionMessage.TransactionMessageType.message
+              )
         else{
             return
         }
-        lastMessage.seen = !lastMessage.seen
+        let desiredState = !lastMessage.seen
+        API.sharedInstance.toggleChatReadUnread(chatId: chat.id, params: params as NSDictionary, shouldMarkAsUnread: desiredState, callback: {success in
+            print(success)
+        })
+        lastMessage.seen = desiredState
         chat.seen = !chat.seen
         tooltipChatListObject.getChat()?.saveChat()
     }

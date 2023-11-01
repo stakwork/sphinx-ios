@@ -449,7 +449,7 @@ extension NewChatTableDataSource {
         var purchaseMessagesMap: [String: [Int: TransactionMessage]] = [:]
         
         for purchaseMessage in purchaseMessages {
-            if let muid = purchaseMessage.muid ?? purchaseMessage.originalMuid, muid.isNotEmpty {
+            if let muid = purchaseMessage.originalMuid ?? purchaseMessage.muid, muid.isNotEmpty {
                 if var _ = purchaseMessagesMap[muid] {
                     purchaseMessagesMap[muid]![purchaseMessage.type] = purchaseMessage
                 } else {

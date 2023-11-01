@@ -411,6 +411,8 @@
 "paid-message.payment-not-supported" = "Items pagos no disponibles en éste dispositivo";
 "loading.paid.message" = "Cargando mensaje...";
 "copy.text" = "Copiar Texto";
+"mark.as.read" = "Marcar como leído";
+"mark.as.unread" = "Marcar como no leído";
 "copy.link" = "Copiar Enlace";
 "copy.pub.key" = "Copiar Clave";
 "copy.call.link" = "Copiar Enlace";

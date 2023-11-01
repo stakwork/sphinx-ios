@@ -9,6 +9,7 @@
 import Foundation
 
 extension NewChatViewController : MessageOptionsVCDelegate {
+     
     
     func shouldShowThreadFor(message: TransactionMessage) {
         if let threadUUID = message.threadUUID {
@@ -48,4 +49,7 @@ extension NewChatViewController : MessageOptionsVCDelegate {
         viewMode = ViewMode.Standard
         chatTableDataSource?.forceReload()
     }
+    
+    //Unused stubs:
+    func shouldToggleReadUnread() {}
 }

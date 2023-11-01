@@ -12,6 +12,7 @@ class ChatsCollectionViewController: UICollectionViewController {
     private var dataSource: DataSource!
     
     private var owner: UserContact!
+    var currentToolTipChatListObject : ChatListCommonObject? = nil
 
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
@@ -283,6 +284,8 @@ extension ChatsCollectionViewController {
 
                 cell.owner = self.owner
                 cell.chatListObject = self.chatListObjects[indexPath.row]
+                cell.delegate = self
+                cell.indexPath = indexPath
 
                 return cell
             }
@@ -363,4 +366,89 @@ extension ChatsCollectionViewController {
         let selectedChatObject = chatListObjects[indexPath.row]
         onChatSelected?(selectedChatObject)
     }
+}
+
+
+extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, MessageOptionsVCDelegate{
+    
+    func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact, indexPath: IndexPath) {
+        print(chatListObject)
+        if let lastMessage = chatListObject.lastMessage,
+           let cell = collectionView.cellForItem(at: indexPath) {
+            
+            if lastMessage.isOutgoing(ownerId: owner.id){
+                return
+            }
+            
+            // Calculate the modifiedCellFrame using the collection view's frame and cell's frame
+            let xOffset = collectionView.contentOffset.x
+            let yOffset = collectionView.contentOffset.y - 178.0
+            let modifiedCellFrame = CGRect(
+                x: cell.frame.minX - xOffset,
+                y: cell.frame.minY - yOffset,
+                width: cell.frame.width,
+                height: cell.frame.height
+            )
+            
+            let bubbleRectAndPath: (CGRect, CGPath) = (modifiedCellFrame, CGPath(rect: CGRect.zero, transform: nil))
+            let messageOptionsVC = MessageOptionsViewController.instantiate(
+                message: lastMessage,
+                purchaseAcceptMessage: nil,
+                delegate: nil,
+                isThreadRow: false,
+                contactsViewIsRead: lastMessage.isSeen(ownerId: owner.id)
+            )
+            messageOptionsVC.delegate = self
+            currentToolTipChatListObject = chatListObject
+            messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
+            messageOptionsVC.modalPresentationStyle = .overCurrentContext
+            self.navigationController?.present(messageOptionsVC, animated: false)
+        }
+    }
+    
+    func shouldToggleReadUnread(){
+        guard let currentToolTipChatListObject = currentToolTipChatListObject else{
+            return
+        }
+        toggleReadUnread(tooltipChatListObject: currentToolTipChatListObject)
+        self.currentToolTipChatListObject = nil
+    }
+    
+    func toggleReadUnread(tooltipChatListObject:ChatListCommonObject){
+        guard let lastMessage = tooltipChatListObject.lastMessage,
+              let chat = tooltipChatListObject.getChat(),
+              let params = TransactionMessage.getMessageParams(
+                chat: chat,
+                type: TransactionMessage.TransactionMessageType.message
+              )
+        else{
+            return
+        }
+        let desiredState = !lastMessage.seen
+        API.sharedInstance.toggleChatReadUnread(chatId: chat.id, params: params as NSDictionary, shouldMarkAsUnread: desiredState == false, callback: {success in
+            print(success)
+        })
+        lastMessage.seen = desiredState
+        chat.seen = !chat.seen
+        tooltipChatListObject.getChat()?.saveChat()
+    }
+    
+    //Unused methods:
+    
+    func shouldDeleteMessage(message: TransactionMessage) {}
+    
+    func shouldReplyToMessage(message: TransactionMessage) {}
+    
+    func shouldBoostMessage(message: TransactionMessage) {}
+    
+    func shouldResendMessage(message: TransactionMessage) {}
+    
+    func shouldFlagMessage(message: TransactionMessage) {}
+    
+    func shouldShowThreadFor(message: TransactionMessage) {}
+    
+    func shouldTogglePinState(message: TransactionMessage, pin: Bool) {}
+    
+    func shouldReloadChat() {}
+
 }

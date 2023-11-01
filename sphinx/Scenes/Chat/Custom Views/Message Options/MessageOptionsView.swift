@@ -18,6 +18,7 @@ import UIKit
     func shouldResendMessage()
     func shouldFlagMessage()
     func shouldTogglePinState(pin: Bool)
+    func shouldToggleReadUnread()
 }
 
 class MessageOptionsView : UIView {
@@ -50,6 +51,8 @@ class MessageOptionsView : UIView {
         message: TransactionMessage?,
         leftTopCorner: CGPoint,
         rightBottomCorner: CGPoint,
+        isThreadRow: Bool,
+        contactsViewIsRead:Bool? = nil,
         delegate: MessageOptionsDelegate
     ) {
         super.init(frame: CGRect.zero)
@@ -63,7 +66,7 @@ class MessageOptionsView : UIView {
         
         let incoming = message.isIncoming()
         let coordinates = getCoordinates(leftTopCorner: leftTopCorner, rightBottomCorner: rightBottomCorner)
-        let messageOptions = getActionsMenuOptions()
+        let messageOptions = getActionsMenuOptions(isThreadRow: isThreadRow,contactsViewIsRead: contactsViewIsRead)
         let optionsCount = messageOptions.count
 
         let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(coordinates: coordinates, optionsCount: optionsCount, incoming: incoming)
@@ -113,11 +116,14 @@ class MessageOptionsView : UIView {
         return (menuRect, verticalPosition, horizontalPosition)
     }
     
-    func getActionsMenuOptions() -> [TransactionMessage.ActionsMenuOption] {
+    func getActionsMenuOptions(
+        isThreadRow: Bool,
+        contactsViewIsRead:Bool? = nil
+    ) -> [TransactionMessage.ActionsMenuOption] {
         guard let message = message else {
             return []
         }
-        return message.getActionsMenuOptions()
+        return message.getActionsMenuOptions(isThreadRow: isThreadRow,contactsViewIsRead: contactsViewIsRead)
     }
     
     func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {
@@ -269,6 +275,8 @@ extension MessageOptionsView : MessageOptionViewDelegate {
             delegate?.shouldTogglePinState(pin: true)
         case .Unpin:
             delegate?.shouldTogglePinState(pin: false)
+        case .ToggleReadUnread:
+            delegate?.shouldToggleReadUnread()
         default:
             break
         }

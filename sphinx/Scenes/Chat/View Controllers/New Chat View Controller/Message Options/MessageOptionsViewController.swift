@@ -17,6 +17,7 @@ import UIKit
     func shouldShowThreadFor(message:TransactionMessage)
     func shouldTogglePinState(message: TransactionMessage, pin: Bool)
     func shouldReloadChat()
+    func shouldToggleReadUnread()
 }
 
 class MessageOptionsViewController: UIViewController {
@@ -28,16 +29,23 @@ class MessageOptionsViewController: UIViewController {
     
     var message: TransactionMessage? = nil
     var purchaseAcceptMessage: TransactionMessage? = nil
+    var isThreadRow: Bool = false
+    var contactsViewIsRead : Bool? = nil
+
     
     static func instantiate(
         message: TransactionMessage,
         purchaseAcceptMessage: TransactionMessage?,
-        delegate: MessageOptionsVCDelegate?
+        delegate: MessageOptionsVCDelegate?,
+        isThreadRow: Bool,
+        contactsViewIsRead:Bool? = nil
     ) -> MessageOptionsViewController {
         let viewController = StoryboardScene.Chat.messageOptionsViewController.instantiate()
         viewController.message = message
         viewController.purchaseAcceptMessage = purchaseAcceptMessage
         viewController.delegate = delegate
+        viewController.isThreadRow = isThreadRow
+        viewController.contactsViewIsRead = contactsViewIsRead
         return viewController
     }
     
@@ -149,6 +157,8 @@ class MessageOptionsViewController: UIViewController {
             message: message,
             leftTopCorner: leftTopCorner,
             rightBottomCorner: rightBottomCorner,
+            isThreadRow: isThreadRow,
+            contactsViewIsRead: contactsViewIsRead,
             delegate: self
         )
         self.view.addSubview(menuView)
@@ -243,4 +253,10 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
             delegate?.shouldShowThreadFor(message: message)
         }
     }
+    
+    //Unused Methods
+    func shouldToggleReadUnread() {
+        delegate?.shouldToggleReadUnread()
+    }
+    
 }

@@ -1,5 +1,8 @@
 import UIKit
 
+protocol ChatListCollectionViewCellDelegate : NSObject{
+    func didLongPressOnCell(chatListObject:ChatListCommonObject,owner:UserContact,indexPath:IndexPath)
+}
 
 class ChatListCollectionViewCell: UICollectionViewCell {
     
@@ -20,6 +23,7 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var mentionsBadgeContainer: UIView!
     @IBOutlet weak var mentionsBadgeLabel: UILabel!
     
+    var delegate : ChatListCollectionViewCellDelegate? = nil
     
     var chatListObject: ChatListCommonObject? {
         didSet {
@@ -32,6 +36,7 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     }
     
     var owner: UserContact!
+    var indexPath: IndexPath? = nil
 }
 
 
@@ -101,6 +106,9 @@ extension ChatListCollectionViewCell {
         muteImageView.isHidden = true
         inviteIcon.isHidden = true
         invitePriceContainer.isHidden = true
+        
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        self.addGestureRecognizer(lpgr)
     }
     
     
@@ -296,6 +304,22 @@ extension ChatListCollectionViewCell {
         } else {
             invitePriceContainer.isHidden = true
         }
+    }
+    
+    @objc func handleLongPress(){
+        guard let delegate = delegate,
+              let chatListObject = chatListObject,
+            let indexPath = indexPath else{
+            return
+        }
+        delegate.didLongPressOnCell(chatListObject: chatListObject,owner:owner,indexPath: indexPath)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
+        chatListObject = nil
+        indexPath = nil
     }
 }
 

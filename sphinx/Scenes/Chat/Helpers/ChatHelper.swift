@@ -96,6 +96,66 @@ class ChatHelper {
         
         return nil
     }
+    
+    public static func getMessageBubbleRectAndPath(
+        collectionView: UICollectionView,
+        indexPath: IndexPath,
+        contentView: UIView,
+        bubbleViewRect: CGRect
+    ) -> (CGRect, CGPath)? {
+        let screenSize = UIScreen.main.bounds.size
+        let contentHeightThreshold = screenSize.height - (1.1 * bubbleViewRect.size.height)
+        
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            let cellRectInCollection = collectionView.layoutAttributesForItem(at: indexPath)?.frame ?? CGRect.zero
+            let cellFrameInContentView = collectionView.convert(cellRectInCollection, to: contentView)
+            
+            let cellY = cellFrameInContentView.origin.y
+            
+            let contentHeight = bubbleViewRect.size.height
+
+            // Check if content height exceeds the threshold
+            if contentHeight > contentHeightThreshold {
+                // Calculate the vertical position to center the bubble
+                let centerY = cellY + (cellFrameInContentView.size.height / 2) - (contentHeight / 2)
+                
+                let bubbleRect = CGRect(
+                    x: bubbleViewRect.origin.x,
+                    y: centerY - 400.0,
+                    width: bubbleViewRect.size.width,
+                    height: contentHeight
+                )
+                
+                return (
+                    bubbleRect,
+                    UIBezierPath(
+                        roundedRect: CGRect(origin: CGPoint(x: 0.0, y: -400.0), size: bubbleRect.size),
+                        cornerRadius: MessageTableCellState.kBubbleCornerRadius
+                    ).cgPath
+                )
+            } else {
+                // Content height is within the threshold, position at the top
+                let bubbleRect = CGRect(
+                    x: bubbleViewRect.origin.x,
+                    y: cellY + bubbleViewRect.origin.y,
+                    width: bubbleViewRect.size.width,
+                    height: bubbleViewRect.size.height
+                )
+                
+                return (
+                    bubbleRect,
+                    UIBezierPath(
+                        roundedRect: CGRect(origin: CGPoint.zero, size: bubbleRect.size),
+                        cornerRadius: MessageTableCellState.kBubbleCornerRadius
+                    ).cgPath
+                )
+            }
+        }
+        
+        return nil
+    }
+
+
 
     public static func removeDuplicatedContainedFrom(
         urlRanges: [NSRange]

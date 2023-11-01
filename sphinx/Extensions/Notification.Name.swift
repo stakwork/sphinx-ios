@@ -21,4 +21,5 @@ extension Notification.Name {
     static let refreshFeedUI = Notification.Name(rawValue: "refreshFeedUI")
     static let onContactsAndChatsChanged = Notification.Name("onContactsAndChatsChanged")
     static let onSizeConfigurationChanged = Notification.Name("onSizeConfigurationChanged")
+    static let webViewImageClicked = Notification.Name("webViewImageClicked")
 }

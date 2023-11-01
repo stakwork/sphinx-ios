@@ -51,11 +51,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LEz-09-WKf">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="330"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="307"/>
                     <color key="backgroundColor" name="ThreadOriginalMsg"/>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lOY-J0-M4B">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="385"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="362"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-0O-AcM">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
@@ -89,11 +89,14 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yyz-03-k2n">
-                            <rect key="frame" x="0.0" y="230" width="393" height="80"/>
+                            <rect key="frame" x="0.0" y="230" width="393" height="57"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text message to see how it works with more than one line" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZo-P2-gjT">
-                                    <rect key="frame" x="16" y="16" width="361" height="48"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="This is a large text message to see how it works with more than one line" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZo-P2-gjT">
+                                    <rect key="frame" x="16" y="12" width="334" height="33"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="33" id="294-bE-efd"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                     <color key="textColor" name="MainBottomIcons"/>
                                     <nil key="highlightedColor"/>
@@ -101,14 +104,14 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="RZo-P2-gjT" firstAttribute="top" secondItem="Yyz-03-k2n" secondAttribute="top" constant="16" id="7Ec-Ru-j4g"/>
-                                <constraint firstAttribute="bottom" secondItem="RZo-P2-gjT" secondAttribute="bottom" constant="16" id="GxV-1x-YNP"/>
-                                <constraint firstAttribute="trailing" secondItem="RZo-P2-gjT" secondAttribute="trailing" constant="16" id="fm1-SL-Sx9"/>
+                                <constraint firstItem="RZo-P2-gjT" firstAttribute="top" secondItem="Yyz-03-k2n" secondAttribute="top" constant="12" id="7Ec-Ru-j4g"/>
+                                <constraint firstAttribute="bottom" secondItem="RZo-P2-gjT" secondAttribute="bottom" constant="12" id="GxV-1x-YNP"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RZo-P2-gjT" secondAttribute="trailing" constant="16" id="fm1-SL-Sx9"/>
                                 <constraint firstItem="RZo-P2-gjT" firstAttribute="leading" secondItem="Yyz-03-k2n" secondAttribute="leading" constant="16" id="hFm-Co-m6O"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Mc-hi-fEg">
-                            <rect key="frame" x="0.0" y="310" width="393" height="20"/>
+                            <rect key="frame" x="0.0" y="287" width="393" height="20"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHJ-FE-zGc">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
@@ -147,7 +150,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ay-3A-NxK">
-                            <rect key="frame" x="0.0" y="330" width="393" height="20"/>
+                            <rect key="frame" x="0.0" y="307" width="393" height="20"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0W-tX-cfd">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
@@ -186,7 +189,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VLf-a3-FTa">
-                            <rect key="frame" x="0.0" y="350" width="393" height="35"/>
+                            <rect key="frame" x="0.0" y="327" width="393" height="35"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Md2-Pb-250">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="48"/>
@@ -252,7 +255,7 @@
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-mI-voQ">
-                    <rect key="frame" x="0.0" y="385" width="393" height="40"/>
+                    <rect key="frame" x="0.0" y="362" width="393" height="40"/>
                     <color key="backgroundColor" name="SentMsgBG"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4fj-XE-lqs"/>

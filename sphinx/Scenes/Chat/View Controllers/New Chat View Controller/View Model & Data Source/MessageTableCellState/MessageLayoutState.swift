@@ -61,6 +61,7 @@ struct BubbleMessageLayoutState {
         var showSendingIcon: Bool
         var showBoltIcon: Bool
         var showFailedContainer: Bool
+        var errorMessage: String
         var showLockIcon: Bool
         var showExpiredSent: Bool
         var showExpiredReceived: Bool
@@ -74,6 +75,7 @@ struct BubbleMessageLayoutState {
             showSendingIcon: Bool,
             showBoltIcon: Bool,
             showFailedContainer: Bool,
+            errorMessage: String,
             showLockIcon: Bool,
             showExpiredSent: Bool,
             showExpiredReceived: Bool,
@@ -86,6 +88,7 @@ struct BubbleMessageLayoutState {
             self.showSendingIcon = showSendingIcon
             self.showBoltIcon = showBoltIcon
             self.showFailedContainer = showFailedContainer
+            self.errorMessage = errorMessage
             self.showLockIcon = showLockIcon
             self.showExpiredSent = showExpiredSent
             self.showExpiredReceived = showExpiredReceived

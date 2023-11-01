@@ -18,9 +18,10 @@ extension NewMessageTableViewCell {
         
         if let messageContent = messageContent {
             
+            textMessageView.isHidden = false
+            
             if messageContent.linkMatches.isEmpty && searchingTerm == nil {
                 messageLabel.attributedText = nil
-                
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {
@@ -47,11 +48,10 @@ extension NewMessageTableViewCell {
                     urlRanges.append(match.range)
                 }
                 
+                messageLabel.text = ""
                 messageLabel.attributedText = attributedString
                 messageLabel.isUserInteractionEnabled = true
             }
-            
-            textMessageView.isHidden = false
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(gesture:)))
             
@@ -86,7 +86,7 @@ extension NewMessageTableViewCell {
         audioDelegate: AudioMessageViewDelegate
     ) {
         if let threadMessages = threadMessages {
-            mediaContentHeightConstraint.constant = 170.0
+            setMediaContentHeightTo(height: 170.0)
             
             messageThreadView.configureWith(
                 threadMessages: threadMessages,
@@ -100,6 +100,18 @@ extension NewMessageTableViewCell {
             )
             
             messageThreadViewContainer.isHidden = false
+        } else {
+            setMediaContentHeightTo(
+                height: (UIScreen.main.bounds.width - MessageTableCellState.kRowLeftMargin - MessageTableCellState.kRowRightMargin) * 0.7
+            )
+        }
+    }
+    
+    func setMediaContentHeightTo(
+        height: CGFloat
+    ) {
+        if mediaContentHeightConstraint.constant != height {
+            mediaContentHeightConstraint.constant = height
         }
     }
     
@@ -233,6 +245,7 @@ extension NewMessageTableViewCell {
                 botWebViewData: botWebViewData
             )
             botResponseView.isHidden = false
+            botResponseView.messageId = self.messageId
             
             if let botWebViewData = botWebViewData {
                 botResponseViewHeightConstraint.constant = botWebViewData.height

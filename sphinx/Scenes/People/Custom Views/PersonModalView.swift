@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import CoreData
 
 class PersonModalView: CommonModalView {
 
@@ -18,6 +19,9 @@ class PersonModalView: CommonModalView {
     @IBOutlet weak var initialMessageField: UITextField!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    
+    var contactResultsController: NSFetchedResultsController<UserContact>!
+    var timeOutTimer : Timer? = nil
     
     var loading = false {
         didSet {
@@ -90,6 +94,16 @@ class PersonModalView: CommonModalView {
         super.modalDidShow()
     }
     
+    @objc func handleKeyExchangeTimeout() {
+        cleanupKeyExchange()
+        showErrorMessage()
+    }
+    
+    func cleanupKeyExchange() {
+        timeOutTimer?.invalidate()
+        resetFetchedResultsControllers()
+    }
+    
     @IBAction func connectButtonTouched() {
         buttonLoading = true
         
@@ -109,13 +123,28 @@ class PersonModalView: CommonModalView {
             let routeHint = authInfo?.jsonBody["owner_route_hint"].string ?? ""
             let contactKey = authInfo?.jsonBody["owner_contact_key"].string ?? ""
             
-            UserContactsHelper.createContact(nickname: nickname,pubKey: pubkey, routeHint: routeHint, contactKey: contactKey, callback: { (success, _) in
-                if success {
-                    self.sendInitialMessage()
-                    return
+            UserContactsHelper.createContact(
+                nickname: nickname,
+                pubKey: pubkey,
+                routeHint: routeHint,
+                contactKey: contactKey,
+                callback: { (success, contact) in
+                    
+                    if let contactId = contact?.id, success {
+                        self.configureFetchResultsControllerFor(contactId: contactId)
+                        
+                        self.timeOutTimer = Timer.scheduledTimer(
+                            timeInterval: 30.0,
+                            target: self,
+                            selector: #selector(self.handleKeyExchangeTimeout),
+                            userInfo: nil,
+                            repeats: false
+                        )
+                        return
+                    }
+                    self.showErrorMessage()
                 }
-                self.showErrorMessage()
-            })
+            )
         }
     }
     
@@ -142,7 +171,7 @@ class PersonModalView: CommonModalView {
     }
     
     func showErrorMessage() {
-        showMessage(message: "generic.error".localized, color: UIColor.Sphinx.BadgeRed)
+        showMessage(message: "generic.error.message".localized, color: UIColor.Sphinx.BadgeRed)
     }
     
     func showMessage(message: String, color: UIColor) {
@@ -154,5 +183,45 @@ class PersonModalView: CommonModalView {
 extension PersonModalView : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.endEditing(true)
+    }
+}
+
+extension PersonModalView: NSFetchedResultsControllerDelegate {
+    func configureFetchResultsControllerFor(
+        contactId: Int
+    ) {
+        let fetchRequest = UserContact.FetchRequests.encryptedContactWith(id: contactId)
+
+        contactResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        contactResultsController.delegate = self
+        
+        do {
+            try contactResultsController.performFetch()
+        } catch {}
+    }
+    
+    func resetFetchedResultsControllers() {
+        contactResultsController = nil
+    }
+
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference
+    ) {
+        if
+            let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
+            let firstSection = resultController.sections?.first {
+            
+            if let contacts = firstSection.objects as? [UserContact], let _ = contacts.first {
+                sendInitialMessage()
+                cleanupKeyExchange()
+            }
+        }
     }
 }

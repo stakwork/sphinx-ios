@@ -31,6 +31,7 @@ class MessageOptionsViewController: UIViewController {
     var purchaseAcceptMessage: TransactionMessage? = nil
     var isThreadRow: Bool = false
     var contactsViewIsRead : Bool? = nil
+
     
     static func instantiate(
         message: TransactionMessage,

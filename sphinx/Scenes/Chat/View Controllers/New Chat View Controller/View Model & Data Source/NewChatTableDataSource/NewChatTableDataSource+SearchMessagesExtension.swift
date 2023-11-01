@@ -114,7 +114,9 @@ extension NewChatTableDataSource {
         searchMatches = searchMatches.reversed()
         
         ///should scroll to first results after current scroll position
-        currentSearchMatchIndex = searchMatches.firstIndex(where: { $0.0 >= (tableView.indexPathsForVisibleRows?.first?.row ?? 0) }) ?? 0
+        currentSearchMatchIndex = searchMatches.firstIndex(
+            where: { $0.0 >= (tableView.indexPathsForVisibleRows?.first?.row ?? 0) }
+        ) ?? 0
         
         ///Show search results
         DispatchQueue.main.async {

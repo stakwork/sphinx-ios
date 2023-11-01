@@ -232,22 +232,24 @@ extension SphinxSocketManager {
             let _ = UserContact.getOrCreateContact(contact: JSON(contactJson))
         }
         
-        if let message = TransactionMessage.insertMessage(m: messageJson).0 {
-            
-            if let chat = message.chat {
-                delegate?.didUpdateChatFromMessage?(chat)
+        DelayPerformedHelper.performAfterDelay(seconds: isConfirmation ? 1.0 : 0.0, completion: {
+            if let message = TransactionMessage.insertMessage(m: messageJson).0 {
+                
+                if let chat = message.chat {
+                    self.delegate?.didUpdateChatFromMessage?(chat)
+                }
+                
+                self.setSeen(message: message, value: false)
+                self.updateBalanceIfNeeded(type: type)
+                
+                message.setPaymentInvoiceAsPaid()
+                
+                if !isConfirmation {
+                    let _ = self.showBubbleIfNeeded(message: message)
+                    SoundsPlayer.playHaptic()
+                }
             }
-            
-            setSeen(message: message, value: false)
-            updateBalanceIfNeeded(type: type)
-            
-            message.setPaymentInvoiceAsPaid()
-            
-            if !isConfirmation {
-                let _ = showBubbleIfNeeded(message: message)
-                SoundsPlayer.playHaptic()
-            }
-        }
+        })
     }
     
     func updateBalanceIfNeeded(type: String) {

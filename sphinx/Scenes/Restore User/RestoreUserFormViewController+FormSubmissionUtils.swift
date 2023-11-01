@@ -104,7 +104,7 @@ extension RestoreUserFormViewController {
         userData.getAndSaveTransportKey(completion: { [weak self] _ in
             guard let self = self else { return }
             
-            self.userData.getOrCreateHMACKey() { [weak self] in
+            self.userData.getOrCreateHMACKey(forceGet: true) { [weak self] in
                 guard let self = self else { return }
                 
                 self.goToWelcomeCompleteScene()

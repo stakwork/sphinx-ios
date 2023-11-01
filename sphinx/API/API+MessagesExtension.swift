@@ -27,7 +27,7 @@ extension API {
             switch response.result {
             case .success(let data):
                 if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
+                    if let response = json["response"] as? NSDictionary {
                         callback(JSON(response))
                     } else {
                         errorCallback()
@@ -132,7 +132,7 @@ extension API {
     ) {
         
         guard let request = getURLRequest(route: "/payment", params: params as NSDictionary?, method: "POST") else {
-            callback(false)
+            errorCallback("Unknown reason")
             return
         }
         
@@ -194,11 +194,11 @@ extension API {
     public func payInvoice(
         parameters: [String : AnyObject],
         callback: @escaping PayInvoiceCallback,
-        errorCallback: @escaping EmptyCallback
+        errorCallback: @escaping ErrorCallback
     ) {
         
         guard let request = getURLRequest(route: "/invoices", params: parameters as NSDictionary?, method: "PUT") else {
-            errorCallback()
+            errorCallback("Unknown reason")
             return
         }
         
@@ -208,12 +208,14 @@ extension API {
                 if let json = data as? NSDictionary {
                     if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
                         callback(JSON(response))
-                    } else {
-                        errorCallback()
+                        return
                     }
                 }
+                errorCallback(
+                    ((data as? NSDictionary)?["error"] as? String) ?? "Unknown reason"
+                )
             case .failure(_):
-                errorCallback()
+                errorCallback("Unknown reason")
             }
         }
     }

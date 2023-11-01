@@ -57,6 +57,15 @@ class FullScreenImageView: UIView {
         super.layoutSubviews()
     }
     
+    func showWebViewImage(url:URL){
+        loading = true
+        pictureImageView.image = nil
+        contentView.isHidden = false
+        isHidden = false
+        
+        self.loadImage(webViewImageURL: url)
+    }
+    
     func showImage(message: TransactionMessage) {
         loading = true
         pictureImageView.image = nil
@@ -83,6 +92,22 @@ class FullScreenImageView: UIView {
             self.contentView.isHidden = true
             self.alpha = 0.0
         })
+    }
+    
+    func loadImage(webViewImageURL: URL) {
+        URLSession.shared.dataTask(with: webViewImageURL) { data, response, error in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async { [self] in
+                    // Test displaying image with a simple UIImageView
+                    let webImageView = UIImageView(image: image)
+                    webImageView.frame = self.bounds // Adjust frame as necessary
+                    webImageView.contentMode = .scaleAspectFit
+                    self.addSubview(webImageView)
+                }
+            } else if let error = error {
+                print("Error loading image: \(error)")
+            }
+        }.resume()
     }
     
     func loadImage(message: TransactionMessage?) {

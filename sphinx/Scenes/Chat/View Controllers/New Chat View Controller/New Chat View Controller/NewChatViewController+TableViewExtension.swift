@@ -48,6 +48,18 @@ extension NewChatViewController {
         }
         
         chatViewModel.setDataSource(chatTableDataSource)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleImageNotification(_:)), name: .webViewImageClicked, object: nil)
+    }
+    
+    @objc func handleImageNotification(_ notification: Notification) {
+        if let imageURL = notification.userInfo?["imageURL"] as? URL,
+           let messageId = notification.userInfo?["messageId"] as? Int{
+            print("Received imageURL: \(imageURL)")
+            shouldGoToAttachmentViewFor(messageId: messageId, isPdf: false, webViewImageURL: imageURL)
+        }
+        else{
+            NewMessageBubbleHelper().showGenericMessageView(text: "Error pulling image data.")
+        }
     }
     
     func getContactImageView() -> UIImageView? {
@@ -111,9 +123,10 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
     
     func shouldGoToAttachmentViewFor(
         messageId: Int,
-        isPdf: Bool
+        isPdf: Bool,
+        webViewImageURL:URL?=nil
     ) {
-        if let attachmentFullScreenVC = AttachmentFullScreenViewController.instantiate(messageId: messageId, animated: isPdf) {
+        if let attachmentFullScreenVC = AttachmentFullScreenViewController.instantiate(messageId: messageId, animated: isPdf, webViewImageUrl: webViewImageURL) {
             self.navigationController?.present(attachmentFullScreenVC, animated: isPdf)
         }
     }
@@ -206,16 +219,14 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 self.messageMenuData = MessageTableCellState.MessageMenuData(
                     messageId: messageId,
                     bubbleRect: bubbleViewRect,
-                    indexPath: indexPath,
-                    isThreadRow: isThreadRow
+                    indexPath: indexPath
                 )
                 self.view.endEditing(true)
             } else {
                 self.showMessageMenuFor(
                     messageId: messageId,
                     indexPath: indexPath,
-                    bubbleViewRect: bubbleViewRect,
-                    isThreadRow: isThreadRow
+                    bubbleViewRect: bubbleViewRect
                 )
             }
         })
@@ -298,8 +309,7 @@ extension NewChatViewController {
             let messageOptionsVC = MessageOptionsViewController.instantiate(
                 message: message,
                 purchaseAcceptMessage: message.getPurchaseAcceptItem(),
-                delegate: self,
-                isThreadRow: isThreadRow
+                delegate: self
             )
             
             messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)

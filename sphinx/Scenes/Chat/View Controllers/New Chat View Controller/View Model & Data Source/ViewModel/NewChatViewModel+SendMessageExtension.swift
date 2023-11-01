@@ -115,6 +115,7 @@ extension NewChatViewModel {
     func sendMessage(
         provisionalMessage: TransactionMessage?,
         text: String,
+        isResend: Bool = false,
         botAmount: Int = 0,
         completion: @escaping (Bool) -> ()
     ) {
@@ -134,7 +135,7 @@ extension NewChatViewModel {
         }
         
         sendMessage(
-            provisionalMessage: provisionalMessage,
+            provisionalMessage: isResend ? nil : provisionalMessage,
             params: params,
             completion: completion
         )
@@ -157,6 +158,7 @@ extension NewChatViewModel {
             }
             
             if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
+                message.managedObjectContext?.saveContext()
                 message.setPaymentInvoiceAsPaid()
                 
                 self.insertSentMessage(

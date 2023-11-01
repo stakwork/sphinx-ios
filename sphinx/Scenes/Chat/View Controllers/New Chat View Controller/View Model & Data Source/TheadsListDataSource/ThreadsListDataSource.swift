@@ -185,6 +185,10 @@ class ThreadsListDataSource : NSObject {
             }
         }
         
+        threadTableCellStateArray = threadTableCellStateArray.sorted(by: {
+            return $0.threadMessages.last?.date ?? Date() > $1.threadMessages.last?.date ?? Date()
+        })
+        
         updateSnapshot()
     }
     

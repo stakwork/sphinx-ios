@@ -323,11 +323,22 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ),
-           let message = tableCellState.1.threadOriginalMessage ?? tableCellState.1.message,
-           let url = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url,
-           let mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey ?? tableCellState.1.messageMedia?.mediaKey
-        {
+        ) {
+            
+            var message = tableCellState.1.message
+            var url = tableCellState.1.messageMedia?.url
+            var mediaKey = tableCellState.1.messageMedia?.mediaKey
+            
+            if messageId == tableCellState.1.threadOriginalMessage?.id {
+                message = tableCellState.1.threadOriginalMessage
+                url = tableCellState.1.threadOriginalMessageMedia?.url
+                mediaKey = tableCellState.1.threadOriginalMessageMedia?.mediaKey
+            }
+            
+            guard let message = message, let url = url, let mediaKey = mediaKey else {
+                return
+            }
+            
             MediaLoader.loadVideo(url: url, message: message, mediaKey: mediaKey, completion: { (messageId, data, image) in
                 let updatedMediaData = MessageTableCellState.MediaData(
                     image: image,
@@ -350,9 +361,18 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
-        ),
-           let url = tableCellState.1.threadOriginalMessageMedia?.url ?? tableCellState.1.messageMedia?.url
-        {
+        ) {
+            
+            var url = tableCellState.1.messageMedia?.url
+            
+            if messageId == tableCellState.1.threadOriginalMessage?.id {
+                url = tableCellState.1.threadOriginalMessageMedia?.url
+            }
+            
+            guard let url = url else {
+                return
+            }
+            
             GiphyHelper.getGiphyDataFrom(url: url.absoluteString, messageId: messageId, completion: { (data, messageId) in
                 DispatchQueue.main.async {
                     if let data = data {
@@ -392,7 +412,7 @@ extension NewChatTableDataSource : NewMessageTableViewCellDelegate {
                         DispatchQueue.main.async {
                             var snapshot = self.dataSource.snapshot()
                             snapshot.reloadItems([tableCellState.1])
-                            self.dataSource.apply(snapshot, animatingDifferences: false)
+                            self.dataSource.apply(snapshot, animatingDifferences: true)
                         }
                     }
                     
@@ -510,7 +530,7 @@ extension NewChatTableDataSource {
                 DispatchQueue.main.async {
                     var snapshot = self.dataSource.snapshot()
                     snapshot.reloadItems([tableCellState.1])
-                    self.dataSource.apply(snapshot, animatingDifferences: false)
+                    self.dataSource.apply(snapshot, animatingDifferences: true)
                 }
             }
         }
@@ -538,7 +558,7 @@ extension NewChatTableDataSource {
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
                 snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }
@@ -557,7 +577,7 @@ extension NewChatTableDataSource {
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
                 snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }
@@ -577,7 +597,7 @@ extension NewChatTableDataSource {
             DispatchQueue.main.async {
                 var snapshot = self.dataSource.snapshot()
                 snapshot.reloadItems([tableCellState.1])
-                self.dataSource.apply(snapshot, animatingDifferences: false)
+                self.dataSource.apply(snapshot, animatingDifferences: true)
             }
         }
     }
@@ -656,7 +676,7 @@ extension NewChatTableDataSource {
                 if messageMedia.isVideo, let data = mediaCached.data {
                     delegate?.shouldGoToVideoPlayerFor(messageId: messageId, with: data)
                 } else {
-                    delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf)
+                    delegate?.shouldGoToAttachmentViewFor(messageId: messageId, isPdf: messageMedia.isPdf, webViewImageURL: nil)
                 }
             }
         }

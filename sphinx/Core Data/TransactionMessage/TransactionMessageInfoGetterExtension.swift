@@ -478,6 +478,7 @@ extension TransactionMessage {
         return invoice?.getAmountString() ?? "0"
     }
     
+
     func getActionsMenuOptions(
         isThreadRow: Bool = false,
         contactsViewIsRead: Bool? = nil
@@ -553,17 +554,6 @@ extension TransactionMessage {
                     materialIconName: "",
                     iconImage: nil,
                     label:  "reply".localized
-                )
-            )
-        }
-        
-        if isThreadRow {
-            options.append(
-                .init(
-                    tag: MessageActionsItem.ShowThread,
-                    materialIconName: "forum",
-                    iconImage: nil,
-                    label: "show.thread".localized
                 )
             )
         }

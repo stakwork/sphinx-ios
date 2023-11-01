@@ -178,10 +178,10 @@ extension NewQRScannerViewController {
 
         API.sharedInstance.payInvoice(parameters: parameters, callback: { payment in
             AlertHelper.showAlert(title: "generic.success.title".localized, message: "invoice.paid".localized)
-        }, errorCallback: {
+        }, errorCallback: { error in
             self.invoiceLoading = false
             
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
+            AlertHelper.showAlert(title: "generic.error.title".localized, message: error, completion: {
                 self.animatePayingContainer(show: false)
             })
         })

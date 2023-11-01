@@ -58,6 +58,8 @@ extension NewChatTableDataSource {
         let snapshot = makeSnapshotForCurrentState()
 
         DispatchQueue.main.async {
+            CoreDataManager.sharedManager.saveContext()
+            
             self.saveSnapshotCurrentState()
             self.dataSource.apply(snapshot, animatingDifferences: false)
             self.restoreScrollLastPosition()
@@ -286,15 +288,15 @@ extension NewChatTableDataSource {
         return filteredThreadMessages
     }
     
+    func forceReload() {
+        processMessages(messages: messagesArray)
+    }
+    
     func getMessagesCount() -> Int {
         return (messageTableCellStateArray.filter {
             var mutableState = $0
             return mutableState.isMessageRow
         }).count
-    }
-    
-    func forceReload() {
-        processMessages(messages: messagesArray)
     }
     
     func getNewMessageCountFor(
@@ -511,6 +513,10 @@ extension NewChatTableDataSource {
                 }
             }
         }
+        
+        threadMessagesMap = threadMessagesMap.filter({
+            $0.value.count > 1
+        })
         
         return threadMessagesMap
     }

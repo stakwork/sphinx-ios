@@ -114,14 +114,10 @@ extension DashboardVideoFeedCollectionViewController {
         func hash(into hasher: inout Hasher) {
             if let contentFeed = self.feedEntity {
                 hasher.combine(contentFeed.feedID)
-                hasher.combine(contentFeed.title)
-                hasher.combine(contentFeed.feedURL?.absoluteString)
-                hasher.combine(contentFeed.videosArray.count)
             }
             
             if let episode = self.episodeEntity {
                 hasher.combine(episode.videoID)
-                hasher.combine(episode.title)
             }
         }
     }

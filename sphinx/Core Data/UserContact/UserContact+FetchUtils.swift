@@ -37,6 +37,17 @@ extension UserContact {
             )
         }
         
+        public static func encryptedContactWith(id: Int) -> NSPredicate {
+            let keyword = "=="
+            let formatSpecifier = "%i"
+
+            return NSPredicate(
+                format: "%K \(keyword) \(formatSpecifier) AND contactKey != NULL",
+                "id",
+                id
+            )
+        }
+        
         public static func chatList() -> NSPredicate {
             if GroupsPinManager.sharedInstance.isStandardPIN {
                 return NSPredicate(
@@ -135,6 +146,15 @@ extension UserContact {
             let request: NSFetchRequest<UserContact> = baseFetchRequest()
             
             request.predicate = Predicates.matching(id: id)
+            request.sortDescriptors = []
+
+            return request
+        }
+        
+        public static func encryptedContactWith(id: Int) -> NSFetchRequest<UserContact> {
+            let request: NSFetchRequest<UserContact> = baseFetchRequest()
+            
+            request.predicate = Predicates.encryptedContactWith(id: id)
             request.sortDescriptors = []
 
             return request

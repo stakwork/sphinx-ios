@@ -11,6 +11,9 @@
         <array key="MaterialIcons-Regular.ttf">
             <string>MaterialIcons-Regular</string>
         </array>
+        <array key="Roboto-Italic.ttf">
+            <string>Roboto-Italic</string>
+        </array>
         <array key="Roboto-Medium.ttf">
             <string>Roboto-Medium</string>
         </array>
@@ -119,22 +122,49 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Atd-K5-zNf">
-                    <rect key="frame" x="300.33333333333331" y="0.0" width="74.666666666666686" height="17"/>
+                    <rect key="frame" x="202" y="0.0" width="173" height="17"/>
                     <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="RA9-ez-Aki">
+                            <rect key="frame" x="0.0" y="0.0" width="94.333333333333329" height="17"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRW-Za-E1A">
+                                    <rect key="frame" x="0.0" y="0.0" width="12" height="17"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="12"/>
+                                    <color key="textColor" name="BadgeRed"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Failed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBP-CU-thj">
+                                    <rect key="frame" x="16" y="0.0" width="70.333333333333329" height="17"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Italic" family="Roboto" pointSize="10"/>
+                                    <color key="textColor" name="PrimaryRed"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovH-b9-LKr">
+                                    <rect key="frame" x="90.333333333333314" y="0.0" width="4" height="17"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="4" id="J34-rO-fAn"/>
+                                        <constraint firstAttribute="height" constant="17" id="eCq-jd-2mN"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                        </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="flash_on" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5WX-MN-zYk">
-                            <rect key="frame" x="0.0" y="0.0" width="12" height="17"/>
+                            <rect key="frame" x="98.333333333333314" y="0.0" width="12" height="17"/>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="12"/>
                             <color key="textColor" name="PrimaryGreen"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="usL-tn-6iZ">
-                            <rect key="frame" x="16" y="0.0" width="12" height="17"/>
+                            <rect key="frame" x="114.33333333333331" y="0.0" width="12" height="17"/>
                             <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="12"/>
                             <color key="textColor" name="SecondaryText"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="06:05 AM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Izc-1S-aLu">
-                            <rect key="frame" x="31.999999999999996" y="0.0" width="42.666666666666657" height="17"/>
+                            <rect key="frame" x="130.33333333333331" y="0.0" width="42.666666666666657" height="17"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                             <color key="textColor" name="SecondaryText"/>
@@ -143,29 +173,9 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </stackView>
-                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="RA9-ez-Aki">
-                    <rect key="frame" x="0.0" y="0.0" width="86.333333333333329" height="17"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRW-Za-E1A">
-                            <rect key="frame" x="0.0" y="0.0" width="12" height="17"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="12"/>
-                            <color key="textColor" name="BadgeRed"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Failed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBP-CU-thj">
-                            <rect key="frame" x="16" y="0.0" width="70.333333333333329" height="17"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
-                            <color key="textColor" name="SecondaryText"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                </stackView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="RA9-ez-Aki" secondAttribute="bottom" id="1nK-Th-oNq"/>
                 <constraint firstAttribute="bottom" secondItem="Evi-AQ-ka4" secondAttribute="bottom" id="8NA-9W-4Qp"/>
                 <constraint firstAttribute="trailing" secondItem="Atd-K5-zNf" secondAttribute="trailing" id="8Qe-tS-KcY"/>
                 <constraint firstAttribute="trailing" secondItem="Evi-AQ-ka4" secondAttribute="trailing" id="9cW-ed-GyW"/>
@@ -175,11 +185,9 @@
                 <constraint firstItem="Atd-K5-zNf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GbB-cs-Hyb"/>
                 <constraint firstItem="doW-39-j69" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Isg-Or-NQd"/>
                 <constraint firstItem="DzI-Kn-kTP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MzK-LV-PIa"/>
-                <constraint firstItem="RA9-ez-Aki" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Voy-z0-dof"/>
                 <constraint firstAttribute="bottom" secondItem="doW-39-j69" secondAttribute="bottom" id="aVy-nP-1oY"/>
                 <constraint firstAttribute="bottom" secondItem="gGp-CK-i1b" secondAttribute="bottom" id="hx1-9K-Rsx"/>
                 <constraint firstItem="doW-39-j69" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kyg-tm-EUz"/>
-                <constraint firstItem="RA9-ez-Aki" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="nnS-kE-Z1M"/>
                 <constraint firstAttribute="bottom" secondItem="DzI-Kn-kTP" secondAttribute="bottom" id="uQx-ni-vug"/>
                 <constraint firstItem="gGp-CK-i1b" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vla-vR-i2O"/>
                 <constraint firstItem="gGp-CK-i1b" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="y8z-FL-lRP"/>
@@ -194,6 +202,9 @@
         </namedColor>
         <namedColor name="PrimaryGreen">
             <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryRed">
+            <color red="0.92941176470588238" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

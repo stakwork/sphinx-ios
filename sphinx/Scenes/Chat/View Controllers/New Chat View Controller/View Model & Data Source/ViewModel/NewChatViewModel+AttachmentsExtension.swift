@@ -77,8 +77,12 @@ extension NewChatViewModel: AttachmentsManagerDelegate {
         chatDataSource?.setProgressForProvisional(messageId: messageId, progress: progress)
     }
     
-    func didSuccessSendingAttachment(message: TransactionMessage, image: UIImage?) {
-        chatDataSource?.resetProgressForProvisional(messageId: -1)
+    func didSuccessSendingAttachment(
+        message: TransactionMessage,
+        image: UIImage?,
+        provisionalMessageId: Int
+    ) {
+        chatDataSource?.resetProgressForProvisional(messageId: provisionalMessageId)
         
         insertSentMessage(
             message: message,

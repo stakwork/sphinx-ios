@@ -122,7 +122,10 @@ class PaymentsViewModel : NSObject {
     
     func createLocalMessages(message: JSON?) -> (TransactionMessage?, Bool) {
         if let message = message {
-            if let messageObject = TransactionMessage.insertMessage(m: message).0 {
+            if let messageObject = TransactionMessage.insertMessage(
+                m: message,
+                existingMessage: TransactionMessage.getMessageWith(id: message["id"].intValue)
+            ).0 {
                 messageObject.setPaymentInvoiceAsPaid()
                 return (messageObject, true)
             }

@@ -167,7 +167,10 @@ class FeedBoostHelper : NSObject {
             }
             
             API.sharedInstance.sendMessage(params: params, callback: { m in
-                if let message = TransactionMessage.insertMessage(m: m, existingMessage: provisionalMessage).0 {
+                if let message = TransactionMessage.insertMessage(
+                    m: m,
+                    existingMessage: provisionalMessage
+                ).0 {
                     message.setPaymentInvoiceAsPaid()
                     
                     completion(message, true)

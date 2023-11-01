@@ -12,8 +12,8 @@ class PopHandlerViewController: UIViewController {
     
     var popOnSwipeEnabled = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }

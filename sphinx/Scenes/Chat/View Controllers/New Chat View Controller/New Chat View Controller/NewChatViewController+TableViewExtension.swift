@@ -226,7 +226,8 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
                 self.showMessageMenuFor(
                     messageId: messageId,
                     indexPath: indexPath,
-                    bubbleViewRect: bubbleViewRect, isThreadRow: self.isThread
+                    bubbleViewRect: bubbleViewRect, 
+                    isThreadRow: self.isThread
                 )
             }
         })
@@ -308,6 +309,7 @@ extension NewChatViewController {
             
             let messageOptionsVC = MessageOptionsViewController.instantiate(
                 message: message,
+                chat: nil,
                 purchaseAcceptMessage: message.getPurchaseAcceptItem(),
                 delegate: self, isThreadRow: self.isThread
             )

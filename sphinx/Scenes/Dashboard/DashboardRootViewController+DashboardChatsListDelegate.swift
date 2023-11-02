@@ -52,4 +52,8 @@ extension DashboardRootViewController: DashboardChatsListDelegate {
             })
         }
     }
+    
+    func shouldGetChatsContainerYOffset() -> CGFloat {
+        return mainContentContainerView.frame.origin.y
+    }
 }

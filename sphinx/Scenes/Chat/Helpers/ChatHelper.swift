@@ -96,6 +96,35 @@ class ChatHelper {
         
         return nil
     }
+    
+    public static func getChatRowRectAndPath(
+        collectionView: UICollectionView,
+        indexPath: IndexPath,
+        yOffset: CGFloat
+    ) -> (CGRect, CGPath)? {
+        
+        if let item = collectionView.cellForItem(at: indexPath) {
+            
+            let itemFrame = item.frame
+            
+            let itemRect = CGRect(
+                x: itemFrame.origin.x,
+                y: itemFrame.origin.y + yOffset - collectionView.contentOffset.y,
+                width: itemFrame.size.width,
+                height: itemFrame.size.height
+            )
+            
+            return (
+                itemRect,
+                UIBezierPath(
+                    roundedRect: CGRect(origin: CGPoint.zero, size: itemRect.size),
+                    cornerRadius: 0
+                ).cgPath
+            )
+        }
+        
+        return nil
+    }
 
     public static func removeDuplicatedContainedFrom(
         urlRanges: [NSRange]

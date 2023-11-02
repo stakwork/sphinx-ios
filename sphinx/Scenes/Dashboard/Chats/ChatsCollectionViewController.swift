@@ -7,13 +7,14 @@ class ChatsCollectionViewController: UICollectionViewController {
     var onChatSelected: ((ChatListCommonObject) -> Void)?
     var onContentScrolled: ((UIScrollView) -> Void)?
     var onRefresh: ((UIRefreshControl) -> Void)?
+    
+    private weak var chatsListDelegate: DashboardChatsListDelegate?
 
     private var currentDataSnapshot: DataSourceSnapshot!
     private var dataSource: DataSource!
     
     private var owner: UserContact!
-    var currentToolTipChatListObject : ChatListCommonObject? = nil
-
+    
     private let itemContentInsets = NSDirectionalEdgeInsets(
         top: 0,
         leading: 0,
@@ -28,6 +29,7 @@ extension ChatsCollectionViewController {
 
     static func instantiate(
         chatListObjects: [ChatListCommonObject] = [],
+        chatsListDelegate: DashboardChatsListDelegate?,
         onChatSelected: ((ChatListCommonObject) -> Void)? = nil,
         onContentScrolled: ((UIScrollView) -> Void)? = nil,
         onRefresh: ((UIRefreshControl) -> Void)? = nil
@@ -36,6 +38,7 @@ extension ChatsCollectionViewController {
         let viewController = StoryboardScene.Dashboard.chatsCollectionViewController.instantiate()
         
         viewController.chatListObjects = chatListObjects
+        viewController.chatsListDelegate = chatsListDelegate
         viewController.onChatSelected = onChatSelected
         viewController.onContentScrolled = onContentScrolled
         viewController.onRefresh = onRefresh
@@ -370,67 +373,63 @@ extension ChatsCollectionViewController {
 
 
 extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, MessageOptionsVCDelegate{
-    
-    func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact, indexPath: IndexPath) {
-        print(chatListObject)
-        if let lastMessage = chatListObject.lastMessage,
-           let cell = collectionView.cellForItem(at: indexPath) {
+    func didLongPressOnCell(
+        chatListObject: ChatListCommonObject,
+        owner: UserContact,
+        indexPath: IndexPath
+    ) {
+        if let chat = chatListObject.getChat(),
+           let lastMessage = chat.lastMessage,
+           let _ = collectionView.cellForItem(at: indexPath) {
             
             if lastMessage.isOutgoing(ownerId: owner.id){
                 return
             }
-            
-            // Calculate the modifiedCellFrame using the collection view's frame and cell's frame
-            let xOffset = collectionView.contentOffset.x
-            let yOffset = collectionView.contentOffset.y - 178.0
-            let modifiedCellFrame = CGRect(
-                x: cell.frame.minX - xOffset,
-                y: cell.frame.minY - yOffset,
-                width: cell.frame.width,
-                height: cell.frame.height
-            )
-            
-            let bubbleRectAndPath: (CGRect, CGPath) = (modifiedCellFrame, CGPath(rect: CGRect.zero, transform: nil))
-            let messageOptionsVC = MessageOptionsViewController.instantiate(
-                message: lastMessage,
-                purchaseAcceptMessage: nil,
-                delegate: nil,
-                isThreadRow: false,
-                contactsViewIsRead: lastMessage.isSeen(ownerId: owner.id)
-            )
-            messageOptionsVC.delegate = self
-            currentToolTipChatListObject = chatListObject
-            messageOptionsVC.setBubblePath(bubblePath: bubbleRectAndPath)
-            messageOptionsVC.modalPresentationStyle = .overCurrentContext
-            self.navigationController?.present(messageOptionsVC, animated: false)
+                
+            if let rowRectAndPath = ChatHelper.getChatRowRectAndPath(
+                collectionView: collectionView,
+                indexPath: indexPath,
+                yOffset: chatsListDelegate?.shouldGetChatsContainerYOffset() ?? 0
+            ) {
+                let messageOptionsVC = MessageOptionsViewController.instantiate(
+                    message: nil,
+                    chat: chat,
+                    purchaseAcceptMessage: nil,
+                    delegate: self,
+                    isThreadRow: false
+                )
+                
+                messageOptionsVC.setBubblePath(bubblePath: rowRectAndPath)
+                messageOptionsVC.modalPresentationStyle = .overCurrentContext
+                navigationController?.present(messageOptionsVC, animated: false)
+            }
         }
     }
     
-    func shouldToggleReadUnread(){
-        guard let currentToolTipChatListObject = currentToolTipChatListObject else{
+    func shouldToggleReadUnread(chat: Chat) {
+
+        guard let lastMessage = chat.lastMessage else {
             return
         }
-        toggleReadUnread(tooltipChatListObject: currentToolTipChatListObject)
-        self.currentToolTipChatListObject = nil
-    }
-    
-    func toggleReadUnread(tooltipChatListObject:ChatListCommonObject){
-        guard let lastMessage = tooltipChatListObject.lastMessage,
-              let chat = tooltipChatListObject.getChat(),
-              let params = TransactionMessage.getMessageParams(
-                chat: chat,
-                type: TransactionMessage.TransactionMessageType.message
-              )
-        else{
-            return
-        }
-        let desiredState = !lastMessage.seen
-        API.sharedInstance.toggleChatReadUnread(chatId: chat.id, params: params as NSDictionary, shouldMarkAsUnread: desiredState == false, callback: {success in
-            print(success)
-        })
-        lastMessage.seen = desiredState
-        chat.seen = !chat.seen
-        tooltipChatListObject.getChat()?.saveChat()
+        
+        API.sharedInstance.toggleChatReadUnread(
+            chatId: chat.id,
+            shouldMarkAsUnread: lastMessage.seen,
+            callback: { success in
+                if success {
+                    lastMessage.seen = !lastMessage.seen
+                    chat.seen = !chat.seen
+                    chat.saveChat()
+                } else {
+                    DispatchQueue.main.async {
+                        AlertHelper.showAlert(
+                            title: "generic.error.title".localized,
+                            message: "generic.error.message".localized
+                        )
+                    }
+                }
+            }
+        )
     }
     
     //Unused methods:

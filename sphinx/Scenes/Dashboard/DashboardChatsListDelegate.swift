@@ -17,4 +17,6 @@ protocol DashboardChatsListDelegate: AnyObject {
     func viewControllerContentScrolled(
         scrollView: UIScrollView
     )
+    
+    func shouldGetChatsContainerYOffset() -> CGFloat
 }

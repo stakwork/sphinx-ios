@@ -18,7 +18,7 @@ import UIKit
     func shouldResendMessage()
     func shouldFlagMessage()
     func shouldTogglePinState(pin: Bool)
-    func shouldToggleReadUnread()
+    func shouldToggleReadUnread(chat: Chat)
 }
 
 class MessageOptionsView : UIView {
@@ -31,6 +31,7 @@ class MessageOptionsView : UIView {
     let menuVerticalMargin: CGFloat = 10
     
     var message: TransactionMessage? = nil
+    var chat: Chat? = nil
     
     public enum VerticalPosition: Int {
         case Top
@@ -49,27 +50,33 @@ class MessageOptionsView : UIView {
     
     init(
         message: TransactionMessage?,
+        chat: Chat?,
         leftTopCorner: CGPoint,
         rightBottomCorner: CGPoint,
         isThreadRow: Bool,
-        contactsViewIsRead:Bool? = nil,
         delegate: MessageOptionsDelegate
     ) {
         super.init(frame: CGRect.zero)
         
         self.delegate = delegate
         self.message = message
+        self.chat = chat
         
-        guard let message = message else {
+        if message == nil && chat == nil {
             return
         }
         
-        let incoming = message.isIncoming()
+        let incoming = message?.isIncoming() ?? true
         let coordinates = getCoordinates(leftTopCorner: leftTopCorner, rightBottomCorner: rightBottomCorner)
-        let messageOptions = getActionsMenuOptions(isThreadRow: isThreadRow,contactsViewIsRead: contactsViewIsRead)
+        let messageOptions = getActionsMenuOptions(isThreadRow: isThreadRow)
         let optionsCount = messageOptions.count
 
-        let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(coordinates: coordinates, optionsCount: optionsCount, incoming: incoming)
+        let (menuRect, verticalPosition, horizontalPosition) = getMenuRectAndPosition(
+            coordinates: coordinates,
+            optionsCount: optionsCount,
+            incoming: incoming
+        )
+        
         self.frame = menuRect
         
         let backColor = incoming ? UIColor.Sphinx.ReceivedMsgBG : UIColor.Sphinx.SentMsgBG
@@ -117,13 +124,17 @@ class MessageOptionsView : UIView {
     }
     
     func getActionsMenuOptions(
-        isThreadRow: Bool,
-        contactsViewIsRead:Bool? = nil
+        isThreadRow: Bool
     ) -> [TransactionMessage.ActionsMenuOption] {
+        
+        if let chat = chat {
+            return chat.getActionsMenuOptions()
+        }
+        
         guard let message = message else {
             return []
         }
-        return message.getActionsMenuOptions(isThreadRow: isThreadRow,contactsViewIsRead: contactsViewIsRead)
+        return message.getActionsMenuOptions(isThreadRow: isThreadRow)
     }
     
     func addMenuOptions(options: [TransactionMessage.ActionsMenuOption]) {
@@ -239,11 +250,20 @@ extension MessageOptionsView : MessageOptionViewDelegate {
     }
     
     private func handleActionWith(_ tag: Int) {
+        let option = TransactionMessage.MessageActionsItem(rawValue: tag)
+        
+        if let chat = chat {
+            switch(option) {
+            case .ToggleReadUnread:
+                delegate?.shouldToggleReadUnread(chat: chat)
+            default:
+                break
+            }
+        }
+        
         guard let message = message else {
             return
         }
-        
-        let option = TransactionMessage.MessageActionsItem(rawValue: tag)
         
         switch(option) {
         case .Copy:
@@ -275,8 +295,6 @@ extension MessageOptionsView : MessageOptionViewDelegate {
             delegate?.shouldTogglePinState(pin: true)
         case .Unpin:
             delegate?.shouldTogglePinState(pin: false)
-        case .ToggleReadUnread:
-            delegate?.shouldToggleReadUnread()
         default:
             break
         }

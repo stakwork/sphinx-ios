@@ -17,7 +17,7 @@ import UIKit
     func shouldShowThreadFor(message:TransactionMessage)
     func shouldTogglePinState(message: TransactionMessage, pin: Bool)
     func shouldReloadChat()
-    func shouldToggleReadUnread()
+    func shouldToggleReadUnread(chat: Chat)
 }
 
 class MessageOptionsViewController: UIViewController {
@@ -28,24 +28,27 @@ class MessageOptionsViewController: UIViewController {
     var bubblePath: (CGRect, CGPath)? = nil
     
     var message: TransactionMessage? = nil
+    var chat: Chat? = nil
+    
     var purchaseAcceptMessage: TransactionMessage? = nil
+    
     var isThreadRow: Bool = false
-    var contactsViewIsRead : Bool? = nil
-
     
     static func instantiate(
-        message: TransactionMessage,
+        message: TransactionMessage?,
+        chat: Chat?,
         purchaseAcceptMessage: TransactionMessage?,
         delegate: MessageOptionsVCDelegate?,
-        isThreadRow: Bool,
-        contactsViewIsRead:Bool? = nil
+        isThreadRow: Bool
     ) -> MessageOptionsViewController {
+        
         let viewController = StoryboardScene.Chat.messageOptionsViewController.instantiate()
         viewController.message = message
+        viewController.chat = chat
         viewController.purchaseAcceptMessage = purchaseAcceptMessage
         viewController.delegate = delegate
         viewController.isThreadRow = isThreadRow
-        viewController.contactsViewIsRead = contactsViewIsRead
+        
         return viewController
     }
     
@@ -59,6 +62,8 @@ class MessageOptionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SoundsPlayer.playHaptic()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         self.view.addGestureRecognizer(tap)
@@ -155,10 +160,10 @@ class MessageOptionsViewController: UIViewController {
     ) {
         let menuView = MessageOptionsView(
             message: message,
+            chat: chat,
             leftTopCorner: leftTopCorner,
             rightBottomCorner: rightBottomCorner,
             isThreadRow: isThreadRow,
-            contactsViewIsRead: contactsViewIsRead,
             delegate: self
         )
         self.view.addSubview(menuView)
@@ -255,8 +260,8 @@ extension MessageOptionsViewController : MessageOptionsDelegate {
     }
     
     //Unused Methods
-    func shouldToggleReadUnread() {
-        delegate?.shouldToggleReadUnread()
+    func shouldToggleReadUnread(chat: Chat) {
+        delegate?.shouldToggleReadUnread(chat: chat)
     }
     
 }

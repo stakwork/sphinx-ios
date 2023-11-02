@@ -1010,7 +1010,6 @@ extension NewChatTableDataSource {
 ///Menu Long press
 extension NewChatTableDataSource {
     func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect) {
-        
         if let indexPath = tableView.indexPath(for: cell) {
             if let tableCellState = getTableCellStateFor(
                 messageId: messageId,
@@ -1023,9 +1022,6 @@ extension NewChatTableDataSource {
                 }
             }
         }
-        
-        SoundsPlayer.playHaptic()
-        
         delegate?.didLongPressOn(
             cell: cell,
             with: messageId,

@@ -699,6 +699,21 @@ public class Chat: NSManagedObject {
         }
     }
     
+    func getActionsMenuOptions() -> [TransactionMessage.ActionsMenuOption] {
+        let isRead = lastMessage?.seen ?? false
+        
+        let options = [
+            TransactionMessage.ActionsMenuOption.init(
+                tag: TransactionMessage.MessageActionsItem.ToggleReadUnread,
+                materialIconName: isRead ? "" : "",
+                iconImage: nil,
+                label: isRead ? "mark.as.unread".localized : "mark.as.read".localized
+            )
+        ]
+        
+        return options
+    }
+    
     func saveChat() {
         CoreDataManager.sharedManager.saveContext()
     }

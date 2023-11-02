@@ -1,7 +1,7 @@
 import UIKit
 
 protocol ChatListCollectionViewCellDelegate : NSObject{
-    func didLongPressOnCell(chatListObject:ChatListCommonObject,owner:UserContact,indexPath:IndexPath)
+    func didLongPressOnCell(chatListObject: ChatListCommonObject, owner: UserContact, indexPath: IndexPath)
 }
 
 class ChatListCollectionViewCell: UICollectionViewCell {
@@ -306,13 +306,13 @@ extension ChatListCollectionViewCell {
         }
     }
     
-    @objc func handleLongPress(){
+    @objc func handleLongPress() {
         guard let delegate = delegate,
               let chatListObject = chatListObject,
-            let indexPath = indexPath else{
+              let indexPath = indexPath else {
             return
         }
-        delegate.didLongPressOnCell(chatListObject: chatListObject,owner:owner,indexPath: indexPath)
+        delegate.didLongPressOnCell(chatListObject: chatListObject, owner: owner, indexPath: indexPath)
     }
     
     override func prepareForReuse() {

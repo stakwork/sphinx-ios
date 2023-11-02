@@ -485,18 +485,7 @@ extension TransactionMessage {
     ) -> [ActionsMenuOption] {
         var options = [ActionsMenuOption]()
         
-        if isPodcastBoost() {
-            return options
-        }
-        else if let isRead = contactsViewIsRead{
-            let options = [
-                ActionsMenuOption.init(
-                    tag: MessageActionsItem.ToggleReadUnread,
-                    materialIconName: isRead ? "" : "",
-                    iconImage: nil,
-                    label: isRead ? "mark.as.unread".localized : "mark.as.read".localized
-                )
-            ]
+        if isPodcastBoost() || isBotResponse() {
             return options
         }
         

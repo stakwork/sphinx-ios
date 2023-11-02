@@ -93,6 +93,7 @@ extension ChatsContainerViewController {
         chatsCollectionViewController = ChatsCollectionViewController
             .instantiate(
                 chatListObjects: chats,
+                chatsListDelegate: chatsListDelegate,
                 onChatSelected: handleChatSelection(_:),
                 onContentScrolled: handleChatsScroll(scrollView:),
                 onRefresh: handleChatsListRefresh(refreshControl:)

@@ -485,7 +485,7 @@ extension TransactionMessage {
     ) -> [ActionsMenuOption] {
         var options = [ActionsMenuOption]()
         
-        if isPodcastBoost() {
+        if isPodcastBoost() || isBotResponse() {
             return options
         }
         

@@ -814,6 +814,7 @@ struct MessageTableCellState {
         
         return NoBubbleMessageLayoutState.ThreadOriginalMessage(
             text: messageContent,
+            font: Constants.kThreadHeaderFont,
             linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
             senderPic: senderInfo.2,
             senderAlias: senderInfo.1,

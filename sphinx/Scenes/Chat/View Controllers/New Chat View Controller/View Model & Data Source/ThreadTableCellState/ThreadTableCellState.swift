@@ -33,9 +33,11 @@ struct ThreadTableCellState {
     lazy var threadMessagesState : ThreadLayoutState.ThreadMessages? = {
         let originalMessageDate = (originalMessage.date ?? Date())
         let timestamp = "\(originalMessageDate.getStringDate(format: "MMMM dd")) at \(originalMessageDate.getStringDate(format: "hh:mm a"))"
+        let messageContent = originalMessage.bubbleMessageContentString ?? ""
         
         let orignalMessageThred = ThreadLayoutState.ThreadOriginalMessage(
-            text: originalMessage.bubbleMessageContentString ?? "",
+            text: messageContent,
+            linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
             timestamp: timestamp,
             senderInfo: getSenderInfo(message: originalMessage)
         )

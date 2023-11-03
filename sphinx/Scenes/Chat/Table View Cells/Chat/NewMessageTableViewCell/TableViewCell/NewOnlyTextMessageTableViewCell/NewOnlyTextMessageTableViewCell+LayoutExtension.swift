@@ -25,9 +25,11 @@ extension NewOnlyTextMessageTableViewCell {
         urlRanges = []
         
         if let messageContent = messageContent {
+            
+            messageLabel.attributedText = nil
+            messageLabel.text = nil
+            
             if messageContent.linkMatches.isEmpty && searchingTerm == nil {
-                messageLabel.attributedText = nil
-                
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {

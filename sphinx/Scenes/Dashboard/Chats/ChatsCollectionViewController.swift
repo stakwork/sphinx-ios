@@ -407,12 +407,12 @@ extension ChatsCollectionViewController : ChatListCollectionViewCellDelegate, Me
     }
     
     func shouldToggleReadUnread(chat: Chat) {
-
         guard let lastMessage = chat.lastMessage else {
             return
         }
         
         let desiredState = !chat.seen //store this immutable value and always sync both based on chat status
+        
         API.sharedInstance.toggleChatReadUnread(
             chatId: chat.id,
             shouldMarkAsUnread: desiredState == false,//mark as unread if we want "seen" to be false

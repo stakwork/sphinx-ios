@@ -567,6 +567,7 @@ struct NoBubbleMessageLayoutState {
     
     struct ThreadOriginalMessage {
         var text: String
+        var font: UIFont
         var linkMatches: [NSTextCheckingResult]
         var senderPic: String?
         var senderAlias: String
@@ -575,6 +576,7 @@ struct NoBubbleMessageLayoutState {
         
         init(
             text: String,
+            font: UIFont,
             linkMatches: [NSTextCheckingResult],
             senderPic: String?,
             senderAlias: String,
@@ -582,6 +584,7 @@ struct NoBubbleMessageLayoutState {
             timestamp: String
         ) {
             self.text = text
+            self.font = font
             self.linkMatches = linkMatches
             self.senderPic = senderPic
             self.senderAlias = senderAlias

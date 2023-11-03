@@ -19,7 +19,7 @@ extension ThreadListTableViewCell {
         let originalMessageSenderInfo = threadLayoutState.orignalThreadMessage.senderInfo
         
         if threadLayoutState.orignalThreadMessage.text.isNotEmpty {
-            originalMessageTextLabel.text = threadLayoutState.orignalThreadMessage.text
+            configureMessageContentWith(threadOriginalMessage: threadLayoutState.orignalThreadMessage)
             originalMessageTextLabel.isHidden = false
         }
         
@@ -126,6 +126,37 @@ extension ThreadListTableViewCell {
             reply6CountLabel.text = "+\(threadLayoutState.threadPeopleCount-6)"
         } else {
             reply6CountContainer.isHidden = true
+        }
+    }
+    
+    func configureMessageContentWith(
+        threadOriginalMessage: ThreadLayoutState.ThreadOriginalMessage
+    ) {
+        originalMessageTextLabel.attributedText = nil
+        originalMessageTextLabel.text = nil
+        
+        if threadOriginalMessage.linkMatches.isEmpty {
+            originalMessageTextLabel.text = threadOriginalMessage.text
+            originalMessageTextLabel.font = Constants.kThreadHeaderFont
+        } else {
+            let messageC = threadOriginalMessage.text
+            
+            let attributedString = NSMutableAttributedString(string: messageC)
+            attributedString.addAttributes([NSAttributedString.Key.font: Constants.kThreadHeaderFont], range: messageC.nsRange)
+            
+            for match in threadOriginalMessage.linkMatches {
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
+                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                        NSAttributedString.Key.font: Constants.kThreadHeaderFont
+                    ],
+                    range: match.range
+                )
+            }
+            
+            originalMessageTextLabel.attributedText = attributedString
         }
     }
     

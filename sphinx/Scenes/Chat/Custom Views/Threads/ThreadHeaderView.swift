@@ -92,8 +92,7 @@ class ThreadHeaderView : UIView {
         
         viewToShow = messageLabelContainer
         
-        messageAndMediaLabel.text = threadOriginalMessage.text
-        messageLabel.text = threadOriginalMessage.text
+        configureMessageContentWith(threadOriginalMessage: threadOriginalMessage)
         
         timestampLabel.text = threadOriginalMessage.timestamp
         senderNameLabel.text = threadOriginalMessage.senderAlias
@@ -103,6 +102,44 @@ class ThreadHeaderView : UIView {
             alias: threadOriginalMessage.senderAlias,
             picture: threadOriginalMessage.senderPic
         )
+    }
+    
+    func configureMessageContentWith(
+        threadOriginalMessage: NoBubbleMessageLayoutState.ThreadOriginalMessage
+    ) {
+        messageAndMediaLabel.attributedText = nil
+        messageAndMediaLabel.text = nil
+        
+        messageLabel.attributedText = nil
+        messageLabel.text = nil
+        
+        if threadOriginalMessage.linkMatches.isEmpty {
+            messageAndMediaLabel.text = threadOriginalMessage.text
+            messageAndMediaLabel.font = threadOriginalMessage.font
+            
+            messageLabel.text = threadOriginalMessage.text
+            messageLabel.font = threadOriginalMessage.font
+        } else {
+            let messageC = threadOriginalMessage.text
+            
+            let attributedString = NSMutableAttributedString(string: messageC)
+            attributedString.addAttributes([NSAttributedString.Key.font: threadOriginalMessage.font], range: messageC.nsRange)
+            
+            for match in threadOriginalMessage.linkMatches {
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
+                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                        NSAttributedString.Key.font: threadOriginalMessage.font
+                    ],
+                    range: match.range
+                )
+            }
+            
+            messageAndMediaLabel.attributedText = attributedString
+            messageLabel.attributedText = attributedString
+        }
     }
     
     func configureWith(

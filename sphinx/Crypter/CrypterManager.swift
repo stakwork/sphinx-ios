@@ -683,7 +683,7 @@ class CrypterManager : NSObject {
         return nowMsString
     }
     
-    func sendOnionMessage(message:String){
+    func sendOnionMessage(message:String){//Sending onion messages
         let network = "regtest"
         guard let serverPubkey = onionConfig.serverPubkey?.replacingOccurrences(of: "\"pubkey\":\"", with: ""),
               let alicePubkey = onionConfig.destinationPubkey else{
@@ -747,7 +747,7 @@ class CrypterManager : NSObject {
         }
     }
     
-    func processReceivedOnionMessage(message: CocoaMQTTMessage) {
+    func processReceivedOnionMessage(message: CocoaMQTTMessage) {//Receiving onion messages
         let network = "regtest"
         do {
             let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
@@ -777,7 +777,7 @@ class CrypterManager : NSObject {
 
 
     
-    func setupOnionMessengerMqtt(seed:String){
+    func setupOnionMessengerMqtt(seed:String){//Setting up & handshaking with server
         print("setupOnionMessengerMqtt")
         do{
             let nowMsString = getTimestampInMilliseconds()

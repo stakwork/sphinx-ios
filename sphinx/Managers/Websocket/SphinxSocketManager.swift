@@ -235,7 +235,19 @@ extension SphinxSocketManager {
             let _ = UserContact.getOrCreateContact(contact: JSON(contactJson))
         }
         
-        DelayPerformedHelper.performAfterDelay(seconds: isConfirmation ? 1.0 : 0.0, completion: {
+        var delay: Double = 0.0
+        
+        if isConfirmation {
+            ///Handles case where confirmation of message is received before the send message endpoint returns.
+            ///Adding delay to prevent provisional message not being overwritten (duplicated bubble issue)
+            let existingMessages = TransactionMessage.getMessageWith(id: messageJson["id"].intValue)
+            
+            if existingMessages == nil {
+                delay =  1.5
+            }
+        }
+
+        DelayPerformedHelper.performAfterDelay(seconds: delay, completion: {
             if let message = TransactionMessage.insertMessage(
                 m: messageJson,
                 existingMessage: TransactionMessage.getMessageWith(id: messageJson["id"].intValue)

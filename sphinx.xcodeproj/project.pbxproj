@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -662,6 +662,7 @@
 		CE3D8CB029B1471900EDB637 /* FeedItemDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */; };
 		CE3D8CB129B1471900EDB637 /* FeedItemDetailActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */; };
 		CE49E13229ACEFAA006D3CCE /* VoIPPushMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */; };
+		CE4B53FD2AFC389C00708A0C /* SphinxOnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */; };
 		CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */; };
 		CE51F3562988743E00ABBACB /* MemberDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */; };
 		CE51F3572988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */; };
@@ -1656,6 +1657,7 @@
 		CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailActionCell.swift; sourceTree = "<group>"; };
 		CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailActionCell.xib; sourceTree = "<group>"; };
 		CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushMessage.swift; sourceTree = "<group>"; };
+		CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SphinxOnionManager.swift; sourceTree = "<group>"; };
 		CE51F34F298870BF00ABBACB /* MemberBadgeDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVM.swift; sourceTree = "<group>"; };
 		CE51F3542988743E00ABBACB /* MemberDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailTableViewCell.swift; sourceTree = "<group>"; };
 		CE51F3552988743E00ABBACB /* MemberBadgeDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -3935,6 +3937,7 @@
 		47F6CA0728786A13005EBCB6 /* Crypter */ = {
 			isa = PBXGroup;
 			children = (
+				CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */,
 				474C7A5328D3A7A1007A3E17 /* Sphinxrs-Bridging-Header.h */,
 				474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */,
 				474C7A5428D3A7A1007A3E17 /* sphinxrsFFI.h */,
@@ -5048,6 +5051,7 @@
 				471161DF29156480008EAFF2 /* NSObject.swift in Sources */,
 				47771C6E259B848300990467 /* GroupPinView.swift in Sources */,
 				F313024626BA62B300A1396E /* ChatsCollectionViewController.swift in Sources */,
+				CE4B53FD2AFC389C00708A0C /* SphinxOnionManager.swift in Sources */,
 				CE51F350298870BF00ABBACB /* MemberBadgeDetailVM.swift in Sources */,
 				4705D39F2799C339009C0729 /* UITextField.swift in Sources */,
 				470146232A3F93DA00A00DF8 /* NewChatViewController+AttachmentsExtension.swift in Sources */,

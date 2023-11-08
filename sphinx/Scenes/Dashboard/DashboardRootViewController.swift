@@ -311,6 +311,9 @@ extension DashboardRootViewController {
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
             self.handleLinkQueries()
         }
+        
+        let om : SphinxOnionManager = SphinxOnionManager.sharedInstance
+        om.createAccount()
     }
     
 }

@@ -25,6 +25,11 @@ class NewUserSignupDescriptionViewController: UIViewController {
 
         setupContinueButton()
         setAttributedTextSubtitle()
+        addAccessibilityIdentifiers()
+    }
+    
+    func addAccessibilityIdentifiers(){
+        continueButton.accessibilityIdentifier = "signup.description.continue"
     }
     
     
@@ -65,5 +70,6 @@ extension NewUserSignupDescriptionViewController {
             font: normalFont,
             boldFont: boldFont
         )
+        imageSubtitle.accessibilityIdentifier = "signup.description.label"
     }
 }

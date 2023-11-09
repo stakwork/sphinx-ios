@@ -49,6 +49,7 @@ extension NewUserGreetingViewController {
             "signup.greeting.continue".localized,
             for: .normal
         )
+        continueButton.accessibilityIdentifier = "continueButton"
     }
     
     private func setupPulsingCircle() {

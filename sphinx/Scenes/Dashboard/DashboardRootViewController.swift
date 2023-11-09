@@ -312,8 +312,6 @@ extension DashboardRootViewController {
             self.handleLinkQueries()
         }
         
-        let om : SphinxOnionManager = SphinxOnionManager.sharedInstance
-        om.createAccount()
     }
     
 }

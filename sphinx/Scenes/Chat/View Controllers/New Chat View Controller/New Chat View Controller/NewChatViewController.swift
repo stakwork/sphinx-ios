@@ -116,6 +116,12 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
+        print(CrypterManager.sharedInstance.generateMnemonic())
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+            print("calling SphinxOnionManager for mqtt connection..")
+            let om : SphinxOnionManager = SphinxOnionManager.sharedInstance
+            om.createAccount()
+        })
     }
     
     override func viewDidDisappear(_ animated: Bool) {

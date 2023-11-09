@@ -38,6 +38,10 @@ extension UserContact {
     @NSManaged public var pin: String?
     @NSManaged public var routeHint: String?
     @NSManaged public var blocked: Bool
+    @NSManaged public var scid: String
+    @NSManaged public var index: Int
+    @NSManaged public var childPubKey: String
+    @NSManaged public var contactRouteHint: String
 
 }
 

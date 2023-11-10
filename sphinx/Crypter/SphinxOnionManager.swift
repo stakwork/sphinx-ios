@@ -101,6 +101,10 @@ class SphinxOnionManager : NSObject {
                             //5. Store my credentials (SCID, serverPubkey, myPubkey)
                             self.myCredentials = retrievedCredentials
                             self.myCredentials?.myPubkey = self.my_only_keysend_pubkey
+                            
+                            let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+                            let server = Server(context: managedContext)
+                            server.pubKey = retrievedCredentials.serverPubkey
                         }
                     } else {
                         print("MQTT Unable to convert payload to a string")

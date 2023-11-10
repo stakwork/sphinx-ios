@@ -35,4 +35,8 @@ extension RestoreUserFormViewController: KeychainRestoreDelegate {
     func willDismiss() {
         setupKeychainButtonContainer()
     }
+    
+    func shouldShowError() {
+        newMessageBubbleHelper.showGenericMessageView(text: "error.restoring.keychain".localized)
+    }
 }

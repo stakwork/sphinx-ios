@@ -78,6 +78,10 @@ class PaymentTransaction {
     func getUsers() -> String? {
         var users = ""
         
+        guard let owner = ContactsService.sharedInstance.owner else {
+            return nil
+        }
+        
         if let senderId = senderId, let sender = UserContact.getContactWith(id: senderId), isIncoming() {
             if let nickname = sender.nickname, !nickname.isEmpty {
                 return nickname
@@ -91,7 +95,7 @@ class PaymentTransaction {
                 if let originalM = TransactionMessage.getMessageWith(uuid: originalMUUI) {
                     
                     return originalM.getMessageSenderNickname(
-                        owner: ContactsService.sharedInstance.owner,
+                        owner: owner,
                         contact: ContactsService.sharedInstance.getContactWith(id: originalM.senderId)
                     )
                 }

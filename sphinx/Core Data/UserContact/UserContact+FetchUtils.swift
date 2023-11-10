@@ -50,8 +50,7 @@ extension UserContact {
         
         public static func chatList() -> NSPredicate {
             return NSPredicate(
-                format: "isOwner == %@ AND fromGroup == %@",
-                NSNumber(value: false),
+                format: "fromGroup == %@",
                 NSNumber(value: false)
             )
             

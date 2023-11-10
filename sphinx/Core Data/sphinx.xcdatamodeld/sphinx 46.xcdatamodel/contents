@@ -112,6 +112,10 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="paymentModel" inverseEntity="ContentFeed"/>
     </entity>
+    <entity name="Server" representedClassName="Server" syncable="YES" codeGenerationType="class">
+        <attribute name="ip" optional="YES" attributeType="String"/>
+        <attribute name="pubKey" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Subscription" representedClassName="Subscription" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="count" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

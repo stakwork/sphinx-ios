@@ -15,6 +15,7 @@ class ChatListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var separatorLine: UIView!
     @IBOutlet weak var lockSign: UILabel!
     @IBOutlet weak var inviteIcon: UILabel!
+    @IBOutlet weak var failedMessageIcon: UILabel!
     @IBOutlet weak var invitePriceContainer: UIView!
     @IBOutlet weak var invitePriceLabel: UILabel!
     @IBOutlet weak var muteImageView: UIImageView!
@@ -106,6 +107,7 @@ extension ChatListCollectionViewCell {
         muteImageView.isHidden = true
         inviteIcon.isHidden = true
         invitePriceContainer.isHidden = true
+        failedMessageIcon.isHidden = true
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         self.addGestureRecognizer(lpgr)
@@ -258,6 +260,7 @@ extension ChatListCollectionViewCell {
             inviteIcon.text = icon
             inviteIcon.textColor = iconColor
             inviteIcon.isHidden = false
+            failedMessageIcon.isHidden = true
             
             messageLabel.superview?.isHidden = false
             messageLabel.text = text
@@ -269,15 +272,22 @@ extension ChatListCollectionViewCell {
         } else {
             
             inviteIcon.isHidden = true
+            failedMessageIcon.isHidden = true
             
             if let lastMessage = chatListObject.lastMessage {
+                
+                let isFailedMessage = lastMessage.failed()
+                
                 messageLabel.font = hasUnreadMessages ?
                     Constants.kNewMessagePreviewFont
                     : Constants.kMessagePreviewFont
-                
-                messageLabel.textColor = hasUnreadMessages ?
-                    .Sphinx.TextMessages
-                    : .Sphinx.SecondaryText
+                if isFailedMessage {
+                    messageLabel.textColor = .Sphinx.PrimaryRed
+                } else {
+                    messageLabel.textColor = hasUnreadMessages ?
+                        .Sphinx.TextMessages
+                        : .Sphinx.SecondaryText
+                }
                 
                 messageLabel.text = lastMessage.getMessageContentPreview(
                     owner: self.owner,
@@ -287,6 +297,8 @@ extension ChatListCollectionViewCell {
                 
                 messageLabel.superview?.isHidden = false
                 dateLabel.isHidden = false
+                
+                failedMessageIcon.isHidden = !isFailedMessage
             } else {
                 messageLabel.superview?.isHidden = true
                 dateLabel.isHidden = true

@@ -670,6 +670,8 @@
 		CE51F35B2989B19800ABBACB /* BadgeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */; };
 		CE6784602968B0E000342905 /* FeedsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE67845F2968B0E000342905 /* FeedsManager.swift */; };
 		CE6C83FC29B918BD00E9FE7C /* TopMostVCsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */; };
+		CE792FAB2AFED7AF007FD4FE /* Server+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE792FAA2AFED7AF007FD4FE /* Server+CoreDataClass.swift */; };
+		CE792FAD2AFED7B9007FD4FE /* Server+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE792FAC2AFED7B9007FD4FE /* Server+CoreDataProperties.swift */; };
 		CE7E4F8029AD2D1100F000FF /* VoIPRequestMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */; };
 		CE80EF672A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE80EF662A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift */; };
 		CE80EF692A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE80EF682A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift */; };
@@ -1665,6 +1667,8 @@
 		CE51F3592989B19800ABBACB /* BadgeDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeDetailCell.xib; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
 		CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMostVCsHelper.swift; sourceTree = "<group>"; };
+		CE792FAA2AFED7AF007FD4FE /* Server+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Server+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CE792FAC2AFED7B9007FD4FE /* Server+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Server+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPRequestMessage.swift; sourceTree = "<group>"; };
 		CE7F06EC29CE004E0076C8BC /* sphinx 38.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 38.xcdatamodel"; sourceTree = "<group>"; };
 		CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 39.xcdatamodel"; sourceTree = "<group>"; };
@@ -2953,6 +2957,8 @@
 				CE30D9562A0BE93500C83555 /* StorageManager.swift */,
 				47468FCD233131B40072124A /* NSManagedObjectContext.swift */,
 				47AF0D4B2551883400C98398 /* PodcastModels.swift */,
+				CE792FAA2AFED7AF007FD4FE /* Server+CoreDataClass.swift */,
+				CE792FAC2AFED7B9007FD4FE /* Server+CoreDataProperties.swift */,
 				475E416A23858D4800928931 /* Subscription+CoreDataClass.swift */,
 				475E416923858D4800928931 /* Subscription+CoreDataProperties.swift */,
 				477F08DE23731AD600755287 /* UserInvite+CoreDataClass.swift */,
@@ -4969,6 +4975,7 @@
 				4701462B2A3FC0A900A00DF8 /* NewChatTableDataSource+AttachmentsExtension.swift in Sources */,
 				CE9A185A2A1D736700F176DE /* ProfileManageStorageSourceDetailsVC.swift in Sources */,
 				F32A696526CFEF600004B8B3 /* PodcastFeed+Properties.swift in Sources */,
+				CE792FAB2AFED7AF007FD4FE /* Server+CoreDataClass.swift in Sources */,
 				475043C82971956D00830E9E /* PodcastPlayerController.swift in Sources */,
 				47D4DE7E2A45CA85004B03AF /* LoadingMoreTableViewCell.swift in Sources */,
 				47363D002A4B374600C295D4 /* ChatSearchResultsBar.swift in Sources */,
@@ -5364,6 +5371,7 @@
 				F32A697B26D565E50004B8B3 /* PodcastModel+Computeds.swift in Sources */,
 				471161D7291563A2008EAFF2 /* ActionTrack+CoreDataClass.swift in Sources */,
 				472092CC2A27985800468796 /* NewChatViewController+TableViewExtension.swift in Sources */,
+				CE792FAD2AFED7B9007FD4FE /* Server+CoreDataProperties.swift in Sources */,
 				472161CB293A66EE0088B87B /* RecommendationFeedPlayerContainerViewController.swift in Sources */,
 				47D0046125E7F3EC00E74063 /* Download.swift in Sources */,
 				475043CF2971AA0700830E9E /* PodcastPlayerController+Delegates&Actions.swift in Sources */,

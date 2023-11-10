@@ -112,7 +112,7 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="feed" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ContentFeed" inverseName="paymentModel" inverseEntity="ContentFeed"/>
     </entity>
-    <entity name="Server" representedClassName="Server" syncable="YES" codeGenerationType="class">
+    <entity name="Server" representedClassName="Server" syncable="YES">
         <attribute name="ip" optional="YES" attributeType="String"/>
         <attribute name="pubKey" optional="YES" attributeType="String"/>
     </entity>

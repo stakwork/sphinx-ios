@@ -11,6 +11,7 @@ import UIKit
 protocol KeychainRestoreDelegate: class {
     func goToApp()
     func willDismiss()
+    func shouldShowError()
 }
 
 class KeychainRestoreViewController: UIViewController {
@@ -73,9 +74,8 @@ class KeychainRestoreViewController: UIViewController {
     }
     
     func dismissAndShowError() {
-        dismiss(animated: true, completion: {
-            self.messageBubbleHelper.showGenericMessageView(text: "error.restoring.keychain".localized)
-        })
+        dismiss(animated: true)
+        delegate?.shouldShowError()
     }
     
     @IBAction func closeButtonTouched() {

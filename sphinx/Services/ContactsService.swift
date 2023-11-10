@@ -34,6 +34,7 @@ class ContactsService: NSObject {
     var contactsSearchQuery: String = ""
     var chatsSearchQuery: String = ""
     
+    var ownerResultsController: NSFetchedResultsController<UserContact>!
     var contactsResultsController: NSFetchedResultsController<UserContact>!
     var chatsResultsController: NSFetchedResultsController<Chat>!
     
@@ -43,7 +44,7 @@ class ContactsService: NSObject {
     override init() {
         super.init()
         
-        updateOwner()
+        configureOwnerFetchResultsController()
         configureFetchResultsController()
     }
     
@@ -51,12 +52,41 @@ class ContactsService: NSObject {
         return API.sharedInstance.lastSeenMessagesDate == nil
     }
     
-    func configureFetchResultsController() {
-        if let _ = chatsResultsController, let _ = contactsResultsController {
+    func reset() {
+        contacts = []
+        allContacts = []
+        chats = []
+        
+        contactsResultsController?.delegate = nil
+        contactsResultsController = nil
+        
+        chatsResultsController?.delegate = nil
+        chatsResultsController = nil
+    }
+    
+    func configureOwnerFetchResultsController() {
+        if let _ = ownerResultsController {
             return
         }
         
-        if isRestoring() {
+        let ownerFetchRequest = UserContact.FetchRequests.owner()
+
+        ownerResultsController = NSFetchedResultsController(
+            fetchRequest: ownerFetchRequest,
+            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        ownerResultsController.delegate = self
+        
+        do {
+            try ownerResultsController.performFetch()
+        } catch {}
+    }
+    
+    func configureFetchResultsController() {
+        if let _ = chatsResultsController, let _ = contactsResultsController {
             return
         }
         
@@ -109,6 +139,11 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {
             
+            if resultController == ownerResultsController {
+                self.owner = firstSection.objects?.first as? UserContact
+                return
+            }
+            
             if resultController == contactsResultsController {
                 didCollectContacts = true
             } else if resultController == chatsResultsController {
@@ -145,6 +180,10 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     func processContactsAndChats() {
         updateOwner()
         
+        guard let owner = owner else {
+            return
+        }
+        
         for chat in chats {
             if chat.isConversation() {
                 if let contactId = chat.contactIds.filter({ $0.intValue != owner.id }).first?.intValue {
@@ -160,6 +199,8 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             let conversations = chats.filter({ $0.isConversation() })
             let contactIds = ((conversations.map { $0.contactIds }).flatMap { $0 }).map { $0.intValue }
             self.contacts = self.allContacts.filter({ !contactIds.contains($0.id) && !$0.isExpiredInvite() && !$0.isBlocked() })
+        } else {
+            self.contacts = []
         }
         
         processChatListObjects()
@@ -170,8 +211,14 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     func calculateBadges() {
+        let messagesCountMap = Chat.calculateUnseenMessagesCount(mentions: false)
+        let mentionsCountMap = Chat.calculateUnseenMessagesCount(mentions: true)
+        
         for chat in self.chats {
-            chat.calculateBadge()
+            chat.calculateBadgeWith(
+                messagesCount: messagesCountMap[chat.id] ?? 0,
+                mentionsCount: mentionsCountMap[chat.id] ?? 0
+            )
         }
     }
     
@@ -182,6 +229,7 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     public func processChatListObjects() {
+        updateOwner()
         calculateBadges()
         
         chatsHasNewMessages = false

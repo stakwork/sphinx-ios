@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -96,6 +96,12 @@
                                                 <rect key="frame" x="0.0" y="0.5" width="327" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <color key="textColor" name="SecondaryText"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ufb-sY-tbD" userLabel="Invite Icon">
+                                                <rect key="frame" x="0.0" y="1.5" width="15" height="15"/>
+                                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="15"/>
+                                                <color key="textColor" name="PrimaryRed"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -215,6 +221,7 @@
                 <outlet property="contactImageView" destination="NIy-iN-zSg" id="8cj-M8-QS1"/>
                 <outlet property="contactInitialsLabel" destination="ATM-o6-rPV" id="B3F-JX-E6A"/>
                 <outlet property="dateLabel" destination="JWD-pI-3ma" id="dPI-Wz-jd4"/>
+                <outlet property="failedMessageIcon" destination="ufb-sY-tbD" id="Cpd-Wz-MPT"/>
                 <outlet property="inviteIcon" destination="buG-sA-UIk" id="ock-YY-y4d"/>
                 <outlet property="invitePriceContainer" destination="eYG-mr-4p4" id="jRx-16-6IA"/>
                 <outlet property="invitePriceLabel" destination="Vlv-bF-u0Z" id="oKX-TH-Qkx"/>
@@ -245,6 +252,9 @@
         </namedColor>
         <namedColor name="PrimaryGreen">
             <color red="0.28627450980392155" green="0.78823529411764703" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="PrimaryRed">
+            <color red="0.92941176470588238" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryText">
             <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

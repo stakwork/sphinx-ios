@@ -31,7 +31,7 @@ class SphinxOnionManager : NSObject {
         }
         return Static.instance
     }
-    
+    var shouldPostUpdates : Bool = false
     var myCredentials = OnionConnectionData(JSON: [:])
     let server_IP = "54.164.163.153"
     let server_PORT = 1883
@@ -96,6 +96,31 @@ class SphinxOnionManager : NSObject {
         }
     }
     
+    func subscribeAndPublishTopics(pubkey:String,idx:Int){
+        self.mqtt.subscribe([
+            ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
+        ])
+        
+        self.mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(pubkey)/\(idx)/req/register",
+                payload: []
+            )
+        )
+        self.mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(pubkey)/\(idx)/req/pubkey",
+                payload: []
+            )
+        )
+        self.mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(pubkey)/\(idx)/req/balance",
+                payload: []
+            )
+        )
+    }
+    
     
     func createAccount(){
         do{
@@ -123,37 +148,13 @@ class SphinxOnionManager : NSObject {
                 mqtt.didConnectAck = { _, _ in
                     //self.showSuccessWithMessage("MQTT connected")
                     print("SphinxOnionManager: MQTT Connected")
-                    API.sharedInstance.postMQTTStatusChange()
                     print("mqtt.didConnectAck")
-                    
-                    self.mqtt.subscribe([
-                        ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
-                    ])
-                    
-                    self.mqtt.publish(
-                        CocoaMQTTMessage(
-                            topic: "\(pubkey)/\(idx)/req/register",
-                            payload: []
-                        )
-                    )
-                    self.mqtt.publish(
-                        CocoaMQTTMessage(
-                            topic: "\(pubkey)/\(idx)/req/pubkey",
-                            payload: []
-                        )
-                    )
-                    self.mqtt.publish(
-                        CocoaMQTTMessage(
-                            topic: "\(pubkey)/\(idx)/req/balance",
-                            payload: []
-                        )
-                    )
-                    
+                    self.subscribeAndPublishTopics(pubkey: pubkey, idx: idx)
                 }
             }
         }
         catch{
-            
+            print("error connecting to mqtt broker")
         }
        
     }
@@ -176,7 +177,7 @@ class SphinxOnionManager : NSObject {
                 server.pubKey = retrievedCredentials.serverPubkey
                 server.ip = self.server_IP
                 print(server)
-                
+                (shouldPostUpdates) ? NotificationCenter.default.post(Notification(name: .onMQTTConnectionStatusChanged, object: nil, userInfo: ["server" : server])) : ()
             }
         } else {
             print("MQTT Unable to convert payload to a string")
@@ -187,6 +188,7 @@ class SphinxOnionManager : NSObject {
         let payloadData = Data(balanceUpdateMessage.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
             print("MQTT Topic:\(balanceUpdateMessage.topic) with Payload as String: \(payloadString)")
+            (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : payloadString])) : ()
         }
     }
     

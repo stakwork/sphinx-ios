@@ -170,8 +170,14 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     func calculateBadges() {
+        let messagesCountMap = Chat.calculateUnseenMessagesCount(mentions: false)
+        let mentionsCountMap = Chat.calculateUnseenMessagesCount(mentions: true)
+        
         for chat in self.chats {
-            chat.calculateBadge()
+            chat.calculateBadgeWith(
+                messagesCount: messagesCountMap[chat.id] ?? 0,
+                mentionsCount: mentionsCountMap[chat.id] ?? 0
+            )
         }
     }
     
@@ -182,6 +188,7 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     public func processChatListObjects() {
+        updateOwner()
         calculateBadges()
         
         chatsHasNewMessages = false

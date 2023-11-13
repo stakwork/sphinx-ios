@@ -104,7 +104,13 @@ class SphinxOnionManager : NSObject {
                             
                             let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
                             let server = Server(context: managedContext)
+                            let self_contact = UserContact(context: managedContext)
+                            self_contact.scid = retrievedCredentials.scid// adding a "self" contact for now
+                            
                             server.pubKey = retrievedCredentials.serverPubkey
+                            server.ip = self.server_IP
+                            print(server)
+                            print(self_contact)
                         }
                     } else {
                         print("MQTT Unable to convert payload to a string")

@@ -93,28 +93,7 @@ class SphinxOnionManager : NSObject {
             
             if success{
                 mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-                    let payloadData = Data(receivedMessage.payload)
-                    if let payloadString = String(data: payloadData, encoding: .utf8) {
-                        print("MQTT Topic:\(receivedMessage.topic) with Payload as String: \(payloadString)")
-                        if let retrievedCredentials = Mapper<OnionConnectionData>().map(JSONString: payloadString){
-                            print("Onion Credentials register over MQTT:\(retrievedCredentials)")
-                            //5. Store my credentials (SCID, serverPubkey, myPubkey)
-                            self.myCredentials = retrievedCredentials
-                            self.myCredentials?.myPubkey = self.my_only_keysend_pubkey
-                            
-                            let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-                            let server = Server(context: managedContext)
-                            let self_contact = UserContact(context: managedContext)
-                            self_contact.scid = retrievedCredentials.scid// adding a "self" contact for now
-                            
-                            server.pubKey = retrievedCredentials.serverPubkey
-                            server.ip = self.server_IP
-                            print(server)
-                            print(self_contact)
-                        }
-                    } else {
-                        print("MQTT Unable to convert payload to a string")
-                    }
+                    self.processMqttMessages(message: receivedMessage)
                 }
                 
                 //subscribe to relevant topics
@@ -154,6 +133,70 @@ class SphinxOnionManager : NSObject {
             
         }
        
+    }
+    
+    func processRegisterTopicResponse(registerMessage:CocoaMQTTMessage){
+        let payloadData = Data(registerMessage.payload)
+        if let payloadString = String(data: payloadData, encoding: .utf8) {
+            print("MQTT Topic:\(registerMessage.topic) with Payload as String: \(payloadString)")
+            if let retrievedCredentials = Mapper<OnionConnectionData>().map(JSONString: payloadString){
+                print("Onion Credentials register over MQTT:\(retrievedCredentials)")
+                //5. Store my credentials (SCID, serverPubkey, myPubkey)
+                self.myCredentials = retrievedCredentials
+                self.myCredentials?.myPubkey = self.my_only_keysend_pubkey
+                
+                let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+                let server = Server(context: managedContext)
+//                            let self_contact = UserContact(context: managedContext)
+//                            self_contact.scid = retrievedCredentials.scid// adding a "self" contact for now
+//                            print(self_contact)
+                server.pubKey = retrievedCredentials.serverPubkey
+                server.ip = self.server_IP
+                print(server)
+                
+            }
+        } else {
+            print("MQTT Unable to convert payload to a string")
+        }
+    }
+    
+    func processPubkeyTopicResponse(pubkeyMessage:CocoaMQTTMessage){
+        let payloadData = Data(pubkeyMessage.payload)
+        if let payloadString = String(data: payloadData, encoding: .utf8) {
+            print("MQTT Topic:\(pubkeyMessage.topic) with Payload as String: \(payloadString)")
+        }
+    }
+    
+    func processBalanceUpdateMessage(balanceUpdateMessage:CocoaMQTTMessage){
+        let payloadData = Data(balanceUpdateMessage.payload)
+        if let payloadString = String(data: payloadData, encoding: .utf8) {
+            print("MQTT Topic:\(balanceUpdateMessage.topic) with Payload as String: \(payloadString)")
+        }
+    }
+    
+    func processMqttMessages(message:CocoaMQTTMessage){
+        let tops = message.topic.split(separator: "/")
+        if tops.count < 4{
+            return
+        }
+        let topic = tops[3]
+        switch(topic){
+        case "register":
+            print("processing register topic!")
+            processRegisterTopicResponse(registerMessage: message)
+            break
+        case "pubkey":
+            print("processing pubkey topic!")
+            processPubkeyTopicResponse(pubkeyMessage: message)
+            break
+        case "balance":
+            print("processing balance topic!")
+            processBalanceUpdateMessage(balanceUpdateMessage: message)
+            break
+        default:
+            print("topic not in list:\(topic)")
+            break
+        }
     }
     
     

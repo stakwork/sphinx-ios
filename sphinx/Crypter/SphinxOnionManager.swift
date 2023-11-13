@@ -40,9 +40,19 @@ class SphinxOnionManager : NSObject {
     
     var mqtt: CocoaMQTT! = nil
     
-    var my_xpub : String?  {
+    func getAccountSeed(mnemonic:String)->String?{
         do{
-            let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
+            let seed = try mnemonicToSeed(mnemonic: mnemonic)
+            return seed
+        }
+        catch{
+            print("error in getAccountSeed")
+            return nil
+        }
+    }
+    
+    func getAccountXpub(seed:String) -> String?  {
+        do{
             let xpub = try xpubFromSeed(seed: seed, time: getTimestampInMilliseconds(), network: network)
             return xpub
         }
@@ -51,9 +61,8 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    var my_only_keysend_pubkey : String? {
+    func getAccountOnlyKeysendPubkey(seed:String)->String?{
         do{
-            let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
             let pubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getTimestampInMilliseconds(), network: network)
             return pubkey
         }
@@ -67,30 +76,44 @@ class SphinxOnionManager : NSObject {
         let nowMilliseconds = Int64(nowSeconds * 1000)
         let nowMsString = String(nowMilliseconds)
         return nowMsString
-    }    
+    }
     
-    func createAccount(){
+    func connectToBroker(seed:String,xpub:String)->Bool{
         do{
-            //1. Generate Seed -> Display to screen the mnemonic for backup???
-            let seed = try mnemonicToSeed(mnemonic: test_mnemonic1)
-            //2. Create the 0th pubkey
-            guard let pubkey = my_only_keysend_pubkey,
-                  let my_xpub = my_xpub else{
-                  return
-            }
-            //3. Connect to server/broker
             let now = getTimestampInMilliseconds()
             let sig = try rootSignMs(seed: seed, time: now, network: network)
             
-            //4. Subscribe to relevant topics based on OK key
-            let idx = 0
-            mqtt = CocoaMQTT(clientID: my_xpub,host: server_IP ,port:  UInt16(server_PORT))
+            mqtt = CocoaMQTT(clientID: xpub,host: server_IP ,port:  UInt16(server_PORT))
             mqtt.username = now
             mqtt.password = sig
             
             let success = mqtt.connect()
             print("mqtt.connect success:\(success)")
+            return success
+        }
+        catch{
+            return false
+        }
+    }
+    
+    
+    func createAccount(){
+        do{
+            //1. Generate Seed -> Display to screen the mnemonic for backup???
+            guard let seed = getAccountSeed(mnemonic: test_mnemonic1) else{
+                //possibly send error message?
+                return
+            }
+            //2. Create the 0th pubkey
+            guard let pubkey = getAccountOnlyKeysendPubkey(seed: seed),
+                  let my_xpub = getAccountXpub(seed: seed) else{
+                  return
+            }
+            //3. Connect to server/broker
+            let success = connectToBroker(seed:seed,xpub: my_xpub)
             
+            //4. Subscribe to relevant topics based on OK key
+            let idx = 0
             if success{
                 mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                     self.processMqttMessages(message: receivedMessage)
@@ -143,7 +166,7 @@ class SphinxOnionManager : NSObject {
                 print("Onion Credentials register over MQTT:\(retrievedCredentials)")
                 //5. Store my credentials (SCID, serverPubkey, myPubkey)
                 self.myCredentials = retrievedCredentials
-                self.myCredentials?.myPubkey = self.my_only_keysend_pubkey
+                self.myCredentials?.myPubkey = retrievedCredentials.myPubkey
                 
                 let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
                 let server = Server(context: managedContext)

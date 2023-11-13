@@ -397,10 +397,61 @@ public class Chat: NSManagedObject {
         calculateUnseenMentionsCount()
     }
     
+    func calculateBadgeWith(
+        messagesCount: Int,
+        mentionsCount: Int
+    ) {
+        unseenMessagesCount = messagesCount
+        unseenMentionsCount = mentionsCount
+    }
+    
+    static func calculateUnseenMessagesCount(
+        mentions: Bool
+    ) -> [Int: Int] {
+        let userId = UserData.sharedInstance.getUserId()
+        
+        var predicate = NSPredicate(
+            format: "senderId != %d AND seen == %@ AND chat.seen == %@",
+            userId,
+            NSNumber(booleanLiteral: false),
+            NSNumber(booleanLiteral: false)
+        )
+        
+        if mentions {
+            predicate = NSPredicate(
+                format: "senderId != %d AND seen == %@ AND push == %@ AND chat.seen == %@",
+                userId,
+                NSNumber(booleanLiteral: false),
+                NSNumber(booleanLiteral: true),
+                NSNumber(booleanLiteral: false)
+            )
+        }
+        
+        let messages: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: [],
+            entityName: "TransactionMessage"
+        )
+        
+        var messagesCountMap: [Int: Int] = [:]
+        
+        for m in messages {
+            if let chatId = m.chat?.id {
+                if let messagesCount = messagesCountMap[chatId] {
+                    messagesCountMap[chatId] = messagesCount + 1
+                } else {
+                    messagesCountMap[chatId] = 1
+                }
+            }
+        }
+        
+        return messagesCountMap
+    }
+    
     func calculateUnseenMessagesCount() {
         let userId = UserData.sharedInstance.getUserId()
         let predicate = NSPredicate(
-            format: "senderId != %d AND chat == %@ AND seen == %@ && chat.seen == %@",
+            format: "senderId != %d AND chat == %@ AND seen == %@ AND chat.seen == %@",
             userId, self,
             NSNumber(booleanLiteral: false),
             NSNumber(booleanLiteral: false)
@@ -411,7 +462,7 @@ public class Chat: NSManagedObject {
     func calculateUnseenMentionsCount() {
         let userId = UserData.sharedInstance.getUserId()
         let predicate = NSPredicate(
-            format: "senderId != %d AND chat == %@ AND seen == %@ && push == %@ && chat.seen == %@",
+            format: "senderId != %d AND chat == %@ AND seen == %@ AND push == %@ AND chat.seen == %@",
             userId,
             self,
             NSNumber(booleanLiteral: false),
@@ -442,7 +493,7 @@ public class Chat: NSManagedObject {
     }
     
     public func updateLastMessage() {
-        if lastMessage == nil {
+        if lastMessage == nil && messages?.count ?? 0 > 0 {
             lastMessage = getLastMessageToShow()
         }
     }

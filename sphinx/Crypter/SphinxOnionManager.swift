@@ -160,13 +160,6 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func processPubkeyTopicResponse(pubkeyMessage:CocoaMQTTMessage){
-        let payloadData = Data(pubkeyMessage.payload)
-        if let payloadString = String(data: payloadData, encoding: .utf8) {
-            print("MQTT Topic:\(pubkeyMessage.topic) with Payload as String: \(payloadString)")
-        }
-    }
-    
     func processBalanceUpdateMessage(balanceUpdateMessage:CocoaMQTTMessage){
         let payloadData = Data(balanceUpdateMessage.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
@@ -184,10 +177,6 @@ class SphinxOnionManager : NSObject {
         case "register":
             print("processing register topic!")
             processRegisterTopicResponse(registerMessage: message)
-            break
-        case "pubkey":
-            print("processing pubkey topic!")
-            processPubkeyTopicResponse(pubkeyMessage: message)
             break
         case "balance":
             print("processing balance topic!")

@@ -29,12 +29,8 @@ class WebAppViewController: KeyboardEventsViewController {
         guard let tribeInfo = chat.tribeInfo, let gameURL = tribeInfo.appUrl, !gameURL.isEmpty else {
             return nil
         }
-        
-        if let tribeUUID = tribeInfo.uuid ?? chat.uuid, let tribeHost = chat.host {
-            viewController.gameURL  = "\(gameURL)?host=\(tribeHost)&uuid=\(tribeUUID)"
-        } else {
-            viewController.gameURL = gameURL
-        }
+
+        viewController.gameURL = gameURL
         
         return viewController
     }
@@ -99,7 +95,11 @@ class WebAppViewController: KeyboardEventsViewController {
         var url: String = gameURL
         
         if let tribeUUID = chat.tribeInfo?.uuid {
-            url = gameURL.withURLParam(key: "tribe", value: tribeUUID)
+            url = url.withURLParam(key: "uuid", value: tribeUUID)
+        }
+        
+        if let host = chat.host {
+            url = url.withURLParam(key: "host", value: host)
         }
         
         if let url = URL(string: url) {

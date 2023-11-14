@@ -30,7 +30,10 @@ class GroupsPinManager {
     
     var isStandardPIN : Bool {
         get {
-            return currentPin == userData.getAppPin() || currentPin.isEmpty
+            if let privacyPin = userData.getPrivacyPin() {
+                return currentPin != privacyPin
+            }
+            return true
         }
     }
     

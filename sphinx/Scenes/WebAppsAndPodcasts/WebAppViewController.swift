@@ -22,11 +22,17 @@ class WebAppViewController: KeyboardEventsViewController {
     
     let webAppHelper = WebAppHelper()
     
-    static func instantiate(chat: Chat) -> WebAppViewController {
+    static func instantiate(chat: Chat) -> WebAppViewController? {
         let viewController = StoryboardScene.WebApps.webAppViewController.instantiate()
         viewController.chat = chat
         
-        if let tribeInfo = chat.tribeInfo, let gameURL = tribeInfo.appUrl, !gameURL.isEmpty {
+        guard let tribeInfo = chat.tribeInfo, let gameURL = tribeInfo.appUrl, !gameURL.isEmpty else {
+            return nil
+        }
+        
+        if let tribeUUID = tribeInfo.uuid ?? chat.uuid, let tribeHost = chat.host {
+            viewController.gameURL  = "\(gameURL)?host=\(tribeHost)&uuid=\(tribeUUID)"
+        } else {
             viewController.gameURL = gameURL
         }
         

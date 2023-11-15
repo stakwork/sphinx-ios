@@ -163,6 +163,7 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
     @objc func handleServerNotification(n: Notification) {
         if let server = n.userInfo?["server"] as? Server{
             self.server = server
+            server.managedObjectContext?.saveContext()
         }
     }
     

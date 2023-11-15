@@ -31,6 +31,8 @@ class SetPinCodeViewController: UIViewController {
     let kOldPinTitle = "enter.old.pin".localized
     let kNewPinTitle = "enter.new.pin".localized
     
+    var isV2 : Bool = false
+    
     public enum SetPinMode: Int {
         case Set
         case Change
@@ -205,6 +207,7 @@ class SetPinCodeViewController: UIViewController {
             SignupHelper.step = SignupHelper.SignupStep.PINSet.rawValue
             
             let newUserGreetingVC = NewUserGreetingViewController.instantiate()
+            newUserGreetingVC.isV2 = self.isV2
             self.navigationController?.pushViewController(newUserGreetingVC, animated: true)
         }
     }

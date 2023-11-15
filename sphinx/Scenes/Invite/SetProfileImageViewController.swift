@@ -19,6 +19,7 @@ class SetProfileImageViewController: SetDataViewController {
     
     var nickname: String? = nil
     var imageSet = false
+    var isV2: Bool = false
     
     var imagePickerManager = ImagePickerManager.sharedInstance
     
@@ -93,17 +94,29 @@ class SetProfileImageViewController: SetDataViewController {
     }
     
     func updateProfile(photoUrl: String) {
-        let id = UserData.sharedInstance.getUserId()
-        let parameters = ["photo_url" : photoUrl as AnyObject]
-        
-        API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
+        if isV2,
+           let selfContact = SphinxOnionManager.sharedInstance.pendingContact{
+            selfContact.avatarUrl = photoUrl //TODO: we need to figure out where avatars actually get stored now!
             self.loading = false
-            let _ = UserContactsHelper.insertContact(contact: contact)
             self.goToSphinxDesktopAd()
-        }, errorCallback: {
+        }
+        else if isV2 == false{
+            let id = UserData.sharedInstance.getUserId()
+            let parameters = ["photo_url" : photoUrl as AnyObject]
+            
+            API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
+                self.loading = false
+                let _ = UserContactsHelper.insertContact(contact: contact)
+                self.goToSphinxDesktopAd()
+            }, errorCallback: {
+                self.loading = false
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+            })
+        }
+        else{
             self.loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
-        })
+        }
     }
     
     func goToSphinxDesktopAd() {

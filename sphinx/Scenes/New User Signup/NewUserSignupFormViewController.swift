@@ -28,6 +28,8 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     var generateTokenRetries = 0
     var generateTokenSuccess: Bool = false
     var hasAdminRetries: Int = 0
+    
+    var isV2:Bool = false
     var server : Server? = nil
     var balance : String? = nil
 
@@ -163,6 +165,7 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
     @objc func handleServerNotification(n: Notification) {
         if let server = n.userInfo?["server"] as? Server{
             self.server = server
+            server.managedObjectContext?.saveContext()
         }
     }
     

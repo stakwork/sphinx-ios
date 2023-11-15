@@ -15,6 +15,7 @@ class SetNickNameViewController: SetDataViewController {
     @IBOutlet weak var textFieldContainer: UIView!
     @IBOutlet weak var nickNameField: UITextField!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    var isV2 : Bool = false
     
     static func instantiate() -> SetNickNameViewController {
         let viewController = StoryboardScene.Invite.setNickNameViewController.instantiate()
@@ -46,8 +47,22 @@ class SetNickNameViewController: SetDataViewController {
         nickNameField.becomeFirstResponder()
     }
     
+    func validateNickname()->String?{
+        if let nickname = nickNameField.text, nickname != ""{
+            return nickname
+        }
+        return nil
+    }
+    
     @IBAction func nextButtonTouched() {
-        if let nickname = nickNameField.text, nickname != "" {
+        if isV2,
+            let nickname = validateNickname(),
+            let selfContact = SphinxOnionManager.sharedInstance.pendingContact,
+            selfContact.isOwner == true{
+            selfContact.nickname = nickname
+            self.goToProfilePicture()
+        }
+        else if isV2 == false, let _ = validateNickname() {
             loading = true
             
             API.sharedInstance.getContacts(callback: {(contacts, _, _) -> () in
@@ -76,6 +91,7 @@ class SetNickNameViewController: SetDataViewController {
     
     func goToProfilePicture() {
         let profilePictureVC = SetProfileImageViewController.instantiate(nickname: nickNameField.text ?? nil)
+        profilePictureVC.isV2 = self.isV2
         self.navigationController?.pushViewController(profilePictureVC, animated: true)
     }
 }

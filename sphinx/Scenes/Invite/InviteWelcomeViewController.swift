@@ -17,6 +17,7 @@ class InviteWelcomeViewController: UIViewController {
     @IBOutlet weak var nextButtonContainer: UIView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
+    var isV2 : Bool = false
     var loading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.white, view: view)
@@ -82,6 +83,7 @@ class InviteWelcomeViewController: UIViewController {
         SignupHelper.step = SignupHelper.SignupStep.InviterContactCreated.rawValue
         
         let setPinVC = SetPinCodeViewController.instantiate()
+        setPinVC.isV2 = true
         self.navigationController?.pushViewController(setPinVC, animated: true)
     }
     

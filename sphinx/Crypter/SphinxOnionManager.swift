@@ -34,6 +34,7 @@ class SphinxOnionManager : NSObject {
     }
     
     var pendingContact : UserContact? = nil
+    var currentServer : Server? = nil
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var shouldPostUpdates : Bool = false
     let server_IP = "54.164.163.153"
@@ -305,6 +306,7 @@ extension SphinxOnionManager{//contacts related
         server.pubKey = retrievedCredentials.serverPubkey
         server.ip = self.server_IP
         (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onMQTTConnectionStatusChanged, object: nil, userInfo: ["server" : server])) : ()
+        self.currentServer = server
         managedContext.saveContext()
     }
     

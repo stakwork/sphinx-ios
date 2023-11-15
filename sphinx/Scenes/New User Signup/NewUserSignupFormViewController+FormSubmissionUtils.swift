@@ -29,8 +29,6 @@ extension NewUserSignupFormViewController {
         som.vc = self
         som.shouldPostUpdates = true
         som.chooseImportOrGenerateSeed()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleServerNotification), name: .onMQTTConnectionStatusChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleBalanceNotification), name: .onBalanceDidChange, object: nil)
     }
 }
     

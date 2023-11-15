@@ -157,12 +157,15 @@ extension ConnectionCodeSignupHandling {
     }
     
     func signup_v2_with_test_server(){
-        guard let vc = self as? NewUserSignupFormViewController else{
-            return
-        }
         presentConnectingLoadingScreenVC()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-            if(vc.server != nil && vc.balance != nil){
+            let som = SphinxOnionManager.sharedInstance
+            if let _ = som.currentServer,
+               let contact = som.pendingContact,
+               contact.isOwner == true{
+                if let vc = self as? NewUserSignupFormViewController{
+                    vc.isV2 = true
+                }
                 self.proceedToNewUserWelcome()
             }
             else{
@@ -299,7 +302,9 @@ extension ConnectionCodeSignupHandling {
             let inviteWelcomeVC = InviteWelcomeViewController.instantiate(
                 inviter: inviter
             )
-
+            if let vc = self as? NewUserSignupFormViewController{
+                inviteWelcomeVC.isV2 = vc.isV2
+            }
             self.navigationController?.pushViewController(inviteWelcomeVC, animated: true)
         }
     }

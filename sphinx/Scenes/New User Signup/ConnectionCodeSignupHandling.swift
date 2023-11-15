@@ -153,6 +153,24 @@ extension ConnectionCodeSignupHandling {
                 )
             }
         )
+        
+    }
+    
+    func signup_v2_with_test_server(){
+        guard let vc = self as? NewUserSignupFormViewController else{
+            return
+        }
+        presentConnectingLoadingScreenVC()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+            if(vc.server != nil && vc.balance != nil){
+                self.proceedToNewUserWelcome()
+            }
+            else{
+                self.navigationController?.popViewController(animated: true)
+                AlertHelper.showAlert(title: "Error", message: "Unable to connect to Sphinx V2 Test Server")
+            }
+        })
+        
     }
     
     

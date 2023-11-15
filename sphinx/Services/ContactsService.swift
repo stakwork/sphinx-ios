@@ -51,12 +51,20 @@ class ContactsService: NSObject {
         return API.sharedInstance.lastSeenMessagesDate == nil
     }
     
+    func reset() {
+        contacts = []
+        allContacts = []
+        chats = []
+        
+        contactsResultsController?.delegate = nil
+        contactsResultsController = nil
+        
+        chatsResultsController?.delegate = nil
+        chatsResultsController = nil
+    }
+    
     func configureFetchResultsController() {
         if let _ = chatsResultsController, let _ = contactsResultsController {
-            return
-        }
-        
-        if isRestoring() {
             return
         }
         
@@ -145,6 +153,10 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     func processContactsAndChats() {
         updateOwner()
         
+        guard let owner = owner else {
+            return
+        }
+        
         for chat in chats {
             if chat.isConversation() {
                 if let contactId = chat.contactIds.filter({ $0.intValue != owner.id }).first?.intValue {
@@ -160,6 +172,8 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             let conversations = chats.filter({ $0.isConversation() })
             let contactIds = ((conversations.map { $0.contactIds }).flatMap { $0 }).map { $0.intValue }
             self.contacts = self.allContacts.filter({ !contactIds.contains($0.id) && !$0.isExpiredInvite() && !$0.isBlocked() })
+        } else {
+            self.contacts = []
         }
         
         processChatListObjects()

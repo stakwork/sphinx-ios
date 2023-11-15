@@ -223,6 +223,8 @@ extension DashboardRootViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: .onContactsAndChatsChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
+        
+        contactsService.configureFetchResultsController()
     }
     
     func loadLastPlayedPod() {
@@ -511,8 +513,6 @@ extension DashboardRootViewController {
                 
                 self.chatsListViewModel.askForNotificationPermissions()
                 self.contactsService.forceUpdate()
-            } else {
-                self.contactsService.configureFetchResultsController()
             }
             
             var contentProgressShare : Float = 0.0
@@ -627,8 +627,6 @@ extension DashboardRootViewController {
         updateNewMessageBadges()
         
         didFinishInitialLoading = true
-        
-        contactsService.configureFetchResultsController()
     }
     
     

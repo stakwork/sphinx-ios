@@ -7,6 +7,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -243,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW USER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxp-4g-tGX">
-                                <rect key="frame" x="124" y="265" width="166.5" height="37"/>
+                                <rect key="frame" x="124" y="201" width="166.5" height="37"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -265,7 +266,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8m-Lu-MG0" userLabel="Form Container">
-                                <rect key="frame" x="30" y="382" width="354" height="132"/>
+                                <rect key="frame" x="30" y="318" width="354" height="260"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Awg-RS-jhR" userLabel="Code Input Container">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="62"/>
@@ -342,16 +343,53 @@
                                             <constraint firstItem="ngQ-ql-U0M" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bEH-EM-lm0" secondAttribute="leading" constant="20" symbolic="YES" id="nOx-jS-079"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpk-Gu-yml" userLabel="Submit Button Container">
+                                        <rect key="frame" x="0.0" y="170" width="354" height="62"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXG-r8-Ize">
+                                                <rect key="frame" x="0.0" y="0.0" width="354" height="62"/>
+                                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="17"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Connect to Test Server">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="connectToTestServer" destination="pDW-8S-YSd" eventType="touchUpInside" id="dOA-ea-XhL"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAH-nv-vSO">
+                                                <rect key="frame" x="313" y="20.5" width="21" height="21"/>
+                                                <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="21"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <constraints>
+                                            <constraint firstItem="WXG-r8-Ize" firstAttribute="leading" secondItem="xpk-Gu-yml" secondAttribute="leading" id="1Yh-OC-6Th"/>
+                                            <constraint firstItem="xAH-nv-vSO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xpk-Gu-yml" secondAttribute="leading" constant="20" symbolic="YES" id="6ti-y9-lJF"/>
+                                            <constraint firstAttribute="trailing" secondItem="xAH-nv-vSO" secondAttribute="trailing" constant="20" id="8pC-Fb-nRm"/>
+                                            <constraint firstItem="WXG-r8-Ize" firstAttribute="top" secondItem="xpk-Gu-yml" secondAttribute="top" id="PRi-gr-7EZ"/>
+                                            <constraint firstItem="xAH-nv-vSO" firstAttribute="centerY" secondItem="xpk-Gu-yml" secondAttribute="centerY" id="eAT-2t-tYi"/>
+                                            <constraint firstAttribute="trailing" secondItem="WXG-r8-Ize" secondAttribute="trailing" id="gdy-uK-0Ph"/>
+                                            <constraint firstAttribute="height" constant="62" id="oJH-gU-zOa"/>
+                                            <constraint firstAttribute="bottom" secondItem="WXG-r8-Ize" secondAttribute="bottom" id="zKF-Ew-acT"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="Awg-RS-jhR" firstAttribute="leading" secondItem="P8m-Lu-MG0" secondAttribute="leading" id="3lK-ai-x4g"/>
+                                    <constraint firstItem="bEH-EM-lm0" firstAttribute="leading" secondItem="xpk-Gu-yml" secondAttribute="leading" id="3yf-DN-FK1"/>
                                     <constraint firstAttribute="trailing" secondItem="Awg-RS-jhR" secondAttribute="trailing" id="40j-5V-HSc"/>
                                     <constraint firstAttribute="trailing" secondItem="bEH-EM-lm0" secondAttribute="trailing" id="9Xd-Q7-ich"/>
                                     <constraint firstItem="Awg-RS-jhR" firstAttribute="top" secondItem="P8m-Lu-MG0" secondAttribute="top" id="Gjg-2i-F9F"/>
-                                    <constraint firstAttribute="height" constant="132" id="KJz-Vg-lLi"/>
+                                    <constraint firstAttribute="height" constant="260" id="KJz-Vg-lLi"/>
+                                    <constraint firstItem="bEH-EM-lm0" firstAttribute="trailing" secondItem="xpk-Gu-yml" secondAttribute="trailing" id="Ntk-4p-XNW"/>
                                     <constraint firstItem="bEH-EM-lm0" firstAttribute="top" secondItem="Awg-RS-jhR" secondAttribute="bottom" constant="30" id="R6D-Aj-xvp"/>
                                     <constraint firstItem="bEH-EM-lm0" firstAttribute="leading" secondItem="P8m-Lu-MG0" secondAttribute="leading" id="dxv-d2-paK"/>
+                                    <constraint firstItem="xpk-Gu-yml" firstAttribute="top" secondItem="bEH-EM-lm0" secondAttribute="bottom" constant="16" id="pzQ-LF-tZa"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mBm-gx-JCP">
@@ -396,6 +434,7 @@
                         <outlet property="backButton" destination="hGk-nq-mPF" id="a0v-0H-GJU"/>
                         <outlet property="codeTextField" destination="6Ax-pV-KVk" id="QaX-Ij-Z5u"/>
                         <outlet property="codeTextFieldContainer" destination="Awg-RS-jhR" id="QLH-q0-ZHG"/>
+                        <outlet property="connectToServerButton" destination="WXG-r8-Ize" id="Bw1-Zx-Qgq"/>
                         <outlet property="importSeedContainer" destination="mBm-gx-JCP" id="bkW-jl-Qv2"/>
                         <outlet property="importSeedView" destination="eVt-DT-WnS" id="RtO-lt-5Yw"/>
                         <outlet property="submitButton" destination="n1x-Nd-XT6" id="znz-ni-Dfl"/>
@@ -622,5 +661,8 @@ Lightning Network!</string>
         <namedColor name="WashedOutReceivedText">
             <color red="0.69019607843137254" green="0.71764705882352942" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

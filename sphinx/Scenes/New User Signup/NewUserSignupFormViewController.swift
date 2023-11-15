@@ -16,6 +16,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var codeTextFieldContainer: UIView!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var connectToServerButton: UIButton!
     @IBOutlet weak var submitButtonContainer: UIView!
     @IBOutlet weak var submitButtonArrow: UILabel!
     @IBOutlet weak var importSeedContainer: UIView!
@@ -27,6 +28,8 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     var generateTokenRetries = 0
     var generateTokenSuccess: Bool = false
     var hasAdminRetries: Int = 0
+    var server : Server? = nil
+    var balance : String? = nil
 
     
     static func instantiate() -> NewUserSignupFormViewController {
@@ -63,6 +66,12 @@ extension NewUserSignupFormViewController {
         submitButton.layer.cornerRadius = submitButton.frame.size.height / 2
         submitButton.clipsToBounds = true
         submitButton.setTitle("signup.submit".localized, for: .normal)
+        
+        connectToServerButton.layer.cornerRadius = submitButton.layer.cornerRadius
+        connectToServerButton.clipsToBounds = true
+        connectToServerButton.isEnabled = true
+        connectToServerButton.isUserInteractionEnabled = true
+        connectToServerButton.superview?.bringSubviewToFront(connectToServerButton)
         
         disableSubmitButton()
     }
@@ -145,6 +154,24 @@ extension NewUserSignupFormViewController: UITextFieldDelegate {
 
 
 extension NewUserSignupFormViewController : ImportSeedViewDelegate{
+    func showImportSeedView() {
+        importSeedView.showWith(delegate: self)
+        importSeedContainer.isHidden = false
+        importSeedView.context = .SphinxOnionPrototype
+    }
+    
+    @objc func handleServerNotification(n: Notification) {
+        if let server = n.userInfo?["server"] as? Server{
+            self.server = server
+        }
+    }
+    
+    @objc func handleBalanceNotification(n:Notification){
+        if let balance = n.userInfo?["balance"] as? String{
+            self.balance = balance
+        }
+    }
+    
     
     func showImportSeedView(
         network: String,
@@ -165,14 +192,24 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
     }
     
     func didTapConfirm() {
-        let success = CrypterManager.sharedInstance.performWalletFinalization(
-            network: importSeedView.network,
-            host: importSeedView.host,
-            relay: importSeedView.relay,
-            enteredMnemonic: importSeedView.textView.text
-        )
-        
-        importSeedContainer.isHidden = !success
+        if(importSeedView.context == .SphinxOnionPrototype){
+            let som = SphinxOnionManager.sharedInstance
+            let success = som.createAccount(mnemonic: importSeedView.textView.text)
+            if(success){
+                importSeedContainer.isHidden = !success
+                signup_v2_with_test_server()
+            }
+        }
+        else{
+            let success = CrypterManager.sharedInstance.performWalletFinalization(
+                network: importSeedView.network,
+                host: importSeedView.host,
+                relay: importSeedView.relay,
+                enteredMnemonic: importSeedView.textView.text
+            )
+            
+            importSeedContainer.isHidden = !success
+        }
     }
     
 }

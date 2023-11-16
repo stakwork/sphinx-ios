@@ -13,10 +13,16 @@ extension NewChatViewController {
         let shouldShow = webAppContainerView.isHidden
         
         if shouldShow {
-            if let chat = chat, webAppVC == nil {
-                webAppVC = WebAppViewController.instantiate(chat: chat)
+            if let chat = chat {
+                if webAppVC == nil {
+                    if let webAppVC = WebAppViewController.instantiate(chat: chat) {
+                        self.webAppVC = webAppVC
+                    }
+                }
+                if let webAppVC = webAppVC {
+                    addChildVC(child: webAppVC, container: webAppContainerView)
+                }
             }
-            addChildVC(child: webAppVC!, container: webAppContainerView)
         } else if let webAppVC = webAppVC {
             removeChildVC(child: webAppVC)
         }

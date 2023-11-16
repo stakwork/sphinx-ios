@@ -220,22 +220,9 @@ extension AllTribeFeedsCollectionViewController {
                 _ in
             })
         })
-        
-        //Debug only - TODO clean this up 
-//        if let vf = VideoFeed.getAll().filter({
-//            if let title = $0.title?.lowercased(){
-//                return title.contains("tftc")
-//            }
-//            return false
-//        }).first,
-//           let item = vf.itemsArray.first{
-//            let video = Video.convertFrom(contentFeedItem: item)
-//            video.videoFeed = VideoFeed.convertFrom(contentFeed: vf)
-//            DownloadService.sharedInstance.startDownload(video: video)
-//        }
-//
-//        API.sharedInstance.getVideoRemoteStorageStatus(videoID: "tADAlisn4HA", callback: {exists in}, errorCallback: {})
-//        API.sharedInstance.getVideoRemoteStorageStatus(videoID: "abc123", callback: {exists in}, errorCallback: {})
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+            SphinxOnionManager.sharedInstance.addContact()
+        })
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {

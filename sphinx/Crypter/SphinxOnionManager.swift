@@ -59,6 +59,10 @@ class SphinxOnionManager : NSObject {
         var result : String? = nil
         do {
             result = try mnemonicFromEntropy(entropy: Data.randomBytes(length: 16).hexString)
+            guard let result = result else{
+                return nil
+            }
+            UserData.sharedInstance.save(walletMnemonic: result)
         }
         catch let error{
             print("error getting seed\(error)")
@@ -187,8 +191,8 @@ class SphinxOnionManager : NSObject {
             if let retrievedCredentials = Mapper<OnionConnectionData>().map(JSONString: payloadString){
                 print("Onion Credentials register over MQTT:\(retrievedCredentials)")
                 //5. Store my credentials (SCID, serverPubkey, myPubkey)
-                if let scid = retrievedCredentials.scid{
-                    createSelfContact(scid: scid)
+                if let _ = retrievedCredentials.scid{
+                    processContact(from: registerMessage.topic,retrievedCredentials: retrievedCredentials)
                 }
                 saveLSPServerData(retrievedCredentials: retrievedCredentials)
             }
@@ -317,5 +321,73 @@ extension SphinxOnionManager{//contacts related
         self.pendingContact?.isOwner = true
         self.pendingContact?.index = 0
         managedContext.saveContext()
+    }
+    
+    func addContact(){
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = getAccountSeed(mnemonic: mnemonic),
+              let xpub = getAccountXpub(seed: seed)
+        else{
+            return
+        }
+        let idx = UInt32(42.0)//TODO: need logic for deciding this //Data.randomBytes(length: 16).uint32
+        let time = getTimestampInMilliseconds()
+        do{
+            let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
+            let success = connectToBroker(seed: seed, xpub: xpub)
+            if (success == false){return}
+            
+            mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                self.processMqttMessages(message: receivedMessage)
+            }
+            
+            //subscribe to relevant topics
+            mqtt.didConnectAck = { _, _ in
+                //self.showSuccessWithMessage("MQTT connected")
+                print("SphinxOnionManager: MQTT Connected")
+                print("mqtt.didConnectAck")
+                self.mqtt.subscribe([
+                    ("\(childPubKey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
+                ])
+                self.mqtt.publish(
+                    CocoaMQTTMessage(
+                        topic: "\(childPubKey)/\(idx)/req/register",
+                        payload: []
+                    )
+                )
+            }
+        }
+        catch{
+            print("error: \(error)")
+        }
+    }
+    
+    func processContact(from MqttTopic:String, retrievedCredentials: OnionConnectionData){
+        guard let scid = retrievedCredentials.scid,
+              let serverPubkey = retrievedCredentials.serverPubkey,
+              let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = getAccountSeed(mnemonic: mnemonic),
+              let myPubkey = getAccountOnlyKeysendPubkey(seed: seed) else{
+              return
+          }
+        if(MqttTopic.contains(myPubkey)){
+            createSelfContact(scid: scid)
+        }
+        else{
+            //create other contact
+            let topicParams = MqttTopic.split(separator: "/")
+            if topicParams.count != 4{
+                return//TODO: throw error?
+            }
+            let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+            let contact = UserContact(context: managedContext)
+            contact.id = 5
+            contact.childPubKey = String(topicParams[0])
+            contact.scid = scid
+            contact.index = Int(String(topicParams[1])) ?? 1
+            contact.publicKey // this needs to be either received from keysend message or known at the outset
+            contact.routeHint = serverPubkey
+            managedContext.saveContext()
+        }
     }
 }

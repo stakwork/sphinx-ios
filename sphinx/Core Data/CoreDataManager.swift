@@ -169,7 +169,7 @@ class CoreDataManager {
     }
     
     func getObjectsOfTypeWith<T>(
-        predicate: NSPredicate,
+        predicate: NSPredicate?,
         sortDescriptors: [NSSortDescriptor],
         entityName: String,
         fetchLimit: Int? = nil,

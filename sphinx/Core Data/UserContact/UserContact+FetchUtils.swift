@@ -49,20 +49,26 @@ extension UserContact {
         }
         
         public static func chatList() -> NSPredicate {
-            if GroupsPinManager.sharedInstance.isStandardPIN {
-                return NSPredicate(
-                    format: "isOwner == %@ AND fromGroup == %@ AND pin == null",
-                    NSNumber(value: false),
-                    NSNumber(value: false)
-                )
-            } else {
-                return NSPredicate(
-                    format: "isOwner == %@ AND fromGroup == %@ AND pin = %@",
-                    NSNumber(value: false),
-                    NSNumber(value: false),
-                    GroupsPinManager.sharedInstance.currentPin
-                )
-            }
+            return NSPredicate(
+                format: "isOwner == %@ AND fromGroup == %@",
+                NSNumber(value: false),
+                NSNumber(value: false)
+            )
+            
+//            if GroupsPinManager.sharedInstance.isStandardPIN {
+//                return NSPredicate(
+//                    format: "isOwner == %@ AND fromGroup == %@ AND pin = nil",
+//                    NSNumber(value: false),
+//                    NSNumber(value: false)
+//                )
+//            } else {
+//                return NSPredicate(
+//                    format: "isOwner == %@ AND fromGroup == %@ AND pin = %@",
+//                    NSNumber(value: false),
+//                    NSNumber(value: false),
+//                    GroupsPinManager.sharedInstance.currentPin
+//                )
+//            }
         }
     }
 }

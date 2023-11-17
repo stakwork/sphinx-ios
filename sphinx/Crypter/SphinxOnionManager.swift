@@ -194,7 +194,6 @@ class SphinxOnionManager : NSObject {
                 if let _ = retrievedCredentials.scid{
                     processContact(from: registerMessage.topic,retrievedCredentials: retrievedCredentials)
                 }
-                saveLSPServerData(retrievedCredentials: retrievedCredentials)
             }
         } else {
             print("MQTT Unable to convert payload to a string")
@@ -314,23 +313,26 @@ extension SphinxOnionManager{//contacts related
         managedContext.saveContext()
     }
     
-    func createSelfContact(scid:String){
+    func createSelfContact(scid:String,serverPubkey:String,myOkKey:String){
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         self.pendingContact = UserContact(context: managedContext)
         self.pendingContact?.scid = scid
         self.pendingContact?.isOwner = true
         self.pendingContact?.index = 0
+        self.pendingContact?.publicKey = myOkKey
+        self.pendingContact?.routeHint = "\(serverPubkey)_\(scid)"
         managedContext.saveContext()
     }
     
     func addContact(){
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
-              let xpub = getAccountXpub(seed: seed)
+              let xpub = getAccountXpub(seed: seed),
+              let nextIndex = UserContact.getNextAvailableContactIndex()
         else{
             return
         }
-        let idx = UInt32(42.0)//TODO: need logic for deciding this //Data.randomBytes(length: 16).uint32
+        let idx = UInt32(nextIndex)
         let time = getTimestampInMilliseconds()
         do{
             let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
@@ -362,32 +364,42 @@ extension SphinxOnionManager{//contacts related
         }
     }
     
-    func processContact(from MqttTopic:String, retrievedCredentials: OnionConnectionData){
-        guard let scid = retrievedCredentials.scid,
+    func processContact(from mqttTopic:String, retrievedCredentials: OnionConnectionData){
+        guard let topicParams = getValidatedRegisterTopicParams(topic:mqttTopic),
+              let scid = retrievedCredentials.scid,
               let serverPubkey = retrievedCredentials.serverPubkey,
               let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
               let myPubkey = getAccountOnlyKeysendPubkey(seed: seed) else{
+            AlertHelper.showAlert(title: "pub.key.options-add.contact.error.title".localized, message: "pub.key.options-add.contact.error.message".localized)
               return
           }
-        if(MqttTopic.contains(myPubkey)){
-            createSelfContact(scid: scid)
+        if(mqttTopic.contains(myPubkey)){//"self" contact case
+            let myOkKey = topicParams[0]
+            createSelfContact(scid: scid, serverPubkey: serverPubkey,myOkKey: myOkKey)
+            saveLSPServerData(retrievedCredentials: retrievedCredentials)//only save LSP if it's a self contact
         }
         else{
             //create other contact
-            let topicParams = MqttTopic.split(separator: "/")
-            if topicParams.count != 4{
-                return//TODO: throw error?
-            }
             let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
             let contact = UserContact(context: managedContext)
-            contact.id = 5
-            contact.childPubKey = String(topicParams[0])
+            contact.id = Int(topicParams[1]) ?? 1
+            contact.childPubKey = topicParams[0]
             contact.scid = scid
-            contact.index = Int(String(topicParams[1])) ?? 1
+            contact.index = Int(topicParams[1]) ?? 1
             contact.publicKey // this needs to be either received from keysend message or known at the outset
-            contact.routeHint = serverPubkey
+            contact.contactRouteHint = "\(serverPubkey)_\(topicParams[0])"
+            //contact.routeHint = serverPubkey //needs okKey to save
             managedContext.saveContext()
         }
+    }
+    
+    func getValidatedRegisterTopicParams(topic:String) -> [String]?{
+        let topicParams = topic.split(separator: "/")
+        if topicParams.count != 4{
+            AlertHelper.showAlert(title: "pub.key.options-add.contact.error.title".localized, message: "pub.key.options-add.contact.error.message".localized)
+            return nil
+        }
+        return topicParams.map({String($0)})
     }
 }

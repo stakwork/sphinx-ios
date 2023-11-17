@@ -262,6 +262,24 @@ public class UserContact: NSManagedObject {
         return contacts
     }
     
+    public static func getNextAvailableContactIndex() -> Int? {
+        let fetchRequest: NSFetchRequest<UserContact> = UserContact.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            let contacts = try CoreDataManager.sharedManager.persistentContainer.viewContext.fetch(fetchRequest)
+            if let highestIndexAvailable = contacts.first as? UserContact {
+                return Int(highestIndexAvailable.index) + 1
+            } else {
+                return nil
+            }
+        } catch {
+            print("Error fetching contacts: \(error)")
+            return nil
+        }
+    }
+    
     public static func getContactWith(id: Int) -> UserContact? {
         let predicate = NSPredicate(format: "id == %d", id)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]

@@ -370,6 +370,8 @@
 "pub.key.options" = "Opciones de Public Key";
 "pub.key.options-add.contact" = "Crear Contacto";
 "pub.key.options-send.payment" = "Enviar Pago";
+"pub.key.options-add.contact.error.title" = "Error con Crear Contacto";
+"pub.key.options-add.contact.error.message" = "Habia un error con crear este contacto. Por favor tratarlo otra vez.";
 
 // CHAT
 "payment.failed.upper" = "PAGO FALLIDO";

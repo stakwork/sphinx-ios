@@ -220,9 +220,6 @@ extension AllTribeFeedsCollectionViewController {
                 _ in
             })
         })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-            SphinxOnionManager.sharedInstance.addContact()
-        })
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {

@@ -143,6 +143,9 @@ class ChatListHeader: UIView {
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
         var message: String? = nil
         
+        SphinxOnionManager.sharedInstance.addContact()
+        return
+        
         switch(status) {
         case API.ConnectionStatus.Connecting:
             break

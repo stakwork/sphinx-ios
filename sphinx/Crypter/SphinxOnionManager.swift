@@ -8,21 +8,7 @@
 import Foundation
 import CocoaMQTT
 import ObjectMapper
-
-// Define a struct to represent the JSON structure
-struct OnionConnectionData: Mappable {
-    var scid: String?
-    var serverPubkey: String?
-    var myPubkey: String?
-    var vc: UIViewController! = nil
-
-    init?(map: Map) {}
-
-    mutating func mapping(map: Map) {
-        scid <- map["scid"]
-        serverPubkey <- map["server_pubkey"]
-    }
-}
+import SwiftyJSON
 
 
 class SphinxOnionManager : NSObject {
@@ -98,10 +84,14 @@ class SphinxOnionManager : NSObject {
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
-        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
-            showSuccessWithMessage("MQTT already connected or connecting")
-            return true
+        if let mqtt = mqtt{
+            mqtt.disconnect()
         }
+        
+//        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
+//            showSuccessWithMessage("MQTT already connected or connecting")
+//            return true
+//        }
         do{
             let now = getTimestampInMilliseconds()
             let sig = try rootSignMs(seed: seed, time: now, network: network)
@@ -188,7 +178,7 @@ class SphinxOnionManager : NSObject {
         let payloadData = Data(registerMessage.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
             print("MQTT Topic:\(registerMessage.topic) with Payload as String: \(payloadString)")
-            if let retrievedCredentials = Mapper<OnionConnectionData>().map(JSONString: payloadString){
+            if let retrievedCredentials = Mapper<SphinxOnionBrokerResponse>().map(JSONString: payloadString){
                 print("Onion Credentials register over MQTT:\(retrievedCredentials)")
                 //5. Store my credentials (SCID, serverPubkey, myPubkey)
                 if let _ = retrievedCredentials.scid{
@@ -302,7 +292,7 @@ extension SphinxOnionManager{//Sign Up UI Related:
 }
 
 extension SphinxOnionManager{//contacts related
-    func saveLSPServerData(retrievedCredentials:OnionConnectionData){
+    func saveLSPServerData(retrievedCredentials:SphinxOnionBrokerResponse){
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let server = Server(context: managedContext)
 
@@ -364,7 +354,7 @@ extension SphinxOnionManager{//contacts related
         }
     }
     
-    func processContact(from mqttTopic:String, retrievedCredentials: OnionConnectionData){
+    func processContact(from mqttTopic:String, retrievedCredentials: SphinxOnionBrokerResponse){
         guard let topicParams = getValidatedRegisterTopicParams(topic:mqttTopic),
               let scid = retrievedCredentials.scid,
               let serverPubkey = retrievedCredentials.serverPubkey,
@@ -387,10 +377,13 @@ extension SphinxOnionManager{//contacts related
             contact.childPubKey = topicParams[0]
             contact.scid = scid
             contact.index = Int(topicParams[1]) ?? 1
-            contact.publicKey // this needs to be either received from keysend message or known at the outset
+            contact.publicKey = "03681cbdf2f72d0689fb092426ad6c3ca8f0554a465463cd9ca9f083673859903d" // debug only // this needs to be either received from keysend message or known at the outset
             contact.contactRouteHint = "\(serverPubkey)_\(topicParams[0])"
             //contact.routeHint = serverPubkey //needs okKey to save
             managedContext.saveContext()
+            
+            //DEBUG ONLY:
+            sendKeyExchangeMsg(to: contact)
         }
     }
     
@@ -403,3 +396,170 @@ extension SphinxOnionManager{//contacts related
         return topicParams.map({String($0)})
     }
 }
+
+
+extension SphinxOnionManager{//Composing outgoing messages & processing incoming messages
+    func sendKeyExchangeMsg(to contact:UserContact)->SphinxMsgError?{
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = self.getAccountSeed(mnemonic: mnemonic),
+              let myOkKey = self.getAccountOnlyKeysendPubkey(seed: seed) else{
+            return SphinxMsgError.credentialsError
+        }
+        guard let recipPubkey = contact.publicKey,//OK key
+              let recipRouteHint = contact.contactRouteHint,
+              recipRouteHint.split(separator: "_").count == 2 else{
+            return SphinxMsgError.contactDataError
+        }
+        let serverPubkey = recipRouteHint.split(separator: "_")[0]
+        let scid = recipRouteHint.split(separator: "_")[1]
+        
+        let senderInfo = JSON([
+            "pubkey" : myOkKey,
+            "routeHint" : "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090617434115"//TODO: need to extract this from the DB
+        ]).stringValue
+        let msg = SphinxChatMsg(message: "hello world!", sender: senderInfo, typ: SphinxMsgTypes.KeyExchange.rawValue)
+        
+//        let hopsArray: [[String: String]] = [
+//            ["pubkey": "\(serverPubkey)"],
+//            ["pubkey": "\(recipPubkey)"]
+//        ]
+        
+        //DEBUG:
+//        let hopsArray: [[String: String]] = [
+//            ["pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"],
+//            ["pubkey": "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"]
+//        ]
+//
+//        // Serialize the hopsArray to JSON
+//        guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
+//           let hopsJSONString = String(data: hopsJSON, encoding: .utf8) else {
+//            return SphinxMsgError.encodingError
+//        }
+        
+        let hopsJSONString = """
+            [
+                {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
+                {"pubkey": "03681cbdf2f72d0689fb092426ad6c3ca8f0554a465463cd9ca9f083673859903d"}
+            ]
+            """
+        
+        let time = getTimestampInMilliseconds()
+        let contentString = msg.message
+        let contentData = contentString.data(using: .utf8) ?? Data()
+        do{
+            let onion = try! createOnion(seed: seed, idx: UInt32(1), time: time, network: network, hops: hopsJSONString, payload: contentData)
+            var onionAsArray = [UInt8](repeating: 0, count: onion.count)
+
+            // Use withUnsafeBytes to copy the Data into the UInt8 array
+            onion.withUnsafeBytes { bufferPointer in
+                guard let baseAddress = bufferPointer.baseAddress else {//
+                    fatalError("Failed to get base address")
+                }
+                memcpy(&onionAsArray, baseAddress, onion.count)
+                self.mqtt.publish(
+                    CocoaMQTTMessage(
+                        topic: "\(myOkKey)/req/send",
+                        payload: onionAsArray
+                    )
+                )
+            }
+            
+        }
+        catch{
+            return SphinxMsgError.encodingError
+        }
+        
+                
+        return nil
+    }
+    
+}
+
+
+//MARK: Helper Structs & Functions:
+
+// Parsing Helper Struct
+struct SphinxOnionBrokerResponse: Mappable {
+    var scid: String?
+    var serverPubkey: String?
+    var myPubkey: String?
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        scid <- map["scid"]
+        serverPubkey <- map["server_pubkey"]
+    }
+}
+
+struct SphinxChatMsg {
+    // Define your struct fields here
+    // For example:
+    var message: String
+    var sender: String
+    var typ: UInt8
+}
+
+enum SphinxMsgTypes: UInt8{
+    case KeyExchange = 10
+    case KeyExchangeConfirmation = 11
+}
+
+enum SphinxMsgError: Error {
+    case encodingError
+    case credentialsError //can't get access to my Private Keys/other data!
+    case contactDataError // not enough data about contact!
+}
+
+func serializeChatMsg(msg: SphinxChatMsg) -> Result<Data, SphinxMsgError> {
+    var buff = Data()
+    
+    do {
+        try encodeMapLength(&buff, length: 3)
+        try encodeString(&buff, string: "m")
+        try serializeMessage(&buff, message: msg.message)
+        try encodeString(&buff, string: "s")
+        try serializeSender(&buff, sender: msg.sender)
+        try encodeString(&buff, string: "t")
+        try encodeUInt8(&buff, value: msg.typ)
+        // don't serialize uuid; it's a hash of the rest
+        
+        return .success(buff)
+    } catch {
+        return .failure(.encodingError)
+    }
+}
+
+func encodeMapLength(_ buffer: inout Data, length: Int) throws {
+    // Implement your encoding logic for map length here
+    // Example:
+    var length = length
+    buffer.append(Data([UInt8(length)]))
+}
+
+func encodeString(_ buffer: inout Data, string: String) throws {
+    // Implement your encoding logic for strings here
+    // Example:
+    let data = string.data(using: .utf8)
+    buffer.append(data!)
+}
+
+func serializeMessage(_ buffer: inout Data, message: String) throws {
+    // Implement your serialization logic for message here
+    // Example:
+    try encodeString(&buffer, string: message)
+}
+
+func serializeSender(_ buffer: inout Data, sender: String) throws {
+    // Implement your serialization logic for sender here
+    // Example:
+    try encodeString(&buffer, string: sender)
+}
+
+func encodeUInt8(_ buffer: inout Data, value: UInt8) throws {
+    // Implement your encoding logic for UInt8 here
+    // Example:
+    var value = value
+    buffer.append(Data([value]))
+}
+

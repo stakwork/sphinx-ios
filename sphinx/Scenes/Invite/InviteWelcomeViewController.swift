@@ -16,6 +16,7 @@ class InviteWelcomeViewController: UIViewController {
     @IBOutlet weak var welcomeMessageLabel: UILabel!
     @IBOutlet weak var nextButtonContainer: UIView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    @IBOutlet weak var nextButton: UIButton!
     
     var isV2 : Bool = false
     var loading = false {
@@ -61,6 +62,7 @@ class InviteWelcomeViewController: UIViewController {
     
     func setTitle() {
         titleLabel.text = "message.from.friend".localized
+        nextButton.accessibilityIdentifier = "getStartedNextButton"
     }
     
     @IBAction func nextButtonTouched() {

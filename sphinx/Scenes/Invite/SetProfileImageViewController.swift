@@ -52,6 +52,7 @@ class SetProfileImageViewController: SetDataViewController {
         
         nextButton.setTitle("skip.upper".localized, for: .normal)
         nicknameLabel.text = nickname ?? "nickname".localized
+        nextButton.accessibilityIdentifier = "nextOrSkipButton"
         
         imagePickerManager.configurePicker(vc: self)
     }

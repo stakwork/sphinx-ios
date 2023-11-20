@@ -39,6 +39,7 @@ class SphinxReadyViewController: UIViewController {
         nextButtonContainer.layer.cornerRadius = nextButtonContainer.frame.size.height / 2
         nextButtonContainer.clipsToBounds = true
         nextButtonContainer.addShadow(location: .bottom, color: UIColor.Sphinx.PrimaryBlueBorder, opacity: 0.5, radius: 2.0)
+        nextButton.accessibilityIdentifier = "finishButton"
         
         setAttributedTitles(local: 1000, remote: 10000)
         loadBalances()

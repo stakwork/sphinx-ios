@@ -61,6 +61,7 @@ extension SphinxDesktopAdViewController {
             "signup.desktop-ad.skip".localized,
             for: .normal
         )
+        skipButtonView.accessibilityIdentifier = "skipButtonView"
     }
     
     

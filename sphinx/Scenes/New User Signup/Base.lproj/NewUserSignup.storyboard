@@ -435,6 +435,7 @@
                         <outlet property="codeTextField" destination="6Ax-pV-KVk" id="QaX-Ij-Z5u"/>
                         <outlet property="codeTextFieldContainer" destination="Awg-RS-jhR" id="QLH-q0-ZHG"/>
                         <outlet property="connectToServerButton" destination="WXG-r8-Ize" id="Bw1-Zx-Qgq"/>
+                        <outlet property="connectToTestServerButton" destination="WXG-r8-Ize" id="6ln-rC-FmD"/>
                         <outlet property="importSeedContainer" destination="mBm-gx-JCP" id="bkW-jl-Qv2"/>
                         <outlet property="importSeedView" destination="eVt-DT-WnS" id="RtO-lt-5Yw"/>
                         <outlet property="submitButton" destination="n1x-Nd-XT6" id="znz-ni-Dfl"/>

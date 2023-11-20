@@ -167,6 +167,10 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
         importSeedView.showWith(delegate: self)
         importSeedContainer.isHidden = false
         importSeedView.context = .SphinxOnionPrototype
+        importSeedView.accessibilityIdentifier = "importSeedView"
+        importSeedView.textView.accessibilityIdentifier = "importSeedView.textView"
+        importSeedView.confirmButton.accessibilityIdentifier = "importSeedView.confirmButton"
+        importSeedView.cancelButton.accessibilityIdentifier = "importSeedView.cancelButton"
     }
     
     @objc func handleServerNotification(n: Notification) {

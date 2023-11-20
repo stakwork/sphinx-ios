@@ -40,6 +40,9 @@ class SetNickNameViewController: SetDataViewController {
         textFieldContainer.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
         
         nickNameField.delegate = self
+        nickNameField.accessibilityIdentifier = "nicknameTextField"
+        nextButton.accessibilityIdentifier = "nextButton"
+        self.view.accessibilityIdentifier = "backgroundView"
     }
     
     override func viewWillAppear(_ animated: Bool) {

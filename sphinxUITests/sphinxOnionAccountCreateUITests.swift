@@ -11,6 +11,7 @@ import XCTest
 final class sphinxOnionAccountCreateUITests: XCTestCase {
     
     private var app : XCUIApplication!
+    let test_mnemonic1 = "artist globe myself huge wing drive bright build agree fork media gentle"
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -122,9 +123,7 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
         XCTAssertEqual(submitButton.label, "Submit")
     }
     
-    func test_fresh_launch_test_v2_generate_then_username_UI() throws {
-        
-
+    func test_fresh_launch_test_v2_flow_generate_copy_complete_sign_up_UI() throws {
         // Find the buttons by their accessibility identifiers
         let newUserButton = app.buttons["new.user"]
 
@@ -145,6 +144,70 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
         connectToTestServerButton.tap()
         sleep(2)
         
+        validateGenerateSeedUI()
+        
+        validateAndPerformCopySeedAction()
+        
+        completeAndValidatePostSeedInputSignupFlow()
+    }
+    
+    func test_fresh_launch_test_v2_flow_import_press_ok_complete_sign_up_UI() throws {
+        // Find the buttons by their accessibility identifiers
+        let newUserButton = app.buttons["new.user"]
+
+        // Verify that the buttons exist
+        newUserButton.tap()
+        sleep(2)
+        
+        let connectionCodeButton = app.buttons["signup.signup-options.connection-code-button"]
+        connectionCodeButton.tap()
+        sleep(2)
+        
+        let continueButton = app.buttons["signup.description.continue"]
+        continueButton.tap()
+        sleep(2)
+        
+        let label = "Connect to Test Server"
+        let connectToTestServerButton = app.buttons[label]
+        connectToTestServerButton.tap()
+        sleep(2)
+        
+        validateImportSeed()
+        
+        sleep(15)
+        
+        completeAndValidatePostSeedInputSignupFlow()
+    }
+    
+    func validateImportSeed(){
+        let alerts = app.alerts
+        print(alerts)
+        let alert = app.alerts["Choose Your Seed Method"]
+        let importButton = alert.buttons["Import"]
+        
+        // Validate the existence of the alert
+        XCTAssertTrue(alert.exists)
+        XCTAssertTrue(importButton.exists)
+        
+        importButton.tap()
+        sleep(2)
+        
+        let importView = app.otherElements["importSeedView"]
+        let importSeedViewTextView = app.textViews["importSeedView.textView"]
+        let confirmButton =  app.buttons["importSeedView.confirmButton"]
+        let cancelButton =  app.buttons["importSeedView.cancelButton"]
+        XCTAssertTrue(importView.exists)
+        XCTAssertTrue(importSeedViewTextView.exists)
+        XCTAssertTrue(confirmButton.exists)
+        XCTAssertTrue(cancelButton.exists)
+        
+        importSeedViewTextView.tap()
+        importSeedViewTextView.typeText(test_mnemonic1)
+        sleep(1)
+        confirmButton.tap()
+    }
+    
+    func validateGenerateSeedUI(){
         let alerts = app.alerts
         print(alerts)
         let alert = app.alerts["Choose Your Seed Method"]
@@ -156,26 +219,92 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
         
         generateButton.tap()
         sleep(2)
+    }
+    
+    func validateAndPerformOkSeedAction(){
+        let secondAlert = app.alerts["Store your Mnemonic securely"]
+        let okButton = secondAlert.buttons["Ok"]
         
+        XCTAssertTrue(secondAlert.exists)
+        XCTAssertTrue(okButton.exists)
+        okButton.tap()
+        sleep(15)
+    }
+    
+    func validateAndPerformCopySeedAction(){
         let secondAlert = app.alerts["Store your Mnemonic securely"]
         let copyButton = secondAlert.buttons["Copy"]
         
         XCTAssertTrue(secondAlert.exists)
         XCTAssertTrue(copyButton.exists)
         copyButton.tap()
+        let clipboard = UIPasteboard.general
+        let clipboardContents = clipboard.string
+        XCTAssertTrue(clipboardContents?.split(separator: " ").count == 12)
         sleep(15)
-        
+    }
+    
+    func completeAndValidatePostSeedInputSignupFlow(){
         let nextButton = app.buttons["getStartedNextButton"]
+        XCTAssertTrue(nextButton.exists)
         nextButton.tap()
         sleep(1)
         
         let pinButton1 = app.buttons["keyPadButton-1"]
+        for i in 1..<10{
+            let pinButton = app.buttons["keyPadButton-\(i)"]
+            XCTAssertTrue(pinButton.exists)
+        }
         XCTAssertTrue(pinButton1.exists)
         
         let requiredNumTaps = 12
         for _ in 0..<(requiredNumTaps + 1){
             pinButton1.tap()
         }
+        sleep(2)
+        
+        let continueButton2 = app.buttons["continueButton"]
+        XCTAssertTrue(continueButton2.exists)
+        continueButton2.tap()
+        sleep(2)
+        
+        let nextButton2 = app.buttons["nextButton"]
+        let nicknameTextfield = app.textFields["nicknameTextField"]
+        
+        XCTAssertTrue(nicknameTextfield.exists)
+        nicknameTextfield.tap()
+        nicknameTextfield.typeText("John Doe")
+        app.buttons["Done"].tap() // Press the "Done" button
+        sleep(3)
+        XCTAssertTrue(nextButton2.exists)
+        nextButton2.tap()
+        sleep(3)
+        
+        let skipButton = app.buttons["nextOrSkipButton"]
+        XCTAssertTrue(skipButton.exists)
+        skipButton.tap()
+        sleep(2)
+        
+        let skipButton2 = app.buttons["skipButtonView"]
+        XCTAssertTrue(skipButton2.exists)
+        XCTAssertEqual(skipButton2.label, "Skip")
+        skipButton2.tap()
+        sleep(2)
+        
+        let finishButton = app.buttons["finishButton"]
+        finishButton.tap()
+        sleep(8)
+        
+        validateDashboardView()
+    }
+    
+    func validateDashboardView(){
+        XCTAssertTrue(app.otherElements["bottomBar"].exists)
+        XCTAssertTrue(app.otherElements["bottomBarContainer"].exists)
+        XCTAssertTrue(app.otherElements["headerView"].exists)
+        XCTAssertTrue(app.otherElements["searchBar"].exists)
+        XCTAssertTrue(app.otherElements["searchBarContainer"].exists)
+        XCTAssertTrue(app.otherElements["mainContentContainerView"].exists)
     }
 
 }

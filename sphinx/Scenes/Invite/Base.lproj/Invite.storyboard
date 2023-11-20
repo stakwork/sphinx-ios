@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19142.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19129"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,7 +44,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="whu-fP-cDh">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="47" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD FRIEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Mg-Nw-7iA">
                                         <rect key="frame" x="161.66666666666666" y="16.333333333333336" width="90.666666666666657" height="17.333333333333336"/>
@@ -81,7 +81,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBc-zq-vli">
-                                <rect key="frame" x="75" y="375" width="264" height="156"/>
+                                <rect key="frame" x="75" y="376.66666666666669" width="264" height="156.00000000000006"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rN-VK-zKy">
                                         <rect key="frame" x="0.0" y="0.0" width="264" height="62"/>
@@ -156,7 +156,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHe-Sq-zPQ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="47" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD FRIEND" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLb-IH-R1w">
                                         <rect key="frame" x="161.66666666666666" y="16.333333333333336" width="90.666666666666657" height="17.333333333333336"/>
@@ -193,7 +193,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cip-lA-Gb7">
-                                <rect key="frame" x="0.0" y="120" width="414" height="90"/>
+                                <rect key="frame" x="0.0" y="123" width="414" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NICKNAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrn-Sz-iM3">
                                         <rect key="frame" x="178.66666666666666" y="18.666666666666657" width="57" height="12"/>
@@ -232,7 +232,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vB5-7W-voe">
-                                <rect key="frame" x="0.0" y="224" width="414" height="160"/>
+                                <rect key="frame" x="0.0" y="227" width="414" height="160"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INCLUDE A MESSAGE..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DsE-7M-zzl">
                                         <rect key="frame" x="148.33333333333334" y="18.666666666666657" width="117.33333333333334" height="12"/>
@@ -272,7 +272,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aus-RY-I6m">
-                                <rect key="frame" x="0.0" y="384" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="387" width="414" height="100"/>
                                 <subviews>
                                     <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0a0-fq-uS6">
                                         <rect key="frame" x="15" y="32" width="189" height="36"/>
@@ -395,7 +395,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSZ-Ig-i2w">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="47" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARE INVITATION CODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vd2-aU-H2Y">
                                         <rect key="frame" x="116.33333333333333" y="16.333333333333336" width="181.33333333333337" height="17.333333333333336"/>
@@ -432,14 +432,14 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ouY-Y6-Puo">
-                                <rect key="frame" x="75" y="194" width="264" height="264"/>
+                                <rect key="frame" x="75" y="197" width="264" height="264"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="ouY-Y6-Puo" secondAttribute="height" multiplier="1:1" id="EmE-HT-VjY"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDI-fN-Fm0">
-                                <rect key="frame" x="156.66666666666666" y="134" width="100.99999999999997" height="40"/>
+                                <rect key="frame" x="156.66666666666666" y="137" width="100.99999999999997" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tapToCopy" translatesAutoresizingMaskIntoConstraints="NO" id="uLP-I7-l1F">
                                         <rect key="frame" x="0.0" y="4" width="19" height="32"/>
@@ -467,7 +467,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALN-MB-tcu">
-                                <rect key="frame" x="80" y="493" width="254" height="40"/>
+                                <rect key="frame" x="80" y="496" width="254" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="asdjhsad6jhaskjsad78asd7dsjhasjhsd78asdsdh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14m-K2-MT0">
                                         <rect key="frame" x="0.0" y="11.666666666666687" width="254" height="16.666666666666671"/>
@@ -495,7 +495,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BIH-YM-k9h">
-                                <rect key="frame" x="75" y="134" width="264" height="399"/>
+                                <rect key="frame" x="75" y="137" width="264" height="399"/>
                                 <connections>
                                     <action selector="copyButtonTouched" destination="e9j-Qn-kKd" eventType="touchUpInside" id="M0i-J8-izn"/>
                                 </connections>
@@ -583,11 +583,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MHO-hn-DlI">
-                                <rect key="frame" x="0.0" y="94" width="414" height="802"/>
+                                <rect key="frame" x="0.0" y="97" width="414" height="799"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fw8-Ab-iRH">
-                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="47" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrS-Jb-mYf">
                                         <rect key="frame" x="207" y="25" width="0.0" height="0.0"/>
@@ -666,7 +666,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-8B-iyR">
-                                <rect key="frame" x="102" y="79" width="210" height="66"/>
+                                <rect key="frame" x="102" y="82" width="210" height="66"/>
                                 <string key="text">You've been invited
 to join Sphinx!</string>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="25"/>
@@ -674,7 +674,7 @@ to join Sphinx!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="RCY-y9-Ue8">
-                                <rect key="frame" x="157" y="363" width="100" height="100"/>
+                                <rect key="frame" x="157" y="364.66666666666669" width="100" height="100"/>
                                 <color key="backgroundColor" name="OnboardingAvatarPlaceholderBG"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="6K3-y4-la3"/>
@@ -682,13 +682,13 @@ to join Sphinx!</string>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Susan Johnson" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szP-L5-Xsf">
-                                <rect key="frame" x="137.33333333333331" y="488" width="139.33333333333331" height="24"/>
+                                <rect key="frame" x="137.33333333333331" y="489.66666666666669" width="139.33333333333331" height="24.000000000000057"/>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Welcome to Sphinx!&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vl8-eB-4he">
-                                <rect key="frame" x="125.66666666666667" y="531" width="162.66666666666663" height="20"/>
+                                <rect key="frame" x="125.66666666666667" y="532.66666666666663" width="162.66666666666663" height="20"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -762,6 +762,7 @@ to join Sphinx!</string>
                         <outlet property="contactImageView" destination="RCY-y9-Ue8" id="LHG-Um-921"/>
                         <outlet property="contactNameLabel" destination="szP-L5-Xsf" id="d0L-Ye-VsX"/>
                         <outlet property="loadingWheel" destination="jtO-YD-npQ" id="pQk-Nv-ths"/>
+                        <outlet property="nextButton" destination="oNi-3E-yoI" id="5yx-TW-2bf"/>
                         <outlet property="nextButtonContainer" destination="C94-to-9Gu" id="wAF-Oc-NKU"/>
                         <outlet property="titleLabel" destination="xrd-8B-iyR" id="qfm-Us-Dud"/>
                         <outlet property="welcomeMessageLabel" destination="vl8-eB-4he" id="UnY-Nc-26a"/>
@@ -796,14 +797,14 @@ to join Sphinx!</string>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="STq-rU-ub3">
-                                <rect key="frame" x="113.66666666666669" y="279.66666666666669" width="187" height="187"/>
+                                <rect key="frame" x="113.66666666666669" y="281" width="187" height="187"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="187" id="3aU-Sw-qmx"/>
                                     <constraint firstAttribute="width" constant="187" id="W19-b8-yqD"/>
                                 </constraints>
                             </imageView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQh-Tp-NYf" customClass="UIActivityIndicatorView">
-                                <rect key="frame" x="113.66666666666669" y="279.66666666666669" width="187" height="187"/>
+                                <rect key="frame" x="113.66666666666669" y="281" width="187" height="187"/>
                                 <color key="backgroundColor" name="OnboardingAvatarPlaceholderBG"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="187" id="1Dd-Cm-uh8"/>
@@ -811,16 +812,16 @@ to join Sphinx!</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxf-Mg-rql">
-                                <rect key="frame" x="119.33333333333333" y="501.66666666666674" width="175.33333333333337" height="50"/>
+                                <rect key="frame" x="119.33333333333333" y="503" width="175.33333333333337" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iub-5J-uVa">
-                                        <rect key="frame" x="15.000000000000014" y="13.333333333333314" width="23" height="23"/>
+                                        <rect key="frame" x="15.000000000000014" y="13.666666666666629" width="23" height="23"/>
                                         <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="23"/>
                                         <color key="textColor" name="OnboardingSecondaryText"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2P2-S1-noc">
-                                        <rect key="frame" x="53.000000000000021" y="15.333333333333314" width="93.333333333333314" height="19"/>
+                                        <rect key="frame" x="53.000000000000021" y="15.666666666666629" width="93.333333333333314" height="19"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -851,13 +852,13 @@ to join Sphinx!</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gm-OB-nXu">
-                                <rect key="frame" x="179" y="104" width="56.333333333333343" height="30"/>
+                                <rect key="frame" x="179" y="107" width="56.333333333333343" height="30"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="25"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evI-fT-tP6">
-                                <rect key="frame" x="0.0" y="44" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="47" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="cr7-bv-pp8"/>
                                     <constraint firstAttribute="width" constant="50" id="sLU-pu-caZ"/>
@@ -871,7 +872,7 @@ to join Sphinx!</string>
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Uploaded: 0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYW-sZ-2rd">
-                                <rect key="frame" x="173.66666666666666" y="586.66666666666663" width="67" height="13"/>
+                                <rect key="frame" x="173.66666666666666" y="588" width="67" height="13"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="11"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
@@ -939,13 +940,13 @@ to join Sphinx!</string>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klr-jZ-Odd">
-                                <rect key="frame" x="164.66666666666666" y="317" width="85" height="20"/>
+                                <rect key="frame" x="164.66666666666666" y="318.66666666666669" width="85" height="20"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="OnboardingSecondaryText"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L75-IT-1iH">
-                                <rect key="frame" x="30" y="347" width="354" height="62"/>
+                                <rect key="frame" x="30" y="348.66666666666669" width="354" height="62"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Set Your Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ma-e3-9jK">
                                         <rect key="frame" x="30" y="10" width="294" height="42"/>
@@ -969,7 +970,7 @@ to join Sphinx!</string>
                                 </constraints>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeX-yo-vFF" customClass="UIActivityIndicatorView">
-                                <rect key="frame" x="182" y="444" width="50" height="50"/>
+                                <rect key="frame" x="182" y="445.66666666666669" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="apm-KP-T0U"/>
@@ -1018,7 +1019,7 @@ to join Sphinx!</string>
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8r-pr-tER">
-                                <rect key="frame" x="114.66666666666669" y="333.33333333333331" width="185" height="79.333333333333314"/>
+                                <rect key="frame" x="114.66666666666669" y="335" width="185" height="79.333333333333314"/>
                                 <string key="text">You're ready
 to use Sphinx!</string>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="30"/>
@@ -1062,13 +1063,13 @@ to use Sphinx!</string>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZX-cW-9xl">
-                                <rect key="frame" x="207" y="462.66666666666669" width="0.0" height="0.0"/>
+                                <rect key="frame" x="207" y="464.33333333333331" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="17"/>
                                 <color key="textColor" name="Body"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WVO-5n-4Eq" customClass="UIActivityIndicatorView">
-                                <rect key="frame" x="182" y="492.66666666666674" width="50" height="50"/>
+                                <rect key="frame" x="182" y="494.33333333333326" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="3lX-bQ-uvX"/>

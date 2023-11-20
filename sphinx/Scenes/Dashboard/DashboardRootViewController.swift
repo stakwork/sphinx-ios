@@ -223,6 +223,17 @@ extension DashboardRootViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: .onContactsAndChatsChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
+        
+        addAccessibilityIdentifiers()
+    }
+    
+    func addAccessibilityIdentifiers(){
+        bottomBar.accessibilityIdentifier = "bottomBar"
+        bottomBarContainer.accessibilityIdentifier = "bottomBarContainer"
+        headerView.accessibilityIdentifier = "headerView"
+        searchBar.accessibilityIdentifier = "searchBar"
+        searchBarContainer.accessibilityIdentifier = "searchBarContainer"
+        mainContentContainerView.accessibilityIdentifier = "mainContentContainerView"
     }
     
     func loadLastPlayedPod() {
@@ -311,6 +322,7 @@ extension DashboardRootViewController {
             let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
             self.handleLinkQueries()
         }
+        
     }
     
 }

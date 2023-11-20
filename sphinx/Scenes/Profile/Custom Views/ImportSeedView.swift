@@ -9,9 +9,15 @@
 import UIKit
 
 protocol ImportSeedViewDelegate : NSObject{
-    func showImportSeedView(network:String,host:String,relay:String)
+    func showImportSeedView(network:String,host:String,relay:String)//TODO: review this before shipping prod. May not need this anymore
+    func showImportSeedView()
     func didTapCancelImportSeed()
     func didTapConfirm()
+}
+
+public enum ImportSeedViewPresentationContext{
+    case SphinxOnionPrototype
+    case Swarm
 }
 
 class ImportSeedView: UIView {
@@ -25,6 +31,7 @@ class ImportSeedView: UIView {
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     var delegate : ImportSeedViewDelegate? = nil
+    var context : ImportSeedViewPresentationContext = .Swarm
     
     var originalFrame: CGRect = .zero
     var isKeyboardShown = false
@@ -82,6 +89,14 @@ class ImportSeedView: UIView {
         self.network = network
         self.host = host
         self.relay = relay
+        
+        textView.becomeFirstResponder()
+    }
+    
+    func showWith(
+        delegate: ImportSeedViewDelegate?
+    ) {
+        self.delegate = delegate
         
         textView.becomeFirstResponder()
     }

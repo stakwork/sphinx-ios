@@ -22,6 +22,14 @@ extension NewUserSignupFormViewController {
         
         present(viewController, animated: true)
     }
+    
+    @IBAction func connectToTestServer(){
+        print("connecting to test server")
+        let som = SphinxOnionManager.sharedInstance
+        som.vc = self
+        som.shouldPostUpdates = true
+        som.chooseImportOrGenerateSeed()
+    }
 }
     
 

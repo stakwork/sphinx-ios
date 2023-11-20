@@ -16,7 +16,9 @@ class InviteWelcomeViewController: UIViewController {
     @IBOutlet weak var welcomeMessageLabel: UILabel!
     @IBOutlet weak var nextButtonContainer: UIView!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
+    @IBOutlet weak var nextButton: UIButton!
     
+    var isV2 : Bool = false
     var loading = false {
         didSet {
             LoadingWheelHelper.toggleLoadingWheel(loading: loading, loadingWheel: loadingWheel, loadingWheelColor: UIColor.white, view: view)
@@ -60,6 +62,7 @@ class InviteWelcomeViewController: UIViewController {
     
     func setTitle() {
         titleLabel.text = "message.from.friend".localized
+        nextButton.accessibilityIdentifier = "getStartedNextButton"
     }
     
     @IBAction func nextButtonTouched() {
@@ -82,6 +85,7 @@ class InviteWelcomeViewController: UIViewController {
         SignupHelper.step = SignupHelper.SignupStep.InviterContactCreated.rawValue
         
         let setPinVC = SetPinCodeViewController.instantiate()
+        setPinVC.isV2 = true
         self.navigationController?.pushViewController(setPinVC, animated: true)
     }
     

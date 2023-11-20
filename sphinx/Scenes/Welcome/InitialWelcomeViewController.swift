@@ -25,13 +25,15 @@ class InitialWelcomeViewController: UIViewController {
         setupButton(
             newUserButton,
             in: newUserButtonContainer,
-            withTitle: "new.user".localized
+            withTitle: "new.user".localized,
+            withAccessibilityString: "new.user"
         )
         
         setupButton(
             existingUserButton,
             in: existingUserButtonContainer,
-            withTitle: "existing.user".localized
+            withTitle: "existing.user".localized,
+            withAccessibilityString: "existing.user"
         )
     }
     
@@ -59,12 +61,14 @@ extension InitialWelcomeViewController {
     private func setupButton(
         _ button: UIButton,
         in container: UIView,
-        withTitle title: String
+        withTitle title: String,
+        withAccessibilityString string: String
     ) {
         container.layer.cornerRadius = container.frame.size.height / 2
         container.clipsToBounds = true
         container.addShadow(location: .bottom, opacity: 0.5, radius: 2.0)
         
         button.setTitle(title, for: .normal)
+        button.accessibilityIdentifier = string
     }
 }

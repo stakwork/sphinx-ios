@@ -55,12 +55,14 @@ class NewUserSignupOptionsViewController: UIViewController, ConnectionCodeSignup
 
         setupButton(
             connectionCodeButton,
-            withTitle: "signup.signup-options.connection-code-button".localized
+            withTitle: "signup.signup-options.connection-code-button".localized,
+            withAccessibilityString: "signup.signup-options.connection-code-button"
         )
         
         setupButton(
             purchaseLiteNodeButton,
-            withTitle: "signup.signup-options.lite-node-button".localized
+            withTitle: "signup.signup-options.lite-node-button".localized,
+            withAccessibilityString: "signup.signup-options.lite-node-button"
         )
         
         fetchProductsInformation()
@@ -110,7 +112,8 @@ extension NewUserSignupOptionsViewController {
  
     private func setupButton(
         _ button: UIButton,
-        withTitle title: String
+        withTitle title: String,
+        withAccessibilityString string: String
     ) {
         
         button.setTitle(title, for: .normal)
@@ -118,6 +121,8 @@ extension NewUserSignupOptionsViewController {
         button.clipsToBounds = true
         
         button.addShadow(location: .bottom, opacity: 0.2, radius: 2.0)
+        
+        button.accessibilityIdentifier = string
     }
     
     

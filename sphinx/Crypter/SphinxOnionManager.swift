@@ -94,9 +94,13 @@ class SphinxOnionManager : NSObject {
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
-        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
-            showSuccessWithMessage("MQTT already connected or connecting")
-            return true
+        //TODO: handle logic for reconnecting
+//        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
+//            showSuccessWithMessage("MQTT already connected or connecting")
+//            return true
+//        }
+        if let mqtt = mqtt{
+            mqtt.disconnect()
         }
         do{
             let now = getTimestampInMilliseconds()

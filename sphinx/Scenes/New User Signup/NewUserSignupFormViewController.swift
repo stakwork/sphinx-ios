@@ -21,7 +21,8 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     @IBOutlet weak var submitButtonArrow: UILabel!
     @IBOutlet weak var importSeedContainer: UIView!
     @IBOutlet weak var importSeedView : ImportSeedView!
-
+    @IBOutlet weak var connectToTestServerButton: UIButton!
+    
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
@@ -51,6 +52,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
         setupSubmitButton()
         
         titleLabel.text = "new.user".localized.uppercased()
+        addAccessibilityIdentifiers()
     }
     
     
@@ -58,6 +60,11 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
         SignupHelper.step = SignupHelper.SignupStep.Start.rawValue
         
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func addAccessibilityIdentifiers(){
+        connectToTestServerButton.accessibilityIdentifier = connectToServerButton.titleLabel?.text
+        submitButton.accessibilityIdentifier = "submit"
     }
 }
 

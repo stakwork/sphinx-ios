@@ -85,8 +85,11 @@ class SetPinCodeViewController: UIViewController {
     }
     
     func configureButtons() {
+        var buttonIndex = 1
         for button in keyPadButtons {
             button.setTitleColor(UIColor.Sphinx.HeaderBG.withAlphaComponent(0.5), for: .highlighted)
+            button.accessibilityIdentifier = "keyPadButton-\(buttonIndex)"
+            buttonIndex += 1
         }
     }
     

@@ -262,6 +262,19 @@ public class UserContact: NSManagedObject {
         return contacts
     }
     
+    public static func getSelfContact()->UserContact?{
+        return self.getContactWith(indices: [0]).first
+    }
+    
+    
+    public static func getContactWith(indices: [Int]) -> [UserContact] {
+        var predicate: NSPredicate! = nil
+        predicate = NSPredicate(format: "index IN %@", indices)
+        let sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
+        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
+        return contacts
+    }
+    
     public static func getNextAvailableContactIndex() -> Int? {
         let fetchRequest: NSFetchRequest<UserContact> = UserContact.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]

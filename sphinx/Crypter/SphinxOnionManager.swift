@@ -314,7 +314,16 @@ extension SphinxOnionManager{//contacts related
         managedContext.saveContext()
     }
     
-    func addContact(){
+    func parseContactInfoString(routeHint:String)->(String,String,String)?{
+        let components = routeHint.split(separator: "_").map({String($0)})
+        return (components.count == 3) ? (components[0],components[1],components[2]) : nil
+    }
+    
+    func addContact(contactInfo:String){
+        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
+            return
+        }
+        let routeHint = "\(recipLspPubkey)_\(scid)"
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
               let xpub = getAccountXpub(seed: seed),
@@ -328,6 +337,8 @@ extension SphinxOnionManager{//contacts related
             let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
             let success = connectToBroker(seed: seed, xpub: xpub)
             if (success == false){return}
+            
+            createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex)
             
             mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                 self.processMqttMessages(message: receivedMessage)
@@ -354,6 +365,25 @@ extension SphinxOnionManager{//contacts related
         }
     }
     
+    func createNewContact(
+        pubkey:String,
+        childPubkey:String,
+        routeHint:String,
+        idx:Int,
+        scid:String?=nil,
+        publicKey:String?=nil
+    ){
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let contact = UserContact(context: managedContext)
+        contact.publicKey = pubkey
+        contact.childPubKey = childPubkey
+        contact.routeHint = routeHint
+        contact.index = idx
+        contact.id = idx
+        
+        managedContext.saveContext()
+    }
+    
     func processContact(from mqttTopic:String, retrievedCredentials: SphinxOnionBrokerResponse){
         guard let topicParams = getValidatedRegisterTopicParams(topic:mqttTopic),
               let scid = retrievedCredentials.scid,
@@ -369,21 +399,16 @@ extension SphinxOnionManager{//contacts related
             createSelfContact(scid: scid, serverPubkey: serverPubkey,myOkKey: myOkKey)
             saveLSPServerData(retrievedCredentials: retrievedCredentials)//only save LSP if it's a self contact
         }
-        else{
-            //create other contact
-            let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-            let contact = UserContact(context: managedContext)
-            contact.id = Int(topicParams[1]) ?? 1
-            contact.childPubKey = topicParams[0]
-            contact.scid = scid
-            contact.index = Int(topicParams[1]) ?? 1
-            contact.publicKey = "03681cbdf2f72d0689fb092426ad6c3ca8f0554a465463cd9ca9f083673859903d" // debug only // this needs to be either received from keysend message or known at the outset
-            contact.contactRouteHint = "\(serverPubkey)_\(topicParams[0])"
-            //contact.routeHint = serverPubkey //needs okKey to save
-            managedContext.saveContext()
+        else if let index = Int(topicParams[1]),
+                let existingContact = UserContact.getContactWith(indices: [index]).first{
+            existingContact.contactRouteHint = "\(serverPubkey)_\(topicParams[0])"
+            existingContact.scid = scid
+            CoreDataManager.sharedManager.saveContext()
             
-            //DEBUG ONLY:
-            sendKeyExchangeMsg(to: contact)
+            sendKeyExchangeMsg(to: existingContact)
+        }
+        else{//falls thorugh & should not hit..throw error
+            print("error")
         }
     }
     
@@ -410,42 +435,52 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
               recipRouteHint.split(separator: "_").count == 2 else{
             return SphinxMsgError.contactDataError
         }
+        
+        guard let selfContact = UserContact.getSelfContact(),
+              let selfRouteHint = selfContact.routeHint else{
+            return SphinxMsgError.credentialsError
+        }
         let serverPubkey = recipRouteHint.split(separator: "_")[0]
         let scid = recipRouteHint.split(separator: "_")[1]
         
         let senderInfo = JSON([
             "pubkey" : myOkKey,
-            "routeHint" : "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090617434115"//TODO: need to extract this from the DB
+            "route_hint": selfRouteHint,
+            "contact_pubkey": contact.childPubKey,
+            "alias": selfContact.nickname ?? "Satoshi Nakamoto",
+            "photo_url": ""
         ]).stringValue
-        let msg = SphinxChatMsg(message: "hello world!", sender: senderInfo, typ: SphinxMsgTypes.KeyExchange.rawValue)
+        let msg = SphinxChatMsg(message: "hello world!", sender: senderInfo, type: SphinxMsgTypes.KeyExchange.rawValue)
         
-//        let hopsArray: [[String: String]] = [
-//            ["pubkey": "\(serverPubkey)"],
-//            ["pubkey": "\(recipPubkey)"]
-//        ]
+        let hopsArray: [[String: String]] = [
+            ["pubkey": "\(serverPubkey)"],
+            ["pubkey": "\(recipPubkey)"]
+        ]
         
-        //DEBUG:
+//        DEBUG:
 //        let hopsArray: [[String: String]] = [
 //            ["pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"],
 //            ["pubkey": "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"]
 //        ]
-//
-//        // Serialize the hopsArray to JSON
-//        guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
-//           let hopsJSONString = String(data: hopsJSON, encoding: .utf8) else {
-//            return SphinxMsgError.encodingError
-//        }
+
+        // Serialize the hopsArray to JSON
+        guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
+           let hopsJSONString = String(data: hopsJSON, encoding: .utf8) else {
+            return SphinxMsgError.encodingError
+        }
         
-        let hopsJSONString = """
-            [
-                {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
-                {"pubkey": "03681cbdf2f72d0689fb092426ad6c3ca8f0554a465463cd9ca9f083673859903d"}
-            ]
-            """
+//        let hopsJSONString = """
+//            [
+//                {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
+//                {"pubkey": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1"}
+//            ]
+//            """
         
         let time = getTimestampInMilliseconds()
-        let contentString = msg.message
-        let contentData = contentString.data(using: .utf8) ?? Data()
+        guard case .success(let contentData) = serializeChatMsg(msg: msg) else {
+            return SphinxMsgError.encodingError
+        }
+        
         do{
             let onion = try! createOnion(seed: seed, idx: UInt32(1), time: time, network: network, hops: hopsJSONString, payload: contentData)
             var onionAsArray = [UInt8](repeating: 0, count: onion.count)
@@ -497,7 +532,8 @@ struct SphinxChatMsg {
     // For example:
     var message: String
     var sender: String
-    var typ: UInt8
+    var type: UInt8
+    let uuid:String = UUID().uuidString
 }
 
 enum SphinxMsgTypes: UInt8{
@@ -515,20 +551,39 @@ func serializeChatMsg(msg: SphinxChatMsg) -> Result<Data, SphinxMsgError> {
     var buff = Data()
     
     do {
-        try encodeMapLength(&buff, length: 3)
+        try encodeMapLength(&buff, length: 4) // Increase the length by 1 for uuid
         try encodeString(&buff, string: "m")
         try serializeMessage(&buff, message: msg.message)
         try encodeString(&buff, string: "s")
         try serializeSender(&buff, sender: msg.sender)
         try encodeString(&buff, string: "t")
-        try encodeUInt8(&buff, value: msg.typ)
-        // don't serialize uuid; it's a hash of the rest
+        try encodeUInt8(&buff, value: msg.type)
+        try encodeString(&buff, string: "u") // Serialize uuid
+        try encodeUUID(&buff, uuid: msg.uuid) // Custom function to serialize UUID
         
         return .success(buff)
     } catch {
         return .failure(.encodingError)
     }
 }
+
+func encodeUUID(_ buffer: inout Data, uuid: String) throws {
+    // Convert UUID string to UUID object
+    guard let uuidObject = UUID(uuidString: uuid) else {
+        throw SphinxMsgError.encodingError
+    }
+
+    // Convert UUID object to Data
+    var uuidBytes = uuidObject.uuid
+    let uuidData = withUnsafeBytes(of: &uuidBytes) {
+        Data($0)
+    }
+
+    // Append the UUID data to the buffer
+    buffer.append(uuidData)
+}
+
+
 
 func encodeMapLength(_ buffer: inout Data, length: Int) throws {
     // Implement your encoding logic for map length here

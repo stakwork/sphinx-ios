@@ -443,13 +443,17 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         let serverPubkey = recipRouteHint.split(separator: "_")[0]
         let scid = recipRouteHint.split(separator: "_")[1]
         
-        let senderInfo = JSON([
+        guard let senderInfo = JSON([
             "pubkey" : myOkKey,
             "route_hint": selfRouteHint,
             "contact_pubkey": contact.childPubKey,
+            "contact_route_hint":"placeholder",
             "alias": selfContact.nickname ?? "Satoshi Nakamoto",
             "photo_url": ""
-        ]).stringValue
+        ]).rawString() else{
+            return SphinxMsgError.encodingError
+        }
+        
         let msg = SphinxChatMsg(message: "hello world!", sender: senderInfo, type: SphinxMsgTypes.KeyExchange.rawValue)
         
         let hopsArray: [[String: String]] = [
@@ -457,24 +461,12 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
             ["pubkey": "\(recipPubkey)"]
         ]
         
-//        DEBUG:
-//        let hopsArray: [[String: String]] = [
-//            ["pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"],
-//            ["pubkey": "02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b"]
-//        ]
 
         // Serialize the hopsArray to JSON
         guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
            let hopsJSONString = String(data: hopsJSON, encoding: .utf8) else {
             return SphinxMsgError.encodingError
         }
-        
-//        let hopsJSONString = """
-//            [
-//                {"pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"},
-//                {"pubkey": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1"}
-//            ]
-//            """
         
         let time = getTimestampInMilliseconds()
         guard case .success(let contentData) = serializeChatMsg(msg: msg) else {
@@ -493,7 +485,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
                 memcpy(&onionAsArray, baseAddress, onion.count)
                 self.mqtt.publish(
                     CocoaMQTTMessage(
-                        topic: "\(myOkKey)/req/send",
+                        topic: "\(myOkKey)/0/req/send",
                         payload: onionAsArray
                     )
                 )

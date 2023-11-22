@@ -445,9 +445,9 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
 
         let senderInfo : [String:String] = [
             "pubkey": myOkKey,
-            "route_hint": selfRouteHint,
-            "contact_pubkey": contact.childPubKey,
-            "contact_route_hint": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090574245895",
+            "routeHint": selfRouteHint,
+            "contactPubkey": contact.childPubKey,
+//            "contactRouteHint": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497",
             "alias": selfContact.nickname ?? "Satoshi Nakamoto",
             "photo_url": ""
         ]

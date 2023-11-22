@@ -198,6 +198,13 @@ class SphinxOnionManager : NSObject {
         }
     }
     
+    func processSendMessage(sendMessage:CocoaMQTTMessage){
+        let payloadData = Data(sendMessage.payload)
+        if let payloadString = String(data: payloadData, encoding: .utf8) {
+            print("MQTT Topic:\(sendMessage.topic) with Payload as String: \(payloadString)")
+        }
+    }
+    
     func processMqttMessages(message:CocoaMQTTMessage){
         let tops = message.topic.split(separator: "/")
         if tops.count < 4{
@@ -212,6 +219,10 @@ class SphinxOnionManager : NSObject {
         case "balance":
             print("processing balance topic!")
             processBalanceUpdateMessage(balanceUpdateMessage: message)
+            break
+        case "send":
+            print("processing send topic!")
+            processSendMessage(sendMessage: message)
             break
         default:
             print("topic not in list:\(topic)")
@@ -405,7 +416,7 @@ extension SphinxOnionManager{//contacts related
             existingContact.scid = scid
             CoreDataManager.sharedManager.saveContext()
             
-            sendKeyExchangeMsg(to: existingContact)
+            sendKeyExchangeMsg(isInitiatorMe: true, to: existingContact)
         }
         else{//falls thorugh & should not hit..throw error
             print("error")
@@ -424,7 +435,7 @@ extension SphinxOnionManager{//contacts related
 
 
 extension SphinxOnionManager{//Composing outgoing messages & processing incoming messages
-    func sendKeyExchangeMsg(to contact: UserContact) -> SphinxMsgError? {
+    func sendKeyExchangeMsg(isInitiatorMe:Bool,to contact: UserContact) -> SphinxMsgError? {
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
               let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
@@ -451,21 +462,18 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
             "alias": selfContact.nickname ?? "Satoshi Nakamoto",
             "photo_url": ""
         ]
-
         
-
+        print("contact.childPubkey:\(contact.childPubKey)")
+        
         let hopsArray: [[String: String]] = [
             ["pubkey": "\(serverPubkey)"],
             ["pubkey": "\(recipPubkey)"]
         ]
-        
-        
 
         // Serialize the hopsArray to JSON
         guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
               let hopsJSONString = String(data: hopsJSON, encoding: .utf8),
-              let senderInfoJSON = try? JSONSerialization.data(withJSONObject: senderInfo),
-              let senderInfoString = String(data: senderInfoJSON, encoding: .utf8) else {
+              let senderInfoJSON = try? JSONSerialization.data(withJSONObject: senderInfo) else {
             return SphinxMsgError.encodingError
         }
         
@@ -482,6 +490,10 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         }
         
         let time = getTimestampInMilliseconds()
+        
+        if(isInitiatorMe){
+            self.mqtt.subscribe("\(myOkKey)/0/res/#")
+        }
 
         do {
             let onion = try! createOnionMsg(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, json: contentJSONString)

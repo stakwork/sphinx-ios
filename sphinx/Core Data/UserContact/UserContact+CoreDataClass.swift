@@ -285,7 +285,7 @@ public class UserContact: NSManagedObject {
             if let highestIndexAvailable = contacts.first as? UserContact {
                 return Int(highestIndexAvailable.index) + 1
             } else {
-                return nil
+                return 1
             }
         } catch {
             print("Error fetching contacts: \(error)")

@@ -188,10 +188,32 @@ class sphinxOnionMessageTests: XCTestCase {
         }
     }
     
+    //prove we properly registered the contact before we get a response from the peer but after we got one from the broker server
+    func validate_test_contact_pre_flight(contact:UserContact){
+        print(contact)
+        let expected_index = 1
+        let expected_child_pubkey = "02949826885589228a72f12734a38e7c9901ab50ed1d49eb935b4bd3da2ec60bae"
+        let expected_pubkey = "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1"
+        let expected_routeHint = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497"
+        XCTAssertTrue(
+            expected_index == contact.id &&
+            expected_child_pubkey == contact.childPubKey &&
+            expected_pubkey == contact.publicKey &&
+            expected_routeHint == contact.routeHint
+        )
+    }
+    
     func test_new_contact_registration(){
         UserContact.deleteAll()//set to known wiped out state
+        UserData.sharedInstance.save(walletMnemonic: test_mnemonic1)
         sphinxOnionManager.makeFriendRequest(contactInfo: test_contact_info)
+        sleep(2)//give new contact time to take
         
+        guard let contact = UserContact.getContactWith(indices: [1]).first else{
+            XCTFail("Failed contact registration")
+            return
+        }
+        validate_test_contact_pre_flight(contact: contact)
     }
 
 }

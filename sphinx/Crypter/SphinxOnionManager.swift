@@ -217,22 +217,23 @@ class SphinxOnionManager : NSObject {
         print("MQTT Stream Topic:\(message.topic)")
         let payloadData = Data(message.payload)
         do{
-            let peeledOnion = try peelOnion(seed: seed, idx: index, time: getTimestampInMilliseconds(), network: network, payload: payloadData)
-            if let jsonObject = try JSONSerialization.jsonObject(with: peeledOnion, options: []) as? [String: Any],
-               let contentArray = jsonObject["content"] as? [Int] {
-                let contentData = Data(contentArray.map { UInt8($0) })
-                if let contentString = String(data: contentData, encoding: .utf8) {
-                    print("Content as String: \(contentString)")
-
-                    // Parse the string as JSON
-                    if let data = contentString.data(using: .utf8) {
-                        do {
-                            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                                // Now jsonObject is your parsed JSON object
-                                print("JSON Object: \(jsonObject)")
-                            }
-                        } catch {
-                            print("JSON parsing error: \(error)")
+            let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getTimestampInMilliseconds(), network: network, payload: payloadData)
+            if let dataFromString = peeledOnion.data(using: .utf8, allowLossyConversion: false) {
+                let json = try JSON(data: dataFromString)
+                if json["type"] == 11 || json["type"] == 10{
+                    //process contact confirmation
+                    if let contact = UserContact.getContactWith(indices: [Int(index)]).first,
+                       let senderInfo = json["sender"].dictionaryObject as? [String: String]{
+                        contact.contactKey = senderInfo["contactPubkey"]
+                        contact.routeHint = senderInfo["routeHint"]
+                        contact.contactRouteHint = senderInfo["contactRouteHint"]
+                        contact.nickname = senderInfo["alias"]
+                        contact.publicKey = senderInfo["pubkey"]
+                        contact.status = UserContact.Status.Confirmed.rawValue
+                        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+                        managedContext.saveContext()
+                        if json["type"] == 10{//reply with contact info if it's not initiated by me
+                            sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
                         }
                     }
                 }
@@ -522,7 +523,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         }
         
         let msg : [String:Any] = [
-            "type": 10,
+            "type": isInitiatorMe ? SphinxMsgTypes.KeyExchangeInitiator : SphinxMsgTypes.KeyExchangeConfirmation,
             "sender": senderInfo,
             "message":["content":""]
         ]
@@ -596,3 +597,5 @@ enum SphinxMsgError: Error {
     case credentialsError //can't get access to my Private Keys/other data!
     case contactDataError // not enough data about contact!
 }
+
+

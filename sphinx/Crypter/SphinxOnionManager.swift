@@ -174,15 +174,15 @@ class SphinxOnionManager : NSObject {
        
     }
     
-    func processRegisterTopicResponse(registerMessage:CocoaMQTTMessage){
-        let payloadData = Data(registerMessage.payload)
+    func processRegisterTopicResponse(message:CocoaMQTTMessage){
+        let payloadData = Data(message.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
-            print("MQTT Topic:\(registerMessage.topic) with Payload as String: \(payloadString)")
+            print("MQTT Topic:\(message.topic) with Payload as String: \(payloadString)")
             if let retrievedCredentials = Mapper<SphinxOnionBrokerResponse>().map(JSONString: payloadString){
                 print("Onion Credentials register over MQTT:\(retrievedCredentials)")
                 //5. Store my credentials (SCID, serverPubkey, myPubkey)
                 if let _ = retrievedCredentials.scid{
-                    processContact(from: registerMessage.topic,retrievedCredentials: retrievedCredentials)
+                    processContact(from: message.topic,retrievedCredentials: retrievedCredentials)
                 }
             }
         } else {
@@ -190,20 +190,60 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func processBalanceUpdateMessage(balanceUpdateMessage:CocoaMQTTMessage){
-        let payloadData = Data(balanceUpdateMessage.payload)
+    func processBalanceTopicMessage(message:CocoaMQTTMessage){
+        let payloadData = Data(message.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
-            print("MQTT Topic:\(balanceUpdateMessage.topic) with Payload as String: \(payloadString)")
+            print("MQTT Topic:\(message.topic) with Payload as String: \(payloadString)")
             (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : payloadString])) : ()
         }
     }
     
-    func processSendMessage(sendMessage:CocoaMQTTMessage){
-        let payloadData = Data(sendMessage.payload)
+    func processSendTopicMessage(message:CocoaMQTTMessage){
+        let payloadData = Data(message.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
-            print("MQTT Topic:\(sendMessage.topic) with Payload as String: \(payloadString)")
+            print("MQTT Topic:\(message.topic) with Payload as String: \(payloadString)")
         }
     }
+    
+    func processStreamTopicMessage(message:CocoaMQTTMessage){
+        let tops = message.topic.split(separator: "/").map({String($0)})
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = getAccountSeed(mnemonic: mnemonic),
+        tops.count > 1,
+        let index = UInt32(tops[1]) else{
+            return
+        }
+        
+        print("MQTT Stream Topic:\(message.topic)")
+        let payloadData = Data(message.payload)
+        do{
+            let peeledOnion = try peelOnion(seed: seed, idx: index, time: getTimestampInMilliseconds(), network: network, payload: payloadData)
+            if let jsonObject = try JSONSerialization.jsonObject(with: peeledOnion, options: []) as? [String: Any],
+               let contentArray = jsonObject["content"] as? [Int] {
+                let contentData = Data(contentArray.map { UInt8($0) })
+                if let contentString = String(data: contentData, encoding: .utf8) {
+                    print("Content as String: \(contentString)")
+
+                    // Parse the string as JSON
+                    if let data = contentString.data(using: .utf8) {
+                        do {
+                            if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                                // Now jsonObject is your parsed JSON object
+                                print("JSON Object: \(jsonObject)")
+                            }
+                        } catch {
+                            print("JSON parsing error: \(error)")
+                        }
+                    }
+                }
+            }
+        }
+        catch{
+            print("error")
+        }
+        
+    }
+    
     
     func processMqttMessages(message:CocoaMQTTMessage){
         let tops = message.topic.split(separator: "/")
@@ -214,15 +254,19 @@ class SphinxOnionManager : NSObject {
         switch(topic){
         case "register":
             print("processing register topic!")
-            processRegisterTopicResponse(registerMessage: message)
+            processRegisterTopicResponse(message: message)
             break
         case "balance":
             print("processing balance topic!")
-            processBalanceUpdateMessage(balanceUpdateMessage: message)
+            processBalanceTopicMessage(message: message)
             break
         case "send":
             print("processing send topic!")
-            processSendMessage(sendMessage: message)
+            processSendTopicMessage(message: message)
+            break
+        case "stream":
+            print("processing stream topic!")
+            processStreamTopicMessage(message: message)
             break
         default:
             print("topic not in list:\(topic)")
@@ -493,6 +537,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         
         if(isInitiatorMe){
             self.mqtt.subscribe("\(myOkKey)/0/res/#")
+            self.mqtt.subscribe("\(contact.childPubKey)/\(contact.index)/res/#")
         }
 
         do {
@@ -540,20 +585,9 @@ struct SphinxOnionBrokerResponse: Mappable {
     }
 }
 
-struct SphinxMsgContent{
-    var content:String
-}
-
-struct SphinxChatMsg {
-    // Define your struct fields here
-    // For example:
-    var message: SphinxMsgContent
-    var sender: String
-    var type: UInt8
-}
 
 enum SphinxMsgTypes: UInt8{
-    case KeyExchange = 10
+    case KeyExchangeInitiator = 10
     case KeyExchangeConfirmation = 11
 }
 
@@ -562,81 +596,3 @@ enum SphinxMsgError: Error {
     case credentialsError //can't get access to my Private Keys/other data!
     case contactDataError // not enough data about contact!
 }
-
-func serializeChatMsg(msg: SphinxChatMsg) -> Result<Data, SphinxMsgError> {
-    var buff = Data()
-
-    do {
-        try encodeMapLength(&buff, length: 4) // Increase the length by 1 for uuid
-        try encodeString(&buff, string: "m")
-        try serializeMessageContent(&buff, messageContent: msg.message)
-        try encodeString(&buff, string: "s")
-        try serializeSender(&buff, sender: msg.sender)
-        try encodeString(&buff, string: "t")
-        try encodeUInt8(&buff, value: msg.type)
-        //try encodeString(&buff, string: "u") // Serialize uuid
-        //try encodeUUID(&buff, uuid: msg.uuid) // Custom function to serialize UUID
-
-        return .success(buff)
-    } catch {
-        return .failure(.encodingError)
-    }
-}
-
-func serializeMessageContent(_ buffer: inout Data, messageContent: SphinxMsgContent) throws {
-    // Implement your serialization logic for message content here
-    // Example:
-    try encodeString(&buffer, string: messageContent.content)
-}
-
-func encodeUUID(_ buffer: inout Data, uuid: String) throws {
-    // Convert UUID string to UUID object
-    guard let uuidObject = UUID(uuidString: uuid) else {
-        throw SphinxMsgError.encodingError
-    }
-
-    // Convert UUID object to Data
-    var uuidBytes = uuidObject.uuid
-    let uuidData = withUnsafeBytes(of: &uuidBytes) {
-        Data($0)
-    }
-
-    // Append the UUID data to the buffer
-    buffer.append(uuidData)
-}
-
-
-
-func encodeMapLength(_ buffer: inout Data, length: Int) throws {
-    // Implement your encoding logic for map length here
-    // Example:
-    var length = length
-    buffer.append(Data([UInt8(length)]))
-}
-
-func encodeString(_ buffer: inout Data, string: String) throws {
-    // Implement your encoding logic for strings here
-    // Example:
-    let data = string.data(using: .utf8)
-    buffer.append(data!)
-}
-
-func serializeMessage(_ buffer: inout Data, message: String) throws {
-    // Implement your serialization logic for message here
-    // Example:
-    try encodeString(&buffer, string: message)
-}
-
-func serializeSender(_ buffer: inout Data, sender: String) throws {
-    // Implement your serialization logic for sender here
-    // Example:
-    try encodeString(&buffer, string: sender)
-}
-
-func encodeUInt8(_ buffer: inout Data, value: UInt8) throws {
-    // Implement your encoding logic for UInt8 here
-    // Example:
-    var value = value
-    buffer.append(Data([value]))
-}
-

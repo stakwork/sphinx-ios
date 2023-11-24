@@ -230,11 +230,25 @@ class SphinxOnionManager : NSObject {
                         contact.nickname = senderInfo["alias"]
                         contact.publicKey = senderInfo["pubkey"]
                         contact.status = UserContact.Status.Confirmed.rawValue
+
+                        if json["type"] == 10,
+                           let mnemonic = UserData.sharedInstance.getMnemonic(),
+                           let seed = getAccountSeed(mnemonic: mnemonic),
+                           let xpub = getAccountXpub(seed: seed),
+                           let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
+                            do{
+                                let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
+                                contact.childPubKey = childKey
+                                sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
+                            }
+                            catch{
+                                print("error generating childPubkey")
+                            }
+                            
+                        }
+                        
                         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
                         managedContext.saveContext()
-                        if json["type"] == 10{//reply with contact info if it's not initiated by me
-                            sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
-                        }
                     }
                 }
             }
@@ -523,7 +537,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         }
         
         let msg : [String:Any] = [
-            "type": isInitiatorMe ? SphinxMsgTypes.KeyExchangeInitiator : SphinxMsgTypes.KeyExchangeConfirmation,
+            "type": isInitiatorMe ? SphinxMsgTypes.KeyExchangeInitiator.rawValue : SphinxMsgTypes.KeyExchangeConfirmation.rawValue,
             "sender": senderInfo,
             "message":["content":""]
         ]

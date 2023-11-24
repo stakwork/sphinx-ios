@@ -389,10 +389,15 @@ extension SphinxOnionManager{//contacts related
         return (components.count == 3) ? (components[0],components[1],components[2]) : nil
     }
     
-    func addContact(contactInfo:String){
+    func makeFriendRequest(contactInfo:String){
         guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
             return
         }
+        if let existingContact = UserContact.getContactWith(pubkey: recipientPubkey){
+            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
+            return
+        }
+        
         let routeHint = "\(recipLspPubkey)_\(scid)"
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
@@ -518,7 +523,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
             "routeHint": selfRouteHint,
             "contactPubkey": contact.childPubKey,
 //            "contactRouteHint": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497",
-            "alias": selfContact.nickname ?? "Satoshi Nakamoto",
+            "alias": (selfContact.nickname ?? "anon"),
             "photo_url": ""
         ]
         

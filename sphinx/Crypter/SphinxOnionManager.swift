@@ -235,22 +235,31 @@ class SphinxOnionManager : NSObject {
                         contact.nickname = senderInfo["alias"]
                         contact.publicKey = pubkey
                         contact.status = UserContact.Status.Confirmed.rawValue
-                        contact.index = 1
-
-                        if json["type"] == 10,
-                           let mnemonic = UserData.sharedInstance.getMnemonic(),
-                           let seed = getAccountSeed(mnemonic: mnemonic),
-                           let xpub = getAccountXpub(seed: seed),
-                           let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
-                            do{
-                                let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
-                                contact.childPubKey = childKey
-                                sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
-                            }
-                            catch{
-                                print("error generating childPubkey")
-                            }
+                        
+                    }
+                    else if json["type"] == 10,//handle response
+                       let mnemonic = UserData.sharedInstance.getMnemonic(),
+                       let seed = getAccountSeed(mnemonic: mnemonic),
+                       let xpub = getAccountXpub(seed: seed),
+                        let senderInfo = json["sender"].dictionaryObject as? [String: String],
+                       let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
+                        do{
+                            let contact = UserContact(context: managedContext)
+                            contact.contactKey = senderInfo["contactPubkey"]
+                            contact.routeHint = senderInfo["routeHint"]
+                            contact.contactRouteHint = senderInfo["contactRouteHint"]
+                            contact.nickname = senderInfo["alias"]
+                            contact.publicKey = senderInfo["pubkey"]
+                            contact.status = UserContact.Status.Confirmed.rawValue
                             
+                            
+                            let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
+                            contact.childPubKey = childKey
+                            
+                            sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
+                        }
+                        catch{
+                            print("error generating childPubkey")
                         }
                         
                     }
@@ -396,10 +405,10 @@ extension SphinxOnionManager{//contacts related
         guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
             return
         }
-        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
-            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
-            return
-        }
+//        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
+//            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
+//            return
+//        }
         
         let routeHint = "\(recipLspPubkey)_\(scid)"
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
@@ -504,6 +513,57 @@ extension SphinxOnionManager{//contacts related
 
 
 extension SphinxOnionManager{//Composing outgoing messages & processing incoming messages
+    
+    func constructKeyExchangeJSONString(isInitiatorMe:Bool,
+                                        recipPubkey:String,
+                                        recipRouteHint:String,
+                                        myOkKey:String,
+                                        selfRouteHint:String,
+                                        selfContact:UserContact,
+                                        recipContact:UserContact)->(String,String)?{
+        let serverPubkey = recipRouteHint.split(separator: "_")[0]
+        let scid = recipRouteHint.split(separator: "_")[1]
+
+        let senderInfo : [String:String] = [
+            "pubkey": myOkKey,
+            "routeHint": selfRouteHint,
+            "contactPubkey": recipContact.childPubKey,
+//            "contactRouteHint": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497",
+            "alias": (selfContact.nickname ?? "anon"),
+            "photo_url": ""
+        ]
+        
+        print("contact.childPubkey:\(recipContact.childPubKey)")
+        
+        let hopsArray: [[String: String]] = [
+            ["pubkey": "\(serverPubkey)"],
+            ["pubkey": "\(recipPubkey)"]
+        ]
+
+        // Serialize the hopsArray to JSON
+        guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
+              let hopsJSONString = String(data: hopsJSON, encoding: .utf8),
+              let senderInfoJSON = try? JSONSerialization.data(withJSONObject: senderInfo) else {
+            return nil
+        }
+        
+        let msg : [String:Any] = [
+            "type": isInitiatorMe ? SphinxMsgTypes.KeyExchangeInitiator.rawValue : SphinxMsgTypes.KeyExchangeConfirmation.rawValue,
+            "sender": senderInfo,
+            "message":["content":""]
+        ]
+        
+        guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
+              let contentJSONString = String(data: contentData, encoding: .utf8)
+               else{
+            return nil
+        }
+        
+        (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .keyExchangeMessageWasConstructed, object: nil, userInfo: ["hopsJSON" : hopsArray, "contentStringJSON": senderInfo])) : ()
+        
+        return (contentJSONString,hopsJSONString)
+    }
+    
     func sendKeyExchangeMsg(isInitiatorMe:Bool,to contact: UserContact) -> SphinxMsgError? {
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
@@ -520,43 +580,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
               let selfRouteHint = selfContact.routeHint else {
             return SphinxMsgError.credentialsError
         }
-        let serverPubkey = recipRouteHint.split(separator: "_")[0]
-        let scid = recipRouteHint.split(separator: "_")[1]
-
-        let senderInfo : [String:String] = [
-            "pubkey": myOkKey,
-            "routeHint": selfRouteHint,
-            "contactPubkey": contact.childPubKey,
-//            "contactRouteHint": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497",
-            "alias": (selfContact.nickname ?? "anon"),
-            "photo_url": ""
-        ]
         
-        print("contact.childPubkey:\(contact.childPubKey)")
-        
-        let hopsArray: [[String: String]] = [
-            ["pubkey": "\(serverPubkey)"],
-            ["pubkey": "\(recipPubkey)"]
-        ]
-
-        // Serialize the hopsArray to JSON
-        guard let hopsJSON = try? JSONSerialization.data(withJSONObject: hopsArray, options: []),
-              let hopsJSONString = String(data: hopsJSON, encoding: .utf8),
-              let senderInfoJSON = try? JSONSerialization.data(withJSONObject: senderInfo) else {
-            return SphinxMsgError.encodingError
-        }
-        
-        let msg : [String:Any] = [
-            "type": isInitiatorMe ? SphinxMsgTypes.KeyExchangeInitiator.rawValue : SphinxMsgTypes.KeyExchangeConfirmation.rawValue,
-            "sender": senderInfo,
-            "message":["content":""]
-        ]
-        
-        guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
-              let contentJSONString = String(data: contentData, encoding: .utf8)
-               else{
-            return SphinxMsgError.encodingError
-        }
         
         let time = getTimestampInMilliseconds()
         
@@ -564,6 +588,12 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
             self.mqtt.subscribe("\(myOkKey)/0/res/#")
             self.mqtt.subscribe("\(contact.childPubKey)/\(contact.index)/res/#")
         }
+        
+        guard let (contentJSONString,hopsJSONString) = constructKeyExchangeJSONString(isInitiatorMe: isInitiatorMe, recipPubkey: recipPubkey, recipRouteHint: recipRouteHint,myOkKey: myOkKey, selfRouteHint: selfRouteHint, selfContact: selfContact, recipContact: contact) else{
+            return SphinxMsgError.encodingError
+        }
+        
+        
 
         do {
             let onion = try! createOnionMsg(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, json: contentJSONString)

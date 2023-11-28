@@ -44,8 +44,26 @@ class sphinxOnionMessageTests: XCTestCase {
     let test_server_pubkey = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"
     let test_contact_info = "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497"
     
+    //MARK: specific to key exchange
+    let test_key_exchange_response_message_json : [String: Any] = [
+            //"routeHint": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090543902727",
+            "pubkey": "03a898d978e42c9feaa25ca103d70b27a2a83472b3b00cd11bbf2a9b3be14460f4",
+            "alias": "anon",
+            "contactPubkey": "02949826885589228a72f12734a38e7c9901ab50ed1d49eb935b4bd3da2ec60bae",
+            "photo_url": ""
+    ]
+    
+    let test_key_exchange_response_hops_json : [[String: String]] = [
+        ["pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"],
+        ["pubkey": "0376f5935fb69361c7a3fbe1c8ce67e034ade3da726a52cf070b63174c853de13f"]
+    ]
+    
+    let test_key_exchange_response_prompt = "IMPORTANT - run the following command from sphinx/wasm/test/cli within the next 60 seconds: yarn cli bob friend alice 03a898d978e42c9feaa25ca103d70b27a2a83472b3b00cd11bbf2a9b3be14460f4_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090671435780"
+    
     var server : Server? = nil
     var balance: String? = nil
+    var hopsJSON: [[String: String]]? = nil
+    var contentJSON: [String:Any]? = nil
     var expectation: XCTestExpectation?
     
     //Test helpers://
@@ -89,6 +107,7 @@ class sphinxOnionMessageTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         server = nil
+        expectation = nil
     }
 
     func test_seed_generation(){
@@ -215,7 +234,7 @@ class sphinxOnionMessageTests: XCTestCase {
         let expected_pubkey = "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1"
         let expected_routeHint = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497"
         XCTAssertTrue(expected_index == contact.index)
-        //XCTAssertTrue(expected_child_pubkey == contact.childPubKey)
+        XCTAssertTrue(expected_child_pubkey == contact.childPubKey)
         XCTAssertTrue(expected_pubkey == contact.publicKey)
         XCTAssertTrue(expected_routeHint == contact.routeHint)
     }
@@ -253,7 +272,7 @@ class sphinxOnionMessageTests: XCTestCase {
         UserData.sharedInstance.save(walletMnemonic: test_mnemonic1)
         let expectation = XCTestExpectation(description: "Expecting to get contact info in time")
         
-        let delayTime = 25.0
+        let delayTime = 8.0
         
         //Async Tasks:
         establish_self_contact()
@@ -267,7 +286,7 @@ class sphinxOnionMessageTests: XCTestCase {
         // Call the function to fulfill the expectation after a 3-second delay.
         fulfillExpectationAfterDelay(expectation, delayInSeconds: delayTime)
         // Wait for the expectation to be fulfilled.
-        wait(for: [expectation], timeout: delayTime + 10.0) // Adjust the timeout as needed
+        wait(for: [expectation], timeout: delayTime + 1.0) // Adjust the timeout as needed
         
         guard let contact = UserContact.getContactWith(indices: [1],managedContext: sphinxOnionManager.managedContext).first else{
             XCTFail("Failed contact registration")
@@ -275,5 +294,56 @@ class sphinxOnionMessageTests: XCTestCase {
         }
         validate_test_contact_post_key_exchange(contact: contact)
     }
+    
+    func handleKeyExchangeResponseNotification(n:Notification){
+        if let hopsJSON = n.userInfo?["hopsJSON"] as? [[String: String]],
+           let contentStringJSON = n.userInfo?["contentStringJSON"] as? [String:Any]{
+            self.hopsJSON = hopsJSON
+            self.contentJSON = contentStringJSON
+        }
+    }
+    
+    func test_key_exchange_response_message() {
+        print(test_key_exchange_response_prompt)
+        UserContact.deleteAll() // set to known wiped out state
+        UserData.sharedInstance.save(walletMnemonic: test_mnemonic1)
+        
+        let delayTime = 20.0
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeResponseNotification), name: .keyExchangeMessageWasConstructed, object: nil)
+        sphinxOnionManager.shouldPostUpdates = true
+        
+        // Async Tasks:
+        establish_self_contact()
+        
+        // Print prompt after a delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\(self.test_key_exchange_response_prompt)")
+        }
+        
+        let expectation = XCTestExpectation(description: "Expecting key exchange after some time")
+        // Set up the expectation here
+        fulfillExpectationAfterDelay(expectation, delayInSeconds: delayTime)
+        
+        wait(for: [expectation], timeout: 20.0)
+        XCTAssertTrue(self.hopsJSON == self.test_key_exchange_response_hops_json)
+        for key in test_key_exchange_response_message_json.keys {
+            guard let expectedValue = test_key_exchange_response_message_json[key],
+                  let actualValue = self.contentJSON?[key] else {
+                XCTFail("Key \(key) not found in one of the dictionaries")
+                continue
+            }
+
+            if let expectedValue = expectedValue as? String, let actualValue = actualValue as? String {
+                XCTAssertTrue(expectedValue == actualValue, "Mismatch for key \(key). Expected Value:\(expectedValue). Actual Value: \(actualValue)")
+            } else if let expectedValue = expectedValue as? [String: String], let actualValue = actualValue as? [String: String] {
+                XCTAssertTrue(expectedValue == actualValue, "Mismatch for key \(key)")
+            } else {
+                XCTFail("Type mismatch for key \(key)")
+            }
+        }
+    }
+
+
 
 }

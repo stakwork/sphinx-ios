@@ -29,6 +29,7 @@ class SphinxOnionManager : NSObject {
     let network = "regtest"
     var vc: UIViewController! = nil
     var mqtt: CocoaMQTT! = nil
+    let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     
     func getAccountSeed(mnemonic:String)->String?{
         do{
@@ -222,14 +223,19 @@ class SphinxOnionManager : NSObject {
                 let json = try JSON(data: dataFromString)
                 if json["type"] == 11 || json["type"] == 10{
                     //process contact confirmation
-                    if let contact = UserContact.getContactWith(indices: [Int(index)]).first,
-                       let senderInfo = json["sender"].dictionaryObject as? [String: String]{
+                    if let senderInfo = json["sender"].dictionaryObject as? [String: String],
+                       let pubkey = senderInfo["pubkey"],
+                       //let contact = UserContact.getContactWith(indices: [Int(index)]).first
+                       let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey,managedContext: managedContext)
+                    {
+                        //TODO: fix this. I can't get this information to save to the db record!!
                         contact.contactKey = senderInfo["contactPubkey"]
                         contact.routeHint = senderInfo["routeHint"]
                         contact.contactRouteHint = senderInfo["contactRouteHint"]
                         contact.nickname = senderInfo["alias"]
-                        contact.publicKey = senderInfo["pubkey"]
+                        contact.publicKey = pubkey
                         contact.status = UserContact.Status.Confirmed.rawValue
+                        contact.index = 1
 
                         if json["type"] == 10,
                            let mnemonic = UserData.sharedInstance.getMnemonic(),
@@ -247,8 +253,6 @@ class SphinxOnionManager : NSObject {
                             
                         }
                         
-                        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-                        managedContext.saveContext()
                     }
                 }
             }
@@ -256,7 +260,7 @@ class SphinxOnionManager : NSObject {
         catch{
             print("error")
         }
-        
+        managedContext.saveContext()
     }
     
     
@@ -363,7 +367,6 @@ extension SphinxOnionManager{//Sign Up UI Related:
 
 extension SphinxOnionManager{//contacts related
     func saveLSPServerData(retrievedCredentials:SphinxOnionBrokerResponse){
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let server = Server(context: managedContext)
 
         server.pubKey = retrievedCredentials.serverPubkey
@@ -374,13 +377,13 @@ extension SphinxOnionManager{//contacts related
     }
     
     func createSelfContact(scid:String,serverPubkey:String,myOkKey:String){
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         self.pendingContact = UserContact(context: managedContext)
         self.pendingContact?.scid = scid
         self.pendingContact?.isOwner = true
         self.pendingContact?.index = 0
         self.pendingContact?.publicKey = myOkKey
         self.pendingContact?.routeHint = "\(serverPubkey)_\(scid)"
+        self.pendingContact?.status = UserContact.Status.Confirmed.rawValue
         managedContext.saveContext()
     }
     
@@ -393,7 +396,7 @@ extension SphinxOnionManager{//contacts related
         guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
             return
         }
-        if let existingContact = UserContact.getContactWith(pubkey: recipientPubkey){
+        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
             AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
             return
         }
@@ -445,16 +448,15 @@ extension SphinxOnionManager{//contacts related
         childPubkey:String,
         routeHint:String,
         idx:Int,
-        scid:String?=nil,
-        publicKey:String?=nil
+        scid:String?=nil
     ){
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let contact = UserContact(context: managedContext)
-        contact.publicKey = pubkey
+        contact.publicKey = pubkey//
         contact.childPubKey = childPubkey
-        contact.routeHint = routeHint
-        contact.index = idx
+        contact.routeHint = routeHint//
+        contact.index = idx//
         contact.id = idx
+        contact.isOwner = false//
         
         managedContext.saveContext()
     }
@@ -476,11 +478,14 @@ extension SphinxOnionManager{//contacts related
         }
         else if let index = Int(topicParams[1]),
                 let existingContact = UserContact.getContactWith(indices: [index]).first{
-            existingContact.contactRouteHint = "\(serverPubkey)_\(topicParams[0])"
+            existingContact.contactRouteHint = "\(serverPubkey)_\(scid)"
             existingContact.scid = scid
             CoreDataManager.sharedManager.saveContext()
             
-            sendKeyExchangeMsg(isInitiatorMe: true, to: existingContact)
+            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {//give new contact time to take to DB
+                self.sendKeyExchangeMsg(isInitiatorMe: true, to: existingContact)
+            })
+            
         }
         else{//falls thorugh & should not hit..throw error
             print("error")

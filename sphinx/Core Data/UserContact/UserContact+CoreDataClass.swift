@@ -20,6 +20,7 @@ public class UserContact: NSManagedObject {
     
     public var lastMessage : TransactionMessage? = nil
     
+    
     func getFakeChat() -> Chat {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.parent = CoreDataManager.sharedManager.persistentContainer.viewContext
@@ -267,11 +268,12 @@ public class UserContact: NSManagedObject {
     }
     
     
-    public static func getContactWith(indices: [Int]) -> [UserContact] {
+    public static func getContactWith(indices: [Int],
+                                      managedContext: NSManagedObjectContext? = nil) -> [UserContact] {
         var predicate: NSPredicate! = nil
         predicate = NSPredicate(format: "index IN %@", indices)
         let sortDescriptors = [NSSortDescriptor(key: "index", ascending: false)]
-        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
+        let contacts: [UserContact] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact",context:managedContext)
         return contacts
     }
     
@@ -300,10 +302,19 @@ public class UserContact: NSManagedObject {
         return contact
     }
     
-    public static func getContactWith(pubkey: String) -> UserContact? {
+    public static func getContactWithDisregardStatus(pubkey: String,
+                                      managedContext: NSManagedObjectContext? = nil) -> UserContact? {
+        let predicate = NSPredicate(format: "publicKey == %@", pubkey)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact",managedContext: managedContext)
+        return contact
+    }
+    
+    public static func getContactWith(pubkey: String,
+                                      managedContext: NSManagedObjectContext? = nil) -> UserContact? {
         let predicate = NSPredicate(format: "publicKey == %@ AND status == %d", pubkey, UserContact.Status.Confirmed.rawValue)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
-        let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact")
+        let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact",managedContext: managedContext)
         return contact
     }
     
@@ -469,6 +480,22 @@ public class UserContact: NSManagedObject {
             API.sharedInstance.updateUser(id: id, params: parameters, callback: { success in
                 owner.tipAmount = amount
             }, errorCallback: { })
+        }
+    }
+}
+
+
+extension NSManagedObject {
+    func printAllAttributes() {
+        let entity = self.entity
+        let attributes = entity.attributesByName
+        
+        for (key, value) in attributes {
+            if let attributeValue = self.value(forKey: key) {
+                print("\(key): \(attributeValue) (Type: \(type(of: attributeValue)), Attribute Type: \(value.attributeType.rawValue))")
+            } else {
+                print("\(key): nil (Attribute Type: \(value.attributeType.rawValue))")
+            }
         }
     }
 }

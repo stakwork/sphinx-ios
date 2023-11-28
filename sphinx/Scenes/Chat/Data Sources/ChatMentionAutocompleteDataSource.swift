@@ -46,27 +46,27 @@ class ChatMentionAutocompleteDataSource : NSObject {
     
     func updateMentionSuggestions(suggestions: [(String, String)]){
         tableView.isHidden = (suggestions.isEmpty == true)
-//        
-//        let suggestionObjects = suggestions.compactMap({
-//            let result = MentionOrMacroItem(
-//                type: .mention,
-//                displayText: $0.0,
-//                imageLink: $0.1,
-//                action: nil
-//            )
-//            return result as! MentionOrMacroItem
-//        }) as? [MentionOrMacroItem]
-//        mentionSuggestions = suggestionObjects
-//        
-//        tableView.reloadData()
-//        
-//        if (suggestions.isEmpty == false) {
-//            let bottom = IndexPath(
-//                row: 0,
-//                section: 0
-//            )
-//            tableView.scrollToRow(at: bottom, at: .bottom, animated: true)
-//        }
+        
+        let suggestionObjects = suggestions.compactMap({
+            let result = MentionOrMacroItem(
+                type: .mention,
+                displayText: $0.0,
+                imageLink: $0.1,
+                action: nil
+            )
+            return result as! MentionOrMacroItem
+        }) as? [MentionOrMacroItem]
+        mentionSuggestions = suggestionObjects
+        
+        tableView.reloadData()
+        
+        if (suggestions.isEmpty == false) {
+            let bottom = IndexPath(
+                row: 0,
+                section: 0
+            )
+            tableView.scrollToRow(at: bottom, at: .bottom, animated: true)
+        }
     }
     
     func updateMacroSuggestions(macros:[MentionOrMacroItem]){

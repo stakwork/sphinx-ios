@@ -110,10 +110,13 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func subscribeAndPublishTopics(pubkey:String,idx:Int){
-        self.mqtt.subscribe([
-            ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
-        ])
+    func publishMyTopics(pubkey:String,idx:Int){
+        self.mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(pubkey)/\(idx)/req/balance",
+                payload: []
+            )
+        )
         
         self.mqtt.publish(
             CocoaMQTTMessage(
@@ -127,16 +130,21 @@ class SphinxOnionManager : NSObject {
                 payload: []
             )
         )
-        self.mqtt.publish(
-            CocoaMQTTMessage(
-                topic: "\(pubkey)/\(idx)/req/balance",
-                payload: []
-            )
-        )
+    }
+    
+    func subscribeToMyTopics(pubkey:String,idx:Int){
+        self.mqtt.subscribe([
+            ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
+        ])
+    }
+    
+    func subscribeAndPublishMyTopics(pubkey:String,idx:Int){
+        subscribeToMyTopics(pubkey: pubkey, idx: idx)
+        publishMyTopics(pubkey: pubkey, idx: idx)
     }
     
     
-    func createAccount(mnemonic:String)->Bool{
+    func createMyAccount(mnemonic:String)->Bool{
         do{
             //1. Generate Seed -> Display to screen the mnemonic for backup???
             guard let seed = getAccountSeed(mnemonic: mnemonic) else{
@@ -163,7 +171,7 @@ class SphinxOnionManager : NSObject {
                     //self.showSuccessWithMessage("MQTT connected")
                     print("SphinxOnionManager: MQTT Connected")
                     print("mqtt.didConnectAck")
-                    self.subscribeAndPublishTopics(pubkey: pubkey, idx: idx)
+                    self.subscribeAndPublishMyTopics(pubkey: pubkey, idx: idx)
                 }
             }
             return success
@@ -174,6 +182,7 @@ class SphinxOnionManager : NSObject {
         }
        
     }
+    
     
     func processRegisterTopicResponse(message:CocoaMQTTMessage){
         let payloadData = Data(message.payload)
@@ -325,7 +334,7 @@ extension SphinxOnionManager{//Sign Up UI Related:
                 return
             }
             self.showMnemonicToUser(mnemonic: mneomnic, callback: {
-                self.createAccount(mnemonic: mneomnic)
+                self.createMyAccount(mnemonic: mneomnic)
                 vc.signup_v2_with_test_server()
             })
         }
@@ -401,7 +410,10 @@ extension SphinxOnionManager{//contacts related
         return (components.count == 3) ? (components[0],components[1],components[2]) : nil
     }
     
-    func makeFriendRequest(contactInfo:String){
+    func makeFriendRequest(
+        contactInfo:String,
+        nickname:String?=nil
+    ){
         guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
             return
         }
@@ -425,7 +437,7 @@ extension SphinxOnionManager{//contacts related
             let success = connectToBroker(seed: seed, xpub: xpub)
             if (success == false){return}
             
-            createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex)
+            createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex,nickname:nickname)
             
             mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                 self.processMqttMessages(message: receivedMessage)
@@ -457,7 +469,8 @@ extension SphinxOnionManager{//contacts related
         childPubkey:String,
         routeHint:String,
         idx:Int,
-        scid:String?=nil
+        scid:String?=nil,
+        nickname:String?=nil
     ){
         let contact = UserContact(context: managedContext)
         contact.publicKey = pubkey//
@@ -466,6 +479,9 @@ extension SphinxOnionManager{//contacts related
         contact.index = idx//
         contact.id = idx
         contact.isOwner = false//
+        contact.nickname = nickname
+        contact.createdAt = Date()
+        contact.status = UserContact.Status.Pending.rawValue
         
         managedContext.saveContext()
     }
@@ -487,6 +503,7 @@ extension SphinxOnionManager{//contacts related
         }
         else if let index = Int(topicParams[1]),
                 let existingContact = UserContact.getContactWith(indices: [index]).first{
+            NotificationCenter.default.post(Notification(name: .newContactWasRegistered, object: nil, userInfo: ["contactIndex" : existingContact.publicKey]))
             existingContact.contactRouteHint = "\(serverPubkey)_\(scid)"
             existingContact.scid = scid
             CoreDataManager.sharedManager.saveContext()

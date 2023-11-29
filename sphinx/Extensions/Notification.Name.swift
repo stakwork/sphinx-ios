@@ -23,4 +23,5 @@ extension Notification.Name {
     static let onSizeConfigurationChanged = Notification.Name("onSizeConfigurationChanged")
     static let webViewImageClicked = Notification.Name("webViewImageClicked")
     static let keyExchangeMessageWasConstructed = Notification.Name("keyExchangeMessageWasConstructed")
+    static let newContactWasRegistered = Notification.Name("newContactWasRegistered")
 }

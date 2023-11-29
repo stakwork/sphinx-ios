@@ -208,7 +208,7 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
     func didTapConfirm() {
         if(importSeedView.context == .SphinxOnionPrototype){
             let som = SphinxOnionManager.sharedInstance
-            let success = som.createAccount(mnemonic: importSeedView.textView.text)
+            let success = som.createMyAccount(mnemonic: importSeedView.textView.text)
             if(success){
                 importSeedContainer.isHidden = !success
                 UserData.sharedInstance.save(walletMnemonic: importSeedView.textView.text)

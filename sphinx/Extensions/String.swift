@@ -383,6 +383,14 @@ extension String {
             return (routeHintRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []).count > 0
         }
     }
+    //uses _ instead of :
+    var isV2RouteHint: Bool {
+        get {
+            // Adjust the number inside the curly braces {18} to match the expected length of digits.
+            let v2RouteHintRegex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{66}_[0-9]{18}$")
+            return (v2RouteHintRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []).count > 0
+        }
+    }
     
     var isVirtualPubKey : Bool {
         get {

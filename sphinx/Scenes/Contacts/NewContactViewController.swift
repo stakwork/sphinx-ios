@@ -41,6 +41,7 @@ class NewContactViewController: KeyboardEventsViewController {
     
     var contact : UserContact? = nil
     var pubkey : String? = nil
+    var isV2 : Bool = true //setting to true for now but needs work to decide how it's done!
     
     var shouldRealodChat = false
     
@@ -226,7 +227,11 @@ class NewContactViewController: KeyboardEventsViewController {
         
         if let _ = contact {
             updateProfile()
-        } else {
+        }
+        else if isV2{
+            createV2Contact()
+        }
+        else {
             createContact()
         }
     }

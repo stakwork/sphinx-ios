@@ -110,7 +110,7 @@ class sphinxOnionAccountCreateUnitTests: XCTestCase {
             //self.showSuccessWithMessage("MQTT connected")
             print("SphinxOnionManager: MQTT Connected")
             print("mqtt.didConnectAck")
-            self.sphinxOnionManager.subscribeAndPublishTopics(pubkey: pubkey, idx: 0)
+            self.sphinxOnionManager.subscribeAndPublishMyTopics(pubkey: pubkey, idx: 0)
         }
         
         expectation = self.expectation(description: "Server should send back valid params within 10 seconds")
@@ -147,7 +147,7 @@ class sphinxOnionAccountCreateUnitTests: XCTestCase {
             //self.showSuccessWithMessage("MQTT connected")
             print("SphinxOnionManager: MQTT Connected")
             print("mqtt.didConnectAck")
-            self.sphinxOnionManager.subscribeAndPublishTopics(pubkey: pubkey, idx: 0)
+            self.sphinxOnionManager.subscribeAndPublishMyTopics(pubkey: pubkey, idx: 0)
         }
         
         expectation = self.expectation(description: "Server should send back valid balance within 10 seconds")

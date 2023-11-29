@@ -9,10 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class UserContactsHelper {
-    var newContactDidRegister = false
-    var wdtDidFire = false
-    
+class UserContactsHelper {    
     ///Inserts
     public static func insertObjects(contacts: [JSON], chats: [JSON], subscriptions: [JSON], invites: [JSON]) {
         CoreDataManager.sharedManager.persistentContainer.viewContext.performAndWait({
@@ -167,47 +164,24 @@ class UserContactsHelper {
         contactKey: String? = nil,
         callback: @escaping (Bool, UserContact?) -> ()
     ){
-        UserContact.deleteAll()
-        let som = SphinxOnionManager.sharedInstance
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = som.getAccountSeed(mnemonic: mnemonic),
-              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
-              let my_xpub = som.getAccountXpub(seed: seed),
-              som.connectToBroker(seed:seed,xpub: my_xpub) == true
-        else{
-            //possibly send error message?
-            callback(false,nil)
-            return
-        }
-        SphinxOnionManager.sharedInstance.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
         //Create new contact with onion mananger
-        newContactDidRegister = false
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNewContactRegistration), name: .newContactWasRegistered, object: nil)
         let contactInfo = pubKey + "_" + routeHint
         SphinxOnionManager.sharedInstance.makeFriendRequest(contactInfo: contactInfo,nickname:nickname)
         
-        //Wait until either contact comes back or wdt fails
-//        let wdt = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(wdtHandler), userInfo: nil, repeats: false)
-//        while (newContactDidRegister == false &&
-//        wdtDidFire == false){
-//
-//        }
-//        wdt.invalidate()
-//        NotificationCenter.default.removeObserver(self, name: .newContactWasRegistered, object: nil)
-//        
-//        //Send back success flag & the contact
-//        let success = wdtDidFire == false && newContactDidRegister == true
-//        wdtDidFire = false
-//        newContactDidRegister = false
-//        callback(success,UserContact.getContactWithDisregardStatus(pubkey: pubKey))
-    }
-    
-    @objc func wdtHandler(){
-        wdtDidFire = true
-    }
-    
-    @objc func handleNewContactRegistration(){
-        newContactDidRegister = true
+        var maxTicks = 20
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) {timer in
+            if let successfulContact = UserContact.getContactWithDisregardStatus(pubkey: pubKey){
+                callback(true,successfulContact)
+                timer.invalidate()
+            }
+            else if(maxTicks >= 0){
+                maxTicks -= 1
+            }
+            else{
+                callback(false,nil)
+                timer.invalidate()
+            }
+        }
     }
 
     public static func exchangeKeys(id: Int) {

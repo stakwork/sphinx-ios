@@ -323,8 +323,30 @@ extension DashboardRootViewController {
             self.handleLinkQueries()
         }
         
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.connectToV2Server()
+        })
     }
     
+    func connectToV2Server(){
+        let som = SphinxOnionManager.sharedInstance
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = som.getAccountSeed(mnemonic: mnemonic),
+              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
+              let my_xpub = som.getAccountXpub(seed: seed),
+              som.connectToBroker(seed:seed,xpub: my_xpub) == true
+        else{
+            //possibly send error message?
+            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
+            return
+        }
+        SphinxOnionManager.sharedInstance.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
+    }
+    
+    @objc func handleNewKeyExchangeReceived(){
+        self.contactChatsContainerViewController.reloadCollectionView()
+    }
 }
 
 

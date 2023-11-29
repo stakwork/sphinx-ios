@@ -244,7 +244,7 @@ class SphinxOnionManager : NSObject {
                         contact.nickname = senderInfo["alias"]
                         contact.publicKey = pubkey
                         contact.status = UserContact.Status.Confirmed.rawValue
-                        
+                        NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                     }
                     else if json["type"] == 10,//handle response
                        let mnemonic = UserData.sharedInstance.getMnemonic(),
@@ -266,6 +266,8 @@ class SphinxOnionManager : NSObject {
                             contact.childPubKey = childKey
                             
                             sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
+                            
+                            NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                         }
                         catch{
                             print("error generating childPubkey")
@@ -503,7 +505,7 @@ extension SphinxOnionManager{//contacts related
         }
         else if let index = Int(topicParams[1]),
                 let existingContact = UserContact.getContactWith(indices: [index]).first{
-            NotificationCenter.default.post(Notification(name: .newContactWasRegistered, object: nil, userInfo: ["contactIndex" : existingContact.publicKey]))
+            NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactIndex" : existingContact.publicKey]))
             existingContact.contactRouteHint = "\(serverPubkey)_\(scid)"
             existingContact.scid = scid
             CoreDataManager.sharedManager.saveContext()
@@ -576,7 +578,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
             return nil
         }
         
-        (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .keyExchangeMessageWasConstructed, object: nil, userInfo: ["hopsJSON" : hopsArray, "contentStringJSON": senderInfo])) : ()
+        (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .keyExchangeResponseMessageWasConstructed, object: nil, userInfo: ["hopsJSON" : hopsArray, "contentStringJSON": senderInfo])) : ()
         
         return (contentJSONString,hopsJSONString)
     }

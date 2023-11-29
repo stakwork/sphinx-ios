@@ -389,6 +389,9 @@ public class UserContact: NSManagedObject {
         if let contactK = self.contactKey, let _ = EncryptionManager.sharedInstance.getPublicKeyFromBase64String(base64String: contactK) {
             return true
         }
+        else if let _ = self.contactKey{
+            return true
+        }
         return false
     }
     

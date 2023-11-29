@@ -247,9 +247,13 @@ class sphinxOnionMessageTests: XCTestCase {
         let expected_contactRouteHint = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090617434115"
         let expected_nickname = "alice"
         print("contact from validate_test_contact_post_key_exchange:\(contact)")
-        XCTAssertTrue(expected_nickname == contact.nickname)
-        XCTAssertTrue(expected_contactRouteHint == contact.contactRouteHint)
-        XCTAssertTrue(expected_contactPubkey == contact.contactKey)
+        print("expected_nickname:\(expected_nickname) vs contact.nickname:\(contact.nickname)")
+        print("expected_contactRouteHint:\(expected_contactRouteHint) vs contact.contactRouteHint:\(contact.contactRouteHint)")
+        print("expected_contactPubkey:\(expected_contactPubkey) vs contact.contactKey:\(contact.contactKey)")
+        
+        XCTAssertTrue(expected_contactRouteHint == contact.contactRouteHint ?? "")
+        XCTAssertTrue(expected_contactPubkey == contact.contactKey ?? "")
+        XCTAssertTrue(expected_nickname == contact.nickname ?? "")
     }
     
     //prove handshake with server works correctly and we store the basic data in the database *before* completing the key exchange
@@ -310,7 +314,7 @@ class sphinxOnionMessageTests: XCTestCase {
         
         let delayTime = 20.0
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeResponseNotification), name: .keyExchangeMessageWasConstructed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeResponseNotification), name: .keyExchangeResponseMessageWasConstructed, object: nil)
         sphinxOnionManager.shouldPostUpdates = true
         
         // Async Tasks:

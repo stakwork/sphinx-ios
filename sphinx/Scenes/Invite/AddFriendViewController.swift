@@ -31,6 +31,11 @@ class AddFriendViewController: UIViewController {
         
         newUserButton.layer.cornerRadius = newUserButton.frame.size.height / 2
         newUserButton.addShadow(location: VerticalLocation.bottom, color: UIColor.Sphinx.GreenBorder, opacity: 1, radius: 0.5, bottomhHeight: 1.5)
+        setAccessibilityIdentifiers()
+    }
+    
+    func setAccessibilityIdentifiers(){
+        existingUserButton.accessibilityIdentifier = "existingUserButton"
     }
     
     @IBAction func addContactButtonTouched() {

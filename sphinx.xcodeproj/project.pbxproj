@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -657,6 +657,8 @@
 		CE3133B12977747E00E91E3A /* BadgeAdminDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */; };
 		CE3133B22977747E00E91E3A /* BadgeAdminListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */; };
 		CE3133B32977747E00E91E3A /* BadgeAdminManagementListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */; };
+		CE3D49922B18D149007E801D /* sphinxOnionAddContactUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D49912B18D149007E801D /* sphinxOnionAddContactUITests.swift */; };
+		CE3D49932B18D527007E801D /* sphinx.app in Resources */ = {isa = PBXBuildFile; fileRef = 4779F15E232AA0F200D35E81 /* sphinx.app */; platformFilter = ios; };
 		CE3D8CA129B0FF7100EDB637 /* FeedItemDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */; };
 		CE3D8CA329B10FA500EDB637 /* FeedItemDetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM.swift */; };
 		CE3D8CAC29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */; };
@@ -1656,6 +1658,7 @@
 		CE3133AA2977747E00E91E3A /* BadgeAdminDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminDetailVC.swift; sourceTree = "<group>"; };
 		CE3133AB2977747E00E91E3A /* BadgeAdminListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BadgeAdminListTableViewCell.xib; sourceTree = "<group>"; };
 		CE3133AC2977747E00E91E3A /* BadgeAdminManagementListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeAdminManagementListVC.swift; sourceTree = "<group>"; };
+		CE3D49912B18D149007E801D /* sphinxOnionAddContactUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxOnionAddContactUITests.swift; sourceTree = "<group>"; };
 		CE3D8CA029B0FF7100EDB637 /* FeedItemDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVC.swift; sourceTree = "<group>"; };
 		CE3D8CA229B10FA500EDB637 /* FeedItemDetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailVM.swift; sourceTree = "<group>"; };
 		CE3D8CAA29B1124E00EDB637 /* FeedItemDetailHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailHeaderCell.swift; sourceTree = "<group>"; };
@@ -3268,6 +3271,7 @@
 			children = (
 				4779F184232AA0F300D35E81 /* sphinxUITests.swift */,
 				CE167B582B0BB17500A9238E /* sphinxOnionAccountCreateUITests.swift */,
+				CE3D49912B18D149007E801D /* sphinxOnionAddContactUITests.swift */,
 				4779F186232AA0F300D35E81 /* Info.plist */,
 			);
 			path = sphinxUITests;
@@ -4841,6 +4845,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3D49932B18D527007E801D /* sphinx.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5529,6 +5534,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE3D49922B18D149007E801D /* sphinxOnionAddContactUITests.swift in Sources */,
 				4779F185232AA0F300D35E81 /* sphinxUITests.swift in Sources */,
 				CE167B592B0BB17500A9238E /* sphinxOnionAccountCreateUITests.swift in Sources */,
 			);

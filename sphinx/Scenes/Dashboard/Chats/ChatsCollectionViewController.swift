@@ -112,6 +112,7 @@ extension ChatsCollectionViewController {
         super.viewDidLoad()
 
         loadChatsList()
+        addAccessibilityIdentifiers()
     }
     
     func loadChatsList() {
@@ -119,6 +120,10 @@ extension ChatsCollectionViewController {
         configure(collectionView)
         configureDataSource(for: collectionView)
         addTableBottomInset(for: collectionView)
+    }
+    
+    func addAccessibilityIdentifiers(){
+        self.collectionView.accessibilityIdentifier = "chatListCollectionView"
     }
     
     func addTableBottomInset(for collectionView: UICollectionView) {

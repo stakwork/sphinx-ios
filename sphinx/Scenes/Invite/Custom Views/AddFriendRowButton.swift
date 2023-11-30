@@ -48,6 +48,7 @@ class AddFriendRowButton: UIView {
         createGroupContainer.layer.cornerRadius = createGroupContainer.frame.size.height / 2
         createGroupContainer.clipsToBounds = true
         createGroupContainer.addShadow(location: VerticalLocation.bottom, color: UIColor.Sphinx.PrimaryBlueBorder, opacity: 1, radius: 0.5, bottomhHeight: 1.5)
+        self.accessibilityIdentifier = "addFriendRowButton"
     }
     
     func configureForAddFriend() {

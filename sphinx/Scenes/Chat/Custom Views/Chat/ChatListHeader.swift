@@ -143,7 +143,7 @@ class ChatListHeader: UIView {
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
         var message: String? = nil
         
-        SphinxOnionManager.sharedInstance.makeFriendRequest(contactInfo: "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497")
+        UserContact.deleteAll()
         return
         
         switch(status) {

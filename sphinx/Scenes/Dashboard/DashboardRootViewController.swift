@@ -340,7 +340,8 @@ extension DashboardRootViewController {
             AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
             return
         }
-        SphinxOnionManager.sharedInstance.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
+        som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
+        som.getAllUnreadMessages()
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
     }
     

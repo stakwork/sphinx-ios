@@ -136,82 +136,6 @@ class SphinxOnionManager : NSObject {
         self.mqtt.subscribe([
             ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
         ])
-//        self.mqtt.subscribe([
-//            ("\(pubkey)/\(idx)/req/#", CocoaMQTTQoS.qos1)
-//        ])
-        subscribeAllContactChildKeys()
-        
-    }
-    
-    func subscribeAllContactChildKeys(){
-        for contact in UserContact.getAll(){
-            if let contactChildKey = contact.childPubKey{
-                let contactIdx = contact.index
-                subscribeToContactChildPubkey(contactChildKey: contactChildKey, contactIdx: contactIdx)
-            }
-        }
-    }
-    
-    func subscribeToContactChildPubkey(contactChildKey:String, contactIdx:Int){
-        self.mqtt.subscribe([
-            ("\(contactChildKey)/\(contactIdx)/res/#", CocoaMQTTQoS.qos1)
-        ])
-    }
-    
-    func getAllUnreadMessages(){
-        getUnreadOkKeyMessages()
-    }
-    
-    func getUnreadOkKeyMessages(){
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = getAccountSeed(mnemonic: mnemonic),
-              let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
-            return //throw error?
-        }
-        let sinceMsgIndex = 0 //TODO: store last read index?
-        let msgCountLimit = 1000
-        let topic = "\(myOkKey)/\(0)/req/msgs"
-        requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
-    }
-    
-    func getUnreadMessages(from contact: UserContact){
-        if let contactChildKey = contact.childPubKey{
-            let contactIdx = contact.index
-            let sinceMsgIndex = 0 //TODO: store last read index?
-            let msgCountLimit = 1000
-            let topic = "\(contactChildKey)/\(contactIdx)/req/msgs"
-            requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
-            
-        }
-    }
-    
-    func requestUnreadMessages(on topic:String,sinceMsgIndex:Int, msgCountLimit:Int){
-        let msgDict: [String: Int] = [
-            "since": sinceMsgIndex,
-            "limit": msgCountLimit
-        ]
-
-        // Serialize the hopsArray to JSON
-        guard let msgJSON = try? JSONSerialization.data(withJSONObject: msgDict, options: []) else {
-            
-            return
-        }
-        
-        var msgAsArray = [UInt8](repeating: 0, count: msgJSON.count)
-
-        // Use withUnsafeBytes to copy the Data into the UInt8 array
-        msgJSON.withUnsafeBytes { bufferPointer in
-            guard let baseAddress = bufferPointer.baseAddress else {
-                fatalError("Failed to get the base address")
-            }
-            memcpy(&msgAsArray, baseAddress, msgJSON.count)
-            self.mqtt.publish(
-                CocoaMQTTMessage(
-                    topic: topic,
-                    payload: msgAsArray
-                )
-            )
-        }
     }
     
     func subscribeAndPublishMyTopics(pubkey:String,idx:Int){
@@ -467,7 +391,7 @@ extension SphinxOnionManager{//contacts related
 
         server.pubKey = retrievedCredentials.serverPubkey
         server.ip = self.server_IP
-        NotificationCenter.default.post(Notification(name: .onMQTTConnectionStatusChanged, object: nil, userInfo: ["server" : server]))
+        (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onMQTTConnectionStatusChanged, object: nil, userInfo: ["server" : server])) : ()
         self.currentServer = server
         managedContext.saveContext()
     }
@@ -622,7 +546,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         let senderInfo : [String:String] = [
             "pubkey": myOkKey,
             "routeHint": selfRouteHint,
-            "contactPubkey": recipContact.childPubKey!,
+            "contactPubkey": recipContact.childPubKey,
 //            "contactRouteHint": "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497",
             "alias": (selfContact.nickname ?? "anon"),
             "photo_url": ""

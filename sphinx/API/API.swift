@@ -307,7 +307,7 @@ class API {
             case self.successStatusCode:
                 self.connectionStatus = .Connected
             case self.unauthorizedStatusCode:
-                self.getRelaykeys()
+//                self.getRelaykeys()
                 
                 self.connectionStatus = .Unauthorize
             default:
@@ -322,7 +322,7 @@ class API {
                     if self.errorCounter < 5 {
                         self.errorCounter = self.errorCounter + 1
                     } else if response.response != nil {
-                        self.getIPFromHUB()
+//                        self.getIPFromHUB()
                         return
                     }
                     completionHandler(response)
@@ -420,9 +420,9 @@ class API {
     }
 
     func retryGettingIPFromHUB() {
-        DelayPerformedHelper.performAfterDelay(seconds: 5, completion: {
-            self.getIPFromHUB()
-        })
+//        DelayPerformedHelper.performAfterDelay(seconds: 5, completion: {
+//            self.getIPFromHUB()
+//        })
     }
 
     func reloadDashboard() {

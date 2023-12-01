@@ -16,7 +16,7 @@
     </entity>
     <entity name="Chat" representedClassName="Chat" syncable="YES">
         <attribute name="contactIds" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer"/>
-        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="599540400" usesScalarValueType="NO"/>
         <attribute name="escrowAmount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="groupKey" optional="YES" attributeType="String"/>
         <attribute name="host" optional="YES" attributeType="String"/>
@@ -134,8 +134,8 @@
     <entity name="TransactionMessage" representedClassName="TransactionMessage" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="amountMsat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="599540400" usesScalarValueType="NO"/>
+        <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="599540400" usesScalarValueType="NO"/>
         <attribute name="encrypted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="errorMessage" optional="YES" attributeType="String"/>
         <attribute name="expirationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -176,7 +176,7 @@
         <attribute name="avatarUrl" optional="YES" attributeType="String"/>
         <attribute name="blocked" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="contactKey" optional="YES" attributeType="String"/>
-        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" defaultDateTimeInterval="599540400" usesScalarValueType="NO"/>
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="fromGroup" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>

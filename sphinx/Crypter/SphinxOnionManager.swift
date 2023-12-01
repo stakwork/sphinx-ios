@@ -155,6 +155,7 @@ class SphinxOnionManager : NSObject {
     }
 
     func getAllUnreadMessages(){
+        getUnreadOkKeyMessages()
         for contact in UserContact.getAll(){
             getUnreadMessages(from: contact)
         }
@@ -306,7 +307,6 @@ class SphinxOnionManager : NSObject {
                     //process contact confirmation
                     if let senderInfo = json["sender"].dictionaryObject as? [String: String],
                        let pubkey = senderInfo["pubkey"],
-                       //let contact = UserContact.getContactWith(indices: [Int(index)]).first
                        let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey,managedContext: managedContext)
                     {
                         //TODO: fix this. I can't get this information to save to the db record!!
@@ -316,9 +316,10 @@ class SphinxOnionManager : NSObject {
                         contact.nickname = senderInfo["alias"]
                         contact.publicKey = pubkey
                         contact.status = UserContact.Status.Confirmed.rawValue
+                        contact.createdAt = Date()
                         NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                     }
-                    else if json["type"] == 10,//handle response
+                    else if json["type"] == 10,//handle key exchange confirmation
                        let mnemonic = UserData.sharedInstance.getMnemonic(),
                        let seed = getAccountSeed(mnemonic: mnemonic),
                        let xpub = getAccountXpub(seed: seed),
@@ -332,6 +333,7 @@ class SphinxOnionManager : NSObject {
                             contact.nickname = senderInfo["alias"]
                             contact.publicKey = senderInfo["pubkey"]
                             contact.status = UserContact.Status.Confirmed.rawValue
+                            contact.createdAt = Date()
                             
                             
                             let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)

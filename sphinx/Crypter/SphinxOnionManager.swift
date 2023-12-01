@@ -136,6 +136,78 @@ class SphinxOnionManager : NSObject {
         self.mqtt.subscribe([
             ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
         ])
+        subscribeAllContactChildKeys()
+
+    }
+
+    func subscribeAllContactChildKeys(){
+        for contact in UserContact.getAll(){
+            let contactChildKey = contact.childPubKey
+            let contactIdx = contact.index
+            subscribeToContactChildPubkey(contactChildKey: contactChildKey, contactIdx: contactIdx)
+        }
+    }
+
+    func subscribeToContactChildPubkey(contactChildKey:String, contactIdx:Int){
+        self.mqtt.subscribe([
+            ("\(contactChildKey)/\(contactIdx)/res/#", CocoaMQTTQoS.qos1)
+        ])
+    }
+
+    func getAllUnreadMessages(){
+        for contact in UserContact.getAll(){
+            getUnreadMessages(from: contact)
+        }
+    }
+
+    func getUnreadOkKeyMessages(){
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = getAccountSeed(mnemonic: mnemonic),
+              let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
+            return //throw error?
+        }
+        let sinceMsgIndex = 0 //TODO: store last read index?
+        let msgCountLimit = 1000
+        let topic = "\(myOkKey)/\(0)/req/msgs"
+        requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
+    }
+
+    func getUnreadMessages(from contact: UserContact){
+        let contactChildKey = contact.childPubKey
+        let contactIdx = contact.index
+        let sinceMsgIndex = 0 //TODO: store last read index?
+        let msgCountLimit = 1000
+        let topic = "\(contactChildKey)/\(contactIdx)/req/msgs"
+        requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
+    }
+
+    func requestUnreadMessages(on topic:String,sinceMsgIndex:Int, msgCountLimit:Int){
+        let msgDict: [String: Int] = [
+            "since": sinceMsgIndex,
+            "limit": msgCountLimit
+        ]
+
+        // Serialize the hopsArray to JSON
+        guard let msgJSON = try? JSONSerialization.data(withJSONObject: msgDict, options: []) else {
+
+            return
+        }
+
+        var msgAsArray = [UInt8](repeating: 0, count: msgJSON.count)
+
+        // Use withUnsafeBytes to copy the Data into the UInt8 array
+        msgJSON.withUnsafeBytes { bufferPointer in
+            guard let baseAddress = bufferPointer.baseAddress else {
+                fatalError("Failed to get the base address")
+            }
+            memcpy(&msgAsArray, baseAddress, msgJSON.count)
+            self.mqtt.publish(
+                CocoaMQTTMessage(
+                    topic: topic,
+                    payload: msgAsArray
+                )
+            )
+        }
     }
     
     func subscribeAndPublishMyTopics(pubkey:String,idx:Int){

@@ -85,9 +85,10 @@ class SphinxOnionManager : NSObject {
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
-        if let mqtt = mqtt{
-            mqtt.disconnect()
-        }
+//        if let mqtt = mqtt{
+//            mqtt.disconnect()
+//        }
+        
         
 //        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
 //            showSuccessWithMessage("MQTT already connected or connecting")
@@ -132,11 +133,17 @@ class SphinxOnionManager : NSObject {
         )
     }
     
+    func disconnectMqtt(){
+        if let mqtt = self.mqtt{
+            mqtt.disconnect()
+        }
+    }
+    
     func subscribeToMyTopics(pubkey:String,idx:Int){
         self.mqtt.subscribe([
             ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
         ])
-        subscribeAllContactChildKeys()
+        //subscribeAllContactChildKeys()
 
     }
 
@@ -156,9 +163,9 @@ class SphinxOnionManager : NSObject {
 
     func getAllUnreadMessages(){
         getUnreadOkKeyMessages()
-        for contact in UserContact.getAll(){
-            getUnreadMessages(from: contact)
-        }
+//        for contact in UserContact.getAll(){
+//            getUnreadMessages(from: contact)
+//        }
     }
 
     func getUnreadOkKeyMessages(){
@@ -380,6 +387,9 @@ class SphinxOnionManager : NSObject {
         case "stream":
             print("processing stream topic!")
             processStreamTopicMessage(message: message)
+            break
+        case "msgs":
+            print("TODO: process msgs topic!")
             break
         default:
             print("topic not in list:\(topic)")

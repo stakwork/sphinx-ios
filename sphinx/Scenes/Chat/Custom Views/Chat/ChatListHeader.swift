@@ -143,7 +143,31 @@ class ChatListHeader: UIView {
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
         var message: String? = nil
         
-        UserContact.deleteAll()
+        let som = SphinxOnionManager.sharedInstance
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = som.getAccountSeed(mnemonic: mnemonic),
+              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
+              let my_xpub = som.getAccountXpub(seed: seed)
+        else{
+            //possibly send error message?
+            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
+            return
+        }
+        som.disconnectMqtt()
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            som.connectToBroker(seed:seed,xpub: my_xpub)
+            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+                som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
+                som.getUnreadOkKeyMessages()
+                som.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                    som.processMqttMessages(message: receivedMessage)
+                }
+            })
+            
+        })
+        
+        //SphinxOnionManager.sharedInstance.getAllUnreadMessages()
+//        UserContact.deleteAll()
         return
         
         switch(status) {

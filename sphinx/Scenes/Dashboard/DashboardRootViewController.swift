@@ -346,7 +346,7 @@ extension DashboardRootViewController {
         DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
             let success = som.connectToBroker(seed:seed,xpub: my_xpub)
             if(success == false) {
-                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker."
+                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker.")
                 return
               }
             DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {

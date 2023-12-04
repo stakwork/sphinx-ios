@@ -326,7 +326,7 @@ class SphinxOnionManager : NSObject {
                         contact.createdAt = Date()
                         NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                     }
-                    else if json["type"] == 10,//handle key exchange confirmation
+                    else if json["type"] == 10,//do key exchange confirmation
                        let mnemonic = UserData.sharedInstance.getMnemonic(),
                        let seed = getAccountSeed(mnemonic: mnemonic),
                        let xpub = getAccountXpub(seed: seed),
@@ -390,6 +390,7 @@ class SphinxOnionManager : NSObject {
             break
         case "msgs":
             print("TODO: process msgs topic!")
+            processStreamTopicMessage(message: message)//for now treat the messages the same way
             break
         default:
             print("topic not in list:\(topic)")

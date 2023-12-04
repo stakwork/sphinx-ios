@@ -329,24 +329,38 @@ extension DashboardRootViewController {
     }
     
     func connectToV2Server(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
+        
+        
         let som = SphinxOnionManager.sharedInstance
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = som.getAccountSeed(mnemonic: mnemonic),
               let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
-              let my_xpub = som.getAccountXpub(seed: seed),
-              som.connectToBroker(seed:seed,xpub: my_xpub) == true
+              let my_xpub = som.getAccountXpub(seed: seed)
         else{
             //possibly send error message?
             AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
             return
         }
-        som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
-        som.getAllUnreadMessages()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
+        som.disconnectMqtt()
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            let success = som.connectToBroker(seed:seed,xpub: my_xpub)
+            if(success == false) {(AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker."); return)}
+            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+                som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
+                som.getUnreadOkKeyMessages()
+                som.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                    som.processMqttMessages(message: receivedMessage)
+                }
+            })
+            
+        })
     }
     
     @objc func handleNewKeyExchangeReceived(){
-        self.contactChatsContainerViewController.reloadCollectionView()
+        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {//slight delay to ensure new DB write goes through first
+            self.contactChatsContainerViewController.reloadCollectionView()
+        })
     }
 }
 

@@ -345,7 +345,10 @@ extension DashboardRootViewController {
         som.disconnectMqtt()
         DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
             let success = som.connectToBroker(seed:seed,xpub: my_xpub)
-            if(success == false) {(AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker."); return)}
+            if(success == false) {
+                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker."
+                return
+              }
             DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
                 som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
                 som.getUnreadOkKeyMessages()

@@ -249,8 +249,6 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
             return SphinxMsgError.encodingError
         }
         
-        
-
         do {
             let onion = try! createOnionMsg(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, json: contentJSONString)
             //let onion = try! createOnion(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, payload: finalData)
@@ -298,6 +296,7 @@ struct SphinxOnionBrokerResponse: Mappable {
 
 
 enum SphinxMsgTypes: UInt8{
+    case PlaintextMessage = 0
     case KeyExchangeInitiator = 10
     case KeyExchangeConfirmation = 11
 }

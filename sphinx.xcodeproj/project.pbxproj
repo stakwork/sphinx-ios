@@ -689,6 +689,8 @@
 		CE842DEE298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */; };
 		CE842DEF298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */; };
 		CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */; };
+		CE887EF62B1E58CE00DBA670 /* SphinxOnionManager+ChatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE887EF52B1E58CD00DBA670 /* SphinxOnionManager+ChatExtension.swift */; };
+		CE887EFA2B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE887EF92B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift */; };
 		CE91E59A29885175008BA6EA /* MemberBadgeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */; };
 		CE94A50D2A4B2BF6001EDF7E /* MentionOrMacroItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */; };
 		CE94A5102A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */; };
@@ -1691,6 +1693,8 @@
 		CE842DEC298D61CF00620AD3 /* BadgeAdminListHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeAdminListHeaderCell.swift; sourceTree = "<group>"; };
 		CE842DED298D61CF00620AD3 /* BadgeAdminListHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BadgeAdminListHeaderCell.xib; sourceTree = "<group>"; };
 		CE842DF02992D0F400620AD3 /* BadgeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeTemplate.swift; sourceTree = "<group>"; };
+		CE887EF52B1E58CD00DBA670 /* SphinxOnionManager+ChatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SphinxOnionManager+ChatExtension.swift"; path = "/Users/jamescarucci/Documents/chat_gpt_notion_bot/sphinx-ios/sphinx/Crypter/SphinxOnionManager+ChatExtension.swift"; sourceTree = "<absolute>"; };
+		CE887EF92B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+ContactExtension.swift"; sourceTree = "<group>"; };
 		CE91E59929885175008BA6EA /* MemberBadgeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeDetailVC.swift; sourceTree = "<group>"; };
 		CE94A50C2A4B2BF6001EDF7E /* MentionOrMacroItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionOrMacroItem.swift; sourceTree = "<group>"; };
 		CE94A50E2A4B2DF3001EDF7E /* ChatMentionAutocompleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMentionAutocompleteTableViewCell.swift; sourceTree = "<group>"; };
@@ -3955,6 +3959,8 @@
 			isa = PBXGroup;
 			children = (
 				CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */,
+				CE887EF92B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift */,
+				CE887EF52B1E58CD00DBA670 /* SphinxOnionManager+ChatExtension.swift */,
 				474C7A5328D3A7A1007A3E17 /* Sphinxrs-Bridging-Header.h */,
 				474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */,
 				474C7A5428D3A7A1007A3E17 /* sphinxrsFFI.h */,
@@ -4931,6 +4937,7 @@
 				4779248A2A28F53E00CD3CF1 /* DirectPaymentView.swift in Sources */,
 				F39F2C7E26E2367B00D357F6 /* FeedSearchEmptyStateViewController.swift in Sources */,
 				47D4DE852A4608C3004B03AF /* InvoicePaymentView.swift in Sources */,
+				CE887EF62B1E58CE00DBA670 /* SphinxOnionManager+ChatExtension.swift in Sources */,
 				47308E1024FEE6E700FFAC6F /* SocketIOClient.swift in Sources */,
 				47308E0624FEE6E600FFAC6F /* SocketManagerSpec.swift in Sources */,
 				47FA18C02425381500469C8F /* CreateInvoiceDetailsViewController.swift in Sources */,
@@ -5251,6 +5258,7 @@
 				47308E1124FEE6E700FFAC6F /* SocketIOClientOption.swift in Sources */,
 				47FB189B23A299000097695B /* SignupHelper.swift in Sources */,
 				47669F3F23CF7CB300C17A77 /* ChatListCommonObject.swift in Sources */,
+				CE887EFA2B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift in Sources */,
 				4701461F2A3F939600A00DF8 /* NewChatViewModel+MessageMenuActionsExtension.swift in Sources */,
 				475BDD1E232AC47C00C5BBD6 /* PayInvoiceViewController.swift in Sources */,
 				475DD3082A0D729B00F92173 /* ChatMessageTextFieldView+Actions.swift in Sources */,

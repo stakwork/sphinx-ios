@@ -349,14 +349,13 @@ extension DashboardRootViewController {
                 AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker.")
                 return
               }
-            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+            som.mqtt.didConnectAck = {_, _ in
                 som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
                 som.getUnreadOkKeyMessages()
                 som.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                     som.processMqttMessages(message: receivedMessage)
                 }
-            })
-            
+            }            
         })
     }
     

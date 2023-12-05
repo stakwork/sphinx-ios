@@ -144,8 +144,10 @@ class ChatListHeader: UIView {
         var message: String? = nil
         
         let som = SphinxOnionManager.sharedInstance
-        let firstContact = UserContact.getAll()[0]
-        som.sendMessage(to: firstContact, content: "testtesttest")
+        for contact in UserContact.getAll(){
+            som.sendMessage(to: contact, content: "testtesttest")
+        }
+        
         
         //SphinxOnionManager.sharedInstance.getAllUnreadMessages()
 //        UserContact.deleteAll()

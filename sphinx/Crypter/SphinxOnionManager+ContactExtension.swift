@@ -146,6 +146,14 @@ extension SphinxOnionManager{//contacts related
         }
     }
     
+    func createChat(for contact:UserContact){
+        let chat = Chat(context: managedContext)
+        let contactIDArray = [NSNumber(value: contact.id)]
+        chat.contactIds = contactIDArray
+        chat.name = contact.nickname
+        chat.photoUrl = contact.avatarUrl
+    }
+    
     func getValidatedRegisterTopicParams(topic:String) -> [String]?{
         let topicParams = topic.split(separator: "/")
         if topicParams.count != 4{

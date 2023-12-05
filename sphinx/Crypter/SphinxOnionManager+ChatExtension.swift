@@ -43,7 +43,7 @@ extension SphinxOnionManager{
     }
     
     
-    func sendMessage(to recipContact: UserContact, content:String)->SphinxMsgError?{
+    func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false)->SphinxMsgError?{
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
               let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
@@ -82,9 +82,10 @@ extension SphinxOnionManager{
                     fatalError("Failed to get the base address")
                 }
                 memcpy(&onionAsArray, baseAddress, onion.count)
+                let topic = shouldSendAsKeysend ? "\(myOkKey)/0/req/send" : "\(recipContact.childPubKey)/\(recipContact.index)/req/send"
                 self.mqtt.publish(
                     CocoaMQTTMessage(
-                        topic: "\(myOkKey)/0/req/send",
+                        topic: topic,
                         payload: onionAsArray
                     )
                 )

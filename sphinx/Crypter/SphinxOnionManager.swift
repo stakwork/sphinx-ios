@@ -295,6 +295,10 @@ class SphinxOnionManager : NSObject {
         }
     }
     
+    func processPlaintextMessage(messageJSON:JSON){
+        print("processPlaintextMessage:\(messageJSON)")
+    }
+    
     func processStreamTopicMessage(message:CocoaMQTTMessage){
         let tops = message.topic.split(separator: "/").map({String($0)})
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
@@ -310,9 +314,10 @@ class SphinxOnionManager : NSObject {
             let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getTimestampInMilliseconds(), network: network, payload: payloadData)
             if let dataFromString = peeledOnion.data(using: .utf8, allowLossyConversion: false) {
                 let json = try JSON(data: dataFromString)
-                if json["type"] == 11 || json["type"] == 10{
+                if json["type"] == 11 || json["type"] == 10 || json["type"] == 0{
                     //process contact confirmation
-                    if let senderInfo = json["sender"].dictionaryObject as? [String: String],
+                    if json["type"] == 11,
+                       let senderInfo = json["sender"].dictionaryObject as? [String: String],
                        let pubkey = senderInfo["pubkey"],
                        let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey,managedContext: managedContext)
                     {
@@ -324,6 +329,9 @@ class SphinxOnionManager : NSObject {
                         contact.publicKey = pubkey
                         contact.status = UserContact.Status.Confirmed.rawValue
                         contact.createdAt = Date()
+                        managedContext.saveContext()
+                        
+                        createChat(for: contact)
                         NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                     }
                     else if json["type"] == 10,//do key exchange confirmation
@@ -345,15 +353,20 @@ class SphinxOnionManager : NSObject {
                             
                             let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
                             contact.childPubKey = childKey
+                            managedContext.saveContext()
                             
                             sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
+                            
+                            createChat(for: contact)
                             
                             NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                         }
                         catch{
                             print("error generating childPubkey")
                         }
-                        
+                    }
+                    else if json["type"] == 0{
+                        processPlaintextMessage(messageJSON: json)
                     }
                 }
             }
@@ -361,7 +374,6 @@ class SphinxOnionManager : NSObject {
         catch{
             print("error")
         }
-        managedContext.saveContext()
     }
     
     

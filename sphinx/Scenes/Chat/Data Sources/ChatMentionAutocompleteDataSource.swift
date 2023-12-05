@@ -56,7 +56,7 @@ class ChatMentionAutocompleteDataSource : NSObject {
             )
             return result as! MentionOrMacroItem
         }) as? [MentionOrMacroItem]
-        mentionSuggestions = suggestionObjects
+        mentionSuggestions = suggestionObjects ?? []
         
         tableView.reloadData()
         

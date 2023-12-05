@@ -151,34 +151,34 @@ class ChatListHeader: UIView {
 //        UserContact.deleteAll()
         return
         
-        switch(status) {
-        case API.ConnectionStatus.Connecting:
-            break
-        case API.ConnectionStatus.Connected:
-            if socketConnected {
-                message = "connected.to.node".localized
-            } else {
-                message = "socket.disconnected".localized
-            }
-            break
-        case API.ConnectionStatus.NotConnected:
-            takeUserToSupport()
-            message = "unable.to.connect".localized
-            break
-        case API.ConnectionStatus.Unauthorize:
-            takeUserToSupport()
-            message = "unauthorized.error.message".localized
-            break
-        default:
-            message = "network.connection.lost".localized
-            break
-        }
-        
-        if let message = message {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
-            })
-        }
+//        switch(status) {
+//        case API.ConnectionStatus.Connecting:
+//            break
+//        case API.ConnectionStatus.Connected:
+//            if socketConnected {
+//                message = "connected.to.node".localized
+//            } else {
+//                message = "socket.disconnected".localized
+//            }
+//            break
+//        case API.ConnectionStatus.NotConnected:
+//            takeUserToSupport()
+//            message = "unable.to.connect".localized
+//            break
+//        case API.ConnectionStatus.Unauthorize:
+//            takeUserToSupport()
+//            message = "unauthorized.error.message".localized
+//            break
+//        default:
+//            message = "network.connection.lost".localized
+//            break
+//        }
+//        
+//        if let message = message {
+//            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+//                self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
+//            })
+//        }
     }
     
     @IBAction func upgradeAppButtonTouched() {

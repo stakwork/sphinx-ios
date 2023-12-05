@@ -144,60 +144,41 @@ class ChatListHeader: UIView {
         var message: String? = nil
         
         let som = SphinxOnionManager.sharedInstance
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = som.getAccountSeed(mnemonic: mnemonic),
-              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
-              let my_xpub = som.getAccountXpub(seed: seed)
-        else{
-            //possibly send error message?
-            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
-            return
-        }
-        som.disconnectMqtt()
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-            som.connectToBroker(seed:seed,xpub: my_xpub)
-            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
-                som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
-                som.getUnreadOkKeyMessages()
-                som.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-                    som.processMqttMessages(message: receivedMessage)
-                }
-            })
-            
-        })
+        let firstContact = UserContact.getAll()[0]
+        som.sendMessage(to: firstContact, content: "testtesttest")
         
         //SphinxOnionManager.sharedInstance.getAllUnreadMessages()
 //        UserContact.deleteAll()
         return
         
-        switch(status) {
-        case API.ConnectionStatus.Connecting:
-            break
-        case API.ConnectionStatus.Connected:
-            if socketConnected {
-                message = "connected.to.node".localized
-            } else {
-                message = "socket.disconnected".localized
-            }
-            break
-        case API.ConnectionStatus.NotConnected:
-            takeUserToSupport()
-            message = "unable.to.connect".localized
-            break
-        case API.ConnectionStatus.Unauthorize:
-            takeUserToSupport()
-            message = "unauthorized.error.message".localized
-            break
-        default:
-            message = "network.connection.lost".localized
-            break
-        }
-        
-        if let message = message {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
-            })
-        }
+//        switch(status) {
+//        case API.ConnectionStatus.Connecting:
+//            break
+//        case API.ConnectionStatus.Connected:
+//            if socketConnected {
+//                message = "connected.to.node".localized
+//            } else {
+//                message = "socket.disconnected".localized
+//            }
+//            break
+//        case API.ConnectionStatus.NotConnected:
+//            takeUserToSupport()
+//            message = "unable.to.connect".localized
+//            break
+//        case API.ConnectionStatus.Unauthorize:
+//            takeUserToSupport()
+//            message = "unauthorized.error.message".localized
+//            break
+//        default:
+//            message = "network.connection.lost".localized
+//            break
+//        }
+//        
+//        if let message = message {
+//            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+//                self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
+//            })
+//        }
     }
     
     @IBAction func upgradeAppButtonTouched() {

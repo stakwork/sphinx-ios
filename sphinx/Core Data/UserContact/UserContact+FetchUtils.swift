@@ -70,6 +70,13 @@ extension UserContact {
 //                )
 //            }
         }
+        
+        public static func owner() -> NSPredicate {
+            return NSPredicate(
+                format: "isOwner == %@",
+                NSNumber(value: true)
+            )
+        }
     }
 }
 
@@ -121,6 +128,16 @@ extension UserContact {
 
             request.sortDescriptors = [UserContact.SortDescriptors.nameAscending]
             request.predicate = nil
+
+            return request
+        }
+        
+        public static func owner() -> NSFetchRequest<UserContact> {
+            let request: NSFetchRequest<UserContact> = baseFetchRequest()
+
+            request.sortDescriptors = [UserContact.SortDescriptors.nameAscending]
+            request.predicate = Predicates.owner()
+            request.fetchLimit = 1
 
             return request
         }

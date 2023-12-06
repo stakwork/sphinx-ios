@@ -147,8 +147,17 @@ extension SphinxOnionManager{//contacts related
     }
     
     func createChat(for contact:UserContact){
+        let selfContactId = UserContact.getSelfContact()?.id ?? 0
         let chat = Chat(context: managedContext)
-        let contactIDArray = [NSNumber(value: contact.id)]
+        let contactIDArray = [NSNumber(value: contact.id),NSNumber(value: selfContactId)]
+        chat.id = contact.id
+        chat.type = Chat.ChatType.conversation.rawValue
+        chat.status = Chat.ChatStatus.approved.rawValue
+        chat.seen = false
+        chat.muted = false
+        chat.unlisted = false
+        chat.privateTribe = false
+        chat.notify = Chat.NotificationLevel.SeeAll.rawValue
         chat.contactIds = contactIDArray
         chat.name = contact.nickname
         chat.photoUrl = contact.avatarUrl

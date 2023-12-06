@@ -137,7 +137,7 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     func updateOwner() {
-        if owner == nil {
+        if owner == nil || owner.isFault{
             owner = UserContact.getOwner()
         }
     }

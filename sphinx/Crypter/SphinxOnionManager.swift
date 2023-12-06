@@ -297,6 +297,29 @@ class SphinxOnionManager : NSObject {
     
     func processPlaintextMessage(messageJSON:JSON){
         print("processPlaintextMessage:\(messageJSON)")
+        guard let messageDict = messageJSON.dictionaryObject,
+              let message = messageDict["message"] as? [String:String],
+              let content = message["content"],
+              let sender = messageDict["sender"] as? [String:String],
+              let pubkey = sender["pubkey"],
+            let contact = UserContact.getContactWith(pubkey: pubkey),
+            let chat = contact.getChat() else{
+            return
+        }
+    
+        let newMessage = TransactionMessage(context: managedContext)
+        newMessage.id = Int.random(in: 1...10_000_000_000)
+        newMessage.createdAt = Date()
+        newMessage.updatedAt = Date()
+        newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+        newMessage.type = TransactionMessage.TransactionMessageType.message.rawValue
+        newMessage.encrypted = true
+        newMessage.senderId = contact.id
+        newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
+        newMessage.push = true
+        newMessage.seen = true
+        newMessage.chat = chat
+        managedContext.saveContext()
     }
     
     func processStreamTopicMessage(message:CocoaMQTTMessage){

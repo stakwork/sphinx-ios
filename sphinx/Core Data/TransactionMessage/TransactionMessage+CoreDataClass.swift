@@ -395,6 +395,14 @@ public class TransactionMessage: NSManagedObject {
         return message
     }
     
+    static func deleteMessageWith(
+        id: Int
+    ) {
+        if let message = TransactionMessage.getMessageWith(id: id) {
+            CoreDataManager.sharedManager.deleteObject(object: message)
+        }
+    }
+    
     func setPaymentInvoiceAsPaid() {
         if !self.isPayment() {
             return

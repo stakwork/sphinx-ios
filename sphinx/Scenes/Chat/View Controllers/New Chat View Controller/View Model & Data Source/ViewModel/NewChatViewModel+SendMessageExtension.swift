@@ -150,6 +150,8 @@ extension NewChatViewModel {
         
         API.sharedInstance.sendMessage(params: params, callback: { m in
             
+            let provisionalMessageId = provisionalMessage?.id
+            
             if let provisionalMessage = provisionalMessage {
                 self.chatDataSource?.replaceMediaDataForMessageWith(
                     provisionalMessageId: provisionalMessage.id,
@@ -165,6 +167,8 @@ extension NewChatViewModel {
                     message: message,
                     completion: completion
                 )
+                
+                self.deleteMessageWith(id: provisionalMessageId)
                 
                 ActionsManager.sharedInstance.trackMessageSent(message: message)
             }
@@ -184,6 +188,14 @@ extension NewChatViewModel {
                 )
              }
         })
+    }
+    
+    func deleteMessageWith(
+        id: Int?
+    ) {
+        if let id = id {
+            TransactionMessage.deleteMessageWith(id: id)
+        }
     }
 
     func insertSentMessage(

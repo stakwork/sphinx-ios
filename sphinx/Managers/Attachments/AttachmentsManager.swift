@@ -248,6 +248,8 @@ class AttachmentsManager {
         message: JSON,
         attachmentObject: AttachmentObject
     ) {
+        let provisionalMessageId = provisionalMessage?.id
+        
         if let provisionalMessage = provisionalMessage {
             delegate?.shouldReplaceMediaDataFor?(
                 provisionalMessageId: provisionalMessage.id,
@@ -262,6 +264,13 @@ class AttachmentsManager {
             delegate?.didUpdateUploadProgress?(progress: 100)
             cacheImageAndMediaData(message: message, attachmentObject: attachmentObject)
             uploadSucceed(message: message)
+            deleteMessageWith(id: provisionalMessageId)
+        }
+    }
+    
+    func deleteMessageWith(id: Int?) {
+        if let id = id {
+            TransactionMessage.deleteMessageWith(id: id)
         }
     }
     

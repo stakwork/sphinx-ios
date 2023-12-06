@@ -12,6 +12,8 @@ import NetworkExtension
 import CoreLocation
 import CocoaMQTT
 import MessagePack
+import Security
+
 
 var wordsListPossibilities : [WordList] = [
     .english,
@@ -714,6 +716,34 @@ class CrypterManager : NSObject {
         )
     }
     
+    func generateCryptographicallySecureRandomBytes(count: Int) -> [UInt8]? {
+        var randomBytes = [UInt8](repeating: 0, count: count)
+        let result = SecRandomCopyBytes(kSecRandomDefault, count, &randomBytes)
+
+        if result == errSecSuccess {
+            return randomBytes
+        } else {
+            return nil // Return nil to indicate an error in generating secure random bytes
+        }
+    }
+    
+    func generateCryptographicallySecureRandomInt(upperBound: Int) -> Int? {
+        guard upperBound > 0 else {
+            return nil // Ensure that the upperBound is greater than 0
+        }
+        
+        var randomInt: UInt32 = 0
+        let result = SecRandomCopyBytes(kSecRandomDefault, MemoryLayout.size(ofValue: randomInt), &randomInt)
+        
+        if result == errSecSuccess {
+            // Use randomInt to generate a random value within the specified range
+            let randomValue = Int(randomInt) % upperBound
+            return randomValue
+        } else {
+            return nil // Return nil to indicate an error in generating a secure random value
+        }
+    }
+    
     func stringToBytes(_ string: String) -> [UInt8]? {
         let length = string.count
         if length & 1 != 0 {
@@ -1158,5 +1188,6 @@ extension Data {
     public var bytes: Array<UInt8> {
         return Array(self)
     }
+    
 
 }

@@ -59,7 +59,7 @@ extension SphinxOnionManager{//contacts related
             return
         }
         let idx = UInt32(nextIndex)
-        let time = getTimestampInMilliseconds()
+        let time = getEntropyString()
         do{
             let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
             let success = connectToBroker(seed: seed, xpub: xpub)
@@ -257,7 +257,7 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
         }
         
         
-        let time = getTimestampInMilliseconds()
+        let time = getEntropyString()
         
         if(isInitiatorMe){
             self.mqtt.subscribe("\(myOkKey)/0/res/#")

@@ -61,7 +61,7 @@ extension SphinxOnionManager{
         }
 
 
-        let time = getTimestampInMilliseconds()
+        let time = getEntropyString()
 
         let senderInfo = getSenderInfo(for: recipContact, myOkKey: myOkKey, selfRouteHint: selfRouteHint, selfContact: selfContact)
 

@@ -349,7 +349,7 @@
 		4779F162232AA0F200D35E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F161232AA0F200D35E81 /* AppDelegate.swift */; };
 		4779F16C232AA0F300D35E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16B232AA0F300D35E81 /* Assets.xcassets */; };
 		4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4779F16D232AA0F300D35E81 /* LaunchScreen.storyboard */; };
-		4779F17A232AA0F300D35E81 /* sphinxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F179232AA0F300D35E81 /* sphinxTests.swift */; };
+		4779F17A232AA0F300D35E81 /* sphinxOnionAddContactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F179232AA0F300D35E81 /* sphinxOnionAddContactTests.swift */; };
 		4779F185232AA0F300D35E81 /* sphinxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779F184232AA0F300D35E81 /* sphinxUITests.swift */; };
 		477ADCC52A1BAC65004E74CE /* PinMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477ADCC42A1BAC65004E74CE /* PinMessageViewController.swift */; };
 		477ADCC72A1BE2B1004E74CE /* PinnedMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477ADCC62A1BE2B1004E74CE /* PinnedMessageView.swift */; };
@@ -680,6 +680,7 @@
 		CE7E4F8029AD2D1100F000FF /* VoIPRequestMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */; };
 		CE80EF672A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE80EF662A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift */; };
 		CE80EF692A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE80EF682A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift */; };
+		CE8161392B21124D00600C81 /* sphinxOnionPlaintextMessagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8161382B21124D00600C81 /* sphinxOnionPlaintextMessagesTests.swift */; };
 		CE842DE0298ADECF00620AD3 /* MemberBadgeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */; };
 		CE842DE1298ADECF00620AD3 /* MemberBadgeHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */; };
 		CE842DE3298B289D00620AD3 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE842DE2298B289D00620AD3 /* ShimmerView.swift */; };
@@ -1268,7 +1269,7 @@
 		4779F16E232AA0F300D35E81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4779F170232AA0F300D35E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4779F175232AA0F300D35E81 /* sphinxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sphinxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4779F179232AA0F300D35E81 /* sphinxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxTests.swift; sourceTree = "<group>"; };
+		4779F179232AA0F300D35E81 /* sphinxOnionAddContactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxOnionAddContactTests.swift; sourceTree = "<group>"; };
 		4779F17B232AA0F300D35E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4779F180232AA0F300D35E81 /* sphinxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sphinxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4779F184232AA0F300D35E81 /* sphinxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxUITests.swift; sourceTree = "<group>"; };
@@ -1684,6 +1685,7 @@
 		CE80EF632A0D7FF2007ED3A3 /* sphinx 39.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 39.xcdatamodel"; sourceTree = "<group>"; };
 		CE80EF662A0D8140007ED3A3 /* CachedMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE80EF682A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CE8161382B21124D00600C81 /* sphinxOnionPlaintextMessagesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxOnionPlaintextMessagesTests.swift; sourceTree = "<group>"; };
 		CE842DDE298ADECF00620AD3 /* MemberBadgeHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberBadgeHeaderCell.swift; sourceTree = "<group>"; };
 		CE842DDF298ADECF00620AD3 /* MemberBadgeHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberBadgeHeaderCell.xib; sourceTree = "<group>"; };
 		CE842DE2298B289D00620AD3 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
@@ -3263,7 +3265,8 @@
 		4779F178232AA0F300D35E81 /* sphinxTests */ = {
 			isa = PBXGroup;
 			children = (
-				4779F179232AA0F300D35E81 /* sphinxTests.swift */,
+				4779F179232AA0F300D35E81 /* sphinxOnionAddContactTests.swift */,
+				CE8161382B21124D00600C81 /* sphinxOnionPlaintextMessagesTests.swift */,
 				CE167B562B0BAF6A00A9238E /* sphinxOnionAccountCreateUnitTests.swift */,
 				4779F17B232AA0F300D35E81 /* Info.plist */,
 			);
@@ -5533,7 +5536,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4779F17A232AA0F300D35E81 /* sphinxTests.swift in Sources */,
+				4779F17A232AA0F300D35E81 /* sphinxOnionAddContactTests.swift in Sources */,
+				CE8161392B21124D00600C81 /* sphinxOnionPlaintextMessagesTests.swift in Sources */,
 				CE167B572B0BAF6A00A9238E /* sphinxOnionAccountCreateUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

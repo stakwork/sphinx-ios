@@ -59,7 +59,7 @@ class SphinxOnionManager : NSObject {
     
     func getAccountXpub(seed:String) -> String?  {
         do{
-            let xpub = try xpubFromSeed(seed: seed, time: getTimestampInMilliseconds(), network: network)
+            let xpub = try xpubFromSeed(seed: seed, time: getEntropyString(), network: network)
             return xpub
         }
         catch{
@@ -69,7 +69,7 @@ class SphinxOnionManager : NSObject {
     
     func getAccountOnlyKeysendPubkey(seed:String)->String?{
         do{
-            let pubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getTimestampInMilliseconds(), network: network)
+            let pubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getEntropyString(), network: network)
             return pubkey
         }
         catch{
@@ -77,11 +77,11 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func getTimestampInMilliseconds()->String{
-        let nowSeconds = Date().timeIntervalSince1970
-        let nowMilliseconds = Int64(nowSeconds * 1000)
-        let nowMsString = String(nowMilliseconds)
-        return nowMsString
+    func getEntropyString()->String{
+        let upperBound = 10_000_000_000
+        let randomInt = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: upperBound)
+        let randomString = String(describing: randomInt!)
+        return randomString
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
@@ -95,7 +95,7 @@ class SphinxOnionManager : NSObject {
 //            return true
 //        }
         do{
-            let now = getTimestampInMilliseconds()
+            let now = getEntropyString()
             let sig = try rootSignMs(seed: seed, time: now, network: network)
             
             mqtt = CocoaMQTT(clientID: xpub,host: server_IP ,port:  UInt16(server_PORT))
@@ -334,7 +334,7 @@ class SphinxOnionManager : NSObject {
         print("MQTT Stream Topic:\(message.topic)")
         let payloadData = Data(message.payload)
         do{
-            let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getTimestampInMilliseconds(), network: network, payload: payloadData)
+            let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getEntropyString(), network: network, payload: payloadData)
             if let dataFromString = peeledOnion.data(using: .utf8, allowLossyConversion: false) {
                 let json = try JSON(data: dataFromString)
                 if json["type"] == 11 || json["type"] == 10 || json["type"] == 0{
@@ -375,7 +375,7 @@ class SphinxOnionManager : NSObject {
                             contact.createdAt = Date()
                             
                             
-                            let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
+                            let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
                             contact.childPubKey = childKey
                             createChat(for: contact)
                             

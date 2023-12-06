@@ -109,6 +109,7 @@ extension SphinxOnionManager{//contacts related
         contact.isOwner = false//
         contact.nickname = nickname
         contact.createdAt = Date()
+        contact.newMessages = 0
         contact.status = UserContact.Status.Pending.rawValue
         
         managedContext.saveContext()
@@ -161,6 +162,7 @@ extension SphinxOnionManager{//contacts related
         chat.contactIds = contactIDArray
         chat.name = contact.nickname
         chat.photoUrl = contact.avatarUrl
+        chat.createdAt = Date()
     }
     
     func getValidatedRegisterTopicParams(topic:String) -> [String]?{

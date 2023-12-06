@@ -329,9 +329,10 @@ class SphinxOnionManager : NSObject {
                         contact.publicKey = pubkey
                         contact.status = UserContact.Status.Confirmed.rawValue
                         contact.createdAt = Date()
+                        createChat(for: contact)
                         managedContext.saveContext()
                         
-                        createChat(for: contact)
+                        
                         NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                     }
                     else if json["type"] == 10,//do key exchange confirmation
@@ -353,11 +354,12 @@ class SphinxOnionManager : NSObject {
                             
                             let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
                             contact.childPubKey = childKey
-                            managedContext.saveContext()
+                            createChat(for: contact)
+                            
                             
                             sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
                             
-                            createChat(for: contact)
+                            managedContext.saveContext()
                             
                             NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
                         }

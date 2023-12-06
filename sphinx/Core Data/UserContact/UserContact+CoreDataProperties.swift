@@ -41,7 +41,7 @@ extension UserContact {
     @NSManaged public var scid: String?
     @NSManaged public var index: Int
     @NSManaged public var childPubKey: String
-    @NSManaged public var contactRouteHint: String
+    @NSManaged public var contactRouteHint: String?
 
 }
 

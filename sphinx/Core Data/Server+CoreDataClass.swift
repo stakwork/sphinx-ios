@@ -14,6 +14,16 @@ import SwiftyJSON
 @objc(Server)
 public class Server: NSManagedObject {
     
-    
+    public static func getAllServers(context: NSManagedObjectContext) -> [Server] {
+        let fetchRequest = NSFetchRequest<Server>(entityName: "Server")
+        
+        do {
+            let servers = try context.fetch(fetchRequest)
+            return servers
+        } catch let error as NSError {
+            print("Error fetching servers: \(error.localizedDescription)")
+            return []
+        }
+    }
     
 }

@@ -380,6 +380,8 @@
 "text.copied.clipboard" = "Nakopya ang text sa clipboard";
 "link.copied.clipboard" = "Nakopya ang link sa clipboard";
 "pub.key.copied.clipboard" = "Ang pampublikong susi ay nakopya sa clipboard";
+"pub.key.options-add.contact.error.title" = "Error Adding Contact";
+"pub.key.options-add.contact.error.message" = "There was an error adding this contact. Please try again or contact support.";
 "call.link.copied.clipboard" = "Nakopya ang Call Link sa clipboard";
 "fetching.old.messages" = "Kinukuha ang mga lumang mensahe. Mangyaring maghintay...";
 "fetching.new.messages" = "Kinukuha ang mga bagong mensahe. Mangyaring maghintay...";

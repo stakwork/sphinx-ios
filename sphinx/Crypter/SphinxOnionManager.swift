@@ -8,21 +8,7 @@
 import Foundation
 import CocoaMQTT
 import ObjectMapper
-
-// Define a struct to represent the JSON structure
-struct OnionConnectionData: Mappable {
-    var scid: String?
-    var serverPubkey: String?
-    var myPubkey: String?
-    var vc: UIViewController! = nil
-
-    init?(map: Map) {}
-
-    mutating func mapping(map: Map) {
-        scid <- map["scid"]
-        serverPubkey <- map["server_pubkey"]
-    }
-}
+import SwiftyJSON
 
 
 class SphinxOnionManager : NSObject {
@@ -43,6 +29,7 @@ class SphinxOnionManager : NSObject {
     let network = "regtest"
     var vc: UIViewController! = nil
     var mqtt: CocoaMQTT! = nil
+    let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     
     func getAccountSeed(mnemonic:String)->String?{
         do{
@@ -59,6 +46,10 @@ class SphinxOnionManager : NSObject {
         var result : String? = nil
         do {
             result = try mnemonicFromEntropy(entropy: Data.randomBytes(length: 16).hexString)
+            guard let result = result else{
+                return nil
+            }
+            UserData.sharedInstance.save(walletMnemonic: result)
         }
         catch let error{
             print("error getting seed\(error)")
@@ -94,14 +85,15 @@ class SphinxOnionManager : NSObject {
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
-        //TODO: handle logic for reconnecting
+//        if let mqtt = mqtt{
+//            mqtt.disconnect()
+//        }
+        
+        
 //        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
 //            showSuccessWithMessage("MQTT already connected or connecting")
 //            return true
 //        }
-        if let mqtt = mqtt{
-            mqtt.disconnect()
-        }
         do{
             let now = getTimestampInMilliseconds()
             let sig = try rootSignMs(seed: seed, time: now, network: network)
@@ -119,10 +111,13 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func subscribeAndPublishTopics(pubkey:String,idx:Int){
-        self.mqtt.subscribe([
-            ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
-        ])
+    func publishMyTopics(pubkey:String,idx:Int){
+        self.mqtt.publish(
+            CocoaMQTTMessage(
+                topic: "\(pubkey)/\(idx)/req/balance",
+                payload: []
+            )
+        )
         
         self.mqtt.publish(
             CocoaMQTTMessage(
@@ -136,16 +131,100 @@ class SphinxOnionManager : NSObject {
                 payload: []
             )
         )
-        self.mqtt.publish(
-            CocoaMQTTMessage(
-                topic: "\(pubkey)/\(idx)/req/balance",
-                payload: []
+    }
+    
+    func disconnectMqtt(){
+        if let mqtt = self.mqtt{
+            mqtt.disconnect()
+        }
+    }
+    
+    func subscribeToMyTopics(pubkey:String,idx:Int){
+        self.mqtt.subscribe([
+            ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
+        ])
+        //subscribeAllContactChildKeys()
+
+    }
+
+    func subscribeAllContactChildKeys(){
+        for contact in UserContact.getAll(){
+            let contactChildKey = contact.childPubKey
+            let contactIdx = contact.index
+            subscribeToContactChildPubkey(contactChildKey: contactChildKey, contactIdx: contactIdx)
+        }
+    }
+
+    func subscribeToContactChildPubkey(contactChildKey:String, contactIdx:Int){
+        self.mqtt.subscribe([
+            ("\(contactChildKey)/\(contactIdx)/res/#", CocoaMQTTQoS.qos1)
+        ])
+    }
+
+    func getAllUnreadMessages(){
+        getUnreadOkKeyMessages()
+//        for contact in UserContact.getAll(){
+//            getUnreadMessages(from: contact)
+//        }
+    }
+
+    func getUnreadOkKeyMessages(){
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = getAccountSeed(mnemonic: mnemonic),
+              let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
+            return //throw error?
+        }
+        let sinceMsgIndex = 0 //TODO: store last read index?
+        let msgCountLimit = 1000
+        let topic = "\(myOkKey)/\(0)/req/msgs"
+        requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
+    }
+
+    func getUnreadMessages(from contact: UserContact){
+        let contactChildKey = contact.childPubKey
+        let contactIdx = contact.index
+        let sinceMsgIndex = 0 //TODO: store last read index?
+        let msgCountLimit = 1000
+        let topic = "\(contactChildKey)/\(contactIdx)/req/msgs"
+        requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
+    }
+
+    func requestUnreadMessages(on topic:String,sinceMsgIndex:Int, msgCountLimit:Int){
+        let msgDict: [String: Int] = [
+            "since": sinceMsgIndex,
+            "limit": msgCountLimit
+        ]
+
+        // Serialize the hopsArray to JSON
+        guard let msgJSON = try? JSONSerialization.data(withJSONObject: msgDict, options: []) else {
+
+            return
+        }
+
+        var msgAsArray = [UInt8](repeating: 0, count: msgJSON.count)
+
+        // Use withUnsafeBytes to copy the Data into the UInt8 array
+        msgJSON.withUnsafeBytes { bufferPointer in
+            guard let baseAddress = bufferPointer.baseAddress else {
+                fatalError("Failed to get the base address")
+            }
+            memcpy(&msgAsArray, baseAddress, msgJSON.count)
+            self.mqtt.publish(
+                CocoaMQTTMessage(
+                    topic: topic,
+                    payload: msgAsArray
+                )
             )
-        )
+        }
+    }
+    
+    func subscribeAndPublishMyTopics(pubkey:String,idx:Int){
+        subscribeToMyTopics(pubkey: pubkey, idx: idx)
+        publishMyTopics(pubkey: pubkey, idx: idx)
     }
     
     
-    func createAccount(mnemonic:String)->Bool{
+    func createMyAccount(mnemonic:String)->Bool{
         do{
             //1. Generate Seed -> Display to screen the mnemonic for backup???
             guard let seed = getAccountSeed(mnemonic: mnemonic) else{
@@ -172,7 +251,7 @@ class SphinxOnionManager : NSObject {
                     //self.showSuccessWithMessage("MQTT connected")
                     print("SphinxOnionManager: MQTT Connected")
                     print("mqtt.didConnectAck")
-                    self.subscribeAndPublishTopics(pubkey: pubkey, idx: idx)
+                    self.subscribeAndPublishMyTopics(pubkey: pubkey, idx: idx)
                 }
             }
             return success
@@ -184,30 +263,107 @@ class SphinxOnionManager : NSObject {
        
     }
     
-    func processRegisterTopicResponse(registerMessage:CocoaMQTTMessage){
-        let payloadData = Data(registerMessage.payload)
+    
+    func processRegisterTopicResponse(message:CocoaMQTTMessage){
+        let payloadData = Data(message.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
-            print("MQTT Topic:\(registerMessage.topic) with Payload as String: \(payloadString)")
-            if let retrievedCredentials = Mapper<OnionConnectionData>().map(JSONString: payloadString){
+            print("MQTT Topic:\(message.topic) with Payload as String: \(payloadString)")
+            if let retrievedCredentials = Mapper<SphinxOnionBrokerResponse>().map(JSONString: payloadString){
                 print("Onion Credentials register over MQTT:\(retrievedCredentials)")
                 //5. Store my credentials (SCID, serverPubkey, myPubkey)
-                if let scid = retrievedCredentials.scid{
-                    createSelfContact(scid: scid)
+                if let _ = retrievedCredentials.scid{
+                    processContact(from: message.topic,retrievedCredentials: retrievedCredentials)
                 }
-                saveLSPServerData(retrievedCredentials: retrievedCredentials)
             }
         } else {
             print("MQTT Unable to convert payload to a string")
         }
     }
     
-    func processBalanceUpdateMessage(balanceUpdateMessage:CocoaMQTTMessage){
-        let payloadData = Data(balanceUpdateMessage.payload)
+    func processBalanceTopicMessage(message:CocoaMQTTMessage){
+        let payloadData = Data(message.payload)
         if let payloadString = String(data: payloadData, encoding: .utf8) {
-            print("MQTT Topic:\(balanceUpdateMessage.topic) with Payload as String: \(payloadString)")
+            print("MQTT Topic:\(message.topic) with Payload as String: \(payloadString)")
             (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : payloadString])) : ()
         }
     }
+    
+    func processSendTopicMessage(message:CocoaMQTTMessage){
+        let payloadData = Data(message.payload)
+        if let payloadString = String(data: payloadData, encoding: .utf8) {
+            print("MQTT Topic:\(message.topic) with Payload as String: \(payloadString)")
+        }
+    }
+    
+    func processStreamTopicMessage(message:CocoaMQTTMessage){
+        let tops = message.topic.split(separator: "/").map({String($0)})
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = getAccountSeed(mnemonic: mnemonic),
+        tops.count > 1,
+        let index = UInt32(tops[1]) else{
+            return
+        }
+        
+        print("MQTT Stream Topic:\(message.topic)")
+        let payloadData = Data(message.payload)
+        do{
+            let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getTimestampInMilliseconds(), network: network, payload: payloadData)
+            if let dataFromString = peeledOnion.data(using: .utf8, allowLossyConversion: false) {
+                let json = try JSON(data: dataFromString)
+                if json["type"] == 11 || json["type"] == 10{
+                    //process contact confirmation
+                    if let senderInfo = json["sender"].dictionaryObject as? [String: String],
+                       let pubkey = senderInfo["pubkey"],
+                       let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey,managedContext: managedContext)
+                    {
+                        //TODO: fix this. I can't get this information to save to the db record!!
+                        contact.contactKey = senderInfo["contactPubkey"]
+                        contact.routeHint = senderInfo["routeHint"]
+                        contact.contactRouteHint = senderInfo["contactRouteHint"]
+                        contact.nickname = senderInfo["alias"]
+                        contact.publicKey = pubkey
+                        contact.status = UserContact.Status.Confirmed.rawValue
+                        contact.createdAt = Date()
+                        NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
+                    }
+                    else if json["type"] == 10,//do key exchange confirmation
+                       let mnemonic = UserData.sharedInstance.getMnemonic(),
+                       let seed = getAccountSeed(mnemonic: mnemonic),
+                       let xpub = getAccountXpub(seed: seed),
+                        let senderInfo = json["sender"].dictionaryObject as? [String: String],
+                       let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
+                        do{
+                            let contact = UserContact(context: managedContext)
+                            contact.contactKey = senderInfo["contactPubkey"]
+                            contact.routeHint = senderInfo["routeHint"]
+                            contact.contactRouteHint = senderInfo["contactRouteHint"]
+                            contact.nickname = senderInfo["alias"]
+                            contact.publicKey = senderInfo["pubkey"]
+                            contact.status = UserContact.Status.Confirmed.rawValue
+                            contact.createdAt = Date()
+                            
+                            
+                            let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getTimestampInMilliseconds(), network: network)
+                            contact.childPubKey = childKey
+                            
+                            sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
+                            
+                            NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
+                        }
+                        catch{
+                            print("error generating childPubkey")
+                        }
+                        
+                    }
+                }
+            }
+        }
+        catch{
+            print("error")
+        }
+        managedContext.saveContext()
+    }
+    
     
     func processMqttMessages(message:CocoaMQTTMessage){
         let tops = message.topic.split(separator: "/")
@@ -218,11 +374,23 @@ class SphinxOnionManager : NSObject {
         switch(topic){
         case "register":
             print("processing register topic!")
-            processRegisterTopicResponse(registerMessage: message)
+            processRegisterTopicResponse(message: message)
             break
         case "balance":
             print("processing balance topic!")
-            processBalanceUpdateMessage(balanceUpdateMessage: message)
+            processBalanceTopicMessage(message: message)
+            break
+        case "send":
+            print("processing send topic!")
+            processSendTopicMessage(message: message)
+            break
+        case "stream":
+            print("processing stream topic!")
+            processStreamTopicMessage(message: message)
+            break
+        case "msgs":
+            print("TODO: process msgs topic!")
+            processStreamTopicMessage(message: message)//for now treat the messages the same way
             break
         default:
             print("topic not in list:\(topic)")
@@ -253,7 +421,7 @@ extension SphinxOnionManager{//Sign Up UI Related:
                 return
             }
             self.showMnemonicToUser(mnemonic: mneomnic, callback: {
-                self.createAccount(mnemonic: mneomnic)
+                self.createMyAccount(mnemonic: mneomnic)
                 vc.signup_v2_with_test_server()
             })
         }
@@ -302,24 +470,3 @@ extension SphinxOnionManager{//Sign Up UI Related:
     
 }
 
-extension SphinxOnionManager{//contacts related
-    func saveLSPServerData(retrievedCredentials:OnionConnectionData){
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let server = Server(context: managedContext)
-
-        server.pubKey = retrievedCredentials.serverPubkey
-        server.ip = self.server_IP
-        (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onMQTTConnectionStatusChanged, object: nil, userInfo: ["server" : server])) : ()
-        self.currentServer = server
-        managedContext.saveContext()
-    }
-    
-    func createSelfContact(scid:String){
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        self.pendingContact = UserContact(context: managedContext)
-        self.pendingContact?.scid = scid
-        self.pendingContact?.isOwner = true
-        self.pendingContact?.index = 0
-        managedContext.saveContext()
-    }
-}

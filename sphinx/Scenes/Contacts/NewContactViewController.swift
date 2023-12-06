@@ -102,6 +102,7 @@ class NewContactViewController: KeyboardEventsViewController {
         qrCodeImageView.image = UIImage(named: "scannerIcon")
         
         configureTextField()
+        setAccessibilityIdentifiers()
     }
     
     func setContactInfo(contact: UserContact) {
@@ -138,6 +139,15 @@ class NewContactViewController: KeyboardEventsViewController {
                 self.contactImageView.image = image
             }, errorCompletion: { _ in })
         }
+        
+    }
+    
+    func setAccessibilityIdentifiers(){
+        nickNameTextField.accessibilityIdentifier = "nickNameTextField"
+        addressTextField.accessibilityIdentifier = "addressTextField"
+        routeHintTextField.accessibilityIdentifier = "routeHintTextField"
+        saveToContactsContainer.accessibilityIdentifier = "saveToContactsContainer"
+        self.view.accessibilityIdentifier = "parentView"
     }
     
     func showInitials(contact: UserContact) {
@@ -226,7 +236,11 @@ class NewContactViewController: KeyboardEventsViewController {
         
         if let _ = contact {
             updateProfile()
-        } else {
+        }
+        else if routeHintTextField.text?.isV2RouteHint ?? false{
+            createV2Contact()
+        }
+        else {
             createContact()
         }
     }

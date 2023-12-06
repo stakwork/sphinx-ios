@@ -22,4 +22,7 @@ extension Notification.Name {
     static let onContactsAndChatsChanged = Notification.Name("onContactsAndChatsChanged")
     static let onSizeConfigurationChanged = Notification.Name("onSizeConfigurationChanged")
     static let webViewImageClicked = Notification.Name("webViewImageClicked")
+    static let keyExchangeResponseMessageWasConstructed = Notification.Name("keyExchangeMessageWasConstructed")
+    static let newContactWasRegisteredWithServer = Notification.Name("newContactWasRegisteredWithServer")
+    static let newContactKeyExchangeResponseWasReceived = Notification.Name("newContactKeyExchangeResponseWasReceived")
 }

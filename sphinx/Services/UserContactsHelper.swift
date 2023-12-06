@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class UserContactsHelper {
+class UserContactsHelper {    
     ///Inserts
     public static func insertObjects(contacts: [JSON], chats: [JSON], subscriptions: [JSON], invites: [JSON]) {
         CoreDataManager.sharedManager.persistentContainer.viewContext.performAndWait({
@@ -153,6 +153,35 @@ class UserContactsHelper {
         }, errorCallback: {
             callback(false, nil)
         })
+    }
+    
+    func createV2Contact(
+        nickname: String,
+        pubKey: String,
+        routeHint: String,
+        photoUrl: String? = nil,
+        pin: String? = nil,
+        contactKey: String? = nil,
+        callback: @escaping (Bool, UserContact?) -> ()
+    ){
+        //Create new contact with onion mananger
+        let contactInfo = pubKey + "_" + routeHint
+        SphinxOnionManager.sharedInstance.makeFriendRequest(contactInfo: contactInfo,nickname:nickname)
+        
+        var maxTicks = 20
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) {timer in
+            if let successfulContact = UserContact.getContactWithDisregardStatus(pubkey: pubKey){
+                callback(true,successfulContact)
+                timer.invalidate()
+            }
+            else if(maxTicks >= 0){
+                maxTicks -= 1
+            }
+            else{
+                callback(false,nil)
+                timer.invalidate()
+            }
+        }
     }
 
     public static func exchangeKeys(id: Int) {

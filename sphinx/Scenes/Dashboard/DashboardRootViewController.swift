@@ -323,8 +323,47 @@ extension DashboardRootViewController {
             self.handleLinkQueries()
         }
         
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.connectToV2Server()
+        })
     }
     
+    func connectToV2Server(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
+        
+        
+        let som = SphinxOnionManager.sharedInstance
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+              let seed = som.getAccountSeed(mnemonic: mnemonic),
+              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
+              let my_xpub = som.getAccountXpub(seed: seed)
+        else{
+            //possibly send error message?
+            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
+            return
+        }
+        som.disconnectMqtt()
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            let success = som.connectToBroker(seed:seed,xpub: my_xpub)
+            if(success == false) {
+                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker.")
+                return
+              }
+            som.mqtt.didConnectAck = {_, _ in
+                som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
+                som.getUnreadOkKeyMessages()
+                som.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                    som.processMqttMessages(message: receivedMessage)
+                }
+            }            
+        })
+    }
+    
+    @objc func handleNewKeyExchangeReceived(){
+        DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {//slight delay to ensure new DB write goes through first
+            self.contactChatsContainerViewController.reloadCollectionView()
+        })
+    }
 }
 
 

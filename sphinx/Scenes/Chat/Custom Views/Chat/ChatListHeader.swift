@@ -143,34 +143,42 @@ class ChatListHeader: UIView {
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
         var message: String? = nil
         
-        switch(status) {
-        case API.ConnectionStatus.Connecting:
-            break
-        case API.ConnectionStatus.Connected:
-            if socketConnected {
-                message = "connected.to.node".localized
-            } else {
-                message = "socket.disconnected".localized
-            }
-            break
-        case API.ConnectionStatus.NotConnected:
-            takeUserToSupport()
-            message = "unable.to.connect".localized
-            break
-        case API.ConnectionStatus.Unauthorize:
-            takeUserToSupport()
-            message = "unauthorized.error.message".localized
-            break
-        default:
-            message = "network.connection.lost".localized
-            break
-        }
+        let som = SphinxOnionManager.sharedInstance
+        let firstContact = UserContact.getAll()[0]
+        som.sendMessage(to: firstContact, content: "testtesttest")
         
-        if let message = message {
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-                self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
-            })
-        }
+        //SphinxOnionManager.sharedInstance.getAllUnreadMessages()
+//        UserContact.deleteAll()
+        return
+        
+//        switch(status) {
+//        case API.ConnectionStatus.Connecting:
+//            break
+//        case API.ConnectionStatus.Connected:
+//            if socketConnected {
+//                message = "connected.to.node".localized
+//            } else {
+//                message = "socket.disconnected".localized
+//            }
+//            break
+//        case API.ConnectionStatus.NotConnected:
+//            takeUserToSupport()
+//            message = "unable.to.connect".localized
+//            break
+//        case API.ConnectionStatus.Unauthorize:
+//            takeUserToSupport()
+//            message = "unauthorized.error.message".localized
+//            break
+//        default:
+//            message = "network.connection.lost".localized
+//            break
+//        }
+//        
+//        if let message = message {
+//            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+//                self.messageBubbleHelper.showGenericMessageView(text:message, delay: 3)
+//            })
+//        }
     }
     
     @IBAction func upgradeAppButtonTouched() {

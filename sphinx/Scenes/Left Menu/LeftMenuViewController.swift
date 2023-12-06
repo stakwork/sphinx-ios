@@ -264,6 +264,7 @@ extension LeftMenuViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row >= menuOptions.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LeftMenuAddFriendTableViewCell", for: indexPath) as! LeftMenuAddFriendTableViewCell
+            cell.accessibilityIdentifier = "LeftMenuAddFriendTableViewCell-\(indexPath.row)"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LeftMenuOptionTableViewCell", for: indexPath) as! LeftMenuOptionTableViewCell

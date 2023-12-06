@@ -29,6 +29,8 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        //TODO: find solution for resetting everything
+        //UserData.sharedInstance.clearData()
     }
 
 
@@ -151,7 +153,10 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
         completeAndValidatePostSeedInputSignupFlow()
     }
     
-    func test_fresh_launch_test_v2_flow_import_press_ok_complete_sign_up_UI() throws {
+    func test_fresh_launch_test_v2_flow_import_press_ok_complete_sign_up_UI(importedApp:XCUIApplication? = nil) throws {
+        if(importedApp != nil){
+            app = importedApp
+        }
         // Find the buttons by their accessibility identifiers
         let newUserButton = app.buttons["new.user"]
 
@@ -259,7 +264,10 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
         
         let requiredNumTaps = 12
         for _ in 0..<(requiredNumTaps + 1){
-            pinButton1.tap()
+            usleep(useconds_t(500e3))
+            if(pinButton1.exists){
+                pinButton1.tap()
+            }
         }
         sleep(2)
         

@@ -148,9 +148,13 @@ extension SphinxOnionManager{//contacts related
     }
     
     func createChat(for contact:UserContact){
+        let contactID = NSNumber(value: contact.id)
+        if let _ = Chat.getAll().filter({$0.contactIds.contains(contactID)}).first{
+            return //don't make duplicates
+        }
         let selfContactId = UserContact.getSelfContact()?.id ?? 0
         let chat = Chat(context: managedContext)
-        let contactIDArray = [NSNumber(value: contact.id),NSNumber(value: selfContactId)]
+        let contactIDArray = [contactID,NSNumber(value: selfContactId)]
         chat.id = contact.id
         chat.type = Chat.ChatType.conversation.rawValue
         chat.status = Chat.ChatStatus.approved.rawValue

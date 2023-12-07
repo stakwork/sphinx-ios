@@ -145,7 +145,7 @@ class ChatListHeader: UIView {
         
         let som = SphinxOnionManager.sharedInstance
         for contact in UserContact.getAll(){
-            som.sendMessage(to: contact, content: "testtesttest")
+            som.sendMessage(to: contact, content: "Sphinx is awesome.")
         }
         
         

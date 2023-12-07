@@ -143,7 +143,6 @@ class SphinxOnionManager : NSObject {
         self.mqtt.subscribe([
             ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
         ])
-        //subscribeAllContactChildKeys()
 
     }
 

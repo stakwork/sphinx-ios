@@ -283,18 +283,23 @@ class NewMessageBubbleHelper {
         onKeyWindow: Bool = true
     ) {
         let contactsService = ContactsService.sharedInstance
+        
+        guard let owner = contactsService.owner else {
+            return
+        }
+        
         let chatName = message.chat?.name ?? ""
         let sender = contactsService.getContactWith(id: message.senderId)
         
         let text = message.getMessageContentPreview(
-            owner: contactsService.owner,
+            owner: owner,
             contact: sender
         )
         
         if text.isNotSupportedMessage { return }
         
         let senderNickname = message.getMessageSenderNickname(
-            owner: contactsService.owner,
+            owner: owner,
             contact: sender
         )
         

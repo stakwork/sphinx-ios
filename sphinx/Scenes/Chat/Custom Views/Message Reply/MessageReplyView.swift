@@ -92,7 +92,7 @@ class MessageReplyView: UIView {
         delegate: MessageReplyViewDelegate,
         isIncoming: Bool = true
     ) {
-        guard let message = message else {
+        guard let message = message, let owner = ContactsService.sharedInstance.owner else {
             return
         }
         
@@ -105,7 +105,7 @@ class MessageReplyView: UIView {
         leftBar.backgroundColor = ChatHelper.getSenderColorFor(message: message)
         
         let senderAlias = message.getMessageSenderNickname(
-            owner: ContactsService.sharedInstance.owner,
+            owner: owner,
             contact: ContactsService.sharedInstance.getContactWith(id: message.senderId)
         )
         

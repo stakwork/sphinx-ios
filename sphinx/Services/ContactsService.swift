@@ -18,7 +18,7 @@ class ContactsService: NSObject {
         return Static.instance
     }
     
-    var owner: UserContact!
+    var owner: UserContact?
 
     var allContacts = [UserContact]()
     var contacts = [UserContact]()
@@ -34,7 +34,6 @@ class ContactsService: NSObject {
     var contactsSearchQuery: String = ""
     var chatsSearchQuery: String = ""
     
-    var ownerResultsController: NSFetchedResultsController<UserContact>!
     var contactsResultsController: NSFetchedResultsController<UserContact>!
     var chatsResultsController: NSFetchedResultsController<Chat>!
     
@@ -44,7 +43,6 @@ class ContactsService: NSObject {
     override init() {
         super.init()
         
-        configureOwnerFetchResultsController()
         configureFetchResultsController()
     }
     
@@ -62,27 +60,6 @@ class ContactsService: NSObject {
         
         chatsResultsController?.delegate = nil
         chatsResultsController = nil
-    }
-    
-    func configureOwnerFetchResultsController() {
-        if let _ = ownerResultsController {
-            return
-        }
-        
-        let ownerFetchRequest = UserContact.FetchRequests.owner()
-
-        ownerResultsController = NSFetchedResultsController(
-            fetchRequest: ownerFetchRequest,
-            managedObjectContext: CoreDataManager.sharedManager.persistentContainer.viewContext,
-            sectionNameKeyPath: nil,
-            cacheName: nil
-        )
-        
-        ownerResultsController.delegate = self
-        
-        do {
-            try ownerResultsController.performFetch()
-        } catch {}
     }
     
     func configureFetchResultsController() {
@@ -139,11 +116,6 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             let resultController = controller as? NSFetchedResultsController<NSManagedObject>,
             let firstSection = resultController.sections?.first {
             
-            if resultController == ownerResultsController {
-                self.owner = firstSection.objects?.first as? UserContact
-                return
-            }
-            
             if resultController == contactsResultsController {
                 didCollectContacts = true
             } else if resultController == chatsResultsController {
@@ -151,7 +123,8 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
             }
             
             if let contacts = firstSection.objects as? [UserContact] {
-                self.allContacts = contacts
+                self.allContacts = contacts.filter({ !$0.isOwner })
+                self.owner = contacts.filter({ $0.isOwner }).first
             }
             
             if let chats = firstSection.objects as? [Chat] {
@@ -165,21 +138,15 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     func forceUpdate() {
-        self.contacts = UserContact.chatList()
+        let contacts = UserContact.chatList()
+        self.allContacts = contacts.filter({ !$0.isOwner })
+        self.owner = contacts.filter({ $0.isOwner }).first
         self.chats = Chat.getAll()
         
         processContactsAndChats()
     }
     
-    func updateOwner() {
-        if owner == nil {
-            owner = UserContact.getOwner()
-        }
-    }
-    
     func processContactsAndChats() {
-        updateOwner()
-        
         guard let owner = owner else {
             return
         }
@@ -229,7 +196,10 @@ extension ContactsService : NSFetchedResultsControllerDelegate {
     }
     
     public func processChatListObjects() {
-        updateOwner()
+        guard let owner = owner else {
+            return
+        }
+        
         calculateBadges()
         
         chatsHasNewMessages = false

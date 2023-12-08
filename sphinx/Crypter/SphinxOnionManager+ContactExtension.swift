@@ -27,9 +27,17 @@ extension SphinxOnionManager{//contacts related
         self.pendingContact?.scid = scid
         self.pendingContact?.isOwner = true
         self.pendingContact?.index = 0
+        self.pendingContact?.id = 0
         self.pendingContact?.publicKey = myOkKey
         self.pendingContact?.routeHint = "\(serverPubkey)_\(scid)"
         self.pendingContact?.status = UserContact.Status.Confirmed.rawValue
+        self.pendingContact?.childPubKey = "" // not possible for self
+        self.pendingContact?.newMessages = 0
+        self.pendingContact?.createdAt = Date()
+        self.pendingContact?.fromGroup = false
+        self.pendingContact?.privatePhoto = false
+        self.pendingContact?.tipAmount = 0
+        self.pendingContact?.blocked = false
         managedContext.saveContext()
     }
     
@@ -66,6 +74,7 @@ extension SphinxOnionManager{//contacts related
             if (success == false){return}
             
             createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex,nickname:nickname)
+            managedContext.saveContext()
             
             mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                 self.processMqttMessages(message: receivedMessage)
@@ -98,8 +107,10 @@ extension SphinxOnionManager{//contacts related
         routeHint:String,
         idx:Int,
         scid:String?=nil,
-        nickname:String?=nil
-    ){
+        nickname:String?=nil,
+        contactRouteHint:String?=nil,
+        contactKey:String?=nil
+    )-> UserContact{
         let contact = UserContact(context: managedContext)
         contact.publicKey = pubkey//
         contact.childPubKey = childPubkey
@@ -111,8 +122,23 @@ extension SphinxOnionManager{//contacts related
         contact.createdAt = Date()
         contact.newMessages = 0
         contact.status = UserContact.Status.Pending.rawValue
+        contact.createdAt = Date()
+        contact.newMessages = 0
+        contact.createdAt = Date()
+        contact.fromGroup = false
+        contact.privatePhoto = false
+        contact.tipAmount = 0
+        contact.blocked = false
         
-        managedContext.saveContext()
+        if let contactRouteHint = contactRouteHint{
+            contact.contactRouteHint = routeHint
+        }
+        
+        if let contactKey = contactKey{
+            contact.contactKey = contactKey
+        }
+        
+        return contact
     }
     
     func processContact(from mqttTopic:String, retrievedCredentials: SphinxOnionBrokerResponse){

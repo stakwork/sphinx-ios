@@ -82,7 +82,9 @@ class ContactsService: NSObject {
         
         do {
             try ownerResultsController.performFetch()
-        } catch {}
+        } catch {
+            print("fetch owner failed")
+        }
     }
     
     func configureFetchResultsController() {

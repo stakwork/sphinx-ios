@@ -25,4 +25,5 @@ extension Notification.Name {
     static let keyExchangeResponseMessageWasConstructed = Notification.Name("keyExchangeMessageWasConstructed")
     static let newContactWasRegisteredWithServer = Notification.Name("newContactWasRegisteredWithServer")
     static let newContactKeyExchangeResponseWasReceived = Notification.Name("newContactKeyExchangeResponseWasReceived")
+    static let newOnionMessageWasReceived = Notification.Name("newOnionMessageWasReceived")
 }

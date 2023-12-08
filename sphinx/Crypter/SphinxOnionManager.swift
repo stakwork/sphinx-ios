@@ -167,14 +167,14 @@ class SphinxOnionManager : NSObject {
 //        }
     }
 
-    func getUnreadOkKeyMessages(){
+    func getUnreadOkKeyMessages(sinceIndex:Int?=nil,limit:Int?=nil){
         guard let mnemonic = UserData.sharedInstance.getMnemonic(),
               let seed = getAccountSeed(mnemonic: mnemonic),
               let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
             return //throw error?
         }
-        let sinceMsgIndex = 0 //TODO: store last read index?
-        let msgCountLimit = 1000
+        let sinceMsgIndex = sinceIndex ?? 0 //TODO: store last read index?
+        let msgCountLimit = limit ?? 1000
         let topic = "\(myOkKey)/\(0)/req/msgs"
         requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
     }
@@ -300,8 +300,13 @@ class SphinxOnionManager : NSObject {
               let message = messageDict["message"] as? [String:String],
               let content = message["content"],
               let sender = messageDict["sender"] as? [String:String],
-              let pubkey = sender["pubkey"],
-            let contact = UserContact.getContactWith(pubkey: pubkey),
+              let pubkey = sender["pubkey"] else{
+            return
+        }
+        
+        NotificationCenter.default.post(name: .newOnionMessageWasReceived, object: nil, userInfo: ["messageDict": messageDict])
+        
+        guard let contact = UserContact.getContactWith(pubkey: pubkey),
             let chat = contact.getChat() else{
             return
         }
@@ -364,18 +369,17 @@ class SphinxOnionManager : NSObject {
                         let senderInfo = json["sender"].dictionaryObject as? [String: String],
                        let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
                         do{
-                            let contact = UserContact(context: managedContext)
-                            contact.contactKey = senderInfo["contactPubkey"]
-                            contact.routeHint = senderInfo["routeHint"]
-                            contact.contactRouteHint = senderInfo["contactRouteHint"]
-                            contact.nickname = senderInfo["alias"]
-                            contact.publicKey = senderInfo["pubkey"]
-                            contact.status = UserContact.Status.Confirmed.rawValue
-                            contact.createdAt = Date()
+                            guard let validPubkey = senderInfo["pubkey"],
+                                  let validRouteHint = senderInfo["routeHint"],
+                                  let validCRH = senderInfo["contactRouteHint"],
+                                  let validNickname = senderInfo["alias"],
+                                  let validContactKey = senderInfo["contactPubkey"] else{
+                                return
+                            }
                             
                             
                             let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
-                            contact.childPubKey = childKey
+                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childKey, routeHint: validRouteHint, idx: Int(index),nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
                             createChat(for: contact)
                             
                             

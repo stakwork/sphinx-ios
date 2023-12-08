@@ -17,7 +17,7 @@ class sphinxOnionAddContactTests: XCTestCase {
     let test_mnemonic1_expected_okKey = "03a898d978e42c9feaa25ca103d70b27a2a83472b3b00cd11bbf2a9b3be14460f4"
     let test_mnemonic1_expected_xpub = "tpubDAGRb7j9yEF51RrPBjxYk6inEyxzX9oZEqRfWGGtnhEaux2xsma2eQFNBYeRgEHLC5pc4Cif4KPJXXRqS1aTErvhvTiZGaGggq9UoTZdEsH"
     let test_server_ip = "54.164.163.153"
-    let test_server_pubkey = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"
+    let test_server_pubkey = "038e286f590b9ef87e367294adfdaa105dc1bcd832201d440a3b84275f3dbb6b13"
     let test_contact_info = "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497"
     
     //MARK: specific to key exchange

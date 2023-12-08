@@ -107,7 +107,17 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     func test_send_plaintext_message() throws {
         //1. Establish self contact and set up "sock puppet" account over http making sure it will mirror our message through an ACK
         
-        //2.
+        //setUpMirrorSockPuppet(seed: , pubkey: )
+        
+        //2. Send message with random content
+        let content = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000)
+        let stringContent = String(content)
+        
+        //sphinxOnionManager.sendMessage(to: contact, content: stringContent)
+        
+        //3. Await ACK message
+        
+        //4. Ensure ACK message reflects same message we sent out.
     }
 
 }

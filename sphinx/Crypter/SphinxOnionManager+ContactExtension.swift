@@ -110,7 +110,10 @@ extension SphinxOnionManager{//contacts related
         nickname:String?=nil,
         contactRouteHint:String?=nil,
         contactKey:String?=nil
-    )-> UserContact{
+    )-> UserContact?{
+        if let _ = UserContact.getContactWithDisregardStatus(pubkey: pubkey){
+            return nil //contact already exists, ignore
+        }
         let contact = UserContact(context: managedContext)
         contact.publicKey = pubkey//
         contact.childPubKey = childPubkey

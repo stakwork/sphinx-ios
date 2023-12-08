@@ -379,7 +379,12 @@ class SphinxOnionManager : NSObject {
                             
                             
                             let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
-                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childKey, routeHint: validRouteHint, idx: Int(index),nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
+                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childKey, routeHint: validRouteHint, idx: nextIndex,nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
+                            
+                            guard let contact = contact else{
+                                //AlertHelper.showAlert(title: "Key Exchange Error", message: "Already have a contact for:\(validNickname)")
+                                return
+                            }
                             createChat(for: contact)
                             
                             

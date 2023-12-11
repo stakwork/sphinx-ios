@@ -323,13 +323,14 @@ class SphinxOnionManager : NSObject {
         newMessage.uuid = uuid
         newMessage.createdAt = Date()
         newMessage.updatedAt = Date()
+        newMessage.date = Date()
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
         newMessage.type = TransactionMessage.TransactionMessageType.message.rawValue
         newMessage.encrypted = true
         newMessage.senderId = contact.id
         newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
         newMessage.push = true
-        newMessage.seen = true
+        newMessage.seen = false
         newMessage.messageContent = content
         newMessage.chat = chat
         managedContext.saveContext()

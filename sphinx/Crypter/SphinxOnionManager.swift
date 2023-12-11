@@ -297,9 +297,16 @@ class SphinxOnionManager : NSObject {
     func processPlaintextMessage(messageJSON:JSON){
         print("processPlaintextMessage:\(messageJSON)")
         guard let messageDict = messageJSON.dictionaryObject,
-              let message = messageDict["message"] as? [String:String],
+              let uuid = messageDict["uuid"] as? String,
+              TransactionMessage.getMessagesWith(ids: [uuid.hashValue]).first == nil else{
+            return //do nothing if we already have the message in the DB
+        }
+              
+                
+        guard let message = messageDict["message"] as? [String:String],
               let content = message["content"],
               let sender = messageDict["sender"] as? [String:String],
+              let uuid = messageDict["uuid"] as? String,
               let pubkey = sender["pubkey"] else{
             return
         }
@@ -312,7 +319,8 @@ class SphinxOnionManager : NSObject {
         }
     
         let newMessage = TransactionMessage(context: managedContext)
-        newMessage.id = Int.random(in: 1...10_000_000_000)
+        newMessage.id = uuid.hashValue//Int.random(in: 1...10_000_000_000)
+        newMessage.uuid = uuid
         newMessage.createdAt = Date()
         newMessage.updatedAt = Date()
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
@@ -322,6 +330,7 @@ class SphinxOnionManager : NSObject {
         newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
         newMessage.push = true
         newMessage.seen = true
+        newMessage.messageContent = content
         newMessage.chat = chat
         managedContext.saveContext()
     }

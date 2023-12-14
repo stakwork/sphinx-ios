@@ -81,6 +81,8 @@ extension UserDefaults {
         public static let lssNonce = DefaultKey<String>("lssNonce")
         public static let signerKeys = DefaultKey<String>("signerKeys")
         public static let sequence = DefaultKey<String>("sequence")
+        
+        public static let lastV2MessageIndex = DefaultKey<Int>("lastV2MessageIndex")
     }
     
     class func resetUserDefaults() {

@@ -173,8 +173,8 @@ class SphinxOnionManager : NSObject {
               let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
             return //throw error?
         }
-        let sinceMsgIndex = sinceIndex ?? 0 //TODO: store last read index?
-        let msgCountLimit = limit ?? 1000
+        let sinceMsgIndex = UserData.sharedInstance.getLastMessageIndex() != nil ? UserData.sharedInstance.getLastMessageIndex()! + 1 : 0 //TODO: store last read index?
+        let msgCountLimit = limit ?? 50
         let topic = "\(myOkKey)/\(0)/req/msgs"
         requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
     }
@@ -294,11 +294,11 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func processPlaintextMessage(messageJSON:JSON){
+    func processPlaintextMessage(messageJSON:JSON,index:Int?=nil){
         print("processPlaintextMessage:\(messageJSON)")
         guard let messageDict = messageJSON.dictionaryObject,
-              let uuid = messageDict["uuid"] as? String,
-              TransactionMessage.getMessagesWith(ids: [uuid.hashValue]).first == nil else{
+              let id = index as? Int,
+              TransactionMessage.getMessagesWith(ids: [id]).first == nil else{
             return //do nothing if we already have the message in the DB
         }
               
@@ -319,7 +319,7 @@ class SphinxOnionManager : NSObject {
         }
     
         let newMessage = TransactionMessage(context: managedContext)
-        newMessage.id = uuid.hashValue//Int.random(in: 1...10_000_000_000)
+        newMessage.id = id//Int.random(in: 1...10_000_000_000)
         newMessage.uuid = uuid
         newMessage.createdAt = Date()
         newMessage.updatedAt = Date()
@@ -334,6 +334,15 @@ class SphinxOnionManager : NSObject {
         newMessage.messageContent = content
         newMessage.chat = chat
         managedContext.saveContext()
+        
+        //update index:
+        if let lastLocalIndex = UserData.sharedInstance.getLastMessageIndex(),
+           lastLocalIndex < index ?? 0{
+            UserData.sharedInstance.setLastMessageIndex(index: index ?? 0)
+        }
+        else if let index = index{
+            UserData.sharedInstance.setLastMessageIndex(index: index)
+        }
     }
     
     func processStreamTopicMessage(message:CocoaMQTTMessage){
@@ -409,7 +418,11 @@ class SphinxOnionManager : NSObject {
                         }
                     }
                     else if json["type"] == 0{
-                        processPlaintextMessage(messageJSON: json)
+                        var index: Int?
+                        if tops.contains("stream"){
+                            index = Int(tops[4])
+                        }
+                        processPlaintextMessage(messageJSON: json,index:index)
                     }
                 }
             }

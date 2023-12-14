@@ -540,6 +540,14 @@ class UserData {
         return nil
     }
     
+    func setLastMessageIndex(index:Int){
+        UserDefaults.Keys.lastV2MessageIndex.set(index)
+    }
+    
+    func getLastMessageIndex() -> Int? {
+        return UserDefaults.Keys.lastV2MessageIndex.get()
+    }
+    
     //Clear User Data
     func clearData() {
         SphinxSocketManager.sharedInstance.disconnectWebsocket()

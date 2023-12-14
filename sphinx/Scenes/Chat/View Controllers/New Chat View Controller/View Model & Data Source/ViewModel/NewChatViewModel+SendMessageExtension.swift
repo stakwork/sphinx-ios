@@ -120,6 +120,8 @@ extension NewChatViewModel {
         completion: @escaping (Bool) -> ()
     ) {
         let messageType = TransactionMessage.TransactionMessageType(fromRawValue: provisionalMessage?.type ?? 0)
+        let som = SphinxOnionManager.sharedInstance
+        let error = som.sendMessage(to: contact!, content: text)
         
         guard let params = TransactionMessage.getMessageParams(
             contact: contact,

@@ -404,6 +404,7 @@ class SphinxOnionManager : NSObject {
                                 //AlertHelper.showAlert(title: "Key Exchange Error", message: "Already have a contact for:\(validNickname)")
                                 return
                             }
+                            contact.status = UserContact.Status.Confirmed.rawValue
                             createChat(for: contact)
                             
                             

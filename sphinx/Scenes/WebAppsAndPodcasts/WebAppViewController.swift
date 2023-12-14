@@ -71,14 +71,21 @@ class WebAppViewController: KeyboardEventsViewController {
         self.view.addSubview(webView)
         addWebViewConstraints()
         
-        webAppHelper.setWebView(webView, authorizeHandler: configureAuthorizeView)
+        webAppHelper.setWebView(webView, authorizeHandler: configureAuthorizeView, authorizeBudgetHandler: configureBudgetView)
     }
     
     func configureAuthorizeView(_ dict: [String: AnyObject]) {
-        let viewHeight = authorizeModalView.configureFor(url: gameURL, delegate: self, dict: dict)
+        let viewHeight = authorizeModalView.configureFor(url: gameURL, delegate: self, dict: dict, showBudgetField: false)
         authorizeModalViewHeight.constant = viewHeight
         authorizeModalView.layoutIfNeeded()
-        
+        view.bringSubviewToFront(authorizeModalContainer)
+        toggleAuthorizationView(show: true)
+    }
+    
+    func configureBudgetView(_ dict: [String: AnyObject]) {
+        let viewHeight = authorizeModalView.configureFor(url: gameURL, delegate: self, dict: dict, showBudgetField: true)
+        authorizeModalViewHeight.constant = viewHeight
+        authorizeModalView.layoutIfNeeded()
         view.bringSubviewToFront(authorizeModalContainer)
         toggleAuthorizationView(show: true)
     }
@@ -147,8 +154,15 @@ extension WebAppViewController : AuthorizeAppViewDelegate {
         })
     }
     
-    func shouldAuthorizeWith(amount: Int, dict: [String: AnyObject]) {
+    func shouldAuthorizeBudgetWith(amount: Int, dict: [String : AnyObject]) {
         webAppHelper.authorizeWebApp(amount: amount, dict: dict, completion: {
+            self.chat.updateWebAppLastDate()
+            self.shouldClose()
+        })
+    }
+    
+    func shouldAuthorizeWith(dict: [String : AnyObject]) {
+        webAppHelper.authorizeNoBudget(dict: dict, completion: {
             self.chat.updateWebAppLastDate()
             self.shouldClose()
         })

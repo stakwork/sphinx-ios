@@ -173,7 +173,7 @@ class SphinxOnionManager : NSObject {
               let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
             return //throw error?
         }
-        let sinceMsgIndex = UserData.sharedInstance.getLastMessageIndex() != nil ? UserData.sharedInstance.getLastMessageIndex()! + 1 : 0 //TODO: store last read index?
+        let sinceMsgIndex = 0//UserData.sharedInstance.getLastMessageIndex() != nil ? UserData.sharedInstance.getLastMessageIndex()! + 1 : 0 //TODO: store last read index?
         let msgCountLimit = limit ?? 50
         let topic = "\(myOkKey)/\(0)/req/msgs"
         requestUnreadMessages(on: topic, sinceMsgIndex: sinceMsgIndex, msgCountLimit: msgCountLimit)
@@ -397,8 +397,8 @@ class SphinxOnionManager : NSObject {
                             }
                             
                             
-                            let childKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
-                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childKey, routeHint: validRouteHint, idx: nextIndex,nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
+                            let childPubKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
+                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childPubKey, routeHint: validRouteHint, idx: nextIndex,nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
                             
                             guard let contact = contact else{
                                 //AlertHelper.showAlert(title: "Key Exchange Error", message: "Already have a contact for:\(validNickname)")
@@ -406,6 +406,19 @@ class SphinxOnionManager : NSObject {
                             }
                             contact.status = UserContact.Status.Confirmed.rawValue
                             createChat(for: contact)
+                            
+                                //self.showSuccessWithMessage("MQTT connected")
+                                print("SphinxOnionManager: MQTT Connected")
+                                print("mqtt.didConnectAck")
+                                self.mqtt.subscribe([
+                                    ("\(childPubKey)/\(nextIndex)/res/#", CocoaMQTTQoS.qos1)
+                                ])
+                                self.mqtt.publish(
+                                    CocoaMQTTMessage(
+                                        topic: "\(childPubKey)/\(nextIndex)/req/register",
+                                        payload: []
+                                    )
+                                )
                             
                             
                             sendKeyExchangeMsg(isInitiatorMe: false, to: contact)

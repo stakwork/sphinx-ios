@@ -143,12 +143,21 @@ class SphinxOnionManager : NSObject {
         self.mqtt.subscribe([
             ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
         ])
-
+        subscribeAllContactChildKeys()
     }
 
     func subscribeAllContactChildKeys(){
         for contact in UserContact.getAll(){
-            let contactChildKey = contact.childPubKey
+            var contactChildKey = contact.childPubKey
+//            if contactChildKey == ""{
+//                guard let mn = UserData.sharedInstance.getMnemonic(),
+//                      let seed = getAccountSeed(mnemonic: mn) else{
+//                    continue
+//                }
+//                contact.childPubKey = try! pubkeyFromSeed(`seed`: seed, `idx`: UInt32(contact.index), `time`: getEntropyString(), `network`: network)
+//                contactChildKey = contact.childPubKey
+//                managedContext.saveContext()
+//            }
             let contactIdx = contact.index
             subscribeToContactChildPubkey(contactChildKey: contactChildKey, contactIdx: contactIdx)
         }

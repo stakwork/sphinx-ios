@@ -134,7 +134,7 @@ extension SphinxOnionManager{//contacts related
         contact.blocked = false
         
         if let contactRouteHint = contactRouteHint{
-            contact.contactRouteHint = contactRouteHint
+            contact.contactRouteHint = routeHint
         }
         
         if let contactKey = contactKey{

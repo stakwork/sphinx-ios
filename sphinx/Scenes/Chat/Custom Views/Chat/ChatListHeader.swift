@@ -143,12 +143,12 @@ class ChatListHeader: UIView {
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
         var message: String? = nil
         
-//        let som = SphinxOnionManager.sharedInstance
-//        for contact in UserContact.getAll(){
-//            som.sendMessage(to: contact, content: "Sphinx is awesome.")
-//        }
+        let som = SphinxOnionManager.sharedInstance
+        for contact in UserContact.getAll(){
+            som.sendMessage(to: contact, content: "Sphinx is awesome.")
+        }
         
-        UserContact.deleteAll()
+        
         //SphinxOnionManager.sharedInstance.getAllUnreadMessages()
 //        UserContact.deleteAll()
         return

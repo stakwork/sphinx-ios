@@ -50,55 +50,55 @@ extension SphinxOnionManager{//contacts related
         contactInfo:String,
         nickname:String?=nil
     ){
-        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
-            return
-        }
-//        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
-//            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
+//        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
 //            return
 //        }
-        
-        let routeHint = "\(recipLspPubkey)_\(scid)"
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = getAccountSeed(mnemonic: mnemonic),
-              let xpub = getAccountXpub(seed: seed),
-              let nextIndex = UserContact.getNextAvailableContactIndex()
-        else{
-            return
-        }
-        let idx = UInt32(nextIndex)
-        let time = getEntropyString()
-        do{
-            let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
-            let success = connectToBroker(seed: seed, xpub: xpub)
-            if (success == false){return}
-            
-            createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex,nickname:nickname)
-            managedContext.saveContext()
-            
-            mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-                self.processMqttMessages(message: receivedMessage)
-            }
-            
-            //subscribe to relevant topics
-            mqtt.didConnectAck = { _, _ in
-                //self.showSuccessWithMessage("MQTT connected")
-                print("SphinxOnionManager: MQTT Connected")
-                print("mqtt.didConnectAck")
-                self.mqtt.subscribe([
-                    ("\(childPubKey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
-                ])
-                self.mqtt.publish(
-                    CocoaMQTTMessage(
-                        topic: "\(childPubKey)/\(idx)/req/register",
-                        payload: []
-                    )
-                )
-            }
-        }
-        catch{
-            print("error: \(error)")
-        }
+////        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
+////            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
+////            return
+////        }
+//        
+//        let routeHint = "\(recipLspPubkey)_\(scid)"
+//        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+//              let seed = getAccountSeed(mnemonic: mnemonic),
+//              let xpub = getAccountXpub(seed: seed),
+//              let nextIndex = UserContact.getNextAvailableContactIndex()
+//        else{
+//            return
+//        }
+//        let idx = UInt32(nextIndex)
+//        let time = getEntropyString()
+//        do{
+//            let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
+//            let success = connectToBroker(seed: seed, xpub: xpub)
+//            if (success == false){return}
+//            
+//            createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex,nickname:nickname)
+//            managedContext.saveContext()
+//            
+//            mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+//                self.processMqttMessages(message: receivedMessage)
+//            }
+//            
+//            //subscribe to relevant topics
+//            mqtt.didConnectAck = { _, _ in
+//                //self.showSuccessWithMessage("MQTT connected")
+//                print("SphinxOnionManager: MQTT Connected")
+//                print("mqtt.didConnectAck")
+//                self.mqtt.subscribe([
+//                    ("\(childPubKey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
+//                ])
+//                self.mqtt.publish(
+//                    CocoaMQTTMessage(
+//                        topic: "\(childPubKey)/\(idx)/req/register",
+//                        payload: []
+//                    )
+//                )
+//            }
+//        }
+//        catch{
+//            print("error: \(error)")
+//        }
     }
     
     func createNewContact(
@@ -273,57 +273,57 @@ extension SphinxOnionManager{//Composing outgoing messages & processing incoming
     }
     
     func sendKeyExchangeMsg(isInitiatorMe:Bool,to contact: UserContact) -> SphinxMsgError? {
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = getAccountSeed(mnemonic: mnemonic),
-              let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
-            return SphinxMsgError.credentialsError
-        }
-        guard let recipPubkey = contact.publicKey, // OK key
-              let recipRouteHint = contact.contactRouteHint,
-              recipRouteHint.split(separator: "_").count == 2 else {
-            return SphinxMsgError.contactDataError
-        }
-
-        guard let selfContact = UserContact.getSelfContact(),
-              let selfRouteHint = selfContact.routeHint else {
-            return SphinxMsgError.credentialsError
-        }
-        
-        
-        let time = getEntropyString()
-        
-        if(isInitiatorMe){
-            self.mqtt.subscribe("\(myOkKey)/0/res/#")
-            self.mqtt.subscribe("\(contact.childPubKey)/\(contact.index)/res/#")
-        }
-        
-        guard let (contentJSONString,hopsJSONString) = constructKeyExchangeJSONString(isInitiatorMe: isInitiatorMe, recipPubkey: recipPubkey, recipRouteHint: recipRouteHint,myOkKey: myOkKey, selfRouteHint: selfRouteHint, selfContact: selfContact, recipContact: contact) else{
-            return SphinxMsgError.encodingError
-        }
-        
-        do {
-            let onion = try! createOnionMsg(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, json: contentJSONString)
-            //let onion = try! createOnion(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, payload: finalData)
-            var onionAsArray = [UInt8](repeating: 0, count: onion.count)
-
-            // Use withUnsafeBytes to copy the Data into the UInt8 array
-            onion.withUnsafeBytes { bufferPointer in
-                guard let baseAddress = bufferPointer.baseAddress else {
-                    fatalError("Failed to get the base address")
-                }
-                memcpy(&onionAsArray, baseAddress, onion.count)
-                self.mqtt.publish(
-                    CocoaMQTTMessage(
-                        topic: "\(myOkKey)/0/req/send",
-                        payload: onionAsArray
-                    )
-                )
-            }
-
-        } catch {
-            return SphinxMsgError.encodingError
-        }
-
+//        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+//              let seed = getAccountSeed(mnemonic: mnemonic),
+//              let myOkKey = getAccountOnlyKeysendPubkey(seed: seed) else {
+//            return SphinxMsgError.credentialsError
+//        }
+//        guard let recipPubkey = contact.publicKey, // OK key
+//              let recipRouteHint = contact.contactRouteHint,
+//              recipRouteHint.split(separator: "_").count == 2 else {
+//            return SphinxMsgError.contactDataError
+//        }
+//
+//        guard let selfContact = UserContact.getSelfContact(),
+//              let selfRouteHint = selfContact.routeHint else {
+//            return SphinxMsgError.credentialsError
+//        }
+//        
+//        
+//        let time = getEntropyString()
+//        
+//        if(isInitiatorMe){
+//            self.mqtt.subscribe("\(myOkKey)/0/res/#")
+//            self.mqtt.subscribe("\(contact.childPubKey)/\(contact.index)/res/#")
+//        }
+//        
+//        guard let (contentJSONString,hopsJSONString) = constructKeyExchangeJSONString(isInitiatorMe: isInitiatorMe, recipPubkey: recipPubkey, recipRouteHint: recipRouteHint,myOkKey: myOkKey, selfRouteHint: selfRouteHint, selfContact: selfContact, recipContact: contact) else{
+//            return SphinxMsgError.encodingError
+//        }
+//        
+//        do {
+//            let onion = try! createOnionMsg(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, json: contentJSONString)
+//            //let onion = try! createOnion(seed: seed, idx: UInt32(0), time: time, network: network, hops: hopsJSONString, payload: finalData)
+//            var onionAsArray = [UInt8](repeating: 0, count: onion.count)
+//
+//            // Use withUnsafeBytes to copy the Data into the UInt8 array
+//            onion.withUnsafeBytes { bufferPointer in
+//                guard let baseAddress = bufferPointer.baseAddress else {
+//                    fatalError("Failed to get the base address")
+//                }
+//                memcpy(&onionAsArray, baseAddress, onion.count)
+//                self.mqtt.publish(
+//                    CocoaMQTTMessage(
+//                        topic: "\(myOkKey)/0/req/send",
+//                        payload: onionAsArray
+//                    )
+//                )
+//            }
+//
+//        } catch {
+//            return SphinxMsgError.encodingError
+//        }
+//
         return nil
     }
     

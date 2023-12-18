@@ -218,6 +218,8 @@ class SphinxOnionManager : NSObject {
     }
     
     func subscribeAndPublishMyTopics(pubkey:String,idx:Int){
+        
+        
         subscribeToMyTopics(pubkey: pubkey, idx: idx)
         publishMyTopics(pubkey: pubkey, idx: idx)
     }
@@ -346,104 +348,104 @@ class SphinxOnionManager : NSObject {
     }
     
     func processStreamTopicMessage(message:CocoaMQTTMessage){
-        let tops = message.topic.split(separator: "/").map({String($0)})
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = getAccountSeed(mnemonic: mnemonic),
-        tops.count > 1,
-        let index = UInt32(tops[1]) else{
-            return
-        }
-        
-        print("MQTT Stream Topic:\(message.topic)")
-        let payloadData = Data(message.payload)
-        do{
-            let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getEntropyString(), network: network, payload: payloadData)
-            if let dataFromString = peeledOnion.data(using: .utf8, allowLossyConversion: false) {
-                let json = try JSON(data: dataFromString)
-                if json["type"] == 11 || json["type"] == 10 || json["type"] == 0{
-                    //process contact confirmation
-                    if json["type"] == 11,
-                       let senderInfo = json["sender"].dictionaryObject as? [String: String],
-                       let pubkey = senderInfo["pubkey"],
-                       let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey,managedContext: managedContext)
-                    {
-                        //TODO: fix this. I can't get this information to save to the db record!!
-                        contact.contactKey = senderInfo["contactPubkey"]
-                        contact.routeHint = senderInfo["routeHint"]
-                        contact.contactRouteHint = senderInfo["contactRouteHint"]
-                        contact.nickname = senderInfo["alias"]
-                        contact.publicKey = pubkey
-                        contact.status = UserContact.Status.Confirmed.rawValue
-                        contact.createdAt = Date()
-                        createChat(for: contact)
-                        managedContext.saveContext()
-                        
-                        
-                        NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
-                    }
-                    else if json["type"] == 10,//do key exchange confirmation
-                       let mnemonic = UserData.sharedInstance.getMnemonic(),
-                       let seed = getAccountSeed(mnemonic: mnemonic),
-                       let xpub = getAccountXpub(seed: seed),
-                        let senderInfo = json["sender"].dictionaryObject as? [String: String],
-                       let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
-                        do{
-                            guard let validPubkey = senderInfo["pubkey"],
-                                  let validRouteHint = senderInfo["routeHint"],
-                                  let validCRH = senderInfo["contactRouteHint"],
-                                  let validNickname = senderInfo["alias"],
-                                  let validContactKey = senderInfo["contactPubkey"] else{
-                                return
-                            }
-                            
-                            
-                            let childPubKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
-                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childPubKey, routeHint: validRouteHint, idx: nextIndex,nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
-                            
-                            guard let contact = contact else{
-                                //AlertHelper.showAlert(title: "Key Exchange Error", message: "Already have a contact for:\(validNickname)")
-                                return
-                            }
-                            contact.status = UserContact.Status.Confirmed.rawValue
-                            createChat(for: contact)
-                            
-                                //self.showSuccessWithMessage("MQTT connected")
-                                print("SphinxOnionManager: MQTT Connected")
-                                print("mqtt.didConnectAck")
-                                self.mqtt.subscribe([
-                                    ("\(childPubKey)/\(nextIndex)/res/#", CocoaMQTTQoS.qos1)
-                                ])
-                                self.mqtt.publish(
-                                    CocoaMQTTMessage(
-                                        topic: "\(childPubKey)/\(nextIndex)/req/register",
-                                        payload: []
-                                    )
-                                )
-                            
-                            
-                            sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
-                            
-                            managedContext.saveContext()
-                            
-                            NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
-                        }
-                        catch{
-                            print("error generating childPubkey")
-                        }
-                    }
-                    else if json["type"] == 0{
-                        var index: Int?
-                        if tops.contains("stream"){
-                            index = Int(tops[4])
-                        }
-                        processPlaintextMessage(messageJSON: json,index:index)
-                    }
-                }
-            }
-        }
-        catch{
-            print("error")
-        }
+//        let tops = message.topic.split(separator: "/").map({String($0)})
+//        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+//              let seed = getAccountSeed(mnemonic: mnemonic),
+//        tops.count > 1,
+//        let index = UInt32(tops[1]) else{
+//            return
+//        }
+//        
+//        print("MQTT Stream Topic:\(message.topic)")
+//        let payloadData = Data(message.payload)
+//        do{
+//            let peeledOnion = try peelOnionMsg(seed: seed, idx: index, time: getEntropyString(), network: network, payload: payloadData)
+//            if let dataFromString = peeledOnion.data(using: .utf8, allowLossyConversion: false) {
+//                let json = try JSON(data: dataFromString)
+//                if json["type"] == 11 || json["type"] == 10 || json["type"] == 0{
+//                    //process contact confirmation
+//                    if json["type"] == 11,
+//                       let senderInfo = json["sender"].dictionaryObject as? [String: String],
+//                       let pubkey = senderInfo["pubkey"],
+//                       let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey,managedContext: managedContext)
+//                    {
+//                        //TODO: fix this. I can't get this information to save to the db record!!
+//                        contact.contactKey = senderInfo["contactPubkey"]
+//                        contact.routeHint = senderInfo["routeHint"]
+//                        contact.contactRouteHint = senderInfo["contactRouteHint"]
+//                        contact.nickname = senderInfo["alias"]
+//                        contact.publicKey = pubkey
+//                        contact.status = UserContact.Status.Confirmed.rawValue
+//                        contact.createdAt = Date()
+//                        createChat(for: contact)
+//                        managedContext.saveContext()
+//                        
+//                        
+//                        NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
+//                    }
+//                    else if json["type"] == 10,//do key exchange confirmation
+//                       let mnemonic = UserData.sharedInstance.getMnemonic(),
+//                       let seed = getAccountSeed(mnemonic: mnemonic),
+//                       let xpub = getAccountXpub(seed: seed),
+//                        let senderInfo = json["sender"].dictionaryObject as? [String: String],
+//                       let nextIndex = UserContact.getNextAvailableContactIndex(){//reply with contact info if it's not initiated by me
+//                        do{
+//                            guard let validPubkey = senderInfo["pubkey"],
+//                                  let validRouteHint = senderInfo["routeHint"],
+//                                  let validCRH = senderInfo["contactRouteHint"],
+//                                  let validNickname = senderInfo["alias"],
+//                                  let validContactKey = senderInfo["contactPubkey"] else{
+//                                return
+//                            }
+//                            
+//                            
+//                            let childPubKey = try pubkeyFromSeed(seed: seed, idx: UInt32(nextIndex), time: getEntropyString(), network: network)
+//                            let contact = createNewContact(pubkey: validPubkey, childPubkey: childPubKey, routeHint: validRouteHint, idx: nextIndex,nickname: validNickname,contactRouteHint: validCRH,contactKey: validContactKey)
+//                            
+//                            guard let contact = contact else{
+//                                //AlertHelper.showAlert(title: "Key Exchange Error", message: "Already have a contact for:\(validNickname)")
+//                                return
+//                            }
+//                            contact.status = UserContact.Status.Confirmed.rawValue
+//                            createChat(for: contact)
+//                            
+//                                //self.showSuccessWithMessage("MQTT connected")
+//                                print("SphinxOnionManager: MQTT Connected")
+//                                print("mqtt.didConnectAck")
+//                                self.mqtt.subscribe([
+//                                    ("\(childPubKey)/\(nextIndex)/res/#", CocoaMQTTQoS.qos1)
+//                                ])
+//                                self.mqtt.publish(
+//                                    CocoaMQTTMessage(
+//                                        topic: "\(childPubKey)/\(nextIndex)/req/register",
+//                                        payload: []
+//                                    )
+//                                )
+//                            
+//                            
+//                            sendKeyExchangeMsg(isInitiatorMe: false, to: contact)
+//                            
+//                            managedContext.saveContext()
+//                            
+//                            NotificationCenter.default.post(Notification(name: .newContactKeyExchangeResponseWasReceived, object: nil, userInfo: nil))
+//                        }
+//                        catch{
+//                            print("error generating childPubkey")
+//                        }
+//                    }
+//                    else if json["type"] == 0{
+//                        var index: Int?
+//                        if tops.contains("stream"){
+//                            index = Int(tops[4])
+//                        }
+//                        processPlaintextMessage(messageJSON: json,index:index)
+//                    }
+//                }
+//            }
+//        }
+//        catch{
+//            print("error")
+//        }
     }
     
     

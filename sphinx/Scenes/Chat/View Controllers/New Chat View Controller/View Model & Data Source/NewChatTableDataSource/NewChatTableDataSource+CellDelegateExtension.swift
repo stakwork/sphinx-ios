@@ -641,12 +641,14 @@ extension NewChatTableDataSource {
         messageId: Int,
         and rowIndex: Int
     ) {
+        
         if var tableCellState = getTableCellStateFor(
             messageId: messageId,
             and: rowIndex
         ), let link = tableCellState.1.callLink?.link {
             startVideoCall(link: link, audioOnly: true)
         }
+        delegate?.shouldDismissKeyboard()
     }
     
     func didTapCallJoinVideoFor(
@@ -659,6 +661,8 @@ extension NewChatTableDataSource {
         ), let link = tableCellState.1.callLink?.link {
             startVideoCall(link: link, audioOnly: false)
         }
+        
+        delegate?.shouldDismissKeyboard()
     }
     
     func didTapMediaButtonFor(

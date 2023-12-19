@@ -341,7 +341,8 @@ extension TransactionMessage {
         _ threadMessages: [String],
         on chat: Chat
     ) -> [TransactionMessage] {
-        let predicate = NSPredicate(format: "chat == %@ AND uuid != nil AND (uuid IN %@)", chat, threadMessages)
+        let deletedStatus = TransactionMessage.TransactionMessageStatus.deleted.rawValue
+        let predicate = NSPredicate(format: "chat == %@ AND uuid != nil AND (uuid IN %@) AND status != %d", chat, threadMessages, deletedStatus)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
         

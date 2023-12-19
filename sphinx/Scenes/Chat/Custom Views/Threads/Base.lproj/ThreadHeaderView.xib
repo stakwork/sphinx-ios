@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,6 +25,7 @@
                 <outlet property="mediaView" destination="WWV-AV-Cde" id="06b-Lw-1R3"/>
                 <outlet property="messageAndMediaContainer" destination="uCJ-WU-6wC" id="z75-1m-RpH"/>
                 <outlet property="messageAndMediaLabel" destination="9vG-7s-Jjx" id="2yX-SU-NLD"/>
+                <outlet property="messageBoostView" destination="GRW-cL-HOU" id="RHA-4Z-98g"/>
                 <outlet property="messageLabel" destination="8kj-a0-Pez" id="uZe-eq-IIO"/>
                 <outlet property="messageLabelContainer" destination="R9e-fE-0M9" id="nvv-Zq-6CA"/>
                 <outlet property="senderAvatarView" destination="YqN-bc-nSd" id="nWo-hv-blu"/>
@@ -187,7 +188,18 @@
                                 <constraint firstItem="WhV-eI-qQj" firstAttribute="top" secondItem="uCJ-WU-6wC" secondAttribute="top" id="hpi-Ab-pcD"/>
                             </constraints>
                         </view>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GRW-cL-HOU" customClass="NewMessageBoostView" customModule="sphinx" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="408" height="41"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="41" id="tTq-K1-eNJ"/>
+                            </constraints>
+                        </view>
                     </subviews>
+                    <constraints>
+                        <constraint firstItem="GRW-cL-HOU" firstAttribute="leading" secondItem="xR6-9r-2YQ" secondAttribute="leading" id="XUK-Bc-rxQ"/>
+                        <constraint firstAttribute="trailing" secondItem="GRW-cL-HOU" secondAttribute="trailing" id="sK6-KY-yCf"/>
+                    </constraints>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohO-Y5-CVq">
                     <rect key="frame" x="0.0" y="65" width="408" height="0.0"/>

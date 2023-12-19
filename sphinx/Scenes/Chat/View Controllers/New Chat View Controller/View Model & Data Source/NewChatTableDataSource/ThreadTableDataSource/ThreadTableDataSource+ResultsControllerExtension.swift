@@ -138,6 +138,9 @@ extension ThreadTableDataSource {
         }
         
         if let threadOriginalMessage = threadOriginalMessage {
+            let boostMessagesMap = getBoostMessagesMapFor(messages: [threadOriginalMessage])
+            let boostsMessages = (threadOriginalMessage.uuid != nil) ? (boostMessagesMap[threadOriginalMessage.uuid!] ?? []) : []
+            
             array.append(
                 MessageTableCellState(
                     message: threadOriginalMessage,
@@ -145,6 +148,8 @@ extension ThreadTableDataSource {
                     owner: owner,
                     contact: contact,
                     tribeAdmin: admin,
+                    bubbleState: MessageTableCellState.BubbleState.Isolated,
+                    boostMessages: boostsMessages,
                     isThreadHeaderMessage: true
                 )
             )

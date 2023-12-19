@@ -43,6 +43,7 @@ extension SphinxOnionManager{//contacts related
     
     func parseContactInfoString(routeHint:String)->(String,String,String)?{
         let components = routeHint.split(separator: "_").map({String($0)})
+        if components.count != 3 {return nil}
         return (components.count == 3) ? (components[0],components[1],components[2]) : nil
     }
     
@@ -99,6 +100,30 @@ extension SphinxOnionManager{//contacts related
 //        catch{
 //            print("error: \(error)")
 //        }
+    }
+    
+    func createNewContact(
+        pubkey:String,
+        nickname:String?=nil,
+        photo_url:String?=nil,
+        person:String? = nil
+    ) -> UserContact?{
+        let contact = UserContact(context: managedContext)
+        contact.publicKey = pubkey//
+        contact.isOwner = false//
+        contact.nickname = nickname
+        contact.createdAt = Date()
+        contact.newMessages = 0
+        contact.status = UserContact.Status.Pending.rawValue
+        contact.createdAt = Date()
+        contact.newMessages = 0
+        contact.createdAt = Date()
+        contact.fromGroup = false
+        contact.privatePhoto = false
+        contact.tipAmount = 0
+        contact.blocked = false
+        
+        return contact
     }
     
     func createNewContact(

@@ -350,12 +350,8 @@ extension DashboardRootViewController {
                 return
               }
             som.mqtt.didConnectAck = {_, _ in
-                som.subscribeToMyTopics(pubkey: myPubkey, idx: 0)
-                som.getUnreadOkKeyMessages()
-                som.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-                    som.processMqttMessages(message: receivedMessage)
-                }
-            }            
+                som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
+            }
         })
     }
     

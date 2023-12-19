@@ -9,6 +9,7 @@
 import Foundation
 import MessagePack
 import CocoaMQTT
+import ObjectMapper
 
 
 extension SphinxOnionManager {
@@ -32,8 +33,9 @@ extension SphinxOnionManager {
         
         if let mci = rr.myContactInfo{
             let components = mci.split(separator: "_").map({String($0)})
-            if components.count == 3{
-                createSelfContact(scid: components[2], serverPubkey: components[1],myOkKey: components[0])
+            if let components = parseContactInfoString(routeHint: mci),
+               UserContact.getContactWithDisregardStatus(pubkey: components.0) == nil{//only add this if we don't already have a "self" contact
+                createSelfContact(scid: components.2, serverPubkey: components.1,myOkKey: components.0)
             }
         }
         
@@ -41,31 +43,44 @@ extension SphinxOnionManager {
             NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : balance]))
         }
         
-        // set your balance
-    //          // incoming message json
-    //          if (rr.msg) {
-    //            // any time there is a "msg"
-    //            // there will also be a "msg_uuid" and "msg_index"
-    //            console.log("=> received msg", rr.msg, rr.msg_uuid, rr.msg_index);
-    //          }
-    //          // incoming sender info json
-    //          if (rr.msg_sender) {
-    //            // you can parse this JSON, and check the "pubkey" field
-    //            // to see if its new or updated or not.
-    //            console.log("=> received msg_sender", rr.msg_sender);
-    //          }
-    //          // sent
-    //          if (rr.sent_status) {
-    //            console.log("=> sent_status", rr.sent_status);
-    //          }
-    //          // settled
-    //          if (rr.settled_status) {
-    //            console.log("=> settled_status", rr.settled_status);
-    //          }
-    //          // incoming error string?
-    //          if (rr.error) {
-    //            console.log("=> error", rr.error);
-    //          }
+        if let message = rr.msg{
+            print(message)
+        }
+        
+        if let sender = rr.msgSender,
+           let csr = ContactServerResponse(JSONString: sender),
+           let senderPubkey = csr.pubkey{
+            print(sender)
+            if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
+                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
+                
+                //TODO: make it check if they're the same before doing DB write
+                existingContact.nickname = csr.alias
+                CoreDataManager.sharedManager.saveContext()
+                
+            }
+            else if let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){
+                
+                //NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
+                
+                DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {//give new contact time to take to DB
+                    self.sendKeyExchangeMsg(isInitiatorMe: false, to: newContactRequest)
+                })
+            }
+        }
+        
+        if let sentStatus = rr.sentStatus{
+            
+        }
+        
+        if let settledStatus = rr.settledStatus{
+            
+        }
+        
+        if let error = rr.error {
+            
+        }
+        
     }
 
     func pushRRTopic(topic:String,payloadData:Data?){
@@ -149,4 +164,22 @@ extension SphinxOnionManager {
         mutationKeys = keys
     }
 
+}
+
+
+struct ContactServerResponse: Mappable {
+    var pubkey: String?
+    var alias: String?
+    var photoUrl: String?
+    var person: String?
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        pubkey    <- map["pubkey"]
+        alias     <- map["alias"]
+        photoUrl  <- map["photo_url"]
+        person    <- map["person"]
+    }
+    
 }

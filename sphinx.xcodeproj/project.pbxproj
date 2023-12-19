@@ -702,6 +702,7 @@
 		CE9A185C2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9A185B2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift */; };
 		CEA2ED152A12D6D000DAC671 /* StorageSummaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */; };
 		CEA2ED172A12D6F700DAC671 /* StorageSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */; };
+		CEAAE28B2B31F119009B283B /* SphinxOnionManager+HandleStateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAAE28A2B31F119009B283B /* SphinxOnionManager+HandleStateExtension.swift */; };
 		CEBF0D032975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */; };
 		CEBF0D052975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */; };
 		CEBF0D07297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */; };
@@ -1750,6 +1751,7 @@
 		CE9A185B2A1D7AF900F176DE /* ProfileManageStorageSourceDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManageStorageSourceDetailsVM.swift; sourceTree = "<group>"; };
 		CEA2ED142A12D6D000DAC671 /* StorageSummaryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StorageSummaryView.xib; sourceTree = "<group>"; };
 		CEA2ED162A12D6F700DAC671 /* StorageSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSummaryView.swift; sourceTree = "<group>"; };
+		CEAAE28A2B31F119009B283B /* SphinxOnionManager+HandleStateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+HandleStateExtension.swift"; sourceTree = "<group>"; };
 		CEBC3A132AFEA1F20081DB6F /* sphinx 46.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 46.xcdatamodel"; sourceTree = "<group>"; };
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
@@ -3964,6 +3966,7 @@
 				CE655AE12B1F88B90063518D /* SphinxOnionManager+ChatExtension.swift */,
 				CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */,
 				CE887EF92B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift */,
+				CEAAE28A2B31F119009B283B /* SphinxOnionManager+HandleStateExtension.swift */,
 				474C7A5328D3A7A1007A3E17 /* Sphinxrs-Bridging-Header.h */,
 				474C7A5228D3A7A1007A3E17 /* sphinxrs.swift */,
 				474C7A5428D3A7A1007A3E17 /* sphinxrsFFI.h */,
@@ -5252,6 +5255,7 @@
 				F30884A92699181200CADDEB /* API+KarmaPurchaseUtils.swift in Sources */,
 				4787F8982478112F00CCE8B9 /* ChatAvatarView.swift in Sources */,
 				CE80EF692A0D814B007ED3A3 /* CachedMedia+CoreDataClass.swift in Sources */,
+				CEAAE28B2B31F119009B283B /* SphinxOnionManager+HandleStateExtension.swift in Sources */,
 				47308E0E24FEE6E700FFAC6F /* SocketIOClientConfiguration.swift in Sources */,
 				CE842DF12992D0F400620AD3 /* BadgeTemplate.swift in Sources */,
 				475DD30C2A1291F900F92173 /* NewChatViewController+ChatHeaderDelegateExtension.swift in Sources */,

@@ -36,6 +36,7 @@ class ThreadHeaderView : UIView {
     @IBOutlet weak var messageAndMediaContainer: UIView!
     @IBOutlet weak var messageAndMediaLabel: UILabel!
     @IBOutlet weak var mediaView: ThreadMediaView!
+    @IBOutlet weak var messageBoostView: NewMessageBoostView!
     
     @IBOutlet weak var senderContainer: UIView!
     @IBOutlet weak var senderNameLabel: UILabel!
@@ -43,6 +44,7 @@ class ThreadHeaderView : UIView {
     @IBOutlet weak var senderAvatarView: ChatAvatarView!
     
     var isExpanded : Bool = false
+    var isBoosted: Bool = false
     
     var viewToShow: UIView! = nil
     
@@ -81,6 +83,10 @@ class ThreadHeaderView : UIView {
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData)
+        
+        if let bubble = mutableMessageCellState.bubble {
+            configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
+        }
     }
     
     func configureWith(
@@ -229,6 +235,18 @@ class ThreadHeaderView : UIView {
         }
     }
     
+    func configureWith(
+        boosts: BubbleMessageLayoutState.Boosts?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        isBoosted = false
+        
+        if let boosts = boosts {
+            messageBoostView.configureWith(boosts: boosts, and: bubble)
+            isBoosted = true
+        }
+    }
+    
     func toggleThreadHeaderView(expanded: Bool) {
         let newAlpha = expanded ? 1.0 : 0.0
         if newAlpha == senderContainer.alpha {
@@ -238,17 +256,21 @@ class ThreadHeaderView : UIView {
         if expanded {
             self.senderContainer.isHidden = false
             self.viewToShow.isHidden = false
+            self.messageBoostView.isHidden = !isBoosted
             
             UIView.animate(withDuration: 0.2, animations: {
                 self.senderContainer.alpha = 1.0
                 self.viewToShow.alpha = 1.0
+                self.messageBoostView.alpha = 1.0
             })
         } else {
             self.viewToShow.alpha = 0.0
             self.viewToShow.isHidden = true
+            self.messageBoostView.isHidden = true
             
             UIView.animate(withDuration: 0.2, animations: {
                 self.senderContainer.alpha = 0.0
+                self.messageBoostView.alpha = 0.0
             }, completion: { _ in
                 self.senderContainer.isHidden = true
             })

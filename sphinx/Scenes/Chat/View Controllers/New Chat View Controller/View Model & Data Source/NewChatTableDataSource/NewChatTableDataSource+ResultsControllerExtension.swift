@@ -499,7 +499,7 @@ extension NewChatTableDataSource {
             return [:]
         }
         
-        let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
+        let messageUUIDs: [String] = messages.filter({ !$0.isDeleted() }).map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
         let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
         
         var threadMessagesMap: [String: [TransactionMessage]] = [:]

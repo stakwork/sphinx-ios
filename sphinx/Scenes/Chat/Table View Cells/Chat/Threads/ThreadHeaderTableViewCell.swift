@@ -35,6 +35,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var mediaMessageView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView!
+    @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var messageContainer: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var senderNameLabel: UILabel!
@@ -73,6 +74,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         fileDetailsView.isHidden = true
         messageContainer.isHidden = true
         audioMessageView.isHidden = true
+        messageBoostView.isHidden = true
     }
     
     func configureWith(
@@ -100,6 +102,10 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData)
+        
+        if let bubble = mutableMessageCellState.bubble {
+            configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
+        }
     }
     
     func configureWith(
@@ -291,6 +297,16 @@ class ThreadHeaderTableViewCell: UITableViewCell {
                     )
                 }
             }
+        }
+    }
+    
+    func configureWith(
+        boosts: BubbleMessageLayoutState.Boosts?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let boosts = boosts {
+            messageBoostView.configureWith(boosts: boosts, and: bubble)
+            messageBoostView.isHidden = false
         }
     }
     

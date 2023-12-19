@@ -160,7 +160,7 @@ extension ConnectionCodeSignupHandling {
         presentConnectingLoadingScreenVC()
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
             let som = SphinxOnionManager.sharedInstance
-            if let _ = som.currentServer,
+            if //let _ = som.currentServer,
                let contact = som.pendingContact,
                contact.isOwner == true{
                 if let vc = self as? NewUserSignupFormViewController{

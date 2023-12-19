@@ -144,6 +144,7 @@ extension SphinxOnionManager{//contacts related
         return contact
     }
     
+    
     func processContact(from mqttTopic:String, retrievedCredentials: SphinxOnionBrokerResponse){
         guard let topicParams = getValidatedRegisterTopicParams(topic:mqttTopic),
               let scid = retrievedCredentials.scid,

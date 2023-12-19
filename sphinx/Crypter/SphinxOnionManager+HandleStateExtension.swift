@@ -30,11 +30,18 @@ extension SphinxOnionManager {
             pushRRTopic(topic: topic2, payloadData: rr.payload2)
         }
         
+        if let mci = rr.myContactInfo{
+            let components = mci.split(separator: "_").map({String($0)})
+            if components.count == 3{
+                createSelfContact(scid: components[2], serverPubkey: components[1],myOkKey: components[0])
+            }
+        }
+        
+        if let balance = rr.newBalance{
+            NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : balance]))
+        }
+        
         // set your balance
-    //          if (rr.new_balance || rr.new_balance === BigInt(0)) {
-    //            console.log("===> BALANCE", Number(rr.new_balance));
-    //            BALANCE = Number(rr.new_balance);
-    //          }
     //          // incoming message json
     //          if (rr.msg) {
     //            // any time there is a "msg"
@@ -46,12 +53,6 @@ extension SphinxOnionManager {
     //            // you can parse this JSON, and check the "pubkey" field
     //            // to see if its new or updated or not.
     //            console.log("=> received msg_sender", rr.msg_sender);
-    //          }
-    //          // print my contact info
-    //          if (rr.my_contact_info) {
-    //            // this comes as PUBKEY_ROUTEHINT (routing = LSP_SCID)
-    //            // you can save this onto your "owner" contact record.
-    //            console.log("=> my_contact_info", rr.my_contact_info);
     //          }
     //          // sent
     //          if (rr.sent_status) {

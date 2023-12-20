@@ -109,6 +109,7 @@ extension SphinxOnionManager{//contacts related
         person:String? = nil
     ) -> UserContact?{
         let contact = UserContact(context: managedContext)
+        contact.id = UUID().hashValue
         contact.publicKey = pubkey//
         contact.isOwner = false//
         contact.nickname = nickname

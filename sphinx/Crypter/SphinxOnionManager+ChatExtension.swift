@@ -48,16 +48,18 @@ extension SphinxOnionManager{
     }
     
     func processPlaintextMessage(message:PlaintextMessageFromServer){
-        guard let content = message.content,
+        guard let indexString = message.index,
+            let index = Int(indexString),
+            TransactionMessage.getMessageWith(id: index) == nil,
+            let content = message.content,
 //              let amount = message.amount,
               let pubkey = message.senderPubkey,
-              let indexString = message.index,
-              let index = Int(indexString),
               let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
               let chat = contact.getChat(),
               let uuid = message.uuid else{
             return //error getting values
         }
+        
         let newMessage = TransactionMessage(context: managedContext)
         newMessage.id = index
         newMessage.uuid = uuid
@@ -74,6 +76,8 @@ extension SphinxOnionManager{
         newMessage.messageContent = content
         newMessage.chat = chat
         managedContext.saveContext()
+        
+        UserData.sharedInstance.setLastMessageIndex(index: index)
     }
     
 

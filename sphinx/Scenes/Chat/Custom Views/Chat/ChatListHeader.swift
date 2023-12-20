@@ -149,9 +149,6 @@ class ChatListHeader: UIView {
             som.sendMessage(to: contact, content: "Sphinx is awesome.")
         }
         
-        
-        //SphinxOnionManager.sharedInstance.getAllUnreadMessages()
-//        UserContact.deleteAll()
         return
         
 //        switch(status) {

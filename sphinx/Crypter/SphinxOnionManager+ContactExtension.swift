@@ -59,8 +59,7 @@ extension SphinxOnionManager{//contacts related
             return
         }
         
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-          let seed = getAccountSeed(mnemonic: mnemonic),
+        guard let seed = getAccountSeed(),
               let selfContact = UserContact.getSelfContact()
         else{
             return
@@ -143,39 +142,7 @@ extension SphinxOnionManager{//contacts related
         
         return contact
     }
-    
-    
-    func processContact(from mqttTopic:String, retrievedCredentials: SphinxOnionBrokerResponse){
-        guard let topicParams = getValidatedRegisterTopicParams(topic:mqttTopic),
-              let scid = retrievedCredentials.scid,
-              let serverPubkey = retrievedCredentials.serverPubkey,
-              let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = getAccountSeed(mnemonic: mnemonic),
-              let myPubkey = getAccountOnlyKeysendPubkey(seed: seed) else{
-            AlertHelper.showAlert(title: "pub.key.options-add.contact.error.title".localized, message: "pub.key.options-add.contact.error.message".localized)
-              return
-          }
-        if(mqttTopic.contains(myPubkey)){//"self" contact case
-            let myOkKey = topicParams[0]
-            createSelfContact(scid: scid, serverPubkey: serverPubkey,myOkKey: myOkKey)
-            saveLSPServerData(retrievedCredentials: retrievedCredentials)//only save LSP if it's a self contact
-        }
-        else if let index = Int(topicParams[1]),
-                let existingContact = UserContact.getContactWith(indices: [index]).first{
-            NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactIndex" : existingContact.publicKey]))
-            existingContact.contactRouteHint = "\(serverPubkey)_\(scid)"
-            existingContact.scid = scid
-            CoreDataManager.sharedManager.saveContext()
-            
-            DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {//give new contact time to take to DB
-                self.sendKeyExchangeMsg(isInitiatorMe: true, to: existingContact)
-            })
-            
-        }
-        else{//falls thorugh & should not hit..throw error
-            print("error")
-        }
-    }
+
     
     func createChat(for contact:UserContact){
         let contactID = NSNumber(value: contact.id)

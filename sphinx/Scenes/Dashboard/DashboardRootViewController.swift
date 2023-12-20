@@ -333,8 +333,7 @@ extension DashboardRootViewController {
         
         
         let som = SphinxOnionManager.sharedInstance
-        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-              let seed = som.getAccountSeed(mnemonic: mnemonic),
+        guard let seed = som.getAccountSeed(),
               let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
               let my_xpub = som.getAccountXpub(seed: seed)
         else{
@@ -351,6 +350,7 @@ extension DashboardRootViewController {
               }
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
+                som.getAllUnreadMessages()
             }
         })
     }

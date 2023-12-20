@@ -694,14 +694,15 @@ extension DashboardRootViewController {
         shouldAnimate: Bool = true,
         didRetry:Bool = false
     ) {
-        let contact = contact ?? chat?.getContact()
+        
+        let chatContact = contact ?? chat?.getContact()
 
         if handleInvite(for: contact) {
             return
         }
         
         let chatVC = NewChatViewController.instantiate(
-            contactId: contact?.id,
+            contactId: chatContact?.id,
             chatId: chat?.id,
             chatListViewModel: chatsListViewModel
         )

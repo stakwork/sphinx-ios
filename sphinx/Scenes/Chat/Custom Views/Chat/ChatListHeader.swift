@@ -144,7 +144,8 @@ class ChatListHeader: UIView {
         var message: String? = nil
         
         let som = SphinxOnionManager.sharedInstance
-        for contact in UserContact.getAll(){
+        let selfContact = UserContact.getSelfContact()
+        for contact in UserContact.getAll().filter({$0.publicKey != selfContact?.publicKey}){
             som.sendMessage(to: contact, content: "Sphinx is awesome.")
         }
         

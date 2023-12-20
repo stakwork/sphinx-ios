@@ -68,10 +68,8 @@ extension SphinxOnionManager{
         }
         
         do{
-            let state = try send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msg_type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
-            if let sm = state.stateMp{
-                let _ = storeOnionState(inc: sm.bytes)
-            }
+            let rr = try send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msg_type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
+            handleRunReturn(rr: rr)
         }
         catch{
             

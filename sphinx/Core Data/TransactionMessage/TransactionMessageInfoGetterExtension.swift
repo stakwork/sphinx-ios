@@ -602,6 +602,15 @@ extension TransactionMessage {
             )
         }
         
+        if let uuid = self.uuid, let chat = self.chat {
+            ///Remove flag/delete for thread original message
+            let threadMessages = TransactionMessage.getThreadMessagesFor([uuid], on: chat)
+            
+            if threadMessages.count > 1 {
+                return options
+            }
+        }
+        
         if isFlagActionAllowed {
             options.append(
                 .init(

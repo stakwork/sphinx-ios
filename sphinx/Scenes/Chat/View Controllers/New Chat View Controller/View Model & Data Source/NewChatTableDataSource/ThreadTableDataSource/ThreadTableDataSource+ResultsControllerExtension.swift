@@ -162,6 +162,8 @@ extension ThreadTableDataSource {
         delegate?.configureNewMessagesIndicatorWith(
             newMsgCount: messages.count
         )
+        
+        delegate?.shouldReloadThreadHeaderView()
     }
     
     override func getFetchRequestFor(

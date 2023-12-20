@@ -23,6 +23,7 @@ protocol ThreadHeaderTableViewCellDelegate: class {
     func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     
     func didTapOnLink(_ link: String)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
 }
 
 class ThreadHeaderTableViewCell: UITableViewCell {
@@ -63,6 +64,43 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         audioMessageView.clipsToBounds = true
         
         mediaMessageView.removeMargin()
+        
+        addLongPressRescognizer()
+    }
+    
+    func addLongPressRescognizer() {
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delaysTouchesBegan = true
+        
+        contentView.addGestureRecognizer(lpgr)
+    }
+    
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        if (gestureReconizer.state == .began) {
+            didLongPressOnCell()
+        }
+    }
+    
+    func didLongPressOnCell() {
+        if let messageId = messageId {
+            
+            let kMargin: CGFloat = 16
+            let contentViewFrame = contentView.frame
+            
+            let frame = CGRect(
+                x: contentViewFrame.origin.x,
+                y: contentViewFrame.origin.y - kMargin,
+                width: contentViewFrame.size.width,
+                height: contentViewFrame.size.height - differenceViewHeightConstraint.constant + kMargin
+            )
+            
+            delegate?.didLongPressOn(
+                cell: self,
+                with: messageId,
+                bubbleViewRect: frame
+            )
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

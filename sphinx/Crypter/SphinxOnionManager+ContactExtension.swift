@@ -51,55 +51,29 @@ extension SphinxOnionManager{//contacts related
         contactInfo:String,
         nickname:String?=nil
     ){
-//        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
-//            return
-//        }
-////        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
-////            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
-////            return
-////        }
-//        
-//        let routeHint = "\(recipLspPubkey)_\(scid)"
-//        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
-//              let seed = getAccountSeed(mnemonic: mnemonic),
-//              let xpub = getAccountXpub(seed: seed),
-//              let nextIndex = UserContact.getNextAvailableContactIndex()
-//        else{
-//            return
-//        }
-//        let idx = UInt32(nextIndex)
-//        let time = getEntropyString()
-//        do{
-//            let childPubKey = try pubkeyFromSeed(seed: seed, idx: idx, time: time, network: network)
-//            let success = connectToBroker(seed: seed, xpub: xpub)
-//            if (success == false){return}
-//            
-//            createNewContact(pubkey: recipientPubkey, childPubkey: childPubKey, routeHint: routeHint, idx: nextIndex,nickname:nickname)
-//            managedContext.saveContext()
-//            
-//            mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-//                self.processMqttMessages(message: receivedMessage)
-//            }
-//            
-//            //subscribe to relevant topics
-//            mqtt.didConnectAck = { _, _ in
-//                //self.showSuccessWithMessage("MQTT connected")
-//                print("SphinxOnionManager: MQTT Connected")
-//                print("mqtt.didConnectAck")
-//                self.mqtt.subscribe([
-//                    ("\(childPubKey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
-//                ])
-//                self.mqtt.publish(
-//                    CocoaMQTTMessage(
-//                        topic: "\(childPubKey)/\(idx)/req/register",
-//                        payload: []
-//                    )
-//                )
-//            }
-//        }
-//        catch{
-//            print("error: \(error)")
-//        }
+        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
+            return
+        }
+        if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
+            AlertHelper.showAlert(title: "Error", message: "Contact already exists for \(existingContact.nickname ?? "this contact")")
+            return
+        }
+        
+        guard let mnemonic = UserData.sharedInstance.getMnemonic(),
+          let seed = getAccountSeed(mnemonic: mnemonic),
+              let selfContact = UserContact.getSelfContact()
+        else{
+            return
+        }
+        
+        do{
+            let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: selfContact.nickname ?? "", myImg: "", amtMsat: 0)
+            handleRunReturn(rr: rr)
+        }
+        catch{
+            
+        }
+        
     }
     
     func createNewContact(

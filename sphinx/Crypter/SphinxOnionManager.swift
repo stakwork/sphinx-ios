@@ -335,57 +335,6 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func processPlaintextMessage(messageJSON:JSON,index:Int?=nil){
-        print("processPlaintextMessage:\(messageJSON)")
-        guard let messageDict = messageJSON.dictionaryObject,
-              let id = index as? Int,
-              TransactionMessage.getMessagesWith(ids: [id]).first == nil else{
-            return //do nothing if we already have the message in the DB
-        }
-              
-                
-        guard let message = messageDict["message"] as? [String:String],
-              let content = message["content"],
-              let sender = messageDict["sender"] as? [String:String],
-              let uuid = messageDict["uuid"] as? String,
-              let pubkey = sender["pubkey"] else{
-            return
-        }
-        
-        NotificationCenter.default.post(name: .newOnionMessageWasReceived, object: nil, userInfo: ["messageDict": messageDict])
-        
-        guard let contact = UserContact.getContactWith(pubkey: pubkey),
-            let chat = contact.getChat() else{
-            return
-        }
-    
-        let newMessage = TransactionMessage(context: managedContext)
-        newMessage.id = id//Int.random(in: 1...10_000_000_000)
-        newMessage.uuid = uuid
-        newMessage.createdAt = Date()
-        newMessage.updatedAt = Date()
-        newMessage.date = Date()
-        newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-        newMessage.type = TransactionMessage.TransactionMessageType.message.rawValue
-        newMessage.encrypted = true
-        newMessage.senderId = contact.id
-        newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
-        newMessage.push = true
-        newMessage.seen = false
-        newMessage.messageContent = content
-        newMessage.chat = chat
-        managedContext.saveContext()
-        
-        //update index:
-        if let lastLocalIndex = UserData.sharedInstance.getLastMessageIndex(),
-           lastLocalIndex < index ?? 0{
-            UserData.sharedInstance.setLastMessageIndex(index: index ?? 0)
-        }
-        else if let index = index{
-            UserData.sharedInstance.setLastMessageIndex(index: index)
-        }
-    }
-    
     func processStreamTopicMessage(message:CocoaMQTTMessage){
 //        let tops = message.topic.split(separator: "/").map({String($0)})
 //        guard let mnemonic = UserData.sharedInstance.getMnemonic(),

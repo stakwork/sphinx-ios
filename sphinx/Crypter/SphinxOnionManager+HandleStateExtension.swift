@@ -10,6 +10,7 @@ import Foundation
 import MessagePack
 import CocoaMQTT
 import ObjectMapper
+import SwiftyJSON
 
 
 extension SphinxOnionManager {
@@ -44,6 +45,16 @@ extension SphinxOnionManager {
         }
         
         if let message = rr.msg{
+            if var plaintextMessage = PlaintextMessageFromServer(JSONString: message),
+               let sender = rr.msgSender,
+               let uuid = rr.msgUuid,
+               let index = rr.msgIndex,
+               let csr = ContactServerResponse(JSONString: sender){
+                plaintextMessage.senderPubkey = csr.pubkey
+                plaintextMessage.uuid = uuid
+                plaintextMessage.index = index
+                processPlaintextMessage(message: plaintextMessage)
+            }
             print("handleRunReturn message: \(message)")
         }
         
@@ -178,6 +189,23 @@ struct ContactServerResponse: Mappable {
         alias     <- map["alias"]
         photoUrl  <- map["photo_url"]
         person    <- map["person"]
+    }
+    
+}
+
+
+struct PlaintextMessageFromServer: Mappable {
+    var content:String?
+    var amount:String?
+    var senderPubkey:String?=nil
+    var uuid:String?=nil
+    var index:String?=nil
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        content    <- map["content"]
+        amount     <- map["amount"]
     }
     
 }

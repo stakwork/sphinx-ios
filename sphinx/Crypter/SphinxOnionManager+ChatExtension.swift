@@ -8,40 +8,9 @@
 
 import Foundation
 import CocoaMQTT
+import SwiftyJSON
 
 extension SphinxOnionManager{
-    
-    func constructMessageJSONString(recipPubkey:String,
-                                        recipRouteHint:String,
-                                        myOkKey:String,
-                                        selfRouteHint:String,
-                                        selfContact:UserContact,
-                                        recipContact:UserContact,
-                                        content:String)->(String,String)?{
-        let serverPubkey = recipRouteHint.split(separator: "_")[0]
-        let senderInfo = getSenderInfo(for: recipContact,myOkKey:myOkKey,selfRouteHint: selfRouteHint,selfContact:selfContact)
-                
-        guard let hopsJSONString = getHopsJSON(serverPubkey: String(serverPubkey), recipPubkey: recipPubkey) else{
-            return nil
-        }
-        
-        let msg : [String:Any] = [
-            "type": SphinxMsgTypes.PlaintextMessage.rawValue,
-            "sender": senderInfo,
-            "message":["content":content]
-        ]
-        
-        guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
-              let contentJSONString = String(data: contentData, encoding: .utf8)
-               else{
-            return nil
-        }
-        
-        (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .keyExchangeResponseMessageWasConstructed, object: nil, userInfo: ["hopsJSON" : hopsJSONString, "contentStringJSON": senderInfo])) : ()
-        
-        return (contentJSONString,hopsJSONString)
-    }
-    
     
     func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false)->SphinxMsgError?{
         guard let seed = getAccountSeed() else{
@@ -77,4 +46,35 @@ extension SphinxOnionManager{
 
         return nil
     }
+    
+    func processPlaintextMessage(message:PlaintextMessageFromServer){
+        guard let content = message.content,
+//              let amount = message.amount,
+              let pubkey = message.senderPubkey,
+              let indexString = message.index,
+              let index = Int(indexString),
+              let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
+              let chat = contact.getChat(),
+              let uuid = message.uuid else{
+            return //error getting values
+        }
+        let newMessage = TransactionMessage(context: managedContext)
+        newMessage.id = index
+        newMessage.uuid = uuid
+        newMessage.createdAt = Date()
+        newMessage.updatedAt = Date()
+        newMessage.date = Date()
+        newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+        newMessage.type = TransactionMessage.TransactionMessageType.message.rawValue
+        newMessage.encrypted = true
+        newMessage.senderId = contact.id
+        newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
+        newMessage.push = true
+        newMessage.seen = false
+        newMessage.messageContent = content
+        newMessage.chat = chat
+        managedContext.saveContext()
+    }
+    
+
 }

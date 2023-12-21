@@ -42,7 +42,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             print("SphinxOnionManager: MQTT Connected")
             print("mqtt.didConnectAck")
             self.sphinxOnionManager.subscribeAndPublishMyTopics(pubkey: pubkey, idx: 0)
-            self.sphinxOnionManager.getUnreadOkKeyMessages(sinceIndex: 1, limit: 1)
+            //self.sphinxOnionManager.getUnreadOkKeyMessages(sinceIndex: 1, limit: 1)
         }
 
     }
@@ -111,7 +111,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         //2. Send message with random content
         let content = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000)
-        let stringContent = String(content)
+        //let stringContent = String(content)
         
         //sphinxOnionManager.sendMessage(to: contact, content: stringContent)
         

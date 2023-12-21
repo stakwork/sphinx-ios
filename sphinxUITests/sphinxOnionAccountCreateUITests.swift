@@ -263,7 +263,7 @@ final class sphinxOnionAccountCreateUITests: XCTestCase {
         XCTAssertTrue(pinButton1.exists)
         
         let requiredNumTaps = 12
-        for _ in 0..<(requiredNumTaps + 1){
+        for _ in 0..<(requiredNumTaps){
             usleep(useconds_t(500e3))
             if(pinButton1.exists){
                 pinButton1.tap()

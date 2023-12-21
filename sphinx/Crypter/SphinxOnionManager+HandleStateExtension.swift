@@ -44,8 +44,31 @@ extension SphinxOnionManager {
             NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : balance]))
         }
         
+        if let sender = rr.msgSender,
+           let csr = ContactServerResponse(JSONString: sender),
+           let senderPubkey = csr.pubkey{
+            print(sender)
+            let type = rr.msgType ?? 255
+            if type == 11 || true, // incoming key exchange confirmation
+               let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
+                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
+                existingContact.nickname = csr.alias
+                existingContact.status = UserContact.Status.Confirmed.rawValue
+                CoreDataManager.sharedManager.saveContext()
+            }
+            else if type == 10 || true, // incoming key exchange request
+                let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
+                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
+                newContactRequest.status = UserContact.Status.Confirmed.rawValue
+                createChat(for: newContactRequest)
+                print("\n\n\n handleRunReturn L64 - NEW CONTACT RECEIVED: \(newContactRequest)")
+                managedContext.saveContext()
+            }
+        }
+        
         if let message = rr.msg{
-            if var plaintextMessage = PlaintextMessageFromServer(JSONString: message),
+            if rr.msgType == 0,
+               var plaintextMessage = PlaintextMessageFromServer(JSONString: message),
                let sender = rr.msgSender,
                let uuid = rr.msgUuid,
                let index = rr.msgIndex,
@@ -56,25 +79,6 @@ extension SphinxOnionManager {
                 processPlaintextMessage(message: plaintextMessage)
             }
             print("handleRunReturn message: \(message)")
-        }
-        
-        if let sender = rr.msgSender,
-           let csr = ContactServerResponse(JSONString: sender),
-           let senderPubkey = csr.pubkey{
-            print(sender)
-            if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
-                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
-                existingContact.nickname = csr.alias
-                existingContact.status = UserContact.Status.Confirmed.rawValue
-                CoreDataManager.sharedManager.saveContext()
-            }
-            else if let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
-                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
-                newContactRequest.status = UserContact.Status.Confirmed.rawValue
-                createChat(for: newContactRequest)
-                print("\n\n\n handleRunReturn L64 - NEW CONTACT RECEIVED: \(newContactRequest)")
-                managedContext.saveContext()
-            }
         }
         
         if let sentStatus = rr.sentStatus{

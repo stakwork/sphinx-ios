@@ -463,6 +463,7 @@ public struct RunReturn {
     public var `payload2`: Data?
     public var `stateMp`: Data?
     public var `msg`: String?
+    public var `msgType`: UInt8?
     public var `msgUuid`: String?
     public var `msgIndex`: String?
     public var `msgSender`: String?
@@ -474,7 +475,7 @@ public struct RunReturn {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?) {
+    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?) {
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
         self.`topic1` = `topic1`
@@ -483,6 +484,7 @@ public struct RunReturn {
         self.`payload2` = `payload2`
         self.`stateMp` = `stateMp`
         self.`msg` = `msg`
+        self.`msgType` = `msgType`
         self.`msgUuid` = `msgUuid`
         self.`msgIndex` = `msgIndex`
         self.`msgSender` = `msgSender`
@@ -521,6 +523,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`msg` != rhs.`msg` {
             return false
         }
+        if lhs.`msgType` != rhs.`msgType` {
+            return false
+        }
         if lhs.`msgUuid` != rhs.`msgUuid` {
             return false
         }
@@ -557,6 +562,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`payload2`)
         hasher.combine(`stateMp`)
         hasher.combine(`msg`)
+        hasher.combine(`msgType`)
         hasher.combine(`msgUuid`)
         hasher.combine(`msgIndex`)
         hasher.combine(`msgSender`)
@@ -580,6 +586,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `payload2`: FfiConverterOptionData.read(from: &buf), 
             `stateMp`: FfiConverterOptionData.read(from: &buf), 
             `msg`: FfiConverterOptionString.read(from: &buf), 
+            `msgType`: FfiConverterOptionUInt8.read(from: &buf), 
             `msgUuid`: FfiConverterOptionString.read(from: &buf), 
             `msgIndex`: FfiConverterOptionString.read(from: &buf), 
             `msgSender`: FfiConverterOptionString.read(from: &buf), 
@@ -600,6 +607,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionData.write(value.`payload2`, into: &buf)
         FfiConverterOptionData.write(value.`stateMp`, into: &buf)
         FfiConverterOptionString.write(value.`msg`, into: &buf)
+        FfiConverterOptionUInt8.write(value.`msgType`, into: &buf)
         FfiConverterOptionString.write(value.`msgUuid`, into: &buf)
         FfiConverterOptionString.write(value.`msgIndex`, into: &buf)
         FfiConverterOptionString.write(value.`msgSender`, into: &buf)
@@ -982,6 +990,27 @@ public struct FfiConverterTypeSphinxError: FfiConverterRustBuffer {
 extension SphinxError: Equatable, Hashable {}
 
 extension SphinxError: Error { }
+
+fileprivate struct FfiConverterOptionUInt8: FfiConverterRustBuffer {
+    typealias SwiftType = UInt8?
+
+    public static func write(_ value: SwiftType, into buf: inout [UInt8]) {
+        guard let value = value else {
+            writeInt(&buf, Int8(0))
+            return
+        }
+        writeInt(&buf, Int8(1))
+        FfiConverterUInt8.write(value, into: &buf)
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> SwiftType {
+        switch try readInt(&buf) as Int8 {
+        case 0: return nil
+        case 1: return try FfiConverterUInt8.read(from: &buf)
+        default: throw UniffiInternalError.unexpectedOptionalTag
+        }
+    }
+}
 
 fileprivate struct FfiConverterOptionUInt16: FfiConverterRustBuffer {
     typealias SwiftType = UInt16?

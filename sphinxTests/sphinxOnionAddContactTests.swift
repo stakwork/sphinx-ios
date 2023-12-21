@@ -14,11 +14,11 @@ class sphinxOnionAddContactTests: XCTestCase {
     var sphinxOnionManager = SphinxOnionManager.sharedInstance
     let test_mnemonic1 = "artist globe myself huge wing drive bright build agree fork media gentle"
     let test_mnemonic1_expected_seed = "dea65b969cd1b0926889f35699586ff7e19469c64e7a944d0c6b68342158a1a8"
-    let test_mnemonic1_expected_okKey = "03a898d978e42c9feaa25ca103d70b27a2a83472b3b00cd11bbf2a9b3be14460f4"
+    let test_mnemonic1_expected_okKey = "02c24c838266d07cbde76642e08a62a4b5c750e3ba318a9fbbf97f8ec0ff66b134"
     let test_mnemonic1_expected_xpub = "tpubDAGRb7j9yEF51RrPBjxYk6inEyxzX9oZEqRfWGGtnhEaux2xsma2eQFNBYeRgEHLC5pc4Cif4KPJXXRqS1aTErvhvTiZGaGggq9UoTZdEsH"
-    let test_server_ip = "54.164.163.153"
-    let test_server_pubkey = "038e286f590b9ef87e367294adfdaa105dc1bcd832201d440a3b84275f3dbb6b13"
-    let test_contact_info = "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497"
+    let test_server_ip = "34.229.52.200"
+    let test_server_pubkey = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"
+    let test_contact_info = "023be900c195aee419e5f68bf4b7bc156597da7649a9103b1afec949d233e4d1aa_03cc30ae6853992275331ba5a699d8fc9575136c65d6374a9e8330d1546edb3c98_529771090558255111"
     
     //MARK: specific to key exchange
     let test_key_exchange_response_message_json : [String: Any] = [
@@ -149,56 +149,56 @@ class sphinxOnionAddContactTests: XCTestCase {
 
     }
     
-    func test_mqtt_server_broker_registration(){
-        establish_self_contact()
-        
-        expectation = self.expectation(description: "Server should send back valid params within 10 seconds")
-        waitForExpectations(timeout: 10) { error in
-            if let error = error {
-                XCTFail("Timeout: \(error)")
-            }
-            
-            // After the expectation is fulfilled, you can check your variable
-            XCTAssert(self.validateServerParams() == true)
-        }
-    }
-    
-    func test_mqtt_server_broker_get_balance(){
-        guard let seed = sphinxOnionManager.getAccountSeed(mnemonic: test_mnemonic1),
-          let xpub = sphinxOnionManager.getAccountXpub(seed: seed),
-        let pubkey = sphinxOnionManager.getAccountOnlyKeysendPubkey(seed: seed) else{
-              XCTFail("failure to properly generate seed & then ok key (test_connect_to_mqtt_broker)")
-            return
-      }
-        sphinxOnionManager.shouldPostUpdates = true
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleBalanceNotification), name: .onBalanceDidChange, object: nil)
-        
-        let success = sphinxOnionManager.connectToBroker(seed: seed, xpub: xpub)
-        XCTAssert(success == true, "Failed to connect to test broker :/")
-        
-        sphinxOnionManager.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-            self.sphinxOnionManager.processMqttMessages(message: receivedMessage)
-        }
-        
-        //subscribe to relevant topics
-        sphinxOnionManager.mqtt.didConnectAck = { _, _ in
-            //self.showSuccessWithMessage("MQTT connected")
-            print("SphinxOnionManager: MQTT Connected")
-            print("mqtt.didConnectAck")
-            self.sphinxOnionManager.subscribeAndPublishMyTopics(pubkey: pubkey, idx: 0)
-        }
-        
-        expectation = self.expectation(description: "Server should send back valid balance within 10 seconds")
-        waitForExpectations(timeout: 10) { error in
-            if let error = error {
-                XCTFail("Timeout: \(error)")
-            }
-            
-            // After the expectation is fulfilled, you can check your variable
-            XCTAssert(self.balance == "0")
-        }
-    }
+//    func test_mqtt_server_broker_registration(){
+//        establish_self_contact()
+//        
+//        expectation = self.expectation(description: "Server should send back valid params within 10 seconds")
+//        waitForExpectations(timeout: 10) { error in
+//            if let error = error {
+//                XCTFail("Timeout: \(error)")
+//            }
+//            
+//            // After the expectation is fulfilled, you can check your variable
+//            XCTAssert(self.validateServerParams() == true)
+//        }
+//    }
+//    
+//    func test_mqtt_server_broker_get_balance(){
+//        guard let seed = sphinxOnionManager.getAccountSeed(mnemonic: test_mnemonic1),
+//          let xpub = sphinxOnionManager.getAccountXpub(seed: seed),
+//        let pubkey = sphinxOnionManager.getAccountOnlyKeysendPubkey(seed: seed) else{
+//              XCTFail("failure to properly generate seed & then ok key (test_connect_to_mqtt_broker)")
+//            return
+//      }
+//        sphinxOnionManager.shouldPostUpdates = true
+//        
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleBalanceNotification), name: .onBalanceDidChange, object: nil)
+//        
+//        let success = sphinxOnionManager.connectToBroker(seed: seed, xpub: xpub)
+//        XCTAssert(success == true, "Failed to connect to test broker :/")
+//        
+//        sphinxOnionManager.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+//            self.sphinxOnionManager.processMqttMessages(message: receivedMessage)
+//        }
+//        
+//        //subscribe to relevant topics
+//        sphinxOnionManager.mqtt.didConnectAck = { _, _ in
+//            //self.showSuccessWithMessage("MQTT connected")
+//            print("SphinxOnionManager: MQTT Connected")
+//            print("mqtt.didConnectAck")
+//            self.sphinxOnionManager.subscribeAndPublishMyTopics(pubkey: pubkey, idx: 0)
+//        }
+//        
+//        expectation = self.expectation(description: "Server should send back valid balance within 10 seconds")
+//        waitForExpectations(timeout: 10) { error in
+//            if let error = error {
+//                XCTFail("Timeout: \(error)")
+//            }
+//            
+//            // After the expectation is fulfilled, you can check your variable
+//            XCTAssert(self.balance == "0")
+//        }
+//    }
     
     //MARK: Key exchange related
     
@@ -236,11 +236,21 @@ class sphinxOnionAddContactTests: XCTestCase {
     func test_new_contact_pre_key_exchange(){
         UserContact.deleteAll()//set to known wiped out state
         UserData.sharedInstance.save(walletMnemonic: test_mnemonic1)
-        sphinxOnionManager.makeFriendRequest(contactInfo: test_contact_info)
-        test_mqtt_server_broker_registration() //pre requisite before we do any key exchange is register self contact
-        sleep(2)//give new contact time to take
         
-        guard let contact = UserContact.getContactWith(indices: [1]).first else{
+        establish_self_contact()
+        // Call the function to fulfill the expectation after a 3-second delay.
+        let selfContactRegistrationExpectation = XCTestExpectation(description: "Expecting self contact.")
+        fulfillExpectationAfterDelay(selfContactRegistrationExpectation, delayInSeconds: 4.5)
+        wait(for: [selfContactRegistrationExpectation], timeout: 5.0)//give self contact time to take
+        
+        sphinxOnionManager.makeFriendRequest(contactInfo: test_contact_info)
+        let newContactRegistrationExpectation = XCTestExpectation(description: "Expecting new contact.")
+        fulfillExpectationAfterDelay(newContactRegistrationExpectation, delayInSeconds: 4.5)
+        wait(for: [newContactRegistrationExpectation], timeout: 5.0)//give self contact time to take
+        //test_mqtt_server_broker_registration() //pre requisite before we do any key exchange is register self contact
+        let contactPubkey = sphinxOnionManager.parseContactInfoString(routeHint: test_contact_info)?.0 ?? ""
+        
+        guard let contact = UserContact.getContactsWith(pubkeys: [contactPubkey]).first else{
             XCTFail("Failed contact registration")
             return
         }

@@ -216,6 +216,21 @@ class SphinxOnionManager : NSObject {
         }
     }
     
+    func fetchMyAccountFromState(){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        do{
+            let myPubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getEntropyString(), network: network)
+            let myFullAccount = try listContacts(state: loadOnionStateAsData())
+            print(myFullAccount)
+        }
+        catch{
+            
+        }
+        
+    }
+    
     
     func createMyAccount(mnemonic:String)->Bool{
         do{

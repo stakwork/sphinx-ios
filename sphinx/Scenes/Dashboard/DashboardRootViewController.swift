@@ -225,6 +225,8 @@ extension DashboardRootViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(sizeDidChange), name: .onSizeConfigurationChanged, object: nil)
         
         addAccessibilityIdentifiers()
+        
+        SphinxOnionManager.sharedInstance.fetchMyAccountFromState()
     }
     
     func addAccessibilityIdentifiers(){

@@ -51,6 +51,9 @@ protocol NewChatTableDataSourceDelegate : class {
     ///Invoices
     func shouldPayInvoiceFor(messageId: Int)
     
+    ///Calls
+    func shouldDismissKeyboard()
+    
     ///Messages search
     func isOnStandardMode() -> Bool
     func didFinishSearchingWith(matchesCount: Int, index: Int)

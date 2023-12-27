@@ -143,18 +143,18 @@ extension CustomSegmentedControl {
     
     private var selectorWidth: CGFloat {
         (
-            frame.width / CGFloat(self.buttonTitles.count)
+            UIScreen.main.bounds.width / CGFloat(self.buttonTitles.count)
         ) * selectorWidthRatio
     }
     
     
     private var selectorPosition: CGFloat {
         let selectedTabStartX = (
-            frame.width / CGFloat(buttonTitles.count)
+            UIScreen.main.bounds.width / CGFloat(buttonTitles.count)
         ) * CGFloat(selectedIndex)
 
         let offset = (
-            frame.width / CGFloat(self.buttonTitles.count)
+            UIScreen.main.bounds.width / CGFloat(self.buttonTitles.count)
             - selectorWidth
         ) * 0.5
         

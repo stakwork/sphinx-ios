@@ -102,7 +102,19 @@ extension SphinxOnionManager{
             }
             
             let result = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: challengeData)
-            return result.base64Encoded
+            if let base64Data = result.data(using: .utf8) {
+                let base64URLString = base64Data.base64EncodedString(options: .init(rawValue: 0))
+                    .replacingOccurrences(of: "+", with: "-")
+                    .replacingOccurrences(of: "/", with: "_")
+                    .trimmingCharacters(in: CharacterSet(charactersIn: "="))
+
+                // Now, 'base64URLString' contains the URL-safe Base64 string
+                print(base64URLString)
+                return base64URLString
+            } else {
+                // Handle the case where data encoding failed
+                return nil
+            }
         }
         catch{
             return nil

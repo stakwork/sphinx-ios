@@ -12,20 +12,7 @@ import SwiftyJSON
 
 extension SphinxOnionManager{
     
-    func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false)->SphinxMsgError?{
-        guard let seed = getAccountSeed() else{
-            return SphinxMsgError.credentialsError
-        }
-        
-        guard let selfContact = UserContact.getSelfContact(),
-              let nickname = selfContact.nickname,
-              let recipPubkey = recipContact.publicKey else{
-            return SphinxMsgError.contactDataError
-        }
-        
-        let msg_type = UInt8(SphinxMsgTypes.PlaintextMessage.rawValue)
-        let myImg = selfContact.avatarUrl ?? ""
-        
+    func formatMsg(content:String)->String?{
         let msg : [String:Any] = [
             "content":content
         ]
@@ -35,6 +22,26 @@ extension SphinxOnionManager{
                else{
             return nil
         }
+        
+        return contentJSONString
+    }
+    
+    func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false)->SphinxMsgError?{
+        guard let seed = getAccountSeed() else{
+            return SphinxMsgError.credentialsError
+        }
+        
+        guard let selfContact = UserContact.getSelfContact(),
+              let nickname = selfContact.nickname,
+              let recipPubkey = recipContact.publicKey,
+            let contentJSONString = formatMsg(content: content) else{
+            return SphinxMsgError.contactDataError
+        }
+        
+        let msg_type = UInt8(SphinxMsgTypes.PlaintextMessage.rawValue)
+        let myImg = selfContact.avatarUrl ?? ""
+        
+        
         
         do{
             let rr = try send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msg_type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
@@ -80,5 +87,28 @@ extension SphinxOnionManager{
         UserData.sharedInstance.setLastMessageIndex(index: index)
     }
     
+    
+    func signChallenge(challenge: String)->String? {
+        guard let seed = self.getAccountSeed() else{
+            return nil
+        }
+        do {
+            let msg : [String:Any] = [
+                "content":challenge
+            ]
+            
+            guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
+                  let contentJSONString = String(data: contentData, encoding: .utf8)
+                   else{
+                return nil
+            }
+            
+            let result = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: contentData)
+            return result
+        }
+        catch{
+            return nil
+        }
+    }
 
 }

@@ -12,6 +12,8 @@ import ObjectMapper
 import SwiftyJSON
 
 extension SphinxOnionManager{//contacts related
+    
+    //MARK: Contact Add helpers
     func saveLSPServerData(retrievedCredentials:SphinxOnionBrokerResponse){
         let server = Server(context: managedContext)
 
@@ -19,25 +21,6 @@ extension SphinxOnionManager{//contacts related
         server.ip = self.server_IP
         (shouldPostUpdates) ?  NotificationCenter.default.post(Notification(name: .onMQTTConnectionStatusChanged, object: nil, userInfo: ["server" : server])) : ()
         self.currentServer = server
-        managedContext.saveContext()
-    }
-    
-    func createSelfContact(scid:String,serverPubkey:String,myOkKey:String){
-        self.pendingContact = UserContact(context: managedContext)
-        self.pendingContact?.scid = scid
-        self.pendingContact?.isOwner = true
-        self.pendingContact?.index = 0
-        self.pendingContact?.id = 0
-        self.pendingContact?.publicKey = myOkKey
-        self.pendingContact?.routeHint = "\(serverPubkey)_\(scid)"
-        self.pendingContact?.status = UserContact.Status.Confirmed.rawValue
-        self.pendingContact?.childPubKey = "" // not possible for self
-        self.pendingContact?.newMessages = 0
-        self.pendingContact?.createdAt = Date()
-        self.pendingContact?.fromGroup = false
-        self.pendingContact?.privatePhoto = false
-        self.pendingContact?.tipAmount = 0
-        self.pendingContact?.blocked = false
         managedContext.saveContext()
     }
     
@@ -73,6 +56,30 @@ extension SphinxOnionManager{//contacts related
             
         }
         
+    }
+    
+    //MARK: END Contact Add helpers
+    
+    
+    //MARK: CoreData Helpers:
+    
+    func createSelfContact(scid:String,serverPubkey:String,myOkKey:String){
+        self.pendingContact = UserContact(context: managedContext)
+        self.pendingContact?.scid = scid
+        self.pendingContact?.isOwner = true
+        self.pendingContact?.index = 0
+        self.pendingContact?.id = 0
+        self.pendingContact?.publicKey = myOkKey
+        self.pendingContact?.routeHint = "\(serverPubkey)_\(scid)"
+        self.pendingContact?.status = UserContact.Status.Confirmed.rawValue
+        self.pendingContact?.childPubKey = "" // not possible for self
+        self.pendingContact?.newMessages = 0
+        self.pendingContact?.createdAt = Date()
+        self.pendingContact?.fromGroup = false
+        self.pendingContact?.privatePhoto = false
+        self.pendingContact?.tipAmount = 0
+        self.pendingContact?.blocked = false
+        managedContext.saveContext()
     }
     
     func createNewContact(
@@ -121,7 +128,7 @@ extension SphinxOnionManager{//contacts related
         chat.photoUrl = contact.avatarUrl
         chat.createdAt = Date()
     }
-    
+    //MARK: END CoreData Helpers
 }
 
 

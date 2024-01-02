@@ -97,14 +97,12 @@ extension SphinxOnionManager{
                 "content":challenge
             ]
             
-            guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
-                  let contentJSONString = String(data: contentData, encoding: .utf8)
-                   else{
+            guard let challengeData = Data(base64Encoded: challenge) else{
                 return nil
             }
             
-            let result = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: contentData)
-            return result
+            let result = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: challengeData)
+            return result.base64Encoded
         }
         catch{
             return nil

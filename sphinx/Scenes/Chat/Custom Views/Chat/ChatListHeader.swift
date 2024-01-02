@@ -143,11 +143,45 @@ class ChatListHeader: UIView {
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
         var message: String? = nil
         
-        let som = SphinxOnionManager.sharedInstance
-        let selfContact = UserContact.getSelfContact()
-        for contact in UserContact.getAll().filter({$0.publicKey != selfContact?.publicKey}){
-            som.sendMessage(to: contact, content: "Sphinx is awesome.")
-        }
+//        let som = SphinxOnionManager.sharedInstance
+//        let selfContact = UserContact.getSelfContact()
+//        for contact in UserContact.getAll().filter({$0.publicKey != selfContact?.publicKey}){
+//            som.sendMessage(to: contact, content: "Sphinx is awesome.")
+//        }
+        
+        API.sharedInstance.askAuthentication(callback: { id, challenge in
+            print(id)
+            print(challenge)
+            guard let id = id,
+                  let challenge = challenge else{
+                return
+            }
+            let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge)
+            print(sig)
+            
+            if let sig = sig {
+                //self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: 15)
+                let som = SphinxOnionManager.sharedInstance
+                guard let seed = som.getAccountSeed(),
+                      let pubkey = SphinxOnionManager.sharedInstance.getAccountOnlyKeysendPubkey(seed: seed) else{
+                    return
+                }
+                
+                API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
+                    if let token = token {
+                        UserDefaults.Keys.attachmentsToken.set(token)
+                        //completion(token)
+                    } else {
+                        //errorCompletion()
+                    }
+                })
+            } else {
+                //errorCompletion()
+            }
+        })
+        
+        
+        
         
         return
         

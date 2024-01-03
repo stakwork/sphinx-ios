@@ -45,8 +45,9 @@ extension SphinxOnionManager {
         }
         
         
-        if let message = rr.msg{
-            if rr.msgType == SphinxMsgTypes.PlaintextMessage.rawValue,
+        if let message = rr.msg,
+           let type = rr.msgType{
+            if type == TransactionMessage.TransactionMessageType.message.rawValue,
                var plaintextMessage = PlaintextMessageFromServer(JSONString: message),
                let sender = rr.msgSender,
                let uuid = rr.msgUuid,
@@ -65,7 +66,7 @@ extension SphinxOnionManager {
            let senderPubkey = csr.pubkey{
             print(sender)
             let type = rr.msgType ?? 255
-            if type == SphinxMsgTypes.KeyExchangeConfirmation.rawValue || true, // incoming key exchange confirmation
+            if type == TransactionMessage.TransactionMessageType.contactKeyConfirmation.rawValue || true, // incoming key exchange confirmation
                let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
                 NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
                 if existingContact.getChat() == nil{
@@ -75,7 +76,7 @@ extension SphinxOnionManager {
                 existingContact.status = UserContact.Status.Confirmed.rawValue
                 CoreDataManager.sharedManager.saveContext()
             }
-            else if type == SphinxMsgTypes.KeyExchangeInitiator.rawValue || true, // incoming key exchange request
+            else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue || true, // incoming key exchange request
                 let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
                 NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
                 newContactRequest.status = UserContact.Status.Confirmed.rawValue

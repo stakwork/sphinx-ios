@@ -148,13 +148,6 @@ struct SphinxOnionBrokerResponse: Mappable {
     }
 }
 
-
-enum SphinxMsgTypes: UInt8{
-    case PlaintextMessage = 0
-    case KeyExchangeInitiator = 10
-    case KeyExchangeConfirmation = 11
-}
-
 enum SphinxMsgError: Error {
     case encodingError
     case credentialsError //can't get access to my Private Keys/other data!

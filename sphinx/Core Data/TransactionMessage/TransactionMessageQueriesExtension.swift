@@ -33,6 +33,19 @@ extension TransactionMessage {
         return message
     }
     
+    static func getMessageWith(muid: String) -> TransactionMessage? {
+        let predicate = NSPredicate(format: "muid == %@", muid)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        
+        let message: TransactionMessage? = CoreDataManager.sharedManager.getObjectOfTypeWith(
+            predicate: predicate,
+            sortDescriptors: sortDescriptors,
+            entityName: "TransactionMessage"
+        )
+        
+        return message
+    }
+    
     static func getMessagesWith(uuids: [String]) -> [TransactionMessage] {
         let predicate = NSPredicate(format: "uuid IN %@", uuids)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]

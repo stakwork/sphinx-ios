@@ -12,10 +12,24 @@ import SwiftyJSON
 
 extension SphinxOnionManager{
     
-    func formatMsg(content:String)->String?{
-        let msg : [String:Any] = [
-            "content":content
-        ]
+    func formatMsg(content:String,type:UInt8)->String?{
+        var msg : [String:Any]? = nil
+        
+        switch(type){
+        case 0:
+            msg = [
+                "content":content
+            ]
+            break
+        case 100:
+            msg = [
+                "content": "test"
+            ]
+            break
+        default:
+            return nil
+            break
+        }
         
         guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
               let contentJSONString = String(data: contentData, encoding: .utf8)
@@ -26,7 +40,7 @@ extension SphinxOnionManager{
         return contentJSONString
     }
     
-    func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false)->SphinxMsgError?{
+    func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false, type:UInt8=0)->SphinxMsgError?{
         guard let seed = getAccountSeed() else{
             return SphinxMsgError.credentialsError
         }
@@ -34,17 +48,14 @@ extension SphinxOnionManager{
         guard let selfContact = UserContact.getSelfContact(),
               let nickname = selfContact.nickname,
               let recipPubkey = recipContact.publicKey,
-            let contentJSONString = formatMsg(content: content) else{
+        let contentJSONString = formatMsg(content: content, type: type) else{
             return SphinxMsgError.contactDataError
         }
         
-        let msg_type = UInt8(SphinxMsgTypes.PlaintextMessage.rawValue)
         let myImg = selfContact.avatarUrl ?? ""
         
-        
-        
         do{
-            let rr = try send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msg_type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
+            let rr = try send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -93,12 +104,7 @@ extension SphinxOnionManager{
         guard let seed = self.getAccountSeed() else {
             return nil
         }
-        
         do {
-            let msg: [String: Any] = [
-                "content": challenge
-            ]
-            
             guard let challengeData = Data(base64Encoded: challenge) else {
                 return nil
             }
@@ -111,8 +117,6 @@ extension SphinxOnionManager{
                     .replacingOccurrences(of: "/", with: "_")
                     .replacingOccurrences(of: "+", with: "-")
                 
-                // Now, 'base64URLString' contains the URL-safe Base64 string without padding
-                print(base64URLString)
                 return base64URLString
             } else {
                 // Handle the case where hex to data conversion failed
@@ -123,6 +127,33 @@ extension SphinxOnionManager{
         }
     }
 
+    func sendAttachment(
+        file: NSDictionary,
+        attachmentObject: AttachmentObject,
+        replyingMessage: TransactionMessage? = nil,
+        threadUUID: String? = nil
+    ){
+        guard let muid = file["muid"] as? String else{
+            return
+        }
+        //Create JSON object and push through onion network
+        print("muid:\(muid)")
+       let message = TransactionMessage.getMessageWith(muid: muid)
+        print(message)
+        
+        guard let testContact = UserContact.getAll().last else{ //TODO: upgrade this
+            return
+        }
+        
+        self.sendMessage(to: testContact, content: "attachment")
+        
+//        self.sendAttachment(
+//            file: fileJSON,
+//            attachmentObject: attachmentObject,
+//            replyingMessage: replyingMessage,
+//            threadUUID: threadUUID
+//        )
+    }
 
 }
 

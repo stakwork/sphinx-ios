@@ -88,37 +88,62 @@ extension SphinxOnionManager{
     }
     
     
-    func signChallenge(challenge: String)->String? {
-        guard let seed = self.getAccountSeed() else{
+
+    func signChallenge(challenge: String) -> String? {
+        guard let seed = self.getAccountSeed() else {
             return nil
         }
+        
         do {
-            let msg : [String:Any] = [
-                "content":challenge
+            let msg: [String: Any] = [
+                "content": challenge
             ]
             
-            guard let challengeData = Data(base64Encoded: challenge) else{
+            guard let challengeData = Data(base64Encoded: challenge) else {
                 return nil
             }
             
-            let result = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: challengeData)
-            if let base64Data = result.data(using: .utf8) {
-                let base64URLString = base64Data.base64EncodedString(options: .init(rawValue: 0))
+            let resultHex = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: challengeData)
+            
+            // Convert the hex string to binary data
+            if let resultData = Data(hexString: resultHex) {
+                let base64URLString = resultData.base64EncodedString(options: .init(rawValue: 0))
                     .replacingOccurrences(of: "+", with: "-")
                     .replacingOccurrences(of: "/", with: "_")
                     .trimmingCharacters(in: CharacterSet(charactersIn: "="))
-
-                // Now, 'base64URLString' contains the URL-safe Base64 string
+                
+                // Now, 'base64URLString' contains the URL-safe Base64 string without padding
                 print(base64URLString)
                 return base64URLString
             } else {
-                // Handle the case where data encoding failed
+                // Handle the case where hex to data conversion failed
                 return nil
             }
-        }
-        catch{
+        } catch {
             return nil
         }
     }
 
+
+}
+
+
+extension Data {
+    init?(hexString: String) {
+        let cleanHex = hexString.replacingOccurrences(of: " ", with: "")
+        var data = Data(capacity: cleanHex.count / 2)
+
+        var index = cleanHex.startIndex
+        while index < cleanHex.endIndex {
+            let byteString = cleanHex[index ..< cleanHex.index(index, offsetBy: 2)]
+            if let byte = UInt8(byteString, radix: 16) {
+                data.append(byte)
+            } else {
+                return nil
+            }
+            index = cleanHex.index(index, offsetBy: 2)
+        }
+
+        self = data
+    }
 }

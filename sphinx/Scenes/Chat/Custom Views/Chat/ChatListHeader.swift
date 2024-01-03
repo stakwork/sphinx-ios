@@ -150,16 +150,11 @@ class ChatListHeader: UIView {
 //        }
         
         API.sharedInstance.askAuthentication(callback: { id, challenge in
-            print(id)
-            print(challenge)
             guard let id = id,
                   let challenge = challenge else{
                 return
             }
-            let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge)
-            print(sig)
-            
-            if let sig = sig {
+            if let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge)  {
                 //self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: 15)
                 let som = SphinxOnionManager.sharedInstance
                 guard let seed = som.getAccountSeed(),

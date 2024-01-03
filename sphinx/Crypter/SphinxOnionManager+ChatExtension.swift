@@ -108,9 +108,8 @@ extension SphinxOnionManager{
             // Convert the hex string to binary data
             if let resultData = Data(hexString: resultHex) {
                 let base64URLString = resultData.base64EncodedString(options: .init(rawValue: 0))
-                    .replacingOccurrences(of: "+", with: "-")
                     .replacingOccurrences(of: "/", with: "_")
-                    .trimmingCharacters(in: CharacterSet(charactersIn: "="))
+                    .replacingOccurrences(of: "+", with: "-")
                 
                 // Now, 'base64URLString' contains the URL-safe Base64 string without padding
                 print(base64URLString)

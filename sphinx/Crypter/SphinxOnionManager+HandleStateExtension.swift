@@ -46,17 +46,20 @@ extension SphinxOnionManager {
         
         
         if let message = rr.msg,
-           let type = rr.msgType{
+           let type = rr.msgType,
+           let sender = rr.msgSender,
+           let uuid = rr.msgUuid,
+           let index = rr.msgIndex,
+           let csr = ContactServerResponse(JSONString: sender){
             if type == TransactionMessage.TransactionMessageType.message.rawValue,
-               var plaintextMessage = PlaintextMessageFromServer(JSONString: message),
-               let sender = rr.msgSender,
-               let uuid = rr.msgUuid,
-               let index = rr.msgIndex,
-               let csr = ContactServerResponse(JSONString: sender){
+               var plaintextMessage = PlaintextMessageFromServer(JSONString: message){
                 plaintextMessage.senderPubkey = csr.pubkey
                 plaintextMessage.uuid = uuid
                 plaintextMessage.index = index
                 processPlaintextMessage(message: plaintextMessage)
+            }
+            else if type == TransactionMessage.TransactionMessageType.attachment.rawValue{
+                print("Received message with attachment:\(message)")
             }
             print("handleRunReturn message: \(message)")
         }
@@ -66,7 +69,7 @@ extension SphinxOnionManager {
            let senderPubkey = csr.pubkey{
             print(sender)
             let type = rr.msgType ?? 255
-            if type == TransactionMessage.TransactionMessageType.contactKeyConfirmation.rawValue || true, // incoming key exchange confirmation
+            if type == TransactionMessage.TransactionMessageType.contactKeyConfirmation.rawValue, // incoming key exchange confirmation
                let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
                 NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
                 if existingContact.getChat() == nil{
@@ -75,8 +78,10 @@ extension SphinxOnionManager {
                 existingContact.nickname = csr.alias
                 existingContact.status = UserContact.Status.Confirmed.rawValue
                 CoreDataManager.sharedManager.saveContext()
+                
             }
-            else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue || true, // incoming key exchange request
+            else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue, // incoming key exchange request
+                    UserContact.getContactWithDisregardStatus(pubkey: senderPubkey) == nil,//don't respond to requests if already exists
                 let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
                 NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
                 newContactRequest.status = UserContact.Status.Confirmed.rawValue

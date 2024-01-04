@@ -49,6 +49,7 @@ extension SphinxOnionManager{//contacts related
         }
         
         do{
+            let _ = createNewContact(pubkey: recipientPubkey,nickname: nickname)
             let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: selfContact.nickname ?? "", myImg: "", amtMsat: 0)
             handleRunReturn(rr: rr)
         }
@@ -112,7 +113,7 @@ extension SphinxOnionManager{//contacts related
         if let _ = Chat.getAll().filter({$0.contactIds.contains(contactID)}).first{
             return //don't make duplicates
         }
-        let selfContactId = UserContact.getSelfContact()?.id ?? 0
+        let selfContactId =  0
         let chat = Chat(context: managedContext)
         let contactIDArray = [contactID,NSNumber(value: selfContactId)]
         chat.id = contact.id

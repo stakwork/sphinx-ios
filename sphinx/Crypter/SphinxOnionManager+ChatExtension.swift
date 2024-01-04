@@ -178,7 +178,7 @@ extension SphinxOnionManager{
         print("muid:\(muid)")
        let message = TransactionMessage.getMessageWith(muid: muid)
         
-        guard let testContact = UserContact.getAll().last else{ //TODO: upgrade this
+        guard let testContact = UserContact.getAll().filter({$0.isOwner == false}).first else{ //TODO: upgrade this
             return
         }
         

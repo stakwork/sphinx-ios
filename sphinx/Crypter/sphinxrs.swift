@@ -1556,6 +1556,21 @@ public func `send`(`seed`: String, `uniqueTime`: String, `to`: String, `msgType`
     )
 }
 
+public func `makeMediaToken`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `muid`: String, `to`: String, `expiry`: UInt32) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_make_media_token(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`host`),
+        FfiConverterString.lower(`muid`),
+        FfiConverterString.lower(`to`),
+        FfiConverterUInt32.lower(`expiry`),$0)
+}
+    )
+}
+
 private enum InitializationResult {
     case ok
     case contractVersionMismatch
@@ -1680,6 +1695,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_send() != 22190) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_make_media_token() != 53931) {
         return InitializationResult.apiChecksumMismatch
     }
 

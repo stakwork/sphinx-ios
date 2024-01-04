@@ -12,7 +12,13 @@ import SwiftyJSON
 
 extension SphinxOnionManager{
     
-    func formatMsg(content:String,type:UInt8)->String?{
+    func formatMsg(
+            content:String,
+            type:UInt8,
+            muid:String?=nil,
+            recipPubkey:String?=nil,
+            mediaKey:String?=nil
+        )->String?{
         var msg : [String:Any]? = nil
         
         switch(type){
@@ -21,10 +27,27 @@ extension SphinxOnionManager{
                 "content":content
             ]
             break
-        case 100:
-            msg = [
-                "content": "test"
-            ]
+        case 6:
+            guard let seed = getAccountSeed(),
+            let muid = muid,
+            let recipPubkey = recipPubkey,
+            let expiry = Calendar.current.date(byAdding: .year, value: 1, to: Date()),
+            let mediaKey = mediaKey else{
+                return nil
+            }
+            do{
+                let mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
+                msg = [
+                    "content": "hello world",//TODO: put the actual text here
+                    "mediaToken": mt,
+                    "mediaKey": mediaKey,
+                    "mediaType": "image/gif",
+                    
+                ]
+            }
+            catch{
+                return nil
+            }
             break
         default:
             return nil
@@ -40,7 +63,15 @@ extension SphinxOnionManager{
         return contentJSONString
     }
     
-    func sendMessage(to recipContact: UserContact, content:String, shouldSendAsKeysend:Bool = false, type:UInt8=0)->SphinxMsgError?{
+    func sendMessage(
+            to recipContact: UserContact,
+            content:String,
+            shouldSendAsKeysend:Bool = false,
+            type:UInt8=0,
+            muid: String?=nil,
+            recipPubkey: String?=nil,
+            mediaKey:String?=nil
+        )->SphinxMsgError?{
         guard let seed = getAccountSeed() else{
             return SphinxMsgError.credentialsError
         }
@@ -48,18 +79,24 @@ extension SphinxOnionManager{
         guard let selfContact = UserContact.getSelfContact(),
               let nickname = selfContact.nickname,
               let recipPubkey = recipContact.publicKey,
-        let contentJSONString = formatMsg(content: content, type: type) else{
+        let contentJSONString = formatMsg(
+                content: content,
+                type: type,
+                muid: muid,
+                recipPubkey: recipPubkey,
+                mediaKey: mediaKey
+            ) else{
             return SphinxMsgError.contactDataError
         }
         
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
-            let rr = try send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
+            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
             handleRunReturn(rr: rr)
         }
         catch{
-            
+            print("error")
         }
 
         return nil
@@ -133,19 +170,26 @@ extension SphinxOnionManager{
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
     ){
-        guard let muid = file["muid"] as? String else{
+        guard let muid = file["muid"] as? String,
+        let mk = attachmentObject.mediaKey else{
             return
         }
         //Create JSON object and push through onion network
         print("muid:\(muid)")
        let message = TransactionMessage.getMessageWith(muid: muid)
-        print(message)
         
         guard let testContact = UserContact.getAll().last else{ //TODO: upgrade this
             return
         }
         
-        self.sendMessage(to: testContact, content: "attachment")
+        self.sendMessage(
+            to: testContact,
+            content: "attachment",
+            type: UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue),
+            muid: muid,
+            recipPubkey: testContact.publicKey,
+            mediaKey: mk
+        )
         
 //        self.sendAttachment(
 //            file: fileJSON,

@@ -178,25 +178,21 @@ extension SphinxOnionManager{
         print("muid:\(muid)")
        let message = TransactionMessage.getMessageWith(muid: muid)
         
-        guard let testContact = UserContact.getAll().filter({$0.isOwner == false}).first else{ //TODO: upgrade this
+        guard let recipPubkey = attachmentObject.contactPubkey,
+              let recipContact = UserContact.getContactWithDisregardStatus(pubkey: recipPubkey)
+        else{ //TODO: upgrade this
             return
         }
         
         self.sendMessage(
-            to: testContact,
+            to: recipContact,
             content: "attachment",
             type: UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue),
             muid: muid,
-            recipPubkey: testContact.publicKey,
+            recipPubkey: recipContact.publicKey,
             mediaKey: mk
         )
-        
-//        self.sendAttachment(
-//            file: fileJSON,
-//            attachmentObject: attachmentObject,
-//            replyingMessage: replyingMessage,
-//            threadUUID: threadUUID
-//        )
+
     }
 
 }

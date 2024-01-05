@@ -216,7 +216,8 @@ class ChatAttachmentViewController: NewKeyboardHandlerViewController, BackCamera
                     text: messageContent,
                     paidMessage: paidMessage,
                     image: fixedImage,
-                    price: price
+                    price: price,
+                    contactPubkey: chat?.getContact()?.publicKey
                 )
                 
                 delegate?.shouldStartUploading(attachmentObject: attachmentObject)

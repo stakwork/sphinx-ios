@@ -277,7 +277,10 @@ class SphinxOnionManager : NSObject {
             return
         }
         do{
-            let ret4 = try handle(topic: message.topic, payload: Data(message.payload), seed: seed, uniqueTime: getEntropyString(), state: self.loadOnionStateAsData(), myAlias: "", myImg: "")
+            let owner = UserContact.getOwner()
+            let alias = owner?.nickname ?? ""
+            let pic = owner?.avatarUrl ?? ""
+            let ret4 = try handle(topic: message.topic, payload: Data(message.payload), seed: seed, uniqueTime: getEntropyString(), state: self.loadOnionStateAsData(), myAlias: alias, myImg: pic)
             handleRunReturn(rr: ret4)
         }
         catch{

@@ -18,6 +18,7 @@ public struct AttachmentObject {
     var paidMessage: String?
     var price: Int = 0
     var fileName: String? = nil
+    var contactPubkey:String? = nil
     
     init(
         data: Data,
@@ -27,7 +28,8 @@ public struct AttachmentObject {
         text: String? = nil,
         paidMessage: String? = nil,
         image: UIImage? = nil,
-        price: Int = 0
+        price: Int = 0,
+        contactPubkey: String?=nil
     ) {
         
         self.data = data
@@ -38,6 +40,7 @@ public struct AttachmentObject {
         self.text = text
         self.paidMessage = paidMessage
         self.price = price
+        self.contactPubkey = contactPubkey
     }
     
     func getUploadData() -> Data? {

@@ -58,8 +58,13 @@ extension SphinxOnionManager {
                 plaintextMessage.index = index
                 processPlaintextMessage(message: plaintextMessage)
             }
-            else if type == TransactionMessage.TransactionMessageType.attachment.rawValue{
+            else if type == TransactionMessage.TransactionMessageType.attachment.rawValue,
+                var attachmentMessage = AttachmentMessageFromServer(JSONString: message){
                 print("Received message with attachment:\(message)")
+                attachmentMessage.senderPubkey = csr.pubkey
+                attachmentMessage.uuid = uuid
+                attachmentMessage.index = index
+                processAttachmentMessage(message: attachmentMessage)
             }
             print("handleRunReturn message: \(message)")
         }
@@ -216,6 +221,26 @@ struct PlaintextMessageFromServer: Mappable {
     var senderPubkey:String?=nil
     var uuid:String?=nil
     var index:String?=nil
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        content    <- map["content"]
+        amount     <- map["amount"]
+    }
+    
+}
+
+
+struct AttachmentMessageFromServer: Mappable {
+    var content:String?
+    var amount:Int?
+    var senderPubkey:String?=nil
+    var uuid:String?=nil
+    var index:String?=nil
+    var mediaToken:String?=nil
+    var mediaType:String?=nil
+    var mediaKey:String?=nil
 
     init?(map: Map) {}
 

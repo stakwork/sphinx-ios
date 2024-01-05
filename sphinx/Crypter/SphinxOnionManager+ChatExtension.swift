@@ -136,6 +136,43 @@ extension SphinxOnionManager{
         UserData.sharedInstance.setLastMessageIndex(index: index)
     }
     
+    func processAttachmentMessage(message:AttachmentMessageFromServer){
+        guard let indexString = message.index,
+            let index = Int(indexString),
+            TransactionMessage.getMessageWith(id: index) == nil,
+            let content = message.content,
+//              let amount = message.amount,
+              let pubkey = message.senderPubkey,
+              let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
+              let chat = contact.getChat(),
+              let uuid = message.uuid else{
+            return //error getting values
+        }
+        
+        let newMessage = TransactionMessage(context: managedContext)
+        newMessage.id = index
+        newMessage.uuid = uuid
+        newMessage.createdAt = Date()
+        newMessage.updatedAt = Date()
+        newMessage.date = Date()
+        newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+        newMessage.type = TransactionMessage.TransactionMessageType.imageAttachment.rawValue
+        newMessage.encrypted = true
+        newMessage.senderId = contact.id
+        newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
+        newMessage.push = true
+        newMessage.seen = false
+        newMessage.messageContent = content
+        newMessage.chat = chat
+        newMessage.mediaKey = message.mediaKey
+        newMessage.mediaToken = message.mediaToken
+        newMessage.mediaType = message.mediaType
+        
+        managedContext.saveContext()
+        
+        UserData.sharedInstance.setLastMessageIndex(index: index)
+    }
+    
     
 
     func signChallenge(challenge: String) -> String? {

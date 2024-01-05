@@ -470,12 +470,13 @@ public struct RunReturn {
     public var `newBalance`: UInt64?
     public var `myContactInfo`: String?
     public var `sentStatus`: String?
+    public var `sentTo`: String?
     public var `settledStatus`: String?
     public var `error`: String?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?) {
+    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?) {
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
         self.`topic1` = `topic1`
@@ -491,6 +492,7 @@ public struct RunReturn {
         self.`newBalance` = `newBalance`
         self.`myContactInfo` = `myContactInfo`
         self.`sentStatus` = `sentStatus`
+        self.`sentTo` = `sentTo`
         self.`settledStatus` = `settledStatus`
         self.`error` = `error`
     }
@@ -544,6 +546,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`sentStatus` != rhs.`sentStatus` {
             return false
         }
+        if lhs.`sentTo` != rhs.`sentTo` {
+            return false
+        }
         if lhs.`settledStatus` != rhs.`settledStatus` {
             return false
         }
@@ -569,6 +574,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`newBalance`)
         hasher.combine(`myContactInfo`)
         hasher.combine(`sentStatus`)
+        hasher.combine(`sentTo`)
         hasher.combine(`settledStatus`)
         hasher.combine(`error`)
     }
@@ -593,6 +599,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `newBalance`: FfiConverterOptionUInt64.read(from: &buf), 
             `myContactInfo`: FfiConverterOptionString.read(from: &buf), 
             `sentStatus`: FfiConverterOptionString.read(from: &buf), 
+            `sentTo`: FfiConverterOptionString.read(from: &buf), 
             `settledStatus`: FfiConverterOptionString.read(from: &buf), 
             `error`: FfiConverterOptionString.read(from: &buf)
         )
@@ -614,6 +621,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionUInt64.write(value.`newBalance`, into: &buf)
         FfiConverterOptionString.write(value.`myContactInfo`, into: &buf)
         FfiConverterOptionString.write(value.`sentStatus`, into: &buf)
+        FfiConverterOptionString.write(value.`sentTo`, into: &buf)
         FfiConverterOptionString.write(value.`settledStatus`, into: &buf)
         FfiConverterOptionString.write(value.`error`, into: &buf)
     }

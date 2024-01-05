@@ -247,6 +247,9 @@ struct AttachmentMessageFromServer: Mappable {
     mutating func mapping(map: Map) {
         content    <- map["content"]
         amount     <- map["amount"]
+        mediaToken <- map["mediaToken"]
+        mediaType <- map["mediaType"]
+        mediaKey <- map["mediaKey"]
     }
     
 }

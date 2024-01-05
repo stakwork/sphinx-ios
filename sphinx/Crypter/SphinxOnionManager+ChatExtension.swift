@@ -38,7 +38,7 @@ extension SphinxOnionManager{
             do{
                 let mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
                 msg = [
-                    "content": "hello world",//TODO: put the actual text here
+                    "content": content,
                     "mediaToken": mt,
                     "mediaKey": mediaKey,
                     "mediaType": "image/gif",
@@ -67,10 +67,11 @@ extension SphinxOnionManager{
             to recipContact: UserContact,
             content:String,
             shouldSendAsKeysend:Bool = false,
-            type:UInt8=0,
+            msgType:UInt8=0,
             muid: String?=nil,
             recipPubkey: String?=nil,
-            mediaKey:String?=nil
+            mediaKey:String?=nil,
+            mediaType:String?=nil
         )->SphinxMsgError?{
         guard let seed = getAccountSeed() else{
             return SphinxMsgError.credentialsError
@@ -81,7 +82,7 @@ extension SphinxOnionManager{
               let recipPubkey = recipContact.publicKey,
         let contentJSONString = formatMsg(
                 content: content,
-                type: type,
+                type: msgType,
                 muid: muid,
                 recipPubkey: recipPubkey,
                 mediaKey: mediaKey
@@ -92,7 +93,7 @@ extension SphinxOnionManager{
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
-            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: type, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
+            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -163,6 +164,7 @@ extension SphinxOnionManager{
             return nil
         }
     }
+    
 
     func sendAttachment(
         file: NSDictionary,
@@ -170,10 +172,15 @@ extension SphinxOnionManager{
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
     ){
+        
         guard let muid = file["muid"] as? String,
-        let mk = attachmentObject.mediaKey else{
+        let mk = attachmentObject.mediaKey
+        else{
             return
         }
+        
+        let (_,mediaType) = attachmentObject.getFileAndMime()
+        
         //Create JSON object and push through onion network
         print("muid:\(muid)")
        let message = TransactionMessage.getMessageWith(muid: muid)
@@ -186,11 +193,12 @@ extension SphinxOnionManager{
         
         self.sendMessage(
             to: recipContact,
-            content: "attachment",
-            type: UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue),
+            content: attachmentObject.text ?? "",
+            msgType: UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue),
             muid: muid,
             recipPubkey: recipContact.publicKey,
-            mediaKey: mk
+            mediaKey: mk,
+            mediaType: mediaType
         )
 
     }

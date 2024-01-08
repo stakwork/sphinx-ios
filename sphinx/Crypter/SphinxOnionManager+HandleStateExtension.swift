@@ -93,7 +93,6 @@ extension SphinxOnionManager {
                 NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
                 newContactRequest.status = UserContact.Status.Confirmed.rawValue
                 createChat(for: newContactRequest)
-                print("\n\n\n handleRunReturn L64 - NEW CONTACT RECEIVED: \(newContactRequest)")
                 managedContext.saveContext()
             }
         }

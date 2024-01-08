@@ -76,22 +76,22 @@ class AttachmentsManager {
                 
                 self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: 10)
                 
-                API.sharedInstance.signChallenge(challenge: challenge, callback: { sig in
-                    if let sig = sig {
-                        self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: 15)
-                        
-                        API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
-                            if let token = token {
-                                UserDefaults.Keys.attachmentsToken.set(token)
-                                completion(token)
-                            } else {
-                                errorCompletion()
-                            }
-                        })
+                guard let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge) else{
+                    errorCompletion()
+                    return
+                }
+                
+                self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: 15)
+                
+                API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
+                    if let token = token {
+                        UserDefaults.Keys.attachmentsToken.set(token)
+                        completion(token)
                     } else {
                         errorCompletion()
                     }
                 })
+                
             } else {
                 errorCompletion()
             }

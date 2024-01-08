@@ -109,9 +109,10 @@ extension WebAppHelper : WKScriptMessageHandler {
     }
     
     func signChallenge(amount: Int, challenge: String, dict: [String: AnyObject], completion: @escaping () -> ()) {
-        API.sharedInstance.signChallenge(challenge: challenge, callback: { signature in
-            self.sendAuthorizeMessage(amount: amount, signature: signature, dict: dict, completion: completion)
-        })
+        guard let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge) else{
+            return
+        }
+        self.sendAuthorizeMessage(amount: amount, signature: sig, dict: dict, completion: completion)
     }
     
     //UPDATED

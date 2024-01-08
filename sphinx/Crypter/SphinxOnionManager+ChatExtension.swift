@@ -17,17 +17,18 @@ extension SphinxOnionManager{
             type:UInt8,
             muid:String?=nil,
             recipPubkey:String?=nil,
-            mediaKey:String?=nil
+            mediaKey:String?=nil,
+            mediaType:String?="file"
         )->String?{
         var msg : [String:Any]? = nil
         
         switch(type){
-        case 0:
+        case UInt8(TransactionMessage.TransactionMessageType.message.rawValue):
             msg = [
                 "content":content
             ]
             break
-        case 6:
+        case UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue):
             guard let seed = getAccountSeed(),
             let muid = muid,
             let recipPubkey = recipPubkey,
@@ -41,7 +42,7 @@ extension SphinxOnionManager{
                     "content": content,
                     "mediaToken": mt,
                     "mediaKey": mediaKey,
-                    "mediaType": "image/gif",
+                    "mediaType": mediaType,
                     
                 ]
             }
@@ -85,7 +86,8 @@ extension SphinxOnionManager{
                 type: msgType,
                 muid: muid,
                 recipPubkey: recipPubkey,
-                mediaKey: mediaKey
+                mediaKey: mediaKey,
+                mediaType: mediaType
             ) else{
             return SphinxMsgError.contactDataError
         }
@@ -156,7 +158,7 @@ extension SphinxOnionManager{
         newMessage.updatedAt = Date()
         newMessage.date = Date()
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-        newMessage.type = TransactionMessage.TransactionMessageType.imageAttachment.rawValue
+        newMessage.type = TransactionMessage.TransactionMessageType.attachment.rawValue
         newMessage.encrypted = true
         newMessage.senderId = contact.id
         newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0

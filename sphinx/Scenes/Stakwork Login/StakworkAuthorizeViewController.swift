@@ -221,14 +221,13 @@ class StakworkAuthorizeViewController: UIViewController {
             return
         }
         
-        API.sharedInstance.signChallenge(challenge: challenge, callback: { sig in
-            if let sig = sig {
-                self.authInfo?.sig = sig
-                self.takeUserToAuth()
-            } else {
-                self.showErrorAlert()
-            }
-        })
+       guard let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge) else {
+            showErrorAlert()
+           return
+        }
+        
+        self.authInfo?.sig = sig
+        self.takeUserToAuth()
     }
     
     func redeemSats() {

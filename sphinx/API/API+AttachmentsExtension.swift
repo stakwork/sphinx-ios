@@ -35,30 +35,6 @@ extension API {
         }
     }
     
-    public func signChallenge(challenge: String, callback: @escaping SignChallengeCallback) {
-        guard let request = getURLRequest(route: "/signer/\(challenge)", method: "GET") else {
-            callback(nil)
-            return
-        }
-        
-        sphinxRequest(request) { response in
-            switch response.result {
-            case .success(let data):
-                if let json = data as? NSDictionary {
-                    if let success = json["success"] as? Bool, let response = json["response"] as? NSDictionary, success {
-                        if let sig = response["sig"] as? String {
-                            callback(sig)
-                        } else {
-                            callback(nil)
-                        }
-                    }
-                }
-            case .failure(_):
-                callback(nil)
-            }
-        }
-    }
-    
     public func verifyAuthentication(
         id: String,
         sig: String,

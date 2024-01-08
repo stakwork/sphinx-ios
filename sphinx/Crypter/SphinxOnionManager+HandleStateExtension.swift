@@ -45,6 +45,7 @@ extension SphinxOnionManager {
         }
         
         
+        //MARK: Message Related:
         if let message = rr.msg,
            let type = rr.msgType,
            let sender = rr.msgSender,
@@ -69,6 +70,7 @@ extension SphinxOnionManager {
             print("handleRunReturn message: \(message)")
         }
         
+        //MARK: Contacts Related
         if let sender = rr.msgSender,
            let csr = ContactServerResponse(JSONString: sender),
            let senderPubkey = csr.pubkey{
@@ -108,7 +110,6 @@ extension SphinxOnionManager {
         if let error = rr.error {
             
         }
-        
     }
 
     func pushRRTopic(topic:String,payloadData:Data?){
@@ -251,4 +252,12 @@ struct AttachmentMessageFromServer: Mappable {
         mediaKey <- map["mediaKey"]
     }
     
+}
+
+struct ProvisionalMessageMetaData {
+    var messageContent:String
+    var type:Int
+    var chat:Chat
+    var replyUUID:String?=nil
+    var threadUUID:String?=nil
 }

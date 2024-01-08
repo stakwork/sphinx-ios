@@ -67,6 +67,7 @@ extension SphinxOnionManager{
     func sendMessage(
             to recipContact: UserContact,
             content:String,
+            chat:Chat,
             shouldSendAsKeysend:Bool = false,
             msgType:UInt8=0,
             muid: String?=nil,
@@ -96,6 +97,19 @@ extension SphinxOnionManager{
         
         do{
             let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
+            if let sentUUID = rr.msgUuid{
+                let message  = TransactionMessage.createProvisionalMessage(
+                    messageContent: content,
+                    type: Int(msgType),
+                    date: Date(),
+                    chat: chat,
+                    replyUUID: nil,
+                    threadUUID: nil
+                )
+                
+                message?.uuid = sentUUID
+                message?.managedObjectContext?.saveContext()
+            }
             handleRunReturn(rr: rr)
         }
         catch{
@@ -208,15 +222,17 @@ extension SphinxOnionManager{
     func sendAttachment(
         file: NSDictionary,
         attachmentObject: AttachmentObject,
+        chat:Chat?,
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
     ){
         
         guard let muid = file["muid"] as? String,
-        let mk = attachmentObject.mediaKey
-        else{
-            return
-        }
+            let chat = chat,
+            let mk = attachmentObject.mediaKey
+            else{
+                return
+            }
         
         let (_,mediaType) = attachmentObject.getFileAndMime()
         
@@ -233,6 +249,7 @@ extension SphinxOnionManager{
         self.sendMessage(
             to: recipContact,
             content: attachmentObject.text ?? "",
+            chat: chat,
             msgType: UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue),
             muid: muid,
             recipPubkey: recipContact.publicKey,

@@ -218,14 +218,8 @@ class AttachmentsManager {
             return
         }
         
-        SphinxOnionManager.sharedInstance.sendAttachment(file: file, attachmentObject: attachmentObject,replyingMessage: replyingMessage,threadUUID: threadUUID)
+        SphinxOnionManager.sharedInstance.sendAttachment(file: file, attachmentObject: attachmentObject, chat: chat,replyingMessage: replyingMessage,threadUUID: threadUUID)
         
-//        API.sharedInstance.sendAttachment(params: params, callback: { message in
-//            self.delegate?.didUpdateUploadProgress?(progress: 100)
-//            self.createLocalMessage(message: message, attachmentObject: attachmentObject)
-//        }, errorCallback: {
-//            self.uploadFailed()
-//        })
     }
     
     func payAttachment(message: TransactionMessage, chat: Chat?, callback: @escaping (TransactionMessage?) -> ()) {

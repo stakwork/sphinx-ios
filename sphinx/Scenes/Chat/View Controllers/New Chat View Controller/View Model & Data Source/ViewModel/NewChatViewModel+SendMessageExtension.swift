@@ -47,13 +47,14 @@ extension NewChatViewModel {
             completion(false)
             return
         }
+        guard let chat = chat else{
+            completion(false)
+            return
+        }
         
-        let _ = createProvisionalAndSend(
-            messageText: messageText,
-            type: type,
-            botAmount: botAmount,
-            completion: completion
-        )
+        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact!, content: text, chat: chat)
+        completion(error == nil)
+        
     }
     
     func createProvisionalAndSend(
@@ -121,7 +122,12 @@ extension NewChatViewModel {
     ) {
         let messageType = TransactionMessage.TransactionMessageType(fromRawValue: provisionalMessage?.type ?? 0)
         let som = SphinxOnionManager.sharedInstance
-        let error = som.sendMessage(to: contact!, content: text)
+        guard let chat = chat else{
+            completion(false)
+            return
+        }
+        
+        let error = som.sendMessage(to: contact!, content: text, chat: chat)
         
         guard let params = TransactionMessage.getMessageParams(
             contact: contact,

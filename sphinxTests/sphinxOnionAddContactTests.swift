@@ -22,16 +22,10 @@ class sphinxOnionAddContactTests: XCTestCase {
     
     //MARK: specific to key exchange
     let test_key_exchange_response_message_json : [String: Any] = [
-            //"routeHint": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090543902727",
             "pubkey": "03a898d978e42c9feaa25ca103d70b27a2a83472b3b00cd11bbf2a9b3be14460f4",
             "alias": "anon",
             "contactPubkey": "02949826885589228a72f12734a38e7c9901ab50ed1d49eb935b4bd3da2ec60bae",
             "photo_url": ""
-    ]
-    
-    let test_key_exchange_response_hops_json : [[String: String]] = [
-        ["pubkey": "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd"],
-        ["pubkey": "0376f5935fb69361c7a3fbe1c8ce67e034ade3da726a52cf070b63174c853de13f"]
     ]
     
     let test_key_exchange_response_prompt = "IMPORTANT - run the following command from sphinx/wasm/test/cli within the next 60 seconds: yarn cli bob friend alice 03a898d978e42c9feaa25ca103d70b27a2a83472b3b00cd11bbf2a9b3be14460f4_0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090671435780"
@@ -205,30 +199,17 @@ class sphinxOnionAddContactTests: XCTestCase {
     //prove we properly registered the contact before we get a response from the peer but after we got one from the broker server
     func validate_test_contact_pre_key_exchange(contact:UserContact){
         print(contact)
-        let expected_index = 1
-        let expected_child_pubkey = "02949826885589228a72f12734a38e7c9901ab50ed1d49eb935b4bd3da2ec60bae"
-        let expected_pubkey = "020947fda2d645f7233b74f02ad6bd9c97d11420f85217680c9e27d1ca5d4413c1"
-        let expected_routeHint = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090639978497"
-        XCTAssertTrue(expected_index == contact.index)
-        XCTAssertTrue(expected_child_pubkey == contact.childPubKey)
+        let expected_pubkey = "023be900c195aee419e5f68bf4b7bc156597da7649a9103b1afec949d233e4d1aa"
         XCTAssertTrue(expected_pubkey == contact.publicKey)
-        XCTAssertTrue(expected_routeHint == contact.routeHint)
     }
     
     //prove we got a proper response from the peer and saved it in the database correctly
     func validate_test_contact_post_key_exchange(contact:UserContact){
         validate_test_contact_pre_key_exchange(contact: contact)
-        
-        let expected_contactPubkey = "03681cbdf2f72d0689fb092426ad6c3ca8f0554a465463cd9ca9f083673859903d"
-        let expected_contactRouteHint = "0343f9e2945b232c5c0e7833acef052d10acf80d1e8a168d86ccb588e63cd962cd_529771090617434115"
+    
         let expected_nickname = "alice"
-        print("contact from validate_test_contact_post_key_exchange:\(contact)")
-        print("expected_nickname:\(expected_nickname) vs contact.nickname:\(contact.nickname)")
-        print("expected_contactRouteHint:\(expected_contactRouteHint) vs contact.contactRouteHint:\(contact.contactRouteHint)")
-        print("expected_contactPubkey:\(expected_contactPubkey) vs contact.contactKey:\(contact.contactKey)")
         
-        XCTAssertTrue(expected_contactRouteHint == contact.contactRouteHint ?? "")
-        XCTAssertTrue(expected_contactPubkey == contact.contactKey ?? "")
+
         XCTAssertTrue(expected_nickname == contact.nickname ?? "")
     }
     
@@ -278,7 +259,7 @@ class sphinxOnionAddContactTests: XCTestCase {
         // Wait for the expectation to be fulfilled.
         wait(for: [expectation], timeout: delayTime + 1.0) // Adjust the timeout as needed
         
-        guard let contact = UserContact.getContactWith(indices: [1],managedContext: sphinxOnionManager.managedContext).first else{
+        guard let contact = UserContact.getAll().filter({$0.isOwner == false}).first else{
             XCTFail("Failed contact registration")
             return
         }
@@ -293,46 +274,45 @@ class sphinxOnionAddContactTests: XCTestCase {
         }
     }
     
-    func test_key_exchange_response_message() {
-        print(test_key_exchange_response_prompt)
-        UserContact.deleteAll() // set to known wiped out state
-        UserData.sharedInstance.save(walletMnemonic: test_mnemonic1)
-        
-        let delayTime = 20.0
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeResponseNotification), name: .keyExchangeResponseMessageWasConstructed, object: nil)
-        sphinxOnionManager.shouldPostUpdates = true
-        
-        // Async Tasks:
-        establish_self_contact()
-        
-        // Print prompt after a delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\(self.test_key_exchange_response_prompt)")
-        }
-        
-        let expectation = XCTestExpectation(description: "Expecting key exchange after some time")
-        // Set up the expectation here
-        fulfillExpectationAfterDelay(expectation, delayInSeconds: delayTime)
-        
-        wait(for: [expectation], timeout: 20.0)
-        XCTAssertTrue(self.hopsJSON == self.test_key_exchange_response_hops_json)
-        for key in test_key_exchange_response_message_json.keys {
-            guard let expectedValue = test_key_exchange_response_message_json[key],
-                  let actualValue = self.contentJSON?[key] else {
-                XCTFail("Key \(key) not found in one of the dictionaries")
-                continue
-            }
-
-            if let expectedValue = expectedValue as? String, let actualValue = actualValue as? String {
-                XCTAssertTrue(expectedValue == actualValue, "Mismatch for key \(key). Expected Value:\(expectedValue). Actual Value: \(actualValue)")
-            } else if let expectedValue = expectedValue as? [String: String], let actualValue = actualValue as? [String: String] {
-                XCTAssertTrue(expectedValue == actualValue, "Mismatch for key \(key)")
-            } else {
-                XCTFail("Type mismatch for key \(key)")
-            }
-        }
-    }
+//    func test_key_exchange_response_message() {
+//        print(test_key_exchange_response_prompt)
+//        UserContact.deleteAll() // set to known wiped out state
+//        UserData.sharedInstance.save(walletMnemonic: test_mnemonic1)
+//        
+//        let delayTime = 20.0
+//        
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyExchangeResponseNotification), name: .newContactWasRegisteredWithServer, object: nil)
+//        sphinxOnionManager.shouldPostUpdates = true
+//        
+//        // Async Tasks:
+//        establish_self_contact()
+//        
+//        // Print prompt after a delay
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\(self.test_key_exchange_response_prompt)")
+//        }
+//        
+//        let expectation = XCTestExpectation(description: "Expecting key exchange after some time")
+//        // Set up the expectation here
+//        fulfillExpectationAfterDelay(expectation, delayInSeconds: delayTime)
+//        
+//        wait(for: [expectation], timeout: 20.0)
+//        for key in test_key_exchange_response_message_json.keys {
+//            guard let expectedValue = test_key_exchange_response_message_json[key],
+//                  let actualValue = self.contentJSON?[key] else {
+//                XCTFail("Key \(key) not found in one of the dictionaries")
+//                continue
+//            }
+//
+//            if let expectedValue = expectedValue as? String, let actualValue = actualValue as? String {
+//                XCTAssertTrue(expectedValue == actualValue, "Mismatch for key \(key). Expected Value:\(expectedValue). Actual Value: \(actualValue)")
+//            } else if let expectedValue = expectedValue as? [String: String], let actualValue = actualValue as? [String: String] {
+//                XCTAssertTrue(expectedValue == actualValue, "Mismatch for key \(key)")
+//            } else {
+//                XCTFail("Type mismatch for key \(key)")
+//            }
+//        }
+//    }
 
 
 

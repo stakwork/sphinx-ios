@@ -122,55 +122,12 @@ class SphinxOnionManager : NSObject {
     
     
     
-    func publishMyTopics(pubkey:String,idx:Int){
-        self.mqtt.publish(
-            CocoaMQTTMessage(
-                topic: "\(pubkey)/\(idx)/req/balance",
-                payload: []
-            )
-        )
-        
-        self.mqtt.publish(
-            CocoaMQTTMessage(
-                topic: "\(pubkey)/\(idx)/req/register",
-                payload: []
-            )
-        )
-        self.mqtt.publish(
-            CocoaMQTTMessage(
-                topic: "\(pubkey)/\(idx)/req/pubkey",
-                payload: []
-            )
-        )
-    }
     
     func disconnectMqtt(){
         if let mqtt = self.mqtt{
             mqtt.disconnect()
         }
     }
-    
-    func subscribeToMyTopics(pubkey:String,idx:Int){
-        self.mqtt.subscribe([
-            ("\(pubkey)/\(idx)/res/#", CocoaMQTTQoS.qos1)
-        ])
-
-    }
-
-    func subscribeAllContactChildKeys(){
-        for contact in UserContact.getAll(){
-            let contactChildKey = contact.childPubKey
-            let contactIdx = contact.index
-            subscribeToContactChildPubkey(contactChildKey: contactChildKey, contactIdx: contactIdx)
-        }
-    }
-
-    func subscribeToContactChildPubkey(contactChildKey:String, contactIdx:Int){
-        self.mqtt.subscribe([
-            ("\(contactChildKey)/\(contactIdx)/res/#", CocoaMQTTQoS.qos1)
-        ])
-    }
-
     func getAllUnreadMessages(sinceIndex:Int?=nil,limit:Int?=nil){
         guard let seed = getAccountSeed() else {
             return //throw error?
@@ -185,6 +142,8 @@ class SphinxOnionManager : NSObject {
             
         }
     }
+    
+
     
     func subscribeAndPublishMyTopics(pubkey:String,idx:Int){
         do{

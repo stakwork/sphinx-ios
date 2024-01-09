@@ -45,7 +45,37 @@ extension SphinxOnionManager {
         }
         
         
-        //MARK: Message Related:
+        processGenericMessages(rr: rr)
+                
+        processKeyExchangeMessages(rr: rr)
+        
+        
+        if let sentStatus = rr.sentStatus{
+            
+        }
+        
+        if let settledStatus = rr.settledStatus{
+            
+        }
+        
+        if let error = rr.error {
+            
+        }
+    }
+
+    func pushRRTopic(topic:String,payloadData:Data?){
+        let byteArray: [UInt8] = payloadData != nil ? [UInt8](payloadData!) : [UInt8]()
+        print("pushRRTopic | topic:\(topic) | payload:\(byteArray)")
+        self.mqtt.publish(
+            CocoaMQTTMessage(
+                topic: topic,
+                payload: byteArray
+            )
+        )
+    }
+    
+    //MARK: processes updates from general purpose messages like plaintext and attachments
+    func processGenericMessages(rr:RunReturn){
         if let message = rr.msg,
            let type = rr.msgType,
            let sender = rr.msgSender,
@@ -70,7 +100,10 @@ extension SphinxOnionManager {
             print("handleRunReturn message: \(message)")
         }
         
-        //MARK: Contacts Related
+    }
+    
+    //MARK: Processes key exchange messages (friend requests) between contacts
+    func processKeyExchangeMessages(rr:RunReturn){
         if let sender = rr.msgSender,
            let csr = ContactServerResponse(JSONString: sender),
            let senderPubkey = csr.pubkey{
@@ -98,31 +131,23 @@ extension SphinxOnionManager {
                 managedContext.saveContext()
             }
         }
-        
-        if let sentStatus = rr.sentStatus{
-            
-        }
-        
-        if let settledStatus = rr.settledStatus{
-            
-        }
-        
-        if let error = rr.error {
-            
+        else if isIndexedSentMessageFromMe(rr: rr),
+                var cachedMessage = TransactionMessage.getMessageWith(uuid: rr.msgUuid!),
+                let indexString = rr.msgIndex,
+                    let index = Int(indexString){
+            cachedMessage.id = index //sync self index
+            cachedMessage.managedObjectContext?.saveContext()
+            print(rr)
         }
     }
 
-    func pushRRTopic(topic:String,payloadData:Data?){
-        let byteArray: [UInt8] = payloadData != nil ? [UInt8](payloadData!) : [UInt8]()
-        print("pushRRTopic | topic:\(topic) | payload:\(byteArray)")
-        self.mqtt.publish(
-            CocoaMQTTMessage(
-                topic: topic,
-                payload: byteArray
-            )
-        )
+    func isIndexedSentMessageFromMe(rr:RunReturn)->Bool{
+        if let _ = rr.msgUuid,
+           let _ = rr.msgIndex{
+            return true
+        }
+        return false
     }
-
 
     var mutationKeys: [String] {
         get {

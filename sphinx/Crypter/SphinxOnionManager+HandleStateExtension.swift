@@ -105,6 +105,8 @@ extension SphinxOnionManager {
                 let indexString = rr.msgIndex,
                     let index = Int(indexString){
             cachedMessage.id = index //sync self index
+            cachedMessage.updatedAt = Date()
+            cachedMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
             cachedMessage.managedObjectContext?.saveContext()
             print(rr)
         }

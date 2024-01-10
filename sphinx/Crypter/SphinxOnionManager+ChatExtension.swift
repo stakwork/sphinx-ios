@@ -117,10 +117,11 @@ extension SphinxOnionManager{
                                mediaType:String?
     ){
         if let sentUUID = rr.msgUuid{
+            let date = Date()
             let message  = TransactionMessage.createProvisionalMessage(
                 messageContent: content,
                 type: Int(msgType),
-                date: Date(),
+                date: date,
                 chat: chat,
                 replyUUID: nil,
                 threadUUID: nil
@@ -132,6 +133,8 @@ extension SphinxOnionManager{
                 message?.mediaType = mediaType
             }
             
+            message?.createdAt = date
+            message?.updatedAt = date
             message?.uuid = sentUUID
             message?.managedObjectContext?.saveContext()
         }

@@ -188,6 +188,7 @@ class AttachmentsManager {
             let totalProgress = (progress * 85) / 100 + 10
             self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: totalProgress)
         }, callback: { success, fileJSON in
+            AttachmentsManager.sharedInstance.uploading = false
             if let fileJSON = fileJSON, success {
                 self.uploadedImage = attachmentObject.image
                 

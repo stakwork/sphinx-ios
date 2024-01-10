@@ -21,7 +21,7 @@ extension SphinxOnionManager{
             mediaType:String?="file"
         )->(String?,String?)?{
         var msg : [String:Any]? = nil
-        
+        var mt : String? = nil
         switch(type){
         case UInt8(TransactionMessage.TransactionMessageType.message.rawValue):
             msg = [
@@ -37,7 +37,7 @@ extension SphinxOnionManager{
                 return nil
             }
             do{
-                let mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
+                mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
                 msg = [
                     "content": content,
                     "mediaToken": mt,
@@ -45,13 +45,6 @@ extension SphinxOnionManager{
                     "mediaType": mediaType,
                 ]
                 
-                guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
-                      let contentJSONString = String(data: contentData, encoding: .utf8)
-                       else{
-                    return nil
-                }
-                
-                return (contentJSONString,mt)
             }
             catch{
                 return nil
@@ -61,7 +54,13 @@ extension SphinxOnionManager{
             return nil
             break
         }
-        return nil
+            guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
+                  let contentJSONString = String(data: contentData, encoding: .utf8)
+                   else{
+                return nil
+            }
+            
+            return (contentJSONString,mt)
     }
     
     func sendMessage(

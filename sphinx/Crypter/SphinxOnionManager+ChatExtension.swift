@@ -74,9 +74,9 @@ extension SphinxOnionManager{
             recipPubkey: String?=nil,
             mediaKey:String?=nil,
             mediaType:String?=nil
-        )->SphinxMsgError?{
+        )->TransactionMessage?{
         guard let seed = getAccountSeed() else{
-            return SphinxMsgError.credentialsError
+            return nil
         }
         
         guard let selfContact = UserContact.getSelfContact(),
@@ -91,21 +91,20 @@ extension SphinxOnionManager{
                 mediaType: mediaType
             ),
             let contentJSONString = contentJSONString else{
-            return SphinxMsgError.contactDataError
+            return nil
         }
         
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
             let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
-            processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType)
+            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType)
             handleRunReturn(rr: rr)
+            return sentMessage
         }
         catch{
             print("error")
         }
-
-        return nil
     }
     
     func processNewOutgoingMessage(rr:RunReturn,
@@ -115,7 +114,7 @@ extension SphinxOnionManager{
                                mediaKey:String?,
                                mediaToken:String?,
                                mediaType:String?
-    ){
+    )->TransactionMessage?{
         if let sentUUID = rr.msgUuid{
             let date = Date()
             let message  = TransactionMessage.createProvisionalMessage(
@@ -137,7 +136,11 @@ extension SphinxOnionManager{
             message?.updatedAt = date
             message?.uuid = sentUUID
             message?.managedObjectContext?.saveContext()
+            
+            return message
         }
+        
+        return nil
     }
     
     func processIncomingPlaintextMessage(message:PlaintextMessageFromServer){
@@ -267,7 +270,7 @@ extension SphinxOnionManager{
             return
         }
         
-        self.sendMessage(
+        if let sentMessage = self.sendMessage(
             to: recipContact,
             content: attachmentObject.text ?? "",
             chat: chat,
@@ -276,8 +279,9 @@ extension SphinxOnionManager{
             recipPubkey: recipContact.publicKey,
             mediaKey: mk,
             mediaType: mediaType
-        )
-
+        ){
+            AttachmentsManager.sharedInstance.cacheImageAndMediaData(message: sentMessage, attachmentObject: attachmentObject)
+        }
     }
 
 }

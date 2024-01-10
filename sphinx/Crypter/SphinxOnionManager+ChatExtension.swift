@@ -19,7 +19,7 @@ extension SphinxOnionManager{
             recipPubkey:String?=nil,
             mediaKey:String?=nil,
             mediaType:String?="file"
-        )->String?{
+        )->(String?,String?)?{
         var msg : [String:Any]? = nil
         
         switch(type){
@@ -43,8 +43,15 @@ extension SphinxOnionManager{
                     "mediaToken": mt,
                     "mediaKey": mediaKey,
                     "mediaType": mediaType,
-                    
                 ]
+                
+                guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
+                      let contentJSONString = String(data: contentData, encoding: .utf8)
+                       else{
+                    return nil
+                }
+                
+                return (contentJSONString,mt)
             }
             catch{
                 return nil
@@ -54,14 +61,7 @@ extension SphinxOnionManager{
             return nil
             break
         }
-        
-        guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
-              let contentJSONString = String(data: contentData, encoding: .utf8)
-               else{
-            return nil
-        }
-        
-        return contentJSONString
+        return nil
     }
     
     func sendMessage(
@@ -82,14 +82,15 @@ extension SphinxOnionManager{
         guard let selfContact = UserContact.getSelfContact(),
               let nickname = selfContact.nickname,
               let recipPubkey = recipContact.publicKey,
-        let contentJSONString = formatMsg(
+        let (contentJSONString,mediaToken) = formatMsg(
                 content: content,
                 type: msgType,
                 muid: muid,
                 recipPubkey: recipPubkey,
                 mediaKey: mediaKey,
                 mediaType: mediaType
-            ) else{
+            ),
+            let contentJSONString = contentJSONString else{
             return SphinxMsgError.contactDataError
         }
         
@@ -97,19 +98,7 @@ extension SphinxOnionManager{
         
         do{
             let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
-            if let sentUUID = rr.msgUuid{
-                let message  = TransactionMessage.createProvisionalMessage(
-                    messageContent: content,
-                    type: Int(msgType),
-                    date: Date(),
-                    chat: chat,
-                    replyUUID: nil,
-                    threadUUID: nil
-                )
-                
-                message?.uuid = sentUUID
-                message?.managedObjectContext?.saveContext()
-            }
+            processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -119,7 +108,36 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func processPlaintextMessage(message:PlaintextMessageFromServer){
+    func processNewOutgoingMessage(rr:RunReturn,
+                               chat:Chat,
+                               msgType:UInt8,
+                               content:String,
+                               mediaKey:String?,
+                               mediaToken:String?,
+                               mediaType:String?
+    ){
+        if let sentUUID = rr.msgUuid{
+            let message  = TransactionMessage.createProvisionalMessage(
+                messageContent: content,
+                type: Int(msgType),
+                date: Date(),
+                chat: chat,
+                replyUUID: nil,
+                threadUUID: nil
+            )
+            
+            if(msgType == TransactionMessage.TransactionMessageType.attachment.rawValue){
+                message?.mediaKey = mediaKey
+                message?.mediaToken = mediaToken
+                message?.mediaType = mediaType
+            }
+            
+            message?.uuid = sentUUID
+            message?.managedObjectContext?.saveContext()
+        }
+    }
+    
+    func processIncomingPlaintextMessage(message:PlaintextMessageFromServer){
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
@@ -152,7 +170,7 @@ extension SphinxOnionManager{
         UserData.sharedInstance.setLastMessageIndex(index: index)
     }
     
-    func processAttachmentMessage(message:AttachmentMessageFromServer){
+    func processIncomingAttachmentMessage(message:AttachmentMessageFromServer){
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,

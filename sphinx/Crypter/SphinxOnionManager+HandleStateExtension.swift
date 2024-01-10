@@ -87,7 +87,7 @@ extension SphinxOnionManager {
                 plaintextMessage.senderPubkey = csr.pubkey
                 plaintextMessage.uuid = uuid
                 plaintextMessage.index = index
-                processPlaintextMessage(message: plaintextMessage)
+                processIncomingPlaintextMessage(message: plaintextMessage)
             }
             else if type == TransactionMessage.TransactionMessageType.attachment.rawValue,
                 var attachmentMessage = AttachmentMessageFromServer(JSONString: message){
@@ -95,11 +95,19 @@ extension SphinxOnionManager {
                 attachmentMessage.senderPubkey = csr.pubkey
                 attachmentMessage.uuid = uuid
                 attachmentMessage.index = index
-                processAttachmentMessage(message: attachmentMessage)
+                processIncomingAttachmentMessage(message: attachmentMessage)
             }
             print("handleRunReturn message: \(message)")
         }
         
+        else if isIndexedSentMessageFromMe(rr: rr),
+                var cachedMessage = TransactionMessage.getMessageWith(uuid: rr.msgUuid!),
+                let indexString = rr.msgIndex,
+                    let index = Int(indexString){
+            cachedMessage.id = index //sync self index
+            cachedMessage.managedObjectContext?.saveContext()
+            print(rr)
+        }
     }
     
     //MARK: Processes key exchange messages (friend requests) between contacts
@@ -130,14 +138,6 @@ extension SphinxOnionManager {
                 createChat(for: newContactRequest)
                 managedContext.saveContext()
             }
-        }
-        else if isIndexedSentMessageFromMe(rr: rr),
-                var cachedMessage = TransactionMessage.getMessageWith(uuid: rr.msgUuid!),
-                let indexString = rr.msgIndex,
-                    let index = Int(indexString){
-            cachedMessage.id = index //sync self index
-            cachedMessage.managedObjectContext?.saveContext()
-            print(rr)
         }
     }
 

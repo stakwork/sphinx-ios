@@ -144,6 +144,7 @@ class AttachmentsManager {
     
     func uploadAndSendAttachment(
         attachmentObject: AttachmentObject,
+        chat:Chat?,
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
     ) {
@@ -152,7 +153,7 @@ class AttachmentsManager {
         
         guard let token: String = UserDefaults.Keys.attachmentsToken.get() else {
             self.authenticate(completion: { token in
-                self.uploadAndSendAttachment(attachmentObject: attachmentObject, replyingMessage: replyingMessage)
+                self.uploadAndSendAttachment(attachmentObject: attachmentObject, chat: chat, replyingMessage: replyingMessage)
             }, errorCompletion: {
                 UserDefaults.Keys.attachmentsToken.removeValue()
                 self.uploadFailed()
@@ -165,6 +166,7 @@ class AttachmentsManager {
             uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
                 self.sendAttachment(
                     file: fileJSON,
+                    chat:chat,
                     attachmentObject: attachmentObject,
                     replyingMessage: replyingMessage,
                     threadUUID: threadUUID
@@ -200,23 +202,11 @@ class AttachmentsManager {
     
     func sendAttachment(
         file: NSDictionary,
+        chat:Chat?,
         attachmentObject: AttachmentObject,
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
     ) {
-        guard let params = TransactionMessage.getMessageParams(
-            contact: contact,
-            chat: chat,
-            file: file,
-            text: attachmentObject.text,
-            mediaKey: attachmentObject.mediaKey,
-            price: attachmentObject.price,
-            replyingMessage: replyingMessage,
-            threadUUID: threadUUID
-        ) else {
-            uploadFailed()
-            return
-        }
         
         SphinxOnionManager.sharedInstance.sendAttachment(file: file, attachmentObject: attachmentObject, chat: chat,replyingMessage: replyingMessage,threadUUID: threadUUID)
         

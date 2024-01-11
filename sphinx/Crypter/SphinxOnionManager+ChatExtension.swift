@@ -186,6 +186,8 @@ extension SphinxOnionManager{
         newMessage.chat = chat
         newMessage.replyUUID = message.replyUuid
         newMessage.threadUUID = message.threadUuid
+        newMessage.seen = false
+        newMessage.chat?.seen = false
         managedContext.saveContext()
         
         UserData.sharedInstance.setLastMessageIndex(index: index)

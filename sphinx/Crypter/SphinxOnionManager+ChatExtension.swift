@@ -222,6 +222,8 @@ extension SphinxOnionManager{
         newMessage.mediaKey = message.mediaKey
         newMessage.mediaToken = message.mediaToken
         newMessage.mediaType = message.mediaType
+        newMessage.threadUUID = message.threadUuid
+        newMessage.replyUUID = message.replyUuid
         
         managedContext.saveContext()
         

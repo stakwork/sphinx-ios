@@ -52,7 +52,7 @@ extension NewChatViewModel {
             return
         }
         
-        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact!, content: text, chat: chat)
+        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact!, content: text, chat: chat,threadUUID: threadUUID, replyUUID: replyingTo?.uuid)
         completion(error == nil)
         
     }
@@ -127,7 +127,7 @@ extension NewChatViewModel {
             return
         }
         
-        let error = som.sendMessage(to: contact!, content: text, chat: chat)
+        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact!, content: text, chat: chat,threadUUID: threadUUID, replyUUID: replyingTo?.uuid)
         
         guard let params = TransactionMessage.getMessageParams(
             contact: contact,

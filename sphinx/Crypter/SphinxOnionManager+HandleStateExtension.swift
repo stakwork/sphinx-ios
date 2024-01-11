@@ -248,12 +248,14 @@ struct PlaintextMessageFromServer: Mappable {
     var senderPubkey:String?=nil
     var uuid:String?=nil
     var index:String?=nil
+    var replyUuid:String?=nil
 
     init?(map: Map) {}
 
     mutating func mapping(map: Map) {
         content    <- map["content"]
         amount     <- map["amount"]
+        replyUuid <- map["replyUuid"]
     }
     
 }

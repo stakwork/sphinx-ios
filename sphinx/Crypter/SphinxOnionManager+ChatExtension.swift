@@ -18,14 +18,16 @@ extension SphinxOnionManager{
             muid:String?=nil,
             recipPubkey:String?=nil,
             mediaKey:String?=nil,
-            mediaType:String?="file"
+            mediaType:String?="file",
+            threadUUID:String?,
+            replyUUID:String?
         )->(String?,String?)?{
         var msg : [String:Any]? = nil
         var mt : String? = nil
         switch(type){
         case UInt8(TransactionMessage.TransactionMessageType.message.rawValue):
             msg = [
-                "content":content
+                "content":content,
             ]
             break
         case UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue):
@@ -54,13 +56,17 @@ extension SphinxOnionManager{
             return nil
             break
         }
-            guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
-                  let contentJSONString = String(data: contentData, encoding: .utf8)
-                   else{
-                return nil
-            }
             
-            return (contentJSONString,mt)
+        replyUUID != nil ? (msg?["replyUuid"] = replyUUID) : ()
+        threadUUID != nil ? (msg?["threadUuid"] = threadUUID) : ()
+        
+        guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
+              let contentJSONString = String(data: contentData, encoding: .utf8)
+               else{
+            return nil
+        }
+        
+        return (contentJSONString,mt)
     }
     
     func sendMessage(
@@ -72,7 +78,9 @@ extension SphinxOnionManager{
             muid: String?=nil,
             recipPubkey: String?=nil,
             mediaKey:String?=nil,
-            mediaType:String?=nil
+            mediaType:String?=nil,
+            threadUUID:String?,
+            replyUUID:String?
         )->TransactionMessage?{
         guard let seed = getAccountSeed() else{
             return nil
@@ -81,13 +89,15 @@ extension SphinxOnionManager{
         guard let selfContact = UserContact.getSelfContact(),
               let nickname = selfContact.nickname,
               let recipPubkey = recipContact.publicKey,
-        let (contentJSONString,mediaToken) = formatMsg(
+              let (contentJSONString,mediaToken) = formatMsg(
                 content: content,
                 type: msgType,
                 muid: muid,
                 recipPubkey: recipPubkey,
                 mediaKey: mediaKey,
-                mediaType: mediaType
+                mediaType: mediaType,
+                threadUUID: threadUUID, 
+                replyUUID: replyUUID
             ),
             let contentJSONString = contentJSONString else{
             return nil
@@ -97,7 +107,7 @@ extension SphinxOnionManager{
         
         do{
             let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
-            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType)
+            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
             handleRunReturn(rr: rr)
             return sentMessage
         }
@@ -112,7 +122,9 @@ extension SphinxOnionManager{
                                content:String,
                                mediaKey:String?,
                                mediaToken:String?,
-                               mediaType:String?
+                               mediaType:String?,
+                                   replyUUID:String?,
+                                   threadUUID:String?
     )->TransactionMessage?{
         if let sentUUID = rr.msgUuid{
             let date = Date()
@@ -131,6 +143,8 @@ extension SphinxOnionManager{
                 message?.mediaType = mediaType
             }
             
+            message?.replyUUID = replyUUID
+            message?.threadUUID = threadUUID
             message?.createdAt = date
             message?.updatedAt = date
             message?.uuid = sentUUID
@@ -170,6 +184,7 @@ extension SphinxOnionManager{
         newMessage.seen = false
         newMessage.messageContent = content
         newMessage.chat = chat
+        newMessage.replyUUID = message.replyUuid
         managedContext.saveContext()
         
         UserData.sharedInstance.setLastMessageIndex(index: index)
@@ -277,7 +292,9 @@ extension SphinxOnionManager{
             muid: muid,
             recipPubkey: recipContact.publicKey,
             mediaKey: mk,
-            mediaType: mediaType
+            mediaType: mediaType,
+            threadUUID:threadUUID,
+            replyUUID: replyingMessage?.uuid
         ){
             AttachmentsManager.sharedInstance.cacheImageAndMediaData(message: sentMessage, attachmentObject: attachmentObject)
         }

@@ -149,7 +149,7 @@ extension SphinxOnionManager{
             message?.updatedAt = date
             message?.uuid = sentUUID
             message?.managedObjectContext?.saveContext()
-            
+            message?.chat?.lastMessage = message
             return message
         }
         
@@ -180,7 +180,7 @@ extension SphinxOnionManager{
         newMessage.encrypted = true
         newMessage.senderId = contact.id
         newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
-        newMessage.push = true
+        newMessage.push = false
         newMessage.seen = false
         newMessage.messageContent = content
         newMessage.chat = chat
@@ -188,6 +188,7 @@ extension SphinxOnionManager{
         newMessage.threadUUID = message.threadUuid
         newMessage.seen = false
         newMessage.chat?.seen = false
+        newMessage.chat?.lastMessage = newMessage
         managedContext.saveContext()
         
         UserData.sharedInstance.setLastMessageIndex(index: index)

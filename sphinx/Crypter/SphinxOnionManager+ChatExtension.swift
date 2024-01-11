@@ -59,7 +59,7 @@ extension SphinxOnionManager{
             
         replyUUID != nil ? (msg?["replyUuid"] = replyUUID) : ()
         threadUUID != nil ? (msg?["threadUuid"] = threadUUID) : ()
-        
+            
         guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
               let contentJSONString = String(data: contentData, encoding: .utf8)
                else{
@@ -185,6 +185,7 @@ extension SphinxOnionManager{
         newMessage.messageContent = content
         newMessage.chat = chat
         newMessage.replyUUID = message.replyUuid
+        newMessage.threadUUID = message.threadUuid
         managedContext.saveContext()
         
         UserData.sharedInstance.setLastMessageIndex(index: index)

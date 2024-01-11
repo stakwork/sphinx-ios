@@ -249,6 +249,7 @@ struct PlaintextMessageFromServer: Mappable {
     var uuid:String?=nil
     var index:String?=nil
     var replyUuid:String?=nil
+    var threadUuid:String?=nil
 
     init?(map: Map) {}
 
@@ -256,6 +257,7 @@ struct PlaintextMessageFromServer: Mappable {
         content    <- map["content"]
         amount     <- map["amount"]
         replyUuid <- map["replyUuid"]
+        threadUuid <- map["threadUuid"]
     }
     
 }
@@ -270,6 +272,8 @@ struct AttachmentMessageFromServer: Mappable {
     var mediaToken:String?=nil
     var mediaType:String?=nil
     var mediaKey:String?=nil
+    var replyUuid:String?=nil
+    var threadUuid:String?=nil
 
     init?(map: Map) {}
 
@@ -279,14 +283,8 @@ struct AttachmentMessageFromServer: Mappable {
         mediaToken <- map["mediaToken"]
         mediaType <- map["mediaType"]
         mediaKey <- map["mediaKey"]
+        replyUuid <- map["replyUuid"]
+        threadUuid <- map["threadUuid"]
     }
     
-}
-
-struct ProvisionalMessageMetaData {
-    var messageContent:String
-    var type:Int
-    var chat:Chat
-    var replyUUID:String?=nil
-    var threadUUID:String?=nil
 }

@@ -77,7 +77,7 @@ class SetProfileImageViewController: SetDataViewController {
     func uploadImage(image: UIImage) {
         let fixedImage = image.fixedOrientation()
         
-        if let profile = UserContact.getOwner(), profile.id > 0, let imgData = fixedImage.jpegData(compressionQuality: 0.5) {
+        if let imgData = fixedImage.jpegData(compressionQuality: 0.5) {
             let uploadMessage = String(format: "uploaded.progress".localized, 0)
             
             self.uploadingLabel.isHidden = false

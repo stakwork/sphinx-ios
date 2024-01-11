@@ -50,7 +50,7 @@ extension SphinxOnionManager{//contacts related
         
         do{
             let _ = createNewContact(pubkey: recipientPubkey,nickname: nickname)
-            let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: selfContact.nickname ?? "", myImg: "", amtMsat: 0)
+            let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: selfContact.nickname ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -65,6 +65,7 @@ extension SphinxOnionManager{//contacts related
     //MARK: CoreData Helpers:
     
     func createSelfContact(scid:String,serverPubkey:String,myOkKey:String){
+        
         self.pendingContact = UserContact(context: managedContext)
         self.pendingContact?.scid = scid
         self.pendingContact?.isOwner = true
@@ -104,6 +105,7 @@ extension SphinxOnionManager{//contacts related
         contact.privatePhoto = false
         contact.tipAmount = 0
         contact.blocked = false
+        contact.avatarUrl = photo_url
         
         return contact
     }

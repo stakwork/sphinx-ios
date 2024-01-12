@@ -97,6 +97,9 @@ extension SphinxOnionManager {
                 attachmentMessage.index = index
                 processIncomingAttachmentMessage(message: attachmentMessage)
             }
+            else if type == TransactionMessage.TransactionMessageType.boost.rawValue{
+                
+            }
             print("handleRunReturn message: \(message)")
         }
         

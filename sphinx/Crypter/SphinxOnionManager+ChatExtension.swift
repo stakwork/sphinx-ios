@@ -52,6 +52,11 @@ extension SphinxOnionManager{
                 return nil
             }
             break
+        case UInt8(TransactionMessage.TransactionMessageType.boost.rawValue):
+            msg = [
+                "content":content
+            ]
+            break
         default:
             return nil
             break
@@ -73,6 +78,7 @@ extension SphinxOnionManager{
             to recipContact: UserContact,
             content:String,
             chat:Chat,
+            amount:Int=0,
             shouldSendAsKeysend:Bool = false,
             msgType:UInt8=0,
             muid: String?=nil,
@@ -106,8 +112,8 @@ extension SphinxOnionManager{
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
-            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: 0)
-            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
+            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((amount * 1000)))
+            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
             handleRunReturn(rr: rr)
             return sentMessage
         }
@@ -120,6 +126,7 @@ extension SphinxOnionManager{
                                chat:Chat,
                                msgType:UInt8,
                                content:String,
+                                amount:Int,
                                mediaKey:String?,
                                mediaToken:String?,
                                mediaType:String?,
@@ -141,6 +148,9 @@ extension SphinxOnionManager{
                 message?.mediaKey = mediaKey
                 message?.mediaToken = mediaToken
                 message?.mediaType = mediaType
+            }
+            else if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue){
+                message?.amount = NSDecimalNumber(value: amount)
             }
             
             message?.replyUUID = replyUUID
@@ -303,6 +313,21 @@ extension SphinxOnionManager{
             replyUUID: replyingMessage?.uuid
         ){
             AttachmentsManager.sharedInstance.cacheImageAndMediaData(message: sentMessage, attachmentObject: attachmentObject)
+        }
+    }
+    
+    func sendBoost(
+        params: [String: AnyObject],
+        chat:Chat
+    ){
+        guard let contact = chat.getContact(),
+        let replyUUID = params["reply_uuid"] as? String,
+        let text = params["text"] as? String,
+        let amount = params["amount"] as? Int else{
+            return
+        }
+        if let sentMessage = self.sendMessage(to: contact, content: text, chat: chat,amount: amount, msgType: UInt8(TransactionMessage.TransactionMessageType.boost.rawValue), threadUUID: nil, replyUUID: replyUUID){
+            print(sentMessage)
         }
     }
 

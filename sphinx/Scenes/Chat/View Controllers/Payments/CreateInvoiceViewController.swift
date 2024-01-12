@@ -170,7 +170,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             let walletBalance = WalletBalanceService().balance
             let sending = (mode == PaymentsViewModel.PaymentMode.send || mode == PaymentsViewModel.PaymentMode.sendOnchain)
             
-            if amount > walletBalance && sending {
+            if amount > walletBalance && sending && false {
                 NewMessageBubbleHelper().showGenericMessageView(text: "balance.too.low".localized)
                 return false
             }

@@ -218,6 +218,7 @@ extension SphinxOnionManager{
         newMessage.replyUUID = message.replyUuid
         newMessage.threadUUID = message.threadUuid
         newMessage.chat?.lastMessage = newMessage
+        newMessage.chat?.seen = false
         newMessage.amount = NSDecimalNumber(value: amount)
         managedContext.saveContext()
         

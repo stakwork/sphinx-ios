@@ -57,6 +57,11 @@ extension SphinxOnionManager{
                 "content":content
             ]
             break
+        case UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue):
+            msg = [
+                "content":content
+            ]
+            break
         default:
             return nil
             break
@@ -135,21 +140,27 @@ extension SphinxOnionManager{
     )->TransactionMessage?{
         if let sentUUID = rr.msgUuid{
             let date = Date()
-            let message  = TransactionMessage.createProvisionalMessage(
-                messageContent: content,
-                type: Int(msgType),
-                date: date,
-                chat: chat,
-                replyUUID: nil,
-                threadUUID: nil
-            )
+            var message : TransactionMessage? = nil
+            if let existingMessage = TransactionMessage.getMessageWith(uuid: sentUUID){
+                message = existingMessage
+            }
+            else{
+                message  = TransactionMessage.createProvisionalMessage(
+                    messageContent: content,
+                    type: Int(msgType),
+                    date: date,
+                    chat: chat,
+                    replyUUID: nil,
+                    threadUUID: nil
+                )
+            }
             
             if(msgType == TransactionMessage.TransactionMessageType.attachment.rawValue){
                 message?.mediaKey = mediaKey
                 message?.mediaToken = mediaToken
                 message?.mediaType = mediaType
             }
-            else if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue){
+            else if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue) || (msgType == TransactionMessage.TransactionMessageType.directPayment.rawValue){
                 message?.amount = NSDecimalNumber(value: amount)
             }
             
@@ -158,8 +169,9 @@ extension SphinxOnionManager{
             message?.createdAt = date
             message?.updatedAt = date
             message?.uuid = sentUUID
-            message?.managedObjectContext?.saveContext()
+            message?.id = sentUUID.hashValue
             message?.chat?.lastMessage = message
+            message?.managedObjectContext?.saveContext()
             return message
         }
         
@@ -316,7 +328,8 @@ extension SphinxOnionManager{
         }
     }
     
-    func sendBoost(
+    //MARK: Payments related
+    func sendBoostReply(
         params: [String: AnyObject],
         chat:Chat
     ){
@@ -328,6 +341,24 @@ extension SphinxOnionManager{
         }
         if let sentMessage = self.sendMessage(to: contact, content: text, chat: chat,amount: amount, msgType: UInt8(TransactionMessage.TransactionMessageType.boost.rawValue), threadUUID: nil, replyUUID: replyUUID){
             print(sentMessage)
+        }
+    }
+    
+    func sendDirectPaymentMessage(
+        params:[String:Any],
+        chat:Chat
+    )->Bool{
+        guard let contact = chat.getContact(),
+        let amount = params["amount"] as? Int,
+        let muid = params["muid"] as? String else{
+            return false
+        }
+        
+        if let _ = sendMessage(to: contact, content: "", chat: chat,amount: amount, msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),muid: muid, threadUUID: nil, replyUUID: nil){
+            return true
+        }
+        else{
+            return false
         }
     }
 

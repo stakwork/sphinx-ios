@@ -19,7 +19,7 @@ extension NewChatViewModel {
             return
         }
         
-        SphinxOnionManager.sharedInstance.sendBoost(params: params, chat: chat)
+        SphinxOnionManager.sharedInstance.sendBoostReply(params: params, chat: chat)
     }
     
     func shouldResendMessage(message: TransactionMessage) {

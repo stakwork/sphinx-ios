@@ -166,7 +166,9 @@ class PaymentTemplateViewController: CommonPaymentViewController {
     @IBAction func proceedButtonTouched() {
         loading = true
         
-        if !paymentsViewModel.validatePayment(contact: contact) {
+        guard let validChat = chat,
+            paymentsViewModel.validatePayment(contact: contact)
+         else{
             loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
             return
@@ -177,20 +179,15 @@ class PaymentTemplateViewController: CommonPaymentViewController {
             contact: contact,
             chat: chat
         )
-        
-        API.sharedInstance.sendDirectPayment(params: parameters, callback: { payment in
-            if let payment = payment {
-                self.createLocalMessages(message: payment)
-            } else {
-                AlertHelper.showAlert(title: "generic.success.title".localized, message: "payment.successfully.sent".localized, completion: {
-                    self.shouldDismissView()
-                })
-            }
-        }, errorCallback: { _ in
+
+        if SphinxOnionManager.sharedInstance.sendDirectPaymentMessage(params: parameters, chat: validChat){
+            self.shouldDismissView()
+        }
+        else{
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
                 self.shouldDismissView()
             })
-        })
+        }
     }
     
     @IBAction func closeButtonTouched() {

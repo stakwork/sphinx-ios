@@ -166,7 +166,7 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func processIncomingPlaintextMessage(message:PlaintextMessageFromServer){
+    func processIncomingPlaintextMessage(message:PlaintextMessageFromServer,amount:Int=0,type:Int?=nil){
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
@@ -186,19 +186,19 @@ extension SphinxOnionManager{
         newMessage.updatedAt = Date()
         newMessage.date = Date()
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-        newMessage.type = TransactionMessage.TransactionMessageType.message.rawValue
+        newMessage.type = type ?? TransactionMessage.TransactionMessageType.message.rawValue
         newMessage.encrypted = true
         newMessage.senderId = contact.id
         newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
         newMessage.push = false
         newMessage.seen = false
+        newMessage.chat?.seen = false
         newMessage.messageContent = content
         newMessage.chat = chat
         newMessage.replyUUID = message.replyUuid
         newMessage.threadUUID = message.threadUuid
-        newMessage.seen = false
-        newMessage.chat?.seen = false
         newMessage.chat?.lastMessage = newMessage
+        newMessage.amount = NSDecimalNumber(value: amount)
         managedContext.saveContext()
         
         UserData.sharedInstance.setLastMessageIndex(index: index)

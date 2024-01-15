@@ -167,26 +167,28 @@ class PaymentTemplateViewController: CommonPaymentViewController {
         loading = true
         
         guard let validChat = chat,
-            paymentsViewModel.validatePayment(contact: contact)
+            paymentsViewModel.validatePayment(contact: contact),
+              let selectedImage = selectedImageView.image
          else{
             loading = false
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
             return
         }
         
-        let parameters = TransactionMessage.getPaymentParamsFor(
+        let params = TransactionMessage.getPaymentParamsFor(
             payment: paymentsViewModel.payment,
             contact: contact,
             chat: chat
         )
-
-        if SphinxOnionManager.sharedInstance.sendDirectPaymentMessage(params: parameters, chat: validChat){
-            self.shouldDismissView()
-        }
-        else{
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
+        SphinxOnionManager.sharedInstance.sendDirectPaymentMessage(params: params, chat: validChat, image: selectedImage) { success in
+            if(success){
                 self.shouldDismissView()
-            })
+            }
+            else{
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
+                    self.shouldDismissView()
+                })
+            }
         }
     }
     

@@ -12,6 +12,25 @@ import SwiftyJSON
 
 extension SphinxOnionManager{
     
+    func loadMediaToken(
+        recipPubkey:String?,
+        muid:String?
+    )->String?{
+        guard let seed = getAccountSeed(),
+        let recipPubkey = recipPubkey,
+        let muid = muid,
+        let expiry = Calendar.current.date(byAdding: .year, value: 1, to: Date()) else{
+            return nil
+        }
+        do{
+            let mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
+            return mt
+        }
+        catch{
+            return nil
+        }
+    }
+    
     func formatMsg(
             content:String,
             type:UInt8,
@@ -31,22 +50,14 @@ extension SphinxOnionManager{
             ]
             break
         case UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue):
-            guard let seed = getAccountSeed(),
-            let muid = muid,
-            let recipPubkey = recipPubkey,
-            let expiry = Calendar.current.date(byAdding: .year, value: 1, to: Date()),
-            let mediaKey = mediaKey else{
-                return nil
-            }
+            mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
             do{
-                mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
                 msg = [
                     "content": content,
                     "mediaToken": mt,
                     "mediaKey": mediaKey,
                     "mediaType": mediaType,
                 ]
-                
             }
             catch{
                 return nil
@@ -58,9 +69,18 @@ extension SphinxOnionManager{
             ]
             break
         case UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue):
-            msg = [
-                "content":content
-            ]
+            mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
+            do{
+                msg = [
+                    "content": content,
+                    "mediaToken": mt,
+                    "mediaKey": mediaKey,
+                    "mediaType": mediaType,
+                ]
+            }
+            catch{
+                return nil
+            }
             break
         default:
             return nil
@@ -140,20 +160,6 @@ extension SphinxOnionManager{
     )->TransactionMessage?{
         if let sentUUID = rr.msgUuid{
             let date = Date()
-//            var message : TransactionMessage? = nil
-//            if let existingMessage = TransactionMessage.getMessageWith(uuid: sentUUID){
-//                message = existingMessage
-//            }
-//            else{
-//                message  = TransactionMessage.createProvisionalMessage(
-//                    messageContent: content,
-//                    type: Int(msgType),
-//                    date: date,
-//                    chat: chat,
-//                    replyUUID: nil,
-//                    threadUUID: nil
-//                )
-//            }
             let message  = TransactionMessage.createProvisionalMessage(
                 messageContent: content,
                 type: Int(msgType),
@@ -312,9 +318,6 @@ extension SphinxOnionManager{
         let (_,mediaType) = attachmentObject.getFileAndMime()
         
         //Create JSON object and push through onion network
-        print("muid:\(muid)")
-       let message = TransactionMessage.getMessageWith(muid: muid)
-        
         guard let recipPubkey = attachmentObject.contactPubkey,
               let recipContact = UserContact.getContactWithDisregardStatus(pubkey: recipPubkey)
         else{ //TODO: upgrade this
@@ -355,20 +358,67 @@ extension SphinxOnionManager{
     
     func sendDirectPaymentMessage(
         params:[String:Any],
-        chat:Chat
-    )->Bool{
+        chat:Chat,
+        image:UIImage,
+        completion: @escaping (Bool)->()
+    ){
         guard let contact = chat.getContact(),
         let amount = params["amount"] as? Int,
-        let muid = params["muid"] as? String else{
-            return false
+        let muid = params["muid"] as? String,
+        let data = image.pngData() else{
+            completion(false)
+            return
         }
         
-        if let _ = sendMessage(to: contact, content: "", chat: chat,amount: amount, msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),muid: muid, threadUUID: nil, replyUUID: nil){
-            return true
+        if let _ = self.sendMessage(to: contact, content: "",
+                               chat: chat,
+                               amount: amount,
+                               msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
+                               muid: muid,
+                               threadUUID: nil,
+                               replyUUID: nil
+        ){
+            completion(true)
         }
         else{
-            return false
+            completion(false)
         }
+        
+//        let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
+        
+//        if let encryptedData = encryptedData {
+//            let attachmentObject = AttachmentObject(data: encryptedData,mediaKey: key ,type: .Photo,image: image,contactPubkey: contact.publicKey)
+//            if let _ = attachmentObject.data {
+//                guard let token: String = UserDefaults.Keys.attachmentsToken.get() else {
+//                    AttachmentsManager.sharedInstance.authenticate(completion: { token in
+//                        self.sendDirectPaymentMessage(params: params, chat: chat, image: image, completion: completion)
+//                        
+//                    }, errorCompletion: {
+//                        UserDefaults.Keys.attachmentsToken.removeValue()
+//                        completion(false)
+//                    })
+//                    return
+//                }
+//                let (_,mediaType) = attachmentObject.getFileAndMime()
+//                AttachmentsManager.sharedInstance.uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
+//                    if let _ = self.sendMessage(to: contact, content: "",
+//                                           chat: chat,
+//                                           amount: amount,
+//                                           msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
+//                                           muid: muid,
+//                                           mediaKey: key,
+//                                           mediaType: mediaType,
+//                                           threadUUID: nil,
+//                                           replyUUID: nil
+//                    ){
+//                        completion(true)
+//                    }
+//                    else{
+//                        completion(false)
+//                    }
+//                }
+//            }
+//        }
     }
 
 }

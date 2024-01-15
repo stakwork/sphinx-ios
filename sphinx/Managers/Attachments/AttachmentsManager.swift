@@ -175,6 +175,7 @@ class AttachmentsManager {
         }
     }
     
+    
     func uploadEncryptedData(attachmentObject: AttachmentObject, token: String, completion: @escaping (NSDictionary, AttachmentObject) -> ()) {
         uploadData(attachmentObject: attachmentObject, route: "file", token: token, completion: completion)
     }

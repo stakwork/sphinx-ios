@@ -140,20 +140,28 @@ extension SphinxOnionManager{
     )->TransactionMessage?{
         if let sentUUID = rr.msgUuid{
             let date = Date()
-            var message : TransactionMessage? = nil
-            if let existingMessage = TransactionMessage.getMessageWith(uuid: sentUUID){
-                message = existingMessage
-            }
-            else{
-                message  = TransactionMessage.createProvisionalMessage(
-                    messageContent: content,
-                    type: Int(msgType),
-                    date: date,
-                    chat: chat,
-                    replyUUID: nil,
-                    threadUUID: nil
-                )
-            }
+//            var message : TransactionMessage? = nil
+//            if let existingMessage = TransactionMessage.getMessageWith(uuid: sentUUID){
+//                message = existingMessage
+//            }
+//            else{
+//                message  = TransactionMessage.createProvisionalMessage(
+//                    messageContent: content,
+//                    type: Int(msgType),
+//                    date: date,
+//                    chat: chat,
+//                    replyUUID: nil,
+//                    threadUUID: nil
+//                )
+//            }
+            let message  = TransactionMessage.createProvisionalMessage(
+                messageContent: content,
+                type: Int(msgType),
+                date: date,
+                chat: chat,
+                replyUUID: nil,
+                threadUUID: nil
+            )
             
             if(msgType == TransactionMessage.TransactionMessageType.attachment.rawValue){
                 message?.mediaKey = mediaKey
@@ -169,7 +177,7 @@ extension SphinxOnionManager{
             message?.createdAt = date
             message?.updatedAt = date
             message?.uuid = sentUUID
-            message?.id = sentUUID.hashValue
+            message?.id = UUID().hashValue
             message?.chat?.lastMessage = message
             message?.managedObjectContext?.saveContext()
             return message

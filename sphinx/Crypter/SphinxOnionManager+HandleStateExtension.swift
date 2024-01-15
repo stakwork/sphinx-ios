@@ -97,7 +97,8 @@ extension SphinxOnionManager {
                 attachmentMessage.index = index
                 processIncomingAttachmentMessage(message: attachmentMessage)
             }
-            else if type == TransactionMessage.TransactionMessageType.boost.rawValue,
+            else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
+                    type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
                     var boostMessage = PlaintextMessageFromServer(JSONString: message),
                     let msats = rr.msgMsat,
                     let index = rr.msgIndex,
@@ -106,7 +107,7 @@ extension SphinxOnionManager {
                 boostMessage.senderPubkey = csr.pubkey
                 boostMessage.uuid = uuid
                 boostMessage.index = index
-                processIncomingBoost(message: boostMessage, amount: Int(msats/1000), type: Int(type))
+                processIncomingPayment(message: boostMessage, amount: Int(msats/1000), type: Int(type))
             }
             print("handleRunReturn message: \(message)")
         }
@@ -154,7 +155,9 @@ extension SphinxOnionManager {
         }
     }
     
-    func processIncomingBoost(message:PlaintextMessageFromServer,amount:Int,type:Int){
+    
+    
+    func processIncomingPayment(message:PlaintextMessageFromServer,amount:Int,type:Int){
         processIncomingPlaintextMessage(message: message,amount: amount,type: type)
     }
 

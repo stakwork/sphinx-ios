@@ -74,8 +74,9 @@ extension SphinxOnionManager{
                 msg = [
                     "content": content,
                     "mediaToken": mt,
-                    "mediaKey": mediaKey,
+//                    "mediaKey": mediaKey,
                     "mediaType": mediaType,
+                    "muid":muid
                 ]
             }
             catch{
@@ -169,13 +170,13 @@ extension SphinxOnionManager{
                 threadUUID: nil
             )
             
-            if(msgType == TransactionMessage.TransactionMessageType.attachment.rawValue){
+            if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue) ||
+                (msgType == TransactionMessage.TransactionMessageType.directPayment.rawValue)
+            {
+                message?.amount = NSDecimalNumber(value: amount)
                 message?.mediaKey = mediaKey
                 message?.mediaToken = mediaToken
                 message?.mediaType = mediaType
-            }
-            else if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue) || (msgType == TransactionMessage.TransactionMessageType.directPayment.rawValue){
-                message?.amount = NSDecimalNumber(value: amount)
             }
             
             message?.replyUUID = replyUUID
@@ -376,55 +377,19 @@ extension SphinxOnionManager{
             completion(false)
             return
         }
-//        
-//        if let _ = self.sendMessage(to: contact, content: "",
-//                               chat: chat,
-//                               amount: amount,
-//                               msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
-//                               muid: muid,
-//                               threadUUID: nil,
-//                               replyUUID: nil
-//        ){
-//            completion(true)
-//        }
-//        else{
-//            completion(false)
-//        }
         
-        let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
-        
-        if let encryptedData = encryptedData {
-            let attachmentObject = AttachmentObject(data: encryptedData,mediaKey: key ,type: .Photo,image: image,contactPubkey: contact.publicKey)
-            if let _ = attachmentObject.data {
-                guard let token: String = UserDefaults.Keys.attachmentsToken.get() else {
-                    AttachmentsManager.sharedInstance.authenticate(completion: { token in
-                        self.sendDirectPaymentMessage(params: params, chat: chat, image: image, completion: completion)
-                        
-                    }, errorCompletion: {
-                        UserDefaults.Keys.attachmentsToken.removeValue()
-                        completion(false)
-                    })
-                    return
-                }
-                let (_,mediaType) = attachmentObject.getFileAndMime()
-                AttachmentsManager.sharedInstance.uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
-                    if let _ = self.sendMessage(to: contact, content: "",
-                                           chat: chat,
-                                           amount: amount,
-                                           msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
-                                           muid: muid,
-                                           mediaKey: key,
-                                           mediaType: mediaType,
-                                           threadUUID: nil,
-                                           replyUUID: nil
-                    ){
-                        completion(true)
-                    }
-                    else{
-                        completion(false)
-                    }
-                }
-            }
+        if let _ = self.sendMessage(to: contact, content: "",
+                               chat: chat,
+                               amount: amount,
+                               msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
+                               muid: muid,
+                               threadUUID: nil,
+                               replyUUID: nil
+        ){
+            completion(true)
+        }
+        else{
+            completion(false)
         }
     }
 

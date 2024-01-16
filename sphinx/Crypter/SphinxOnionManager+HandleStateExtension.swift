@@ -265,6 +265,7 @@ struct PlaintextMessageFromServer: Mappable {
     var mediaKey:String?=nil
     var mediaToken:String?=nil
     var mediaType:String?=nil
+    var muid:String?=nil
 
     init?(map: Map) {}
 
@@ -273,6 +274,9 @@ struct PlaintextMessageFromServer: Mappable {
         amount     <- map["amount"]
         replyUuid <- map["replyUuid"]
         threadUuid <- map["threadUuid"]
+        mediaToken <- map["mediaToken"]
+        mediaType <- map["mediaType"]
+        muid <- map["muid"]
     }
     
 }

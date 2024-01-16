@@ -225,6 +225,9 @@ extension SphinxOnionManager{
         newMessage.threadUUID = message.threadUuid
         newMessage.chat?.lastMessage = newMessage
         newMessage.chat?.seen = false
+        newMessage.mediaKey = message.mediaKey
+        newMessage.mediaType = message.mediaType
+        newMessage.mediaToken = message.mediaToken
         newMessage.amount = NSDecimalNumber(value: amount)
         managedContext.saveContext()
         
@@ -270,6 +273,10 @@ extension SphinxOnionManager{
         UserData.sharedInstance.setLastMessageIndex(index: index)
     }
     
+    
+    func processIncomingPayment(message:PlaintextMessageFromServer,amount:Int,type:Int){
+        processIncomingPlaintextMessage(message: message,amount: amount,type: type)
+    }
     
 
     func signChallenge(challenge: String) -> String? {
@@ -369,56 +376,56 @@ extension SphinxOnionManager{
             completion(false)
             return
         }
-        
-        if let _ = self.sendMessage(to: contact, content: "",
-                               chat: chat,
-                               amount: amount,
-                               msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
-                               muid: muid,
-                               threadUUID: nil,
-                               replyUUID: nil
-        ){
-            completion(true)
-        }
-        else{
-            completion(false)
-        }
-        
-//        let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
-        
-//        if let encryptedData = encryptedData {
-//            let attachmentObject = AttachmentObject(data: encryptedData,mediaKey: key ,type: .Photo,image: image,contactPubkey: contact.publicKey)
-//            if let _ = attachmentObject.data {
-//                guard let token: String = UserDefaults.Keys.attachmentsToken.get() else {
-//                    AttachmentsManager.sharedInstance.authenticate(completion: { token in
-//                        self.sendDirectPaymentMessage(params: params, chat: chat, image: image, completion: completion)
-//                        
-//                    }, errorCompletion: {
-//                        UserDefaults.Keys.attachmentsToken.removeValue()
-//                        completion(false)
-//                    })
-//                    return
-//                }
-//                let (_,mediaType) = attachmentObject.getFileAndMime()
-//                AttachmentsManager.sharedInstance.uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
-//                    if let _ = self.sendMessage(to: contact, content: "",
-//                                           chat: chat,
-//                                           amount: amount,
-//                                           msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
-//                                           muid: muid,
-//                                           mediaKey: key,
-//                                           mediaType: mediaType,
-//                                           threadUUID: nil,
-//                                           replyUUID: nil
-//                    ){
-//                        completion(true)
-//                    }
-//                    else{
-//                        completion(false)
-//                    }
-//                }
-//            }
+//        
+//        if let _ = self.sendMessage(to: contact, content: "",
+//                               chat: chat,
+//                               amount: amount,
+//                               msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
+//                               muid: muid,
+//                               threadUUID: nil,
+//                               replyUUID: nil
+//        ){
+//            completion(true)
 //        }
+//        else{
+//            completion(false)
+//        }
+        
+        let (key, encryptedData) = SymmetricEncryptionManager.sharedInstance.encryptData(data: data)
+        
+        if let encryptedData = encryptedData {
+            let attachmentObject = AttachmentObject(data: encryptedData,mediaKey: key ,type: .Photo,image: image,contactPubkey: contact.publicKey)
+            if let _ = attachmentObject.data {
+                guard let token: String = UserDefaults.Keys.attachmentsToken.get() else {
+                    AttachmentsManager.sharedInstance.authenticate(completion: { token in
+                        self.sendDirectPaymentMessage(params: params, chat: chat, image: image, completion: completion)
+                        
+                    }, errorCompletion: {
+                        UserDefaults.Keys.attachmentsToken.removeValue()
+                        completion(false)
+                    })
+                    return
+                }
+                let (_,mediaType) = attachmentObject.getFileAndMime()
+                AttachmentsManager.sharedInstance.uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
+                    if let _ = self.sendMessage(to: contact, content: "",
+                                           chat: chat,
+                                           amount: amount,
+                                           msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
+                                           muid: muid,
+                                           mediaKey: key,
+                                           mediaType: mediaType,
+                                           threadUUID: nil,
+                                           replyUUID: nil
+                    ){
+                        completion(true)
+                    }
+                    else{
+                        completion(false)
+                    }
+                }
+            }
+        }
     }
 
 }

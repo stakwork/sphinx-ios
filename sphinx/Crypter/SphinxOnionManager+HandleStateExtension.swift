@@ -154,12 +154,6 @@ extension SphinxOnionManager {
             }
         }
     }
-    
-    
-    
-    func processIncomingPayment(message:PlaintextMessageFromServer,amount:Int,type:Int){
-        processIncomingPlaintextMessage(message: message,amount: amount,type: type)
-    }
 
     func isIndexedSentMessageFromMe(rr:RunReturn)->Bool{
         if let _ = rr.msgUuid,
@@ -268,6 +262,9 @@ struct PlaintextMessageFromServer: Mappable {
     var index:String?=nil
     var replyUuid:String?=nil
     var threadUuid:String?=nil
+    var mediaKey:String?=nil
+    var mediaToken:String?=nil
+    var mediaType:String?=nil
 
     init?(map: Map) {}
 

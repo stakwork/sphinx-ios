@@ -105,9 +105,15 @@ extension RestoreUserFormViewController {
             guard let self = self else { return }
             
             self.userData.getOrCreateHMACKey(forceGet: true) { [weak self] in
-                guard let self = self else { return }
-                
-                self.goToWelcomeCompleteScene()
+                API.sharedInstance.getWalletLocalAndRemote(callback: { local, remote in
+                    guard let self = self else { return }
+                    
+                    self.goToWelcomeCompleteScene()
+                }, errorCallback: {
+                    guard let self = self else { return }
+                    
+                    self.errorRestoring(message: "generic.error.message".localized)
+                })
             }
         })
     }

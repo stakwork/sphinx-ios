@@ -284,7 +284,7 @@ extension SphinxOnionManager{
     func processIncomingDeletion(message:PlaintextMessageFromServer){
         if let messageToDeleteUUID = message.replyUuid,
            let messageToDelete = TransactionMessage.getMessageWith(uuid: messageToDeleteUUID){
-            messageToDelete.status = TransactionMessage.TransactionMessageType.delete.rawValue
+            messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue
             if let context = messageToDelete.managedObjectContext{
                 context.saveContext()
             }

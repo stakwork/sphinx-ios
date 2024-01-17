@@ -116,15 +116,6 @@ extension NewChatViewModel {
             return
         }
         
-        API.sharedInstance.deleteMessage(messageId: message.id, callback: { (success, m) in
-            let _ = TransactionMessage.insertMessage(
-                m: m,
-                existingMessage: TransactionMessage.getMessageWith(id: m["id"].intValue)
-            ).0
-            
-            if !success {
-                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
-            }
-        })
+        SphinxOnionManager.sharedInstance.sendDeleteRequest(message: message)
     }
 }

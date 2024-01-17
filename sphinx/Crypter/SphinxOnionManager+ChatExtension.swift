@@ -51,17 +51,12 @@ extension SphinxOnionManager{
             break
         case UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue):
             mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
-            do{
-                msg = [
-                    "content": content,
-                    "mediaToken": mt,
-                    "mediaKey": mediaKey,
-                    "mediaType": mediaType,
-                ]
-            }
-            catch{
-                return nil
-            }
+            msg = [
+                "content": content,
+                "mediaToken": mt,
+                "mediaKey": mediaKey,
+                "mediaType": mediaType,
+            ]
             break
         case UInt8(TransactionMessage.TransactionMessageType.boost.rawValue):
             msg = [
@@ -70,18 +65,17 @@ extension SphinxOnionManager{
             break
         case UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue):
             mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
-            do{
-                msg = [
-                    "content": content,
-                    "mediaToken": mt,
-//                    "mediaKey": mediaKey,
-                    "mediaType": mediaType,
-                    "muid":muid
-                ]
-            }
-            catch{
-                return nil
-            }
+            msg = [
+                "content": content,
+                "mediaToken": mt,
+                "mediaType": mediaType,
+                "muid":muid
+            ]
+            break
+        case UInt8(TransactionMessage.TransactionMessageType.delete.rawValue):
+            msg = [
+                "content":content
+            ]
             break
         default:
             return nil
@@ -159,7 +153,9 @@ extension SphinxOnionManager{
                                    replyUUID:String?,
                                    threadUUID:String?
     )->TransactionMessage?{
-        if let sentUUID = rr.msgUuid{
+        if let sentUUID = rr.msgUuid,
+           msgType != TransactionMessage.TransactionMessageType.delete.rawValue
+        {
             let date = Date()
             let message  = TransactionMessage.createProvisionalMessage(
                 messageContent: content,
@@ -189,7 +185,13 @@ extension SphinxOnionManager{
             message?.managedObjectContext?.saveContext()
             return message
         }
-        
+        else if let replyUUID = replyUUID,
+                let messageToDelete = TransactionMessage.getMessageWith(uuid: replyUUID){
+            messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue
+            messageToDelete.chat?.lastMessage = messageToDelete
+            messageToDelete.managedObjectContext?.saveContext()
+            return messageToDelete
+        }
         return nil
     }
     
@@ -277,6 +279,16 @@ extension SphinxOnionManager{
     
     func processIncomingPayment(message:PlaintextMessageFromServer,amount:Int,type:Int){
         processIncomingPlaintextMessage(message: message,amount: amount,type: type)
+    }
+    
+    func processIncomingDeletion(message:PlaintextMessageFromServer){
+        if let messageToDeleteUUID = message.replyUuid,
+           let messageToDelete = TransactionMessage.getMessageWith(uuid: messageToDeleteUUID){
+            messageToDelete.status = TransactionMessage.TransactionMessageType.delete.rawValue
+            if let context = messageToDelete.managedObjectContext{
+                context.saveContext()
+            }
+        }
     }
     
 
@@ -390,6 +402,20 @@ extension SphinxOnionManager{
         }
         else{
             completion(false)
+        }
+    }
+    
+    func sendDeleteRequest(message:TransactionMessage){
+        guard let chat = message.chat,
+              let contact = chat.getContact() else{
+            return
+        }
+        
+        if let deletedMessage = sendMessage(to: contact, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.delete.rawValue), threadUUID: nil, replyUUID: message.uuid){
+            
+        }
+        else{
+            
         }
     }
 

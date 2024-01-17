@@ -109,6 +109,10 @@ extension SphinxOnionManager {
                 boostMessage.index = index
                 processIncomingPayment(message: boostMessage, amount: Int(msats/1000), type: Int(type))
             }
+            else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
+                    var deletionRequestMessage = PlaintextMessageFromServer(JSONString: message){
+                processIncomingDeletion(message: deletionRequestMessage)
+            }
             print("handleRunReturn message: \(message)")
         }
         

@@ -139,6 +139,10 @@ RustBuffer uniffi_sphinxrs_fn_func_send(RustBuffer seed, RustBuffer unique_time,
 );
 RustBuffer uniffi_sphinxrs_fn_func_make_media_token(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer host, RustBuffer muid, RustBuffer to, uint32_t expiry, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_sphinxrs_fn_func_make_media_token_with_meta(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer host, RustBuffer muid, RustBuffer to, uint32_t expiry, RustBuffer meta, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_make_invoice(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t amt_msat, RustBuffer preimage, RustBuffer description, RustCallStatus *_Nonnull out_status
+);
 RustBuffer ffi_sphinxrs_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
 );
 RustBuffer ffi_sphinxrs_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
@@ -259,6 +263,12 @@ uint16_t uniffi_sphinxrs_checksum_func_send(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_make_media_token(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_make_media_token_with_meta(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_make_invoice(void
     
 );
 uint32_t ffi_sphinxrs_uniffi_contract_version(void

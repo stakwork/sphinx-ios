@@ -1587,6 +1587,36 @@ public func `makeMediaToken`(`seed`: String, `uniqueTime`: String, `state`: Data
     )
 }
 
+public func `makeMediaTokenWithMeta`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `muid`: String, `to`: String, `expiry`: UInt32, `meta`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_make_media_token_with_meta(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`host`),
+        FfiConverterString.lower(`muid`),
+        FfiConverterString.lower(`to`),
+        FfiConverterUInt32.lower(`expiry`),
+        FfiConverterString.lower(`meta`),$0)
+}
+    )
+}
+
+public func `makeInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `amtMsat`: UInt64, `preimage`: String, `description`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_make_invoice(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterUInt64.lower(`amtMsat`),
+        FfiConverterString.lower(`preimage`),
+        FfiConverterString.lower(`description`),$0)
+}
+    )
+}
+
 private enum InitializationResult {
     case ok
     case contractVersionMismatch
@@ -1714,6 +1744,12 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_make_media_token() != 53931) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_make_media_token_with_meta() != 21693) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_make_invoice() != 41170) {
         return InitializationResult.apiChecksumMismatch
     }
 

@@ -82,12 +82,13 @@ extension SphinxOnionManager {
            let uuid = rr.msgUuid,
            let index = rr.msgIndex,
            let csr = ContactServerResponse(JSONString: sender){
-            if type == TransactionMessage.TransactionMessageType.message.rawValue,
+            if type == TransactionMessage.TransactionMessageType.message.rawValue 
+                || type == TransactionMessage.TransactionMessageType.call.rawValue,
                var plaintextMessage = PlaintextMessageFromServer(JSONString: message){
                 plaintextMessage.senderPubkey = csr.pubkey
                 plaintextMessage.uuid = uuid
                 plaintextMessage.index = index
-                processIncomingPlaintextMessage(message: plaintextMessage)
+                processIncomingPlaintextMessage(message: plaintextMessage,type: Int(type))
             }
             else if type == TransactionMessage.TransactionMessageType.attachment.rawValue,
                 var attachmentMessage = AttachmentMessageFromServer(JSONString: message){
@@ -113,6 +114,11 @@ extension SphinxOnionManager {
                     var deletionRequestMessage = PlaintextMessageFromServer(JSONString: message){
                 processIncomingDeletion(message: deletionRequestMessage)
             }
+//            else if type == TransactionMessage.TransactionMessageType.call.rawValue,
+//            var message = PlaintextMessageFromServer(JSONString: message){
+//                print(message)
+//                processIncomingPlaintextMessage(message: message,type: TransactionMessage.TransactionMessageType.call.rawValue)
+//            }
             print("handleRunReturn message: \(message)")
         }
         

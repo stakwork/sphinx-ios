@@ -52,7 +52,7 @@ extension NewChatViewModel {
             return
         }
         
-        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact!, content: text, chat: chat,threadUUID: threadUUID, replyUUID: replyingTo?.uuid)
+        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact!, content: text, chat: chat,msgType: UInt8(type), threadUUID: threadUUID, replyUUID: replyingTo?.uuid)
         completion(error == nil)
         
     }

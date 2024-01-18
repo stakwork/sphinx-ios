@@ -77,6 +77,11 @@ extension SphinxOnionManager{
                 "content":content
             ]
             break
+        case UInt8(TransactionMessage.TransactionMessageType.call.rawValue):
+            msg = [
+                "content":content
+            ]
+        break
         default:
             return nil
             break
@@ -186,6 +191,7 @@ extension SphinxOnionManager{
             return message
         }
         else if let replyUUID = replyUUID,
+                msgType == TransactionMessage.TransactionMessageType.delete.rawValue,
                 let messageToDelete = TransactionMessage.getMessageWith(uuid: replyUUID){
             messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue
             messageToDelete.chat?.lastMessage = messageToDelete

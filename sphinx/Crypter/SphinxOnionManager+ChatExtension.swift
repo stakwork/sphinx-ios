@@ -81,7 +81,13 @@ extension SphinxOnionManager{
             msg = [
                 "content":content
             ]
-        break
+            break
+        case UInt8(TransactionMessage.TransactionMessageType.purchase.rawValue):
+            mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
+            msg = [
+                "content":""
+            ]
+            break
         default:
             return nil
             break
@@ -175,6 +181,11 @@ extension SphinxOnionManager{
                 (msgType == TransactionMessage.TransactionMessageType.directPayment.rawValue)
             {
                 message?.amount = NSDecimalNumber(value: amount)
+                message?.mediaKey = mediaKey
+                message?.mediaToken = mediaToken
+                message?.mediaType = mediaType
+            }
+            else if(msgType == TransactionMessage.TransactionMessageType.purchase.rawValue){
                 message?.mediaKey = mediaKey
                 message?.mediaToken = mediaToken
                 message?.mediaType = mediaType
@@ -350,11 +361,13 @@ extension SphinxOnionManager{
             return
         }
         
+        let type = (attachmentObject.paidMessage != nil) ? (TransactionMessage.TransactionMessageType.purchase.rawValue) : (TransactionMessage.TransactionMessageType.attachment.rawValue)
+        
         if let sentMessage = self.sendMessage(
             to: recipContact,
             content: attachmentObject.text ?? "",
             chat: chat,
-            msgType: UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue),
+            msgType: UInt8(type),
             muid: muid,
             recipPubkey: recipContact.publicKey,
             mediaKey: mk,
@@ -362,7 +375,12 @@ extension SphinxOnionManager{
             threadUUID:threadUUID,
             replyUUID: replyingMessage?.uuid
         ){
-            AttachmentsManager.sharedInstance.cacheImageAndMediaData(message: sentMessage, attachmentObject: attachmentObject)
+            if(type == TransactionMessage.TransactionMessageType.attachment.rawValue){
+                AttachmentsManager.sharedInstance.cacheImageAndMediaData(message: sentMessage, attachmentObject: attachmentObject)
+            }
+            else if (type == TransactionMessage.TransactionMessageType.purchase.rawValue){
+                print(sentMessage)
+            }
         }
     }
     

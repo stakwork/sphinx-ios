@@ -258,7 +258,7 @@ class sphinxOnionAddContactTests: XCTestCase {
         fulfillExpectationAfterDelay(expectation, delayInSeconds: delayTime)
         // Wait for the expectation to be fulfilled.
         wait(for: [expectation], timeout: delayTime + 1.0) // Adjust the timeout as needed
-        
+        print("\n\n\n\n WARNING: Must run yarn cli alice from inside the wasm tests folder in the Sphinx repo in order to ensure the receiver is online & available to respond with the correct data!")
         guard let contact = UserContact.getAll().filter({$0.isOwner == false}).first else{
             XCTFail("Failed contact registration")
             return

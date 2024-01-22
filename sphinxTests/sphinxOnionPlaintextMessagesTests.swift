@@ -7,7 +7,29 @@
 //
 
 import XCTest
+import Alamofire
 @testable import sphinx
+
+
+func performRemoteServerAction(toAlias: String, theMsg: String) {
+    let url = "http://localhost:4020/command"
+    let parameters: [String: Any] = [
+        "command": "send",
+        "parameters": [
+            "to_alias": toAlias,
+            "the_msg": theMsg
+        ]
+    ]
+    
+    AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+        switch response.result {
+        case .success(let value):
+            print("Response: \(value)")
+        case .failure(let error):
+            print("Error: \(error)")
+        }
+    }
+}
 
 final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     let sphinxOnionManager = SphinxOnionManager.sharedInstance
@@ -108,7 +130,8 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         }
         
         //3. Await results to come in
-        print("\n\n\n\n INSTRUCTIONS: Send this command through the wasm test client: yarn cli alice send \(self_alias) \(qrCodeString) \(test_received_message_content)")
+        
+        performRemoteServerAction(toAlias: self_alias, theMsg: "\(test_received_message_content)")
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
         fulfillExpectationAfterDelay(expectation, delayInSeconds: 18.0)
         // Wait for the expectation to be fulfilled.

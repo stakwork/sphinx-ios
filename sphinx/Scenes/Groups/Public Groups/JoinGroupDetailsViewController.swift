@@ -40,7 +40,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     var qrString: String! = nil
     var tribeInfo : GroupsManager.TribeInfo? = nil
     
-    var isV2 : Bool {
+    var isV2Tribe : Bool {
         return qrString.contains("action=tribe") && qrString.contains("pubkey=")
     }
     
@@ -62,6 +62,35 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             imageUploadContainer.alpha = uploading ? 1.0 : 0.0
             LoadingWheelHelper.toggleLoadingWheel(loading: uploading, loadingWheel: imageUploadLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, view: view)
         }
+    }
+    
+    func cleanPubKey(_ key: String) -> String {
+        let trimmed = key.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.hasSuffix("\")") {
+            return String(trimmed.dropLast(2))
+        } else {
+            return trimmed
+        }
+    }
+    
+    func getPubkey()->String?{
+        if let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+            let queryItems = components.queryItems,
+           let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value{
+            return cleanPubKey(pubkey)
+        }
+        return nil
+    }
+    
+    func getChatJSON()->JSON?{
+        var chatDict : [String:Any] = [
+            "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
+            "owner_pubkey": tribeInfo?.ownerPubkey,
+            "name" : tribeInfo?.name
+        ]
+        let chatJSON = JSON(chatDict)
+        return chatJSON
     }
     
     static func instantiate(
@@ -105,15 +134,8 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             shouldFixAlias: true
         )
         
-        if(isV2){//treat as v2 tribe
-            tribeInfo = GroupsManager.TribeInfo(name:"testV2",description: "no real description yet this is hardcoded")
-            if let groupInfo = JSON(rawValue: ""){
-                self.completeDataAndShow(groupInfo: groupInfo)
-            }
-        }
-        else{
-            loadGroupDetails()
-        }
+
+        loadGroupDetails()
     }
     
     @objc override func keyboardWillShow(_ notification: Notification) {
@@ -128,10 +150,17 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     
     func loadGroupDetails() {
         loadingGroup = true
-        tribeInfo = groupsManager.getGroupInfo(query: qrString)
+        
+         if(isV2Tribe),
+          let pubkey = getPubkey(){
+             tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: "34.229.52.200:8801",uuid: pubkey)
+        }
+        else{
+            tribeInfo = groupsManager.getGroupInfo(query: qrString)
+        }
         
         if let tribeInfo = tribeInfo {
-            API.sharedInstance.getTribeInfo(host: tribeInfo.host, uuid: tribeInfo.uuid, callback: { groupInfo in
+            API.sharedInstance.getTribeInfo(host: tribeInfo.host, uuid: tribeInfo.uuid, useSSL: !isV2Tribe, callback: { groupInfo in
                 self.completeDataAndShow(groupInfo: groupInfo)
             }, errorCallback: {
                 self.showErrorAndDismiss()
@@ -194,15 +223,13 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     }
     
     func joinTribe(name: String?, imageUrl: String?) {
-        if isV2 ,
-           let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
-           let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-           let queryItems = components.queryItems,
-           let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value{
+        if isV2Tribe ,
+           let pubkey = getPubkey(),
+           let chatJSON = getChatJSON(),
+           let chat = Chat.insertChat(chat: chatJSON){
             SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                AlertHelper.showAlert(title: "Join Tribe Request Sent", message: "Awaiting the tribe owner to approve you to finalize.")
-            })
+            chat.type = Chat.ChatType.publicGroup.rawValue
+            chat.managedObjectContext?.saveContext()
             self.closeButtonTouched()
         }
         else{

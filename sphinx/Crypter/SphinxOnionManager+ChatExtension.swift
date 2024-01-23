@@ -106,7 +106,7 @@ extension SphinxOnionManager{
     }
     
     func sendMessage(
-            to recipContact: UserContact,
+            to recipContact: UserContact?,
             content:String,
             chat:Chat,
             amount:Int=0,
@@ -122,10 +122,10 @@ extension SphinxOnionManager{
         guard let seed = getAccountSeed() else{
             return nil
         }
-        
+        let sendAmount = chat.isConversation() ? amount : 1  //send keysends to group
         guard let selfContact = UserContact.getSelfContact(),
-              let nickname = selfContact.nickname,
-              let recipPubkey = recipContact.publicKey,
+              let nickname = selfContact.nickname ?? chat.name,
+              let recipPubkey = (recipContact?.publicKey ?? chat.ownerPubkey),
               let (contentJSONString,mediaToken) = formatMsg(
                 content: content,
                 type: msgType,
@@ -143,7 +143,7 @@ extension SphinxOnionManager{
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
-            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((amount * 1000)))
+            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((sendAmount * 1000)))
             let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
             handleRunReturn(rr: rr)
             return sentMessage

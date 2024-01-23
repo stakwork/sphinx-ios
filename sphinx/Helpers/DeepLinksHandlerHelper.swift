@@ -76,7 +76,7 @@ class DeepLinksHandlerHelper {
     static func storeLinkQueryFrom(url: URL) -> Bool {
         var shouldSetVC = false
         
-        if let query = url.query, UserData.sharedInstance.isUserLogged() {
+        if let query = url.query, UserData.sharedInstance.isUserLogged(){ 
             if let action = url.getLinkAction() {
                 switch(action) {
                 case "donation":

@@ -112,8 +112,9 @@ extension NewQRScannerViewController {
         
         var success = false
         let action = queryItems.first(where: { $0.name == "action" })?.value
-        if let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value{
-            delegate?.didScanJoinTribeCode?(pubkey: pubkey)
+        if let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value,
+        let dashboard = delegate as? DashboardRootViewController{
+            dashboard.didScanJoinTribeCode(pubkey: pubkey)
             success = action == "tribe" && (pubkey.isPubKey)
         }
                 

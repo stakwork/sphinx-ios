@@ -199,7 +199,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
     }
     
     @IBAction func confirmButtonTouched() {
-        if let code = addressField.text {
+         if let code = addressField.text {
             let fixedCode = code.fixInvoiceString().trim()
             confirmButton.isHidden = fixedCode == ""
             

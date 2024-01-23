@@ -44,6 +44,9 @@ class UserData {
     }
     
     func isUserLogged() -> Bool {
+        if(getMnemonic() != nil){ //v2
+            return true
+        }
         return getAppPin() != "" &&
                getNodeIP() != "" &&
                getAuthToken() != "" &&

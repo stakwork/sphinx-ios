@@ -36,8 +36,13 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     
     let owner = UserContact.getOwner()
     let groupsManager = GroupsManager.sharedInstance
+    var v2TribePubkey: String? = nil
     var qrString: String! = nil
     var tribeInfo : GroupsManager.TribeInfo? = nil
+    
+    var isV2 : Bool {
+        return qrString.contains("action=tribe") && qrString.contains("pubkey=")
+    }
     
     var loading = false {
         didSet {
@@ -69,6 +74,16 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
 
         return viewController
     }
+    
+    static func instantiate(
+        v2TribePubkey: String,
+        delegate: NewContactVCDelegate? = nil
+    ) -> JoinGroupDetailsViewController{
+        let viewController = StoryboardScene.Groups.joinGroupDetailsViewController.instantiate()
+        viewController.v2TribePubkey = v2TribePubkey
+        
+        return viewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +105,15 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             shouldFixAlias: true
         )
         
-        loadGroupDetails()
+        if(isV2){//treat as v2 tribe
+            tribeInfo = GroupsManager.TribeInfo(name:"testV2",description: "no real description yet this is hardcoded")
+            if let groupInfo = JSON(rawValue: ""){
+                self.completeDataAndShow(groupInfo: groupInfo)
+            }
+        }
+        else{
+            loadGroupDetails()
+        }
     }
     
     @objc override func keyboardWillShow(_ notification: Notification) {
@@ -171,51 +194,65 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     }
     
     func joinTribe(name: String?, imageUrl: String?) {
-        guard let name = name, !name.isEmpty else {
-            loading = false
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "alias.cannot.empty".localized)
-            return
-        }
-        
-        if let tribeInfo = tribeInfo {
-            var params = groupsManager.getParamsFrom(tribe: tribeInfo)
-            params["my_alias"] = name as AnyObject
-            params["my_photo_url"] = (imageUrl ?? "") as AnyObject
-            
-            API.sharedInstance.joinTribe(params: params, callback: { chatJson in
-                if let chat = Chat.insertChat(chat: chatJson) {
-                    chat.tribeInfo = tribeInfo
-                    chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
-                    
-                    
-                    if let feedUrl = tribeInfo.feedUrl {
-                        ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: chat.id, completion: { feedId in
-                            
-                            if let feedId = feedId {
-                                chat.contentFeed = ContentFeed.getFeedById(feedId: feedId)
-                                chat.saveChat()
-                            }
-                            
-                            self.delegate?.shouldReloadContacts?(reload: true)
-                            if let dashboardDelegate = self.delegate as? DashboardRootViewController,
-                               let tribesIndex = dashboardDelegate.buttonTitles.firstIndex(where: {
-                                   $0 == "dashboard.tabs.tribes".localized
-                               }){
-                                dashboardDelegate.activeTab = .tribes
-                                dashboardDelegate.segmentedControlDidSwitch(dashboardDelegate.dashboardNavigationTabs, to: tribesIndex)
-                            }
-                            self.closeButtonTouched()
-                        })
-                    }
-                } else {
-                    self.showErrorAndDismiss()
-                }
-            }, errorCallback: {
-                self.showErrorAndDismiss()
+        if isV2 ,
+           let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
+           let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+           let queryItems = components.queryItems,
+           let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value{
+            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                AlertHelper.showAlert(title: "Join Tribe Request Sent", message: "Awaiting the tribe owner to approve you to finalize.")
             })
-        } else {
-            showErrorAndDismiss()
+            self.closeButtonTouched()
         }
+        else{
+            guard let name = name, !name.isEmpty else {
+                loading = false
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "alias.cannot.empty".localized)
+                return
+            }
+            
+            if let tribeInfo = tribeInfo {
+                var params = groupsManager.getParamsFrom(tribe: tribeInfo)
+                params["my_alias"] = name as AnyObject
+                params["my_photo_url"] = (imageUrl ?? "") as AnyObject
+                
+                API.sharedInstance.joinTribe(params: params, callback: { chatJson in
+                    if let chat = Chat.insertChat(chat: chatJson) {
+                        chat.tribeInfo = tribeInfo
+                        chat.pricePerMessage = NSDecimalNumber(floatLiteral: Double(tribeInfo.pricePerMessage ?? 0))
+                        
+                        
+                        if let feedUrl = tribeInfo.feedUrl {
+                            ContentFeed.fetchChatFeedContentInBackground(feedUrl: feedUrl, chatId: chat.id, completion: { feedId in
+                                
+                                if let feedId = feedId {
+                                    chat.contentFeed = ContentFeed.getFeedById(feedId: feedId)
+                                    chat.saveChat()
+                                }
+                                
+                                self.delegate?.shouldReloadContacts?(reload: true)
+                                if let dashboardDelegate = self.delegate as? DashboardRootViewController,
+                                   let tribesIndex = dashboardDelegate.buttonTitles.firstIndex(where: {
+                                       $0 == "dashboard.tabs.tribes".localized
+                                   }){
+                                    dashboardDelegate.activeTab = .tribes
+                                    dashboardDelegate.segmentedControlDidSwitch(dashboardDelegate.dashboardNavigationTabs, to: tribesIndex)
+                                }
+                                self.closeButtonTouched()
+                            })
+                        }
+                    } else {
+                        self.showErrorAndDismiss()
+                    }
+                }, errorCallback: {
+                    self.showErrorAndDismiss()
+                })
+            } else {
+                showErrorAndDismiss()
+            }
+        }
+       
     }
 }
 

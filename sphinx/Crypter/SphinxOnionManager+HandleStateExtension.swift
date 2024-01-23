@@ -74,6 +74,15 @@ extension SphinxOnionManager {
         )
     }
     
+    func getChatJSON(csr:ContactServerResponse)->JSON?{
+        var chatDict : [String:Any] = [
+            "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
+            "owner_pubkey":csr.pubkey
+        ]
+        let chatJSON = JSON(chatDict)
+        return chatJSON
+    }
+    
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         if let message = rr.msg,
@@ -114,8 +123,11 @@ extension SphinxOnionManager {
                     var deletionRequestMessage = PlaintextMessageFromServer(JSONString: message){
                 processIncomingDeletion(message: deletionRequestMessage)
             }
-            else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue{
-                let tribePubkey = csr.pubkey
+            else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue,
+                let _ = csr.pubkey,
+                let chatJSON = getChatJSON(csr: csr),
+                let nativeChatObject = Chat.insertChat(chat: chatJSON){
+                nativeChatObject.managedObjectContext?.saveContext()
             }
             print("handleRunReturn message: \(message)")
         }

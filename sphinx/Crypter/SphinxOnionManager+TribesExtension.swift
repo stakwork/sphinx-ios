@@ -40,7 +40,7 @@ extension SphinxOnionManager{//tribes related
             return
         }
         do{
-           let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: "03b0d6fc6549db3134a01dcadf3d26b0faa201c46aa34fa019135f5ffe7aa256ee", tribeRouteHint: "03b8873a89885aa54cd8d98a639a793e43d27100ee17638a00c3685d29a64b3c6e_529771090552487942", alias: "test", amtMsat: 10000)
+           let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: "03b8873a89885aa54cd8d98a639a793e43d27100ee17638a00c3685d29a64b3c6e_529771090552487942", alias: "test", amtMsat: 10000)
             handleRunReturn(rr: rr)
         }
         catch{

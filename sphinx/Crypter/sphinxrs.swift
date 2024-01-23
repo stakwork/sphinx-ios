@@ -455,6 +455,7 @@ public func FfiConverterTypeKeys_lower(_ value: Keys) -> RustBuffer {
 
 
 public struct RunReturn {
+    public var `newSubscription`: String?
     public var `topic0`: String?
     public var `payload0`: Data?
     public var `topic1`: String?
@@ -474,10 +475,12 @@ public struct RunReturn {
     public var `sentTo`: String?
     public var `settledStatus`: String?
     public var `error`: String?
+    public var `newTribe`: String?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?) {
+    public init(`newSubscription`: String?, `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?) {
+        self.`newSubscription` = `newSubscription`
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
         self.`topic1` = `topic1`
@@ -497,12 +500,16 @@ public struct RunReturn {
         self.`sentTo` = `sentTo`
         self.`settledStatus` = `settledStatus`
         self.`error` = `error`
+        self.`newTribe` = `newTribe`
     }
 }
 
 
 extension RunReturn: Equatable, Hashable {
     public static func ==(lhs: RunReturn, rhs: RunReturn) -> Bool {
+        if lhs.`newSubscription` != rhs.`newSubscription` {
+            return false
+        }
         if lhs.`topic0` != rhs.`topic0` {
             return false
         }
@@ -560,10 +567,14 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`error` != rhs.`error` {
             return false
         }
+        if lhs.`newTribe` != rhs.`newTribe` {
+            return false
+        }
         return true
     }
 
     public func hash(into hasher: inout Hasher) {
+        hasher.combine(`newSubscription`)
         hasher.combine(`topic0`)
         hasher.combine(`payload0`)
         hasher.combine(`topic1`)
@@ -583,6 +594,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`sentTo`)
         hasher.combine(`settledStatus`)
         hasher.combine(`error`)
+        hasher.combine(`newTribe`)
     }
 }
 
@@ -590,6 +602,7 @@ extension RunReturn: Equatable, Hashable {
 public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> RunReturn {
         return try RunReturn(
+            `newSubscription`: FfiConverterOptionString.read(from: &buf), 
             `topic0`: FfiConverterOptionString.read(from: &buf), 
             `payload0`: FfiConverterOptionData.read(from: &buf), 
             `topic1`: FfiConverterOptionString.read(from: &buf), 
@@ -608,11 +621,13 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `sentStatus`: FfiConverterOptionString.read(from: &buf), 
             `sentTo`: FfiConverterOptionString.read(from: &buf), 
             `settledStatus`: FfiConverterOptionString.read(from: &buf), 
-            `error`: FfiConverterOptionString.read(from: &buf)
+            `error`: FfiConverterOptionString.read(from: &buf), 
+            `newTribe`: FfiConverterOptionString.read(from: &buf)
         )
     }
 
     public static func write(_ value: RunReturn, into buf: inout [UInt8]) {
+        FfiConverterOptionString.write(value.`newSubscription`, into: &buf)
         FfiConverterOptionString.write(value.`topic0`, into: &buf)
         FfiConverterOptionData.write(value.`payload0`, into: &buf)
         FfiConverterOptionString.write(value.`topic1`, into: &buf)
@@ -632,6 +647,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`sentTo`, into: &buf)
         FfiConverterOptionString.write(value.`settledStatus`, into: &buf)
         FfiConverterOptionString.write(value.`error`, into: &buf)
+        FfiConverterOptionString.write(value.`newTribe`, into: &buf)
     }
 }
 
@@ -1617,6 +1633,34 @@ public func `makeInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `
     )
 }
 
+public func `createTribe`(`seed`: String, `uniqueTime`: String, `state`: Data, `tribeServerPubkey`: String, `tribeJson`: String) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_create_tribe(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`tribeServerPubkey`),
+        FfiConverterString.lower(`tribeJson`),$0)
+}
+    )
+}
+
+public func `joinTribe`(`seed`: String, `uniqueTime`: String, `state`: Data, `tribePubkey`: String, `tribeRouteHint`: String, `alias`: String, `amtMsat`: UInt64) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_join_tribe(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`tribePubkey`),
+        FfiConverterString.lower(`tribeRouteHint`),
+        FfiConverterString.lower(`alias`),
+        FfiConverterUInt64.lower(`amtMsat`),$0)
+}
+    )
+}
+
 private enum InitializationResult {
     case ok
     case contractVersionMismatch
@@ -1750,6 +1794,12 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_make_invoice() != 41170) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_create_tribe() != 28873) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_join_tribe() != 63841) {
         return InitializationResult.apiChecksumMismatch
     }
 

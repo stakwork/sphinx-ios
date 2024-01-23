@@ -441,6 +441,11 @@ extension DashboardRootViewController {
         
         presentNavigationControllerWith(vc: viewController)
     }
+    
+    @objc func didScanJoinTribeCode(pubkey:String){
+        //TODO: 1. Create UI to confirm? 2. Save tribe data 3. Join tribe
+        SphinxOnionManager.sharedInstance.joinTribe()
+    }
 }
 
 

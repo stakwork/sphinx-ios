@@ -149,31 +149,7 @@ class ChatListHeader: UIView {
 //            som.sendMessage(to: contact, content: "Sphinx is awesome.")
 //        }
         
-        API.sharedInstance.askAuthentication(callback: { id, challenge in
-            guard let id = id,
-                  let challenge = challenge else{
-                return
-            }
-            if let sig = SphinxOnionManager.sharedInstance.signChallenge(challenge: challenge)  {
-                //self.delegate?.didUpdateUploadProgressFor?(messageId: self.provisionalMessage?.id ?? -1, progress: 15)
-                let som = SphinxOnionManager.sharedInstance
-                guard let seed = som.getAccountSeed(),
-                      let pubkey = SphinxOnionManager.sharedInstance.getAccountOnlyKeysendPubkey(seed: seed) else{
-                    return
-                }
-                
-                API.sharedInstance.verifyAuthentication(id: id, sig: sig, pubkey: pubkey, callback: { token in
-                    if let token = token {
-                        UserDefaults.Keys.attachmentsToken.set(token)
-                        //completion(token)
-                    } else {
-                        //errorCompletion()
-                    }
-                })
-            } else {
-                //errorCompletion()
-            }
-        })
+        SphinxOnionManager.sharedInstance.joinTribe()
         
         
         

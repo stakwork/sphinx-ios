@@ -114,11 +114,9 @@ extension SphinxOnionManager {
                     var deletionRequestMessage = PlaintextMessageFromServer(JSONString: message){
                 processIncomingDeletion(message: deletionRequestMessage)
             }
-//            else if type == TransactionMessage.TransactionMessageType.call.rawValue,
-//            var message = PlaintextMessageFromServer(JSONString: message){
-//                print(message)
-//                processIncomingPlaintextMessage(message: message,type: TransactionMessage.TransactionMessageType.call.rawValue)
-//            }
+            else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue{
+                let tribePubkey = csr.pubkey
+            }
             print("handleRunReturn message: \(message)")
         }
         

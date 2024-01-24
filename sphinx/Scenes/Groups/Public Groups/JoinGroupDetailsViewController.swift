@@ -41,7 +41,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     var tribeInfo : GroupsManager.TribeInfo? = nil
     
     var isV2Tribe : Bool {
-        return qrString.contains("action=tribe") && qrString.contains("pubkey=")
+        return qrString.contains("action=tribeV2") && qrString.contains("pubkey=")
     }
     
     var loading = false {
@@ -73,12 +73,22 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         }
     }
     
-    func getPubkey()->String?{
+    func getV2Pubkey()->String?{
         if let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
             let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
             let queryItems = components.queryItems,
            let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value{
             return cleanPubKey(pubkey)
+        }
+        return nil
+    }
+    
+    func getV2Host()->String?{
+        if let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+            let queryItems = components.queryItems,
+           let host = queryItems.first(where: { $0.name == "host" })?.value{
+            return cleanPubKey(host)
         }
         return nil
     }
@@ -152,8 +162,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         loadingGroup = true
         
          if(isV2Tribe),
-          let pubkey = getPubkey(){
-             tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: "34.229.52.200:8801",uuid: pubkey)
+          let pubkey = getV2Pubkey(),
+           let host = getV2Host(){
+             tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: host,uuid: pubkey)
         }
         else{
             tribeInfo = groupsManager.getGroupInfo(query: qrString)
@@ -224,7 +235,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     
     func joinTribe(name: String?, imageUrl: String?) {
         if isV2Tribe ,
-           let pubkey = getPubkey(),
+           let pubkey = getV2Pubkey(),
            let chatJSON = getChatJSON(),
            let chat = Chat.insertChat(chat: chatJSON){
             SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey)

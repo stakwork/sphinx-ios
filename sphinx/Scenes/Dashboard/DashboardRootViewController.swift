@@ -192,6 +192,12 @@ extension DashboardRootViewController {
         viewController.leftMenuDelegate = leftMenuDelegate
         viewController.managedObjectContext = managedObjectContext
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
+            if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=03b0d6fc6549db3134a01dcadf3d26b0faa201c46aa34fa019135f5ffe7aa256ee&host=34.229.52.200:8801"){
+                DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
+            }
+        })
+        
         return viewController
     }
 }
@@ -227,6 +233,7 @@ extension DashboardRootViewController {
         addAccessibilityIdentifiers()
         
         SphinxOnionManager.sharedInstance.fetchMyAccountFromState()
+        
     }
     
     func addAccessibilityIdentifiers(){

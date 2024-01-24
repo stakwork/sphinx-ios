@@ -88,7 +88,7 @@ extension SphinxOnionManager {
                 plaintextMessage.senderPubkey = csr.pubkey
                 plaintextMessage.uuid = uuid
                 plaintextMessage.index = index
-                processIncomingPlaintextMessage(message: plaintextMessage,type: Int(type))
+                processIncomingPlaintextMessage(message: plaintextMessage,csr: csr,type: Int(type))
             }
             else if type == TransactionMessage.TransactionMessageType.attachment.rawValue,
                 var attachmentMessage = AttachmentMessageFromServer(JSONString: message){

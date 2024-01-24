@@ -212,7 +212,7 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func processIncomingPlaintextMessage(message:PlaintextMessageFromServer,amount:Int=0,type:Int?=nil){
+    func processIncomingPlaintextMessage(message:PlaintextMessageFromServer,csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
@@ -225,6 +225,7 @@ extension SphinxOnionManager{
         
         var chat : Chat? = nil
         var senderId: Int? = nil
+        //var senderAlias : String? = nil
         if let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
            let oneOnOneChat = contact.getChat(){
             chat = oneOnOneChat
@@ -261,6 +262,8 @@ extension SphinxOnionManager{
         newMessage.threadUUID = message.threadUuid
         newMessage.chat?.lastMessage = newMessage
         newMessage.chat?.seen = false
+        newMessage.senderAlias = csr?.alias
+        newMessage.senderPic = csr?.photoUrl
         newMessage.mediaKey = message.mediaKey
         newMessage.mediaType = message.mediaType
         newMessage.mediaToken = message.mediaToken

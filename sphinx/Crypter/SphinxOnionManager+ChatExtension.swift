@@ -219,10 +219,26 @@ extension SphinxOnionManager{
             let content = message.content,
 //              let amount = message.amount,
               let pubkey = message.senderPubkey,
-              let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
-              let chat = contact.getChat(),
               let uuid = message.uuid else{
             return //error getting values
+        }
+        
+        var chat : Chat? = nil
+        var senderId: Int? = nil
+        if let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
+           let oneOnOneChat = contact.getChat(){
+            chat = oneOnOneChat
+            senderId = contact.id
+        }
+        else if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: pubkey){
+            print("found tribeChat:\(tribeChat)")
+            chat = tribeChat
+            senderId = tribeChat.id
+        }
+        
+        guard let chat = chat,
+              let senderId = senderId else{
+            return //error extracting proper chat data
         }
         
         let newMessage = TransactionMessage(context: managedContext)
@@ -234,7 +250,7 @@ extension SphinxOnionManager{
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
         newMessage.type = type ?? TransactionMessage.TransactionMessageType.message.rawValue
         newMessage.encrypted = true
-        newMessage.senderId = contact.id
+        newMessage.senderId = senderId
         newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
         newMessage.push = false
         newMessage.seen = false
@@ -252,6 +268,8 @@ extension SphinxOnionManager{
         managedContext.saveContext()
         
         UserData.sharedInstance.setLastMessageIndex(index: index)
+        
+        
     }
     
     func processIncomingAttachmentMessage(message:AttachmentMessageFromServer){

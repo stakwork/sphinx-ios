@@ -114,12 +114,15 @@ extension SphinxOnionManager {
                     var deletionRequestMessage = PlaintextMessageFromServer(JSONString: message){
                 processIncomingDeletion(message: deletionRequestMessage)
             }
-//            else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue,
-//                let _ = csr.pubkey,
-//                let chatJSON = getChatJSON(csr: csr),
-//                let nativeChatObject = Chat.insertChat(chat: chatJSON){
-//                nativeChatObject.managedObjectContext?.saveContext()
-//            }
+            else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue,
+                let tribePubkey = csr.pubkey,
+                let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
+                let joinMessage = TransactionMessage(context: self.managedContext)
+                joinMessage.type = TransactionMessage.TransactionMessageType.groupJoin.rawValue
+                joinMessage.senderAlias = csr.alias
+                joinMessage.senderPic = csr.photoUrl
+                self.managedContext.saveContext()
+            }
             print("handleRunReturn message: \(message)")
         }
         

@@ -185,7 +185,8 @@ extension SphinxOnionManager{
                 message?.mediaToken = mediaToken
                 message?.mediaType = mediaType
             }
-            else if(msgType == TransactionMessage.TransactionMessageType.purchase.rawValue){
+            else if(msgType == TransactionMessage.TransactionMessageType.purchase.rawValue) ||
+                    msgType == TransactionMessage.TransactionMessageType.attachment.rawValue{
                 message?.mediaKey = mediaKey
                 message?.mediaToken = mediaToken
                 message?.mediaType = mediaType
@@ -329,7 +330,8 @@ extension SphinxOnionManager{
         
         guard let muid = file["muid"] as? String,
             let chat = chat,
-            let mk = attachmentObject.mediaKey
+            let mk = attachmentObject.mediaKey,
+            let destinationPubkey = getDestinationPubkey(for: chat)
             else{
                 return
             }
@@ -337,10 +339,10 @@ extension SphinxOnionManager{
         let (_,mediaType) = attachmentObject.getFileAndMime()
         
         //Create JSON object and push through onion network
-        guard let recipPubkey = attachmentObject.contactPubkey,
-              let recipContact = UserContact.getContactWithDisregardStatus(pubkey: recipPubkey)
-        else{ //TODO: upgrade this
-            return
+        var recipContact : UserContact? = nil
+        if let recipPubkey = attachmentObject.contactPubkey,
+           let contact = UserContact.getContactWithDisregardStatus(pubkey: recipPubkey){
+            recipContact = contact
         }
         
         let type = (attachmentObject.paidMessage != nil) ? (TransactionMessage.TransactionMessageType.purchase.rawValue) : (TransactionMessage.TransactionMessageType.attachment.rawValue)
@@ -351,7 +353,7 @@ extension SphinxOnionManager{
             chat: chat,
             msgType: UInt8(type),
             muid: muid,
-            recipPubkey: recipContact.publicKey,
+            recipPubkey: destinationPubkey,
             mediaKey: mk,
             mediaType: mediaType,
             threadUUID:threadUUID,
@@ -424,6 +426,11 @@ extension SphinxOnionManager{
             
         }
     }
+    
+    func getDestinationPubkey(for chat:Chat)->String?{
+        return chat.getContact()?.publicKey ?? chat.ownerPubkey ?? nil
+    }
+    
 
 }
 

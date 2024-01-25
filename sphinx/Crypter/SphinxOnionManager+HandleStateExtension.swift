@@ -283,6 +283,7 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
         threadUuid <- map["threadUuid"]
         mediaToken <- map["mediaToken"]
         mediaType <- map["mediaType"]
+        mediaKey <- map["mediaKey"]
         muid <- map["muid"]
     }
     

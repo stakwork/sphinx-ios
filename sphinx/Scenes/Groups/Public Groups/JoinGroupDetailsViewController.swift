@@ -36,7 +36,6 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     
     let owner = UserContact.getOwner()
     let groupsManager = GroupsManager.sharedInstance
-    var v2TribePubkey: String? = nil
     var qrString: String! = nil
     var tribeInfo : GroupsManager.TribeInfo? = nil
     
@@ -115,12 +114,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     }
     
     static func instantiate(
-        v2TribePubkey: String,
         delegate: NewContactVCDelegate? = nil
     ) -> JoinGroupDetailsViewController{
         let viewController = StoryboardScene.Groups.joinGroupDetailsViewController.instantiate()
-        viewController.v2TribePubkey = v2TribePubkey
-        
         return viewController
     }
 
@@ -237,8 +233,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         if isV2Tribe ,
            let pubkey = getV2Pubkey(),
            let chatJSON = getChatJSON(),
+           let routeHint = tribeInfo?.ownerRouteHint,
            let chat = Chat.insertChat(chat: chatJSON){
-            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey)
+            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: tribeInfo?.name)
             chat.type = Chat.ChatType.publicGroup.rawValue
             chat.managedObjectContext?.saveContext()
             self.closeButtonTouched()

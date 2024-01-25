@@ -40,9 +40,6 @@ extension NewQRScannerViewController {
         } else if validateDeepLinks(string: string) {
             return
         }
-        else if validateJoinTribeCode(string: string){
-            return
-        }
         
         AlertHelper.showAlert(title: "sorry".localized, message: "code.not.recognized".localized)
     }
@@ -100,25 +97,6 @@ extension NewQRScannerViewController {
                 vc.presentNewContactVC(pubkey: pubkey)
             })
         }
-    }
-    
-    func validateJoinTribeCode(string:String) -> Bool{
-        guard let url = URL(string:string),
-              let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-                  let queryItems = components.queryItems else {
-                print("Could not extract query items")
-                return false
-            }
-        
-        var success = false
-        let action = queryItems.first(where: { $0.name == "action" })?.value
-        if let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value,
-        let dashboard = delegate as? DashboardRootViewController{
-            dashboard.didScanJoinTribeCode(pubkey: pubkey)
-            success = action == "tribeV2" && (pubkey.isPubKey)
-        }
-                
-        return success
     }
     
     func validateSubscriptionQR(string: String) -> Bool {

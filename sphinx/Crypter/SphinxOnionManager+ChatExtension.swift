@@ -122,7 +122,7 @@ extension SphinxOnionManager{
         guard let seed = getAccountSeed() else{
             return nil
         }
-        let sendAmount = chat.isConversation() ? amount : 1  //send keysends to group
+        let sendAmount = chat.isConversation() ? amount : max(1, amount)  //send keysends to group
         guard let selfContact = UserContact.getSelfContact(),
               let nickname = selfContact.nickname ?? chat.name,
               let recipPubkey = (recipContact?.publicKey ?? chat.ownerPubkey),
@@ -373,8 +373,9 @@ extension SphinxOnionManager{
         params: [String: AnyObject],
         chat:Chat
     ){
-        guard let contact = chat.getContact(),
-        let replyUUID = params["reply_uuid"] as? String,
+        let contact = chat.getContact()
+        
+        guard let replyUUID = params["reply_uuid"] as? String,
         let text = params["text"] as? String,
         let amount = params["amount"] as? Int else{
             return

@@ -35,12 +35,12 @@ extension SphinxOnionManager{//tribes related
         }
     }
     
-    func joinTribe(tribePubkey:String){
+    func joinTribe(tribePubkey:String,routeHint:String ,alias:String?=nil){
         guard let seed = getAccountSeed() else{
             return
         }
         do{
-           let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: "03b8873a89885aa54cd8d98a639a793e43d27100ee17638a00c3685d29a64b3c6e_529771090552487942", alias: "test", amtMsat: 10000)
+           let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000)
             handleRunReturn(rr: rr)
         }
         catch{

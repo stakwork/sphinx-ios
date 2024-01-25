@@ -131,7 +131,7 @@ class ChatMessageTextFieldView: UIView {
     }
     
     func updateFieldStateFrom(_ chat: Chat?) {
-        setOngoingMessage(text: chat?.ongoingMessage ?? "")
+        setOngoingMessageFor(chat: chat)
         
         let pending = chat?.isStatusPending() ?? false
         let rejected = chat?.isStatusRejected() ?? false
@@ -141,16 +141,18 @@ class ChatMessageTextFieldView: UIView {
         self.alpha = active ? 1.0 : 0.8
     }
     
-    func setOngoingMessage(text: String) {
-        if
-            text.isEmpty ||
-            textView.text.isNotEmptyField(with: kFieldPlaceHolder)
-        {
-            return
+    func setOngoingMessageFor(chat: Chat?) {
+        if let text = ChatTrackingHandler.shared.getOngoingMessageFor(chatId: chat?.id) {
+            if
+                text.isEmpty ||
+                textView.text.isNotEmptyField(with: kFieldPlaceHolder)
+            {
+                return
+            }
+            
+            textView.text = text
+            textView.textColor = UIColor.Sphinx.TextMessages
+            textViewDidChange(textView)
         }
-        
-        textView.text = text
-        textView.textColor = UIColor.Sphinx.TextMessages
-        textViewDidChange(textView)
     }
 }

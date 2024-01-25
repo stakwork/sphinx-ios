@@ -15,6 +15,8 @@ extension NewChatViewController : AttachmentsDelegate {
         bottomView.clearMessage()
         bottomView.resetReplyView()
         
+        ChatTrackingHandler.shared.deleteReplyableMessage(with: chat?.id)
+        
         chatViewModel.insertPrivisionalAttachmentMessageAndUpload(
             attachmentObject: attachmentObject,
             chat: chat
@@ -60,6 +62,8 @@ extension NewChatViewController : AttachmentsDelegate {
         
         shouldAdjustTableViewTopInset()
         bottomView.resetReplyView()
+        
+        ChatTrackingHandler.shared.deleteReplyableMessage(with: chat?.id)
     }
 }
 

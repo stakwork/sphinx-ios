@@ -45,7 +45,6 @@ public class Chat: NSManagedObject {
     
     public var conversationContact : UserContact? = nil
     
-    var ongoingMessage : String? = nil
     var image : UIImage? = nil
     var tribeInfo: GroupsManager.TribeInfo? = nil
     var aliasesAndPics: [(String, String)] = []
@@ -650,14 +649,6 @@ public class Chat: NSManagedObject {
                 AlertHelper.showAlert(title: "deleted.tribe.title".localized, message: "deleted.tribe.description".localized)
             }
         }
-    }
-    
-    func setOngoingMessage(text: String?) {
-        self.ongoingMessage = text
-    }
-    
-    func resetOngoingMessage() {
-        self.ongoingMessage = nil
     }
     
     func shouldShowPrice() -> Bool {

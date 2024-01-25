@@ -116,6 +116,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         super.viewDidAppear(animated)
         
         fetchTribeData()
+        loadReplyableMeesage()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -124,8 +125,6 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         if self.isMovingFromParent {
             chatTableDataSource?.saveSnapshotCurrentState()
             chatTableDataSource?.stopListeningToResultsController()
-
-            chat?.setOngoingMessage(text: bottomView.getMessage())
 
             SphinxSocketManager.sharedInstance.setDelegate(delegate: nil)
 
@@ -236,5 +235,20 @@ class NewChatViewController: NewKeyboardHandlerViewController {
         )
         
         SphinxSocketManager.sharedInstance.setDelegate(delegate: self)
+    }
+    
+    private func loadReplyableMeesage() {
+        if let replyableMessage = ChatTrackingHandler.shared.getReplyableMessageFor(chatId: chat?.id) {
+            chatViewModel.replyingTo = replyableMessage
+            
+            bottomView.configureReplyViewFor(
+                message: replyableMessage,
+                withDelegate: self
+            )
+            
+            shouldAdjustTableViewTopInset()
+        } else {
+            bottomView.resetReplyView()
+        }
     }
 }

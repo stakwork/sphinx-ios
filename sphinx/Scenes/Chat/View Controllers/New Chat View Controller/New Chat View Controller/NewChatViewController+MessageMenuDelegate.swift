@@ -29,7 +29,17 @@ extension NewChatViewController : MessageOptionsVCDelegate {
     
     func shouldReplyToMessage(message: TransactionMessage) {
         chatViewModel.replyingTo = message
-        bottomView.configureReplyViewFor(message: message, withDelegate: self)
+        
+        ChatTrackingHandler.shared.saveReplyableMessage(
+            with: message.id,
+            chatId: chat?.id
+        )
+        
+        bottomView.configureReplyViewFor(
+            message: message,
+            withDelegate: self
+        )
+        
         shouldAdjustTableViewTopInset()
     }
     

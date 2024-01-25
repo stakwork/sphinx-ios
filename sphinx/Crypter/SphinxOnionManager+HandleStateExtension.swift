@@ -83,24 +83,17 @@ extension SphinxOnionManager {
            let index = rr.msgIndex,
            let csr = ContactServerResponse(JSONString: sender){
             if type == TransactionMessage.TransactionMessageType.message.rawValue 
-                || type == TransactionMessage.TransactionMessageType.call.rawValue,
-               var plaintextMessage = PlaintextMessageFromServer(JSONString: message){
+                || type == TransactionMessage.TransactionMessageType.call.rawValue
+                || type == TransactionMessage.TransactionMessageType.attachment.rawValue,
+               var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
                 plaintextMessage.senderPubkey = csr.pubkey
                 plaintextMessage.uuid = uuid
                 plaintextMessage.index = index
-                processIncomingPlaintextMessage(message: plaintextMessage,csr: csr,type: Int(type))
-            }
-            else if type == TransactionMessage.TransactionMessageType.attachment.rawValue,
-                var attachmentMessage = AttachmentMessageFromServer(JSONString: message){
-                print("Received message with attachment:\(message)")
-                attachmentMessage.senderPubkey = csr.pubkey
-                attachmentMessage.uuid = uuid
-                attachmentMessage.index = index
-                processIncomingAttachmentMessage(message: attachmentMessage)
+                processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage,csr: csr,type: Int(type))
             }
             else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
                     type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
-                    var boostMessage = PlaintextMessageFromServer(JSONString: message),
+                    var boostMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
                     let msats = rr.msgMsat,
                     let index = rr.msgIndex,
                     let uuid = rr.msgUuid
@@ -111,7 +104,7 @@ extension SphinxOnionManager {
                 processIncomingPayment(message: boostMessage, amount: Int(msats/1000), type: Int(type))
             }
             else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
-                    var deletionRequestMessage = PlaintextMessageFromServer(JSONString: message){
+                    var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
                 processIncomingDeletion(message: deletionRequestMessage)
             }
             else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue,
@@ -268,7 +261,7 @@ struct ContactServerResponse: Mappable {
 }
 
 
-struct PlaintextMessageFromServer: Mappable {
+struct PlaintextOrAttachmentMessageFromServer: Mappable {
     var content:String?
     var amount:Int?
     var senderPubkey:String?=nil
@@ -291,33 +284,6 @@ struct PlaintextMessageFromServer: Mappable {
         mediaToken <- map["mediaToken"]
         mediaType <- map["mediaType"]
         muid <- map["muid"]
-    }
-    
-}
-
-
-struct AttachmentMessageFromServer: Mappable {
-    var content:String?
-    var amount:Int?
-    var senderPubkey:String?=nil
-    var uuid:String?=nil
-    var index:String?=nil
-    var mediaToken:String?=nil
-    var mediaType:String?=nil
-    var mediaKey:String?=nil
-    var replyUuid:String?=nil
-    var threadUuid:String?=nil
-
-    init?(map: Map) {}
-
-    mutating func mapping(map: Map) {
-        content    <- map["content"]
-        amount     <- map["amount"]
-        mediaToken <- map["mediaToken"]
-        mediaType <- map["mediaType"]
-        mediaKey <- map["mediaKey"]
-        replyUuid <- map["replyUuid"]
-        threadUuid <- map["threadUuid"]
     }
     
 }

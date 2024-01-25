@@ -212,7 +212,7 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func processIncomingPlaintextMessage(message:PlaintextMessageFromServer,csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
+    func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
@@ -275,51 +275,12 @@ extension SphinxOnionManager{
         
     }
     
-    func processIncomingAttachmentMessage(message:AttachmentMessageFromServer){
-        guard let indexString = message.index,
-            let index = Int(indexString),
-            TransactionMessage.getMessageWith(id: index) == nil,
-            let content = message.content,
-//              let amount = message.amount,
-              let pubkey = message.senderPubkey,
-              let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
-              let chat = contact.getChat(),
-              let uuid = message.uuid else{
-            return //error getting values
-        }
-        
-        let newMessage = TransactionMessage(context: managedContext)
-        newMessage.id = index
-        newMessage.uuid = uuid
-        newMessage.createdAt = Date()
-        newMessage.updatedAt = Date()
-        newMessage.date = Date()
-        newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-        newMessage.type = TransactionMessage.TransactionMessageType.attachment.rawValue
-        newMessage.encrypted = true
-        newMessage.senderId = contact.id
-        newMessage.receiverId = UserContact.getSelfContact()?.id ?? 0
-        newMessage.push = true
-        newMessage.seen = false
-        newMessage.messageContent = content
-        newMessage.chat = chat
-        newMessage.mediaKey = message.mediaKey
-        newMessage.mediaToken = message.mediaToken
-        newMessage.mediaType = message.mediaType
-        newMessage.threadUUID = message.threadUuid
-        newMessage.replyUUID = message.replyUuid
-        
-        managedContext.saveContext()
-        
-        UserData.sharedInstance.setLastMessageIndex(index: index)
+    
+    func processIncomingPayment(message:PlaintextOrAttachmentMessageFromServer,amount:Int,type:Int){
+        processIncomingPlaintextOrAttachmentMessage(message: message,amount: amount,type: type)
     }
     
-    
-    func processIncomingPayment(message:PlaintextMessageFromServer,amount:Int,type:Int){
-        processIncomingPlaintextMessage(message: message,amount: amount,type: type)
-    }
-    
-    func processIncomingDeletion(message:PlaintextMessageFromServer){
+    func processIncomingDeletion(message:PlaintextOrAttachmentMessageFromServer){
         if let messageToDeleteUUID = message.replyUuid,
            let messageToDelete = TransactionMessage.getMessageWith(uuid: messageToDeleteUUID){
             messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue

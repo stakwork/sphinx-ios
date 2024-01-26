@@ -278,8 +278,13 @@ extension SphinxOnionManager{
     }
     
     
-    func processIncomingPayment(message:PlaintextOrAttachmentMessageFromServer,amount:Int,type:Int){
-        processIncomingPlaintextOrAttachmentMessage(message: message,amount: amount,type: type)
+    func processIncomingPayment(
+        message:PlaintextOrAttachmentMessageFromServer,
+        csr:ContactServerResponse?=nil,
+        amount:Int,
+        type:Int
+    ){
+        processIncomingPlaintextOrAttachmentMessage(message: message,csr: csr,amount: amount,type: type)
     }
     
     func processIncomingDeletion(message:PlaintextOrAttachmentMessageFromServer){

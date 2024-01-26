@@ -109,7 +109,7 @@ extension SphinxOnionManager {
                 boostMessage.senderPubkey = csr.pubkey
                 boostMessage.uuid = uuid
                 boostMessage.index = index
-                processIncomingPayment(message: boostMessage, amount: Int(msats/1000), type: Int(type))
+                processIncomingPayment(message: boostMessage,csr: csr, amount: Int(msats/1000), type: Int(type))
             }
             else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
                     var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){

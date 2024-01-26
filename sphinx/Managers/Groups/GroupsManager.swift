@@ -322,7 +322,7 @@ class GroupsManager {
         tribeInfo.appUrl = json["app_url"].string ?? tribeInfo.appUrl
         tribeInfo.feedUrl = json["feed_url"].string ?? tribeInfo.feedUrl
         tribeInfo.feedContentType = json["feed_type"].int?.toFeedContentType ?? tribeInfo.feedContentType
-        tribeInfo.ownerRouteHint = json["owner_route_hint"].string ?? tribeInfo.ownerRouteHint
+        tribeInfo.ownerRouteHint = json["owner_route_hint"].string ?? json["route_hint"].string ?? tribeInfo.ownerRouteHint
         
         if let rawBadgeInput : [String] = json["badges"].rawValue as? [String] {
             tribeInfo.badgeIds = rawBadgeInput.compactMap({

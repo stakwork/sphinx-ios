@@ -345,6 +345,27 @@ fileprivate struct FfiConverterUInt64: FfiConverterPrimitive {
     }
 }
 
+fileprivate struct FfiConverterBool : FfiConverter {
+    typealias FfiType = Int8
+    typealias SwiftType = Bool
+
+    public static func lift(_ value: Int8) throws -> Bool {
+        return value != 0
+    }
+
+    public static func lower(_ value: Bool) -> Int8 {
+        return value ? 1 : 0
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Bool {
+        return try lift(readInt(&buf))
+    }
+
+    public static func write(_ value: Bool, into buf: inout [UInt8]) {
+        writeInt(&buf, lower(value))
+    }
+}
+
 fileprivate struct FfiConverterString: FfiConverter {
     typealias SwiftType = String
     typealias FfiType = RustBuffer
@@ -1571,7 +1592,7 @@ public func `handle`(`topic`: String, `payload`: Data, `seed`: String, `uniqueTi
     )
 }
 
-public func `send`(`seed`: String, `uniqueTime`: String, `to`: String, `msgType`: UInt8, `msgJson`: String, `state`: Data, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64) throws -> RunReturn {
+public func `send`(`seed`: String, `uniqueTime`: String, `to`: String, `msgType`: UInt8, `msgJson`: String, `state`: Data, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64, `isTribe`: Bool = false) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_send(
@@ -1583,7 +1604,8 @@ public func `send`(`seed`: String, `uniqueTime`: String, `to`: String, `msgType`
         FfiConverterData.lower(`state`),
         FfiConverterString.lower(`myAlias`),
         FfiConverterString.lower(`myImg`),
-        FfiConverterUInt64.lower(`amtMsat`),$0)
+        FfiConverterUInt64.lower(`amtMsat`),
+        FfiConverterBool.lower(`isTribe`),$0)
 }
     )
 }
@@ -1784,7 +1806,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_handle() != 58131) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_send() != 22190) {
+    if (uniffi_sphinxrs_checksum_func_send() != 56750) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_make_media_token() != 53931) {

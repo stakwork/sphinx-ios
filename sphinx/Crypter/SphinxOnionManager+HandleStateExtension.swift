@@ -77,6 +77,14 @@ extension SphinxOnionManager {
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         if let message = rr.msg,
+           var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
+           let omuuid = plaintextMessage.originalUuid,
+           let newUUID = rr.msgUuid,
+           var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){ //update uuid if it's changing
+            originalMessage.uuid = newUUID
+            originalMessage.managedObjectContext?.saveContext()
+       }
+        else if let message = rr.msg,
            let type = rr.msgType,
            let sender = rr.msgSender,
            let uuid = rr.msgUuid,
@@ -266,6 +274,7 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
     var amount:Int?
     var senderPubkey:String?=nil
     var uuid:String?=nil
+    var originalUuid:String?=nil
     var index:String?=nil
     var replyUuid:String?=nil
     var threadUuid:String?=nil
@@ -273,6 +282,7 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
     var mediaToken:String?=nil
     var mediaType:String?=nil
     var muid:String?=nil
+    var date:Int?=nil
 
     init?(map: Map) {}
 
@@ -285,6 +295,8 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
         mediaType <- map["mediaType"]
         mediaKey <- map["mediaKey"]
         muid <- map["muid"]
+        date <- map["date"]
+        originalUuid <- map["originalUuid"]
     }
     
 }

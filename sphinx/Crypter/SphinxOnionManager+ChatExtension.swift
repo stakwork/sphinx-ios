@@ -143,7 +143,7 @@ extension SphinxOnionManager{
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
-            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((sendAmount * 1000)))
+            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((sendAmount * 1000)),isTribe: recipContact == nil)
             let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
             handleRunReturn(rr: rr)
             return sentMessage
@@ -153,16 +153,17 @@ extension SphinxOnionManager{
         }
     }
     
-    func processNewOutgoingMessage(rr:RunReturn,
-                               chat:Chat,
-                               msgType:UInt8,
-                               content:String,
-                                amount:Int,
-                               mediaKey:String?,
-                               mediaToken:String?,
-                               mediaType:String?,
-                                   replyUUID:String?,
-                                   threadUUID:String?
+    func processNewOutgoingMessage(
+        rr:RunReturn,
+       chat:Chat,
+       msgType:UInt8,
+       content:String,
+        amount:Int,
+       mediaKey:String?,
+       mediaToken:String?,
+       mediaType:String?,
+       replyUUID:String?,
+       threadUUID:String?
     )->TransactionMessage?{
         if let sentUUID = rr.msgUuid,
            msgType != TransactionMessage.TransactionMessageType.delete.rawValue

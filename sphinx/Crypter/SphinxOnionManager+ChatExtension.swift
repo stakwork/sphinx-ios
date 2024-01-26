@@ -198,7 +198,7 @@ extension SphinxOnionManager{
             message?.createdAt = date
             message?.updatedAt = date
             message?.uuid = sentUUID
-            message?.id = UUID().hashValue
+            message?.id = abs(UUID().hashValue)
             message?.chat?.lastMessage = message
             message?.managedObjectContext?.saveContext()
             return message
@@ -421,12 +421,12 @@ extension SphinxOnionManager{
     }
     
     func sendDeleteRequest(message:TransactionMessage){
-        guard let chat = message.chat,
-              let contact = chat.getContact() else{
+        guard let chat = message.chat else{
             return
         }
-        
-        if let deletedMessage = sendMessage(to: contact, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.delete.rawValue), threadUUID: nil, replyUUID: message.uuid){
+        let contact = chat.getContact()
+        let pubkey = getDestinationPubkey(for: chat)
+        if let deletedMessage = sendMessage(to: contact, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.delete.rawValue),recipPubkey: pubkey, threadUUID: nil, replyUUID: message.uuid){
             
         }
         else{

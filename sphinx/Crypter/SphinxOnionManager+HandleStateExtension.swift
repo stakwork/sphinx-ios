@@ -82,7 +82,7 @@ extension SphinxOnionManager {
            let newUUID = rr.msgUuid,
            var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){ //update uuid if it's changing
             originalMessage.uuid = newUUID
-            originalMessage.status = TransactionMessage.TransactionMessageStatus.received.rawValue
+            originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
             originalMessage.managedObjectContext?.saveContext()
        }
         else if let message = rr.msg,

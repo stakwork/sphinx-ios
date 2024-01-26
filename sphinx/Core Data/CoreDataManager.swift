@@ -149,7 +149,7 @@ class CoreDataManager {
         var objects:[T] = [T]()
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName:"\(entityName)")
-        let predicate = NSPredicate(format: "id == %d", id)
+        let predicate = NSPredicate(format: "id == %ld", id)
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         fetchRequest.fetchLimit = 1

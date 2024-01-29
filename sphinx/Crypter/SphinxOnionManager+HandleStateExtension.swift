@@ -78,9 +78,9 @@ extension SphinxOnionManager {
     func processGenericMessages(rr:RunReturn){
         if let message = rr.msg,
            var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
-           let omuuid = plaintextMessage.originalUuid,
+           let omuuid = plaintextMessage.originalUuid,//update uuid if it's changing/
            let newUUID = rr.msgUuid,
-           var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){ //update uuid if it's changing
+           var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
             originalMessage.uuid = newUUID
             originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
             originalMessage.managedObjectContext?.saveContext()

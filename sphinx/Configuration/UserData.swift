@@ -44,8 +44,9 @@ class UserData {
     }
     
     func isUserLogged() -> Bool {
-        if(getMnemonic() != nil){ //v2
-            return true
+        if(getMnemonic() != nil &&
+           getAppPin() != ""){ //v2
+            return SignupHelper.isLogged()
         }
         return getAppPin() != "" &&
                getNodeIP() != "" &&

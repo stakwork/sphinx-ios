@@ -120,7 +120,11 @@ extension SphinxOnionManager {
                 let tribePubkey = csr.pubkey,
                 let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
                 let joinMessage = TransactionMessage(context: self.managedContext)
+                joinMessage.uuid = uuid
+                joinMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
+                joinMessage.chat = chat
                 joinMessage.type = TransactionMessage.TransactionMessageType.groupJoin.rawValue
+                joinMessage.chat?.lastMessage = joinMessage
                 joinMessage.senderAlias = csr.alias
                 joinMessage.senderPic = csr.photoUrl
                 self.managedContext.saveContext()

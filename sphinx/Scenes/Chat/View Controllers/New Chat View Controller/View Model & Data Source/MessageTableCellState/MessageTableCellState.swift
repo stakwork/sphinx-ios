@@ -739,7 +739,8 @@ struct MessageTableCellState {
     
     lazy var groupMemberNotification: NoBubbleMessageLayoutState.GroupMemberNotification? = {
         
-        guard let message = message, let ownerPubKey = owner.publicKey,
+        guard let message = message, 
+                let ownerPubKey = owner.publicKey,
                 message.isGroupLeaveOrJoinMessage() ||
                 (message.isApprovedRequest() && !chat.isMyPublicGroup(ownerPubKey: ownerPubKey)) else {
             

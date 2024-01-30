@@ -124,6 +124,7 @@ extension NewChatTableDataSource {
     @objc func processMessages(
         messages: [TransactionMessage]
     ) {
+        let sortedMessages = messages.sorted(by: {$0.id < $1.id})
         let chat = chat ?? contact?.getFakeChat()
         
         guard let chat = chat, let owner = owner else {
@@ -138,21 +139,21 @@ extension NewChatTableDataSource {
         let admin = chat.getAdmin()
         let contact = chat.getConversationContact()
         
-        chat.processAliasesFrom(messages: messages)
+        chat.processAliasesFrom(messages: sortedMessages)
         
-        let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
-        let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
-        let threadMessagesMap = getThreadMessagesFor(messages: messages)
-        let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
-        let linkContactsArray = getLinkContactsArrayFor(messages: messages)
-        let linkTribesArray = getLinkTribesArrayFor(messages: messages)
-        let webLinksArray = getWebLinksArrayFor(messages: messages)
+        let replyingMessagesMap = getReplyingMessagesMapFor(messages: sortedMessages)
+        let boostMessagesMap = getBoostMessagesMapFor(messages: sortedMessages)
+        let threadMessagesMap = getThreadMessagesFor(messages: sortedMessages)
+        let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: sortedMessages)
+        let linkContactsArray = getLinkContactsArrayFor(messages: sortedMessages)
+        let linkTribesArray = getLinkTribesArrayFor(messages: sortedMessages)
+        let webLinksArray = getWebLinksArrayFor(messages: sortedMessages)
         
         var groupingDate: Date? = nil
         var invoiceData: (Int, Int) = (0, 0)
         
         let filteredThreadMessages: [TransactionMessage] = filterThreadMessagesFrom(
-            messages: messages,
+            messages: sortedMessages,
             threadMessagesMap: threadMessagesMap
         )
         

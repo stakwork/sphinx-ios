@@ -47,6 +47,7 @@ extension ThreadTableDataSource {
     override func processMessages(
         messages: [TransactionMessage]
     ) {
+        let sortedMessages = messages.sorted(by: {$0.id < $1.id})
         let chat = chat ?? contact?.getFakeChat()
         
         guard let chat = chat, let owner = owner else {
@@ -59,20 +60,20 @@ extension ThreadTableDataSource {
         let contact = chat.getConversationContact()
         let threadOriginalMessage = TransactionMessage.getMessageWith(uuid: threadUUID)
         
-        chat.processAliasesFrom(messages: messages)
+        chat.processAliasesFrom(messages: sortedMessages)
         
-        let replyingMessagesMap = getReplyingMessagesMapFor(messages: messages)
-        let boostMessagesMap = getBoostMessagesMapFor(messages: messages)
-        let threadMessagesMap = getThreadMessagesFor(messages: messages)
-        let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: messages)
-        let linkContactsArray = getLinkContactsArrayFor(messages: messages)
-        let linkTribesArray = getLinkTribesArrayFor(messages: messages)
-        let webLinksArray = getWebLinksArrayFor(messages: messages)
+        let replyingMessagesMap = getReplyingMessagesMapFor(messages: sortedMessages)
+        let boostMessagesMap = getBoostMessagesMapFor(messages: sortedMessages)
+        let threadMessagesMap = getThreadMessagesFor(messages: sortedMessages)
+        let purchaseMessagesMap = getPurchaseMessagesMapFor(messages: sortedMessages)
+        let linkContactsArray = getLinkContactsArrayFor(messages: sortedMessages)
+        let linkTribesArray = getLinkTribesArrayFor(messages: sortedMessages)
+        let webLinksArray = getWebLinksArrayFor(messages: sortedMessages)
         
         var groupingDate: Date? = nil
         var invoiceData: (Int, Int) = (0, 0)
 
-        for (index, message) in messages.enumerated() {
+        for (index, message) in sortedMessages.enumerated() {
             
             invoiceData = (
                 invoiceData.0 + ((message.isPayment() && message.isIncoming(ownerId: owner.id)) ? -1 : 0),
@@ -82,7 +83,7 @@ extension ThreadTableDataSource {
             let bubbleStateAndDate = getBubbleBackgroundForMessage(
                 msg: message,
                 with: index,
-                in: messages,
+                in: sortedMessages,
                 and: [:],
                 groupingDate: &groupingDate,
                 threadHeaderMessage: threadOriginalMessage
@@ -155,7 +156,7 @@ extension ThreadTableDataSource {
         updateSnapshot()
         
         delegate?.configureNewMessagesIndicatorWith(
-            newMsgCount: messages.count
+            newMsgCount: sortedMessages.count
         )
     }
     

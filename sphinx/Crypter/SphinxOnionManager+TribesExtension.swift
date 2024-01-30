@@ -48,7 +48,16 @@ extension SphinxOnionManager{//tribes related
         }
     }
     
-    
+    func exitTribe(tribeChat:Chat){
+        self.sendMessage(
+            to: nil,
+            content: "",
+            chat: tribeChat,
+            msgType: UInt8(TransactionMessage.TransactionMessageType.groupLeave.rawValue),
+            threadUUID: nil,
+            replyUUID: nil
+        )
+    }
     
     
 }

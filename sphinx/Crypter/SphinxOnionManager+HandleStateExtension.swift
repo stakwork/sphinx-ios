@@ -85,54 +85,57 @@ extension SphinxOnionManager {
             originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
             originalMessage.managedObjectContext?.saveContext()
        }
-        else if let message = rr.msg,
-           let type = rr.msgType,
-           let sender = rr.msgSender,
-           let uuid = rr.msgUuid,
-           let index = rr.msgIndex,
-           let csr = ContactServerResponse(JSONString: sender){
-            if type == TransactionMessage.TransactionMessageType.message.rawValue 
-                || type == TransactionMessage.TransactionMessageType.call.rawValue
-                || type == TransactionMessage.TransactionMessageType.attachment.rawValue,
-               var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
-                plaintextMessage.senderPubkey = csr.pubkey
-                plaintextMessage.uuid = uuid
-                plaintextMessage.index = index
-                processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage,csr: csr,type: Int(type))
+        else if let uuid = rr.msgUuid,
+                TransactionMessage.getMessageWith(uuid: uuid) == nil{ // guarantee it is a new message
+            if let message = rr.msg,
+               let type = rr.msgType,
+               let sender = rr.msgSender,
+               let uuid = rr.msgUuid,
+               let index = rr.msgIndex,
+               let csr = ContactServerResponse(JSONString: sender){
+                if type == TransactionMessage.TransactionMessageType.message.rawValue
+                    || type == TransactionMessage.TransactionMessageType.call.rawValue
+                    || type == TransactionMessage.TransactionMessageType.attachment.rawValue,
+                   var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
+                    plaintextMessage.senderPubkey = csr.pubkey
+                    plaintextMessage.uuid = uuid
+                    plaintextMessage.index = index
+                    processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage,csr: csr,type: Int(type))
+                }
+                else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
+                        type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
+                        var boostMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
+                        let msats = rr.msgMsat,
+                        let index = rr.msgIndex,
+                        let uuid = rr.msgUuid
+                {
+                    boostMessage.senderPubkey = csr.pubkey
+                    boostMessage.uuid = uuid
+                    boostMessage.index = index
+                    processIncomingPayment(message: boostMessage,csr: csr, amount: Int(msats/1000), type: Int(type))
+                }
+                else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
+                        var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
+                    processIncomingDeletion(message: deletionRequestMessage)
+                }
+                else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue ||
+                        type == TransactionMessage.TransactionMessageType.groupLeave.rawValue,
+                    let tribePubkey = csr.pubkey,
+                    let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
+                    let joinOrLeaveMessage = TransactionMessage(context: self.managedContext)
+                    joinOrLeaveMessage.uuid = uuid
+                    joinOrLeaveMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
+                    joinOrLeaveMessage.chat = chat
+                    joinOrLeaveMessage.type = Int(type)
+                    joinOrLeaveMessage.chat?.lastMessage = joinOrLeaveMessage
+                    joinOrLeaveMessage.senderAlias = csr.alias
+                    joinOrLeaveMessage.senderPic = csr.photoUrl
+                    self.managedContext.saveContext()
+                }
+                print("handleRunReturn message: \(message)")
             }
-            else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
-                    type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
-                    var boostMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
-                    let msats = rr.msgMsat,
-                    let index = rr.msgIndex,
-                    let uuid = rr.msgUuid
-            {
-                boostMessage.senderPubkey = csr.pubkey
-                boostMessage.uuid = uuid
-                boostMessage.index = index
-                processIncomingPayment(message: boostMessage,csr: csr, amount: Int(msats/1000), type: Int(type))
-            }
-            else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
-                    var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
-                processIncomingDeletion(message: deletionRequestMessage)
-            }
-            else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue,
-                let tribePubkey = csr.pubkey,
-                let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
-                let joinMessage = TransactionMessage(context: self.managedContext)
-                joinMessage.uuid = uuid
-                joinMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
-                joinMessage.chat = chat
-                joinMessage.type = TransactionMessage.TransactionMessageType.groupJoin.rawValue
-                joinMessage.chat?.lastMessage = joinMessage
-                joinMessage.senderAlias = csr.alias
-                joinMessage.senderPic = csr.photoUrl
-                self.managedContext.saveContext()
-            }
-            print("handleRunReturn message: \(message)")
         }
-        
-        else if isIndexedSentMessageFromMe(rr: rr),
+        else if isIndexedSentMessageFromMe(rr: rr), //re index my own message
                 var cachedMessage = TransactionMessage.getMessageWith(uuid: rr.msgUuid!),
                 let indexString = rr.msgIndex,
                     let index = Int(indexString){

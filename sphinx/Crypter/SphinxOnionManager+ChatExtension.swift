@@ -41,60 +41,26 @@ extension SphinxOnionManager{
             threadUUID:String?,
             replyUUID:String?
         )->(String?,String?)?{
-        var msg : [String:Any]? = nil
-        var mt : String? = nil
-        switch(type){
-        case UInt8(TransactionMessage.TransactionMessageType.message.rawValue):
-            msg = [
-                "content":content,
-            ]
+        var msg: [String: Any] = ["content": content]
+        var mt: String? = nil
+
+        switch TransactionMessage.TransactionMessageType(rawValue: Int(type)) {
+        case .message, .boost, .delete, .call, .groupLeave:
             break
-        case UInt8(TransactionMessage.TransactionMessageType.attachment.rawValue):
+        case .attachment, .directPayment, .purchase:
             mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
-            msg = [
-                "content": content,
-                "mediaToken": mt,
-                "mediaKey": mediaKey,
-                "mediaType": mediaType,
-            ]
-            break
-        case UInt8(TransactionMessage.TransactionMessageType.boost.rawValue):
-            msg = [
-                "content":content
-            ]
-            break
-        case UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue):
-            mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
-            msg = [
-                "content": content,
-                "mediaToken": mt,
-                "mediaType": mediaType,
-                "muid":muid
-            ]
-            break
-        case UInt8(TransactionMessage.TransactionMessageType.delete.rawValue):
-            msg = [
-                "content":content
-            ]
-            break
-        case UInt8(TransactionMessage.TransactionMessageType.call.rawValue):
-            msg = [
-                "content":content
-            ]
-            break
-        case UInt8(TransactionMessage.TransactionMessageType.purchase.rawValue):
-            mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)
-            msg = [
-                "content":""
-            ]
-            break
+            msg["mediaToken"] = mt
+            msg["mediaKey"] = mediaKey
+            msg["mediaType"] = mediaType
+            if type == UInt8(TransactionMessage.TransactionMessageType.purchase.rawValue) {
+                msg["content"] = ""
+            }
         default:
             return nil
-            break
         }
-            
-        replyUUID != nil ? (msg?["replyUuid"] = replyUUID) : ()
-        threadUUID != nil ? (msg?["threadUuid"] = threadUUID) : ()
+        
+        replyUUID != nil ? (msg["replyUuid"] = replyUUID) : ()
+        threadUUID != nil ? (msg["threadUuid"] = threadUUID) : ()
             
         guard let contentData = try? JSONSerialization.data(withJSONObject: msg),
               let contentJSONString = String(data: contentData, encoding: .utf8)

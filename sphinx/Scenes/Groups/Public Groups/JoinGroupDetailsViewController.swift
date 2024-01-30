@@ -235,7 +235,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
            let chatJSON = getChatJSON(),
            let routeHint = tribeInfo?.ownerRouteHint,
            let chat = Chat.insertChat(chat: chatJSON){
-            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: tribeInfo?.name)
+            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: UserContact.getOwner()?.nickname)
             chat.type = Chat.ChatType.publicGroup.rawValue
             chat.managedObjectContext?.saveContext()
             self.closeButtonTouched()

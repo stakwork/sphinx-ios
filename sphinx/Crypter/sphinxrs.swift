@@ -490,6 +490,7 @@ public struct RunReturn {
     public var `msgIndex`: String?
     public var `msgSender`: String?
     public var `msgMsat`: UInt64?
+    public var `msgTimestamp`: UInt64?
     public var `newBalance`: UInt64?
     public var `myContactInfo`: String?
     public var `sentStatus`: String?
@@ -500,7 +501,7 @@ public struct RunReturn {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`newSubscription`: String?, `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?) {
+    public init(`newSubscription`: String?, `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `msgTimestamp`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?) {
         self.`newSubscription` = `newSubscription`
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
@@ -515,6 +516,7 @@ public struct RunReturn {
         self.`msgIndex` = `msgIndex`
         self.`msgSender` = `msgSender`
         self.`msgMsat` = `msgMsat`
+        self.`msgTimestamp` = `msgTimestamp`
         self.`newBalance` = `newBalance`
         self.`myContactInfo` = `myContactInfo`
         self.`sentStatus` = `sentStatus`
@@ -570,6 +572,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`msgMsat` != rhs.`msgMsat` {
             return false
         }
+        if lhs.`msgTimestamp` != rhs.`msgTimestamp` {
+            return false
+        }
         if lhs.`newBalance` != rhs.`newBalance` {
             return false
         }
@@ -609,6 +614,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`msgIndex`)
         hasher.combine(`msgSender`)
         hasher.combine(`msgMsat`)
+        hasher.combine(`msgTimestamp`)
         hasher.combine(`newBalance`)
         hasher.combine(`myContactInfo`)
         hasher.combine(`sentStatus`)
@@ -637,6 +643,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `msgIndex`: FfiConverterOptionString.read(from: &buf), 
             `msgSender`: FfiConverterOptionString.read(from: &buf), 
             `msgMsat`: FfiConverterOptionUInt64.read(from: &buf), 
+            `msgTimestamp`: FfiConverterOptionUInt64.read(from: &buf), 
             `newBalance`: FfiConverterOptionUInt64.read(from: &buf), 
             `myContactInfo`: FfiConverterOptionString.read(from: &buf), 
             `sentStatus`: FfiConverterOptionString.read(from: &buf), 
@@ -662,6 +669,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`msgIndex`, into: &buf)
         FfiConverterOptionString.write(value.`msgSender`, into: &buf)
         FfiConverterOptionUInt64.write(value.`msgMsat`, into: &buf)
+        FfiConverterOptionUInt64.write(value.`msgTimestamp`, into: &buf)
         FfiConverterOptionUInt64.write(value.`newBalance`, into: &buf)
         FfiConverterOptionString.write(value.`myContactInfo`, into: &buf)
         FfiConverterOptionString.write(value.`sentStatus`, into: &buf)

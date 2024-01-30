@@ -124,7 +124,8 @@ extension NewChatTableDataSource {
     @objc func processMessages(
         messages: [TransactionMessage]
     ) {
-        let sortedMessages = messages.sorted(by: {$0.id < $1.id})
+        let sortedMessages = messages
+        //let sortedMessages = messages.sorted(by: {$0.id < $1.id})
         let chat = chat ?? contact?.getFakeChat()
         
         guard let chat = chat, let owner = owner else {

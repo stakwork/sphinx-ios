@@ -130,6 +130,10 @@ extension SphinxOnionManager {
                     joinOrLeaveMessage.chat?.lastMessage = joinOrLeaveMessage
                     joinOrLeaveMessage.senderAlias = csr.alias
                     joinOrLeaveMessage.senderPic = csr.photoUrl
+                    joinOrLeaveMessage.date = Date()
+                    joinOrLeaveMessage.updatedAt = Date()
+                    joinOrLeaveMessage.seen = false
+                    chat.seen = false
                     self.managedContext.saveContext()
                 }
                 print("handleRunReturn message: \(message)")

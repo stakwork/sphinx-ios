@@ -180,7 +180,7 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
+    func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,date:Date, csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
@@ -213,9 +213,9 @@ extension SphinxOnionManager{
         let newMessage = TransactionMessage(context: managedContext)
         newMessage.id = index
         newMessage.uuid = uuid
-        newMessage.createdAt = Date()
-        newMessage.updatedAt = Date()
-        newMessage.date = Date()
+        newMessage.createdAt = date
+        newMessage.updatedAt = date
+        newMessage.date = date
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
         newMessage.type = type ?? TransactionMessage.TransactionMessageType.message.rawValue
         newMessage.encrypted = true
@@ -246,14 +246,15 @@ extension SphinxOnionManager{
     
     func processIncomingPayment(
         message:PlaintextOrAttachmentMessageFromServer,
+        date:Date,
         csr:ContactServerResponse?=nil,
         amount:Int,
         type:Int
     ){
-        processIncomingPlaintextOrAttachmentMessage(message: message,csr: csr,amount: amount,type: type)
+        processIncomingPlaintextOrAttachmentMessage(message: message, date: date,csr: csr,amount: amount,type: type)
     }
     
-    func processIncomingDeletion(message:PlaintextOrAttachmentMessageFromServer){
+    func processIncomingDeletion(message:PlaintextOrAttachmentMessageFromServer, date:Date){
         if let messageToDeleteUUID = message.replyUuid,
            let messageToDelete = TransactionMessage.getMessageWith(uuid: messageToDeleteUUID){
             messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue

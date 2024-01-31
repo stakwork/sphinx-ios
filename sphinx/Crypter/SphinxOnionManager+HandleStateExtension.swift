@@ -74,6 +74,11 @@ extension SphinxOnionManager {
         )
     }
     
+    func timestampToDate(timestamp:UInt64)->Date?{
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp) / 1000)
+        return date
+    }
+    
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         if let message = rr.msg,
@@ -83,6 +88,12 @@ extension SphinxOnionManager {
            var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
             originalMessage.uuid = newUUID
             originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
+            if let timestamp = rr.msgTimestamp
+            {
+                let date = timestampToDate(timestamp: timestamp) ?? Date()
+                originalMessage.date = date
+                originalMessage.updatedAt = date
+            }
             originalMessage.managedObjectContext?.saveContext()
        }
         else if let uuid = rr.msgUuid,
@@ -92,6 +103,8 @@ extension SphinxOnionManager {
                let sender = rr.msgSender,
                let uuid = rr.msgUuid,
                let index = rr.msgIndex,
+               let timestamp = rr.msgTimestamp,
+               let date = timestampToDate(timestamp: timestamp),
                let csr = ContactServerResponse(JSONString: sender){
                 if type == TransactionMessage.TransactionMessageType.message.rawValue
                     || type == TransactionMessage.TransactionMessageType.call.rawValue
@@ -100,7 +113,7 @@ extension SphinxOnionManager {
                     plaintextMessage.senderPubkey = csr.pubkey
                     plaintextMessage.uuid = uuid
                     plaintextMessage.index = index
-                    processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage,csr: csr,type: Int(type))
+                    processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage, date: date,csr: csr,type: Int(type))
                 }
                 else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
                         type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
@@ -112,11 +125,11 @@ extension SphinxOnionManager {
                     boostMessage.senderPubkey = csr.pubkey
                     boostMessage.uuid = uuid
                     boostMessage.index = index
-                    processIncomingPayment(message: boostMessage,csr: csr, amount: Int(msats/1000), type: Int(type))
+                    processIncomingPayment(message: boostMessage, date: date,csr: csr, amount: Int(msats/1000), type: Int(type))
                 }
                 else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
                         var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
-                    processIncomingDeletion(message: deletionRequestMessage)
+                    processIncomingDeletion(message: deletionRequestMessage, date: date)
                 }
                 else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue ||
                         type == TransactionMessage.TransactionMessageType.groupLeave.rawValue,
@@ -130,8 +143,9 @@ extension SphinxOnionManager {
                     joinOrLeaveMessage.chat?.lastMessage = joinOrLeaveMessage
                     joinOrLeaveMessage.senderAlias = csr.alias
                     joinOrLeaveMessage.senderPic = csr.photoUrl
-                    joinOrLeaveMessage.date = Date()
-                    joinOrLeaveMessage.updatedAt = Date()
+                    joinOrLeaveMessage.createdAt = date
+                    joinOrLeaveMessage.date = date
+                    joinOrLeaveMessage.updatedAt = date
                     joinOrLeaveMessage.seen = false
                     chat.seen = false
                     self.managedContext.saveContext()

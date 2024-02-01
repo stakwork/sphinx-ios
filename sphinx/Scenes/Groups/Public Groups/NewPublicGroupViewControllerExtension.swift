@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 extension NewPublicGroupViewController {
     
@@ -150,16 +151,51 @@ extension NewPublicGroupViewController {
         createGroup(params: params)
     }
     
-    func createGroup(params: [String: AnyObject]) {
-        API.sharedInstance.createGroup(params: params, callback: { chatJson in
-            if let _ = Chat.insertChat(chat: chatJson) {
-                 self.shouldDismissView()
-            } else {
-                self.showErrorAlert()
-            }
-        }, errorCallback: {
+    func mapChatJSON(rawTribeJSON:[String:Any])->JSON?{
+        guard let name = rawTribeJSON["name"] as? String,
+              let ownerPubkey = rawTribeJSON["pubkey"] as? String,
+              ownerPubkey.isPubKey,
+              let createdAt = rawTribeJSON["created"] as? Int else{
             self.showErrorAlert()
-        })
+            return nil
+          }
+        
+        let chatDict : [String:Any] = [
+            "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
+            "owner_pubkey": ownerPubkey,
+            "name" : name,
+            //"created_at":createdAt
+        ]
+        let chatJSON = JSON(chatDict)
+        return chatJSON
+    }
+    
+    func createGroup(params: [String: AnyObject]) {
+        guard let name = params["name"] as? String,
+            let description = params["description"] as? String else{
+            //Send Alert?
+            self.showErrorAlert()
+            return
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewTribeNotification(_:)), name: .newTribeCreationComplete, object: nil)
+        SphinxOnionManager.sharedInstance.createTribe(tribeName: name)
+    }
+    
+
+    @objc func handleNewTribeNotification(_ notification: Notification) {
+        NotificationCenter.default.removeObserver(self, name: .newTribeCreationComplete, object: nil)
+        if let tribeJSONString = notification.userInfo?["tribeJSON"] as? String,
+           let tribeJSON = try? tribeJSONString.toDictionary(),
+           let chatJSON = mapChatJSON(rawTribeJSON: tribeJSON),
+           let chat = Chat.insertChat(chat: chatJSON)
+        {
+            chat.type = Chat.ChatType.publicGroup.rawValue
+            chat.managedObjectContext?.saveContext()
+            self.shouldDismissView()
+            return
+        }
+        showErrorAlert()
     }
     
     func editGroup(id: Int, params: [String: AnyObject]) {

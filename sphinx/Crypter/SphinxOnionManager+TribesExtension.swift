@@ -14,13 +14,14 @@ import SwiftyJSON
 
 extension SphinxOnionManager{//tribes related
     
-    func createTribe(){
+    func createTribe(tribeName:String){
         guard let seed = getAccountSeed() else{
             return
         }
         let pubkey = getAccountOnlyKeysendPubkey(seed: seed)
+        let rand = CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: 1_000_000) ?? 21
         let tribe = [
-            "name":"myTribe \(CrypterManager.sharedInstance.generateCryptographicallySecureRandomBytes(count: 1000))"
+            "name": tribeName
         ]
         guard let tribeData = try? JSONSerialization.data(withJSONObject: tribe),
               let tribeJSONString = String(data: tribeData, encoding: .utf8)
@@ -28,7 +29,8 @@ extension SphinxOnionManager{//tribes related
             return
         }
         do{
-            try! sphinx.createTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: pubkey!, tribeJson: tribeJSONString)
+            let rr = try! sphinx.createTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: "0356091a4d8a1bfa8e2b9d19924bf8275dd057536e12427c557dd91a6cb1c03e8b", tribeJson: tribeJSONString)
+            handleRunReturn(rr: rr)
         }
         catch{
             

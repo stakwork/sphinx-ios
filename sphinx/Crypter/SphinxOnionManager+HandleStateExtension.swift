@@ -20,17 +20,37 @@ extension SphinxOnionManager {
             let _ = storeOnionState(inc: sm.bytes)
         }
         
-        if let topic0 = rr.topic0{
-            pushRRTopic(topic: topic0, payloadData: rr.payload0)
+        var publishDelay = 0.0
+        if let newSubscription = rr.newSubscription{
+            self.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                self.processMqttMessages(message: receivedMessage)
+            }
+            self.mqtt.subscribe([
+                (newSubscription, CocoaMQTTQoS.qos1)
+            ])
+            
+            publishDelay = 1.5
         }
         
-        if let topic1 = rr.topic1{
-            pushRRTopic(topic: topic1, payloadData: rr.payload1)
+        if let newTribe = rr.newTribe{
+            print(newTribe)
+            NotificationCenter.default.post(name: .newTribeCreationComplete, object: nil, userInfo: ["tribeJSON" : newTribe])
         }
         
-        if let topic2 = rr.topic2{
-            pushRRTopic(topic: topic2, payloadData: rr.payload2)
-        }
+        DelayPerformedHelper.performAfterDelay(seconds: publishDelay, completion: {
+            if let topic0 = rr.topic0{
+                self.pushRRTopic(topic: topic0, payloadData: rr.payload0)
+            }
+            
+            if let topic1 = rr.topic1{
+                self.pushRRTopic(topic: topic1, payloadData: rr.payload1)
+            }
+            
+            if let topic2 = rr.topic2{
+                self.pushRRTopic(topic: topic2, payloadData: rr.payload2)
+            }
+        })
+        
         
         if let mci = rr.myContactInfo{
             let components = mci.split(separator: "_").map({String($0)})

@@ -153,8 +153,8 @@ class ChatListHeader: UIView {
 //            som.sendMessage(to: contact, content: "Sphinx is awesome.")
 //        }
         
-        //SphinxOnionManager.sharedInstance.joinTribe()
-        
+//        SphinxOnionManager.sharedInstance.createTribe()
+        //SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: "02a73be90947476b45b96bb4db6a7285e4a276abd13fb79473ab0cd29f8ca277d3", routeHint: <#T##String#>, alias: <#T##String?#>)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=0268b717ec12462d6c85bc0324cbe8a7dd8bc4d605cb0f6dc5484b372b6a7bff8e&host=34.229.52.200:8801"){
                 DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)

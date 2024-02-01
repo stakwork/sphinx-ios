@@ -71,7 +71,7 @@ public class Chat: NSManagedObject {
     static func insertChat(chat: JSON) -> Chat? {
         if let id = getChatId(chat: chat) {
             let name = chat["name"].string ?? ""
-            let photoUrl = chat["photo_url"].string ?? ""
+            let photoUrl = chat["photo_url"].string ?? chat["img"].string ?? ""
             let uuid = chat["uuid"].stringValue
             let type = chat["type"].intValue
             let muted = chat["is_muted"].boolValue

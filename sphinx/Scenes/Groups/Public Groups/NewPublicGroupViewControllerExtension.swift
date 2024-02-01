@@ -154,18 +154,23 @@ extension NewPublicGroupViewController {
     func mapChatJSON(rawTribeJSON:[String:Any])->JSON?{
         guard let name = rawTribeJSON["name"] as? String,
               let ownerPubkey = rawTribeJSON["pubkey"] as? String,
-              ownerPubkey.isPubKey,
-              let createdAt = rawTribeJSON["created"] as? Int else{
+              ownerPubkey.isPubKey else{
             self.showErrorAlert()
             return nil
           }
+        var chatDict = rawTribeJSON
         
-        let chatDict : [String:Any] = [
+        let mappedFields : [String:Any] = [
             "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
             "owner_pubkey": ownerPubkey,
             "name" : name,
             //"created_at":createdAt
         ]
+        
+        for key in mappedFields.keys{
+            chatDict[key] = mappedFields[key]
+        }
+        
         let chatJSON = JSON(chatDict)
         return chatJSON
     }
@@ -179,7 +184,7 @@ extension NewPublicGroupViewController {
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewTribeNotification(_:)), name: .newTribeCreationComplete, object: nil)
-        SphinxOnionManager.sharedInstance.createTribe(tribeName: name)
+        SphinxOnionManager.sharedInstance.createTribe(params:params)
     }
     
 

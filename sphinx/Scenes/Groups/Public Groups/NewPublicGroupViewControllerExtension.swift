@@ -164,6 +164,8 @@ extension NewPublicGroupViewController {
             "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
             "owner_pubkey": ownerPubkey,
             "name" : name,
+            "is_tribe_i_created":true,
+            "type":Chat.ChatType.publicGroup.rawValue
             //"created_at":createdAt
         ]
         
@@ -195,7 +197,6 @@ extension NewPublicGroupViewController {
            let chatJSON = mapChatJSON(rawTribeJSON: tribeJSON),
            let chat = Chat.insertChat(chat: chatJSON)
         {
-            chat.type = Chat.ChatType.publicGroup.rawValue
             chat.managedObjectContext?.saveContext()
             self.shouldDismissView()
             return

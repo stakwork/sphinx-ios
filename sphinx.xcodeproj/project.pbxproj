@@ -1758,6 +1758,7 @@
 		CEBF0D022975B20B006C1F21 /* DiscoverTribesTagSelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVC.swift; sourceTree = "<group>"; };
 		CEBF0D042975C367006C1F21 /* DiscoverTribesTagSelectionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTagSelectionVM.swift; sourceTree = "<group>"; };
 		CEBF0D06297603B0006C1F21 /* TribeTagSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TribeTagSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		CECE3D9C2B6D4678009EE475 /* sphinx 47.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 47.xcdatamodel"; sourceTree = "<group>"; };
 		CECE9C2A2AA7779E0039B843 /* WordsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsList.swift; sourceTree = "<group>"; };
 		CECFBEFD2965C84400BAD935 /* DiscoverTribesTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewDataSource.swift; sourceTree = "<group>"; };
 		CECFBEFF2965C85B00BAD935 /* DiscoverTribesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTribesTableViewCell.swift; sourceTree = "<group>"; };
@@ -6540,6 +6541,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CECE3D9C2B6D4678009EE475 /* sphinx 47.xcdatamodel */,
 				CEBC3A132AFEA1F20081DB6F /* sphinx 46.xcdatamodel */,
 				47469D712AD98DCA004F0490 /* sphinx 45.xcdatamodel */,
 				47DE1C422A6EB6CC0029597B /* sphinx 44.xcdatamodel */,
@@ -6587,7 +6589,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = CEBC3A132AFEA1F20081DB6F /* sphinx 46.xcdatamodel */;
+			currentVersion = CECE3D9C2B6D4678009EE475 /* sphinx 47.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

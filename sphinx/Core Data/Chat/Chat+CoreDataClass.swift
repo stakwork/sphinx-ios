@@ -89,6 +89,7 @@ public class Chat: NSManagedObject {
             let pinnedMessageUUID = chat["pin"].string
             let notify = chat["notify"].intValue
             let date = Date.getDateFromString(dateString: chat["created_at"].stringValue) ?? Date()
+            let isTribeICreated = chat["is_tribe_i_created"].boolValue
             
             let contactIds = chat["contact_ids"].arrayObject as? [NSNumber] ?? []
             let pendingContactIds = chat["pending_contact_ids"].arrayObject as? [NSNumber] ?? []
@@ -115,7 +116,8 @@ public class Chat: NSManagedObject {
                 pinnedMessageUUID: pinnedMessageUUID,
                 contactIds: contactIds,
                 pendingContactIds: pendingContactIds,
-                date: date
+                date: date,
+                isTribeICreated: isTribeICreated
             )
             
             return chat
@@ -155,7 +157,8 @@ public class Chat: NSManagedObject {
         pinnedMessageUUID: String?,
         contactIds: [NSNumber],
         pendingContactIds: [NSNumber],
-        date: Date
+        date: Date,
+        isTribeICreated:Bool=false
     ) -> Chat? {
         
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
@@ -181,6 +184,7 @@ public class Chat: NSManagedObject {
         chat.contactIds = contactIds
         chat.pendingContactIds = pendingContactIds
         chat.subscription = chat.getContact()?.getCurrentSubscription()
+        chat.isTribeICreated = isTribeICreated
         
         if chat.isMyPublicGroup() {
             chat.pricePerMessage = NSDecimalNumber(integerLiteral: pricePerMessage)
@@ -714,7 +718,7 @@ public class Chat: NSManagedObject {
     func isMyPublicGroup(
         ownerPubKey: String? = nil
     ) -> Bool {
-        return isPublicGroup() && ownerPubkey == (ownerPubKey ?? UserData.sharedInstance.getUserPubKey())
+        return isPublicGroup() && isTribeICreated == true
     }
     
     

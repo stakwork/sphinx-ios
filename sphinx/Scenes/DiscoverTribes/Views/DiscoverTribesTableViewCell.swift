@@ -48,6 +48,9 @@ class DiscoverTribesTableViewCell: UITableViewCell {
             tribeImageView.layer.cornerRadius = 24
             tribeImageView.clipsToBounds = true
         }
+        else if tribeData.imgURL == nil{
+            tribeImageView.sd_setImage(with: URL(string: ""), placeholderImage: UIImage(named: "tribePlaceholder"))
+        }
         
         titleLabel.text = tribeData.name
         descriptionLabel.text = tribeData.description

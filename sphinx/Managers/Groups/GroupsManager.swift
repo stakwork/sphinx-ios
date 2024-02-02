@@ -143,6 +143,12 @@ class GroupsManager {
                 dashboardRootVC.presentChatDetailsVC(for: chat, shouldAnimate: true)
                 return true
             }
+            else if let pubkey = tribeInfo?.ownerPubkey,
+                    let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: pubkey),
+                    let dashboardRootVC = vc as? DashboardRootViewController{
+                dashboardRootVC.presentChatDetailsVC(for: chat, shouldAnimate: true)
+                return true
+            }
             
             if let delegate = vc as? NewContactVCDelegate {
                 let groupDetailsVC = JoinGroupDetailsViewController
@@ -212,6 +218,9 @@ class GroupsManager {
                     case "host":
                         tribeInfo.host = value
                         break
+                    case "pubkey":
+                        tribeInfo.ownerPubkey = value
+                        break
                     default:
                         break
                     }
@@ -219,7 +228,13 @@ class GroupsManager {
             }
         }
         
-        if let _ = tribeInfo.uuid, let _ = tribeInfo.host {
+        if let _ = tribeInfo.uuid, 
+            let _ = tribeInfo.host {//v1
+            return tribeInfo
+        }
+        else if let _ = tribeInfo.ownerPubkey, 
+            let _ = tribeInfo.host
+        {//v2
             return tribeInfo
         }
         return nil

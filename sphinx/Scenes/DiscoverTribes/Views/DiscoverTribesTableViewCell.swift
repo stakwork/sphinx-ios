@@ -69,7 +69,12 @@ class DiscoverTribesTableViewCell: UITableViewCell {
         
         let host = tribeData.host ?? API.kTribesServerBaseURL.replacingOccurrences(of: "https://", with: "")
         
-        if let uuid = tribeData.uuid {
+        if let pubkey = tribeData.pubkey{
+            joinButton.isEnabled = true
+            cellURL = URL(string: "sphinx.chat://?action=tribeV2&pubkey=\(pubkey)&host=34.229.52.200:8801")
+            joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)
+        }
+        else if let uuid = tribeData.uuid {
             joinButton.isEnabled = true
             cellURL = URL(string: "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)")
             joinButton.addTarget(self, action: #selector(handleJoinTap), for: .touchUpInside)

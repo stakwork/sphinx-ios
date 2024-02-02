@@ -161,6 +161,8 @@ class API {
     
     public static let kTribesServerBaseURL = "https://tribes.sphinx.chat"
     
+    public static let kTestV2TribesServer = "http://34.229.52.200:8801"
+    
 
     class func getUrl(route: String) -> String {
         if let url = URL(string: route), let _ = url.scheme {

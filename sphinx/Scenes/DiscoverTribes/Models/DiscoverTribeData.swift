@@ -15,6 +15,7 @@ class DiscoverTribeData: Mappable {
     var name: String?
     var uuid : String?
     var host : String?
+    var pubkey:String?
     
     required convenience init(map: Map) {
         self.init()
@@ -26,5 +27,6 @@ class DiscoverTribeData: Mappable {
         description       <- map["description"]
         uuid              <- map["uuid"]
         host              <- map["host"]
+        pubkey            <- map["pubkey"]
     }
 }

@@ -156,7 +156,7 @@ class ChatListHeader: UIView {
 //        SphinxOnionManager.sharedInstance.createTribe()
         //SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: "02a73be90947476b45b96bb4db6a7285e4a276abd13fb79473ab0cd29f8ca277d3", routeHint: <#T##String#>, alias: <#T##String?#>)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=0286db8213af3bb423d79bfe74f4bba615f88c52e020f61297263e22b4d9e498e8&host=34.229.52.200:8801"){
+            if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=020d1ba35dc0f66f826a04a3c94bc3a87bbfd6a117278c05b0871f03e4728b4e82&host=34.229.52.200:8801"){
                 DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
                 if let delegate = self.delegate as? DashboardRootViewController{
                     delegate.handleLinkQueries()

@@ -24,6 +24,10 @@ class DiscoverTribeTableViewDataSource : NSObject{
         return Chat.getAllTribes().compactMap({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
     }()
     
+    lazy var joinedChatPubkeys : [String] = {
+        return Chat.getAllTribes().compactMap({ $0.ownerPubkey ?? "" }).filter({ $0.isNotEmpty })
+    }()
+    
     init(tableView:UITableView,vc:DiscoverTribesWebViewController){
         self.vc = vc
         self.tableView = tableView
@@ -106,7 +110,7 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
             return cell
         } else {
             let tribeOfInterest = tribes[indexPath.row]
-            let wasJoined = joinedChatIds.contains(tribeOfInterest.uuid ?? "")
+            let wasJoined = joinedChatIds.contains(tribeOfInterest.uuid ?? "") || joinedChatPubkeys.contains(tribeOfInterest.pubkey ?? "")
             let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
             cell.configureCell(tribeData: tribeOfInterest,wasJoined: wasJoined)
             cell.delegate = vc

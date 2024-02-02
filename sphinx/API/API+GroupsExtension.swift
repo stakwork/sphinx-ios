@@ -125,6 +125,7 @@ extension API {
         tags : [String] = []
     ) {
         var url = API.getUrl(route: "\(API.kTribesServerBaseURL)/tribes?limit=\(limit)&sortBy=member_count&page=\(page)")
+        url = "\(API.kTestV2TribesServer)/tribes"
         if tags.isEmpty == false {
             url.append("&tags=")
             for tag in tags {

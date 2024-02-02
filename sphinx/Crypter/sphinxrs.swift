@@ -498,10 +498,11 @@ public struct RunReturn {
     public var `settledStatus`: String?
     public var `error`: String?
     public var `newTribe`: String?
+    public var `tribeMembers`: String?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`newSubscription`: String?, `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `msgTimestamp`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?) {
+    public init(`newSubscription`: String?, `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `msgTimestamp`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?) {
         self.`newSubscription` = `newSubscription`
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
@@ -524,6 +525,7 @@ public struct RunReturn {
         self.`settledStatus` = `settledStatus`
         self.`error` = `error`
         self.`newTribe` = `newTribe`
+        self.`tribeMembers` = `tribeMembers`
     }
 }
 
@@ -596,6 +598,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`newTribe` != rhs.`newTribe` {
             return false
         }
+        if lhs.`tribeMembers` != rhs.`tribeMembers` {
+            return false
+        }
         return true
     }
 
@@ -622,6 +627,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`settledStatus`)
         hasher.combine(`error`)
         hasher.combine(`newTribe`)
+        hasher.combine(`tribeMembers`)
     }
 }
 
@@ -650,7 +656,8 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `sentTo`: FfiConverterOptionString.read(from: &buf), 
             `settledStatus`: FfiConverterOptionString.read(from: &buf), 
             `error`: FfiConverterOptionString.read(from: &buf), 
-            `newTribe`: FfiConverterOptionString.read(from: &buf)
+            `newTribe`: FfiConverterOptionString.read(from: &buf), 
+            `tribeMembers`: FfiConverterOptionString.read(from: &buf)
         )
     }
 
@@ -677,6 +684,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`settledStatus`, into: &buf)
         FfiConverterOptionString.write(value.`error`, into: &buf)
         FfiConverterOptionString.write(value.`newTribe`, into: &buf)
+        FfiConverterOptionString.write(value.`tribeMembers`, into: &buf)
     }
 }
 
@@ -1649,6 +1657,22 @@ public func `makeMediaTokenWithMeta`(`seed`: String, `uniqueTime`: String, `stat
     )
 }
 
+public func `makeMediaTokenWithPrice`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `muid`: String, `to`: String, `expiry`: UInt32, `price`: UInt64) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_make_media_token_with_price(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`host`),
+        FfiConverterString.lower(`muid`),
+        FfiConverterString.lower(`to`),
+        FfiConverterUInt32.lower(`expiry`),
+        FfiConverterUInt64.lower(`price`),$0)
+}
+    )
+}
+
 public func `makeInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `amtMsat`: UInt64, `preimage`: String, `description`: String) throws -> String {
     return try  FfiConverterString.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
@@ -1687,6 +1711,19 @@ public func `joinTribe`(`seed`: String, `uniqueTime`: String, `state`: Data, `tr
         FfiConverterString.lower(`tribeRouteHint`),
         FfiConverterString.lower(`alias`),
         FfiConverterUInt64.lower(`amtMsat`),$0)
+}
+    )
+}
+
+public func `listTribeMembers`(`seed`: String, `uniqueTime`: String, `state`: Data, `tribeServerPubkey`: String, `tribePubkey`: String) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_list_tribe_members(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`tribeServerPubkey`),
+        FfiConverterString.lower(`tribePubkey`),$0)
 }
     )
 }
@@ -1823,6 +1860,9 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_make_media_token_with_meta() != 21693) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_sphinxrs_checksum_func_make_media_token_with_price() != 53555) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_sphinxrs_checksum_func_make_invoice() != 41170) {
         return InitializationResult.apiChecksumMismatch
     }
@@ -1830,6 +1870,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_join_tribe() != 63841) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_list_tribe_members() != 48922) {
         return InitializationResult.apiChecksumMismatch
     }
 

@@ -228,6 +228,7 @@ class GroupsManager {
     func getNewGroupParams() -> [String: AnyObject] {
         var parameters = [String : AnyObject]()
         
+        parameters["owner_alias"] = (UserContact.getOwner()?.nickname ?? "anon") as AnyObject 
         parameters["name"] = (newGroupInfo.name ?? "") as AnyObject
         parameters["price_per_message"] = (newGroupInfo.pricePerMessage ?? 0) as AnyObject
         parameters["price_to_join"] = (newGroupInfo.priceToJoin ?? 0) as AnyObject

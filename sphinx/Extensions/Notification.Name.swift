@@ -27,4 +27,5 @@ extension Notification.Name {
     static let newContactKeyExchangeResponseWasReceived = Notification.Name("newContactKeyExchangeResponseWasReceived")
     static let newOnionMessageWasReceived = Notification.Name("newOnionMessageWasReceived")
     static let newTribeCreationComplete = Notification.Name("newTribeCreationComplete")
+    static let newTribeMemberListRetrieved = Notification.Name("newTribeMemberListRetrieved")
 }

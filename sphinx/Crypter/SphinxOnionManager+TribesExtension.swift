@@ -25,7 +25,7 @@ extension SphinxOnionManager{//tribes related
             return
         }
         do{
-            let rr = try! sphinx.createTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: "0356091a4d8a1bfa8e2b9d19924bf8275dd057536e12427c557dd91a6cb1c03e8b", tribeJson: tribeJSONString)
+            let rr = try! sphinx.createTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: tribeServerPubkey, tribeJson: tribeJSONString)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -55,6 +55,36 @@ extension SphinxOnionManager{//tribes related
             threadUUID: nil,
             replyUUID: nil
         )
+    }
+    
+    func getTribeMembers(
+        tribeChat:Chat,
+        completion: (([String:AnyObject]) ->())?
+    ){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        do{
+            let rr = try! listTribeMembers(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: tribeServerPubkey, tribePubkey: tribeChat.ownerPubkey ?? "")
+            stashedCallback = completion
+            handleRunReturn(rr: rr)
+        }
+        catch{
+            
+        }
+    }
+    
+    func kickTribeMember(pubkey:String, chat:Chat){
+        do{
+            sendMessage(to: nil, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.groupKick.rawValue), recipPubkey: pubkey, threadUUID: nil, replyUUID: nil)
+        }
+        catch{
+            
+        }
+    }
+    
+    func deleteTribe(tribeChat:Chat){
+        
     }
     
     

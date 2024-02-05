@@ -190,14 +190,7 @@ extension DashboardRootViewController {
         let viewController = StoryboardScene.Dashboard.dashboardRootViewController.instantiate()
         
         viewController.leftMenuDelegate = leftMenuDelegate
-        viewController.managedObjectContext = managedObjectContext
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
-            if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=0268b717ec12462d6c85bc0324cbe8a7dd8bc4d605cb0f6dc5484b372b6a7bff8e&host=34.229.52.200:8801"){
-                DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
-            }
-        })
-        
+        viewController.managedObjectContext = managedObjectContext        
         return viewController
     }
 }

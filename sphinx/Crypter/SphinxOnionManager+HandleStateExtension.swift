@@ -14,7 +14,10 @@ import SwiftyJSON
 
 
 extension SphinxOnionManager {
-    func handleRunReturn(rr: RunReturn){
+    func handleRunReturn(
+        rr: RunReturn,
+        completion: (([String:AnyObject]) ->())? = nil
+    ){
         if let sm = rr.stateMp{
             //update state map
             let _ = storeOnionState(inc: sm.bytes)
@@ -69,6 +72,13 @@ extension SphinxOnionManager {
                 
         processKeyExchangeMessages(rr: rr)
         
+        if let tribeMembersString = rr.tribeMembers,
+           let tribeMembers = Mapper<TribeMembersRRObject>().mapArray(JSONString: tribeMembersString),
+            let completion = stashedCallback{
+            print(tribeMembers)
+            completion(["tribeMembers" : tribeMembers as AnyObject])
+            stashedCallback = nil
+        }
         
         if let sentStatus = rr.sentStatus{
             
@@ -343,6 +353,24 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
         muid <- map["muid"]
         date <- map["date"]
         originalUuid <- map["originalUuid"]
+    }
+    
+}
+
+struct TribeMembersRRObject: Mappable {
+    var pubkey:String? = nil
+    var routeHint:String? = nil
+    var alias:String? = nil
+    var contactKey:String? = nil
+    var is_owner: Bool = false
+
+    init?(map: Map) {}
+
+    mutating func mapping(map: Map) {
+        pubkey    <- map["pubkey"]
+        alias    <- map["alias"]
+        routeHint    <- map["route_hint"]
+        contactKey    <- map["contact_key"]
     }
     
 }

@@ -40,13 +40,21 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
     }
     
     func loadTribeContacts() {
-        API.sharedInstance.getContactsForChat(chatId: chat.id, callback: { c in
-            let (contacts, pendingContacts) = self.getGroupContactsFrom(contacts: c)
-            self.groupContacts = contacts
-            self.groupPendingContacts = pendingContacts
+        SphinxOnionManager.sharedInstance.getTribeMembers(tribeChat: self.chat, completion: { tribeMembers in
+            if let tribeMemberArray = tribeMembers["tribeMembers"] as? [TribeMembersRRObject]{
+                let contactsMap = tribeMemberArray.map({
+                    let contact = JSON($0.toJSON())
+                    return contact
+                })
+                let (contacts, pendingContacts) = self.getGroupContactsFrom(contacts: contactsMap)
+                self.groupContacts = contacts
+                self.groupPendingContacts = pendingContacts
+                
+                self.tableView.reloadData()
+                self.messageBubbleHelper.hideLoadingWheel()
+            }
+            print(tribeMembers)
             
-            self.tableView.reloadData()
-            self.messageBubbleHelper.hideLoadingWheel()
         })
     }
     
@@ -96,10 +104,11 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
         var lastLetter = ""
         
         for contact in  contacts {
-            let id = contact.getJSONId()
+            let id = contact.getJSONId() ?? CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: 100_000)
             let nickname = contact["alias"].stringValue
             let avatarUrl = contact["photo_url"].stringValue
-            let isOwner = contact["is_owner"].boolValue
+            let pubkey = contact["pubkey"].stringValue
+            let isOwner = chat.isTribeICreated && UserContact.getOwner()?.getName() == nickname
             let pending = contact["pending"].boolValue
             
             if let initial = nickname.first {
@@ -110,6 +119,7 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
                 groupContact.nickname = nickname
                 groupContact.avatarUrl = avatarUrl
                 groupContact.isOwner = isOwner
+                groupContact.pubkey = pubkey
                 groupContact.selected = false
                 groupContact.firstOnLetter = (initialString != lastLetter)
                 
@@ -226,18 +236,15 @@ extension GroupMembersDataSource {
 
 extension GroupMembersDataSource : GroupMemberCellDelegate {
     func didKickContact(contact: GroupAllContactsDataSource.GroupContact, cell: UITableViewCell) {
-        if let chat = chat {
+        if let chat = chat,
+           let pubkey = contact.pubkey{
             messageBubbleHelper.showLoadingWheel()
             
-            API.sharedInstance.kickMember(chatId: chat.id, contactId: contact.id, callback: { chatJson in
-                if let chat = Chat.insertChat(chat: chatJson) {
-                    self.reloadContacts(chat: chat)
-                    return
-                }
-                self.showErrorAlert()
-            }, errorCallback: {
-                self.showErrorAlert()
-            })
+            SphinxOnionManager.sharedInstance.kickTribeMember(pubkey:pubkey, chat: chat)
+            self.reloadContacts(chat: chat)
+        }
+        else{
+            self.showErrorAlert()
         }
     }
     

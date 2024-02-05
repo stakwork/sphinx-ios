@@ -55,6 +55,14 @@ extension SphinxOnionManager{
             if type == UInt8(TransactionMessage.TransactionMessageType.purchase.rawValue) {
                 msg["content"] = ""
             }
+        case .groupKick:
+            if let member = recipPubkey{
+                msg["member"] = member
+            }
+            else{
+                return nil
+            }
+            break
         default:
             return nil
         }

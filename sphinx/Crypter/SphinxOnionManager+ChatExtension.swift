@@ -57,7 +57,7 @@ extension SphinxOnionManager{
             }
         case .groupKick:
             if let member = recipPubkey{
-                msg["member"] = member
+                msg["member"] = content
             }
             else{
                 return nil

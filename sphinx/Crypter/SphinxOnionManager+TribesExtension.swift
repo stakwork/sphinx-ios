@@ -38,8 +38,12 @@ extension SphinxOnionManager{//tribes related
             return
         }
         do{
-           let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000)
-            handleRunReturn(rr: rr)
+            
+            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000, isPrivate: false)
+            DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+                self.handleRunReturn(rr: rr)
+            })
+            
         }
         catch{
             
@@ -76,7 +80,7 @@ extension SphinxOnionManager{//tribes related
     
     func kickTribeMember(pubkey:String, chat:Chat){
         do{
-            sendMessage(to: nil, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.groupKick.rawValue), recipPubkey: pubkey, threadUUID: nil, replyUUID: nil)
+            sendMessage(to: nil, content: pubkey, chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.groupKick.rawValue), recipPubkey: tribeServerPubkey, threadUUID: nil, replyUUID: nil)
         }
         catch{
             

@@ -250,8 +250,8 @@ class GroupDetailsViewController: UIViewController {
             DispatchQueue.main.async{
                 CoreDataManager.sharedManager.deleteChatObjectsFor(self.chat)
             }
-            DelayPerformedHelper.performAfterDelay(seconds: 2.5, completion: {
-                self.groupDeleted()
+            DelayPerformedHelper.performAfterDelay(seconds: 1.5, completion: {
+                self.navigationController?.popToRootViewController(animated: true)
             })
         })
     }

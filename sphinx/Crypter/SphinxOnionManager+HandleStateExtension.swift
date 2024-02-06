@@ -162,7 +162,8 @@ extension SphinxOnionManager {
                     processIncomingDeletion(message: deletionRequestMessage, date: date)
                 }
                 else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue ||
-                        type == TransactionMessage.TransactionMessageType.groupLeave.rawValue,
+                        type == TransactionMessage.TransactionMessageType.groupLeave.rawValue ||
+                        type == TransactionMessage.TransactionMessageType.groupKick.rawValue,
                     let tribePubkey = csr.pubkey,
                     let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
                     let joinOrLeaveMessage = TransactionMessage(context: self.managedContext)

@@ -940,14 +940,16 @@ extension NewChatTableDataSource {
     
     func deleteGroup() {
         messageBubbleHelper.showLoadingWheel()
-        
-        GroupsManager.sharedInstance.deleteGroup(chat: self.chat, completion: { success in
-            self.messageBubbleHelper.hideLoadingWheel()
-            
-            if success {
-                self.delegate?.didDeleteTribe()
-            } else {
-                self.showGenericError()
+        guard let chat = chat else{
+            return
+        }
+        SphinxOnionManager.sharedInstance.exitTribe(tribeChat: chat)
+        DispatchQueue.main.async{
+            CoreDataManager.sharedManager.deleteChatObjectsFor(chat)
+        }
+        DelayPerformedHelper.performAfterDelay(seconds: 1.5, completion: {
+            if let vc = self.delegate as? NewChatViewController{
+                vc.navigationController?.popViewController(animated: true)
             }
         })
     }

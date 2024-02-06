@@ -611,16 +611,16 @@ extension TransactionMessage {
             }
         }
         
-        if isFlagActionAllowed {
-            options.append(
-                .init(
-                    tag: MessageActionsItem.Flag,
-                    materialIconName: nil,
-                    iconImage: "iconFlagContent",
-                    label:  "flag.item".localized
-                )
-            )
-        }
+//        if isFlagActionAllowed {
+//            options.append(
+//                .init(
+//                    tag: MessageActionsItem.Flag,
+//                    materialIconName: nil,
+//                    iconImage: "iconFlagContent",
+//                    label:  "flag.item".localized
+//                )
+//            )
+//        }
         
         if isDeleteActionAllowed {
             options.append(

@@ -14,6 +14,7 @@ import ObjectMapper
 class DiscoverTribeTableViewDataSource : NSObject{
     var tableView : UITableView
     var vc : DiscoverTribesWebViewController
+    var displayedTribes = [DiscoverTribeData]()
     var tribes = [DiscoverTribeData]()
     var pageNum : Int = 1
     var itemsPerPage : Int = 20
@@ -69,6 +70,7 @@ class DiscoverTribeTableViewDataSource : NSObject{
             } else{
                 tribes = mappedResults
             }
+            displayedTribes = tribes
             tableView.reloadData()
             tableView.isHidden = tribes.isEmpty
             
@@ -90,18 +92,29 @@ class DiscoverTribeTableViewDataSource : NSObject{
         searchTerm: String?,
         tags: [String]
     ){
-        pageNum = 1
-        fetchTribeData(searchTerm: searchTerm, tags: tags)
+        if(searchTerm == nil || searchTerm == ""){
+            displayedTribes = tribes
+        }
+        else if let searchTerm = searchTerm{
+            displayedTribes = tribes.filter({
+                if let name = $0.name?.lowercased(){
+                    return name.contains(searchTerm.lowercased())
+                }
+                return false
+            })
+        }
+        
+        tableView.reloadData()
     }
 }
 
 extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tribes.count + loadingWheelCell
+        return displayedTribes.count //+ loadingWheelCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.row  == tribes.count) {
+        if (indexPath.row  == displayedTribes.count) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingMoreTableViewCell", for: indexPath) as! LoadingMoreTableViewCell
             cell.configureCell(text: "")
             cell.loadingMoreLabel.text = "Loading..."
@@ -109,7 +122,7 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
             cell.loadingMoreLabel.textColor = UIColor.Sphinx.SecondaryText
             return cell
         } else {
-            let tribeOfInterest = tribes[indexPath.row]
+            let tribeOfInterest = displayedTribes[indexPath.row]
             let wasJoined = joinedChatIds.contains(tribeOfInterest.uuid ?? "") || joinedChatPubkeys.contains(tribeOfInterest.pubkey ?? "")
             let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverTribesTableViewCell", for: indexPath) as! DiscoverTribesTableViewCell
             cell.configureCell(tribeData: tribeOfInterest,wasJoined: wasJoined)
@@ -119,7 +132,7 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row  == tribes.count) {
+        if (indexPath.row  == displayedTribes.count) {
             return 50.0
         } else {
             return 130.0
@@ -127,7 +140,7 @@ extension DiscoverTribeTableViewDataSource : UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == tribes.count {
+        if indexPath.row == displayedTribes.count {
             pageNum += 1
             
             fetchTribeData(

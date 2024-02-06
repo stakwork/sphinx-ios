@@ -23,7 +23,7 @@ extension SphinxOnionManager {
             let _ = storeOnionState(inc: sm.bytes)
         }
         
-        var publishDelay = 0.0
+        var publishDelay = 0.5
         if let newSubscription = rr.newSubscription{
             self.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                 self.processMqttMessages(message: receivedMessage)

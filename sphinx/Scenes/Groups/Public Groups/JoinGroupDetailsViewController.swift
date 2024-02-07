@@ -96,7 +96,8 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         var chatDict : [String:Any] = [
             "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
             "owner_pubkey": tribeInfo?.ownerPubkey,
-            "name" : tribeInfo?.name
+            "name" : tribeInfo?.name ?? "Unknown Name",
+            "private": tribeInfo?.privateTribe ?? false
         ]
         let chatJSON = JSON(chatDict)
         return chatJSON
@@ -235,7 +236,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
            let chatJSON = getChatJSON(),
            let routeHint = tribeInfo?.ownerRouteHint,
            let chat = Chat.insertChat(chat: chatJSON){
-            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: UserContact.getOwner()?.nickname)
+            let isPrivate = tribeInfo?.privateTribe ?? false
+            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: UserContact.getOwner()?.nickname,isPrivate: isPrivate)
+            chat.status = (isPrivate) ? Chat.ChatStatus.pending.rawValue : Chat.ChatStatus.approved.rawValue
             chat.type = Chat.ChatType.publicGroup.rawValue
             chat.managedObjectContext?.saveContext()
             self.closeButtonTouched()

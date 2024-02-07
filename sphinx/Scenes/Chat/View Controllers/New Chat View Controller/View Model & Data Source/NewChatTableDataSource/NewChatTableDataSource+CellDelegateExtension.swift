@@ -956,32 +956,27 @@ extension NewChatTableDataSource {
     
     func shouldApproveMember(message: TransactionMessage) {
         messageBubbleHelper.showLoadingWheel()
-        
-        GroupsManager.sharedInstance.respondToRequest(
-            message: message,
-            action: "approved",
-            completion: { (chat, _) in
-                self.requestResponseSucceddedWith(chat: chat)
-            },
-            errorCompletion: {
-                self.requestResponseFailed()
-            }
-        )
+        guard let uuid = message.uuid,
+        let chat = chat else{
+            messageBubbleHelper.hideLoadingWheel()
+            AlertHelper.showAlert(title: "Error", message: "There was an error with corrupted data from this request (invalid uuid)")
+            return
+        }
+        SphinxOnionManager.sharedInstance.approveOrRejectTribeJoinRequest(requestUuid: uuid, chat: chat, type: TransactionMessage.TransactionMessageType.memberApprove)
+        messageBubbleHelper.hideLoadingWheel()
     }
     
     func shouldRejectMember(message: TransactionMessage) {
         messageBubbleHelper.showLoadingWheel()
         
-        GroupsManager.sharedInstance.respondToRequest(
-            message: message,
-            action: "rejected",
-            completion: { (chat, _) in
-                self.requestResponseSucceddedWith(chat: chat)
-            },
-            errorCompletion: {
-                self.requestResponseFailed()
-            }
-        )
+        guard let uuid = message.uuid,
+        let chat = chat else{
+            messageBubbleHelper.hideLoadingWheel()
+            AlertHelper.showAlert(title: "Error", message: "There was an error with corrupted data from this request (invalid uuid)")
+            return
+        }
+        SphinxOnionManager.sharedInstance.approveOrRejectTribeJoinRequest(requestUuid: uuid, chat: chat, type: TransactionMessage.TransactionMessageType.memberReject)
+        messageBubbleHelper.hideLoadingWheel()
     }
     
     func requestResponseSucceddedWith(chat: Chat) {

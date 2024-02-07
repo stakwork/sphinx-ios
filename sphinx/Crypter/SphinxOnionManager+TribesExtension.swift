@@ -33,13 +33,18 @@ extension SphinxOnionManager{//tribes related
         }
     }
     
-    func joinTribe(tribePubkey:String,routeHint:String ,alias:String?=nil){
+    func joinTribe(
+        tribePubkey:String,
+        routeHint:String,
+        alias:String?=nil,
+        isPrivate:Bool=false
+    ){
         guard let seed = getAccountSeed() else{
             return
         }
         do{
             
-            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000, isPrivate: false)
+            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000, isPrivate: isPrivate)
             DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
                 self.handleRunReturn(rr: rr)
             })
@@ -86,6 +91,20 @@ extension SphinxOnionManager{//tribes related
             
         }
     }
+    
+    func approveOrRejectTribeJoinRequest(
+        requestUuid:String,
+        chat: Chat,
+        type: TransactionMessage.TransactionMessageType
+    ){
+        if (type.rawValue == TransactionMessage.TransactionMessageType.memberApprove.rawValue ||
+            type.rawValue == TransactionMessage.TransactionMessageType.memberReject.rawValue) == false{
+            return
+        }
+        sendMessage(to: nil, content: "", chat: chat, msgType: UInt8(type.rawValue), recipPubkey: tribeServerPubkey, threadUUID: nil, replyUUID: requestUuid)
+    }
+    
+    
     
     func deleteTribe(tribeChat:Chat){
         

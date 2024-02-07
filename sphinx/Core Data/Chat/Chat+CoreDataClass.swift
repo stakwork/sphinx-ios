@@ -730,8 +730,8 @@ public class Chat: NSManagedObject {
     }
     
     func getJoinChatLink() -> String? {
-        if let uuid = self.uuid, let host = self.host, uuid.isNotEmpty && host.isNotEmpty {
-            return "sphinx.chat://?action=tribe&uuid=\(uuid)&host=\(host)"
+        if let pubkey = self.ownerPubkey {
+            return "sphinx.chat://?action=tribeV2&pubkey=\(pubkey)&host=34.229.52.200:8801"
         }
         return nil
     }

@@ -16,6 +16,7 @@ import SwiftyJSON
 extension SphinxOnionManager {
     func handleRunReturn(
         rr: RunReturn,
+        publishDelay:Double=0.5,
         completion: (([String:AnyObject]) ->())? = nil
     ){
         if let sm = rr.stateMp{
@@ -23,17 +24,6 @@ extension SphinxOnionManager {
             let _ = storeOnionState(inc: sm.bytes)
         }
         
-        var publishDelay = 0.5
-        if let newSubscription = rr.newSubscription{
-            self.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
-                self.processMqttMessages(message: receivedMessage)
-            }
-            self.mqtt.subscribe([
-                (newSubscription, CocoaMQTTQoS.qos1)
-            ])
-            
-            publishDelay = 1.5
-        }
         
         if let newTribe = rr.newTribe{
             print(newTribe)

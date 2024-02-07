@@ -171,6 +171,12 @@ class SphinxOnionManager : NSObject {
             let ret3 = try initialSetup(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData())
             handleRunReturn(rr: ret3)
             
+            let tribeMgmtTopic = try getTribeManagementTopic(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData())
+            
+            
+            self.mqtt.subscribe([
+                (tribeMgmtTopic, CocoaMQTTQoS.qos1)
+            ])
         }
         catch{
             

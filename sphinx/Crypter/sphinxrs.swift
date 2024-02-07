@@ -476,7 +476,6 @@ public func FfiConverterTypeKeys_lower(_ value: Keys) -> RustBuffer {
 
 
 public struct RunReturn {
-    public var `newSubscription`: String?
     public var `topic0`: String?
     public var `payload0`: Data?
     public var `topic1`: String?
@@ -505,8 +504,7 @@ public struct RunReturn {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`newSubscription`: String?, `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `msgTimestamp`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
-        self.`newSubscription` = `newSubscription`
+    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `msgTimestamp`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
         self.`topic1` = `topic1`
@@ -538,9 +536,6 @@ public struct RunReturn {
 
 extension RunReturn: Equatable, Hashable {
     public static func ==(lhs: RunReturn, rhs: RunReturn) -> Bool {
-        if lhs.`newSubscription` != rhs.`newSubscription` {
-            return false
-        }
         if lhs.`topic0` != rhs.`topic0` {
             return false
         }
@@ -620,7 +615,6 @@ extension RunReturn: Equatable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(`newSubscription`)
         hasher.combine(`topic0`)
         hasher.combine(`payload0`)
         hasher.combine(`topic1`)
@@ -653,7 +647,6 @@ extension RunReturn: Equatable, Hashable {
 public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> RunReturn {
         return try RunReturn(
-            `newSubscription`: FfiConverterOptionString.read(from: &buf), 
             `topic0`: FfiConverterOptionString.read(from: &buf), 
             `payload0`: FfiConverterOptionData.read(from: &buf), 
             `topic1`: FfiConverterOptionString.read(from: &buf), 
@@ -683,7 +676,6 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     }
 
     public static func write(_ value: RunReturn, into buf: inout [UInt8]) {
-        FfiConverterOptionString.write(value.`newSubscription`, into: &buf)
         FfiConverterOptionString.write(value.`topic0`, into: &buf)
         FfiConverterOptionData.write(value.`payload0`, into: &buf)
         FfiConverterOptionString.write(value.`topic1`, into: &buf)
@@ -1593,6 +1585,17 @@ public func `getSubscriptionTopic`(`seed`: String, `uniqueTime`: String, `state`
     )
 }
 
+public func `getTribeManagementTopic`(`seed`: String, `uniqueTime`: String, `state`: Data) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_get_tribe_management_topic(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),$0)
+}
+    )
+}
+
 public func `initialSetup`(`seed`: String, `uniqueTime`: String, `state`: Data) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
@@ -1890,6 +1893,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_get_subscription_topic() != 12763) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_get_tribe_management_topic() != 29476) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_initial_setup() != 63727) {

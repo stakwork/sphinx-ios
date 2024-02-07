@@ -113,6 +113,13 @@ extension SphinxOnionManager {
                 originalMessage.date = date
                 originalMessage.updatedAt = date
             }
+            if let type = rr.msgType,
+               type == TransactionMessage.TransactionMessageType.memberApprove.rawValue,
+               let ruuid = originalMessage.replyUUID,
+               let messageWeAreReplying = TransactionMessage.getMessageWith(uuid: ruuid){
+                originalMessage.senderAlias = messageWeAreReplying.senderAlias
+            }
+            
             originalMessage.managedObjectContext?.saveContext()
        }
         else if let uuid = rr.msgUuid,

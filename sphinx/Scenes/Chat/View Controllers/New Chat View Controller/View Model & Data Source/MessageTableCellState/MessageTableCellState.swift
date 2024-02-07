@@ -796,7 +796,7 @@ struct MessageTableCellState {
         guard let memberRequestStatus = NoBubbleMessageLayoutState.GroupMemberRequest.MemberRequestStatus(rawValue: message.type) else {
             return nil
         }
-        
+
         return NoBubbleMessageLayoutState.GroupMemberRequest(
             status: memberRequestStatus,
             isActiveMember: chat.isActiveMember(id: message.senderId),

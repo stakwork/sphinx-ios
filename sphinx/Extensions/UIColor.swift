@@ -110,7 +110,7 @@ public extension UIColor {
         }
     }
     
-    func toHexString() -> String {
+    func toHexColorString() -> String {
         var r:CGFloat = 0
         var g:CGFloat = 0
         var b:CGFloat = 0

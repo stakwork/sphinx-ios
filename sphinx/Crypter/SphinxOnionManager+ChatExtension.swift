@@ -45,7 +45,7 @@ extension SphinxOnionManager{
         var mt: String? = nil
 
         switch TransactionMessage.TransactionMessageType(rawValue: Int(type)) {
-        case .message, .boost, .delete, .call, .groupLeave, .memberReject, .memberApprove:
+        case .message, .boost, .delete, .call, .groupLeave, .memberReject, .memberApprove,.groupDelete:
             break
         case .attachment, .directPayment, .purchase:
             mt = loadMediaToken(recipPubkey: recipPubkey, muid: muid)

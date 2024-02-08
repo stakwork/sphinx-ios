@@ -107,7 +107,12 @@ extension SphinxOnionManager{//tribes related
     
     
     func deleteTribe(tribeChat:Chat){
-        
+        do{
+            sendMessage(to: nil, content: "", chat: tribeChat, msgType: UInt8(TransactionMessage.TransactionMessageType.groupDelete.rawValue), recipPubkey: tribeServerPubkey, threadUUID: nil, replyUUID: nil)
+        }
+        catch{
+            
+        }
     }
     
     

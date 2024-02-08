@@ -157,12 +157,7 @@ extension SphinxOnionManager {
                         var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
                     processIncomingDeletion(message: deletionRequestMessage, date: date)
                 }
-                else if type == TransactionMessage.TransactionMessageType.groupJoin.rawValue ||
-                    type == TransactionMessage.TransactionMessageType.groupLeave.rawValue ||
-                    type == TransactionMessage.TransactionMessageType.groupKick.rawValue ||
-                    type == TransactionMessage.TransactionMessageType.memberRequest.rawValue ||
-                    type == TransactionMessage.TransactionMessageType.memberApprove.rawValue ||
-                    type == TransactionMessage.TransactionMessageType.memberReject.rawValue,
+                else if isGroupAction(type: type),
                     let tribePubkey = csr.pubkey,
                     let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
                     let groupActionMessage = TransactionMessage(context: self.managedContext)
@@ -197,6 +192,12 @@ extension SphinxOnionManager {
         }
     }
     
+    func isGroupAction(type:UInt8)->Bool{
+        let throwAwayMessage = TransactionMessage(context: managedContext)
+        throwAwayMessage.type = Int(type)
+        return throwAwayMessage.isGroupActionMessage()
+    }
+        
     //MARK: Processes key exchange messages (friend requests) between contacts
     func processKeyExchangeMessages(rr:RunReturn){
         if let sender = rr.msgSender,

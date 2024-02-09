@@ -765,7 +765,7 @@ struct MessageTableCellState {
     lazy var groupKickRemovedOrDeclined: NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined? = {
         
         guard let message = message, let ownerPubKey = owner.publicKey,
-                message.isGroupKickMessage() ||
+                message.isGroupKickMessage() && (message.chat?.isTribeICreated != true) ||
                 message.isGroupDeletedMessage() ||
                 (message.isDeclinedRequest() && !chat.isMyPublicGroup(ownerPubKey: ownerPubKey)) else {
             
@@ -781,7 +781,6 @@ struct MessageTableCellState {
         } else if message.isDeclinedRequest() {
             messageString = "member.request.rejected".localized
         }
-        
         return NoBubbleMessageLayoutState.GroupKickRemovedOrDeclined(message: messageString)
     }()
     

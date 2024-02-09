@@ -97,7 +97,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
             "owner_pubkey": tribeInfo?.ownerPubkey,
             "name" : tribeInfo?.name ?? "Unknown Name",
-            "private": tribeInfo?.privateTribe ?? false
+            "private": tribeInfo?.privateTribe ?? false,
+            "photo_url": tribeInfo?.img ?? "",
+            "unlisted": tribeInfo?.unlisted
         ]
         let chatJSON = JSON(chatDict)
         return chatJSON

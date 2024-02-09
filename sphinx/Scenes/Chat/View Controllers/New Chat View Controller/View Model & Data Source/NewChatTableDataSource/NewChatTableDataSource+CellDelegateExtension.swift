@@ -944,10 +944,8 @@ extension NewChatTableDataSource {
             return
         }
         SphinxOnionManager.sharedInstance.exitTribe(tribeChat: chat)
-        DispatchQueue.main.async{
-            CoreDataManager.sharedManager.deleteChatObjectsFor(chat)
-        }
         DelayPerformedHelper.performAfterDelay(seconds: 1.5, completion: {
+            CoreDataManager.sharedManager.deleteChatObjectsFor(chat)
             if let vc = self.delegate as? NewChatViewController{
                 vc.navigationController?.popViewController(animated: true)
             }

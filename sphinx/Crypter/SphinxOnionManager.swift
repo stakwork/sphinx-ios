@@ -30,7 +30,7 @@ class SphinxOnionManager : NSObject {
     var vc: UIViewController! = nil
     var mqtt: CocoaMQTT! = nil
     let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-    let tribeServerPubkey = "0356091a4d8a1bfa8e2b9d19924bf8275dd057536e12427c557dd91a6cb1c03e8b"
+    let tribeServerPubkey = "036b441c86acf790ff00694dfbf83e49cc8d537d166ec68b1077a719e61aa9bb42"
     var stashedCallback : (([String:AnyObject]) ->())? = nil
     
     func getAccountSeed(mnemonic:String?=nil)->String?{

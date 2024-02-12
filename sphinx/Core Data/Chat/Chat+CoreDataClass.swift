@@ -576,15 +576,16 @@ public class Chat: NSManagedObject {
     
     
     func updateTribeInfo(completion: @escaping () -> ()) {
-        if
-            let host = host,
-            let uuid = uuid,
+        
+        let host = API.kTestV2TribesServer.replacingOccurrences(of: "http://", with: "") //TODO: update if we need to handle v1 and v2
+        if let uuid = ownerPubkey,
             host.isEmpty == false,
             isPublicGroup()
         {
             API.sharedInstance.getTribeInfo(
                 host: host,
                 uuid: uuid,
+                useSSL: false, //TODO: change this
                 callback: { chatJson in
                     self.tribeInfo = GroupsManager.sharedInstance.getTribesInfoFrom(json: chatJson)
                     self.updateChatFromTribesInfo()

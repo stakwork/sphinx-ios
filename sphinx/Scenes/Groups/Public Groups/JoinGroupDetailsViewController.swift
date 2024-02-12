@@ -164,6 +164,7 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
           let pubkey = getV2Pubkey(),
            let host = getV2Host(){
              tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: host,uuid: pubkey)
+             //Chat.updateTribeInfo(<#T##self: Chat##Chat#>)
         }
         else{
             tribeInfo = groupsManager.getGroupInfo(query: qrString)

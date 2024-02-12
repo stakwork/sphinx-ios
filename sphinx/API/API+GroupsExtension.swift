@@ -176,7 +176,8 @@ extension API {
                 } else {
                     errorCallback()
                 }
-            case .failure(_):
+            case .failure(let error):
+                print(error)
                 errorCallback()
             }
         }

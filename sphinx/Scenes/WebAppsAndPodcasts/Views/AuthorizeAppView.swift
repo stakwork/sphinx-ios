@@ -148,7 +148,7 @@ extension AuthorizeAppView : UITextFieldDelegate {
         let amount = getAmountFrom(string: String(currentString))
         let walletBalance = WalletBalanceService().balance
         
-        if amount > walletBalance {
+        if amount > walletBalance && false {
             NewMessageBubbleHelper().showGenericMessageView(text: "balance.too.low".localized)
             return false
         }

@@ -139,53 +139,54 @@ extension SphinxOnionManager{
        replyUUID:String?,
        threadUUID:String?
     )->TransactionMessage?{
-        if let sentUUID = rr.msgUuid,
-           msgType != TransactionMessage.TransactionMessageType.delete.rawValue
-        {
-            let date = Date()
-            let message  = TransactionMessage.createProvisionalMessage(
-                messageContent: content,
-                type: Int(msgType),
-                date: date,
-                chat: chat,
-                replyUUID: nil,
-                threadUUID: nil
-            )
-            
-            if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue) ||
-                (msgType == TransactionMessage.TransactionMessageType.directPayment.rawValue)
+        for msg in rr.msgs{
+            if let sentUUID = msg.uuid,
+               msgType != TransactionMessage.TransactionMessageType.delete.rawValue
             {
-                message?.amount = NSDecimalNumber(value: amount)
-                message?.mediaKey = mediaKey
-                message?.mediaToken = mediaToken
-                message?.mediaType = mediaType
+                let date = Date()
+                let message  = TransactionMessage.createProvisionalMessage(
+                    messageContent: content,
+                    type: Int(msgType),
+                    date: date,
+                    chat: chat,
+                    replyUUID: nil,
+                    threadUUID: nil
+                )
+                
+                if(msgType == TransactionMessage.TransactionMessageType.boost.rawValue) ||
+                    (msgType == TransactionMessage.TransactionMessageType.directPayment.rawValue)
+                {
+                    message?.amount = NSDecimalNumber(value: amount)
+                    message?.mediaKey = mediaKey
+                    message?.mediaToken = mediaToken
+                    message?.mediaType = mediaType
+                }
+                else if(msgType == TransactionMessage.TransactionMessageType.purchase.rawValue) ||
+                        msgType == TransactionMessage.TransactionMessageType.attachment.rawValue{
+                    message?.mediaKey = mediaKey
+                    message?.mediaToken = mediaToken
+                    message?.mediaType = mediaType
+                }
+                
+                message?.replyUUID = replyUUID
+                message?.threadUUID = threadUUID
+                message?.createdAt = date
+                message?.updatedAt = date
+                message?.uuid = sentUUID
+                message?.id = abs(UUID().hashValue)
+                message?.chat?.lastMessage = message
+                message?.managedObjectContext?.saveContext()
+                return message
             }
-            else if(msgType == TransactionMessage.TransactionMessageType.purchase.rawValue) ||
-                    msgType == TransactionMessage.TransactionMessageType.attachment.rawValue{
-                message?.mediaKey = mediaKey
-                message?.mediaToken = mediaToken
-                message?.mediaType = mediaType
+            else if let replyUUID = replyUUID,
+                    msgType == TransactionMessage.TransactionMessageType.delete.rawValue,
+                    let messageToDelete = TransactionMessage.getMessageWith(uuid: replyUUID){
+                messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue
+                messageToDelete.chat?.lastMessage = messageToDelete
+                messageToDelete.managedObjectContext?.saveContext()
+                return messageToDelete
             }
-            
-            message?.replyUUID = replyUUID
-            message?.threadUUID = threadUUID
-            message?.createdAt = date
-            message?.updatedAt = date
-            message?.uuid = sentUUID
-            message?.id = abs(UUID().hashValue)
-            message?.chat?.lastMessage = message
-            message?.managedObjectContext?.saveContext()
-            return message
         }
-        else if let replyUUID = replyUUID,
-                msgType == TransactionMessage.TransactionMessageType.delete.rawValue,
-                let messageToDelete = TransactionMessage.getMessageWith(uuid: replyUUID){
-            messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue
-            messageToDelete.chat?.lastMessage = messageToDelete
-            messageToDelete.managedObjectContext?.saveContext()
-            return messageToDelete
-        }
-        return nil
     }
     
     func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,date:Date, csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){

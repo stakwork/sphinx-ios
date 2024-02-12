@@ -475,7 +475,111 @@ public func FfiConverterTypeKeys_lower(_ value: Keys) -> RustBuffer {
 }
 
 
+public struct Msg {
+    public var `message`: String?
+    public var `type`: UInt8?
+    public var `uuid`: String?
+    public var `index`: String?
+    public var `sender`: String?
+    public var `msat`: UInt64?
+    public var `timestamp`: UInt64?
+    public var `sentTo`: String?
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(`message`: String?, `type`: UInt8?, `uuid`: String?, `index`: String?, `sender`: String?, `msat`: UInt64?, `timestamp`: UInt64?, `sentTo`: String?) {
+        self.`message` = `message`
+        self.`type` = `type`
+        self.`uuid` = `uuid`
+        self.`index` = `index`
+        self.`sender` = `sender`
+        self.`msat` = `msat`
+        self.`timestamp` = `timestamp`
+        self.`sentTo` = `sentTo`
+    }
+}
+
+
+extension Msg: Equatable, Hashable {
+    public static func ==(lhs: Msg, rhs: Msg) -> Bool {
+        if lhs.`message` != rhs.`message` {
+            return false
+        }
+        if lhs.`type` != rhs.`type` {
+            return false
+        }
+        if lhs.`uuid` != rhs.`uuid` {
+            return false
+        }
+        if lhs.`index` != rhs.`index` {
+            return false
+        }
+        if lhs.`sender` != rhs.`sender` {
+            return false
+        }
+        if lhs.`msat` != rhs.`msat` {
+            return false
+        }
+        if lhs.`timestamp` != rhs.`timestamp` {
+            return false
+        }
+        if lhs.`sentTo` != rhs.`sentTo` {
+            return false
+        }
+        return true
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(`message`)
+        hasher.combine(`type`)
+        hasher.combine(`uuid`)
+        hasher.combine(`index`)
+        hasher.combine(`sender`)
+        hasher.combine(`msat`)
+        hasher.combine(`timestamp`)
+        hasher.combine(`sentTo`)
+    }
+}
+
+
+public struct FfiConverterTypeMsg: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> Msg {
+        return try Msg(
+            `message`: FfiConverterOptionString.read(from: &buf), 
+            `type`: FfiConverterOptionUInt8.read(from: &buf), 
+            `uuid`: FfiConverterOptionString.read(from: &buf), 
+            `index`: FfiConverterOptionString.read(from: &buf), 
+            `sender`: FfiConverterOptionString.read(from: &buf), 
+            `msat`: FfiConverterOptionUInt64.read(from: &buf), 
+            `timestamp`: FfiConverterOptionUInt64.read(from: &buf), 
+            `sentTo`: FfiConverterOptionString.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: Msg, into buf: inout [UInt8]) {
+        FfiConverterOptionString.write(value.`message`, into: &buf)
+        FfiConverterOptionUInt8.write(value.`type`, into: &buf)
+        FfiConverterOptionString.write(value.`uuid`, into: &buf)
+        FfiConverterOptionString.write(value.`index`, into: &buf)
+        FfiConverterOptionString.write(value.`sender`, into: &buf)
+        FfiConverterOptionUInt64.write(value.`msat`, into: &buf)
+        FfiConverterOptionUInt64.write(value.`timestamp`, into: &buf)
+        FfiConverterOptionString.write(value.`sentTo`, into: &buf)
+    }
+}
+
+
+public func FfiConverterTypeMsg_lift(_ buf: RustBuffer) throws -> Msg {
+    return try FfiConverterTypeMsg.lift(buf)
+}
+
+public func FfiConverterTypeMsg_lower(_ value: Msg) -> RustBuffer {
+    return FfiConverterTypeMsg.lower(value)
+}
+
+
 public struct RunReturn {
+    public var `msgs`: [Msg]
     public var `topic0`: String?
     public var `payload0`: Data?
     public var `topic1`: String?
@@ -483,17 +587,9 @@ public struct RunReturn {
     public var `topic2`: String?
     public var `payload2`: Data?
     public var `stateMp`: Data?
-    public var `msg`: String?
-    public var `msgType`: UInt8?
-    public var `msgUuid`: String?
-    public var `msgIndex`: String?
-    public var `msgSender`: String?
-    public var `msgMsat`: UInt64?
-    public var `msgTimestamp`: UInt64?
     public var `newBalance`: UInt64?
     public var `myContactInfo`: String?
     public var `sentStatus`: String?
-    public var `sentTo`: String?
     public var `settledStatus`: String?
     public var `error`: String?
     public var `newTribe`: String?
@@ -504,7 +600,8 @@ public struct RunReturn {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `msg`: String?, `msgType`: UInt8?, `msgUuid`: String?, `msgIndex`: String?, `msgSender`: String?, `msgMsat`: UInt64?, `msgTimestamp`: UInt64?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `sentTo`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
+    public init(`msgs`: [Msg], `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
+        self.`msgs` = `msgs`
         self.`topic0` = `topic0`
         self.`payload0` = `payload0`
         self.`topic1` = `topic1`
@@ -512,17 +609,9 @@ public struct RunReturn {
         self.`topic2` = `topic2`
         self.`payload2` = `payload2`
         self.`stateMp` = `stateMp`
-        self.`msg` = `msg`
-        self.`msgType` = `msgType`
-        self.`msgUuid` = `msgUuid`
-        self.`msgIndex` = `msgIndex`
-        self.`msgSender` = `msgSender`
-        self.`msgMsat` = `msgMsat`
-        self.`msgTimestamp` = `msgTimestamp`
         self.`newBalance` = `newBalance`
         self.`myContactInfo` = `myContactInfo`
         self.`sentStatus` = `sentStatus`
-        self.`sentTo` = `sentTo`
         self.`settledStatus` = `settledStatus`
         self.`error` = `error`
         self.`newTribe` = `newTribe`
@@ -536,6 +625,9 @@ public struct RunReturn {
 
 extension RunReturn: Equatable, Hashable {
     public static func ==(lhs: RunReturn, rhs: RunReturn) -> Bool {
+        if lhs.`msgs` != rhs.`msgs` {
+            return false
+        }
         if lhs.`topic0` != rhs.`topic0` {
             return false
         }
@@ -557,27 +649,6 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`stateMp` != rhs.`stateMp` {
             return false
         }
-        if lhs.`msg` != rhs.`msg` {
-            return false
-        }
-        if lhs.`msgType` != rhs.`msgType` {
-            return false
-        }
-        if lhs.`msgUuid` != rhs.`msgUuid` {
-            return false
-        }
-        if lhs.`msgIndex` != rhs.`msgIndex` {
-            return false
-        }
-        if lhs.`msgSender` != rhs.`msgSender` {
-            return false
-        }
-        if lhs.`msgMsat` != rhs.`msgMsat` {
-            return false
-        }
-        if lhs.`msgTimestamp` != rhs.`msgTimestamp` {
-            return false
-        }
         if lhs.`newBalance` != rhs.`newBalance` {
             return false
         }
@@ -585,9 +656,6 @@ extension RunReturn: Equatable, Hashable {
             return false
         }
         if lhs.`sentStatus` != rhs.`sentStatus` {
-            return false
-        }
-        if lhs.`sentTo` != rhs.`sentTo` {
             return false
         }
         if lhs.`settledStatus` != rhs.`settledStatus` {
@@ -615,6 +683,7 @@ extension RunReturn: Equatable, Hashable {
     }
 
     public func hash(into hasher: inout Hasher) {
+        hasher.combine(`msgs`)
         hasher.combine(`topic0`)
         hasher.combine(`payload0`)
         hasher.combine(`topic1`)
@@ -622,17 +691,9 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`topic2`)
         hasher.combine(`payload2`)
         hasher.combine(`stateMp`)
-        hasher.combine(`msg`)
-        hasher.combine(`msgType`)
-        hasher.combine(`msgUuid`)
-        hasher.combine(`msgIndex`)
-        hasher.combine(`msgSender`)
-        hasher.combine(`msgMsat`)
-        hasher.combine(`msgTimestamp`)
         hasher.combine(`newBalance`)
         hasher.combine(`myContactInfo`)
         hasher.combine(`sentStatus`)
-        hasher.combine(`sentTo`)
         hasher.combine(`settledStatus`)
         hasher.combine(`error`)
         hasher.combine(`newTribe`)
@@ -647,6 +708,7 @@ extension RunReturn: Equatable, Hashable {
 public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> RunReturn {
         return try RunReturn(
+            `msgs`: FfiConverterSequenceTypeMsg.read(from: &buf), 
             `topic0`: FfiConverterOptionString.read(from: &buf), 
             `payload0`: FfiConverterOptionData.read(from: &buf), 
             `topic1`: FfiConverterOptionString.read(from: &buf), 
@@ -654,17 +716,9 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `topic2`: FfiConverterOptionString.read(from: &buf), 
             `payload2`: FfiConverterOptionData.read(from: &buf), 
             `stateMp`: FfiConverterOptionData.read(from: &buf), 
-            `msg`: FfiConverterOptionString.read(from: &buf), 
-            `msgType`: FfiConverterOptionUInt8.read(from: &buf), 
-            `msgUuid`: FfiConverterOptionString.read(from: &buf), 
-            `msgIndex`: FfiConverterOptionString.read(from: &buf), 
-            `msgSender`: FfiConverterOptionString.read(from: &buf), 
-            `msgMsat`: FfiConverterOptionUInt64.read(from: &buf), 
-            `msgTimestamp`: FfiConverterOptionUInt64.read(from: &buf), 
             `newBalance`: FfiConverterOptionUInt64.read(from: &buf), 
             `myContactInfo`: FfiConverterOptionString.read(from: &buf), 
             `sentStatus`: FfiConverterOptionString.read(from: &buf), 
-            `sentTo`: FfiConverterOptionString.read(from: &buf), 
             `settledStatus`: FfiConverterOptionString.read(from: &buf), 
             `error`: FfiConverterOptionString.read(from: &buf), 
             `newTribe`: FfiConverterOptionString.read(from: &buf), 
@@ -676,6 +730,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     }
 
     public static func write(_ value: RunReturn, into buf: inout [UInt8]) {
+        FfiConverterSequenceTypeMsg.write(value.`msgs`, into: &buf)
         FfiConverterOptionString.write(value.`topic0`, into: &buf)
         FfiConverterOptionData.write(value.`payload0`, into: &buf)
         FfiConverterOptionString.write(value.`topic1`, into: &buf)
@@ -683,17 +738,9 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`topic2`, into: &buf)
         FfiConverterOptionData.write(value.`payload2`, into: &buf)
         FfiConverterOptionData.write(value.`stateMp`, into: &buf)
-        FfiConverterOptionString.write(value.`msg`, into: &buf)
-        FfiConverterOptionUInt8.write(value.`msgType`, into: &buf)
-        FfiConverterOptionString.write(value.`msgUuid`, into: &buf)
-        FfiConverterOptionString.write(value.`msgIndex`, into: &buf)
-        FfiConverterOptionString.write(value.`msgSender`, into: &buf)
-        FfiConverterOptionUInt64.write(value.`msgMsat`, into: &buf)
-        FfiConverterOptionUInt64.write(value.`msgTimestamp`, into: &buf)
         FfiConverterOptionUInt64.write(value.`newBalance`, into: &buf)
         FfiConverterOptionString.write(value.`myContactInfo`, into: &buf)
         FfiConverterOptionString.write(value.`sentStatus`, into: &buf)
-        FfiConverterOptionString.write(value.`sentTo`, into: &buf)
         FfiConverterOptionString.write(value.`settledStatus`, into: &buf)
         FfiConverterOptionString.write(value.`error`, into: &buf)
         FfiConverterOptionString.write(value.`newTribe`, into: &buf)
@@ -1199,6 +1246,28 @@ fileprivate struct FfiConverterOptionData: FfiConverterRustBuffer {
         case 1: return try FfiConverterData.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
+    }
+}
+
+fileprivate struct FfiConverterSequenceTypeMsg: FfiConverterRustBuffer {
+    typealias SwiftType = [Msg]
+
+    public static func write(_ value: [Msg], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterTypeMsg.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [Msg] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [Msg]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterTypeMsg.read(from: &buf))
+        }
+        return seq
     }
 }
 

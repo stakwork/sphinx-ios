@@ -100,100 +100,101 @@ extension SphinxOnionManager {
     
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
-        if let message = rr.msg,
-           var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
-           let omuuid = plaintextMessage.originalUuid,//update uuid if it's changing/
-           let newUUID = rr.msgUuid,
-           var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
-            originalMessage.uuid = newUUID
-            originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
-            if let timestamp = rr.msgTimestamp
-            {
-                let date = timestampToDate(timestamp: timestamp) ?? Date()
-                originalMessage.date = date
-                originalMessage.updatedAt = date
-            }
-            
-            if let type = rr.msgType,
-               type == TransactionMessage.TransactionMessageType.memberApprove.rawValue,
-               let ruuid = originalMessage.replyUUID,
-               let messageWeAreReplying = TransactionMessage.getMessageWith(uuid: ruuid){
-                originalMessage.senderAlias = messageWeAreReplying.senderAlias
-            }
-            else if let owner = UserContact.getOwner(){
-                originalMessage.senderAlias = owner.nickname
-                originalMessage.senderPic = owner.avatarUrl
-            }
-            
-            originalMessage.managedObjectContext?.saveContext()
-       }
-        else if let uuid = rr.msgUuid,
-                TransactionMessage.getMessageWith(uuid: uuid) == nil{ // guarantee it is a new message
-            if let message = rr.msg,
-               let type = rr.msgType,
-               let sender = rr.msgSender,
-               let uuid = rr.msgUuid,
-               let index = rr.msgIndex,
-               let timestamp = rr.msgTimestamp,
-               let date = timestampToDate(timestamp: timestamp),
-               let csr = ContactServerResponse(JSONString: sender){
-                if type == TransactionMessage.TransactionMessageType.message.rawValue
-                    || type == TransactionMessage.TransactionMessageType.call.rawValue
-                    || type == TransactionMessage.TransactionMessageType.attachment.rawValue,
-                   var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
-                    plaintextMessage.senderPubkey = csr.pubkey
-                    plaintextMessage.uuid = uuid
-                    plaintextMessage.index = index
-                    processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage, date: date,csr: csr,type: Int(type))
-                }
-                else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
-                        type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
-                        var boostMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
-                        let msats = rr.msgMsat,
-                        let index = rr.msgIndex,
-                        let uuid = rr.msgUuid
+        for message in rr.msgs{
+            if var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
+               let omuuid = plaintextMessage.originalUuid,//update uuid if it's changing/
+               let newUUID = message.uuid,
+               var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
+                originalMessage.uuid = newUUID
+                originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
+                if let timestamp = message.timestamp
                 {
-                    boostMessage.senderPubkey = csr.pubkey
-                    boostMessage.uuid = uuid
-                    boostMessage.index = index
-                    processIncomingPayment(message: boostMessage, date: date,csr: csr, amount: Int(msats/1000), type: Int(type))
+                    let date = timestampToDate(timestamp: timestamp) ?? Date()
+                    originalMessage.date = date
+                    originalMessage.updatedAt = date
                 }
-                else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
-                        var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
-                    processIncomingDeletion(message: deletionRequestMessage, date: date)
+                
+                if let type = message.type,
+                   type == TransactionMessage.TransactionMessageType.memberApprove.rawValue,
+                   let ruuid = originalMessage.replyUUID,
+                   let messageWeAreReplying = TransactionMessage.getMessageWith(uuid: ruuid){
+                    originalMessage.senderAlias = messageWeAreReplying.senderAlias
                 }
-                else if isGroupAction(type: type),
-                    let tribePubkey = csr.pubkey,
-                    let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
-                    let groupActionMessage = TransactionMessage(context: self.managedContext)
-                    groupActionMessage.uuid = uuid
-                    groupActionMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
-                    groupActionMessage.chat = chat
-                    groupActionMessage.type = Int(type)
-                    groupActionMessage.chat?.lastMessage = groupActionMessage
-                    groupActionMessage.senderAlias = csr.alias
-                    groupActionMessage.senderPic = csr.photoUrl
-                    groupActionMessage.createdAt = date
-                    groupActionMessage.date = date
-                    groupActionMessage.updatedAt = date
-                    groupActionMessage.seen = false
-                    chat.seen = false
-                    (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
-                    (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
-                    self.managedContext.saveContext()
+                else if let owner = UserContact.getOwner(){
+                    originalMessage.senderAlias = owner.nickname
+                    originalMessage.senderPic = owner.avatarUrl
                 }
-                print("handleRunReturn message: \(message)")
+                
+                originalMessage.managedObjectContext?.saveContext()
+           }
+            else if let uuid = message.uuid,
+                    TransactionMessage.getMessageWith(uuid: uuid) == nil{ // guarantee it is a new message
+                if let type = message.type,
+                   let sender = message.sender,
+                   let uuid = message.uuid,
+                   let index = message.index,
+                   let timestamp = message.timestamp,
+                   let date = timestampToDate(timestamp: timestamp),
+                   let csr = ContactServerResponse(JSONString: sender){
+                    if type == TransactionMessage.TransactionMessageType.message.rawValue
+                        || type == TransactionMessage.TransactionMessageType.call.rawValue
+                        || type == TransactionMessage.TransactionMessageType.attachment.rawValue,
+                       var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
+                        plaintextMessage.senderPubkey = csr.pubkey
+                        plaintextMessage.uuid = uuid
+                        plaintextMessage.index = index
+                        processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage, date: date,csr: csr,type: Int(type))
+                    }
+                    else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
+                            type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
+                            var boostMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
+                            let msats = message.msat,
+                            let index = message.index,
+                            let uuid = message.uuid
+                    {
+                        boostMessage.senderPubkey = csr.pubkey
+                        boostMessage.uuid = uuid
+                        boostMessage.index = index
+                        processIncomingPayment(message: boostMessage, date: date,csr: csr, amount: Int(msats/1000), type: Int(type))
+                    }
+                    else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
+                            var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
+                        processIncomingDeletion(message: deletionRequestMessage, date: date)
+                    }
+                    else if isGroupAction(type: type),
+                        let tribePubkey = csr.pubkey,
+                        let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
+                        let groupActionMessage = TransactionMessage(context: self.managedContext)
+                        groupActionMessage.uuid = uuid
+                        groupActionMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
+                        groupActionMessage.chat = chat
+                        groupActionMessage.type = Int(type)
+                        groupActionMessage.chat?.lastMessage = groupActionMessage
+                        groupActionMessage.senderAlias = csr.alias
+                        groupActionMessage.senderPic = csr.photoUrl
+                        groupActionMessage.createdAt = date
+                        groupActionMessage.date = date
+                        groupActionMessage.updatedAt = date
+                        groupActionMessage.seen = false
+                        chat.seen = false
+                        (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
+                        (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
+                        self.managedContext.saveContext()
+                    }
+                    print("handleRunReturn message: \(message)")
+                }
             }
-        }
-        else if isIndexedSentMessageFromMe(rr: rr), //re index my own message
-                var cachedMessage = TransactionMessage.getMessageWith(uuid: rr.msgUuid!),
-                let indexString = rr.msgIndex,
-                    let index = Int(indexString){
-            cachedMessage.id = index //sync self index
-            cachedMessage.updatedAt = Date()
-            cachedMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-            cachedMessage.managedObjectContext?.saveContext()
-            print(rr)
+            else if isIndexedSentMessageFromMe(msg: message),
+                    let uuid = message.uuid,
+                    var cachedMessage = TransactionMessage.getMessageWith(uuid: uuid),
+                    let indexString = message.index,
+                        let index = Int(indexString){
+                cachedMessage.id = index //sync self index
+                cachedMessage.updatedAt = Date()
+                cachedMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+                cachedMessage.managedObjectContext?.saveContext()
+                print(rr)
+            }
         }
     }
     
@@ -205,38 +206,41 @@ extension SphinxOnionManager {
         
     //MARK: Processes key exchange messages (friend requests) between contacts
     func processKeyExchangeMessages(rr:RunReturn){
-        if let sender = rr.msgSender,
-           let csr = ContactServerResponse(JSONString: sender),
-           let senderPubkey = csr.pubkey{
-            print(sender)
-            let type = rr.msgType ?? 255
-            if type == TransactionMessage.TransactionMessageType.contactKeyConfirmation.rawValue, // incoming key exchange confirmation
-               let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
-                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
-                existingContact.nickname = csr.alias
-                existingContact.avatarUrl = csr.photoUrl
-                if existingContact.getChat() == nil{
-                    createChat(for: existingContact)
+        for msg in rr.msgs{
+            if let sender = msg.sender,
+               let csr = ContactServerResponse(JSONString: sender),
+               let senderPubkey = csr.pubkey{
+                print(sender)
+                let type = msg.type ?? 255
+                if type == TransactionMessage.TransactionMessageType.contactKeyConfirmation.rawValue, // incoming key exchange confirmation
+                   let existingContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey){ // if contact exists it's a key exchange response from them or it exists already
+                    NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : existingContact.publicKey]))
+                    existingContact.nickname = csr.alias
+                    existingContact.avatarUrl = csr.photoUrl
+                    if existingContact.getChat() == nil{
+                        createChat(for: existingContact)
+                    }
+                    existingContact.nickname = csr.alias
+                    existingContact.status = UserContact.Status.Confirmed.rawValue
+                    CoreDataManager.sharedManager.saveContext()
+                    
                 }
-                existingContact.nickname = csr.alias
-                existingContact.status = UserContact.Status.Confirmed.rawValue
-                CoreDataManager.sharedManager.saveContext()
-                
-            }
-            else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue, // incoming key exchange request
-                    UserContact.getContactWithDisregardStatus(pubkey: senderPubkey) == nil,//don't respond to requests if already exists
-                let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
-                NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
-                newContactRequest.status = UserContact.Status.Confirmed.rawValue
-                createChat(for: newContactRequest)
-                managedContext.saveContext()
+                else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue, // incoming key exchange request
+                        UserContact.getContactWithDisregardStatus(pubkey: senderPubkey) == nil,//don't respond to requests if already exists
+                    let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
+                    NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
+                    newContactRequest.status = UserContact.Status.Confirmed.rawValue
+                    createChat(for: newContactRequest)
+                    managedContext.saveContext()
+                }
             }
         }
+        
     }
 
-    func isIndexedSentMessageFromMe(rr:RunReturn)->Bool{
-        if let _ = rr.msgUuid,
-           let _ = rr.msgIndex{
+    func isIndexedSentMessageFromMe(msg:Msg)->Bool{
+        if let _ = msg.uuid,
+           let _ = msg.index{
             return true
         }
         return false
@@ -349,6 +353,12 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
     var date:Int?=nil
 
     init?(map: Map) {}
+    
+    init(msg:Msg){
+        msg.type
+        msg.msat
+        msg.sender
+    }
 
     mutating func mapping(map: Map) {
         content    <- map["content"]

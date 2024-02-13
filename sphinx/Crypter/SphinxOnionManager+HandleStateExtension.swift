@@ -101,8 +101,8 @@ extension SphinxOnionManager {
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs{
-            if var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
-               let omuuid = plaintextMessage.originalUuid,//update uuid if it's changing/
+            var plaintextMessage = PlaintextOrAttachmentMessageFromServer(msg: message)
+            if let omuuid = plaintextMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,
                var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
                 originalMessage.uuid = newUUID
@@ -138,8 +138,7 @@ extension SphinxOnionManager {
                    let csr = ContactServerResponse(JSONString: sender){
                     if type == TransactionMessage.TransactionMessageType.message.rawValue
                         || type == TransactionMessage.TransactionMessageType.call.rawValue
-                        || type == TransactionMessage.TransactionMessageType.attachment.rawValue,
-                       var plaintextMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
+                        || type == TransactionMessage.TransactionMessageType.attachment.rawValue{
                         plaintextMessage.senderPubkey = csr.pubkey
                         plaintextMessage.uuid = uuid
                         plaintextMessage.index = index
@@ -147,19 +146,17 @@ extension SphinxOnionManager {
                     }
                     else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
                             type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
-                            var boostMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message),
                             let msats = message.msat,
                             let index = message.index,
                             let uuid = message.uuid
                     {
-                        boostMessage.senderPubkey = csr.pubkey
-                        boostMessage.uuid = uuid
-                        boostMessage.index = index
-                        processIncomingPayment(message: boostMessage, date: date,csr: csr, amount: Int(msats/1000), type: Int(type))
+                        plaintextMessage.senderPubkey = csr.pubkey
+                        plaintextMessage.uuid = uuid
+                        plaintextMessage.index = index
+                        processIncomingPayment(message: plaintextMessage, date: date,csr: csr, amount: Int(msats/1000), type: Int(type))
                     }
-                    else if type == TransactionMessage.TransactionMessageType.delete.rawValue,
-                            var deletionRequestMessage = PlaintextOrAttachmentMessageFromServer(JSONString: message){
-                        processIncomingDeletion(message: deletionRequestMessage, date: date)
+                    else if type == TransactionMessage.TransactionMessageType.delete.rawValue{
+                        processIncomingDeletion(message: plaintextMessage, date: date)
                     }
                     else if isGroupAction(type: type),
                         let tribePubkey = csr.pubkey,
@@ -337,6 +334,35 @@ struct ContactServerResponse: Mappable {
 }
 
 
+
+struct MessageInnerContent: Mappable {
+    var content:String?
+    var replyUuid:String?=nil
+    var threadUuid:String?=nil
+    var mediaKey:String?=nil
+    var mediaToken:String?=nil
+    var mediaType:String?=nil
+    var muid:String?=nil
+    var originalUuid:String?=nil
+    var date:Int?=nil
+
+    init?(map: Map) {}
+    
+    mutating func mapping(map: Map) {
+        content    <- map["content"]
+        replyUuid <- map["replyUuid"]
+        threadUuid <- map["threadUuid"]
+        mediaToken <- map["mediaToken"]
+        mediaType <- map["mediaType"]
+        mediaKey <- map["mediaKey"]
+        muid <- map["muid"]
+        date <- map["date"]
+        originalUuid <- map["originalUuid"]
+    }
+    
+}
+
+
 struct PlaintextOrAttachmentMessageFromServer: Mappable {
     var content:String?
     var amount:Int?
@@ -355,9 +381,26 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
     init?(map: Map) {}
     
     init(msg:Msg){
-        msg.type
-        msg.msat
-        msg.sender
+        if let sender = msg.sender,
+           let csr = ContactServerResponse(JSONString: sender){
+            self.senderPubkey = csr.pubkey
+        }
+        
+        if let message = msg.message,
+           let innerContent = MessageInnerContent(JSONString: message){
+            self.content = innerContent.content
+            self.replyUuid = innerContent.replyUuid
+            self.threadUuid = innerContent.threadUuid
+            self.mediaKey = innerContent.mediaKey
+            self.mediaToken = innerContent.mediaToken
+            self.mediaType = innerContent.mediaType
+            self.muid = innerContent.muid
+            self.originalUuid = innerContent.originalUuid
+            self.date = innerContent.date
+        }
+        self.amount = Int(msg.msat ?? 0)
+        self.uuid = msg.uuid
+        self.index = msg.index
     }
 
     mutating func mapping(map: Map) {
@@ -369,8 +412,7 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
         mediaType <- map["mediaType"]
         mediaKey <- map["mediaKey"]
         muid <- map["muid"]
-        date <- map["date"]
-        originalUuid <- map["originalUuid"]
+        
     }
     
 }

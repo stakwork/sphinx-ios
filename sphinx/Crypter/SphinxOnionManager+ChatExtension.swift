@@ -187,6 +187,8 @@ extension SphinxOnionManager{
                 return messageToDelete
             }
         }
+        
+        return nil
     }
     
     func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,date:Date, csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){

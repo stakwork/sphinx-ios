@@ -580,12 +580,8 @@ public func FfiConverterTypeMsg_lower(_ value: Msg) -> RustBuffer {
 
 public struct RunReturn {
     public var `msgs`: [Msg]
-    public var `topic0`: String?
-    public var `payload0`: Data?
-    public var `topic1`: String?
-    public var `payload1`: Data?
-    public var `topic2`: String?
-    public var `payload2`: Data?
+    public var `topics`: [String]
+    public var `payloads`: [Data]
     public var `stateMp`: Data?
     public var `newBalance`: UInt64?
     public var `myContactInfo`: String?
@@ -600,14 +596,10 @@ public struct RunReturn {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`msgs`: [Msg], `topic0`: String?, `payload0`: Data?, `topic1`: String?, `payload1`: Data?, `topic2`: String?, `payload2`: Data?, `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
+    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
         self.`msgs` = `msgs`
-        self.`topic0` = `topic0`
-        self.`payload0` = `payload0`
-        self.`topic1` = `topic1`
-        self.`payload1` = `payload1`
-        self.`topic2` = `topic2`
-        self.`payload2` = `payload2`
+        self.`topics` = `topics`
+        self.`payloads` = `payloads`
         self.`stateMp` = `stateMp`
         self.`newBalance` = `newBalance`
         self.`myContactInfo` = `myContactInfo`
@@ -628,22 +620,10 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`msgs` != rhs.`msgs` {
             return false
         }
-        if lhs.`topic0` != rhs.`topic0` {
+        if lhs.`topics` != rhs.`topics` {
             return false
         }
-        if lhs.`payload0` != rhs.`payload0` {
-            return false
-        }
-        if lhs.`topic1` != rhs.`topic1` {
-            return false
-        }
-        if lhs.`payload1` != rhs.`payload1` {
-            return false
-        }
-        if lhs.`topic2` != rhs.`topic2` {
-            return false
-        }
-        if lhs.`payload2` != rhs.`payload2` {
+        if lhs.`payloads` != rhs.`payloads` {
             return false
         }
         if lhs.`stateMp` != rhs.`stateMp` {
@@ -684,12 +664,8 @@ extension RunReturn: Equatable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(`msgs`)
-        hasher.combine(`topic0`)
-        hasher.combine(`payload0`)
-        hasher.combine(`topic1`)
-        hasher.combine(`payload1`)
-        hasher.combine(`topic2`)
-        hasher.combine(`payload2`)
+        hasher.combine(`topics`)
+        hasher.combine(`payloads`)
         hasher.combine(`stateMp`)
         hasher.combine(`newBalance`)
         hasher.combine(`myContactInfo`)
@@ -709,12 +685,8 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> RunReturn {
         return try RunReturn(
             `msgs`: FfiConverterSequenceTypeMsg.read(from: &buf), 
-            `topic0`: FfiConverterOptionString.read(from: &buf), 
-            `payload0`: FfiConverterOptionData.read(from: &buf), 
-            `topic1`: FfiConverterOptionString.read(from: &buf), 
-            `payload1`: FfiConverterOptionData.read(from: &buf), 
-            `topic2`: FfiConverterOptionString.read(from: &buf), 
-            `payload2`: FfiConverterOptionData.read(from: &buf), 
+            `topics`: FfiConverterSequenceString.read(from: &buf), 
+            `payloads`: FfiConverterSequenceData.read(from: &buf), 
             `stateMp`: FfiConverterOptionData.read(from: &buf), 
             `newBalance`: FfiConverterOptionUInt64.read(from: &buf), 
             `myContactInfo`: FfiConverterOptionString.read(from: &buf), 
@@ -731,12 +703,8 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
 
     public static func write(_ value: RunReturn, into buf: inout [UInt8]) {
         FfiConverterSequenceTypeMsg.write(value.`msgs`, into: &buf)
-        FfiConverterOptionString.write(value.`topic0`, into: &buf)
-        FfiConverterOptionData.write(value.`payload0`, into: &buf)
-        FfiConverterOptionString.write(value.`topic1`, into: &buf)
-        FfiConverterOptionData.write(value.`payload1`, into: &buf)
-        FfiConverterOptionString.write(value.`topic2`, into: &buf)
-        FfiConverterOptionData.write(value.`payload2`, into: &buf)
+        FfiConverterSequenceString.write(value.`topics`, into: &buf)
+        FfiConverterSequenceData.write(value.`payloads`, into: &buf)
         FfiConverterOptionData.write(value.`stateMp`, into: &buf)
         FfiConverterOptionUInt64.write(value.`newBalance`, into: &buf)
         FfiConverterOptionString.write(value.`myContactInfo`, into: &buf)
@@ -1246,6 +1214,50 @@ fileprivate struct FfiConverterOptionData: FfiConverterRustBuffer {
         case 1: return try FfiConverterData.read(from: &buf)
         default: throw UniffiInternalError.unexpectedOptionalTag
         }
+    }
+}
+
+fileprivate struct FfiConverterSequenceString: FfiConverterRustBuffer {
+    typealias SwiftType = [String]
+
+    public static func write(_ value: [String], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterString.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [String] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [String]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterString.read(from: &buf))
+        }
+        return seq
+    }
+}
+
+fileprivate struct FfiConverterSequenceData: FfiConverterRustBuffer {
+    typealias SwiftType = [Data]
+
+    public static func write(_ value: [Data], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterData.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [Data] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [Data]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterData.read(from: &buf))
+        }
+        return seq
     }
 }
 

@@ -191,6 +191,103 @@ extension SphinxOnionManager{
         return nil
     }
     
+    //MARK: processes updates from general purpose messages like plaintext and attachments
+    func processGenericMessages(rr:RunReturn){
+        for message in rr.msgs{
+            var plaintextMessage = PlaintextOrAttachmentMessageFromServer(msg: message)
+            if let omuuid = plaintextMessage.originalUuid,//update uuid if it's changing/
+               let newUUID = message.uuid,
+               var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
+                originalMessage.uuid = newUUID
+                originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
+                if let timestamp = message.timestamp
+                {
+                    let date = timestampToDate(timestamp: timestamp) ?? Date()
+                    originalMessage.date = date
+                    originalMessage.updatedAt = date
+                }
+                
+                if let type = message.type,
+                   type == TransactionMessage.TransactionMessageType.memberApprove.rawValue,
+                   let ruuid = originalMessage.replyUUID,
+                   let messageWeAreReplying = TransactionMessage.getMessageWith(uuid: ruuid){
+                    originalMessage.senderAlias = messageWeAreReplying.senderAlias
+                }
+                else if let owner = UserContact.getOwner(){
+                    originalMessage.senderAlias = owner.nickname
+                    originalMessage.senderPic = owner.avatarUrl
+                }
+                
+                originalMessage.managedObjectContext?.saveContext()
+           }
+            else if let uuid = message.uuid,
+                    TransactionMessage.getMessageWith(uuid: uuid) == nil{ // guarantee it is a new message
+                if let type = message.type,
+                   let sender = message.sender,
+                   let uuid = message.uuid,
+                   let index = message.index,
+                   let timestamp = message.timestamp,
+                   let date = timestampToDate(timestamp: timestamp),
+                   let csr = ContactServerResponse(JSONString: sender){
+                    if type == TransactionMessage.TransactionMessageType.message.rawValue
+                        || type == TransactionMessage.TransactionMessageType.call.rawValue
+                        || type == TransactionMessage.TransactionMessageType.attachment.rawValue{
+                        plaintextMessage.senderPubkey = csr.pubkey
+                        plaintextMessage.uuid = uuid
+                        plaintextMessage.index = index
+                        processIncomingPlaintextOrAttachmentMessage(message: plaintextMessage, date: date,csr: csr,type: Int(type))
+                    }
+                    else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
+                            type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
+                            let msats = message.msat,
+                            let index = message.index,
+                            let uuid = message.uuid
+                    {
+                        plaintextMessage.senderPubkey = csr.pubkey
+                        plaintextMessage.uuid = uuid
+                        plaintextMessage.index = index
+                        processIncomingPayment(message: plaintextMessage, date: date,csr: csr, amount: Int(msats/1000), type: Int(type))
+                    }
+                    else if type == TransactionMessage.TransactionMessageType.delete.rawValue{
+                        processIncomingDeletion(message: plaintextMessage, date: date)
+                    }
+                    else if isGroupAction(type: type),
+                        let tribePubkey = csr.pubkey,
+                        let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
+                        let groupActionMessage = TransactionMessage(context: self.managedContext)
+                        groupActionMessage.uuid = uuid
+                        groupActionMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
+                        groupActionMessage.chat = chat
+                        groupActionMessage.type = Int(type)
+                        groupActionMessage.chat?.lastMessage = groupActionMessage
+                        groupActionMessage.senderAlias = csr.alias
+                        groupActionMessage.senderPic = csr.photoUrl
+                        groupActionMessage.createdAt = date
+                        groupActionMessage.date = date
+                        groupActionMessage.updatedAt = date
+                        groupActionMessage.seen = false
+                        chat.seen = false
+                        (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
+                        (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
+                        self.managedContext.saveContext()
+                    }
+                    print("handleRunReturn message: \(message)")
+                }
+            }
+            else if isIndexedSentMessageFromMe(msg: message),
+                    let uuid = message.uuid,
+                    var cachedMessage = TransactionMessage.getMessageWith(uuid: uuid),
+                    let indexString = message.index,
+                        let index = Int(indexString){
+                cachedMessage.id = index //sync self index
+                cachedMessage.updatedAt = Date()
+                cachedMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+                cachedMessage.managedObjectContext?.saveContext()
+                print(rr)
+            }
+        }
+    }
+    
     func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,date:Date, csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
         guard let indexString = message.index,
             let index = Int(indexString),

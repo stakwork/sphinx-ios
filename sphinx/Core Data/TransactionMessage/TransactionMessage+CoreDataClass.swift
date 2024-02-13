@@ -14,27 +14,27 @@ import SwiftyJSON
 public class TransactionMessage: NSManagedObject {
     
     enum TransactionMessageType: Int {
-        case message = 0
+        case message = 0 //
         case confirmation = 1
         case invoice = 2
         case payment = 3
         case cancellation = 4
         case directPayment = 5
-        case attachment = 6
+        case attachment = 6 //
         case purchase = 7
         case purchaseAccept = 8
         case purchaseDeny = 9
-        case contactKey = 10
-        case contactKeyConfirmation = 11
-        case groupCreate = 12
+        case contactKey = 10 //
+        case contactKeyConfirmation = 11 //
+        case groupCreate = 12 //
         case groupInvite = 13
-        case groupJoin = 14
-        case groupLeave = 15
+        case groupJoin = 14 //
+        case groupLeave = 15 //
         case groupKick = 16
-        case delete = 17
+        case delete = 17 //
         case repayment = 18
-        case memberRequest = 19
-        case memberApprove = 20
+        case memberRequest = 19 //
+        case memberApprove = 20 //
         case memberReject = 21
         case groupDelete = 22
         case botInstall = 23
@@ -43,17 +43,17 @@ public class TransactionMessage: NSManagedObject {
         case heartbeat = 26
         case heartbeatConfirmation = 27
         case keysend = 28
-        case boost = 29
+        case boost = 29 //
         case query = 30
         case query_response = 31
-        case call = 32
+        case call = 32 //
         case unknown = 33
-        case imageAttachment = 100
-        case videoAttachment = 101
-        case audioAttachment = 102
+        case imageAttachment = 100 //
+        case videoAttachment = 101 //
+        case audioAttachment = 102 //
         case textAttachment = 103
-        case pdfAttachment = 104
-        case fileAttachment = 105
+        case pdfAttachment = 104 //
+        case fileAttachment = 105 //
         
         public init(fromRawValue: Int){
             self = TransactionMessageType(rawValue: fromRawValue) ?? .unknown

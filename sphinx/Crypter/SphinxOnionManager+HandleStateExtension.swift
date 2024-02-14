@@ -45,7 +45,10 @@ extension SphinxOnionManager {
         }
         
         if let balance = rr.newBalance{
-            NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : balance]))
+            UserData.sharedInstance.save(balance: balance)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {
+                NotificationCenter.default.post(Notification(name: .onBalanceDidChange, object: nil, userInfo: ["balance" : balance]))
+            })
         }
         
         
@@ -72,6 +75,7 @@ extension SphinxOnionManager {
         if let error = rr.error {
             
         }
+        
     }
 
     func pushRRTopic(topic:String,payloadData:Data?){

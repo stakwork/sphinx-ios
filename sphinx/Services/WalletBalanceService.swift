@@ -29,13 +29,8 @@ public final class WalletBalanceService {
         }
     }
     
-    func getBalance(completion: @escaping (Int) -> ()) -> Int {
-        API.sharedInstance.getWalletBalance(callback: { updatedBalance in
-            self.balance = updatedBalance
-            completion(updatedBalance)
-        }, errorCallback: {
-            completion(self.balance)
-        })
+    func getBalance()->Int? {
+        let balance = UserData.sharedInstance.getBalanceSats()
         return balance
     }
     
@@ -52,10 +47,9 @@ public final class WalletBalanceService {
     
     func updateBalance(labels: [UILabel]) {
         DispatchQueue.global().async {
-            let storedBalance = self.getBalance() { updatedBalance in
-                self.updateLabels(labels: labels, balance: updatedBalance.formattedWithSeparator)
+            if let storedBalance = self.getBalance(){
+                self.updateLabels(labels: labels, balance: storedBalance.formattedWithSeparator)
             }
-            self.updateLabels(labels: labels, balance: storedBalance.formattedWithSeparator)
         }
     }
     

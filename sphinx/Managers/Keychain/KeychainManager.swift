@@ -32,6 +32,7 @@ class KeychainManager {
         case privateKey = "encryption_private_key"
         case publicKey = "encryption_public_key"
         case walletMnemonic = "wallet_mnemonic"
+        case balance_msats = "balance_msats"
     }
     
     let keychain = Keychain(service: "sphinx-app", accessGroup: KeychainManager.kKeychainGroup).synchronizable(true)

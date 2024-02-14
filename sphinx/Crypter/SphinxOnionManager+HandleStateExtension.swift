@@ -56,13 +56,31 @@ extension SphinxOnionManager {
                 
         processKeyExchangeMessages(rr: rr)
         
+        // Assuming 'rr.tribeMembers' is a JSON string similar to the 'po map.JSON' output you've shown
         if let tribeMembersString = rr.tribeMembers,
-           let tribeMembers = Mapper<TribeMembersRRObject>().mapArray(JSONString: tribeMembersString),
-            let completion = stashedCallback{
-            print(tribeMembers)
-            completion(["tribeMembers" : tribeMembers as AnyObject])
-            stashedCallback = nil
+           let jsonData = tribeMembersString.data(using: .utf8),
+           let jsonDict = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
+            
+            var confirmedMembers: [TribeMembersRRObject] = []
+            var pendingMembers: [TribeMembersRRObject] = []
+            
+            // Parse confirmed members
+            if let confirmedArray = jsonDict?["confirmed"] as? [[String: Any]] {
+                confirmedMembers = confirmedArray.compactMap { Mapper<TribeMembersRRObject>().map(JSONObject: $0) }
+            }
+            
+            // Parse pending members (assuming a similar structure for actual pending members)
+            if let pendingArray = jsonDict?["pending"] as? [[String: Any]] {
+                pendingMembers = pendingArray.compactMap { Mapper<TribeMembersRRObject>().map(JSONObject: $0) }
+            }
+            
+            // Assuming 'stashedCallback' expects a dictionary with confirmed and pending members
+            if let completion = stashedCallback {
+                completion(["confirmedMembers": confirmedMembers as AnyObject, "pendingMembers": pendingMembers as AnyObject])
+                stashedCallback = nil
+            }
         }
+
         
         if let sentStatus = rr.sentStatus{
             
@@ -322,6 +340,7 @@ struct TribeMembersRRObject: Mappable {
     var alias:String? = nil
     var contactKey:String? = nil
     var is_owner: Bool = false
+    var status:String? = nil
 
     init?(map: Map) {}
 

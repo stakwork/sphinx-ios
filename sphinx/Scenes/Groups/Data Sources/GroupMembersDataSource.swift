@@ -41,12 +41,21 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
     
     func loadTribeContacts() {
         SphinxOnionManager.sharedInstance.getTribeMembers(tribeChat: self.chat, completion: { tribeMembers in
-            if let tribeMemberArray = tribeMembers["tribeMembers"] as? [TribeMembersRRObject]{
-                let contactsMap = tribeMemberArray.map({
-                    let contact = JSON($0.toJSON())
+            if let tribeMemberArray = tribeMembers["confirmedMembers"] as? [TribeMembersRRObject],
+            let pendingMembersArray = tribeMembers["pendingMembers"] as? [TribeMembersRRObject]{
+                var contactsMap = tribeMemberArray.map({
+                    var contact = JSON($0.toJSON())
+                    contact["pending"] = false
                     return contact
                 })
-                let (contacts, pendingContacts) = self.getGroupContactsFrom(contacts: contactsMap)
+                
+                var pendingContactsMap = pendingMembersArray.map({
+                    var contact = JSON($0.toJSON())
+                    contact["pending"] = true
+                    return contact
+                })
+                
+                let (contacts, pendingContacts) = self.getGroupContactsFrom(contacts: contactsMap + pendingContactsMap)
                 self.groupContacts = contacts
                 self.groupPendingContacts = pendingContacts
                 

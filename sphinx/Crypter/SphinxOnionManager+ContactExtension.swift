@@ -50,7 +50,7 @@ extension SphinxOnionManager{//contacts related
         
         do{
             let _ = createNewContact(pubkey: recipientPubkey,nickname: nickname)
-            let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: selfContact.nickname ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0)
+            let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0)
             handleRunReturn(rr: rr)
         }
         catch{

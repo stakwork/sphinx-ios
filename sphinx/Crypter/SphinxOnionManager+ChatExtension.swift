@@ -349,6 +349,7 @@ extension SphinxOnionManager{
         UserData.sharedInstance.setLastMessageIndex(index: index)
         
         
+        NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": newMessage])
     }
     
     

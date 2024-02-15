@@ -96,15 +96,6 @@ class SphinxOnionManager : NSObject {
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
-        //        if let mqtt = mqtt{
-        //            mqtt.disconnect()
-        //        }
-        
-        
-        //        if mqtt?.connState == .connected || mqtt?.connState == .connecting {
-        //            showSuccessWithMessage("MQTT already connected or connecting")
-        //            return true
-        //        }
         do{
             let now = getEntropyString()
             let sig = try rootSignMs(seed: seed, time: now, network: network)

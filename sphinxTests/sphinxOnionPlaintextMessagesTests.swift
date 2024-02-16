@@ -67,49 +67,63 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             self.sphinxOnionManager.subscribeAndPublishMyTopics(pubkey: pubkey, idx: 0)
             //self.sphinxOnionManager.getUnreadOkKeyMessages(sinceIndex: 1, limit: 1)
         }
-
+        
+    }
+    
+    func enforceDelay(expectation: XCTestExpectation, delay: TimeInterval) {
+        fulfillExpectationAfterDelay(expectation: expectation, delayInSeconds: delay)
+        // Wait for the expectation to be fulfilled.
+        wait(for: [expectation], timeout: delay + 1.0)
     }
     
     func establish_test_contact() {
         // Assuming `makeFriendRequest` and the existence of `test_contact_info` and `self_alias` are correct as provided
+        sphinxOnionManager.mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+            self.sphinxOnionManager.processMqttMessages(message: receivedMessage)
+        }
         sphinxOnionManager.makeFriendRequest(contactInfo: test_contact_info, nickname: self_alias)
         let myUserId = UserData.sharedInstance.getUserId()
-        DelayPerformedHelper.performAfterDelay(seconds: 5.0, completion: {
-            guard let contact = UserContact.getContactWithDisregardStatus(pubkey: self.test_sender_pubkey) else{
-                return
-            }
-            // Assuming `sphinxOnionManager.managedContext` is a valid NSManagedObjectContext
-            let chat = Chat(context: self.sphinxOnionManager.managedContext)
-            
-            // Set mandatory fields with neutral values
-            chat.id = 21 // Provided as an example, assuming this is mandatory and unique for each chat
-            chat.type = 0 // Assuming '0' is a neutral/placeholder value for type
-            chat.status = 0 // Assuming '0' is a neutral/placeholder value for status
-            chat.createdAt = Date() // Sets to current date and time
-            chat.muted = false // Assuming 'false' as a neutral value for muted
-            chat.seen = false // Assuming 'false' as a neutral value for seen
-            chat.unlisted = false // Assuming 'false' as a neutral value for unlisted
-            chat.privateTribe = false // Assuming 'false' as a neutral value for privateTribe
-            chat.notify = 0 // Assuming '0' as a neutral/placeholder value for notify
-            chat.isTribeICreated = false // Assuming 'false' as a neutral value for isTribeICreated
-            chat.contactIds = [NSNumber(integerLiteral: myUserId),NSNumber(integerLiteral: contact.id)] // Assuming an empty array as a neutral value
-            chat.pendingContactIds = [] // Assuming an empty array as a neutral value
-            
-            // Set the ownerPubkey if it's considered mandatory
-            chat.ownerPubkey = self.test_sender_pubkey // Use a test or neutral public key value
-            
-            // Save the context
-            self.sphinxOnionManager.managedContext.saveContext()
-        })
+        
+        
+        guard let contact = UserContact.getContactWithDisregardStatus(pubkey: self.test_sender_pubkey) else{
+            return
+        }
+        
+        let expectation = XCTestExpectation(description: "Expecting to have established self contact in this time.")
+        enforceDelay(expectation: expectation, delay: 8.0)
+        
+        // Assuming `sphinxOnionManager.managedContext` is a valid NSManagedObjectContext
+        let chat = Chat(context: self.sphinxOnionManager.managedContext)
+        
+        // Set mandatory fields with neutral values
+        chat.id = 21 // Provided as an example, assuming this is mandatory and unique for each chat
+        chat.type = 0 // Assuming '0' is a neutral/placeholder value for type
+        chat.status = 0 // Assuming '0' is a neutral/placeholder value for status
+        chat.createdAt = Date() // Sets to current date and time
+        chat.muted = false // Assuming 'false' as a neutral value for muted
+        chat.seen = false // Assuming 'false' as a neutral value for seen
+        chat.unlisted = false // Assuming 'false' as a neutral value for unlisted
+        chat.privateTribe = false // Assuming 'false' as a neutral value for privateTribe
+        chat.notify = 0 // Assuming '0' as a neutral/placeholder value for notify
+        chat.isTribeICreated = false // Assuming 'false' as a neutral value for isTribeICreated
+        chat.contactIds = [NSNumber(integerLiteral: myUserId),NSNumber(integerLiteral: contact.id)] // Assuming an empty array as a neutral value
+        chat.pendingContactIds = [] // Assuming an empty array as a neutral value
+        
+        // Set the ownerPubkey if it's considered mandatory
+        chat.ownerPubkey = self.test_sender_pubkey // Use a test or neutral public key value
+        chat.name = self.self_alias
+        
+        // Save the context
+        self.sphinxOnionManager.managedContext.saveContext()
     }
 
     
-    func fulfillExpectationAfterDelay(_ expectation: XCTestExpectation, delayInSeconds: TimeInterval) {
-        let timer = Timer.scheduledTimer(withTimeInterval: delayInSeconds, repeats: false) { _ in
+    func fulfillExpectationAfterDelay(expectation: XCTestExpectation, delayInSeconds delay: TimeInterval) {
+        // Dispatch after the specified delay
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            // Fulfill the expectation
             expectation.fulfill()
         }
-        // Make sure the timer is added to the current run loop to start counting down.
-        RunLoop.current.add(timer, forMode: .common)
     }
 
     override func setUpWithError() throws {
@@ -118,9 +132,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         establish_self_contact()
         let expectation = XCTestExpectation(description: "Expecting to have established self contact in this time.")
-        fulfillExpectationAfterDelay(expectation, delayInSeconds: 8.0)
-        // Wait for the expectation to be fulfilled.
-        wait(for: [expectation], timeout: 10.0)
+        enforceDelay(expectation: expectation, delay: 8.0)
         establish_test_contact()
     }
 
@@ -158,12 +170,11 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         test_received_message_content += "-\(sphinxOnionManager.getEntropyString())"//Guarantee unique string each time
         performRemoteServerAction(pubkey: pubkey, theMsg: "\(test_received_message_content)")
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
-        fulfillExpectationAfterDelay(expectation, delayInSeconds: 18.0)
-        // Wait for the expectation to be fulfilled.
-        wait(for: [expectation], timeout: 20.0)
+        enforceDelay(expectation: expectation, delay: 8.0)
         
         //4. Confirm that the known message content matches what we expect
-        
+        let contacts = sphinxOnionManager.listContacts()
+        print(contacts)
         XCTAssertTrue(receivedMessage != nil)
         XCTAssertTrue(receivedMessage?["content"] as? String == test_received_message_content)
         XCTAssert(receivedMessage?["senderPubkey"] as? String == test_sender_pubkey)
@@ -171,12 +182,18 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     }
     
     func test_send_plaintext_message() throws {
-        //1. Establish self contact and set up "sock puppet" account over http making sure it will mirror our message through an ACK
-        
-        //setUpMirrorSockPuppet(seed: , pubkey: )
-        
+        let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        enforceDelay(expectation: expectation, delay: 8.0)
         //2. Send message with random content
-        let content = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000)
+        let content = String(describing: CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000))
+        
+        guard let contact = UserContact.getContactWithDisregardStatus(pubkey: test_sender_pubkey),
+            let chat = contact.getChat() else{
+            XCTFail("Failed to establish self contact")
+            return
+        }
+        
+        sphinxOnionManager.sendMessage(to: contact, content: content, chat: chat, amount: 0, shouldSendAsKeysend: false, msgType: 0, muid: nil, recipPubkey: nil, mediaKey: nil, mediaType: nil, threadUUID: nil, replyUUID: nil)
         //let stringContent = String(content)
         
         //sphinxOnionManager.sendMessage(to: contact, content: stringContent)

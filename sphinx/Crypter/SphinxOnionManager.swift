@@ -137,7 +137,10 @@ class SphinxOnionManager : NSObject {
     }
     
 
-    
+    func listContacts()->String{
+        let contacts = try! sphinx.listContacts(state: self.loadOnionStateAsData())
+        return contacts
+    }
     func subscribeAndPublishMyTopics(pubkey:String,idx:Int){
         do{
             let ret = try setNetwork(network: network)
@@ -180,7 +183,7 @@ class SphinxOnionManager : NSObject {
         }
         do{
             let myPubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getEntropyString(), network: network)
-            let myFullAccount = try listContacts(state: loadOnionStateAsData())
+            let myFullAccount = try sphinx.listContacts(state: loadOnionStateAsData())
             print(myFullAccount)
         }
         catch{

@@ -7,10 +7,10 @@ PODS:
   - FLAnimatedImage (1.0.16)
   - Giphy (2.1.20):
     - libwebp
-  - JitsiMeetSDK (7.0.1):
+  - JitsiMeetSDK (8.4.0):
     - Giphy (= 2.1.20)
-    - JitsiWebRTC (~> 106.0)
-  - JitsiWebRTC (106.0.0)
+    - JitsiWebRTC (~> 111.0)
+  - JitsiWebRTC (111.0.2)
   - KeychainAccess (4.2.2)
   - KYDrawerController (2.1.0)
   - libwebp (1.3.2):
@@ -63,7 +63,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.6.4)
   - CocoaMQTT (from `https://github.com/emqx/CocoaMQTT.git`)
   - Giphy (= 2.1.20)
-  - JitsiMeetSDK (~> 7.0.0)
+  - JitsiMeetSDK (~> 8.4.0)
   - KeychainAccess
   - KYDrawerController
   - lottie-ios
@@ -135,8 +135,8 @@ SPEC CHECKSUMS:
   CocoaMQTT: 1f206228b29318eabdacad0c2e4e88575922c27a
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
   Giphy: b6d5087521d251bb8c99cdc0eb07bbdf86d142d5
-  JitsiMeetSDK: 3a8798edb12e401237a0d74ce863a3227ca5d681
-  JitsiWebRTC: f441eb0e2d67f0588bf24e21c5162e97342714fb
+  JitsiMeetSDK: cb94e522af5cb96b7551dcbb4e8e3592dd215596
+  JitsiWebRTC: 80f62908fcf2a1160e0d14b584323fb6e6be630b
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
@@ -161,6 +161,6 @@ SPEC CHECKSUMS:
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: a3d53892b1e980f5bd4e2643852e1b1be4b995d5
+PODFILE CHECKSUM: f105a6174109c31e2ad3830a5689e6c5c558bc2a
 
 COCOAPODS: 1.11.3

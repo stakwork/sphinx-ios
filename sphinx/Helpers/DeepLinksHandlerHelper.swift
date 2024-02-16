@@ -54,6 +54,25 @@ class DeepLinksHandlerHelper {
             return true
         }
         
+        if DeepLinksHandlerHelper.joinJitsiCall(vc: vc) {
+            return true
+        }
+        
+        return false
+    }
+    
+    static func joinJitsiCall(vc: UIViewController, forceJoin: Bool = false) -> Bool {
+        if let jitsiCall = UserDefaults.Keys.jitsiLinkUrl.get(defaultValue: ""), jitsiCall.isNotEmpty {
+            
+            if !GroupsPinManager.sharedInstance.shouldAskForPin() || forceJoin {
+                UserDefaults.Keys.jitsiLinkUrl.removeValue()
+                
+                VideoCallManager.sharedInstance.startVideoCall(link: jitsiCall)
+
+                return true
+            }
+            
+        }
         return false
     }
     
@@ -73,10 +92,21 @@ class DeepLinksHandlerHelper {
         return false
     }
     
+    static func storeJitsiCallLink(url: URL) {
+        if url.absoluteString.starts(with: "https://jitsi.sphinx.chat") {
+            UserDefaults.Keys.jitsiLinkUrl.set(url.absoluteString)
+        }
+    }
+    
     static func storeLinkQueryFrom(url: URL) -> Bool {
         var shouldSetVC = false
         
-        if let query = url.query, UserData.sharedInstance.isUserLogged() {
+        if url.absoluteString.starts(with: "https://jitsi.sphinx.chat") {
+            UserDefaults.Keys.jitsiLinkUrl.set(url.absoluteString)
+            return true
+        }
+        
+        if let query = url.query {
             if let action = url.getLinkAction() {
                 switch(action) {
                 case "donation":
@@ -119,8 +149,6 @@ class DeepLinksHandlerHelper {
                     break
                 }
             }
-        } else if UserData.sharedInstance.isUserLogged() == false, let query = url.query {
-            UserDefaults.Keys.stashedQuery.set(query)
         }
         
         return shouldSetVC

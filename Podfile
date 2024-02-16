@@ -31,7 +31,7 @@ target 'sphinx' do
     pod 'SwiftyRSA'
     pod 'RNCryptor', '~> 5.0'
     pod 'SwiftLinkPreview', '~> 3.4.0'
-    pod 'JitsiMeetSDK', '~> 7.0.0'
+    pod 'JitsiMeetSDK', '~> 8.4.0'
     pod 'PINCache'
     pod 'KeychainAccess'
     pod 'Giphy', '2.1.20'

@@ -43,6 +43,7 @@ class VideoCallManager : NSObject {
         link: String,
         audioOnly: Bool? = nil
     ) {
+        
         if activeCall {
             return
         }
@@ -160,7 +161,23 @@ extension VideoCallManager : JitsiMeetViewDelegate {
     func conferenceTerminated(_ data: [AnyHashable : Any]!) {
         DispatchQueue.main.async {
             self.videoCallPayButton?.isHidden = true
-
+            
+            self.pipViewCoordinator?.hide() { _ in
+                self.cleanUp()
+            }
+            
+            self.videoCallDelegate?.didFinishCall()
+        }
+        
+        if #available(iOS 14.0, *) {
+            JitsiIncomingCallManager.sharedInstance.finishCall()
+        }
+    }
+    
+    func ready(toClose data: [AnyHashable : Any]!) {
+        DispatchQueue.main.async {
+            self.videoCallPayButton?.isHidden = true
+            
             self.pipViewCoordinator?.hide() { _ in
                 self.cleanUp()
             }

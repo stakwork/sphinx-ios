@@ -132,9 +132,13 @@ public extension UIColor {
     }
     
     convenience init(hex: String, alpha: CGFloat = 1) {
-        assert(hex[hex.startIndex] == "#", "Expected hex string of format #RRGGBB")
+        var hexString = hex
         
-        let scanner = Scanner(string: hex)
+        if hex[hex.startIndex] != "#" {
+            hexString = "#\(hex)"
+        }
+        
+        let scanner = Scanner(string: hexString)
         scanner.scanLocation = 1
         
         var rgb: UInt32 = 0

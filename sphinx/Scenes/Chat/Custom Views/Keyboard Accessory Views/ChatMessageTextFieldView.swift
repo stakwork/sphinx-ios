@@ -112,7 +112,13 @@ class ChatMessageTextFieldView: UIView {
         
         clearMessage()
         
-        delegate?.shouldSendMessage(text: text, type: messageType, completion: { _ in
+        delegate?.shouldSendMessage(text: text, type: messageType, completion: { success in
+            if !success {
+                AlertHelper.showAlert(
+                    title: "generic.error.title".localized,
+                    message: "generic.message.error".localized
+                )
+            }
             self.sendButton.isUserInteractionEnabled = true
         })
     }

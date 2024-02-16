@@ -10,6 +10,7 @@
 
 import XCTest
 import Alamofire
+import SwiftyJSON
 @testable import sphinx
 
 
@@ -34,15 +35,16 @@ func sendRemoteServerMessageRequest(pubkey: String, theMsg: String, amount:Int=0
     }
 }
 
-func requestListenForIncomingMessage(completion: @escaping (String) -> ()) {
+func requestListenForIncomingMessage(completion: @escaping (JSON) -> ()) {
     let url = "http://localhost:4020/arm"
     let parameters: [String: Any] = [:]
     
     AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { response in
         switch response.result {
-        case .success(let value):
-            print("Response: \(value)")
-            completion("Response: \(value)")
+        case .success(let data):
+            let json = JSON(data)
+            print("Response: \(json)")
+            completion(json)
         case .failure(let error):
             print("Error: \(error)")
         }
@@ -203,14 +205,18 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
         enforceDelay(delay: 8.0)
         //2. Send message with random content
-        let content = String(describing: CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000))
+        guard let rand = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000) else{
+            XCTFail()
+            return
+        }
+        let content = String(describing: rand)
         
         guard let contact = UserContact.getContactWithDisregardStatus(pubkey: test_sender_pubkey),
             let chat = contact.getChat() else{
             XCTFail("Failed to establish self contact")
             return
         }
-        var messageResult = ""
+        var messageResult : JSON? = nil
         requestListenForIncomingMessage(completion: {result in
             messageResult = result
         })
@@ -221,6 +227,18 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         let expectation3 = XCTestExpectation(description: "Expecting to have retrieved message in time")
         enforceDelay( delay: 14.0)
+        guard let resultDict = messageResult?.dictionaryValue,
+              let dataDict = resultDict["data"]?.dictionaryValue,
+                let msg = dataDict["msg"]?.rawString() else{
+            XCTFail("Value coming back is invalid")
+            return
+        }
+        for key in dataDict.keys{
+            print("key:\(key), value:\(dataDict[key])")
+        }
+        
+        let contentMatch = msg.contains(content)
+        XCTAssert(contentMatch == true)
         
         print(messageResult)
         

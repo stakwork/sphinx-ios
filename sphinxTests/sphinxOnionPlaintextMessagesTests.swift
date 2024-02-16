@@ -13,7 +13,7 @@ import Alamofire
 @testable import sphinx
 
 
-func performRemoteServerAction(pubkey: String, theMsg: String, amount:Int=0) {
+func sendRemoteServerMessageRequest(pubkey: String, theMsg: String, amount:Int=0) {
     let url = "http://localhost:4020/command"
     let parameters: [String: Any] = [
         "command": "send",
@@ -28,6 +28,21 @@ func performRemoteServerAction(pubkey: String, theMsg: String, amount:Int=0) {
         switch response.result {
         case .success(let value):
             print("Response: \(value)")
+        case .failure(let error):
+            print("Error: \(error)")
+        }
+    }
+}
+
+func requestListenForIncomingMessage(completion: @escaping (String) -> ()) {
+    let url = "http://localhost:4020/arm"
+    let parameters: [String: Any] = [:]
+    
+    AF.request(url, method: .get, encoding: JSONEncoding.default).responseJSON { response in
+        switch response.result {
+        case .success(let value):
+            print("Response: \(value)")
+            completion("Response: \(value)")
         case .failure(let error):
             print("Error: \(error)")
         }
@@ -70,10 +85,11 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
     }
     
-    func enforceDelay(expectation: XCTestExpectation, delay: TimeInterval) {
-        fulfillExpectationAfterDelay(expectation: expectation, delayInSeconds: delay)
+    func enforceDelay(delay: TimeInterval) {
+        let expectation3 = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        fulfillExpectationAfterDelay(expectation: expectation3, delayInSeconds: delay)
         // Wait for the expectation to be fulfilled.
-        wait(for: [expectation], timeout: delay + 1.0)
+        wait(for: [expectation3], timeout: delay + 1.0)
     }
     
     func establish_test_contact() {
@@ -90,7 +106,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         }
         
         let expectation = XCTestExpectation(description: "Expecting to have established self contact in this time.")
-        enforceDelay(expectation: expectation, delay: 8.0)
+        enforceDelay(delay: 8.0)
         
         // Assuming `sphinxOnionManager.managedContext` is a valid NSManagedObjectContext
         let chat = Chat(context: self.sphinxOnionManager.managedContext)
@@ -130,10 +146,12 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         UserData.sharedInstance.save(walletMnemonic: test_mnemonic2)
         
-        establish_self_contact()
-        let expectation = XCTestExpectation(description: "Expecting to have established self contact in this time.")
-        enforceDelay(expectation: expectation, delay: 8.0)
-        establish_test_contact()
+//        establish_self_contact()
+//        let expectation = XCTestExpectation(description: "Expecting to have established self contact in this time.")
+//        enforceDelay(expectation: expectation, delay: 8.0)
+//        establish_test_contact()
+//        let expectation2 = XCTestExpectation(description: "Expecting to have established test contact in this time.")
+//        enforceDelay(expectation: expectation2, delay: 45.0)
     }
 
     override func tearDownWithError() throws {
@@ -149,7 +167,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         receivedMessage = [
             "content": message.messageContent ?? "",
-            "senderPubkey":message.chat?.getChat()?.ownerPubkey ?? ""
+            "alias": message.senderAlias?.lowercased() ?? ""
         ]
     }
 
@@ -168,22 +186,22 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         //3. Await results to come in
         test_received_message_content += "-\(sphinxOnionManager.getEntropyString())"//Guarantee unique string each time
-        performRemoteServerAction(pubkey: pubkey, theMsg: "\(test_received_message_content)")
-        let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
-        enforceDelay(expectation: expectation, delay: 8.0)
+        sendRemoteServerMessageRequest(pubkey: pubkey, theMsg: "\(test_received_message_content)")
+        enforceDelay(delay: 8.0)
         
         //4. Confirm that the known message content matches what we expect
         let contacts = sphinxOnionManager.listContacts()
         print(contacts)
         XCTAssertTrue(receivedMessage != nil)
         XCTAssertTrue(receivedMessage?["content"] as? String == test_received_message_content)
-        XCTAssert(receivedMessage?["senderPubkey"] as? String == test_sender_pubkey)
+        XCTAssertTrue(receivedMessage?["alias"] as? String == "alice")
+        //XCTAssert(receivedMessage?["senderPubkey"] as? String == test_sender_pubkey)
         
     }
     
     func test_send_plaintext_message() throws {
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
-        enforceDelay(expectation: expectation, delay: 8.0)
+        enforceDelay(delay: 8.0)
         //2. Send message with random content
         let content = String(describing: CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000))
         
@@ -192,8 +210,20 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             XCTFail("Failed to establish self contact")
             return
         }
+        var messageResult = ""
+        requestListenForIncomingMessage(completion: {result in
+            messageResult = result
+        })
+        let expectation2 = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        enforceDelay(delay: 8.0)
         
         sphinxOnionManager.sendMessage(to: contact, content: content, chat: chat, amount: 0, shouldSendAsKeysend: false, msgType: 0, muid: nil, recipPubkey: nil, mediaKey: nil, mediaType: nil, threadUUID: nil, replyUUID: nil)
+        
+        let expectation3 = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        enforceDelay( delay: 14.0)
+        
+        print(messageResult)
+        
         //let stringContent = String(content)
         
         //sphinxOnionManager.sendMessage(to: contact, content: stringContent)

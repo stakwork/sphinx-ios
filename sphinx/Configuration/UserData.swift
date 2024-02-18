@@ -106,9 +106,10 @@ class UserData {
     }
     
     func getAndSaveTransportKey(
+        forceGet: Bool = false,
         completion: ((String?) ->())? = nil
     ) {
-        if let transportKey = getTransportKey(), !transportKey.isEmpty {
+        if let transportKey = getTransportKey(), !transportKey.isEmpty && !forceGet {
             completion?(transportKey)
             return
         }

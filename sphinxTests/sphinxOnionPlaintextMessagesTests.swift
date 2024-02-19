@@ -169,8 +169,45 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         receivedMessage = [
             "content": message.messageContent ?? "",
-            "alias": message.senderAlias?.lowercased() ?? ""
+            "alias": message.senderAlias?.lowercased() ?? "",
+            "uuid": message.uuid ?? ""
         ]
+    }
+    //MARK: Test Helpers:
+    func makeServerSendMessage(customMessage:String?=nil){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewOnionMessageReceived), name: .newOnionMessageWasReceived, object: nil)
+        
+        guard let profile = UserContact.getOwner(),
+              let pubkey = profile.publicKey else{
+            XCTFail("Failed to establish self contact")
+            return
+        }
+        let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        //3. Send & Await results to come in
+        sendRemoteServerMessageRequest(pubkey: pubkey, theMsg: "\(messageContent)")
+        enforceDelay(delay: 8.0)
+    }
+    
+    func sendTestMessage(
+        content:String,
+        replyUuid:String?=nil
+        )->JSON?{
+        guard let contact = UserContact.getContactWithDisregardStatus(pubkey: test_sender_pubkey),
+            let chat = contact.getChat() else{
+            XCTFail("Failed to establish self contact")
+            return nil
+        }
+        var messageResult : JSON? = nil
+        requestListenForIncomingMessage(completion: {result in
+            messageResult = result
+        })
+        enforceDelay(delay: 8.0)
+        
+        sphinxOnionManager.sendMessage(to: contact, content: content, chat: chat, amount: 0, shouldSendAsKeysend: false, msgType: 0, muid: nil, recipPubkey: nil, mediaKey: nil, mediaType: nil, threadUUID: nil, replyUUID: replyUuid)
+        
+        enforceDelay( delay: 14.0)
+        
+        return messageResult
     }
 
     //MARK: Type 0 Messages:
@@ -179,24 +216,14 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         //1. Listen to the correct channels -> handled in setup
         
         //2. Publish to a channel known to contain a message
-        NotificationCenter.default.addObserver(self, selector: #selector(handleNewOnionMessageReceived), name: .newOnionMessageWasReceived, object: nil)
-        
-        guard let profile = UserContact.getOwner(),
-              let pubkey = profile.publicKey else{
-            XCTFail("Failed to establish self contact")
-            return
-        }
-        
-        //3. Await results to come in
-        test_received_message_content += "-\(sphinxOnionManager.getEntropyString())"//Guarantee unique string each time
-        sendRemoteServerMessageRequest(pubkey: pubkey, theMsg: "\(test_received_message_content)")
-        enforceDelay(delay: 8.0)
+        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        makeServerSendMessage(customMessage: test_content_value)
         
         //4. Confirm that the known message content matches what we expect
         let contacts = sphinxOnionManager.listContacts()
         print(contacts)
         XCTAssertTrue(receivedMessage != nil)
-        XCTAssertTrue(receivedMessage?["content"] as? String == test_received_message_content)
+        XCTAssertTrue(receivedMessage?["content"] as? String == test_content_value)
         XCTAssertTrue(receivedMessage?["alias"] as? String == "alice")
         //XCTAssert(receivedMessage?["senderPubkey"] as? String == test_sender_pubkey)
         
@@ -214,22 +241,8 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         }
         let content = String(describing: rand)
         
-        guard let contact = UserContact.getContactWithDisregardStatus(pubkey: test_sender_pubkey),
-            let chat = contact.getChat() else{
-            XCTFail("Failed to establish self contact")
-            return
-        }
-        var messageResult : JSON? = nil
-        requestListenForIncomingMessage(completion: {result in
-            messageResult = result
-        })
-        let expectation2 = XCTestExpectation(description: "Expecting to have retrieved message in time")
-        enforceDelay(delay: 8.0)
+        let messageResult = sendTestMessage(content: content)
         
-        sphinxOnionManager.sendMessage(to: contact, content: content, chat: chat, amount: 0, shouldSendAsKeysend: false, msgType: 0, muid: nil, recipPubkey: nil, mediaKey: nil, mediaType: nil, threadUUID: nil, replyUUID: nil)
-        
-        let expectation3 = XCTestExpectation(description: "Expecting to have retrieved message in time")
-        enforceDelay( delay: 14.0)
         guard let resultDict = messageResult?.dictionaryValue,
               let dataDict = resultDict["data"]?.dictionaryValue,
                 let msg = dataDict["msg"]?.rawString() else{
@@ -353,5 +366,66 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         //3. Await ACK message
         
         //4. Ensure ACK message reflects same message we sent out.
+    }
+    
+    func test_reply_and_boost() throws {
+        //Force message send
+        makeServerSendMessage()
+        guard let receivedMessage = receivedMessage,
+        let rmUuid = receivedMessage["uuid"] as? String,
+        let rand = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000) else{
+            XCTFail()
+            return
+        }
+        
+        let content = String(describing: rand)
+        
+        //Reply to message with text, prove its receipt and fidelity
+        let echoedMessage = sendTestMessage(content: content,replyUuid: rmUuid)
+        
+        guard let resultDict = echoedMessage?.dictionaryValue,
+              let dataDict = resultDict["data"]?.dictionaryValue,
+                let msg = dataDict["msg"]?.rawString() else{
+            XCTFail("Value coming back is invalid")
+            return
+        }
+        
+        let contentMatch = msg.contains(content)
+        XCTAssert(contentMatch == true)
+        XCTAssert(msg.contains(rmUuid) == true)
+        
+        
+        //Reply to message with boost, prove its receipt
+        
+        guard let contact = UserContact.getContactWithDisregardStatus(pubkey: test_sender_pubkey),
+            let chat = contact.getChat() else{
+            XCTFail("Failed to establish self contact")
+            return 
+        }
+        
+        let params: [String: AnyObject] = [
+            "text": "" as AnyObject,
+            "reply_uuid": rmUuid as AnyObject,
+            "boost": 1 as AnyObject,
+            "chat_id": chat.id as AnyObject,
+            "message_price": 0 as AnyObject,
+            "amount": 100 as AnyObject
+        ]
+        
+        var messageResult : JSON? = nil
+        requestListenForIncomingMessage(completion: {result in
+            messageResult = result
+        })
+        
+        enforceDelay(delay: 8.0)
+        
+        sphinxOnionManager.sendBoostReply(params: params, chat: chat)
+        
+        enforceDelay( delay: 14.0)
+        
+        //TODO: figure out some way to get the wasm test regime to tell me when it's a boost reply!!!
+        
+        
+        print(messageResult)
     }
 }

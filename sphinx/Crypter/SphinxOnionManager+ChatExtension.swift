@@ -458,17 +458,19 @@ extension SphinxOnionManager{
     func sendBoostReply(
         params: [String: AnyObject],
         chat:Chat
-    ){
+    )->TransactionMessage?{
         let contact = chat.getContact()
         
         guard let replyUUID = params["reply_uuid"] as? String,
         let text = params["text"] as? String,
         let amount = params["amount"] as? Int else{
-            return
+            return nil
         }
         if let sentMessage = self.sendMessage(to: contact, content: text, chat: chat,amount: amount, msgType: UInt8(TransactionMessage.TransactionMessageType.boost.rawValue), threadUUID: nil, replyUUID: replyUUID){
             print(sentMessage)
+            return sentMessage
         }
+        return nil
     }
     
     func sendDirectPaymentMessage(

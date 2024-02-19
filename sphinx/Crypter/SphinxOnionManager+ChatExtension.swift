@@ -408,14 +408,14 @@ extension SphinxOnionManager{
         chat:Chat?,
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
-    ){
+    )->TransactionMessage?{
         
         guard let muid = file["muid"] as? String,
             let chat = chat,
             let mk = attachmentObject.mediaKey,
             let destinationPubkey = getDestinationPubkey(for: chat)
             else{
-                return
+                return nil
             }
         
         let (_,mediaType) = attachmentObject.getFileAndMime()
@@ -447,7 +447,11 @@ extension SphinxOnionManager{
             else if (type == TransactionMessage.TransactionMessageType.purchase.rawValue){
                 print(sentMessage)
             }
+            
+            return sentMessage
         }
+        
+        return nil
     }
     
     //MARK: Payments related

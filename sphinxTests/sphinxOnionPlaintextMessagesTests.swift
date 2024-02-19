@@ -173,6 +173,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         ]
     }
 
+    //MARK: Type 0 Messages:
     func test_receive_plaintext_message() throws {
         //0. Set up test client running on http://localhost:4020 from Sphinx repo
         //1. Listen to the correct channels -> handled in setup
@@ -200,6 +201,8 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         //XCTAssert(receivedMessage?["senderPubkey"] as? String == test_sender_pubkey)
         
     }
+    
+    
     
     func test_send_plaintext_message() throws {
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
@@ -250,5 +253,105 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         //4. Ensure ACK message reflects same message we sent out.
     }
+    
+    //MARK: Type 6 Attachment Messages
+    func test_send_attachment_message() throws {
+        let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        enforceDelay(delay: 8.0)
+        //2. Send message with random content
+        guard let rand = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000) else{
+            XCTFail()
+            return
+        }
+        let content = String(describing: rand)
+        
+        guard let contact = UserContact.getContactWithDisregardStatus(pubkey: test_sender_pubkey),
+            let chat = contact.getChat() else{
+            XCTFail("Failed to establish self contact")
+            return
+        }
+        var messageResult : JSON? = nil
+        requestListenForIncomingMessage(completion: {result in
+            messageResult = result
+        })
+        let expectation2 = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        enforceDelay(delay: 8.0)
+        
+        let fakeFile: NSDictionary = [
+            "description": "description",
+            "template": 0,
+            "updated": "2024-02-19T15:45:51.088669581Z",
+            "ttl": 31536000,
+            "filename": "image.jpg",
+            "mime": "image/jpg",
+            "tags": [],
+            "width": 0,
+            "owner_pub_key": "Al-nkDa5wmTQJNOPP9z49R7Jja3D9HPn1ofNNSqOEoRX",
+            "size": 500674,
+            "price": 0,
+            "muid": "nIGa243jKrQP4vkOMU-ub0ZS4di8paVR9FSmxx9MYBs=",
+            "created": "2024-02-19T15:45:51.088669581Z",
+            "expiry": "2025-02-19T15:45:51.088669581Z",
+            "height": 0,
+            "name": "image"
+        ]
+        
+        let exampleData = Data(count: 500674) // Replace with actual data
+        let exampleImage = UIImage() // Replace with actual UIImage
+        let testMediaKey = "Njc0MTZCMEZBNDAzNEMzNzk4RDczMDFD"
+        // Creating the AttachmentObject instance
+        var attachmentObject = AttachmentObject(
+            data: exampleData,
+            mediaKey: testMediaKey,
+            type: .Photo,
+            image: exampleImage,
+            contactPubkey: "023be900c195aee419e5f68bf4b7bc156597da7649a9103b1afec949d233e4d1aa"
+        )
 
+        attachmentObject.text = content
+        guard let sentMessage = sphinxOnionManager.sendAttachment(file: fakeFile, attachmentObject: attachmentObject, chat: chat, replyingMessage: nil, threadUUID: nil),
+              let testMediaToken = sentMessage.mediaToken else{
+            XCTFail("Expected to get back valid pre-flight message")
+            return
+        }
+        
+        
+        
+        let expectation3 = XCTestExpectation(description: "Expecting to have retrieved message in time")
+        enforceDelay( delay: 14.0)
+        
+        //Example result for reference:
+//        => msg type: attachment
+//        => msg {"content":"","mediaToken":"bWVtZXMuc3BoaW54LmNoYXQ=.M_ZcxtcbRUZmDcHDYahSDvZJV4eOFvapZOb2wa-qNy0=..Z7X6KA==..ILxohNjxscIumj0f5NH1fySoR1HirySwMEHwVTGCAqzgPxXINtIyVO4agyf12hulTvCLDbKyOatmdotD9TBqLD4=","mediaKey":"Q0QxQjUyMkMzODM3NDE2NTg1NDgxQTBD","mediaType":"image/jpg","date":2182593930}
+//        => sender {"pubkey":"025fa79036b9c264d024d38f3fdcf8f51ec98dadc3f473e7d687cd352a8e128457","alias":"ALICE","photo_url":"","person":"","confirmed":true}
+//        => msat 0n
+//        => uuid fe278dc86e968281ad368f5586243ce682045013cdca85aa8b9c8c9838e60b11
+//        => index 155
+        guard let resultDict = messageResult?.dictionaryValue,
+              let dataDict = resultDict["data"]?.dictionaryValue,
+                let msg = dataDict["msg"]?.rawString() else{
+            XCTFail("Value coming back is invalid")
+            return
+        }
+        for key in dataDict.keys{
+            print("key:\(key), value:\(dataDict[key])")
+        }
+        
+        let contentMatch = msg.contains(content)
+        XCTAssert(contentMatch == true)
+        let mediaKeyMatch = msg.contains(testMediaKey)
+        XCTAssert(mediaKeyMatch == true)
+        let mediaTokenMatch = msg.contains(testMediaToken)
+        XCTAssert(mediaTokenMatch == true)
+        
+        print(messageResult)
+        
+        //let stringContent = String(content)
+        
+        //sphinxOnionManager.sendMessage(to: contact, content: stringContent)
+        
+        //3. Await ACK message
+        
+        //4. Ensure ACK message reflects same message we sent out.
+    }
 }

@@ -105,6 +105,10 @@ class LeftMenuViewController: UIViewController {
         configureProfile()
         configureTable()
         configureKarmaPurchaseButton()
+        configureBalanceTap()
+    }
+    
+    func configureBalanceTap(){
         let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
         self.balanceLabel.addGestureRecognizer(balanceTap)
         updateBalance()

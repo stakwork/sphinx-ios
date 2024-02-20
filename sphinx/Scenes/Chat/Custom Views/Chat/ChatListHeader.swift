@@ -100,7 +100,14 @@ class ChatListHeader: UIView {
     
     func showBalance() {
         smallUnitLabel.text = "chat-header.balance.unit".localized
-        smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
+        
+        let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
+        
+        if (hideBalances) {
+            smallBalanceLabel.text = "＊＊＊＊"
+        } else {
+            smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
+        }
         
         shouldCheckAppVersions()
     }

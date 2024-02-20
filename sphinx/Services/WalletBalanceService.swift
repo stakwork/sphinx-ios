@@ -64,7 +64,7 @@ public final class WalletBalanceService {
             let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
             for label in labels {
                 if (hideBalances) {
-                    label.text = "＊＊＊＊＊"
+                    label.text = "＊＊＊＊"
                 } else {
                     label.text = balance
                 }

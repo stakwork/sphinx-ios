@@ -119,6 +119,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         configureProfile()
         configureServers()
         showStorageSpinner()
+        configureBalanceTap()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -141,10 +142,6 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
-        self.balanceLabel.addGestureRecognizer(balanceTap)
-        updateBalance()
     }
     
     override func keyboardWillShowHandler(_ notification: Notification) {
@@ -159,6 +156,11 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         advanceScrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
+    func configureBalanceTap() {
+        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
+        self.balanceLabel.addGestureRecognizer(balanceTap)
+        updateBalance()
+    }
     
     func configureFields() {
         inviteServerTextField.delegate = self

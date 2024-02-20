@@ -50,6 +50,9 @@ class ChatListHeader: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         upgradeAppButton.layer.cornerRadius = upgradeAppButton.frame.size.height / 2
+        
+        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
+        self.smallBalanceLabel.addGestureRecognizer(balanceTap)
     }
     
     func listenForEvents() {
@@ -180,6 +183,12 @@ class ChatListHeader: UIView {
     
     @IBAction func leftMenuButtonTouched() {
         delegate?.leftMenuButtonTouched()
+    }
+    
+    @objc private func balanceLabelTapped(gesture: UIGestureRecognizer) {
+        let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
+        UserDefaults.Keys.hideBalances.set(!hideBalances)
+        updateBalance()
     }
     
 }

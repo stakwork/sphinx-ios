@@ -142,7 +142,9 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        walletBalanceService.updateBalance(labels: [balanceLabel])
+        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
+        self.balanceLabel.addGestureRecognizer(balanceTap)
+        updateBalance()
     }
     
     override func keyboardWillShowHandler(_ notification: Notification) {
@@ -437,6 +439,16 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         let _ = notificationSoundHelper.selectUserSound(file: UserContact.getOwner()?.notificationSound)
         let notificationSoundVC = NotificationSoundViewController.instantiate(helper: notificationSoundHelper, delegate: self)
         self.navigationController?.pushViewController(notificationSoundVC, animated: true)
+    }
+    
+    private func updateBalance() {
+        walletBalanceService.updateBalance(labels: [balanceLabel])
+    }
+    
+    @objc private func balanceLabelTapped(gesture: UIGestureRecognizer) {
+        let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
+        UserDefaults.Keys.hideBalances.set(!hideBalances)
+        updateBalance()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

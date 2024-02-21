@@ -105,7 +105,13 @@ class LeftMenuViewController: UIViewController {
         configureProfile()
         configureTable()
         configureKarmaPurchaseButton()
-        walletBalanceService.updateBalance(labels: [balanceLabel])
+        configureBalanceTap()
+    }
+    
+    func configureBalanceTap(){
+        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
+        self.balanceLabel.addGestureRecognizer(balanceTap)
+        updateBalance()
     }
     
     func configureProfile() {
@@ -207,6 +213,16 @@ class LeftMenuViewController: UIViewController {
         }
         startPurchaseProgressIndicator()
         storeKitService.purchase(karmaPurchaseProduct)
+    }
+    
+    private func updateBalance() {
+        walletBalanceService.updateBalance(labels: [balanceLabel])
+    }
+    
+    @objc private func balanceLabelTapped(gesture: UIGestureRecognizer) {
+        let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
+        UserDefaults.Keys.hideBalances.set(!hideBalances)
+        updateBalance()
     }
 }
 

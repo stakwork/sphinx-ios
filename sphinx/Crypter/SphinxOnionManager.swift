@@ -32,6 +32,11 @@ class SphinxOnionManager : NSObject {
     let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
     let tribeServerPubkey = "036b441c86acf790ff00694dfbf83e49cc8d537d166ec68b1077a719e61aa9bb42"
     var stashedCallback : (([String:AnyObject]) ->())? = nil
+    var isConnected : Bool = false{
+        didSet{
+            NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
+        }
+    }
     
     func getAccountSeed(mnemonic:String?=nil)->String?{
         do{
@@ -155,6 +160,7 @@ class SphinxOnionManager : NSObject {
             let subtopic = try! sphinx.getSubscriptionTopic(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData())
             
             mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                self.isConnected = true
                 self.processMqttMessages(message: receivedMessage)
             }
             
@@ -212,6 +218,7 @@ class SphinxOnionManager : NSObject {
             let idx = 0
             if success{
                 mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
+                    self.isConnected = true
                     self.processMqttMessages(message: receivedMessage)
                 }
                 

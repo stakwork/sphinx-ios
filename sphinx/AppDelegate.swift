@@ -549,7 +549,7 @@ extension AppDelegate : SphinxOnionConnectorDelegate {
         newMessageBubbleHelper.hideLoadingWheel()
         newMessageBubbleHelper.showGenericMessageView(text: "tor.connection.failed".localized)
         
-        NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
+//        NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
     }
 }
 

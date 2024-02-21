@@ -101,7 +101,7 @@ class ChatHeaderView: UIView {
     func setChatInfo() {
         nameLabel.text = getHeaderName()
         
-        let isEncrypted = (contact?.status == UserContact.Status.Confirmed.rawValue)
+        let isEncrypted = (contact?.status == UserContact.Status.Confirmed.rawValue) || (chat?.status == Chat.ChatStatus.approved.rawValue)
         lockSign.text = isEncrypted ? "lock" : "lock_open"
         keysLoading = !isEncrypted
         
@@ -212,7 +212,7 @@ class ChatHeaderView: UIView {
     }
     
     func checkRoute() {
-        let success = self.contact?.status == UserContact.Status.Confirmed.rawValue
+        let success = (contact?.status == UserContact.Status.Confirmed.rawValue) || (chat?.status == Chat.ChatStatus.approved.rawValue)
         self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
         keysLoading = !success
     }

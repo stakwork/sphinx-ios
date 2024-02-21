@@ -249,6 +249,7 @@ extension LeftMenuViewController : UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.row > menuOptions.count - 1){tableView.deselectRow(at: indexPath, animated: true); return}
         let option = menuOptions[indexPath.row]
         
         switch (option.tag) {

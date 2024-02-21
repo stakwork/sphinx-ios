@@ -49,12 +49,12 @@ func requestListenForIncomingMessage(completion: @escaping (JSON) -> ()) {
             print("Error: \(error)")
         }
     }
-}
+}//03ff1c4e658be3ee59575b24e631945cd640926fb7cb095a569da7bb3bfcad5867_02adccd7f574d17d627541b447f47493916e78e33c1583ba9936607b35ca99c392_529771090635784199
 
 final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     let sphinxOnionManager = SphinxOnionManager.sharedInstance
     //Account details for test account aka David
-    let test_mnemonic2 = "embody correct zebra nephew elevator anchor page remind silk fog immune fitness"
+    let test_mnemonic2 = "embody correct zebra nephew elevator anchor page remind silk fog immune frog"
     
     var receivedMessage : [String:Any]? = nil
     let test_sender_pubkey = "023be900c195aee419e5f68bf4b7bc156597da7649a9103b1afec949d233e4d1aa"
@@ -211,7 +211,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     }
 
     //MARK: Type 0 Messages:
-    func test_receive_plaintext_message() throws {
+    func test_receive_plaintext_message_3_1() throws {
         //0. Set up test client running on http://localhost:4020 from Sphinx repo
         //1. Listen to the correct channels -> handled in setup
         
@@ -231,7 +231,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     
     
     
-    func test_send_plaintext_message() throws {
+    func test_send_plaintext_message_3_2() throws {
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
         enforceDelay(delay: 8.0)
         //2. Send message with random content
@@ -268,7 +268,12 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     }
     
     //MARK: Type 6 Attachment Messages
-    func test_send_attachment_message() throws {
+    
+    func test_receive_attachment_message_3_3() throws {
+        
+    }
+    
+    func test_send_attachment_message_3_4() throws {
         let expectation = XCTestExpectation(description: "Expecting to have retrieved message in time")
         enforceDelay(delay: 8.0)
         //2. Send message with random content
@@ -368,7 +373,15 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         //4. Ensure ACK message reflects same message we sent out.
     }
     
-    func test_reply_and_boost() throws {
+    
+    
+    //MARK: Boost and replies related:
+    func test_send_reply_and_boost_3_5() throws {
+        
+    }
+    
+    
+    func test_send_reply_and_boost_3_6() throws {
         //Force message send
         makeServerSendMessage()
         guard let receivedMessage = receivedMessage,

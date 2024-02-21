@@ -220,7 +220,8 @@ extension SphinxOnionManager {
         for  mut in muts {
             if let key = mut.key.stringValue, let value = mut.value.dataValue?.bytes {
                 keys.append(key)
-              
+                UserDefaults.standard.removeObject(forKey: key)
+                UserDefaults.standard.synchronize()
                 UserDefaults.standard.set(value, forKey: key)
                 UserDefaults.standard.synchronize()
             }

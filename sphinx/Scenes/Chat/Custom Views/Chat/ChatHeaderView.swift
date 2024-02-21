@@ -101,7 +101,7 @@ class ChatHeaderView: UIView {
     func setChatInfo() {
         nameLabel.text = getHeaderName()
         
-        let isEncrypted = (chat?.isEncrypted() ?? contact?.hasEncryptionKey()) ?? false
+        let isEncrypted = (contact?.status == UserContact.Status.Confirmed.rawValue)
         lockSign.text = isEncrypted ? "lock" : "lock_open"
         keysLoading = !isEncrypted
         
@@ -212,15 +212,9 @@ class ChatHeaderView: UIView {
     }
     
     func checkRoute() {
-        API.sharedInstance.checkRoute(
-            chat: self.chat,
-            contact: self.contact,
-            callback: { success in
-                DispatchQueue.main.async {
-                    self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
-                }
-            }
-        )
+        let success = self.contact?.status == UserContact.Status.Confirmed.rawValue
+        self.boltSign.textColor = success ? ChatListHeader.kConnectedColor : ChatListHeader.kNotConnectedColor
+        keysLoading = !success
     }
     
     func toggleWebAppIcon(showChatIcon: Bool) {

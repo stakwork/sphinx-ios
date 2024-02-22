@@ -1,0 +1,7 @@
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "ef7-It-4Rs"; */
+"ef7-It-4Rs.placeholder" = "検索"; // Kensaku
+
+/* Class = "UIButton"; configuration.title = "Add Tribe"; ObjectID = "vfi-ch-n2c"; */
+"vfi-ch-n2c.configuration.title" = "グループを追加"; // Gurūpu o tsuika suru
+
+"Re9-Eb-2Gh.title" = "閉じる" // Tojiru 

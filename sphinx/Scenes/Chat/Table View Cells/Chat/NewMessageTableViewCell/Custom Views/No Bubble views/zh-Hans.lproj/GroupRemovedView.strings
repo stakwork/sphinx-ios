@@ -1,0 +1,5 @@
+/* Class = "UIButton"; normalTitle = "Delete group"; ObjectID = "2PJ-LV-kfi"; */
+"2PJ-LV-kfi.normalTitle" = "删除群组"; // Shānchú qúnzǔ
+
+/* Class = "UILabel"; text = "The admin has removed \nyou from this group"; ObjectID = "CyX-yB-yyl"; */
+"CyX-yB-yyl.text" = "管理员已将您从该群组中移除"; // Guǎnlǐ yuán yǐ jiāng nín cóng gāi qúnzǔ zhōng yíchú

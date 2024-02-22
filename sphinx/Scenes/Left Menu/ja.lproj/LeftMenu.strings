@@ -1,0 +1,33 @@
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "8Et-S7-VDq"; */
+"8Et-S7-VDq.normalTitle" = "完了"; // Kanryō
+
+/* Class = "UIButton"; normalTitle = "Send Message"; ObjectID = "VUd-ZZ-tSV"; */
+"VUd-ZZ-tSV.normalTitle" = "メッセージを送信"; // Messēji o sōshin
+
+/* Class = "UITextView"; text = "Describe your problem..."; ObjectID = "bKo-Co-okt"; */
+"bKo-Co-okt.text" = "ここに問題を説明してください..."; // Koko ni mondai o setsumei shite kudasai...
+
+/* Class = "UILabel"; text = "SUPPORT"; ObjectID = "gKM-ns-Slb"; */
+"gKM-ns-Slb.text" = "サポート"; // Sapōto
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "mmQ-nD-ZJe"; */
+"mmQ-nD-ZJe.normalTitle" = "キャンセル"; // Kyanseru
+
+/* Class = "UIButton"; normalTitle = "Support"; ObjectID = "qb1-rZ-TSG"; */
+"qb1-rZ-TSG.normalTitle" = "サポート"; // Sapōto
+
+/* Class = "UIButton"; normalTitle = "Copy Logs"; ObjectID = "rQP-gW-ald"; */
+"rQP-gW-ald.normalTitle" = "ログをコピー"; // Rogu o kopī
+
+"oxd-6a-boA.text" = "サトシを追加"; // Satoshi o tsuika
+
+"naX-fJ-3cb.text" = "宛先"; // Atesaki
+
+"4Q5-5T-a5h.normalTitle" = "コピー"; // Kopi
+
+/* Text, explain limits, etc */
+"it3-mD-nqd.text" = "...";
+
+"rHy-Kt-UHY.text" = "開く"; // Hiraku
+
+"mhE-Dp-blS.text" = "アドレスを生成中..."; // Adoressu o seisei-chū

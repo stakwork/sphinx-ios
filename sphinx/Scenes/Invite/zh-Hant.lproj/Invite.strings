@@ -1,0 +1,74 @@
+/* Placeholder = "Set Your Name" */
+"1ma-e3-9jK.placeholder" = "設定您的姓名";
+
+/* Class = "UILabel"; text = "Select Image"; ObjectID = "2P2-S1-noc"; */
+"2P2-S1-noc.text" = "選擇圖像";
+
+/* New to Sphinx */
+"3rN-VK-zKy.normalTitle" = "Sphinx 新手";
+
+/* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "4Mg-Nw-7iA"; */
+"4Mg-Nw-7iA.text" = "加入好友";
+
+/* INCLUDE A MESSAGE */
+"DsE-7M-zzl.text" = "包含一條訊息...";
+
+/* Already on Sphinx */
+"Mi0-in-ems.normalTitle" = "已經在 Sphinx 上";
+
+/* Class = "UILabel"; text = "FINISH"; ObjectID = "Oe8-KJ-BtX"; */
+"Oe8-KJ-BtX.text" = "完成";
+
+/* Placeholder = "Enter code..." */
+"QEu-hq-fQQ.placeholder" = "輸入代碼...";
+
+/* Restore from Keychain */
+"RQP-ey-bcd.text" = "從鑰匙串恢復";
+
+/* Class = "UILabel"; text = "SHARE"; ObjectID = "UO4-zg-C4j"; */
+"UO4-zg-C4j.text" = "分享";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "URL-hB-8Yz"; */
+"URL-hB-8Yz.normalTitle" = "下一步";
+
+/* Class = "UILabel"; text = "Welcome"; ObjectID = "VS5-RC-luB"; */
+"VS5-RC-luB.text" = "歡迎";
+
+/* You're ready to use Sphinx! */
+"c8r-pr-tER.text" = "您可以開始使用 Sphinx 了！";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "fJ5-mk-nZs"; */
+"fJ5-mk-nZs.normalTitle" = "下一步";
+
+/* Class = "UITextView"; text = "Welcome to Sphinx!"; ObjectID = "iUT-7o-yHP"; */
+"iUT-7o-yHP.text" = "歡迎來到 Sphinx！";
+
+/* Create Invitation */
+"k95-oK-Zox.normalTitle" = "創建邀請";
+
+/* Class = "UILabel"; text = "ESTIMATED COST"; ObjectID = "kW7-Wb-3DM"; */
+"kW7-Wb-3DM.text" = "預估費用";
+
+/* Class = "UILabel"; text = "Your Name"; ObjectID = "klr-jZ-Odd"; */
+"klr-jZ-Odd.text" = "您的姓名";
+
+/* Class = "UILabel"; text = "TAP TO COPY"; ObjectID = "pgo-lA-YWw"; */
+"pgo-lA-YWw.text" = "點擊複製";
+
+/* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "rLb-IH-R1w"; */
+"rLb-IH-R1w.text" = "加入好友";
+
+/* SHARE INVITATION CODE */
+"vd2-aU-H2Y.text" = "分享邀請碼";
+
+/* Class = "UILabel"; text = "\"Welcome to Sphinx!\""; ObjectID = "vl8-eB-4he"; */
+"vl8-eB-4he.text" = "\"歡迎來到 Sphinx！\"";
+
+/* You've been invited to join Sphinx! */
+"xrd-8B-iyR.text" = "您已受邀加入 Sphinx！";
+
+/* Class = "UILabel"; text = "NICKNAME"; ObjectID = "xrn-Sz-iM3"; */
+"xrn-Sz-iM3.text" = "暱稱";
+
+/* Class = "UILabel"; text = "Get Started"; ObjectID = "zc0-Xh-U1c"; */
+"zc0-Xh-U1c.text" = "開始";

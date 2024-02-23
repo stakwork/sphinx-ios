@@ -376,7 +376,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     
     
     //MARK: Boost and replies related:
-    func test_send_reply_and_boost_3_5() throws {
+    func test_receive_reply_and_boost_3_5() throws {
         
     }
     
@@ -416,13 +416,14 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             return 
         }
         
+        let boost_amount_sats = 100
         let params: [String: AnyObject] = [
             "text": "" as AnyObject,
             "reply_uuid": rmUuid as AnyObject,
             "boost": 1 as AnyObject,
             "chat_id": chat.id as AnyObject,
             "message_price": 0 as AnyObject,
-            "amount": 100 as AnyObject
+            "amount": boost_amount_sats as AnyObject
         ]
         
         var messageResult : JSON? = nil
@@ -436,6 +437,23 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         enforceDelay( delay: 14.0)
         
+        guard let resultDict = messageResult?.dictionaryValue,
+              let dataDict = resultDict["data"]?.dictionaryValue,
+                let msg = dataDict["msg"]?.rawString(),
+              let msgType = dataDict["msg_type"]?.rawString(),
+              let msats = dataDict["msat"]?.rawValue else{
+            XCTFail("Value coming back is invalid")
+            return
+        }
+        for key in dataDict.keys{
+            print("key:\(key), value:\(dataDict[key])")
+        }
+        
+        XCTAssert(msgType == "boost")
+        XCTAssert(boost_amount_sats * 1000 == msats)
+        
+        print(messageResult)
+        print("")
         //TODO: figure out some way to get the wasm test regime to tell me when it's a boost reply!!!
         
         

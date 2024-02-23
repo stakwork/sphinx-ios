@@ -54,7 +54,7 @@ func requestListenForIncomingMessage(completion: @escaping (JSON) -> ()) {
 final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     let sphinxOnionManager = SphinxOnionManager.sharedInstance
     //Account details for test account aka David
-    let test_mnemonic2 = "embody correct zebra nephew elevator anchor page remind silk fog immune frog"
+    let test_mnemonic2 = "hair live delay memory injury float extend mixture fetch excuse control hedgehog"
     
     var receivedMessage : [String:Any]? = nil
     let test_sender_pubkey = "023be900c195aee419e5f68bf4b7bc156597da7649a9103b1afec949d233e4d1aa"

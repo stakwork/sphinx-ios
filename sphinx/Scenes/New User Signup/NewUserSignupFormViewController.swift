@@ -214,6 +214,10 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
                 UserData.sharedInstance.save(walletMnemonic: importSeedView.textView.text)
                 signup_v2_with_test_server()
             }
+            else{
+                AlertHelper.showAlert(title: "Account Creation Error", message: "There was an error creating your account")
+                importSeedView.isLoading = false
+            }
         }
         else{
             let success = CrypterManager.sharedInstance.performWalletFinalization(

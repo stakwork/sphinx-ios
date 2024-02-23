@@ -39,6 +39,19 @@ class ImportSeedView: UIView {
     var host:String = ""
     var relay:String = ""
     
+    var isLoading:Bool = false {
+        didSet{
+            if(isLoading == false){
+                activityView.stopAnimating()
+                activityViewContainer.isHidden = true
+            }
+            else{
+                activityViewContainer.isHidden = false
+                activityView.startAnimating()
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -105,8 +118,7 @@ class ImportSeedView: UIView {
         textView.resignFirstResponder()
         textView.text = ""
         
-        activityView.stopAnimating()
-        activityViewContainer.isHidden = true
+        self.isLoading = false
         
         delegate?.didTapCancelImportSeed()
     }
@@ -124,8 +136,7 @@ class ImportSeedView: UIView {
         }
         
         textView.resignFirstResponder()
-        activityViewContainer.isHidden = false
-        activityView.startAnimating()
+        isLoading = true
         
         delegate?.didTapConfirm()
     }

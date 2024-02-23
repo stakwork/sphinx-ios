@@ -283,7 +283,7 @@ extension SphinxOnionManager{
                         let index = Int(indexString){
                 cachedMessage.id = index //sync self index
                 cachedMessage.updatedAt = Date()
-                cachedMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+                cachedMessage.status = (cachedMessage.chat?.type == Chat.ChatType.conversation.rawValue) ? TransactionMessage.TransactionMessageStatus.received.rawValue : TransactionMessage.TransactionMessageStatus.confirmed.rawValue
                 cachedMessage.managedObjectContext?.saveContext()
                 print(rr)
             }

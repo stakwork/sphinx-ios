@@ -14,15 +14,23 @@ import SwiftyJSON
 @testable import sphinx
 
 
-func sendRemoteServerMessageRequest(pubkey: String, theMsg: String, amount:Int=0) {
+func sendRemoteServerMessageRequest(
+    cmd: String ,
+    pubkey: String,
+    theMsg: String,
+    amount:Int=0,
+    additionalParams:[String]=[]
+    ) {
     let url = "http://localhost:4020/command"
     let parameters: [String: Any] = [
-        "command": "send",
-        "parameters": [
+        "command": cmd,
+        "parameters": ([
             pubkey,
             amount,
             theMsg
         ]
+         + additionalParams
+        )
     ]
     
     AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
@@ -170,7 +178,9 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         receivedMessage = [
             "content": message.messageContent ?? "",
             "alias": message.senderAlias?.lowercased() ?? "",
-            "uuid": message.uuid ?? ""
+            "uuid": message.uuid ?? "",
+            "mediaKey": message.mediaKey ?? "",
+            "mediaToken": message.mediaToken ?? ""
         ]
     }
     //MARK: Test Helpers:
@@ -184,7 +194,21 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         }
         let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
         //3. Send & Await results to come in
-        sendRemoteServerMessageRequest(pubkey: pubkey, theMsg: "\(messageContent)")
+        sendRemoteServerMessageRequest(cmd: "send",pubkey: pubkey, theMsg: "\(messageContent)")
+        enforceDelay(delay: 8.0)
+    }
+    
+    func makeServerSendAttachment(mk:String,mt:String,customMessage:String?=nil){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewOnionMessageReceived), name: .newOnionMessageWasReceived, object: nil)
+        
+        guard let profile = UserContact.getOwner(),
+              let pubkey = profile.publicKey else{
+            XCTFail("Failed to establish self contact")
+            return
+        }
+        let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        //3. Send & Await results to come in
+        sendRemoteServerMessageRequest(cmd: "send_attachment",pubkey: pubkey, theMsg: "\(messageContent)",amount:0,additionalParams: [mk,mt])
         enforceDelay(delay: 8.0)
     }
     
@@ -220,8 +244,6 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         makeServerSendMessage(customMessage: test_content_value)
         
         //4. Confirm that the known message content matches what we expect
-        let contacts = sphinxOnionManager.listContacts()
-        print(contacts)
         XCTAssertTrue(receivedMessage != nil)
         XCTAssertTrue(receivedMessage?["content"] as? String == test_content_value)
         XCTAssertTrue(receivedMessage?["alias"] as? String == "alice")
@@ -270,7 +292,16 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     //MARK: Type 6 Attachment Messages
     
     func test_receive_attachment_message_3_3() throws {
+        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        let testMediaKey = "Q0QxQjUyMkMzODM3NDE2NTg1NDgxQTBD"
+        let testMediaToken = "bWVtZXMuc3BoaW54LmNoYXQ=.M_ZcxtcbRUZmDcHDYahSDvZJV4eOFvapZOb2wa-qNy0=..Z7X6KA==..ILxohNjxscIumj0f5NH1fySoR1HirySwMEHwVTGCAqzgPxXINtIyVO4agyf12hulTvCLDbKyOatmdotD9TBqLD4="
+        makeServerSendAttachment(mk: testMediaKey, mt: testMediaToken, customMessage: test_content_value)
         
+        XCTAssertTrue(receivedMessage?["content"] as? String == test_content_value)
+        XCTAssertTrue(receivedMessage?["alias"] as? String == "alice")
+        XCTAssertTrue(receivedMessage?["mediaKey"] as? String == testMediaKey)
+        XCTAssertTrue(receivedMessage?["mediaToken"] as? String == testMediaToken)
+        XCTAssert(receivedMessage != nil)
     }
     
     func test_send_attachment_message_3_4() throws {
@@ -441,7 +472,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
               let dataDict = resultDict["data"]?.dictionaryValue,
                 let msg = dataDict["msg"]?.rawString(),
               let msgType = dataDict["msg_type"]?.rawString(),
-              let msats = dataDict["msat"]?.rawValue else{
+              let msats = dataDict["msat"]?.rawString() else{
             XCTFail("Value coming back is invalid")
             return
         }
@@ -450,7 +481,8 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         }
         
         XCTAssert(msgType == "boost")
-        XCTAssert(boost_amount_sats * 1000 == msats)
+        let msatsString = String(boost_amount_sats * 1000)
+        XCTAssert(msatsString == msats)
         
         print(messageResult)
         print("")

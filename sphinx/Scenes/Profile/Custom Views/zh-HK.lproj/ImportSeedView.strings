@@ -1,0 +1,11 @@
+/* Class = "UIButton"; normalTitle = "Confirm"; ObjectID = "EDJ-TI-seS"; */
+"EDJ-TI-seS.normalTitle" = "確認";
+
+/* Class = "UILabel"; text = "Loading, please wait..."; ObjectID = "Upv-aH-hZm"; */
+"Upv-aH-hZm.text" = "加載中，請稍候...";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "omm-KQ-xIa"; */
+"omm-KQ-xIa.normalTitle" = "取消";
+
+/* Class = "UILabel"; text = "Enter your mnemonic words"; ObjectID = "zjZ-yj-uN0"; */
+"zjZ-yj-uN0.text" = "輸入您的助記詞"; 

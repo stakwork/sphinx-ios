@@ -1,0 +1,17 @@
+/* Class = "UILabel"; text = "Twitter:"; ObjectID = "EmP-GM-zJF"; */
+"EmP-GM-zJF.text" = "推特:"; // Tuī tè:
+
+/* Class = "UILabel"; text = "Send Sats"; ObjectID = "Gx0-Ka-gEI"; */
+"Gx0-Ka-gEI.text" = "发送萨"; // Fāsòng sà
+
+/* Class = "UILabel"; text = "Coding Languages:"; ObjectID = "UC6-pY-l3d"; */
+"UC6-pY-l3d.text" = "编程语言:"; // Biānchéng yǔyán:
+
+/* Class = "UILabel"; text = "Github:"; ObjectID = "ocu-Vn-YXc"; */
+"ocu-Vn-YXc.text" = "GitHub:"; // GitHub:
+
+/* Class = "UILabel"; text = "Posts:"; ObjectID = "osi-cQ-o2N"; */
+"osi-cQ-o2N.text" = "帖子:"; // Tiě zi:
+
+/* Class = "UILabel"; text = "Price to meet:"; ObjectID = "yPE-dF-xP1"; */
+"yPE-dF-xP1.text" = "见面价格:"; // Jiànmiàn jiàgé:

@@ -1,0 +1,69 @@
+/* Class = "UILabel"; text = "Camera"; ObjectID = "2gk-Fb-5y1"; */
+"2gk-Fb-5y1.text" = "カメラ"; // Kamera
+
+/* Set price and message */
+"4FV-0A-lup.text" = "価格を設定してメッセージを入力してください。"; // Kakaku o settei shite messēji o nyūryoku shite kudasai.
+
+/* Class = "UILabel"; text = "Loading Templates..."; ObjectID = "BeD-Td-UVZ"; */
+"BeD-Td-UVZ.text" = "テンプレートを読み込み中..."; // Tenpurēto o yomikomi-chū...
+
+/* Class = "UILabel"; text = "SET PRICE"; ObjectID = "EGL-XG-Ej5"; */
+"EGL-XG-Ej5.text" = "価格を設定"; // Kakaku o settei
+
+/* Class = "UILabel"; text = "Paid Message"; ObjectID = "F2I-3M-f6u"; */
+"F2I-3M-f6u.text" = "有料メッセージ"; // Yūryō messēji
+
+/* Class = "UILabel"; text = "Request"; ObjectID = "HTw-wx-D0f"; */
+"HTw-wx-D0f.text" = "リクエスト"; // Rikesuto
+
+/* Class = "UILabel"; text = "REQUEST AMOUNT"; ObjectID = "JH8-XK-2TQ"; */
+"JH8-XK-2TQ.text" = "リクエスト金額 "; // Rikesuto kingaku
+
+/* Class = "UILabel"; text = "Send"; ObjectID = "NHj-ji-e9m"; */
+"NHj-ji-e9m.text" = "送信"; // Sōshin
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "RCs-d3-bab"; */
+"RCs-d3-bab.normalTitle" = "確認"; // Kakunin
+
+/* Class = "UILabel"; text = "From"; ObjectID = "UY6-eK-1Qs"; */
+"UY6-eK-1Qs.text" = "From"; // (差出人)
+
+/* Class = "UILabel"; text = "SEND IMAGE"; ObjectID = "ZEJ-HW-iL9"; */
+"ZEJ-HW-iL9.text" = "画像を送信"; // Gazō o sōshin
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "aEd-yg-3LK"; */
+"aEd-yg-3LK.placeholder" = "検索"; // Kensaku
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "bqg-tt-jE5"; */
+"bqg-tt-jE5.normalTitle" = "キャンセル"; // Kyanseru
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "dgR-PH-JGP"; */
+"dgR-PH-JGP.normalTitle" = "確認"; // Kakunin
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "fwf-Iy-Dpd"; */
+"fwf-Iy-Dpd.normalTitle" = "確認"; // Kakunin
+
+/* No Message */
+"mnK-0f-aOi.placeholder" = "メッセージはありません"; // Messēji wa arimasen
+
+/* Class = "UITextField"; placeholder = "Add Message"; ObjectID = "uzk-r4-4Vh"; */
+"uzk-r4-4Vh.placeholder" = "メッセージを追加"; // Messēji o tsuika
+
+/* Class = "UILabel"; text = "Library"; ObjectID = "vqQ-dy-2SC"; */
+"vqQ-dy-2SC.text" = "ライブラリ"; // Raiburari
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "x1w-R5-F90"; */
+"x1w-R5-F90.normalTitle" = "確認"; // Kakunin
+
+/* Class = "UILabel"; text = "REQUEST: "; ObjectID = "ypU-tY-BWb"; */
+"ypU-tY-BWb.text" = "リクエスト: "; // Rikesuto:
+
+"vI1-az-0QI.text" = "ファイル"; // Fairu
+
+"SpZ-Zf-bcC.text" = "通知"; // Tsūchi
+
+"gNH-oj-DcC.text" = "ピン留めされたメッセージ"; // Pindome sareta messēji
+
+"g2v-1V-6xc.text" = "メッセージのピン留めを外す"; //  Messēji no pindome o hazusu
+
+"O8d-Gl-VCj.text" = "スレッドが見つかりません"; // Sureddo ga mitsukarimasen

@@ -1,0 +1,14 @@
+/* Class = "UILabel"; text = "sat / month"; ObjectID = "egx-me-iNi"; */
+"egx-me-iNi.text" = "sat / 月";
+
+/* Class = "UIButton"; normalTitle = "SUBSCRIBE"; ObjectID = "j5w-7K-euL"; */
+"j5w-7K-euL.normalTitle" = "購読";
+
+/* Class = "UILabel"; text = "RECURRING"; ObjectID = "sHc-7M-z7f"; */
+"sHc-7M-z7f.text" = "定期的";
+
+/* Class = "UILabel"; text = "Pay until:"; ObjectID = "tPr-km-QZm"; */
+"tPr-km-QZm.text" = "支払い期限：";
+
+/* Class = "UILabel"; text = "ACTIVE"; ObjectID = "tX4-KT-z3P"; */
+"tX4-KT-z3P.text" = "有効"; 

@@ -1,0 +1,5 @@
+/* Class = "UILabel"; text = "TRANSACTIONS"; ObjectID = "Qdx-XD-Mbl"; */
+"Qdx-XD-Mbl.text" = "取引履歴"; // Torihiki rirekishi
+
+/* Class = "UILabel"; text = "No transactions found"; ObjectID = "stK-eH-Bki"; */
+"stK-eH-Bki.text" = "取引履歴がありません"; // Torihiki rirekishi ga arimasen

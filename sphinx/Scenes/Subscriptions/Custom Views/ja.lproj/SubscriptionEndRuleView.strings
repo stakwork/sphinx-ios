@@ -1,0 +1,14 @@
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "GbQ-xN-c4F"; */
+"GbQ-xN-c4F.normalTitle" = "キャンセル";
+
+/* Class = "UILabel"; text = "Pay until"; ObjectID = "MtN-hi-VeI"; */
+"MtN-hi-VeI.text" = "支払い期限";
+
+/* Class = "UILabel"; text = "Payments"; ObjectID = "XDq-qi-RaU"; */
+"XDq-qi-RaU.text" = "支払い";
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "Zh5-LL-F2J"; */
+"Zh5-LL-F2J.normalTitle" = "完了";
+
+/* Class = "UILabel"; text = "Make"; ObjectID = "dIl-Hs-vmD"; */
+"dIl-Hs-vmD.text" = "行う"; 

@@ -1,0 +1,5 @@
+/* Class = "UIButton"; normalTitle = "Basic"; ObjectID = "I5t-ra-mE4"; */
+"I5t-ra-mE4.normalTitle" = "基本"; // Kihon
+
+/* Class = "UIButton"; normalTitle = "Advanced"; ObjectID = "dxC-MV-YVW"; */
+"dxC-MV-YVW.normalTitle" = "詳細"; // Shōsai

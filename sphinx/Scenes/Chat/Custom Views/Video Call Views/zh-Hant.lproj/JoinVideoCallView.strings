@@ -1,0 +1,11 @@
+/* Class = "UILabel"; text = "VIDEO"; ObjectID = "1dd-eP-y7r"; */
+"1dd-eP-y7r.text" = "視訊"; // Shìxùn
+
+/* Class = "UILabel"; text = "JOIN CALL BY ..."; ObjectID = "HpA-EW-kei"; */
+"HpA-EW-kei.text" = "由...加入通話"; // Yóu... Jiārù tōnghuà
+
+/* Class = "UILabel"; text = "COPY LINK"; ObjectID = "VWO-or-LC3"; */
+"VWO-or-LC3.text" = "複製連結"; // Fùzhì liànjiē
+
+/* Class = "UILabel"; text = "AUDIO"; ObjectID = "cgF-Zn-a7l"; */
+"cgF-Zn-a7l.text" = "音訊"; // Yīnxùn 

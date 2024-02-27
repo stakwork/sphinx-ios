@@ -291,10 +291,11 @@ extension SphinxOnionManager{
     }
     
     func processIncomingPlaintextOrAttachmentMessage(message:PlaintextOrAttachmentMessageFromServer,date:Date, csr:ContactServerResponse?=nil ,amount:Int=0,type:Int?=nil){
+        let content = (type == TransactionMessage.TransactionMessageType.boost.rawValue) ? ("") : (message.content)
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
-            let content = message.content,
+            let content = content,
 //              let amount = message.amount,
               let pubkey = message.senderPubkey,
               let uuid = message.uuid else{
@@ -479,17 +480,17 @@ extension SphinxOnionManager{
         params:[String:Any],
         chat:Chat,
         image:UIImage,
-        completion: @escaping (Bool)->()
+        completion: @escaping (Bool,TransactionMessage?)->()
     ){
         guard let contact = chat.getContact(),
         let amount = params["amount"] as? Int,
         let muid = params["muid"] as? String,
         let data = image.pngData() else{
-            completion(false)
+            completion(false,nil)
             return
         }
         
-        if let _ = self.sendMessage(to: contact, content: "",
+        if let sentMessage = self.sendMessage(to: contact, content: "",
                                chat: chat,
                                amount: amount,
                                msgType: UInt8(TransactionMessage.TransactionMessageType.directPayment.rawValue),
@@ -497,10 +498,10 @@ extension SphinxOnionManager{
                                threadUUID: nil,
                                replyUUID: nil
         ){
-            completion(true)
+            completion(true, sentMessage)
         }
         else{
-            completion(false)
+            completion(false, nil)
         }
     }
     

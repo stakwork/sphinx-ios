@@ -180,7 +180,7 @@ class PaymentTemplateViewController: CommonPaymentViewController {
             contact: contact,
             chat: chat
         )
-        SphinxOnionManager.sharedInstance.sendDirectPaymentMessage(params: params, chat: validChat, image: selectedImage) { success in
+        SphinxOnionManager.sharedInstance.sendDirectPaymentMessage(params: params, chat: validChat, image: selectedImage) { success, _ in
             if(success){
                 self.shouldDismissView()
             }

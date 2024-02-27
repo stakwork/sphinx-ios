@@ -19,18 +19,27 @@ func sendRemoteServerMessageRequest(
     pubkey: String,
     theMsg: String,
     amount:Int=0,
+    useAmount:Bool=true,
+    useMsg:Bool=true,
     additionalParams:[String]=[]
     ) {
     let url = "http://localhost:4020/command"
-    let parameters: [String: Any] = [
+    var parametersArray: [Any] = [pubkey, amount, theMsg] + additionalParams
+    
+    if !useAmount {
+        parametersArray.remove(at: 1)
+    }
+    if !useMsg {
+        // If amount is not used, the message index shifts to 1, otherwise it's 2.
+        let msgIndex = useAmount ? 2 : 1
+        if parametersArray.count > msgIndex { // Ensure the array is large enough
+            parametersArray.remove(at: msgIndex)
+        }
+    }
+    
+    var parameters: [String: Any] = [
         "command": cmd,
-        "parameters": ([
-            pubkey,
-            amount,
-            theMsg
-        ]
-         + additionalParams
-        )
+        "parameters": parametersArray
     ]
     
     AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
@@ -180,11 +189,13 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             "alias": message.senderAlias?.lowercased() ?? "",
             "uuid": message.uuid ?? "",
             "mediaKey": message.mediaKey ?? "",
-            "mediaToken": message.mediaToken ?? ""
+            "mediaToken": message.mediaToken ?? "",
+            "replyUuid": message.replyUUID ?? "",
+            "amount": message.amount ?? 0
         ]
     }
     //MARK: Test Helpers:
-    func makeServerSendMessage(customMessage:String?=nil){
+    func makeServerSendMessage(customMessage:String?=nil, replyUuid:String?=nil){
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewOnionMessageReceived), name: .newOnionMessageWasReceived, object: nil)
         
         guard let profile = UserContact.getOwner(),
@@ -194,7 +205,8 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         }
         let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
         //3. Send & Await results to come in
-        sendRemoteServerMessageRequest(cmd: "send",pubkey: pubkey, theMsg: "\(messageContent)")
+        let additionalParams = [replyUuid].compactMap({$0})
+        sendRemoteServerMessageRequest(cmd: "send",pubkey: pubkey, theMsg: "\(messageContent)",additionalParams: additionalParams)
         enforceDelay(delay: 8.0)
     }
     
@@ -210,6 +222,20 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         //3. Send & Await results to come in
         sendRemoteServerMessageRequest(cmd: "send_attachment",pubkey: pubkey, theMsg: "\(messageContent)",amount:0,additionalParams: [mk,mt])
         enforceDelay(delay: 8.0)
+    }
+    
+    func makeServerSendBoost(replyUuid:String,amount:Int){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNewOnionMessageReceived), name: .newOnionMessageWasReceived, object: nil)
+        
+        guard let profile = UserContact.getOwner(),
+              let pubkey = profile.publicKey else{
+            XCTFail("Failed to establish self contact")
+            return
+        }
+
+        //3. Send & Await results to come in
+        sendRemoteServerMessageRequest(cmd: "boost",pubkey: pubkey, theMsg: "",amount:0,useAmount:false,useMsg:false,additionalParams: [replyUuid,String(describing: amount)])
+        enforceDelay(delay: 10.0)
     }
     
     func sendTestMessage(
@@ -233,6 +259,8 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         return messageResult
     }
+    
+    //END Helpers
 
     //MARK: Type 0 Messages:
     func test_receive_plaintext_message_3_1() throws {
@@ -408,7 +436,38 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     
     //MARK: Boost and replies related:
     func test_receive_reply_and_boost_3_5() throws {
+        //1. Construct initial message
+        guard let rand = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 100_000_000) else{
+            XCTFail()
+            return
+        }
+        let content = String(describing: rand)
+        let echoedMessage = sendTestMessage(content: content)
+        guard let resultDict = echoedMessage?.dictionaryValue,
+            let dataDict = resultDict["data"]?.dictionaryValue,
+            let originalUuid = dataDict["uuid"]?.rawString() else{
+            XCTFail("Value coming back is invalid")
+            return
+        }
+        //2. Reply to initial message
+        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        makeServerSendMessage(customMessage: test_content_value,replyUuid: originalUuid)
         
+        XCTAssertTrue(receivedMessage?["content"] as? String == test_content_value)
+        XCTAssertTrue(receivedMessage?["replyUuid"] as? String == originalUuid)
+        print(receivedMessage)
+        
+        
+        //3. Make server boost initial message: yarn auto boost MYPUBKEY MYMESSSAGEUUID RANDOMSATVALUE
+        guard let rand_amount = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: 1000) else{
+            XCTFail()
+            return
+        }
+        
+        makeServerSendBoost(replyUuid: originalUuid, amount: rand_amount * 1000)
+        XCTAssertTrue(receivedMessage?["replyUuid"] as? String == originalUuid)
+        XCTAssertTrue(receivedMessage?["amount"] as? Int == (rand_amount))
+        print(receivedMessage)
     }
     
     
@@ -490,5 +549,13 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         
         
         print(messageResult)
+    }
+    
+    func test_send_receive_direct_payment_3_7(){
+        
+    }
+    
+    func test_send_direct_payment_3_8(){
+        //sendDirectPaymentMessage
     }
 }

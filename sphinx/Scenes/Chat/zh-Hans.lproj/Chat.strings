@@ -1,0 +1,69 @@
+/* Class = "UILabel"; text = "Camera"; ObjectID = "2gk-Fb-5y1"; */
+"2gk-Fb-5y1.text" = "相機"; // Xiàngjī
+
+/* Set price and message */
+"4FV-0A-lup.text" = "設定價格並輸入您的訊息。"; // Shèdìng jiàgé bìng shūrù nín de xùnxī.
+
+/* Class = "UILabel"; text = "Loading Templates..."; ObjectID = "BeD-Td-UVZ"; */
+"BeD-Td-UVZ.text" = "正在加載模板..."; // Zhèngzài jiāzǎi móbǎn...
+
+/* Class = "UILabel"; text = "SET PRICE"; ObjectID = "EGL-XG-Ej5"; */
+"EGL-XG-Ej5.text" = "設定價格"; // Shèdìng jiàgé
+
+/* Class = "UILabel"; text = "Paid Message"; ObjectID = "F2I-3M-f6u"; */
+"F2I-3M-f6u.text" = "付費訊息"; // Fùfèi xùnxī
+
+/* Class = "UILabel"; text = "Request"; ObjectID = "HTw-wx-D0f"; */
+"HTw-wx-D0f.text" = "請求"; // Qǐngqiú
+
+/* Class = "UILabel"; text = "REQUEST AMOUNT"; ObjectID = "JH8-XK-2TQ"; */
+"JH8-XK-2TQ.text" = "請求金額"; // Qǐngqiú jīn'é
+
+/* Class = "UILabel"; text = "Send"; ObjectID = "NHj-ji-e9m"; */
+"NHj-ji-e9m.text" = "發送"; // Fāsòng
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "RCs-d3-bab"; */
+"RCs-d3-bab.normalTitle" = "確認"; // Quèrèn
+
+/* Class = "UILabel"; text = "From"; ObjectID = "UY6-eK-1Qs"; */
+"UY6-eK-1Qs.text" = "從"; // Cóng
+
+/* Class = "UILabel"; text = "SEND IMAGE"; ObjectID = "ZEJ-HW-iL9"; */
+"ZEJ-HW-iL9.text" = "發送圖像"; // Fāsòng túxiàng
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "aEd-yg-3LK"; */
+"aEd-yg-3LK.placeholder" = "搜尋"; // Sōuxún
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "bqg-tt-jE5"; */
+"bqg-tt-jE5.normalTitle" = "取消"; // Qǔxiāo
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "dgR-PH-JGP"; */
+"dgR-PH-JGP.normalTitle" = "確認"; // Quèrèn
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "fwf-Iy-Dpd"; */
+"fwf-Iy-Dpd.normalTitle" = "確認"; // Quèrèn
+
+/* No Message */
+"mnK-0f-aOi.placeholder" = "沒有訊息"; // Méiyǒu xùnxī
+
+/* Class = "UITextField"; placeholder = "Add Message"; ObjectID = "uzk-r4-4Vh"; */
+"uzk-r4-4Vh.placeholder" = "新增訊息"; // Xīnzēng xùnxī
+
+/* Class = "UILabel"; text = "Library"; ObjectID = "vqQ-dy-2SC"; */
+"vqQ-dy-2SC.text" = "圖書館"; // Túshūguǎn
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "x1w-R5-F90"; */
+"x1w-R5-F90.normalTitle" = "確認"; // Quèrèn
+
+/* Class = "UILabel"; text = "REQUEST: "; ObjectID = "ypU-tY-BWb"; */
+"ypU-tY-BWb.text" = "請求: "; // Qǐngqiú:
+
+"vI1-az-0QI.text" = "檔案"; // Dàng'àn
+
+"SpZ-Zf-bcC.text" = "通知"; // Tōngzhī
+
+"gNH-oj-DcC.text" = "置頂訊息"; // Zhìdǐng xùnxī
+
+"g2v-1V-6xc.text" = "取消置頂訊息"; // Qǔxiāo zhìdǐng xùnxī
+
+"O8d-Gl-VCj.text" = "找不到任何討論串"; // Zhǎobudào rénhe tǎolùn chuàn

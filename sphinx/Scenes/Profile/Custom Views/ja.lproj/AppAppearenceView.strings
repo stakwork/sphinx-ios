@@ -1,0 +1,8 @@
+/* Class = "UIButton"; normalTitle = "Light"; ObjectID = "eDT-he-L0Q"; */
+"eDT-he-L0Q.normalTitle" = "ライト"; // Raito
+
+/* Class = "UIButton"; normalTitle = "Dark"; ObjectID = "mNb-Ed-DhZ"; */
+"mNb-Ed-DhZ.normalTitle" = "ダーク"; // Dāku
+
+/* Class = "UIButton"; normalTitle = "System"; ObjectID = "uWS-ao-oEr"; */
+"uWS-ao-oEr.normalTitle" = "システム"; // Shisutemu

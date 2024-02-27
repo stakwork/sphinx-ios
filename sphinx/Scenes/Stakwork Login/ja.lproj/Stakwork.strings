@@ -1,0 +1,5 @@
+/* Class = "UIButton"; normalTitle = "AUTHORIZE"; ObjectID = "OsM-qt-t4R"; */
+"OsM-qt-t4R.normalTitle" = "認証"; 
+
+/* Class = "UILabel"; text = "AUTHORIZE WITH"; ObjectID = "Vdr-Qe-v8u"; */
+"Vdr-Qe-v8u.text" = "認証する";

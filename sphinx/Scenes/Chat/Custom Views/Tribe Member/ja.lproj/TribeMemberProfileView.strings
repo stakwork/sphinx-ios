@@ -1,0 +1,17 @@
+/* Class = "UILabel"; text = "Twitter:"; ObjectID = "EmP-GM-zJF"; */
+"EmP-GM-zJF.text" = "Twitter:"; // Tsuittā:
+
+/* Class = "UILabel"; text = "Send Sats"; ObjectID = "Gx0-Ka-gEI"; */
+"Gx0-Ka-gEI.text" = "サトシを送る"; // Satoshi o okuru
+
+/* Class = "UILabel"; text = "Coding Languages:"; ObjectID = "UC6-pY-l3d"; */
+"UC6-pY-l3d.text" = "プログラミング言語:"; // Puroguramingu gengo:
+
+/* Class = "UILabel"; text = "Github:"; ObjectID = "ocu-Vn-YXc"; */
+"ocu-Vn-YXc.text" = "Github:";  // Gittohabu:
+
+/* Class = "UILabel"; text = "Posts:"; ObjectID = "osi-cQ-o2N"; */
+"osi-cQ-o2N.text" = "投稿:"; // Tōkō:
+
+/* Class = "UILabel"; text = "Price to meet:"; ObjectID = "yPE-dF-xP1"; */
+"yPE-dF-xP1.text" = "会うための値段:"; // Au tame no nedan:

@@ -1,0 +1,8 @@
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "6kD-b4-dmx"; */
+"6kD-b4-dmx.normalTitle" = "完了";
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "OW6-Fc-9Ei"; */
+"OW6-Fc-9Ei.normalTitle" = "キャンセル";
+
+/* Class = "UILabel"; text = "Custom amount:"; ObjectID = "Z49-ZY-yl7"; */
+"Z49-ZY-yl7.text" = "カスタム金額："; 

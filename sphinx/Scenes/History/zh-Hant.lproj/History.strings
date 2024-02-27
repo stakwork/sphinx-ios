@@ -1,0 +1,5 @@
+/* Class = "UILabel"; text = "TRANSACTIONS"; ObjectID = "Qdx-XD-Mbl"; */
+"Qdx-XD-Mbl.text" = "交易記錄";
+
+/* Class = "UILabel"; text = "No transactions found"; ObjectID = "stK-eH-Bki"; */
+"stK-eH-Bki.text" = "找不到交易記錄";

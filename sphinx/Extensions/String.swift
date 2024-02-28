@@ -471,7 +471,9 @@ extension String {
     var callRoom : String {
         if let range = self.lowerClean.range(of: "sphinx.call.") {
             let endIndex = self.index(of: "#") ?? self.endIndex
-            let room = self.lowerClean[range.lowerBound..<endIndex]
+            let roomWithParams = String(self.lowerClean[range.lowerBound..<endIndex])
+            let queryEndIndex = roomWithParams.index(of: "?") ?? self.endIndex
+            let room = roomWithParams.lowerClean[roomWithParams.startIndex..<queryEndIndex]
             return String(room)
         }
         return self.lowerClean

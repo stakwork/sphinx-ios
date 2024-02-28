@@ -84,6 +84,10 @@ class ConfirmAddFriendViewController: UIViewController {
         nickNameField.delegate = self
         
         getLowestPrice()
+        
+        messageTextView.isHidden = true
+        messageFieldContainer.isHidden = true
+        nickNameLabel.text = "Amount for Invitee (sats)"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -132,24 +136,21 @@ class ConfirmAddFriendViewController: UIViewController {
     func createInvite() {
         view.endEditing(true)
         
-        if let nickname = nickNameField.text, let message = messageTextView.text, nickname != "" && message != "" {
-            var parameters = [String : AnyObject]()
-            parameters["nickname"] = nickname as AnyObject?
-            parameters["welcome_message"] = message as AnyObject?
-
+        if let amount = nickNameField.text,
+            let amountSats = Int(amount)
+            //let message = messageTextView.text
+            //nickname != "" && message != ""
+        {
             loading = true
-
-            API.sharedInstance.createUserInvite(parameters: parameters, callback: { contact in
-                let _ = UserContactsHelper.insertContact(contact: contact)
-
-                if let invite = contact["invite"].dictionary, let inviteString = invite["invite_string"]?.string, inviteString != "" {
-                    self.delegate?.shouldDismissView?()
-                    self.closeButtonTouched()
-                }
-            }, errorCallback: {
-                self.loading = false
+            if let code = SphinxOnionManager.sharedInstance.issueInvite(amountMsat: amountSats * 1000){
+                loading = false
+                self.delegate?.shouldDismissView?()
+                self.closeButtonTouched()
+                ClipboardHelper.copyToClipboard(text: code)
+            }
+            else{
                 AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
-            })
+            }
         } else {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "nickname.cannot.empty".localized)
         }

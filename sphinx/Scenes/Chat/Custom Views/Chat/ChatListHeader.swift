@@ -161,7 +161,7 @@ class ChatListHeader: UIView {
 //            }
 //        })
         let som = SphinxOnionManager.sharedInstance
-        som.issueInvite(host: som.server_IP, amountMsat: 10_000)
+        som.issueInvite(amountMsat: 10_000)
         return
         
 //        switch(status) {

@@ -10,12 +10,12 @@ import Foundation
 
 extension SphinxOnionManager{//invites related
     
-    func issueInvite(host:String,amountMsat:Int)->String?{
+    func issueInvite(amountMsat:Int)->String?{
         guard let seed = getAccountSeed() else{
             return nil
         }
         do{
-            let rr = try! makeInvite(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: host, amtMsat: UInt64(amountMsat))
+            let rr = try! makeInvite(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: self.server_IP, amtMsat: UInt64(amountMsat))
             handleRunReturn(rr: rr)
             return rr.newInvite
         }

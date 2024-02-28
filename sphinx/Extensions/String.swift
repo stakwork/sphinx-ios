@@ -422,10 +422,16 @@ extension String {
         return (false, nil)
    }
     
+    var isV2InviteCode : Bool{
+        get {
+            return self.localizedStandardContains("action=invite")
+        }
+    }
+    
     var isInviteCode : Bool {
         get {
             let regex = try? NSRegularExpression(pattern: "^[A-F0-9a-f]{40}$")
-            return (regex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []).count > 0
+            return ((regex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []).count > 0) || isV2InviteCode
         }
     }
     

@@ -28,7 +28,7 @@ extension NewUserSignupFormViewController {
         let som = SphinxOnionManager.sharedInstance
         som.vc = self
         som.shouldPostUpdates = true
-        som.chooseImportOrGenerateSeed()
+        //som.chooseImportOrGenerateSeed()
     }
 }
     
@@ -45,7 +45,25 @@ extension NewUserSignupFormViewController {
 
         view.endEditing(true)
         
-        startSignup(with: code)
+        if(code.isV2InviteCode){
+            SphinxOnionManager.sharedInstance.vc = self
+            SphinxOnionManager.sharedInstance.chooseImportOrGenerateSeed(completion: {success in
+                if(success){
+                    SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code, completion: { rr in
+                        if let mnemonic = UserData.sharedInstance.getMnemonic(),
+                           let rr = rr,
+                           SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
+                            SphinxOnionManager.sharedInstance.handleRunReturn(rr: rr)
+                            self.signup_v2_with_test_server()
+                        }
+                        SphinxOnionManager.sharedInstance.vc = nil
+                    })
+                }
+            })
+        }
+        else{
+            startSignup(with: code)
+        }
     }
     
     
@@ -77,7 +95,7 @@ extension NewUserSignupFormViewController {
     func isCodeValid(_ code: String) -> Bool {
         return code.isRelayQRCode || code.isInviteCode || code.isSwarmClaimCode || code.isSwarmConnectCode || code.isSwarmGlyphAction
     }
-    
+    //sphinx.chat://?action=invite&d=EMxQifHIEKUzDUkq3TrkIbvIoFMxaKClqy_Fd5YVUNQCJKxcE6wCunsStg4GYXEZUuNxl23z5d6QJHd3q51wgzkCrczX9XTRfWJ1QbRH9HSTkW544zwVg7qZNmB7NcqZw5IHWiAACF0ABDM0LjIyOS41Mi4yMDA=
     
     func validateCode(_ code: String) -> Bool {
         if isCodeValid(code) {

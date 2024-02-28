@@ -643,6 +643,7 @@
 		CE167B572B0BAF6A00A9238E /* sphinxOnionAccountCreateUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE167B562B0BAF6A00A9238E /* sphinxOnionAccountCreateUnitTests.swift */; };
 		CE167B592B0BB17500A9238E /* sphinxOnionAccountCreateUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE167B582B0BB17500A9238E /* sphinxOnionAccountCreateUITests.swift */; };
 		CE1F033F2994458B002E1079 /* ChatLeaderboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */; };
+		CE2349852B8E749F00A708CB /* SphinxOnionManager+InvitesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2349842B8E749F00A708CB /* SphinxOnionManager+InvitesExtension.swift */; };
 		CE2585E929A3FE7300130641 /* JitsiIncomingCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */; };
 		CE2743B62A29318A007A0FDC /* MediaDeletionConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE2743B52A29318A007A0FDC /* MediaDeletionConfirmationView.xib */; };
 		CE2743B82A2931BF007A0FDC /* MediaDeletionConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2743B72A2931BF007A0FDC /* MediaDeletionConfirmationView.swift */; };
@@ -1649,6 +1650,7 @@
 		CE167B562B0BAF6A00A9238E /* sphinxOnionAccountCreateUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxOnionAccountCreateUnitTests.swift; sourceTree = "<group>"; };
 		CE167B582B0BB17500A9238E /* sphinxOnionAccountCreateUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sphinxOnionAccountCreateUITests.swift; sourceTree = "<group>"; };
 		CE1F033E2994458B002E1079 /* ChatLeaderboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeaderboardEntry.swift; sourceTree = "<group>"; };
+		CE2349842B8E749F00A708CB /* SphinxOnionManager+InvitesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+InvitesExtension.swift"; sourceTree = "<group>"; };
 		CE2585E829A3FE7200130641 /* JitsiIncomingCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JitsiIncomingCallManager.swift; sourceTree = "<group>"; };
 		CE2743B52A29318A007A0FDC /* MediaDeletionConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDeletionConfirmationView.xib; sourceTree = "<group>"; };
 		CE2743B72A2931BF007A0FDC /* MediaDeletionConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDeletionConfirmationView.swift; sourceTree = "<group>"; };
@@ -3967,6 +3969,7 @@
 			isa = PBXGroup;
 			children = (
 				CE655AE12B1F88B90063518D /* SphinxOnionManager+ChatExtension.swift */,
+				CE2349842B8E749F00A708CB /* SphinxOnionManager+InvitesExtension.swift */,
 				CE4A85922B5F051600813B59 /* SphinxOnionManager+TribesExtension.swift */,
 				CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */,
 				CE887EF92B1E5C7B00DBA670 /* SphinxOnionManager+ContactExtension.swift */,
@@ -5104,6 +5107,7 @@
 				47308E0124FEE6E600FFAC6F /* SocketExtensions.swift in Sources */,
 				CE2743B82A2931BF007A0FDC /* MediaDeletionConfirmationView.swift in Sources */,
 				475E416C23858D4900928931 /* Subscription+CoreDataClass.swift in Sources */,
+				CE2349852B8E749F00A708CB /* SphinxOnionManager+InvitesExtension.swift in Sources */,
 				477924822A28DF6700CD3CF1 /* NewMessageReplyView.swift in Sources */,
 				473633EA25559945007405F2 /* LogarithmicSlider.swift in Sources */,
 				47363CF82A4B269700C295D4 /* ChatSearchTextFieldView.swift in Sources */,

@@ -353,7 +353,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         })
         let expectation2 = XCTestExpectation(description: "Expecting to have retrieved message in time")
         enforceDelay(delay: 8.0)
-        
+
         let fakeFile: NSDictionary = [
             "description": "description",
             "template": 0,

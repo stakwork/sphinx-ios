@@ -152,16 +152,16 @@ class ChatListHeader: UIView {
         
 //        SphinxOnionManager.sharedInstance.createTribe()
         //SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: "02a73be90947476b45b96bb4db6a7285e4a276abd13fb79473ab0cd29f8ca277d3", routeHint: <#T##String#>, alias: <#T##String?#>)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=03e2c7df9811f0562451a4eb4108e422835838b507b5de01b8077c05d0eb4ff4d7&host=34.229.52.200:8801"){
-                DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
-                if let delegate = self.delegate as? DashboardRootViewController{
-                    delegate.handleLinkQueries()
-                }
-            }
-        })
-        
-        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+//            if let url = URL(string: "https://sphinxx.chat?action=tribeV2&pubkey=03e2c7df9811f0562451a4eb4108e422835838b507b5de01b8077c05d0eb4ff4d7&host=34.229.52.200:8801"){
+//                DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
+//                if let delegate = self.delegate as? DashboardRootViewController{
+//                    delegate.handleLinkQueries()
+//                }
+//            }
+//        })
+        let som = SphinxOnionManager.sharedInstance
+        som.issueInvite(host: som.server_IP, amountMsat: 10_000)
         return
         
 //        switch(status) {

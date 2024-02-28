@@ -592,11 +592,12 @@ public struct RunReturn {
     public var `tribeMembers`: String?
     public var `newInvite`: String?
     public var `inviterContactInfo`: String?
+    public var `initialTribe`: String?
     public var `lspHost`: String?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `lspHost`: String?) {
+    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `initialTribe`: String?, `lspHost`: String?) {
         self.`msgs` = `msgs`
         self.`topics` = `topics`
         self.`payloads` = `payloads`
@@ -610,6 +611,7 @@ public struct RunReturn {
         self.`tribeMembers` = `tribeMembers`
         self.`newInvite` = `newInvite`
         self.`inviterContactInfo` = `inviterContactInfo`
+        self.`initialTribe` = `initialTribe`
         self.`lspHost` = `lspHost`
     }
 }
@@ -656,6 +658,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`inviterContactInfo` != rhs.`inviterContactInfo` {
             return false
         }
+        if lhs.`initialTribe` != rhs.`initialTribe` {
+            return false
+        }
         if lhs.`lspHost` != rhs.`lspHost` {
             return false
         }
@@ -676,6 +681,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`tribeMembers`)
         hasher.combine(`newInvite`)
         hasher.combine(`inviterContactInfo`)
+        hasher.combine(`initialTribe`)
         hasher.combine(`lspHost`)
     }
 }
@@ -697,6 +703,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `tribeMembers`: FfiConverterOptionString.read(from: &buf), 
             `newInvite`: FfiConverterOptionString.read(from: &buf), 
             `inviterContactInfo`: FfiConverterOptionString.read(from: &buf), 
+            `initialTribe`: FfiConverterOptionString.read(from: &buf), 
             `lspHost`: FfiConverterOptionString.read(from: &buf)
         )
     }
@@ -715,6 +722,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`tribeMembers`, into: &buf)
         FfiConverterOptionString.write(value.`newInvite`, into: &buf)
         FfiConverterOptionString.write(value.`inviterContactInfo`, into: &buf)
+        FfiConverterOptionString.write(value.`initialTribe`, into: &buf)
         FfiConverterOptionString.write(value.`lspHost`, into: &buf)
     }
 }
@@ -1620,7 +1628,7 @@ public func `setBlockheight`(`blockheight`: UInt32) throws -> RunReturn {
     )
 }
 
-public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `toPubkey`: String, `routeHint`: String, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64) throws -> RunReturn {
+public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `toPubkey`: String, `routeHint`: String, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64, `inviteCode`: String?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_add_contact(
@@ -1631,7 +1639,8 @@ public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `t
         FfiConverterString.lower(`routeHint`),
         FfiConverterString.lower(`myAlias`),
         FfiConverterString.lower(`myImg`),
-        FfiConverterUInt64.lower(`amtMsat`),$0)
+        FfiConverterUInt64.lower(`amtMsat`),
+        FfiConverterOptionString.lower(`inviteCode`),$0)
 }
     )
 }
@@ -1862,6 +1871,15 @@ public func `processInvite`(`seed`: String, `uniqueTime`: String, `state`: Data,
     )
 }
 
+public func `codeFromInvite`(`inviteQr`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_code_from_invite(
+        FfiConverterString.lower(`inviteQr`),$0)
+}
+    )
+}
+
 private enum InitializationResult {
     case ok
     case contractVersionMismatch
@@ -1964,7 +1982,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_set_blockheight() != 43943) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_add_contact() != 51154) {
+    if (uniffi_sphinxrs_checksum_func_add_contact() != 11442) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_get_contact() != 19847) {
@@ -2016,6 +2034,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_process_invite() != 52237) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_code_from_invite() != 40279) {
         return InitializationResult.apiChecksumMismatch
     }
 

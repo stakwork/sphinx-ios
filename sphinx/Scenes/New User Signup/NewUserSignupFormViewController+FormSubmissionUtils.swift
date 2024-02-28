@@ -52,7 +52,9 @@ extension NewUserSignupFormViewController {
                     SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code, completion: { rr in
                         if let mnemonic = UserData.sharedInstance.getMnemonic(),
                            let rr = rr,
-                           SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
+                           let serverIp = rr.lspHost{
+                            SphinxOnionManager.sharedInstance.server_IP = serverIp
+                            SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic)
                             SphinxOnionManager.sharedInstance.handleRunReturn(rr: rr)
                             self.signup_v2_with_test_server()
                         }

@@ -424,7 +424,7 @@ extension String {
     
     var isV2InviteCode : Bool{
         get {
-            return self.localizedStandardContains("action=invite")
+            return self.localizedStandardContains("action=i&d")
         }
     }
     

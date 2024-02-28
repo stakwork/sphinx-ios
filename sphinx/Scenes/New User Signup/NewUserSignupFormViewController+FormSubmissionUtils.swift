@@ -48,19 +48,16 @@ extension NewUserSignupFormViewController {
         if(code.isV2InviteCode){
             SphinxOnionManager.sharedInstance.vc = self
             SphinxOnionManager.sharedInstance.chooseImportOrGenerateSeed(completion: {success in
-                if(success){
-                    SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code, completion: { rr in
-                        if let mnemonic = UserData.sharedInstance.getMnemonic(),
-                           let rr = rr,
-                           let serverIp = rr.lspHost{
-                            SphinxOnionManager.sharedInstance.server_IP = serverIp
-                            SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic)
-                            SphinxOnionManager.sharedInstance.handleRunReturn(rr: rr)
-                            self.signup_v2_with_test_server()
-                        }
-                        SphinxOnionManager.sharedInstance.vc = nil
-                    })
+                if(success),
+                let mnemonic = UserData.sharedInstance.getMnemonic(),
+                   SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
+                    SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code)
+                    self.signup_v2_with_test_server()
                 }
+                else{
+                    AlertHelper.showAlert(title: "Error redeeming invite", message: "Please try again or ask for another invite.")
+                }
+                SphinxOnionManager.sharedInstance.vc = nil
             })
         }
         else{

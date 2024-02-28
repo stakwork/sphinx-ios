@@ -24,17 +24,18 @@ extension SphinxOnionManager{//invites related
         }
     }
     
-    func redeemInvite(inviteCode:String,completion:@escaping (RunReturn?)->()){
+    func redeemInvite(inviteCode:String){
         guard let seed = getAccountSeed() else{
-            completion(nil)
             return
         }
         do{
             let rr = try! processInvite(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), inviteQr: inviteCode)
-            completion(rr)
+            handleRunReturn(rr: rr)
+            if let lsp = rr.lspHost{
+                self.server_IP = lsp
+            }
         }
         catch{
-            completion(nil)
         }
     }
     

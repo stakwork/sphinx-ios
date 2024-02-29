@@ -166,6 +166,7 @@ extension ConnectionCodeSignupHandling {
                 if let vc = self as? NewUserSignupFormViewController{
                     vc.isV2 = true
                 }
+                som.isV2InitialSetup = true
                 self.proceedToNewUserWelcome()
             }
             else{

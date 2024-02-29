@@ -32,7 +32,8 @@ extension SphinxOnionManager{//contacts related
     
     func makeFriendRequest(
         contactInfo:String,
-        nickname:String?=nil
+        nickname:String?=nil,
+        inviteCode:String?=nil
     ){
         guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
             return
@@ -50,7 +51,11 @@ extension SphinxOnionManager{//contacts related
         
         do{
             let _ = createNewContact(pubkey: recipientPubkey,nickname: nickname)
-            let rr = try addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0, inviteCode: nil)
+            var hexCode : String? = nil
+            if let inviteCode = inviteCode{
+                hexCode = try! codeFromInvite(inviteQr: inviteCode)
+            }
+            let rr = try! addContact(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0, inviteCode: hexCode)
             handleRunReturn(rr: rr)
         }
         catch{

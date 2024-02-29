@@ -40,7 +40,7 @@ extension SphinxOnionManager {
             let components = mci.split(separator: "_").map({String($0)})
             if let components = parseContactInfoString(routeHint: mci),
                UserContact.getContactWithDisregardStatus(pubkey: components.0) == nil{//only add this if we don't already have a "self" contact
-                createSelfContact(scid: components.2, serverPubkey: components.1,myOkKey: components.0)
+                createSelfContact(scid: components.2, serverPubkey: components.1,myOkKey: components.0)                
             }
         }
         
@@ -111,7 +111,7 @@ extension SphinxOnionManager {
         let date = Date(timeIntervalSince1970: TimeInterval(timestamp) / 1000)
         return date
     }
-    
+
     func isGroupAction(type:UInt8)->Bool{
         let throwAwayMessage = TransactionMessage(context: managedContext)
         throwAwayMessage.type = Int(type)

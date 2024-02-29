@@ -21,6 +21,12 @@ class SphinxOnionManager : NSObject {
     
     var pendingContact : UserContact? = nil
     var currentServer : Server? = nil
+    var stashedContactInfo:String?=nil
+    var stashedInitialTribe:String?=nil
+    var stashedInviteCode:String?=nil
+    var stashedInviterAlias:String?=nil
+    
+    var isV2InitialSetup:Bool=false
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var shouldPostUpdates : Bool = false
     var server_IP = "34.229.52.200"
@@ -280,7 +286,7 @@ extension SphinxOnionManager{//Sign Up UI Related:
         
         let generateSeedCallback: (() -> ()) = {
             guard let mneomnic = self.generateMnemonic(),
-                  let vc = self.vc as? NewUserSignupFormViewController else{
+                  let _ = self.vc as? NewUserSignupFormViewController else{
                 completion(false)
                 return
             }

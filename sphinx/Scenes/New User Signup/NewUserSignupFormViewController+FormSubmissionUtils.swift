@@ -49,10 +49,8 @@ extension NewUserSignupFormViewController {
             SphinxOnionManager.sharedInstance.vc = self
             SphinxOnionManager.sharedInstance.chooseImportOrGenerateSeed(completion: {success in
                 if(success),
-                let mnemonic = UserData.sharedInstance.getMnemonic(),
-                   SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
-                    SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code)
-                    self.signup_v2_with_test_server()
+                  let code = self.codeTextField.text{
+                    self.handleInviteCodeV2SignUp(code: code)
                 }
                 else{
                     AlertHelper.showAlert(title: "Error redeeming invite", message: "Please try again or ask for another invite.")
@@ -62,6 +60,14 @@ extension NewUserSignupFormViewController {
         }
         else{
             startSignup(with: code)
+        }
+    }
+    
+    func handleInviteCodeV2SignUp(code:String){
+        if let mnemonic = UserData.sharedInstance.getMnemonic(),
+           SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
+            SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code)
+            self.signup_v2_with_test_server()
         }
     }
     

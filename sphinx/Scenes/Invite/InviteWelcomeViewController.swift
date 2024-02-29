@@ -52,7 +52,12 @@ class InviteWelcomeViewController: UIViewController {
             }
         }
         
-        if let inviter = currentInviter {
+        if isV2,
+           let alias = SphinxOnionManager.sharedInstance.stashedInviterAlias{
+            contactNameLabel.text = alias
+            //welcomeMessageLabel.text = currentInviter?.welcomeMessage
+        }
+        else if let inviter = currentInviter {
             contactNameLabel.text = inviter.nickname
             welcomeMessageLabel.text = inviter.welcomeMessage
         }

@@ -355,6 +355,21 @@ extension DashboardRootViewController {
                 som.getAllUnreadMessages()
             }
         })
+        
+        for contact in UserContact.getAll(){
+            if(contact.nickname == nil){
+                contact.nickname = "Unknown"
+                contact.managedObjectContext?.saveContext()
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                self.shouldReloadContacts(reload: true)
+            })
+        }
+        
+        if som.isV2InitialSetup{
+            som.doInitialInviteSetup()
+        }
     }
     
     @objc func handleNewKeyExchangeReceived(){

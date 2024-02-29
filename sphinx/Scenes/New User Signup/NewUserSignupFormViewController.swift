@@ -207,16 +207,11 @@ extension NewUserSignupFormViewController : ImportSeedViewDelegate{
     
     func didTapConfirm() {
         if(importSeedView.context == .SphinxOnionPrototype){
-            let som = SphinxOnionManager.sharedInstance
-            let success = som.createMyAccount(mnemonic: importSeedView.textView.text)
-            if(success){
-                importSeedContainer.isHidden = !success
-                UserData.sharedInstance.save(walletMnemonic: importSeedView.textView.text)
-                signup_v2_with_test_server()
-            }
-            else{
-                AlertHelper.showAlert(title: "Account Creation Error", message: "There was an error creating your account")
-                importSeedView.isLoading = false
+            importSeedContainer.isHidden = true
+            UserData.sharedInstance.save(walletMnemonic: importSeedView.textView.text)
+            if let code = codeTextField.text,
+               validateCode(code){
+                handleInviteCodeV2SignUp(code: code)
             }
         }
         else{

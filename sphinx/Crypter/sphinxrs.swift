@@ -592,12 +592,13 @@ public struct RunReturn {
     public var `tribeMembers`: String?
     public var `newInvite`: String?
     public var `inviterContactInfo`: String?
+    public var `inviterAlias`: String?
     public var `initialTribe`: String?
     public var `lspHost`: String?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `initialTribe`: String?, `lspHost`: String?) {
+    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `inviterAlias`: String?, `initialTribe`: String?, `lspHost`: String?) {
         self.`msgs` = `msgs`
         self.`topics` = `topics`
         self.`payloads` = `payloads`
@@ -611,6 +612,7 @@ public struct RunReturn {
         self.`tribeMembers` = `tribeMembers`
         self.`newInvite` = `newInvite`
         self.`inviterContactInfo` = `inviterContactInfo`
+        self.`inviterAlias` = `inviterAlias`
         self.`initialTribe` = `initialTribe`
         self.`lspHost` = `lspHost`
     }
@@ -658,6 +660,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`inviterContactInfo` != rhs.`inviterContactInfo` {
             return false
         }
+        if lhs.`inviterAlias` != rhs.`inviterAlias` {
+            return false
+        }
         if lhs.`initialTribe` != rhs.`initialTribe` {
             return false
         }
@@ -681,6 +686,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`tribeMembers`)
         hasher.combine(`newInvite`)
         hasher.combine(`inviterContactInfo`)
+        hasher.combine(`inviterAlias`)
         hasher.combine(`initialTribe`)
         hasher.combine(`lspHost`)
     }
@@ -703,6 +709,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `tribeMembers`: FfiConverterOptionString.read(from: &buf), 
             `newInvite`: FfiConverterOptionString.read(from: &buf), 
             `inviterContactInfo`: FfiConverterOptionString.read(from: &buf), 
+            `inviterAlias`: FfiConverterOptionString.read(from: &buf), 
             `initialTribe`: FfiConverterOptionString.read(from: &buf), 
             `lspHost`: FfiConverterOptionString.read(from: &buf)
         )
@@ -722,6 +729,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`tribeMembers`, into: &buf)
         FfiConverterOptionString.write(value.`newInvite`, into: &buf)
         FfiConverterOptionString.write(value.`inviterContactInfo`, into: &buf)
+        FfiConverterOptionString.write(value.`inviterAlias`, into: &buf)
         FfiConverterOptionString.write(value.`initialTribe`, into: &buf)
         FfiConverterOptionString.write(value.`lspHost`, into: &buf)
     }
@@ -1846,7 +1854,7 @@ public func `listTribeMembers`(`seed`: String, `uniqueTime`: String, `state`: Da
     )
 }
 
-public func `makeInvite`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `amtMsat`: UInt64) throws -> RunReturn {
+public func `makeInvite`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `amtMsat`: UInt64, `myAlias`: String) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_make_invite(
@@ -1854,7 +1862,8 @@ public func `makeInvite`(`seed`: String, `uniqueTime`: String, `state`: Data, `h
         FfiConverterString.lower(`uniqueTime`),
         FfiConverterData.lower(`state`),
         FfiConverterString.lower(`host`),
-        FfiConverterUInt64.lower(`amtMsat`),$0)
+        FfiConverterUInt64.lower(`amtMsat`),
+        FfiConverterString.lower(`myAlias`),$0)
 }
     )
 }
@@ -2030,7 +2039,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_list_tribe_members() != 48922) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_make_invite() != 48075) {
+    if (uniffi_sphinxrs_checksum_func_make_invite() != 61878) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_process_invite() != 52237) {

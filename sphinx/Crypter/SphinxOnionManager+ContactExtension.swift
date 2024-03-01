@@ -79,7 +79,6 @@ extension SphinxOnionManager{//contacts related
         self.pendingContact?.publicKey = myOkKey
         self.pendingContact?.routeHint = "\(serverPubkey)_\(scid)"
         self.pendingContact?.status = UserContact.Status.Confirmed.rawValue
-        self.pendingContact?.childPubKey = "" // not possible for self
         self.pendingContact?.newMessages = 0
         self.pendingContact?.createdAt = Date()
         self.pendingContact?.fromGroup = false

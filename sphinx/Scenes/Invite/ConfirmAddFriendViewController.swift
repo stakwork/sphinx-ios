@@ -146,6 +146,7 @@ class ConfirmAddFriendViewController: UIViewController {
                 loading = false
                 self.delegate?.shouldDismissView?()
                 self.closeButtonTouched()
+                SphinxOnionManager.sharedInstance.createContactForInvite(code: code, nickname: "satoshi")
                 ClipboardHelper.copyToClipboard(text: code)
             }
             else{

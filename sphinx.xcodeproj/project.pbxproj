@@ -1683,6 +1683,7 @@
 		CE655AE12B1F88B90063518D /* SphinxOnionManager+ChatExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+ChatExtension.swift"; sourceTree = "<group>"; };
 		CE67845F2968B0E000342905 /* FeedsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsManager.swift; sourceTree = "<group>"; };
 		CE6C83FB29B918BD00E9FE7C /* TopMostVCsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMostVCsHelper.swift; sourceTree = "<group>"; };
+		CE7840162B922F4D002038AE /* sphinx 48.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "sphinx 48.xcdatamodel"; sourceTree = "<group>"; };
 		CE792FAA2AFED7AF007FD4FE /* Server+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Server+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CE792FAC2AFED7B9007FD4FE /* Server+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Server+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CE7E4F7F29AD2D1100F000FF /* VoIPRequestMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPRequestMessage.swift; sourceTree = "<group>"; };
@@ -6545,6 +6546,7 @@
 		47F35D4A2373156A0042A58F /* sphinx.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CE7840162B922F4D002038AE /* sphinx 48.xcdatamodel */,
 				CECE3D9C2B6D4678009EE475 /* sphinx 47.xcdatamodel */,
 				CEBC3A132AFEA1F20081DB6F /* sphinx 46.xcdatamodel */,
 				47469D712AD98DCA004F0490 /* sphinx 45.xcdatamodel */,
@@ -6593,7 +6595,7 @@
 				475E4162238588A200928931 /* sphinx 2.xcdatamodel */,
 				47F35D4B2373156A0042A58F /* sphinx.xcdatamodel */,
 			);
-			currentVersion = CECE3D9C2B6D4678009EE475 /* sphinx 47.xcdatamodel */;
+			currentVersion = CE7840162B922F4D002038AE /* sphinx 48.xcdatamodel */;
 			path = sphinx.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

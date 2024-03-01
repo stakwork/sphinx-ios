@@ -60,4 +60,25 @@ extension SphinxOnionManager{//invites related
         }
     }
     
+    func createContactForInvite(code:String,nickname:String){
+        let contact = UserContact(context: managedContext)
+        contact.id = Int(Int32(UUID().hashValue & 0x7FFFFFFF))
+        contact.publicKey = ""//
+        contact.isOwner = false//
+        contact.nickname = nickname
+        contact.createdAt = Date()
+        contact.newMessages = 0
+        contact.status = UserContact.Status.Pending.rawValue
+        contact.createdAt = Date()
+        contact.newMessages = 0
+        contact.createdAt = Date()
+        contact.fromGroup = false
+        contact.privatePhoto = false
+        contact.tipAmount = 0
+        contact.blocked = false
+        contact.sentInviteCode = code
+        //contact.avatarUrl = photo_url
+        managedContext.saveContext()
+    }
+    
 }

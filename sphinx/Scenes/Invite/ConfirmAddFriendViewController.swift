@@ -19,11 +19,13 @@ class ConfirmAddFriendViewController: UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     @IBOutlet weak var bottomContainer: UIView!
     @IBOutlet weak var bottomLeftContainer: UIView!
-    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var createInvitationButton: UIButton!
     @IBOutlet weak var nickNameLabel: UILabel!
     @IBOutlet weak var nickNameView: UIView!
     @IBOutlet weak var nickNameField: UITextField!
+    @IBOutlet weak var amountView: UIView!
+    @IBOutlet weak var amountField: UITextField!
+    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var loadingWheel: UIActivityIndicatorView!
     
     let kCharacterLimit = 100
@@ -83,11 +85,14 @@ class ConfirmAddFriendViewController: UIViewController {
         nickNameField.textColor = kTextViewColor
         nickNameField.delegate = self
         
+        amountField.textColor = kTextViewColor
+        amountField.layer.cornerRadius = 5
+        amountField.layer.borderWidth = 1
+        amountField.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
+        
+        
         getLowestPrice()
         
-        messageTextView.isHidden = true
-        messageFieldContainer.isHidden = true
-        nickNameLabel.text = "Amount for Invitee (sats)"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -136,17 +141,16 @@ class ConfirmAddFriendViewController: UIViewController {
     func createInvite() {
         view.endEditing(true)
         
-        if let amount = nickNameField.text,
+        if let amount = amountField.text,
             let amountSats = Int(amount)
-            //let message = messageTextView.text
-            //nickname != "" && message != ""
         {
             loading = true
             if let code = SphinxOnionManager.sharedInstance.issueInvite(amountMsat: amountSats * 1000){
                 loading = false
                 self.delegate?.shouldDismissView?()
                 self.closeButtonTouched()
-                SphinxOnionManager.sharedInstance.createContactForInvite(code: code, nickname: "satoshi")
+                let nickname = nickNameField.text ?? "unknown"
+                SphinxOnionManager.sharedInstance.createContactForInvite(code: code, nickname: nickname)
                 ClipboardHelper.copyToClipboard(text: code)
             }
             else{

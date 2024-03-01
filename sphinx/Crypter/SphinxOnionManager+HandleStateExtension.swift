@@ -147,7 +147,7 @@ extension SphinxOnionManager {
                 }
                 else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue, // incoming key exchange request
                         UserContact.getContactWithDisregardStatus(pubkey: senderPubkey) == nil,//don't respond to requests if already exists
-                    let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person){//new contact from a key exchange message
+                        let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person,code:csr.code){//new contact from a key exchange message
                     NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
                     newContactRequest.status = UserContact.Status.Confirmed.rawValue
                     createChat(for: newContactRequest)
@@ -245,6 +245,7 @@ struct ContactServerResponse: Mappable {
     var alias: String?
     var photoUrl: String?
     var person: String?
+    var code: String?
 
     init?(map: Map) {}
 
@@ -253,6 +254,7 @@ struct ContactServerResponse: Mappable {
         alias     <- map["alias"]
         photoUrl  <- map["photo_url"]
         person    <- map["person"]
+        code <- map["code"]
     }
     
 }

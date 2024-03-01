@@ -76,7 +76,7 @@ extension SphinxOnionManager{//invites related
         contact.privatePhoto = false
         contact.tipAmount = 0
         contact.blocked = false
-        contact.sentInviteCode = code
+        contact.sentInviteCode = try! codeFromInvite(inviteQr: code)
         //contact.avatarUrl = photo_url
         managedContext.saveContext()
     }

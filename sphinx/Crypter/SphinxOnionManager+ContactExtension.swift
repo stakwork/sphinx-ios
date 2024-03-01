@@ -92,9 +92,11 @@ extension SphinxOnionManager{//contacts related
         pubkey:String,
         nickname:String?=nil,
         photo_url:String?=nil,
-        person:String? = nil
+        person:String? = nil,
+        code:String?=nil
     ) -> UserContact?{
-        let contact = UserContact(context: managedContext)
+        
+        let contact = UserContact.getContactWithInvitCode(inviteCode: code ?? "") ?? UserContact(context: managedContext)
         contact.id = Int(Int32(UUID().hashValue & 0x7FFFFFFF))
         contact.publicKey = pubkey//
         contact.isOwner = false//

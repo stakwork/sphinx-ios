@@ -308,7 +308,7 @@ public class UserContact: NSManagedObject {
     
     public static func getContactWithInvitCode(inviteCode: String,
                                       managedContext: NSManagedObjectContext? = nil) -> UserContact? {
-        let predicate = NSPredicate(format: "inviteCode == %@", inviteCode)
+        let predicate = NSPredicate(format: "sentInviteCode == %@", inviteCode)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let contact:UserContact? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "UserContact",managedContext: managedContext)
         return contact

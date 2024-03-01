@@ -77,7 +77,11 @@ extension SphinxOnionManager{//invites related
         contact.tipAmount = 0
         contact.blocked = false
         contact.sentInviteCode = try! codeFromInvite(inviteQr: code)
-        //contact.avatarUrl = photo_url
+        let invite = UserInvite(context: managedContext)
+        invite.inviteString = code
+        invite.status = UserInvite.Status.Ready.rawValue
+        contact.invite = invite
+        invite.contact = contact
         managedContext.saveContext()
     }
     

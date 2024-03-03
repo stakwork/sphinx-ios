@@ -32,8 +32,6 @@ final class DashboardUITest: XCTestCase {
     func testTappingFriendsTabShowFriendsChat() {
         let friendsStaticText = app/*@START_MENU_TOKEN@*/.staticTexts["Friends"]/*[[".buttons[\"Friends\"].staticTexts[\"Friends\"]",".staticTexts[\"Friends\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
         friendsStaticText.tap()
-        app/*@START_MENU_TOKEN@*/.staticTexts["Feed"]/*[[".buttons[\"Feed\"].staticTexts[\"Feed\"]",".staticTexts[\"Feed\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        friendsStaticText.tap()
         let chatsContainerVC = app.otherElements["ChatsContainerViewController"]
         XCTAssertTrue(chatsContainerVC.exists)
     }
@@ -70,6 +68,13 @@ final class DashboardUITest: XCTestCase {
         let newQRScannerVC = app.otherElements["NewQRScannerViewController"]
         XCTAssertTrue(newQRScannerVC.exists)
         newQRScannerVC.children(matching: .other).element(boundBy: 0)/*@START_MENU_TOKEN@*/.staticTexts[""]/*[[".buttons[\"\"].staticTexts[\"\"]",".staticTexts[\"\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+    }
+    
+    func testTappingTransactionsBottomBarShowTransactionView() {
+        app.buttons["bottomBar2"].tap()
+        let historyVC = app.otherElements["HistoryViewController"]
+        XCTAssertTrue(historyVC.exists)
+        historyVC.children(matching: .other).element.children(matching: .button).element.tap()
     }
 
     func testLaunchPerformance() throws {

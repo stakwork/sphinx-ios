@@ -43,7 +43,12 @@ final class DashboardUITest: XCTestCase {
         XCTAssertTrue(chatViewController.exists)
     }
     
-
+    func testTappingTribesTabShowTribesChats() {
+        app/*@START_MENU_TOKEN@*/.staticTexts["Tribes"]/*[[".buttons[\"Tribes\"].staticTexts[\"Tribes\"]",".staticTexts[\"Tribes\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        let chatViewController = app.otherElements["ChatsContainerViewController"]
+        XCTAssertTrue(chatViewController.exists)
+    }
+    
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.

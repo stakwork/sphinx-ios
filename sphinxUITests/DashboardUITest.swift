@@ -9,8 +9,7 @@
 import XCTest
 
 final class DashboardUITest: XCTestCase {
-
-//    var app: XCUIApplication!
+    
     let app = XCUIApplication()
     
     override func setUpWithError() throws {
@@ -35,21 +34,28 @@ final class DashboardUITest: XCTestCase {
         friendsStaticText.tap()
         app/*@START_MENU_TOKEN@*/.staticTexts["Feed"]/*[[".buttons[\"Feed\"].staticTexts[\"Feed\"]",".staticTexts[\"Feed\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         friendsStaticText.tap()
-        let chatViewController = app.otherElements["ChatsContainerViewController"]
-        XCTAssertTrue(chatViewController.exists)
+        let chatsContainerVC = app.otherElements["ChatsContainerViewController"]
+        XCTAssertTrue(chatsContainerVC.exists)
     }
     
     func testTappingTribesTabShowTribesChats() {
         app/*@START_MENU_TOKEN@*/.staticTexts["Tribes"]/*[[".buttons[\"Tribes\"].staticTexts[\"Tribes\"]",".staticTexts[\"Tribes\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        let chatViewController = app.otherElements["ChatsContainerViewController"]
-        XCTAssertTrue(chatViewController.exists)
+        let chatsContainerVC = app.otherElements["ChatsContainerViewController"]
+        XCTAssertTrue(chatsContainerVC.exists)
     }
     
     func testTappingAddTribesShowDiscoverTribesView() {
         app/*@START_MENU_TOKEN@*/.staticTexts["Tribes"]/*[[".buttons[\"Tribes\"].staticTexts[\"Tribes\"]",".staticTexts[\"Tribes\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
         app/*@START_MENU_TOKEN@*/.staticTexts["Add Tribe"]/*[[".buttons[\"Add Tribe\"].staticTexts[\"Add Tribe\"]",".staticTexts[\"Add Tribe\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        let chatViewController = app.otherElements["DiscoverTribesWebViewController"]
-        XCTAssertTrue(chatViewController.exists)
+        let discoverTribesWebVC = app.otherElements["DiscoverTribesWebViewController"]
+        XCTAssertTrue(discoverTribesWebVC.exists)
+    }
+    
+    func testTappingLeftArrowButtonBottomBarShowRequestAmountView() {
+        app.buttons["bottomBar1"].tap()
+        let createInvoiceVC = app.otherElements["CreateInvoiceViewController"]
+        XCTAssertTrue(createInvoiceVC.exists)
+        app/*@START_MENU_TOKEN@*/.buttons[""]/*[[".otherElements[\"CreateInvoiceViewController\"].buttons[\"\"]",".buttons[\"\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
     }
 
     func testLaunchPerformance() throws {

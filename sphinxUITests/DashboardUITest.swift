@@ -57,6 +57,13 @@ final class DashboardUITest: XCTestCase {
         XCTAssertTrue(createInvoiceVC.exists)
         app/*@START_MENU_TOKEN@*/.buttons[""]/*[[".otherElements[\"CreateInvoiceViewController\"].buttons[\"\"]",".buttons[\"\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
     }
+    
+    func testTappingRightArrowButtonBottomBarShowRequestAmountView() {
+        app.buttons["bottomBar4"].tap()
+        let newQRScannerVC = app.otherElements["NewQRScannerViewController"]
+        XCTAssertTrue(newQRScannerVC.exists)
+        newQRScannerVC.children(matching: .other).element(boundBy: 0)/*@START_MENU_TOKEN@*/.staticTexts[""]/*[[".buttons[\"\"].staticTexts[\"\"]",".staticTexts[\"\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

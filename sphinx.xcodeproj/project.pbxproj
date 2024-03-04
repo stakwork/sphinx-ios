@@ -3451,7 +3451,6 @@
 			children = (
 				4779F184232AA0F300D35E81 /* sphinxUITests.swift */,
 				4779F186232AA0F300D35E81 /* Info.plist */,
-				93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */,
 			);
 			path = sphinxUITests;
 			sourceTree = "<group>";
@@ -3718,6 +3717,14 @@
 				47A79D3F2444EEFF005CD72F /* MessageOptionView.xib */,
 			);
 			path = "Message Options";
+			sourceTree = "<group>";
+		};
+		47A90F592B965A5600D2FD44 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		47AAFC83238F009D00E30BDA /* Attachments */ = {
@@ -4541,6 +4548,7 @@
 				473C314E279869B8007735CD /* Custom Views */,
 				F373BF0A26AAFB6B0093C886 /* Custom Segmented Control */,
 				F3CE637826AFD42C006E37A0 /* Feeds */,
+				47A90F592B965A5600D2FD44 /* Tests */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -6492,6 +6500,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -6556,6 +6565,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -6767,7 +6777,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakwork.sphinxTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6788,7 +6798,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakwork.sphinxTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6808,7 +6818,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakwork.sphinxUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinxUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6822,13 +6832,14 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P9X3KBM9TJ;
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = sphinxUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stakwork.sphinxUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinxUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -18,11 +18,11 @@ final class DashboardUITest: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        app.terminate()
     }
     
     func testDashboardUI() {
-        let friendSearchcontent = "Saif"
+        let friendSearchcontent = "Alejandro"
         //MARK: - test Tapping Feeds Tab Shows FeedContent
         let feedTab = app.staticTexts["Feed"]
         XCTAssertTrue(feedTab.exists)
@@ -76,7 +76,7 @@ final class DashboardUITest: XCTestCase {
         searchTextField.tap()
         searchTextField.typeText(friendSearchcontent)
         sleep(1)
-        let result = app/*@START_MENU_TOKEN@*/.collectionViews.cells.staticTexts["Saif "]/*[[".otherElements[\"ChatsContainerViewController\"].collectionViews",".cells.staticTexts[\"Saif \"]",".staticTexts[\"Saif \"]",".collectionViews"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,1]]@END_MENU_TOKEN@*/
+        let result = app.collectionViews.cells.staticTexts["Alejandro"]
         XCTAssertTrue(result.exists)
         sleep(1)
         app.terminate()

@@ -636,6 +636,7 @@
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		93FCEA782B91AF3B0069B344 /* DashboardUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */; };
 		CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */; };
 		CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */; };
 		CE07B83A29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */; };
@@ -1823,6 +1824,7 @@
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardUITest.swift; sourceTree = "<group>"; };
 		CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -3449,6 +3451,7 @@
 			children = (
 				4779F184232AA0F300D35E81 /* sphinxUITests.swift */,
 				4779F186232AA0F300D35E81 /* Info.plist */,
+				93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */,
 			);
 			path = sphinxUITests;
 			sourceTree = "<group>";
@@ -5709,6 +5712,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93FCEA782B91AF3B0069B344 /* DashboardUITest.swift in Sources */,
 				4779F185232AA0F300D35E81 /* sphinxUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

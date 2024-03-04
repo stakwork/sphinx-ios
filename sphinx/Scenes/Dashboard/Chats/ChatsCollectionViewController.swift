@@ -110,7 +110,7 @@ extension ChatsCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.accessibilityIdentifier = "ChatsCollectionViewController"
         loadChatsList()
     }
     

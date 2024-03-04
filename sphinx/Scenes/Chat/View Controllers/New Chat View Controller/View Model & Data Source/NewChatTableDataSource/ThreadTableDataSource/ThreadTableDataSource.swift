@@ -140,7 +140,11 @@ class ThreadTableDataSource : NewChatTableDataSource {
     override func makeCellProvider(
         for tableView: UITableView
     ) -> DataSource.CellProvider {
-        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
+        { [weak self] (tableView, indexPath, dataSourceItem) -> UITableViewCell? in
+            guard let self else {
+                return nil
+            }
+            
             return self.getThreadCellFor(
                 dataSourceItem: dataSourceItem,
                 indexPath: indexPath

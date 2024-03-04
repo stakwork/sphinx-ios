@@ -131,7 +131,10 @@ class ThreadsListDataSource : NSObject {
     func makeCellProvider(
         for tableView: UITableView
     ) -> DataSource.CellProvider {
-        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
+        { [weak self] (tableView, indexPath, dataSourceItem) -> UITableViewCell? in
+            guard let self else {
+                return nil
+            }
             
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "ThreadListTableViewCell",

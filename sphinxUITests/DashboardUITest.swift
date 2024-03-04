@@ -77,6 +77,19 @@ final class DashboardUITest: XCTestCase {
         historyVC.children(matching: .other).element.children(matching: .button).element.tap()
     }
 
+    func testSearchFieldOnFriendsTabFilterChatRow() {
+        let friendSearchcontent = "Saif"
+        let friendsStaticText = app/*@START_MENU_TOKEN@*/.staticTexts["Friends"]/*[[".buttons[\"Friends\"].staticTexts[\"Friends\"]",".staticTexts[\"Friends\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        let searchTextField = app.textFields["Search"]
+        friendsStaticText.tap()
+        searchTextField.tap()
+        searchTextField.typeText(friendSearchcontent)
+        sleep(1)
+        let result = app/*@START_MENU_TOKEN@*/.collectionViews.cells.staticTexts["Saif "]/*[[".otherElements[\"ChatsContainerViewController\"].collectionViews",".cells.staticTexts[\"Saif \"]",".staticTexts[\"Saif \"]",".collectionViews"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,1]]@END_MENU_TOKEN@*/
+        XCTAssertTrue(result.exists)
+        sleep(1)
+        app.terminate()
+    }
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.

@@ -403,7 +403,11 @@ extension PodcastFeedCollectionViewController {
     func makeCellProvider(
         for collectionView: UICollectionView
     ) -> DataSource.CellProvider {
-        { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
+        { [weak self] (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell? in
+            guard let self else {
+                return nil
+            }
+            
             guard
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,

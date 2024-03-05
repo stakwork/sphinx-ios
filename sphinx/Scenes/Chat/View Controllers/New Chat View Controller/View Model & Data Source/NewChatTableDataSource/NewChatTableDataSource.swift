@@ -193,8 +193,8 @@ class NewChatTableDataSource : NSObject {
     func makeCellProvider(
         for tableView: UITableView
     ) -> DataSource.CellProvider {
-        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
-            return self.getCellFor(
+        { [weak self] (tableView, indexPath, dataSourceItem) -> UITableViewCell? in
+            return self?.getCellFor(
                 dataSourceItem: dataSourceItem,
                 indexPath: indexPath
             )

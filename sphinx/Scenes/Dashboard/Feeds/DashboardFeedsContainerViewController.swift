@@ -171,7 +171,7 @@ class DashboardFeedsContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.accessibilityIdentifier = "DashboardFeedsContainerViewController"
         isLoading = true
         
         setupFilterOptions()

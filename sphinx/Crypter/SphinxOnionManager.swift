@@ -85,7 +85,7 @@ class SphinxOnionManager : NSObject {
     
     func getAccountXpub(seed:String) -> String?  {
         do{
-            let xpub = try xpubFromSeed(seed: seed, time: getEntropyString(), network: network)
+            let xpub = try xpubFromSeed(seed: seed, time: getTimeWithEntropy(), network: network)
             return xpub
         }
         catch{
@@ -95,7 +95,7 @@ class SphinxOnionManager : NSObject {
     
     func getAccountOnlyKeysendPubkey(seed:String)->String?{
         do{
-            let pubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getEntropyString(), network: network)
+            let pubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getTimeWithEntropy(), network: network)
             return pubkey
         }
         catch{
@@ -103,16 +103,18 @@ class SphinxOnionManager : NSObject {
         }
     }
     
-    func getEntropyString()->String{
-        let upperBound = 10_000_000_000
+    func getTimeWithEntropy()->String{
+        let currentTimeMilliseconds = Int(Date().timeIntervalSince1970 * 1000)
+        let upperBound = 1_000
         let randomInt = CrypterManager().generateCryptographicallySecureRandomInt(upperBound: upperBound)
-        let randomString = String(describing: randomInt!)
+        let timePlusRandom = currentTimeMilliseconds + randomInt!
+        let randomString = String(describing: timePlusRandom)
         return randomString
     }
     
     func connectToBroker(seed:String,xpub:String)->Bool{
         do{
-            let now = getEntropyString()
+            let now = getTimeWithEntropy()
             let sig = try rootSignMs(seed: seed, time: now, network: network)
             
             mqtt = CocoaMQTT(clientID: xpub,host: server_IP ,port:  UInt16(server_PORT))
@@ -143,7 +145,7 @@ class SphinxOnionManager : NSObject {
         let sinceMsgIndex = UserData.sharedInstance.getLastMessageIndex() != nil ? UserData.sharedInstance.getLastMessageIndex()! + 1 : 0 //TODO: store last read index?
         let msgCountLimit = limit ?? 50
         do{
-            let rr = try fetchMsgs(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(sinceMsgIndex), limit: UInt32(msgCountLimit))
+            let rr = try fetchMsgs(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(sinceMsgIndex), limit: UInt32(msgCountLimit))
             handleRunReturn(rr: rr)
         }
         catch{
@@ -167,7 +169,7 @@ class SphinxOnionManager : NSObject {
                 return
             }
             
-            let subtopic = try! sphinx.getSubscriptionTopic(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData())
+            let subtopic = try! sphinx.getSubscriptionTopic(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
             
             mqtt.didReceiveMessage = { mqtt, receivedMessage, id in
                 self.isConnected = true
@@ -178,10 +180,10 @@ class SphinxOnionManager : NSObject {
                 (subtopic, CocoaMQTTQoS.qos1)
             ])
             
-            let ret3 = try initialSetup(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData())
+            let ret3 = try initialSetup(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
             handleRunReturn(rr: ret3)
             
-            let tribeMgmtTopic = try getTribeManagementTopic(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData())
+            let tribeMgmtTopic = try getTribeManagementTopic(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
             
             
             self.mqtt.subscribe([
@@ -198,7 +200,7 @@ class SphinxOnionManager : NSObject {
             return
         }
         do{
-            let myPubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getEntropyString(), network: network)
+            let myPubkey = try pubkeyFromSeed(seed: seed, idx: 0, time: getTimeWithEntropy(), network: network)
             let myFullAccount = try sphinx.listContacts(state: loadOnionStateAsData())
             print(myFullAccount)
         }
@@ -258,7 +260,7 @@ class SphinxOnionManager : NSObject {
             let owner = UserContact.getOwner()
             let alias = owner?.nickname ?? ""
             let pic = owner?.avatarUrl ?? ""
-            let ret4 = try handle(topic: message.topic, payload: Data(message.payload), seed: seed, uniqueTime: getEntropyString(), state: self.loadOnionStateAsData(), myAlias: alias, myImg: pic)
+            let ret4 = try handle(topic: message.topic, payload: Data(message.payload), seed: seed, uniqueTime: getTimeWithEntropy(), state: self.loadOnionStateAsData(), myAlias: alias, myImg: pic)
             handleRunReturn(rr: ret4)
         }
         catch{

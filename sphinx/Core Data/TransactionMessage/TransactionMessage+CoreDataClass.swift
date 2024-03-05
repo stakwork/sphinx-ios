@@ -30,13 +30,13 @@ public class TransactionMessage: NSManagedObject {
         case groupInvite = 13
         case groupJoin = 14 //
         case groupLeave = 15 //
-        case groupKick = 16
+        case groupKick = 16 //
         case delete = 17 //
         case repayment = 18
         case memberRequest = 19 //
         case memberApprove = 20 //
-        case memberReject = 21
-        case groupDelete = 22
+        case memberReject = 21 //
+        case groupDelete = 22 //
         case botInstall = 23
         case botCmd = 24
         case botResponse = 25
@@ -51,7 +51,7 @@ public class TransactionMessage: NSManagedObject {
         case imageAttachment = 100 //
         case videoAttachment = 101 //
         case audioAttachment = 102 //
-        case textAttachment = 103
+        case textAttachment = 103 //
         case pdfAttachment = 104 //
         case fileAttachment = 105 //
         

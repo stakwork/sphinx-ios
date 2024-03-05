@@ -35,7 +35,7 @@ extension NewQRScannerViewController {
             return
         } else if validatePublicKey(string: string) {
             return
-        }else if validateInvoice(string: string) {
+        }else if validateInvoice(string: string) || validateZeroAmountInvoice(string: string){
             return
         } else if validateDeepLinks(string: string) {
             return
@@ -44,7 +44,20 @@ extension NewQRScannerViewController {
         AlertHelper.showAlert(title: "sorry".localized, message: "code.not.recognized".localized)
     }
     
+    func validateZeroAmountInvoice(string:String) -> Bool{
+        print("isZeroAmountInvoice:\(prDecoder.isZeroAmountInvoice(invoice: string))")
+        if(prDecoder.isZeroAmountInvoice(invoice: string)){
+            DispatchQueue.main.async {
+                self.completeAndShowPRDetails()
+            }
+            return true
+        }
+        
+        return false
+    }
+    
     func validateInvoice(string: String) -> Bool {
+        
         prDecoder.decodePaymentRequest(paymentRequest: string)
         
         if prDecoder.isPaymentRequest() {
@@ -176,15 +189,7 @@ extension NewQRScannerViewController {
         var parameters = [String : AnyObject]()
         parameters["payment_request"] = invoice as AnyObject?
 
-        API.sharedInstance.payInvoice(parameters: parameters, callback: { payment in
-            AlertHelper.showAlert(title: "generic.success.title".localized, message: "invoice.paid".localized)
-        }, errorCallback: { error in
-            self.invoiceLoading = false
-            
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: error, completion: {
-                self.animatePayingContainer(show: false)
-            })
-        })
+        SphinxOnionManager.sharedInstance.payInvoice(invoice: invoice)
         self.dismiss(animated: true, completion: nil)
     }
 }

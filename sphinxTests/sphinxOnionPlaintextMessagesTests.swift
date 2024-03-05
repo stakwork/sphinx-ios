@@ -203,7 +203,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             XCTFail("Failed to establish self contact")
             return
         }
-        let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getTimeWithEntropy())"
         //3. Send & Await results to come in
         let additionalParams = [replyUuid].compactMap({$0})
         sendRemoteServerMessageRequest(cmd: "send",pubkey: pubkey, theMsg: "\(messageContent)",additionalParams: additionalParams)
@@ -218,7 +218,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             XCTFail("Failed to establish self contact")
             return
         }
-        let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        let messageContent =  customMessage ?? test_received_message_content + "-\(sphinxOnionManager.getTimeWithEntropy())"
         //3. Send & Await results to come in
         sendRemoteServerMessageRequest(cmd: "send_attachment",pubkey: pubkey, theMsg: "\(messageContent)",amount:0,additionalParams: [mk,mt])
         enforceDelay(delay: 8.0)
@@ -268,7 +268,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
         //1. Listen to the correct channels -> handled in setup
         
         //2. Publish to a channel known to contain a message
-        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getTimeWithEntropy())"
         makeServerSendMessage(customMessage: test_content_value)
         
         //4. Confirm that the known message content matches what we expect
@@ -320,7 +320,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
     //MARK: Type 6 Attachment Messages
     
     func test_receive_attachment_message_3_3() throws {
-        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getTimeWithEntropy())"
         let testMediaKey = "Q0QxQjUyMkMzODM3NDE2NTg1NDgxQTBD"
         let testMediaToken = "bWVtZXMuc3BoaW54LmNoYXQ=.M_ZcxtcbRUZmDcHDYahSDvZJV4eOFvapZOb2wa-qNy0=..Z7X6KA==..ILxohNjxscIumj0f5NH1fySoR1HirySwMEHwVTGCAqzgPxXINtIyVO4agyf12hulTvCLDbKyOatmdotD9TBqLD4="
         makeServerSendAttachment(mk: testMediaKey, mt: testMediaToken, customMessage: test_content_value)
@@ -450,7 +450,7 @@ final class sphinxOnionPlaintextMessagesTests: XCTestCase {
             return
         }
         //2. Reply to initial message
-        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getEntropyString())"
+        let test_content_value = test_received_message_content + "-\(sphinxOnionManager.getTimeWithEntropy())"
         makeServerSendMessage(customMessage: test_content_value,replyUuid: originalUuid)
         
         XCTAssertTrue(receivedMessage?["content"] as? String == test_content_value)

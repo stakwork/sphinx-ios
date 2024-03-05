@@ -23,7 +23,7 @@ extension SphinxOnionManager{
             return nil
         }
         do{
-            let mt = try makeMediaToken(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
+            let mt = try makeMediaToken(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), host: "memes.sphinx.chat", muid: muid, to: recipPubkey, expiry: UInt32(expiry.timeIntervalSince1970))
             return mt
         }
         catch{
@@ -117,9 +117,9 @@ extension SphinxOnionManager{
         let myImg = selfContact.avatarUrl ?? ""
         
         do{
-            print("seed: \(seed), uniqueTime: \(getEntropyString()), to: \(recipPubkey), msgType: \(msgType), msgJson: \(contentJSONString), state: \(String(describing: loadOnionStateAsData())), myAlias: \(nickname), myImg: \(String(describing: myImg)), amtMsat: \(UInt64(sendAmount * 1000)), isTribe: \(String(describing: recipContact == nil))")
+            print("seed: \(seed), uniqueTime: \(getTimeWithEntropy()), to: \(recipPubkey), msgType: \(msgType), msgJson: \(contentJSONString), state: \(String(describing: loadOnionStateAsData())), myAlias: \(nickname), myImg: \(String(describing: myImg)), amtMsat: \(UInt64(sendAmount * 1000)), isTribe: \(String(describing: recipContact == nil))")
 
-            let rr = try! send(seed: seed, uniqueTime: getEntropyString(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((sendAmount * 1000)),isTribe: recipContact == nil)
+            let rr = try! send(seed: seed, uniqueTime: getTimeWithEntropy(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((sendAmount * 1000)),isTribe: recipContact == nil)
             let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
             handleRunReturn(rr: rr)
             return sentMessage
@@ -386,7 +386,7 @@ extension SphinxOnionManager{
                 return nil
             }
             
-            let resultHex = try signBytes(seed: seed, idx: 0, time: getEntropyString(), network: network, msg: challengeData)
+            let resultHex = try signBytes(seed: seed, idx: 0, time: getTimeWithEntropy(), network: network, msg: challengeData)
             
             // Convert the hex string to binary data
             if let resultData = Data(hexString: resultHex) {

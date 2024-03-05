@@ -333,22 +333,14 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             AlertHelper.showAlert(title: "generic.error.title".localized, message: "memo.too.large".localized)
             return
         }
-            
-        let parameters = TransactionMessage.getPaymentParamsFor(
-            payment: paymentsViewModel.payment,
-            contact: contact,
-            chat: chat
-        )
         
-        API.sharedInstance.createInvoice(parameters: parameters, callback: { message, invoice in
-            if let message = message {
-                self.createLocalMessages(message: message)
-            } else if let invoice = invoice {
-                self.presentInvoiceDetailsVC(invoiceString: invoice)
-            }
-        }, errorCallback: {
-            self.createLocalMessages(message: nil)
-        })
+        if let paymentAmount = paymentsViewModel.payment.amount,
+           let invoice = SphinxOnionManager.sharedInstance.createInvoice(amountMsat: paymentAmount * 1000, description: paymentsViewModel.payment.memo ?? "") {
+            self.presentInvoiceDetailsVC(invoiceString: invoice)
+        }
+        else{
+            delegate?.didFailCreatingInvoice?()
+        }
     }
 }
 

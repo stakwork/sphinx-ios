@@ -583,6 +583,7 @@ public struct RunReturn {
     public var `topics`: [String]
     public var `payloads`: [Data]
     public var `stateMp`: Data?
+    public var `stateToDelete`: [String]
     public var `newBalance`: UInt64?
     public var `myContactInfo`: String?
     public var `sentStatus`: String?
@@ -595,14 +596,16 @@ public struct RunReturn {
     public var `inviterAlias`: String?
     public var `initialTribe`: String?
     public var `lspHost`: String?
+    public var `invoice`: String?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `inviterAlias`: String?, `initialTribe`: String?, `lspHost`: String?) {
+    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `stateToDelete`: [String], `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `inviterAlias`: String?, `initialTribe`: String?, `lspHost`: String?, `invoice`: String?) {
         self.`msgs` = `msgs`
         self.`topics` = `topics`
         self.`payloads` = `payloads`
         self.`stateMp` = `stateMp`
+        self.`stateToDelete` = `stateToDelete`
         self.`newBalance` = `newBalance`
         self.`myContactInfo` = `myContactInfo`
         self.`sentStatus` = `sentStatus`
@@ -615,6 +618,7 @@ public struct RunReturn {
         self.`inviterAlias` = `inviterAlias`
         self.`initialTribe` = `initialTribe`
         self.`lspHost` = `lspHost`
+        self.`invoice` = `invoice`
     }
 }
 
@@ -631,6 +635,9 @@ extension RunReturn: Equatable, Hashable {
             return false
         }
         if lhs.`stateMp` != rhs.`stateMp` {
+            return false
+        }
+        if lhs.`stateToDelete` != rhs.`stateToDelete` {
             return false
         }
         if lhs.`newBalance` != rhs.`newBalance` {
@@ -669,6 +676,9 @@ extension RunReturn: Equatable, Hashable {
         if lhs.`lspHost` != rhs.`lspHost` {
             return false
         }
+        if lhs.`invoice` != rhs.`invoice` {
+            return false
+        }
         return true
     }
 
@@ -677,6 +687,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`topics`)
         hasher.combine(`payloads`)
         hasher.combine(`stateMp`)
+        hasher.combine(`stateToDelete`)
         hasher.combine(`newBalance`)
         hasher.combine(`myContactInfo`)
         hasher.combine(`sentStatus`)
@@ -689,6 +700,7 @@ extension RunReturn: Equatable, Hashable {
         hasher.combine(`inviterAlias`)
         hasher.combine(`initialTribe`)
         hasher.combine(`lspHost`)
+        hasher.combine(`invoice`)
     }
 }
 
@@ -700,6 +712,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `topics`: FfiConverterSequenceString.read(from: &buf), 
             `payloads`: FfiConverterSequenceData.read(from: &buf), 
             `stateMp`: FfiConverterOptionData.read(from: &buf), 
+            `stateToDelete`: FfiConverterSequenceString.read(from: &buf), 
             `newBalance`: FfiConverterOptionUInt64.read(from: &buf), 
             `myContactInfo`: FfiConverterOptionString.read(from: &buf), 
             `sentStatus`: FfiConverterOptionString.read(from: &buf), 
@@ -711,7 +724,8 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
             `inviterContactInfo`: FfiConverterOptionString.read(from: &buf), 
             `inviterAlias`: FfiConverterOptionString.read(from: &buf), 
             `initialTribe`: FfiConverterOptionString.read(from: &buf), 
-            `lspHost`: FfiConverterOptionString.read(from: &buf)
+            `lspHost`: FfiConverterOptionString.read(from: &buf), 
+            `invoice`: FfiConverterOptionString.read(from: &buf)
         )
     }
 
@@ -720,6 +734,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterSequenceString.write(value.`topics`, into: &buf)
         FfiConverterSequenceData.write(value.`payloads`, into: &buf)
         FfiConverterOptionData.write(value.`stateMp`, into: &buf)
+        FfiConverterSequenceString.write(value.`stateToDelete`, into: &buf)
         FfiConverterOptionUInt64.write(value.`newBalance`, into: &buf)
         FfiConverterOptionString.write(value.`myContactInfo`, into: &buf)
         FfiConverterOptionString.write(value.`sentStatus`, into: &buf)
@@ -732,6 +747,7 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`inviterAlias`, into: &buf)
         FfiConverterOptionString.write(value.`initialTribe`, into: &buf)
         FfiConverterOptionString.write(value.`lspHost`, into: &buf)
+        FfiConverterOptionString.write(value.`invoice`, into: &buf)
     }
 }
 
@@ -1798,16 +1814,28 @@ public func `makeMediaTokenWithPrice`(`seed`: String, `uniqueTime`: String, `sta
     )
 }
 
-public func `makeInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `amtMsat`: UInt64, `preimage`: String, `description`: String) throws -> String {
-    return try  FfiConverterString.lift(
+public func `makeInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `amtMsat`: UInt64, `description`: String) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_make_invoice(
         FfiConverterString.lower(`seed`),
         FfiConverterString.lower(`uniqueTime`),
         FfiConverterData.lower(`state`),
         FfiConverterUInt64.lower(`amtMsat`),
-        FfiConverterString.lower(`preimage`),
         FfiConverterString.lower(`description`),$0)
+}
+    )
+}
+
+public func `payInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `bolt11`: String, `overpayMsat`: UInt64?) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_pay_invoice(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`bolt11`),
+        FfiConverterOptionUInt64.lower(`overpayMsat`),$0)
 }
     )
 }
@@ -1854,7 +1882,7 @@ public func `listTribeMembers`(`seed`: String, `uniqueTime`: String, `state`: Da
     )
 }
 
-public func `makeInvite`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `amtMsat`: UInt64, `myAlias`: String) throws -> RunReturn {
+public func `makeInvite`(`seed`: String, `uniqueTime`: String, `state`: Data, `host`: String, `amtMsat`: UInt64, `myAlias`: String, `tribeHost`: String?, `tribePubkey`: String?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_make_invite(
@@ -1863,7 +1891,9 @@ public func `makeInvite`(`seed`: String, `uniqueTime`: String, `state`: Data, `h
         FfiConverterData.lower(`state`),
         FfiConverterString.lower(`host`),
         FfiConverterUInt64.lower(`amtMsat`),
-        FfiConverterString.lower(`myAlias`),$0)
+        FfiConverterString.lower(`myAlias`),
+        FfiConverterOptionString.lower(`tribeHost`),
+        FfiConverterOptionString.lower(`tribePubkey`),$0)
 }
     )
 }
@@ -2027,7 +2057,10 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_make_media_token_with_price() != 53555) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_make_invoice() != 41170) {
+    if (uniffi_sphinxrs_checksum_func_make_invoice() != 12949) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_pay_invoice() != 40951) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_create_tribe() != 28873) {
@@ -2039,7 +2072,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_list_tribe_members() != 48922) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_make_invite() != 61878) {
+    if (uniffi_sphinxrs_checksum_func_make_invite() != 6280) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_process_invite() != 52237) {

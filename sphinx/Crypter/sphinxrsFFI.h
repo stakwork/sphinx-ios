@@ -145,7 +145,9 @@ RustBuffer uniffi_sphinxrs_fn_func_make_media_token_with_meta(RustBuffer seed, R
 );
 RustBuffer uniffi_sphinxrs_fn_func_make_media_token_with_price(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer host, RustBuffer muid, RustBuffer to, uint32_t expiry, uint64_t price, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_sphinxrs_fn_func_make_invoice(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t amt_msat, RustBuffer preimage, RustBuffer description, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_sphinxrs_fn_func_make_invoice(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t amt_msat, RustBuffer description, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_pay_invoice(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer bolt11, RustBuffer overpay_msat, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_create_tribe(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer tribe_server_pubkey, RustBuffer tribe_json, RustCallStatus *_Nonnull out_status
 );
@@ -153,7 +155,7 @@ RustBuffer uniffi_sphinxrs_fn_func_join_tribe(RustBuffer seed, RustBuffer unique
 );
 RustBuffer uniffi_sphinxrs_fn_func_list_tribe_members(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer tribe_server_pubkey, RustBuffer tribe_pubkey, RustCallStatus *_Nonnull out_status
 );
-RustBuffer uniffi_sphinxrs_fn_func_make_invite(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer host, uint64_t amt_msat, RustBuffer my_alias, RustCallStatus *_Nonnull out_status
+RustBuffer uniffi_sphinxrs_fn_func_make_invite(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer host, uint64_t amt_msat, RustBuffer my_alias, RustBuffer tribe_host, RustBuffer tribe_pubkey, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_process_invite(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer invite_qr, RustCallStatus *_Nonnull out_status
 );
@@ -291,6 +293,9 @@ uint16_t uniffi_sphinxrs_checksum_func_make_media_token_with_price(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_make_invoice(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_pay_invoice(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_create_tribe(void

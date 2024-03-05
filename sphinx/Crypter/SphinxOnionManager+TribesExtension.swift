@@ -25,7 +25,7 @@ extension SphinxOnionManager{//tribes related
             return
         }
         do{
-            let rr = try! sphinx.createTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: tribeServerPubkey, tribeJson: tribeJSONString)
+            let rr = try! sphinx.createTribe(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), tribeServerPubkey: tribeServerPubkey, tribeJson: tribeJSONString)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -44,7 +44,7 @@ extension SphinxOnionManager{//tribes related
         }
         do{
             
-            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000, isPrivate: isPrivate)
+            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000, isPrivate: isPrivate)
             DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
                 self.handleRunReturn(rr: rr)
             })
@@ -74,7 +74,7 @@ extension SphinxOnionManager{//tribes related
             return
         }
         do{
-            let rr = try! listTribeMembers(seed: seed, uniqueTime: getEntropyString(), state: loadOnionStateAsData(), tribeServerPubkey: tribeServerPubkey, tribePubkey: tribeChat.ownerPubkey ?? "")
+            let rr = try! listTribeMembers(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), tribeServerPubkey: tribeServerPubkey, tribePubkey: tribeChat.ownerPubkey ?? "")
             stashedCallback = completion
             handleRunReturn(rr: rr)
         }

@@ -19,6 +19,10 @@ public class PaymentRequestDecoder {
     
     private let bech32CharValues = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
     
+    func isZeroAmountInvoice(invoice:String)->Bool{
+        return invoice.starts(with: "lnbc1pj7t")
+    }
+    
     func isPaymentRequest() -> Bool {
         return decodedPR != nil
     }
@@ -124,7 +128,8 @@ public class PaymentRequestDecoder {
                 return
             }
             
-            guard let hdr = decodeHumanReadablePart(humanReadablePart: humanReadablePart), let d = decodeData(data: data, humanReadablePart: humanReadablePart) else {
+            guard let hdr = decodeHumanReadablePart(humanReadablePart: humanReadablePart),
+                  let d = decodeData(data: data, humanReadablePart: humanReadablePart) else {
                 return
             }
             

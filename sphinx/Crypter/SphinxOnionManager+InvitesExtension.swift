@@ -18,7 +18,7 @@ extension SphinxOnionManager{//invites related
         }
         do{
             
-            let rr = try! makeInvite(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), host: self.server_IP, amtMsat: UInt64(amountMsat), myAlias: nickname,`tribeHost`: nil, `tribePubkey`: nil)
+            let rr = try! makeInvite(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), host: self.server_IP, amtMsat: UInt64(amountMsat), myAlias: nickname,tribeHost: server_IP, tribePubkey: defaultTribePubkey)
             handleRunReturn(rr: rr)
             return rr.newInvite
         }

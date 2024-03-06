@@ -119,7 +119,7 @@ extension SphinxOnionManager{
         do{
             print("seed: \(seed), uniqueTime: \(getTimeWithEntropy()), to: \(recipPubkey), msgType: \(msgType), msgJson: \(contentJSONString), state: \(String(describing: loadOnionStateAsData())), myAlias: \(nickname), myImg: \(String(describing: myImg)), amtMsat: \(UInt64(sendAmount * 1000)), isTribe: \(String(describing: recipContact == nil))")
 
-            let rr = try! send(seed: seed, uniqueTime: getTimeWithEntropy(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((sendAmount * 1000)),isTribe: recipContact == nil)
+            let rr = try! send(seed: seed, uniqueTime: getTimeWithEntropy(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: UInt64((amount * 1000)),isTribe: recipContact == nil)
             let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
             handleRunReturn(rr: rr)
             return sentMessage

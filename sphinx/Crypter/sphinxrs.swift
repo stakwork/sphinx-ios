@@ -1840,6 +1840,15 @@ public func `payInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `b
     )
 }
 
+public func `paymentHashFromInvoice`(`bolt11`: String) throws -> String {
+    return try  FfiConverterString.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_payment_hash_from_invoice(
+        FfiConverterString.lower(`bolt11`),$0)
+}
+    )
+}
+
 public func `createTribe`(`seed`: String, `uniqueTime`: String, `state`: Data, `tribeServerPubkey`: String, `tribeJson`: String) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
@@ -2061,6 +2070,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_pay_invoice() != 40951) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_payment_hash_from_invoice() != 3194) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_create_tribe() != 28873) {

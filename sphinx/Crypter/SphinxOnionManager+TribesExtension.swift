@@ -55,47 +55,46 @@ extension SphinxOnionManager{//tribes related
         }
     }
     
+    func extractHostAndTribeIdentifier(from urlString: String)->(String,String)? {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return nil
+        }
+        
+        guard let host = url.host,
+              let port = url.port else {
+            print("URL does not have a host")
+            return nil
+        }
+        
+        let pathComponents = url.pathComponents
+        guard let tribeIdentifier = pathComponents.last, tribeIdentifier != "/" else {
+            print("URL does not have a tribe identifier")
+            return nil
+        }
+        
+        print("Host: \(host)")
+        print("Tribe Identifier: \(tribeIdentifier)")
+        return ("\(host):\(port)",tribeIdentifier)
+    }
+    
     func joinInitialTribe(){
-        guard let tribeURL = self.stashedInitialTribe else{
+        guard let tribeURL = self.stashedInitialTribe,
+        let (host, pubkey) = extractHostAndTribeIdentifier(from: tribeURL) else{
             return
         }
-        API.sharedInstance.getInitialTribeInfo(
-            url: tribeURL,
+        GroupsManager.sharedInstance.fetchTribeInfo(
+            host: host,
+            uuid: pubkey,
             useSSL: false,
-            callback: {json in
-                let result = json.dictionaryValue
-                print(result)
-                
-                
-
-                // Using SwiftyJSON's built-in methods for a safer extraction
-                guard let pubkey = result["pubkey"]?.stringValue,
-                      let routeHint = result["route_hint"]?.stringValue,
-                      let alias = result["name"]?.stringValue,
-                      let unlisted = result["unlisted"]?.stringValue,
-                      let isPrivate = result["private"]?.boolValue else {
-                    return
-                }
-                
-                var chatDict : [String:Any] = [
-                    "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
-                    "owner_pubkey": pubkey,
-                    "name" : alias,
-                    "private": isPrivate,
-                    "photo_url": result["img"]?.stringValue ?? "",
-                    "unlisted": unlisted
-                ]
-                let chatJSON = JSON(chatDict)
-                
-                guard let chat = Chat.insertChat(chat: chatJSON) else{
-                    return
-                }
-
-                self.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: alias, isPrivate: isPrivate)
+            completion: { groupInfo in
+                let qrString = "action=tribeV2&pubkey=\(pubkey)&host=\(host)"
+                var tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: host,uuid: pubkey)
+                GroupsManager.sharedInstance.update(tribeInfo: &tribeInfo, from: groupInfo)
+                GroupsManager.sharedInstance.finalizeTribeJoin(tribeInfo: tribeInfo, qrString: qrString)
             },
-            errorCallback: {
-                
-            })
+            errorCallback: {}
+        )
     }
     
     func exitTribe(tribeChat:Chat){

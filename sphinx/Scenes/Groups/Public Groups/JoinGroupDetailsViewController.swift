@@ -61,49 +61,8 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
             imageUploadContainer.alpha = uploading ? 1.0 : 0.0
             LoadingWheelHelper.toggleLoadingWheel(loading: uploading, loadingWheel: imageUploadLoadingWheel, loadingWheelColor: UIColor.Sphinx.Text, view: view)
         }
-    }
+    }    
     
-    func cleanPubKey(_ key: String) -> String {
-        let trimmed = key.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.hasSuffix("\")") {
-            return String(trimmed.dropLast(2))
-        } else {
-            return trimmed
-        }
-    }
-    
-    func getV2Pubkey()->String?{
-        if let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
-            let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-            let queryItems = components.queryItems,
-           let pubkey = queryItems.first(where: { $0.name == "pubkey" })?.value{
-            return cleanPubKey(pubkey)
-        }
-        return nil
-    }
-    
-    func getV2Host()->String?{
-        if let url = URL(string: "\(API.kHUBServerUrl)?\(qrString)"),
-            let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-            let queryItems = components.queryItems,
-           let host = queryItems.first(where: { $0.name == "host" })?.value{
-            return cleanPubKey(host)
-        }
-        return nil
-    }
-    
-    func getChatJSON()->JSON?{
-        var chatDict : [String:Any] = [
-            "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
-            "owner_pubkey": tribeInfo?.ownerPubkey,
-            "name" : tribeInfo?.name ?? "Unknown Name",
-            "private": tribeInfo?.privateTribe ?? false,
-            "photo_url": tribeInfo?.img ?? "",
-            "unlisted": tribeInfo?.unlisted
-        ]
-        let chatJSON = JSON(chatDict)
-        return chatJSON
-    }
     
     static func instantiate(
         qrString: String,
@@ -161,21 +120,25 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
         loadingGroup = true
         
          if(isV2Tribe),
-          let pubkey = getV2Pubkey(),
-           let host = getV2Host(){
+           let pubkey = groupsManager.getV2Pubkey(qrString: qrString),
+           let host = groupsManager.getV2Host(qrString: qrString){
              tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: host,uuid: pubkey)
-             //Chat.updateTribeInfo(<#T##self: Chat##Chat#>)
         }
         else{
             tribeInfo = groupsManager.getGroupInfo(query: qrString)
         }
         
         if let tribeInfo = tribeInfo {
-            API.sharedInstance.getTribeInfo(host: tribeInfo.host, uuid: tribeInfo.uuid, useSSL: !isV2Tribe, callback: { groupInfo in
-                self.completeDataAndShow(groupInfo: groupInfo)
-            }, errorCallback: {
-                self.showErrorAndDismiss()
-            })
+            groupsManager.fetchTribeInfo(
+                host: tribeInfo.host,
+                uuid: tribeInfo.uuid,
+                useSSL: !isV2Tribe,
+                completion: { groupInfo in
+                    self.completeDataAndShow(groupInfo: groupInfo)
+                },
+                errorCallback: {
+                    self.showErrorAndDismiss()
+                })
         } else {
             showErrorAndDismiss()
         }
@@ -234,16 +197,9 @@ class JoinGroupDetailsViewController: KeyboardEventsViewController {
     }
     
     func joinTribe(name: String?, imageUrl: String?) {
-        if isV2Tribe ,
-           let pubkey = getV2Pubkey(),
-           let chatJSON = getChatJSON(),
-           let routeHint = tribeInfo?.ownerRouteHint,
-           let chat = Chat.insertChat(chat: chatJSON){
-            let isPrivate = tribeInfo?.privateTribe ?? false
-            SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: UserContact.getOwner()?.nickname,isPrivate: isPrivate)
-            chat.status = (isPrivate) ? Chat.ChatStatus.pending.rawValue : Chat.ChatStatus.approved.rawValue
-            chat.type = Chat.ChatType.publicGroup.rawValue
-            chat.managedObjectContext?.saveContext()
+        if isV2Tribe,
+        let tribeInfo = tribeInfo{
+            groupsManager.finalizeTribeJoin(tribeInfo: tribeInfo, qrString: qrString)
             self.closeButtonTouched()
         }
         else{

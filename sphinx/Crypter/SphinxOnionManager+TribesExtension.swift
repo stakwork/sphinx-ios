@@ -36,6 +36,7 @@ extension SphinxOnionManager{//tribes related
     func joinTribe(
         tribePubkey:String,
         routeHint:String,
+        joinAmountMsats:Int=1000,
         alias:String?=nil,
         isPrivate:Bool=false
     ){
@@ -44,7 +45,7 @@ extension SphinxOnionManager{//tribes related
         }
         do{
             
-            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: 10000, isPrivate: isPrivate)
+            let rr = try! sphinx.joinTribe(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), tribePubkey: tribePubkey, tribeRouteHint: routeHint, alias: alias ?? "test", amtMsat: UInt64(joinAmountMsats), isPrivate: isPrivate)
             DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
                 self.handleRunReturn(rr: rr)
             })

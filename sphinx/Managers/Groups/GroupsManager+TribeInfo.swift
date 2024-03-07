@@ -74,7 +74,8 @@ extension GroupsManager {
             "private": tribeInfo.privateTribe ?? false,
             "photo_url": tribeInfo.img ?? "",
             "unlisted": tribeInfo.unlisted,
-            "price_per_message": tribeInfo.pricePerMessage ?? 0
+            "price_per_message": tribeInfo.pricePerMessage ?? 0,
+            "escrow_amount": max(tribeInfo.amountToStake ?? 3, 3)
         ]
         let chatJSON = JSON(chatDict)
         return chatJSON

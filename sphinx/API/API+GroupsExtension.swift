@@ -151,6 +151,38 @@ extension API {
         }
     }
     
+    func getInitialTribeInfo(
+        url:String,
+        useSSL:Bool=true,
+        callback: @escaping CreateGroupCallback,
+        errorCallback: @escaping EmptyCallback
+    ) {
+        var url = API.getUrl(route: url)
+        url = useSSL ? (url) : (url.replacingOccurrences(of: "https", with: "http"))
+        let tribeRequest : URLRequest? = createRequest(url, bodyParams: nil, method: "GET")
+        
+        guard let request = tribeRequest else {
+            errorCallback()
+            return
+        }
+        
+        //NEEDS TO BE CHANGED
+        sphinxRequest(request) { response in
+            switch response.result {
+            case .success(let data):
+                if let json = data as? NSDictionary {
+                    callback(JSON(json))
+                } else {
+                    errorCallback()
+                }
+            case .failure(let error):
+                print(error)
+                errorCallback()
+            }
+        }
+        
+    }
+    
     func getTribeInfo(
         host: String,
         uuid: String,

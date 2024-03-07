@@ -18,7 +18,7 @@ extension SphinxOnionManager{//invites related
         }
         do{
             
-            let rr = try! makeInvite(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), host: self.server_IP, amtMsat: UInt64(amountMsat), myAlias: nickname,tribeHost: server_IP, tribePubkey: defaultTribePubkey)
+            let rr = try! makeInvite(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), host: self.server_IP, amtMsat: UInt64(amountMsat), myAlias: nickname,tribeHost: "\(server_IP):8801", tribePubkey: defaultTribePubkey)
             handleRunReturn(rr: rr)
             return rr.newInvite
         }
@@ -55,9 +55,7 @@ extension SphinxOnionManager{//invites related
         if let stashedContactInfo = stashedContactInfo{
             makeFriendRequest(contactInfo: stashedContactInfo,inviteCode: stashedInviteCode)
         }
-        if let stashedInitialTribe = stashedInitialTribe{
-            //joinTribe(tribePubkey: <#T##String#>, routeHint: <#T##String#>)
-        }
+        joinInitialTribe()
     }
     
     func createContactForInvite(code:String,nickname:String){

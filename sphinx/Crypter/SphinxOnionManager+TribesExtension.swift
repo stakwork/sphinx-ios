@@ -55,6 +55,49 @@ extension SphinxOnionManager{//tribes related
         }
     }
     
+    func joinInitialTribe(){
+        guard let tribeURL = self.stashedInitialTribe else{
+            return
+        }
+        API.sharedInstance.getInitialTribeInfo(
+            url: tribeURL,
+            useSSL: false,
+            callback: {json in
+                let result = json.dictionaryValue
+                print(result)
+                
+                
+
+                // Using SwiftyJSON's built-in methods for a safer extraction
+                guard let pubkey = result["pubkey"]?.stringValue,
+                      let routeHint = result["route_hint"]?.stringValue,
+                      let alias = result["name"]?.stringValue,
+                      let unlisted = result["unlisted"]?.stringValue,
+                      let isPrivate = result["private"]?.boolValue else {
+                    return
+                }
+                
+                var chatDict : [String:Any] = [
+                    "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
+                    "owner_pubkey": pubkey,
+                    "name" : alias,
+                    "private": isPrivate,
+                    "photo_url": result["img"]?.stringValue ?? "",
+                    "unlisted": unlisted
+                ]
+                let chatJSON = JSON(chatDict)
+                
+                guard let chat = Chat.insertChat(chat: chatJSON) else{
+                    return
+                }
+
+                self.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: alias, isPrivate: isPrivate)
+            },
+            errorCallback: {
+                
+            })
+    }
+    
     func exitTribe(tribeChat:Chat){
         self.sendMessage(
             to: nil,

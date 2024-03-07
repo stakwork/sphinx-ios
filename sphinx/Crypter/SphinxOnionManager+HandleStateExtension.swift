@@ -94,7 +94,11 @@ extension SphinxOnionManager {
             
         }
         
+        purgeObsoleteState(keys: rr.stateToDelete)
+        
     }
+    
+    
 
     func pushRRTopic(topic:String,payloadData:Data?){
         let byteArray: [UInt8] = payloadData != nil ? [UInt8](payloadData!) : [UInt8]()
@@ -235,6 +239,13 @@ extension SphinxOnionManager {
         
         keys.append(contentsOf: mutationKeys)
         mutationKeys = keys
+    }
+    
+    func purgeObsoleteState(keys:[String]){
+        for key in keys{
+            UserDefaults.standard.removeObject(forKey: key)
+            UserDefaults.standard.synchronize()
+        }
     }
 
 }

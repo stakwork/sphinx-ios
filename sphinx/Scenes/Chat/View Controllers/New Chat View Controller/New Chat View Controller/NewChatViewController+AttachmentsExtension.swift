@@ -50,7 +50,8 @@ extension NewChatViewController : AttachmentsDelegate {
         let viewController = CreateInvoiceViewController.instantiate(
             contact: contact,
             chat: chat,
-            delegate: self
+            delegate: self,
+            presentationContext: .InChat
         )
         self.presentNavigationControllerWith(vc: viewController)
     }

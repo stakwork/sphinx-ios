@@ -9,6 +9,11 @@ import UIKit
 import SDWebImage
 import SwiftyJSON
 
+public enum CreateInvoiceVCPresentationContext{
+    case Default
+    case InChat
+}
+
 class CreateInvoiceViewController: CommonPaymentViewController {
     
     enum bottomButtonState: Int {
@@ -17,6 +22,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     var mode = PaymentsViewModel.PaymentMode.receive
+    var presentationContext : CreateInvoiceVCPresentationContext = .Default
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var keyPadView: NewKeyPadView!
@@ -55,11 +61,13 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         messageUUID: String? = nil,
         delegate: PaymentInvoiceDelegate? = nil,
         paymentMode: PaymentsViewModel.PaymentMode = PaymentsViewModel.PaymentMode.receive,
-        preloadedPubkey: String? = nil
+        preloadedPubkey: String? = nil,
+        presentationContext: CreateInvoiceVCPresentationContext = .Default
     ) -> CreateInvoiceViewController {
         
         let viewController = StoryboardScene.Chat.createInvoiceViewController.instantiate()
         viewController.mode = paymentMode
+        viewController.presentationContext = presentationContext
         viewController.contact = contact
         viewController.chat = chat
         viewController.delegate = delegate
@@ -336,7 +344,12 @@ class CreateInvoiceViewController: CommonPaymentViewController {
         
         if let paymentAmount = paymentsViewModel.payment.amount,
            let invoice = SphinxOnionManager.sharedInstance.createInvoice(amountMsat: paymentAmount * 1000, description: paymentsViewModel.payment.memo ?? "") {
-            self.presentInvoiceDetailsVC(invoiceString: invoice)
+            if presentationContext == .InChat{
+                
+            }
+            else{
+                self.presentInvoiceDetailsVC(invoiceString: invoice)
+            }
         }
         else{
             delegate?.didFailCreatingInvoice?()

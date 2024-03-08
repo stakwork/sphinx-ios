@@ -22,7 +22,7 @@ extension NewMessageTableViewCell {
             messageLabel.attributedText = nil
             messageLabel.text = nil
             
-            if messageContent.linkMatches.isEmpty && searchingTerm == nil {
+            if messageContent.linkMatches.isEmpty && messageContent.highlightedMatches.isEmpty && searchingTerm == nil {
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {
@@ -47,6 +47,22 @@ extension NewMessageTableViewCell {
                     )
                     
                     urlRanges.append(match.range)
+                }
+                
+                let highlightedNsRanges = messageContent.highlightedMatches.map {
+                    return $0.range
+                }
+                
+                for nsRange in highlightedNsRanges {
+                    
+                    attributedString.setAttributes(
+                        [
+                            NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                            NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                            NSAttributedString.Key.font: messageContent.highlightedFont
+                        ],
+                        range: nsRange
+                    )
                 }
                 
                 messageLabel.attributedText = attributedString

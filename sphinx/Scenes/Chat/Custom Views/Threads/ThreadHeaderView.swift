@@ -119,7 +119,7 @@ class ThreadHeaderView : UIView {
         messageLabel.attributedText = nil
         messageLabel.text = nil
         
-        if threadOriginalMessage.linkMatches.isEmpty {
+        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.highlightedMatches.isEmpty {
             messageAndMediaLabel.text = threadOriginalMessage.text
             messageAndMediaLabel.font = threadOriginalMessage.font
             
@@ -140,6 +140,22 @@ class ThreadHeaderView : UIView {
                         NSAttributedString.Key.font: threadOriginalMessage.font
                     ],
                     range: match.range
+                )
+            }
+            
+            let highlightedNsRanges = threadOriginalMessage.highlightedMatches.map {
+                return $0.range
+            }
+            
+            for nsRange in highlightedNsRanges {
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                        NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                        NSAttributedString.Key.font: threadOriginalMessage.highlightedFont
+                    ],
+                    range: nsRange
                 )
             }
             

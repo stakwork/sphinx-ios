@@ -185,7 +185,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         let font = UIFont(name: "Roboto-Regular", size: 17.0)!
         
-        if threadOriginalMessage.linkMatches.isEmpty {
+        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.highlightedMatches.isEmpty {
             messageLabel.attributedText = nil
             messageLabel.text = threadOriginalMessage.text
             messageLabel.font = font
@@ -206,6 +206,22 @@ class ThreadHeaderTableViewCell: UITableViewCell {
                 )
                 
                 urlRanges.append(match.range)
+            }
+            
+            let highlightedNsRanges = threadOriginalMessage.highlightedMatches.map {
+                return $0.range
+            }
+            
+            for nsRange in highlightedNsRanges {
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                        NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                        NSAttributedString.Key.font: threadOriginalMessage.highlightedFont
+                    ],
+                    range: nsRange
+                )
             }
             
             messageLabel.attributedText = attributedString

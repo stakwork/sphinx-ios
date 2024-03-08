@@ -253,16 +253,20 @@ struct MessageTableCellState {
         
         if let messageContent = message.bubbleMessageContentString, messageContent.isNotEmpty {
             return BubbleMessageLayoutState.MessageContent(
-                text: messageContent,
+                text: messageContent.replacingOccurrences(of: "`", with: " "),
                 font: UIFont.getMessageFont(),
+                highlightedFont: UIFont.getHighlightedMessageFont(),
                 linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
+                highlightedMatches: messageContent.highlightedMatches,
                 shouldLoadPaidText: false
             )
         } else if message.isPaidMessage() {
             return BubbleMessageLayoutState.MessageContent(
                 text: paidMessageContent,
                 font: UIFont.getEncryptionErrorFont(),
+                highlightedFont: UIFont.getHighlightedMessageFont(),
                 linkMatches: [],
+                highlightedMatches: [],
                 shouldLoadPaidText: message.messageContent == nil && (paidContent?.isPurchaseAccepted() == true || bubble?.direction.isOutgoing() == true)
             )
         }
@@ -813,9 +817,11 @@ struct MessageTableCellState {
         let messageContent = message.bubbleMessageContentString ?? ""
         
         return NoBubbleMessageLayoutState.ThreadOriginalMessage(
-            text: messageContent,
+            text: messageContent.replacingOccurrences(of: "`", with: " "),
             font: Constants.kThreadHeaderFont,
+            highlightedFont: Constants.kThreadHighlightedHeaderFont,
             linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
+            highlightedMatches: messageContent.highlightedMatches,
             senderPic: senderInfo.2,
             senderAlias: senderInfo.1,
             senderColor: senderInfo.0,

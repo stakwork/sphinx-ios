@@ -40,6 +40,10 @@ public extension UIFont {
     static func getMessageFont() -> UIFont {
         return Constants.kMessageFont
     }
+
+    static func getHighlightedMessageFont() -> UIFont {
+        return Constants.kMessageHighlightedFont
+    }
     
     static func getEmojisFont() -> UIFont {
         return Constants.kEmojisFont

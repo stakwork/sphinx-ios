@@ -269,6 +269,11 @@ extension String {
         return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
+    var highlightedMatches: [NSTextCheckingResult] {
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`")
+        return highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+    }
+    
     var stringFirstWebLink : (String, NSRange)? {
         if let range = self.stringLinks.first?.range {
             let matchString = (self as NSString).substring(with: range) as String

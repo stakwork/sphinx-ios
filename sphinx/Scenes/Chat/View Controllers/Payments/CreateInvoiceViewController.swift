@@ -342,10 +342,14 @@ class CreateInvoiceViewController: CommonPaymentViewController {
             return
         }
         
+        let parameters = TransactionMessage.getPaymentParamsFor(payment: paymentsViewModel.payment, contact: contact, chat: chat)
+        print(parameters)
         if let paymentAmount = paymentsViewModel.payment.amount,
            let invoice = SphinxOnionManager.sharedInstance.createInvoice(amountMsat: paymentAmount * 1000, description: paymentsViewModel.payment.memo ?? "") {
-            if presentationContext == .InChat{
-                
+            if presentationContext == .InChat,
+               let contact = contact,
+               let chat = chat{
+                SphinxOnionManager.sharedInstance.sendInvoiceMessage(contact: contact, chat: chat, invoiceString: invoice)
             }
             else{
                 self.presentInvoiceDetailsVC(invoiceString: invoice)

@@ -29,4 +29,13 @@ extension SphinxOnionManager{//invoices related
         handleRunReturn(rr: rr)
     }
     
+    
+    func sendInvoiceMessage(
+        contact:UserContact,
+        chat:Chat,
+        invoiceString:String
+    ){
+        let type = TransactionMessage.TransactionMessageType.invoice.rawValue
+        SphinxOnionManager.sharedInstance.sendMessage(to: contact, content: "", chat: chat,msgType: UInt8(type), threadUUID: nil, replyUUID: nil)
+    }
 }

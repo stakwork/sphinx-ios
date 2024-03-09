@@ -282,6 +282,7 @@ struct MessageInnerContent: Mappable {
     var muid:String?=nil
     var originalUuid:String?=nil
     var date:Int?=nil
+    var invoice:String?=nil
 
     init?(map: Map) {}
     
@@ -295,12 +296,13 @@ struct MessageInnerContent: Mappable {
         muid <- map["muid"]
         date <- map["date"]
         originalUuid <- map["originalUuid"]
+        invoice <- map["invoice"]
     }
     
 }
 
 
-struct PlaintextOrAttachmentMessageFromServer: Mappable {
+struct GenericIncomingMessage: Mappable {
     var content:String?
     var amount:Int?
     var senderPubkey:String?=nil
@@ -314,6 +316,7 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
     var mediaType:String?=nil
     var muid:String?=nil
     var date:Int?=nil
+    var invoice:String?=nil
 
     init?(map: Map) {}
     
@@ -334,6 +337,7 @@ struct PlaintextOrAttachmentMessageFromServer: Mappable {
             self.muid = innerContent.muid
             self.originalUuid = innerContent.originalUuid
             self.date = innerContent.date
+            self.invoice = innerContent.invoice
         }
         self.amount = Int(msg.msat ?? 0)
         self.uuid = msg.uuid

@@ -350,6 +350,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
                let contact = contact,
                let chat = chat{
                 SphinxOnionManager.sharedInstance.sendInvoiceMessage(contact: contact, chat: chat, invoiceString: invoice)
+                self.dismissView()
             }
             else{
                 self.presentInvoiceDetailsVC(invoiceString: invoice)

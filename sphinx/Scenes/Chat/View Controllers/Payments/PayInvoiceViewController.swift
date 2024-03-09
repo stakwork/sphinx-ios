@@ -105,20 +105,31 @@ class PayInvoiceViewController: UIViewController {
     }
     
     private func send() {
-        guard let message = message, let invoice = message.invoice else {
+        guard let message = message, 
+                let invoice = message.invoice,
+                let chat = message.chat else {
             return
         }
         
         loading = true
         
-        var parameters = [String : AnyObject]()
-        parameters["payment_request"] = invoice as AnyObject?
-
-        API.sharedInstance.payInvoice(parameters: parameters, callback: { payment in
-            self.createLocalPayment(payment: payment)
-        }, errorCallback: { error in
-            self.showErrorAlert(errorMessage: error)
-        })
+        
+        SphinxOnionManager.sharedInstance.payInvoice(invoice: invoice)
+        let localPaymentMessage : JSON = [
+            "id": CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: 100_000),
+            "chatId": chat.id,
+            "sender": message.senderId,
+            "type": TransactionMessage.TransactionMessageType.payment.rawValue,
+            "amount":402,
+            "amountMsat": 402 * 1000,
+            "paymentHash":"",
+            "status": TransactionMessage.TransactionMessageStatus.confirmed.rawValue,
+            "createdAt": Date(),
+            "updatedAt": Date()
+        ]
+        self.createLocalPayment(payment: localPaymentMessage)
+        message.setPaymentInvoiceAsPaid()
+        shouldDismiss(paymentCreated: true)
     }
     
     func createLocalPayment(payment: JSON?) {

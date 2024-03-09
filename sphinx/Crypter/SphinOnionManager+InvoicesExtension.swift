@@ -36,6 +36,6 @@ extension SphinxOnionManager{//invoices related
         invoiceString:String
     ){
         let type = TransactionMessage.TransactionMessageType.invoice.rawValue
-        SphinxOnionManager.sharedInstance.sendMessage(to: contact, content: "", chat: chat,msgType: UInt8(type), threadUUID: nil, replyUUID: nil)
+        let result = SphinxOnionManager.sharedInstance.sendMessage(to: contact, content: "", chat: chat,msgType: UInt8(type), threadUUID: nil, replyUUID: nil,invoiceString: invoiceString)
     }
 }

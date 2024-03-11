@@ -36,8 +36,9 @@ struct ThreadTableCellState {
         let messageContent = originalMessage.bubbleMessageContentString ?? ""
         
         let orignalMessageThred = ThreadLayoutState.ThreadOriginalMessage(
-            text: messageContent,
+            text: messageContent.replacingHightlightedChars,
             linkMatches: messageContent.stringLinks + messageContent.pubKeyMatches + messageContent.mentionMatches,
+            highlightedMatches: messageContent.highlightedMatches,
             timestamp: timestamp,
             senderInfo: getSenderInfo(message: originalMessage)
         )

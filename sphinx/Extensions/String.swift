@@ -274,6 +274,46 @@ extension String {
         return highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
+    var replacingHightlightedChars: String {
+        if !self.contains("`") {
+            return self
+        }
+        
+        var adaptedString = self
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`")
+        let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        
+        for match in matches {
+            adaptedString = adaptedString.replacingOccurrences(
+                of: "`",
+                with: " ",
+                range: Range(match.range, in: adaptedString)
+            )
+        }
+        
+        return adaptedString
+    }
+    
+    var withoutHightlightedChars: String {
+        if !self.contains("`") {
+            return self
+        }
+        
+        var adaptedString = self
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`")
+        let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        
+        for match in matches {
+            adaptedString = adaptedString.replacingOccurrences(
+                of: "`",
+                with: "",
+                range: Range(match.range, in: adaptedString)
+            )
+        }
+        
+        return adaptedString
+    }
+    
     var stringFirstWebLink : (String, NSRange)? {
         if let range = self.stringLinks.first?.range {
             let matchString = (self as NSString).substring(with: range) as String

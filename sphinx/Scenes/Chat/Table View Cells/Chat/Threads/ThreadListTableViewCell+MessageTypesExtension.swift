@@ -135,7 +135,7 @@ extension ThreadListTableViewCell {
         originalMessageTextLabel.attributedText = nil
         originalMessageTextLabel.text = nil
         
-        if threadOriginalMessage.linkMatches.isEmpty {
+        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.text.highlightedMatches.isEmpty {
             originalMessageTextLabel.text = threadOriginalMessage.text
             originalMessageTextLabel.font = Constants.kThreadHeaderFont
         } else {
@@ -150,7 +150,19 @@ extension ThreadListTableViewCell {
                     [
                         NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
                         NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-                        NSAttributedString.Key.font: Constants.kThreadHeaderFont
+                        NSAttributedString.Key.font: UIFont.getThreadListFont()
+                    ],
+                    range: match.range
+                )
+            }
+            
+            for match in threadOriginalMessage.highlightedMatches {
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                        NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                        NSAttributedString.Key.font: UIFont.getThreadListHightlightedFont()
                     ],
                     range: match.range
                 )

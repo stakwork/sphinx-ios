@@ -30,8 +30,11 @@ class Constants {
     public static var kMessagePreviewFont = UIFont(name: "Roboto-Regular", size: 14.0)!
     public static var kNewMessagePreviewFont = UIFont(name: "Roboto-Bold", size: 14.0)!
     public static var kChatNameFont = UIFont(name: "Roboto-Regular", size: 17.0)!
-    public static var kThreadHeaderFont = UIFont(name: "Roboto-Regular", size: 17.0)!
-    public static var kThreadHighlightedHeaderFont = UIFont(name: "Roboto-Light", size: 17.0)!
+    public static var kThreadHeaderFont = UIFont(name: "Roboto-Regular", size: 16.0)!
+    public static var kThreadHeaderHighlightedFont = UIFont(name: "Roboto-Light", size: 16.0)!
+    public static var kThreadListFont = UIFont(name: "Roboto-Regular", size: 17.0)!
+    public static var kThreadListHighlightedFont = UIFont(name: "Roboto-Light", size: 17.0)!
+
     
     //Sizes
     public static var kChatListRowHeight: CGFloat = 90

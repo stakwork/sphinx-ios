@@ -45,6 +45,22 @@ public extension UIFont {
         return Constants.kMessageHighlightedFont
     }
     
+    static func getThreadHeaderFont() -> UIFont {
+        return Constants.kThreadHeaderFont
+    }
+    
+    static func getThreadHeaderHightlightedFont() -> UIFont {
+        return Constants.kThreadHeaderHighlightedFont
+    }
+    
+    static func getThreadListFont() -> UIFont {
+        return Constants.kThreadListFont
+    }
+    
+    static func getThreadListHightlightedFont() -> UIFont {
+        return Constants.kThreadListHighlightedFont
+    }
+    
     static func getEmojisFont() -> UIFont {
         return Constants.kEmojisFont
     }

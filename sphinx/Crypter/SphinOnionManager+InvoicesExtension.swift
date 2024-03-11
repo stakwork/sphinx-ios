@@ -29,6 +29,18 @@ extension SphinxOnionManager{//invoices related
         handleRunReturn(rr: rr)
     }
     
+    func sendPaymentOfInvoiceMessage(message:TransactionMessage){
+        guard message.type == TransactionMessage.TransactionMessageType.payment.rawValue,
+              let invoice = message.invoice,
+              let chat = message.chat,
+              let msats = message.amountMsat,
+                let contact = chat.getContact() else{
+            return
+        }
+        self.sendMessage(to: contact, content: "", chat: chat, amount: Int(msats), msgType: UInt8(TransactionMessage.TransactionMessageType.payment.rawValue), threadUUID: nil, replyUUID: nil,invoiceString: invoice )
+        
+    }
+    
     
     func sendInvoiceMessage(
         contact:UserContact,
@@ -36,6 +48,6 @@ extension SphinxOnionManager{//invoices related
         invoiceString:String
     ){
         let type = TransactionMessage.TransactionMessageType.invoice.rawValue
-        let result = SphinxOnionManager.sharedInstance.sendMessage(to: contact, content: "", chat: chat,msgType: UInt8(type), threadUUID: nil, replyUUID: nil,invoiceString: invoiceString)
+        let result = self.sendMessage(to: contact, content: "", chat: chat,msgType: UInt8(type), threadUUID: nil, replyUUID: nil,invoiceString: invoiceString)
     }
 }

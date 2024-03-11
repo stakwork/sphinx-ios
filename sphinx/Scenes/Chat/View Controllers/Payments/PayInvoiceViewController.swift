@@ -130,7 +130,8 @@ class PayInvoiceViewController: UIViewController {
             "payment_hash":paymentHash,
             "status": TransactionMessage.TransactionMessageStatus.confirmed.rawValue,
             "createdAt": Date(),
-            "updatedAt": Date()
+            "updatedAt": Date(),
+            "payment_request": invoice
         ]
         self.createLocalPayment(payment: localPaymentMessage)
         NotificationCenter.default.addObserver(self, selector: #selector(handleMyInvoicePaymentSettled(notification:)), name: .invoiceIPaidSettled, object: nil)
@@ -143,6 +144,7 @@ class PayInvoiceViewController: UIViewController {
         if let paymentHash = notification.userInfo?["payment_hash"] as? String,
            let message = TransactionMessage.getPaymentOfInvoiceWith(paymentHash: paymentHash){
             message.setPaymentInvoiceAsPaid()
+            SphinxOnionManager.sharedInstance.sendPaymentOfInvoiceMessage(message: message)
             //TODO: send this
         }
     }

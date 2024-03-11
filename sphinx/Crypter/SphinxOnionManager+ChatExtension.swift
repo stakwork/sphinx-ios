@@ -57,7 +57,7 @@ extension SphinxOnionManager{
                 msg["content"] = ""
             }
             break
-        case .invoice:
+        case .invoice, .payment:
             msg["invoice"] = invoiceString
             break
         case .groupKick:

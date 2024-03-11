@@ -284,8 +284,10 @@ extension String {
         let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
         
         for (index, match) in matches.enumerated() {
-            let substractNeeded = index * 2
-            let adaptedRange = NSRange(location: match.range.location - substractNeeded, length: match.range.length)
+            
+            ///Subtracting the previous matches delimiter characters since they have been removed from the string
+            let substractionNeeded = index * 2
+            let adaptedRange = NSRange(location: match.range.location - substractionNeeded, length: match.range.length)
             
             adaptedString = adaptedString.replacingOccurrences(
                 of: "`",

@@ -55,8 +55,9 @@ extension NewMessageTableViewCell {
                 
                 for (index, nsRange) in highlightedNsRanges.enumerated() {
                     
-                    let substractNeeded = index * 2
-                    let adaptedRange = NSRange(location: nsRange.location - substractNeeded, length: nsRange.length - 2)
+                    ///Subtracting the previous matches delimiter characters since they have been removed from the string
+                    let substractionNeeded = index * 2
+                    let adaptedRange = NSRange(location: nsRange.location - substractionNeeded, length: nsRange.length - 2)
                     
                     attributedString.setAttributes(
                         [

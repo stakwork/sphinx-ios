@@ -135,7 +135,7 @@ extension ThreadListTableViewCell {
         originalMessageTextLabel.attributedText = nil
         originalMessageTextLabel.text = nil
         
-        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.text.highlightedMatches.isEmpty {
+        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.highlightedMatches.isEmpty {
             originalMessageTextLabel.text = threadOriginalMessage.text
             originalMessageTextLabel.font = Constants.kThreadHeaderFont
         } else {
@@ -156,7 +156,15 @@ extension ThreadListTableViewCell {
                 )
             }
             
-            for match in threadOriginalMessage.highlightedMatches {
+            
+            let highlightedNsRanges = threadOriginalMessage.highlightedMatches.map {
+                return $0.range
+            }
+            
+            for (index, nsRange) in highlightedNsRanges.enumerated() {
+                
+                let substractNeeded = index * 2
+                let adaptedRange = NSRange(location: nsRange.location - substractNeeded, length: nsRange.length - 2)
                 
                 attributedString.setAttributes(
                     [
@@ -164,7 +172,7 @@ extension ThreadListTableViewCell {
                         NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
                         NSAttributedString.Key.font: UIFont.getThreadListHightlightedFont()
                     ],
-                    range: match.range
+                    range: adaptedRange
                 )
             }
             

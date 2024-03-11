@@ -270,7 +270,7 @@ extension String {
     }
     
     var highlightedMatches: [NSTextCheckingResult] {
-        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`")
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`", options: .dotMatchesLineSeparators)
         return highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
@@ -280,34 +280,17 @@ extension String {
         }
         
         var adaptedString = self
-        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`")
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`", options: .dotMatchesLineSeparators)
         let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
         
-        for match in matches {
-            adaptedString = adaptedString.replacingOccurrences(
-                of: "`",
-                with: " ",
-                range: Range(match.range, in: adaptedString)
-            )
-        }
-        
-        return adaptedString
-    }
-    
-    var withoutHightlightedChars: String {
-        if !self.contains("`") {
-            return self
-        }
-        
-        var adaptedString = self
-        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`")
-        let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        
-        for match in matches {
+        for (index, match) in matches.enumerated() {
+            let substractNeeded = index * 2
+            let adaptedRange = NSRange(location: match.range.location - substractNeeded, length: match.range.length)
+            
             adaptedString = adaptedString.replacingOccurrences(
                 of: "`",
                 with: "",
-                range: Range(match.range, in: adaptedString)
+                range: Range(adaptedRange, in: adaptedString)
             )
         }
         

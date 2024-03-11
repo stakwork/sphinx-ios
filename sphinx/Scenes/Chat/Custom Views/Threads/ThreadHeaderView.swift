@@ -147,7 +147,10 @@ class ThreadHeaderView : UIView {
                 return $0.range
             }
             
-            for nsRange in highlightedNsRanges {
+            for (index, nsRange) in highlightedNsRanges.enumerated() {
+                
+                let substractNeeded = index * 2
+                let adaptedRange = NSRange(location: nsRange.location - substractNeeded, length: nsRange.length - 2)
                 
                 attributedString.setAttributes(
                     [
@@ -155,7 +158,7 @@ class ThreadHeaderView : UIView {
                         NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
                         NSAttributedString.Key.font: threadOriginalMessage.highlightedFont
                     ],
-                    range: nsRange
+                    range: adaptedRange
                 )
             }
             

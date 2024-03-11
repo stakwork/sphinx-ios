@@ -135,7 +135,7 @@ extension ThreadListTableViewCell {
         originalMessageTextLabel.attributedText = nil
         originalMessageTextLabel.text = nil
         
-        if threadOriginalMessage.linkMatches.isEmpty {
+        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.highlightedMatches.isEmpty {
             originalMessageTextLabel.text = threadOriginalMessage.text
             originalMessageTextLabel.font = Constants.kThreadHeaderFont
         } else {
@@ -150,9 +150,30 @@ extension ThreadListTableViewCell {
                     [
                         NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
                         NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-                        NSAttributedString.Key.font: Constants.kThreadHeaderFont
+                        NSAttributedString.Key.font: UIFont.getThreadListFont()
                     ],
                     range: match.range
+                )
+            }
+            
+            
+            let highlightedNsRanges = threadOriginalMessage.highlightedMatches.map {
+                return $0.range
+            }
+            
+            for (index, nsRange) in highlightedNsRanges.enumerated() {
+                
+                ///Subtracting the previous matches delimiter characters since they have been removed from the string
+                let substractionNeeded = index * 2
+                let adaptedRange = NSRange(location: nsRange.location - substractionNeeded, length: nsRange.length - 2)
+                
+                attributedString.setAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                        NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                        NSAttributedString.Key.font: UIFont.getThreadListHightlightedFont()
+                    ],
+                    range: adaptedRange
                 )
             }
             

@@ -269,6 +269,36 @@ extension String {
         return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
     }
     
+    var highlightedMatches: [NSTextCheckingResult] {
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`", options: .dotMatchesLineSeparators)
+        return highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+    }
+    
+    var replacingHightlightedChars: String {
+        if !self.contains("`") {
+            return self
+        }
+        
+        var adaptedString = self
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`", options: .dotMatchesLineSeparators)
+        let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        
+        for (index, match) in matches.enumerated() {
+            
+            ///Subtracting the previous matches delimiter characters since they have been removed from the string
+            let substractionNeeded = index * 2
+            let adaptedRange = NSRange(location: match.range.location - substractionNeeded, length: match.range.length)
+            
+            adaptedString = adaptedString.replacingOccurrences(
+                of: "`",
+                with: "",
+                range: Range(adaptedRange, in: adaptedString)
+            )
+        }
+        
+        return adaptedString
+    }
+    
     var stringFirstWebLink : (String, NSRange)? {
         if let range = self.stringLinks.first?.range {
             let matchString = (self as NSString).substring(with: range) as String

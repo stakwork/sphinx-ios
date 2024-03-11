@@ -135,12 +135,22 @@
                                             <constraint firstAttribute="trailing" secondItem="51d-af-xpA" secondAttribute="trailing" id="r9A-Cd-sLN"/>
                                         </constraints>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DrI-5q-HTM">
+                                        <rect key="frame" x="0.0" y="685" width="408" height="1"/>
+                                        <color key="backgroundColor" name="Divider"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="dAQ-W0-t8X"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="NjK-yM-870" secondAttribute="bottom" constant="12" id="2RL-Ly-8Fa"/>
                                     <constraint firstItem="NjK-yM-870" firstAttribute="leading" secondItem="GG7-PQ-HiL" secondAttribute="leading" constant="16" id="4zR-aL-FrF"/>
+                                    <constraint firstItem="DrI-5q-HTM" firstAttribute="leading" secondItem="GG7-PQ-HiL" secondAttribute="leading" id="HLy-Fx-Gk6"/>
                                     <constraint firstAttribute="trailing" secondItem="NjK-yM-870" secondAttribute="trailing" constant="16" id="MeR-Xa-Th0"/>
+                                    <constraint firstAttribute="trailing" secondItem="DrI-5q-HTM" secondAttribute="trailing" id="WUs-bP-TJj"/>
+                                    <constraint firstItem="uDu-S2-CM1" firstAttribute="top" secondItem="DrI-5q-HTM" secondAttribute="bottom" constant="-12" id="bTW-o6-tga"/>
                                     <constraint firstItem="NjK-yM-870" firstAttribute="top" secondItem="GG7-PQ-HiL" secondAttribute="top" constant="12" id="c70-mY-GXf"/>
                                 </constraints>
                             </view>
@@ -238,6 +248,9 @@
     <resources>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Divider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

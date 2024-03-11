@@ -29,7 +29,7 @@ extension NewOnlyTextMessageTableViewCell {
             messageLabel.attributedText = nil
             messageLabel.text = nil
             
-            if messageContent.linkMatches.isEmpty && searchingTerm == nil {
+            if messageContent.linkMatches.isEmpty && messageContent.highlightedMatches.isEmpty && searchingTerm == nil {
                 messageLabel.text = messageContent.text
                 messageLabel.font = messageContent.font
             } else {
@@ -54,6 +54,26 @@ extension NewOnlyTextMessageTableViewCell {
                     )
                     
                     urlRanges.append(match.range)
+                }
+                
+                let highlightedNsRanges = messageContent.highlightedMatches.map {
+                    return $0.range
+                }
+                
+                for (index, nsRange) in highlightedNsRanges.enumerated() {
+                    
+                    ///Subtracting the previous matches delimiter characters since they have been removed from the string
+                    let substractionNeeded = index * 2
+                    let adaptedRange = NSRange(location: nsRange.location - substractionNeeded, length: nsRange.length - 2)
+                    
+                    attributedString.setAttributes(
+                        [
+                            NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                            NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                            NSAttributedString.Key.font: messageContent.highlightedFont
+                        ],
+                        range: adaptedRange
+                    )
                 }
                 
                 messageLabel.attributedText = attributedString

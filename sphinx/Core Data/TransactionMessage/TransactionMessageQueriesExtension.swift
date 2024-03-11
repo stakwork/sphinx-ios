@@ -214,6 +214,14 @@ extension TransactionMessage {
         return invoice
     }
     
+    static func getPaymentOfInvoiceWith(paymentHash: String) -> TransactionMessage? {
+        let predicate = NSPredicate(format: "type == %d AND paymentHash == %@", TransactionMessageType.payment.rawValue, paymentHash)
+        let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        let invoice: TransactionMessage? = CoreDataManager.sharedManager.getObjectOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
+        
+        return invoice
+    }
+    
     static func getInvoiceWith(paymentRequestString: String) -> TransactionMessage? {
         let predicate = NSPredicate(format: "type == %d AND invoice == %@", TransactionMessageType.invoice.rawValue, paymentRequestString)
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]

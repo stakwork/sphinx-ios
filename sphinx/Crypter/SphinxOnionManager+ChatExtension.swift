@@ -130,7 +130,7 @@ extension SphinxOnionManager{
             let escrowAmountSats = max(Int(truncating: chat.escrowAmount ?? 3), tribeMinEscrowSats)
             let amtMsat = (isTribe && amount == 0) ? UInt64(((Int(truncating: (chat.pricePerMessage ?? 0)) + escrowAmountSats) * 1000)) : UInt64((amount * 1000))
             let rr = try! send(seed: seed, uniqueTime: getTimeWithEntropy(), to: recipPubkey, msgType: msgType, msgJson: contentJSONString, state: loadOnionStateAsData(), myAlias: nickname, myImg: myImg, amtMsat: amtMsat,isTribe: isTribe)
-            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID)
+            let sentMessage = processNewOutgoingMessage(rr: rr, chat: chat, msgType: msgType, content: content, amount: amount,mediaKey:mediaKey,mediaToken: mediaToken, mediaType: mediaType, replyUUID: replyUUID, threadUUID: threadUUID,invoiceString: invoiceString)
             handleRunReturn(rr: rr)
             return sentMessage
         }
@@ -149,7 +149,8 @@ extension SphinxOnionManager{
        mediaToken:String?,
        mediaType:String?,
        replyUUID:String?,
-       threadUUID:String?
+       threadUUID:String?,
+        invoiceString:String?
     )->TransactionMessage?{
         for msg in rr.msgs{
             if let sentUUID = msg.uuid,
@@ -179,9 +180,22 @@ extension SphinxOnionManager{
                     message?.mediaToken = mediaToken
                     message?.mediaType = mediaType
                 }
-                else if(msgType == TransactionMessage.TransactionMessageType.invoice.rawValue){
-                    message?.amount = 42
+                else if msgType == TransactionMessage.TransactionMessageType.invoice.rawValue {
+                    guard let invoiceString = invoiceString else { return nil}
+                    
+                    let prd = PaymentRequestDecoder()
+                    prd.decodePaymentRequest(paymentRequest: invoiceString)
+                    
+                    guard let paymentHash = try? paymentHashFromInvoice(bolt11: invoiceString),
+                          let expiry = prd.getExpirationDate(),
+                          let amount = prd.getAmount() else { return nil}
+                    
+                    message?.paymentHash = paymentHash
+                    message?.invoice = invoiceString
+                    message?.amount = NSDecimalNumber(value: amount)
+                    message?.expirationDate = expiry
                 }
+
                 
                 message?.replyUUID = replyUUID
                 message?.threadUUID = threadUUID
@@ -297,6 +311,7 @@ extension SphinxOnionManager{
                         
                         if let expiry = prd.getExpirationDate(),
                             let amount = prd.getAmount(),
+                           let paymentHash = try? paymentHashFromInvoice(bolt11: invoice),
                            let newMessage = processGenericIncomingMessage(
                             message: genericIncomingMessage,
                             date: date,
@@ -304,7 +319,7 @@ extension SphinxOnionManager{
                             amount: amount,
                             type: Int(type)
                         ){
-                            
+                            newMessage.paymentHash = paymentHash
                             newMessage.expirationDate = expiry
                             newMessage.invoice = genericIncomingMessage.invoice
                             newMessage.amountMsat = NSDecimalNumber(value: Int(truncating: newMessage.amount ?? 0) * 1000)

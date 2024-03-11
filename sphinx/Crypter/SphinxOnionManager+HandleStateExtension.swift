@@ -80,10 +80,27 @@ extension SphinxOnionManager {
                 stashedCallback = nil
             }
         }
-
         
-        if let sentStatus = rr.sentStatus{
-            
+        
+        if let sentStatus = rr.sentStatus {
+            print(sentStatus)
+            // Assuming sentStatus is a JSON string, convert it to a dictionary
+            if let data = sentStatus.data(using: .utf8) {
+                do {
+                    // Decode the JSON string into a dictionary
+                    if let dictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any?] {
+                        // Check if payment_hash exists and is not nil
+                        if let paymentHash = dictionary["payment_hash"] as? String, !paymentHash.isEmpty,
+                           let preimage = dictionary["preimage"] as? String,
+                            !preimage.isEmpty{
+                            // Post to the notification center
+                            NotificationCenter.default.post(name: .invoiceIPaidSettled, object: nil, userInfo: dictionary)
+                        }
+                    }
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                }
+            }
         }
         
         if let settledStatus = rr.settledStatus{

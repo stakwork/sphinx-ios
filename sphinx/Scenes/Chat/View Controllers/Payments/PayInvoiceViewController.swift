@@ -105,9 +105,14 @@ class PayInvoiceViewController: UIViewController {
     }
     
     private func send() {
-        guard let message = message, 
-                let invoice = message.invoice,
-                let chat = message.chat else {
+        let prd = PaymentRequestDecoder()
+        prd.decodePaymentRequest(paymentRequest: message?.invoice ?? "")
+        guard let message = message,
+              let invoice = message.invoice,
+              let chat = message.chat,
+              let amount = prd.getAmount(),
+              let expiry = prd.getExpirationDate(),
+              let paymentHash = try? paymentHashFromInvoice(bolt11: invoice) else {
             return
         }
         
@@ -117,20 +122,31 @@ class PayInvoiceViewController: UIViewController {
         SphinxOnionManager.sharedInstance.payInvoice(invoice: invoice)
         let localPaymentMessage : JSON = [
             "id": CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: 100_000),
-            "chatId": chat.id,
-            "sender": message.senderId,
+            "chat_id": chat.id,
+            "sender": 0,
             "type": TransactionMessage.TransactionMessageType.payment.rawValue,
-            "amount":402,
-            "amountMsat": 402 * 1000,
-            "paymentHash":"",
+            "amount":amount,
+            "amountMsat": amount * 1000,
+            "payment_hash":paymentHash,
             "status": TransactionMessage.TransactionMessageStatus.confirmed.rawValue,
             "createdAt": Date(),
             "updatedAt": Date()
         ]
         self.createLocalPayment(payment: localPaymentMessage)
-        message.setPaymentInvoiceAsPaid()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleMyInvoicePaymentSettled(notification:)), name: .invoiceIPaidSettled, object: nil)
+
+        
         shouldDismiss(paymentCreated: true)
     }
+    
+    @objc func handleMyInvoicePaymentSettled(notification: Notification) {
+        if let paymentHash = notification.userInfo?["payment_hash"] as? String,
+           let message = TransactionMessage.getPaymentOfInvoiceWith(paymentHash: paymentHash){
+            message.setPaymentInvoiceAsPaid()
+            //TODO: send this
+        }
+    }
+
     
     func createLocalPayment(payment: JSON?) {
         if let payment = payment {
@@ -138,8 +154,8 @@ class PayInvoiceViewController: UIViewController {
                 m: payment,
                 existingMessage: TransactionMessage.getMessageWith(id: payment["id"].intValue)
             ).0 {
-                message.setPaymentInvoiceAsPaid()
-                shouldDismiss(paymentCreated: true)
+//                message.setPaymentInvoiceAsPaid()
+//                shouldDismiss(paymentCreated: true)
             }
         } else {
             showErrorAlert()

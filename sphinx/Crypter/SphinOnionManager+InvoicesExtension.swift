@@ -37,7 +37,7 @@ extension SphinxOnionManager{//invoices related
                 let contact = chat.getContact() else{
             return
         }
-        self.sendMessage(to: contact, content: "", chat: chat, amount: Int(msats), msgType: UInt8(TransactionMessage.TransactionMessageType.payment.rawValue), threadUUID: nil, replyUUID: nil,invoiceString: invoice )
+        self.sendMessage(to: contact, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.payment.rawValue), threadUUID: nil, replyUUID: nil,invoiceString: invoice)
         
     }
     

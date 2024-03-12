@@ -19,6 +19,7 @@ extension SphinxOnionManager {
         publishDelay:Double=0.5,
         completion: (([String:AnyObject]) ->())? = nil
     ){
+        print("handleRR rr:\(rr)")
         if let sm = rr.stateMp{
             //update state map
             let _ = storeOnionState(inc: sm.bytes)
@@ -104,7 +105,7 @@ extension SphinxOnionManager {
         }
         
         if let settledStatus = rr.settledStatus{
-            
+            print("settledStatus:\(rr.settledStatus)")
         }
         
         if let error = rr.error {

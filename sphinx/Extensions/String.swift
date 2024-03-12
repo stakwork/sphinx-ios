@@ -502,7 +502,7 @@ extension String {
         if let range = self.lowerClean.range(of: "sphinx.call.") {
             let endIndex = self.index(of: "#") ?? self.endIndex
             let roomWithParams = String(self.lowerClean[range.lowerBound..<endIndex])
-            let queryEndIndex = roomWithParams.index(of: "?") ?? self.endIndex
+            let queryEndIndex = roomWithParams.index(of: "?") ?? roomWithParams.endIndex
             let room = roomWithParams.lowerClean[roomWithParams.startIndex..<queryEndIndex]
             return String(room)
         }

@@ -194,20 +194,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             let attributedString = NSMutableAttributedString(string: messageContent)
             attributedString.addAttributes([NSAttributedString.Key.font: font], range: messageContent.nsRange)
             
-            for match in threadOriginalMessage.linkMatches {
-                
-                attributedString.setAttributes(
-                    [
-                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
-                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-                        NSAttributedString.Key.font: font
-                    ],
-                    range: match.range
-                )
-                
-                urlRanges.append(match.range)
-            }
-            
+            ///Highlighted text formatting
             let highlightedNsRanges = threadOriginalMessage.highlightedMatches.map {
                 return $0.range
             }
@@ -218,7 +205,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
                 let substractionNeeded = index * 2
                 let adaptedRange = NSRange(location: nsRange.location - substractionNeeded, length: nsRange.length - 2)
                 
-                attributedString.setAttributes(
+                attributedString.addAttributes(
                     [
                         NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
                         NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
@@ -226,6 +213,21 @@ class ThreadHeaderTableViewCell: UITableViewCell {
                     ],
                     range: adaptedRange
                 )
+            }
+            
+            ///Links formatting
+            for match in threadOriginalMessage.linkMatches {
+                
+                attributedString.addAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
+                        NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                        NSAttributedString.Key.font: font
+                    ],
+                    range: match.range
+                )
+                
+                urlRanges.append(match.range)
             }
             
             messageLabel.attributedText = attributedString

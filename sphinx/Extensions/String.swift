@@ -247,26 +247,45 @@ extension String {
     }
     
     var stringLinks: [NSTextCheckingResult] {
+        let textWithoutHightlights = self.replacingHightlightedChars
         let types: NSTextCheckingResult.CheckingType = .link
         let detector = try? NSDataDetector(types: types.rawValue)
-        let matches = detector!.matches(in: self, options: [], range: NSMakeRange(0, self.utf16.count))
+        
+        let matches = detector!.matches(
+            in: textWithoutHightlights,
+            options: [],
+            range: NSMakeRange(0, textWithoutHightlights.utf16.count)
+        )
+        
         return matches
     }
     
     var pubKeyMatches: [NSTextCheckingResult] {
+        let textWithoutHightlights = self.replacingHightlightedChars
         let pubkeyRegex = try? NSRegularExpression(pattern: "\\b[A-F0-9a-f]{66}\\b")
         let virtualPubkeyRegex = try? NSRegularExpression(pattern: "\\b[A-F0-9a-f]{66}:[A-F0-9a-f]{66}:[0-9]+\\b")
         
-        let virtualPubkeyResults = virtualPubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        let pubkeyResults = pubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        let virtualPubkeyResults = virtualPubkeyRegex?.matches(
+            in: textWithoutHightlights,
+            range: NSRange(textWithoutHightlights.startIndex..., in: textWithoutHightlights)
+        ) ?? []
+        
+        let pubkeyResults = pubkeyRegex?.matches(
+            in: textWithoutHightlights,
+            range: NSRange(textWithoutHightlights.startIndex..., in: textWithoutHightlights)
+        ) ?? []
         
         return virtualPubkeyResults + pubkeyResults
     }
     
     var mentionMatches: [NSTextCheckingResult] {
+        let textWithoutHightlights = self.replacingHightlightedChars
         let mentionRegex = try? NSRegularExpression(pattern: "\\B@[^\\s]+")
         
-        return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        return mentionRegex?.matches(
+            in: textWithoutHightlights,
+            range: NSRange(textWithoutHightlights.startIndex..., in: textWithoutHightlights)
+        ) ?? []
     }
     
     var highlightedMatches: [NSTextCheckingResult] {

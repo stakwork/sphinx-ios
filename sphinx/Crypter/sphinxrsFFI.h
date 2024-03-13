@@ -151,6 +151,8 @@ RustBuffer uniffi_sphinxrs_fn_func_pay_invoice(RustBuffer seed, RustBuffer uniqu
 );
 RustBuffer uniffi_sphinxrs_fn_func_payment_hash_from_invoice(RustBuffer bolt11, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_sphinxrs_fn_func_parse_invoice(RustBuffer invoice_json, RustCallStatus *_Nonnull out_status
+);
 RustBuffer uniffi_sphinxrs_fn_func_create_tribe(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer tribe_server_pubkey, RustBuffer tribe_json, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_join_tribe(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer tribe_pubkey, RustBuffer tribe_route_hint, RustBuffer alias, uint64_t amt_msat, int8_t is_private, RustCallStatus *_Nonnull out_status
@@ -162,6 +164,22 @@ RustBuffer uniffi_sphinxrs_fn_func_make_invite(RustBuffer seed, RustBuffer uniqu
 RustBuffer uniffi_sphinxrs_fn_func_process_invite(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer invite_qr, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_code_from_invite(RustBuffer invite_qr, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_get_default_tribe_server(RustBuffer state, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_read(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer pubkey, uint64_t msg_idx, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_get_reads(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_mute(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer pubkey, uint8_t mute_level, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_get_mutes(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_set_push_token(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer push_token, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_fetch_msgs_batch(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t last_msg_idx, RustBuffer limit, RustBuffer reverse, RustBuffer is_restore, RustCallStatus *_Nonnull out_status
+);
+RustBuffer uniffi_sphinxrs_fn_func_fetch_msgs_batch_okkey(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t last_msg_idx, RustBuffer limit, RustBuffer reverse, RustBuffer is_restore, RustCallStatus *_Nonnull out_status
 );
 RustBuffer ffi_sphinxrs_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
 );
@@ -303,6 +321,9 @@ uint16_t uniffi_sphinxrs_checksum_func_pay_invoice(void
 uint16_t uniffi_sphinxrs_checksum_func_payment_hash_from_invoice(void
     
 );
+uint16_t uniffi_sphinxrs_checksum_func_parse_invoice(void
+    
+);
 uint16_t uniffi_sphinxrs_checksum_func_create_tribe(void
     
 );
@@ -319,6 +340,30 @@ uint16_t uniffi_sphinxrs_checksum_func_process_invite(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_code_from_invite(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_get_default_tribe_server(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_read(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_get_reads(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_mute(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_get_mutes(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_set_push_token(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_fetch_msgs_batch(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_fetch_msgs_batch_okkey(void
     
 );
 uint32_t ffi_sphinxrs_uniffi_contract_version(void

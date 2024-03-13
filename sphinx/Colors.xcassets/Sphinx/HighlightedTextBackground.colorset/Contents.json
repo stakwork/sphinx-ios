@@ -4,7 +4,7 @@
       "color" : {
         "color-space" : "srgb",
         "components" : {
-          "alpha" : "0.250",
+          "alpha" : "0.150",
           "blue" : "0xFF",
           "green" : "0x8A",
           "red" : "0x61"
@@ -22,7 +22,7 @@
       "color" : {
         "color-space" : "srgb",
         "components" : {
-          "alpha" : "0.250",
+          "alpha" : "0.150",
           "blue" : "0xFF",
           "green" : "0xFF",
           "red" : "0xFF"

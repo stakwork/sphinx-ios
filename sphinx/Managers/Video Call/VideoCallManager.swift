@@ -43,6 +43,7 @@ class VideoCallManager : NSObject {
         link: String,
         audioOnly: Bool? = nil
     ) {
+        
         if activeCall {
             return
         }
@@ -56,7 +57,6 @@ class VideoCallManager : NSObject {
                 let _ = AudioRecorderHelper().configureAudioSession(delegate: self)
             })
             return
-            break
         case .granted://continue
             break
         }
@@ -69,16 +69,18 @@ class VideoCallManager : NSObject {
 
             let jitsiMeetView = JitsiMeetView()
             jitsiMeetView.delegate = self
+            
             self.jitsiMeetView = jitsiMeetView
 
             let options = JitsiMeetConferenceOptions.fromBuilder({(builder: JitsiMeetConferenceOptionsBuilder) -> Void in
                 builder.serverURL = URL(string: linkUrl)!
                 builder.room = linkUrl.callRoom
-                builder.audioOnly = audioOnly ?? linkUrl.contains("startAudioOnly=true")
-                builder.audioMuted = false
-                builder.videoMuted = false
-                builder.welcomePageEnabled = false
-                builder.subject = " "
+                builder.setAudioOnly(audioOnly ?? linkUrl.contains("startAudioOnly=true"))
+                builder.setAudioMuted(false)
+                builder.setVideoMuted(false)
+                builder.setFeatureFlag("welcomepage.enabled", withValue: false)
+                builder.setFeatureFlag("prejoinpage.enabled", withValue: false)
+                builder.setSubject(" ")
                 builder.userInfo = JitsiMeetUserInfo(
                     displayName: owner.nickname,
                     andEmail: nil,
@@ -108,7 +110,14 @@ class VideoCallManager : NSObject {
 
     func getPaymentView() -> VideoCallPayButton {
         let windowWidth = WindowsManager.getWindowWidth()
-        let videoCallPayButton = VideoCallPayButton(frame: CGRect(x: windowWidth/2, y: getWindowInsets().top + 15, width: windowWidth/2, height: 46.0))
+        let videoCallPayButton = VideoCallPayButton(
+            frame: CGRect(
+                x: windowWidth/2,
+                y: getWindowInsets().top + 63,
+                width: windowWidth/2,
+                height: 46.0
+            )
+        )
         videoCallPayButton.configure(delegata: self.videoCallDelegate, amount: UserContact.kTipAmount)
         videoCallPayButton.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
         videoCallPayButton.isHidden = true
@@ -148,11 +157,27 @@ extension VideoCallManager : JitsiMeetViewDelegate {
 
         videoCallPayButton?.isHidden = isGroupChat()
     }
-
+    
     func conferenceTerminated(_ data: [AnyHashable : Any]!) {
         DispatchQueue.main.async {
             self.videoCallPayButton?.isHidden = true
-
+            
+            self.pipViewCoordinator?.hide() { _ in
+                self.cleanUp()
+            }
+            
+            self.videoCallDelegate?.didFinishCall()
+        }
+        
+        if #available(iOS 14.0, *) {
+            JitsiIncomingCallManager.sharedInstance.finishCall()
+        }
+    }
+    
+    func ready(toClose data: [AnyHashable : Any]!) {
+        DispatchQueue.main.async {
+            self.videoCallPayButton?.isHidden = true
+            
             self.pipViewCoordinator?.hide() { _ in
                 self.cleanUp()
             }
@@ -204,6 +229,4 @@ extension VideoCallManager : AudioHelperDelegate{
     func audioTooShort() {}
     
     func recordingProgress(minutes: String, seconds: String) {}
-    
-    
 }

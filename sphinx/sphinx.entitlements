@@ -3,14 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>aps-environment</key>
-	<string>development</string>
+	<string>distribution</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:jitsi.sphinx.chat</string>
+	</array>
 	<key>com.apple.developer.networking.wifi-info</key>
+	<true/>
+	<key>com.apple.developer.push-to-talk</key>
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)sphinxSharedItems</string>
 	</array>
-    <key>com.apple.developer.push-to-talk</key>
-    <true/>
 </dict>
 </plist>

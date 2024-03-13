@@ -66,8 +66,7 @@ class GiphyHelper {
         }
         
         GPHCache.shared.downloadAssetData(url) { (data, error) in
-            if let nsData = data {
-                let data = Data(referencing: nsData)
+            if let data = data {
                 MediaLoader.storeMediaDataInCache(data: data, url: url)
                 
                 DispatchQueue.main.async {

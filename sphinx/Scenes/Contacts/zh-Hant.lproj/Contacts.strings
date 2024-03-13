@@ -1,0 +1,25 @@
+/* Class = "UILabel"; text = "ADDRESS BOOK"; ObjectID = "0QV-li-AOO"; */
+"0QV-li-AOO.text" = "通訊錄"; // Tōngxùn lù
+
+/* Class = "UILabel"; text = "Address *"; ObjectID = "39P-Xw-u5x"; */
+"39P-Xw-u5x.text" = "地址 *"; // Dìzhǐ *
+
+"vHf-rK-nEW.text" = "路由提示"; // Lóuyóu tǐshì
+
+/* Class = "UILabel"; text = "Nickname *"; ObjectID = "7eV-VN-bp2"; */
+"7eV-VN-bp2.text" = "暱稱 *"; // Nìchēng *
+
+/* Class = "UIButton"; normalTitle = "SUBSCRIBE"; ObjectID = "OiJ-fJ-jK3"; */
+"OiJ-fJ-jK3.normalTitle" = "訂閱"; // Dìngyuè
+
+/* Class = "UILabel"; text = "Email *"; ObjectID = "WXR-op-lDc"; */
+"WXR-op-lDc.text" = "群組 PIN *"; // Qúnzǔ PIN *
+
+/* Class = "UILabel"; text = "NEW CONTACT"; ObjectID = "fLm-O4-dUI"; */
+"fLm-O4-dUI.text" = "新增聯絡人"; // Xīnzēng liánxì rén
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "hvF-Lr-QK6"; */
+"hvF-Lr-QK6.placeholder" = "搜尋"; // Sōusuǒ
+
+/* SAVE TO CONTACTS */
+"o1h-CK-PTE.text" = "儲存至聯絡人"; // Chǔcún zhì liánxì rén 

@@ -1,0 +1,5 @@
+/* Class = "UIButton"; normalTitle = "AUTHORIZE"; ObjectID = "NTY-E1-Rbf"; */
+"NTY-E1-Rbf.normalTitle" = "認証"; // Ninshō
+
+/* Class = "UILabel"; text = "Do you want to authorize with"; ObjectID = "PLf-Qq-gka"; */
+"PLf-Qq-gka.text" = "...での認証を許可しますか？"; // ...de no ninshō o kyoka shimasu ka? 

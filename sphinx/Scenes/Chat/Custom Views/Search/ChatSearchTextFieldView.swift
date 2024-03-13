@@ -15,7 +15,7 @@ protocol ChatSearchTextFieldViewDelegate : class {
 
 class ChatSearchTextFieldView: UIView {
     
-    var delegate: ChatSearchTextFieldViewDelegate?
+    weak var delegate: ChatSearchTextFieldViewDelegate?
 
     @IBOutlet var contentView: UIView!
     

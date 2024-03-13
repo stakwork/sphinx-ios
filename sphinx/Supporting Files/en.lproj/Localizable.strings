@@ -10,6 +10,7 @@
 "generic.success.title" = "Success";
 "generic.error.title" = "Error";
 "generic.error.message" = "There was an error. Please try again later.";
+"generic.message.error" = "The message could not be sent. Please try again later";
 "generic.contact-support" = "Please contact support at support@stakwork.com";
 "confirm" = "Confirm";
 "verify" = "Verify";

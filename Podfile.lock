@@ -5,21 +5,26 @@ PODS:
   - CocoaMQTT/Core (2.1.6):
     - MqttCocoaAsyncSocket (~> 1.0.8)
   - FLAnimatedImage (1.0.16)
-  - Giphy (2.1.1):
+  - Giphy (2.1.20):
     - libwebp
-    - PINCache
-  - JitsiMeetSDK (3.6.0)
+  - JitsiMeetSDK (8.4.0):
+    - Giphy (= 2.1.20)
+    - JitsiWebRTC (~> 111.0)
+  - JitsiWebRTC (111.0.2)
   - KeychainAccess (4.2.2)
   - KYDrawerController (2.1.0)
-  - libwebp (1.2.0):
-    - libwebp/demux (= 1.2.0)
-    - libwebp/mux (= 1.2.0)
-    - libwebp/webp (= 1.2.0)
-  - libwebp/demux (1.2.0):
+  - libwebp (1.3.2):
+    - libwebp/demux (= 1.3.2)
+    - libwebp/mux (= 1.3.2)
+    - libwebp/sharpyuv (= 1.3.2)
+    - libwebp/webp (= 1.3.2)
+  - libwebp/demux (1.3.2):
     - libwebp/webp
-  - libwebp/mux (1.2.0):
+  - libwebp/mux (1.3.2):
     - libwebp/demux
-  - libwebp/webp (1.2.0)
+  - libwebp/sharpyuv (1.3.2)
+  - libwebp/webp (1.3.2):
+    - libwebp/sharpyuv
   - lottie-ios (3.2.3)
   - MarqueeLabel (4.3.0)
   - MessagePack.swift (4.0.0)
@@ -32,7 +37,7 @@ PODS:
     - PINCache/Core
   - PINCache/Core (3.0.3):
     - PINOperation (~> 1.2.1)
-  - PINOperation (1.2.1)
+  - PINOperation (1.2.2)
   - ReachabilitySwift (5.0.0)
   - RNCryptor (5.1.0)
   - SDWebImage (5.12.5):
@@ -57,14 +62,15 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.6.4)
   - CocoaMQTT (from `https://github.com/emqx/CocoaMQTT.git`)
-  - Giphy (= 2.1.1)
-  - JitsiMeetSDK (~> 3.6.0)
+  - Giphy (= 2.1.20)
+  - JitsiMeetSDK (~> 8.4.0)
   - KeychainAccess
   - KYDrawerController
   - lottie-ios
   - MarqueeLabel
   - MessagePack.swift (~> 4.0)
   - ObjectMapper
+  - PINCache
   - ReachabilitySwift
   - RNCryptor (~> 5.0)
   - SDWebImage (~> 5.12)
@@ -85,6 +91,7 @@ SPEC REPOS:
     - FLAnimatedImage
     - Giphy
     - JitsiMeetSDK
+    - JitsiWebRTC
     - KeychainAccess
     - KYDrawerController
     - libwebp
@@ -127,18 +134,19 @@ SPEC CHECKSUMS:
   Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
   CocoaMQTT: 1f206228b29318eabdacad0c2e4e88575922c27a
   FLAnimatedImage: 8f3e854ebf9680b71f0b6e700939687fc4d82b4b
-  Giphy: 4a3ca076645091bba1a2e5579066b4c851e53d45
-  JitsiMeetSDK: 476329f72a866f714d2802bafe1729de6d644ccf
+  Giphy: b6d5087521d251bb8c99cdc0eb07bbdf86d142d5
+  JitsiMeetSDK: cb94e522af5cb96b7551dcbb4e8e3592dd215596
+  JitsiWebRTC: 80f62908fcf2a1160e0d14b584323fb6e6be630b
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   KYDrawerController: baad0e63b09c0cb564bd48f0f7f70f45d9176ebc
-  libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
+  libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
   MessagePack.swift: 417f6b6e27a86ad4f19a0ee47093b3985cd77323
   MqttCocoaAsyncSocket: 77d3b74f76228dd5a05d1f9526eab101d415b30c
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PINCache: 7a8fc1a691173d21dbddbf86cd515de6efa55086
-  PINOperation: 00c935935f1e8cf0d1e2d6b542e75b88fc3e5e20
+  PINOperation: daa34d4aa1d8449089be7d405b9d974abc4724c6
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   RNCryptor: a369134686cd2ad391323cc856b62e591193ba79
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
@@ -153,6 +161,6 @@ SPEC CHECKSUMS:
   UIView-Shimmer: ff0a32c73d67c7dbdea3d9e530538b10d18aea56
   youtube-ios-player-helper: 0185c57db23c80d63d6ca11251d110abb8a4ca61
 
-PODFILE CHECKSUM: 450783a9fa3b771eb4ccc309c07b09fadbe549ec
+PODFILE CHECKSUM: f105a6174109c31e2ad3830a5689e6c5c558bc2a
 
 COCOAPODS: 1.14.3

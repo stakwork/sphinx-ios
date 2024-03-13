@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-protocol ChatMentionAutocompleteDelegate{
+protocol ChatMentionAutocompleteDelegate : AnyObject {
     func processAutocomplete(text: String )
     func processGeneralPurposeMacro(action: @escaping ()->())
 }
@@ -18,7 +18,7 @@ protocol ChatMentionAutocompleteDelegate{
 class ChatMentionAutocompleteDataSource : NSObject {
     var mentionSuggestions : [MentionOrMacroItem] = [MentionOrMacroItem]()
     var tableView : UITableView!
-    var delegate: ChatMentionAutocompleteDelegate!
+    weak var delegate: ChatMentionAutocompleteDelegate!
     let mentionCellHeight :CGFloat = 50.0
     var chat : Chat?
     var macros : [MentionOrMacroItem]!

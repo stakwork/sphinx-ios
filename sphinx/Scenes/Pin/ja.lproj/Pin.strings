@@ -1,0 +1,5 @@
+/* Class = "UILabel"; text = "ENTER PIN"; ObjectID = "2Ad-3F-LRd"; */
+"2Ad-3F-LRd.text" = "PIN を入力"; // PIN o nyūryoku
+
+/* Class = "UILabel"; text = "CHOOSE PIN"; ObjectID = "JQG-3J-yyD"; */
+"JQG-3J-yyD.text" = "PIN を選択"; // PIN o sentaku

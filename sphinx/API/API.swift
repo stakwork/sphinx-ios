@@ -99,6 +99,7 @@ class API {
         return Static.instance
     }
 
+    let interceptor = SphinxInterceptor()
     var onionConnector = SphinxOnionConnector.sharedInstance
     var cancellableRequest: DataRequest?
     var podcastSearchRequest: DataRequest?
@@ -301,7 +302,10 @@ class API {
         _ urlRequest: URLRequestConvertible,
         completionHandler: @escaping (AFDataResponse<Any>) -> Void
     ) -> DataRequest? {
-        let request = session()?.request(urlRequest).responseJSON { (response) in
+        let request = session()?.request(
+            urlRequest,
+            interceptor: interceptor
+        ).responseJSON { (response) in
             
             let statusCode = (response.response?.statusCode ?? -1)
             
@@ -536,5 +540,18 @@ class API {
         } else {
             return nil
         }
+    }
+}
+
+class SphinxInterceptor : RequestInterceptor {
+    public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        completion(.success(urlRequest))
+    }
+
+    public func retry(_ request: Request,
+                      for session: Session,
+                      dueTo error: Error,
+                      completion: @escaping (RetryResult) -> Void) {
+        completion(.doNotRetry)
     }
 }

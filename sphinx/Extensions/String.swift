@@ -247,26 +247,75 @@ extension String {
     }
     
     var stringLinks: [NSTextCheckingResult] {
+        let textWithoutHightlights = self.replacingHightlightedChars
         let types: NSTextCheckingResult.CheckingType = .link
         let detector = try? NSDataDetector(types: types.rawValue)
-        let matches = detector!.matches(in: self, options: [], range: NSMakeRange(0, self.utf16.count))
+        
+        let matches = detector!.matches(
+            in: textWithoutHightlights,
+            options: [],
+            range: NSMakeRange(0, textWithoutHightlights.utf16.count)
+        )
+        
         return matches
     }
     
     var pubKeyMatches: [NSTextCheckingResult] {
+        let textWithoutHightlights = self.replacingHightlightedChars
         let pubkeyRegex = try? NSRegularExpression(pattern: "\\b[A-F0-9a-f]{66}\\b")
         let virtualPubkeyRegex = try? NSRegularExpression(pattern: "\\b[A-F0-9a-f]{66}:[A-F0-9a-f]{66}:[0-9]+\\b")
         
-        let virtualPubkeyResults = virtualPubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
-        let pubkeyResults = pubkeyRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        let virtualPubkeyResults = virtualPubkeyRegex?.matches(
+            in: textWithoutHightlights,
+            range: NSRange(textWithoutHightlights.startIndex..., in: textWithoutHightlights)
+        ) ?? []
+        
+        let pubkeyResults = pubkeyRegex?.matches(
+            in: textWithoutHightlights,
+            range: NSRange(textWithoutHightlights.startIndex..., in: textWithoutHightlights)
+        ) ?? []
         
         return virtualPubkeyResults + pubkeyResults
     }
     
     var mentionMatches: [NSTextCheckingResult] {
+        let textWithoutHightlights = self.replacingHightlightedChars
         let mentionRegex = try? NSRegularExpression(pattern: "\\B@[^\\s]+")
         
-        return mentionRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        return mentionRegex?.matches(
+            in: textWithoutHightlights,
+            range: NSRange(textWithoutHightlights.startIndex..., in: textWithoutHightlights)
+        ) ?? []
+    }
+    
+    var highlightedMatches: [NSTextCheckingResult] {
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`", options: .dotMatchesLineSeparators)
+        return highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+    }
+    
+    var replacingHightlightedChars: String {
+        if !self.contains("`") {
+            return self
+        }
+        
+        var adaptedString = self
+        let highlightedRegex = try? NSRegularExpression(pattern: "`(.*?)`", options: .dotMatchesLineSeparators)
+        let matches =  highlightedRegex?.matches(in: self, range: NSRange(self.startIndex..., in: self)) ?? []
+        
+        for (index, match) in matches.enumerated() {
+            
+            ///Subtracting the previous matches delimiter characters since they have been removed from the string
+            let substractionNeeded = index * 2
+            let adaptedRange = NSRange(location: match.range.location - substractionNeeded, length: match.range.length)
+            
+            adaptedString = adaptedString.replacingOccurrences(
+                of: "`",
+                with: "",
+                range: Range(adaptedRange, in: adaptedString)
+            )
+        }
+        
+        return adaptedString
     }
     
     var stringFirstWebLink : (String, NSRange)? {
@@ -485,7 +534,9 @@ extension String {
     var callRoom : String {
         if let range = self.lowerClean.range(of: "sphinx.call.") {
             let endIndex = self.index(of: "#") ?? self.endIndex
-            let room = self.lowerClean[range.lowerBound..<endIndex]
+            let roomWithParams = String(self.lowerClean[range.lowerBound..<endIndex])
+            let queryEndIndex = roomWithParams.index(of: "?") ?? roomWithParams.endIndex
+            let room = roomWithParams.lowerClean[roomWithParams.startIndex..<queryEndIndex]
             return String(room)
         }
         return self.lowerClean

@@ -53,10 +53,15 @@ public final class WalletBalanceService {
         }
     }
     
-    func updateLabels(labels: [UILabel], balance: String) {
+    private func updateLabels(labels: [UILabel], balance: String) {
         DispatchQueue.main.async {
+            let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
             for label in labels {
-                label.text = balance
+                if (hideBalances) {
+                    label.text = "＊＊＊＊"
+                } else {
+                    label.text = balance
+                }
             }
         }
     }

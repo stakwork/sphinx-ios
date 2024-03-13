@@ -9,7 +9,8 @@
 import UIKit
 
 protocol AuthorizeAppViewDelegate: class {
-    func shouldAuthorizeWith(amount: Int, dict: [String: AnyObject])
+    func shouldAuthorizeWith(dict: [String: AnyObject])
+    func shouldAuthorizeBudgetWith(amount: Int, dict: [String: AnyObject])
     func shouldClose()
 }
 
@@ -66,7 +67,12 @@ class AuthorizeAppView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
-    func configureFor(url: String, delegate: AuthorizeAppViewDelegate, dict: [String: AnyObject]) -> CGFloat {
+    func configureFor(
+        url: String,
+        delegate: AuthorizeAppViewDelegate, 
+        dict: [String: AnyObject],
+        showBudgetField: Bool
+    ) -> CGFloat {
         self.delegate = delegate
         self.dict = dict
         
@@ -80,12 +86,15 @@ class AuthorizeAppView: UIView {
         
         configureView()
         
-        if let noBudget = dict["noBudget"] as? Bool, noBudget {
+        let noBudget = (dict["noBudget"] as? Bool) ?? false
+        
+        if noBudget || !showBudgetField {
             configureWithNoBudget()
             return kHeightWithoutBudgetField
+        } else {
+            configureWithBudget()
+            return kHeightWithBudgetField
         }
-        
-        return kHeightWithBudgetField
     }
     
     func configureWithNoBudget() {
@@ -95,9 +104,19 @@ class AuthorizeAppView: UIView {
         confirmButtonEnabled = true
     }
     
+    func configureWithBudget() {
+        fieldTopLabel.isHidden = false
+        amountFieldContainer.isHidden = false
+        fieldBottomLabel.isHidden = false
+        confirmButtonEnabled = false
+    }
+    
     func configureView() {
-        let amount = getAmountFrom(string: amountTextField.text)
-        confirmButtonEnabled = (amount > 0)
+        if let amount = getAmountFrom(string: amountTextField.text) {
+            confirmButtonEnabled = (amount > 0)
+        } else {
+            confirmButtonEnabled = true
+        }
         
         authorizeButton.layer.cornerRadius = authorizeButton.frame.height / 2
         
@@ -116,8 +135,14 @@ class AuthorizeAppView: UIView {
     @IBAction func authorizeButtonTouched() {
         loading = true
         
-        let amount = getAmountFrom(string: amountTextField.text)
-        delegate?.shouldAuthorizeWith(amount: amount, dict: dict)
+        if let amount = getAmountFrom(string: amountTextField.text) {
+            delegate?.shouldAuthorizeBudgetWith(
+                amount: amount,
+                dict: dict
+            )
+        } else {
+            delegate?.shouldAuthorizeWith(dict: dict)
+        }
     }
     
     @IBAction func keyboardButtonTouched(_ sender: UIButton) {
@@ -145,28 +170,37 @@ extension AuthorizeAppView : UITextFieldDelegate {
         var currentString = textField.text! as NSString
         currentString = currentString.replacingCharacters(in: range, with: string) as NSString
         
-        let amount = getAmountFrom(string: String(currentString))
-        let walletBalance = WalletBalanceService().balance
-        
-        if amount > walletBalance && false {
-            NewMessageBubbleHelper().showGenericMessageView(text: "balance.too.low".localized)
-            return false
+
+        if let amount = getAmountFrom(string: String(currentString)) {
+            let walletBalance = WalletBalanceService().balance
+            
+            if amount > walletBalance {
+                NewMessageBubbleHelper().showGenericMessageView(text: "balance.too.low".localized)
+                return false
+            }
+            
+            if amount > 100000 {
+                return false
+            }
+            
+            confirmButtonEnabled = (amount > 0)
+            return true
+
         }
         
-        if amount > 100000 {
-            return false
-        }
-        
-        confirmButtonEnabled = (amount > 0)
-        return true
+        return false
     }
     
-    func getAmountFrom(string: String?) -> Int {
-        if let currentString = string {
-            let amount = Int(currentString) ?? 0
-            return amount
+    func getAmountFrom(string: String?) -> Int? {
+        if amountFieldContainer.isHidden {
+            return nil
+        } else {
+            if let string = string {
+                let amount = Int(string) ?? 0
+                return amount
+            }
         }
-        return 0
+        return nil
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

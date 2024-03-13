@@ -1,0 +1,20 @@
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "4kd-55-TFX"; */
+"4kd-55-TFX.normalTitle" = "确认";
+
+/* Class = "UILabel"; text = "Generate Invoice"; ObjectID = "Eej-fz-fO1"; */
+"Eej-fz-fO1.text" = "生成发票";
+
+/* Class = "UIButton"; normalTitle = "Share"; ObjectID = "R9A-Rd-gNX"; */
+"R9A-Rd-gNX.normalTitle" = "分享";
+
+/* Class = "UILabel"; text = "Amount: "; ObjectID = "VB7-rS-zTG"; */
+"VB7-rS-zTG.text" = "金额：";
+
+/* Class = "UILabel"; text = "PAID"; ObjectID = "daJ-Bf-qdS"; */
+"daJ-Bf-qdS.text" = "已付款";
+
+/* Class = "UIButton"; normalTitle = "Copy"; ObjectID = "t6Q-AH-Dpt"; */
+"t6Q-AH-Dpt.normalTitle" = "复制";
+
+/* Class = "UILabel"; text = "PUBLIC KEY"; ObjectID = "xtc-ef-mNL"; */
+"xtc-ef-mNL.text" = "公钥"; 

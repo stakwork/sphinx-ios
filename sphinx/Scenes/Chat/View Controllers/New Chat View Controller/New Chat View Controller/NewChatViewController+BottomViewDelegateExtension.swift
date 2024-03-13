@@ -9,8 +9,14 @@
 import UIKit
 
 extension NewChatViewController : ChatMessageTextFieldViewDelegate {
+    func didChangeText(text: String) {
+        ChatTrackingHandler.shared.saveOngoingMessage(with: text, chatId: chat?.id)
+    }
+    
     func shouldSendMessage(text: String, type: Int, completion: @escaping (Bool) -> ()) {
         bottomView.resetReplyView()
+        
+        ChatTrackingHandler.shared.deleteReplyableMessage(with: chat?.id)
         
         chatViewModel.shouldSendMessage(text: text, type: type, completion: { success in
             
@@ -92,6 +98,8 @@ extension NewChatViewController : AudioHelperDelegate {
             bottomView.clearMessage()
             bottomView.resetReplyView()
             
+            ChatTrackingHandler.shared.deleteReplyableMessage(with: chat?.id)
+            
             chatViewModel.didFinishRecording()
         }
     }
@@ -111,6 +119,8 @@ extension NewChatViewController : MessageReplyViewDelegate {
     func didCloseView() {
         chatViewModel.resetReply()
         shouldAdjustTableViewTopInset()
+        
+        ChatTrackingHandler.shared.deleteReplyableMessage(with: chat?.id)
     }
     
     func shouldScrollTo(message: TransactionMessage) {}

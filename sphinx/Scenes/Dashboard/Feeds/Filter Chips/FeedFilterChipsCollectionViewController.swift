@@ -182,7 +182,11 @@ extension FeedFilterChipsCollectionViewController {
     func makeCellProvider(
         for collectionView: UICollectionView
     ) -> DataSource.CellProvider {
-        { (collectionView, indexPath, dataItem) -> UICollectionViewCell? in
+        { [weak self] (collectionView, indexPath, dataItem) -> UICollectionViewCell? in
+            guard let self else {
+                return nil
+            }
+            
             guard let cell = collectionView
                 .dequeueReusableCell(
                     withReuseIdentifier: CollectionViewCell.reuseID,

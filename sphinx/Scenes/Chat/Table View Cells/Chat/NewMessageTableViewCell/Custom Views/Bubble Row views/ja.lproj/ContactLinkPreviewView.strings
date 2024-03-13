@@ -1,0 +1,5 @@
+/* Class = "UILabel"; text = "ADD CONTACT"; ObjectID = "lRf-of-dIg"; */
+"lRf-of-dIg.text" = "連絡先を追加"; // Renrakusaki o tsuika suru
+
+/* Class = "UILabel"; text = "New Contact"; ObjectID = "usc-2z-GcC"; */
+"usc-2z-GcC.text" = "新規連絡先"; // Shinki renrakusaki

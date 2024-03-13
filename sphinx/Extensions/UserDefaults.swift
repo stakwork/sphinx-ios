@@ -49,9 +49,8 @@ extension UserDefaults {
         public static let saveQuery = DefaultKey<String>("saveQuery")
         public static let shareContentQuery = DefaultKey<String>("shareContentQuery")
         public static let glyphQuery = DefaultKey<String>("glyphQuery")
-        
+        public static let stashedQuery = DefaultKey<String>("stashedQuery")
         public static let previousIP = DefaultKey<String>("previousIP")
-        
         public static let defaultPIN = DefaultKey<String>("currentPin")
         public static let privacyPIN = DefaultKey<String>("privacyPIN")
         public static let currentSessionPin = DefaultKey<String>("currentSessionPin")

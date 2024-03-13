@@ -529,11 +529,11 @@ extension DashboardRootViewController {
         
         if chatsListViewModel.isRestoring() {
             DispatchQueue.main.async {
-                self.restoreProgressView.showRestoreProgressView(
-                    with: 1,
-                    label: "restoring-contacts".localized,
-                    buttonEnabled: false
-                )
+//                self.restoreProgressView.showRestoreProgressView(
+//                    with: 1,
+//                    label: "restoring-contacts".localized,
+//                    buttonEnabled: false
+//                )
             }
         }
         

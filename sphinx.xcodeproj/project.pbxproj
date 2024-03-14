@@ -6322,7 +6322,7 @@
 					"\"UIKit\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx.v2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Sphinxrs-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
@@ -6415,7 +6415,7 @@
 					"\"UIKit\"",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gl.sphinx.v2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(PROJECT_DIR)/sphinx/Crypter/Sphinxrs-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;

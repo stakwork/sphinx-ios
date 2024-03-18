@@ -268,10 +268,10 @@ extension SphinxOnionManager{
                     }
                     else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
                             type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
-                            let msats = message.msat,
                             let index = message.index,
                             let uuid = message.uuid
                     {
+                        let msats = message.msat ?? 0
                         genericIncomingMessage.senderPubkey = csr.pubkey
                         genericIncomingMessage.uuid = uuid
                         genericIncomingMessage.index = index
@@ -367,6 +367,7 @@ extension SphinxOnionManager{
         var chat : Chat? = nil
         var senderId: Int? = nil
         //var senderAlias : String? = nil
+        var isTribe = false
         if let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
            let oneOnOneChat = contact.getChat(){
             chat = oneOnOneChat
@@ -376,6 +377,7 @@ extension SphinxOnionManager{
             print("found tribeChat:\(tribeChat)")
             chat = tribeChat
             senderId = tribeChat.id
+            isTribe = true
         }
         
         guard let chat = chat,
@@ -384,6 +386,7 @@ extension SphinxOnionManager{
         }
         
         let newMessage = TransactionMessage(context: managedContext)
+        
         newMessage.id = index
         newMessage.uuid = uuid
         newMessage.createdAt = date
@@ -408,7 +411,15 @@ extension SphinxOnionManager{
         newMessage.mediaKey = message.mediaKey
         newMessage.mediaType = message.mediaType
         newMessage.mediaToken = message.mediaToken
-        newMessage.amount = NSDecimalNumber(value: amount)
+        if(type == TransactionMessage.TransactionMessageType.boost.rawValue && isTribe == true),
+          let msgAmount = message.amount{
+            newMessage.amount = NSDecimalNumber(value: msgAmount/1000)
+            newMessage.amountMsat = NSDecimalNumber(value: msgAmount)
+        }
+        else{
+            newMessage.amount = NSDecimalNumber(value: amount)
+            newMessage.amountMsat = NSDecimalNumber(value: amount)
+        }
         
         if(delaySave == false){
             finalizeNewMessage(index: index, newMessage: newMessage)

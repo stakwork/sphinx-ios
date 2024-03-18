@@ -301,6 +301,7 @@ struct MessageInnerContent: Mappable {
     var originalUuid:String?=nil
     var date:Int?=nil
     var invoice:String?=nil
+    var amount:Int?=nil
 
     init?(map: Map) {}
     
@@ -315,6 +316,7 @@ struct MessageInnerContent: Mappable {
         date <- map["date"]
         originalUuid <- map["originalUuid"]
         invoice <- map["invoice"]
+        amount <- map["amount"]
     }
     
 }
@@ -344,6 +346,7 @@ struct GenericIncomingMessage: Mappable {
             self.senderPubkey = csr.pubkey
         }
         
+        var innerContentAmount : UInt64? = nil
         if let message = msg.message,
            let innerContent = MessageInnerContent(JSONString: message){
             self.content = innerContent.content
@@ -356,8 +359,9 @@ struct GenericIncomingMessage: Mappable {
             self.originalUuid = innerContent.originalUuid
             self.date = innerContent.date
             self.invoice = innerContent.invoice
+            innerContentAmount = UInt64(innerContent.amount ?? 0)
         }
-        self.amount = Int(msg.msat ?? 0)
+        self.amount = Int((msg.msat ?? innerContentAmount) ?? 0)
         self.uuid = msg.uuid
         self.index = msg.index
     }

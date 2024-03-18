@@ -1902,6 +1902,20 @@ public func `payInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `b
     )
 }
 
+public func `payContactInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `bolt11`: String, `myAlias`: String, `myImg`: String) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_pay_contact_invoice(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterString.lower(`bolt11`),
+        FfiConverterString.lower(`myAlias`),
+        FfiConverterString.lower(`myImg`),$0)
+}
+    )
+}
+
 public func `paymentHashFromInvoice`(`bolt11`: String) throws -> String {
     return try  FfiConverterString.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
@@ -2240,6 +2254,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_pay_invoice() != 40951) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_pay_contact_invoice() != 38258) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_payment_hash_from_invoice() != 3194) {

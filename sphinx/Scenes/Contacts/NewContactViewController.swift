@@ -178,7 +178,7 @@ class NewContactViewController: KeyboardEventsViewController {
                 self.setContactInfo(contact: contact)
             })
         } else if let pubkey = pubkey {
-            let (pk, rh) = pubkey.pubkeyComponents
+            let (pk, rh) = (pubkey.isV2Pubkey) ? pubkey.v2PubkeyComponents : pubkey.pubkeyComponents
             backButton.isHidden = true
             addressTextField.text = pk
             routeHintTextField.text = rh

@@ -70,7 +70,7 @@ extension NewQRScannerViewController {
     }
     
     func validatePublicKey(string: String) -> Bool {
-        if string.isPubKey || string.isVirtualPubKey {
+        if string.isPubKey || string.isVirtualPubKey || string.isV2Pubkey {
             self.handleContactOrSend(string: string)
             return true
         }

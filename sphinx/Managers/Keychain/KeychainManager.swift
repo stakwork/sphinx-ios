@@ -18,7 +18,7 @@ class KeychainManager {
         return Static.instance
     }
     
-    public static let kKeychainGroup = "8297M44YTW.sphinxSharedItems"
+    public static let kKeychainGroup = "8297M44YTW.sphinxV2SharedItems"
     
     enum KeychainKeys : String {
         case pubKeys = "pub_keys"

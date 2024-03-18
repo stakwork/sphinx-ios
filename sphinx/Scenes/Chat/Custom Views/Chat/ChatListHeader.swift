@@ -160,15 +160,15 @@ class ChatListHeader: UIView {
 //                }
 //            }
 //        })
-        let som = SphinxOnionManager.sharedInstance
-//        som.issueInvite(amountMsat: 10_000)
-//        let invoice = som.createInvoice(amountMsat: 11_000)
-//        print(invoice)
-        //som.payInvoice(invoice: "lnbcrt110n1pj70yn4dqqpp5xg04cz9gcqhrdvyvcnqfvqfueny9rkzfe70nqxw9ry6hdueq3lcssp5tjxk49cl342jlkyq2p234ngwuhgcu67dr4w7t3485d3pafctvp8s9qrsgqcqpjrzjq2kue4l4wngh6cn4gx6y0ar5jwgku78r8s2c8w5exes8kdw2n8peyp66yqqqs5gqqsqqqqqqqqqqqqqq9gmvxpumzm95g5kh9240eqlehvlr6lvvmstdaux6nmy22su9chu74ycpupfwyy9e6wgsejl226q0a3agxun9k79uhq3q8qykk9fsxlt9cpj2d30v")
-        som.stashedInitialTribe = "https://34.229.52.200:8801/tribes/032dbf9a31140897e52b66743f2c78e93cff2d5ecf6fe4814327d8912243106ff6"
-        som.joinInitialTribe()
-        
-        return
+//        let som = SphinxOnionManager.sharedInstance
+////        som.issueInvite(amountMsat: 10_000)
+////        let invoice = som.createInvoice(amountMsat: 11_000)
+////        print(invoice)
+//        //som.payInvoice(invoice: "lnbcrt110n1pj70yn4dqqpp5xg04cz9gcqhrdvyvcnqfvqfueny9rkzfe70nqxw9ry6hdueq3lcssp5tjxk49cl342jlkyq2p234ngwuhgcu67dr4w7t3485d3pafctvp8s9qrsgqcqpjrzjq2kue4l4wngh6cn4gx6y0ar5jwgku78r8s2c8w5exes8kdw2n8peyp66yqqqs5gqqsqqqqqqqqqqqqqq9gmvxpumzm95g5kh9240eqlehvlr6lvvmstdaux6nmy22su9chu74ycpupfwyy9e6wgsejl226q0a3agxun9k79uhq3q8qykk9fsxlt9cpj2d30v")
+//        som.stashedInitialTribe = "https://34.229.52.200:8801/tribes/032dbf9a31140897e52b66743f2c78e93cff2d5ecf6fe4814327d8912243106ff6"
+//        som.joinInitialTribe()
+//        
+//        return
         
 //        switch(status) {
 //        case API.ConnectionStatus.Connecting:

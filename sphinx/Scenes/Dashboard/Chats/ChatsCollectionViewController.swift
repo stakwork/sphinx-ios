@@ -326,7 +326,7 @@ extension ChatsCollectionViewController {
 
         snapshot.appendSections(CollectionViewSection.allCases)
 
-        let items = chatListObjects.map {
+        let items = chatListObjects.filter({$0.getContact()?.isOwner != true}).map {
             
             DataSourceItem(
                 objectId: $0.getObjectId(),

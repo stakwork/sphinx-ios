@@ -301,6 +301,7 @@ struct MessageInnerContent: Mappable {
     var originalUuid:String?=nil
     var date:Int?=nil
     var invoice:String?=nil
+    var paymentHash:String?=nil
     var amount:Int?=nil
 
     init?(map: Map) {}
@@ -316,6 +317,7 @@ struct MessageInnerContent: Mappable {
         date <- map["date"]
         originalUuid <- map["originalUuid"]
         invoice <- map["invoice"]
+        paymentHash <- map["paymentHash"]
         amount <- map["amount"]
     }
     
@@ -337,6 +339,7 @@ struct GenericIncomingMessage: Mappable {
     var muid:String?=nil
     var date:Int?=nil
     var invoice:String?=nil
+    var paymentHash:String?=nil
 
     init?(map: Map) {}
     
@@ -359,6 +362,7 @@ struct GenericIncomingMessage: Mappable {
             self.originalUuid = innerContent.originalUuid
             self.date = innerContent.date
             self.invoice = innerContent.invoice
+            self.paymentHash = innerContent.paymentHash
             innerContentAmount = UInt64(innerContent.amount ?? 0)
         }
         self.amount = Int((msg.msat ?? innerContentAmount) ?? 0)

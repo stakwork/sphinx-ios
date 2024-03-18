@@ -32,13 +32,14 @@ extension SphinxOnionManager{//invoices related
     func sendPaymentOfInvoiceMessage(message:TransactionMessage){
         guard message.type == TransactionMessage.TransactionMessageType.payment.rawValue,
               let invoice = message.invoice,
+              let seed = getAccountSeed(),
+              let selfContact = UserContact.getSelfContact(),
               let chat = message.chat,
-              let msats = message.amountMsat,
-                let contact = chat.getContact() else{
+              let nickname = selfContact.nickname ?? chat.name else{
             return
         }
-        self.sendMessage(to: contact, content: "", chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.payment.rawValue), threadUUID: nil, replyUUID: nil,invoiceString: invoice)
-        
+       let rr = try! payContactInvoice(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), bolt11: invoice, myAlias: nickname, myImg: selfContact.avatarUrl ?? "")
+        handleRunReturn(rr: rr)
     }
     
     

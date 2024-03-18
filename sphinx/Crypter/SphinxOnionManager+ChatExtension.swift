@@ -267,7 +267,8 @@ extension SphinxOnionManager{
                         processGenericIncomingMessage(message: genericIncomingMessage, date: date,csr: csr,type: Int(type))
                     }
                     else if type == TransactionMessage.TransactionMessageType.boost.rawValue ||
-                            type == TransactionMessage.TransactionMessageType.directPayment.rawValue,
+                            type == TransactionMessage.TransactionMessageType.directPayment.rawValue ||
+                                type == TransactionMessage.TransactionMessageType.payment.rawValue,
                             let index = message.index,
                             let uuid = message.uuid
                     {
@@ -357,7 +358,7 @@ extension SphinxOnionManager{
         guard let indexString = message.index,
             let index = Int(indexString),
             TransactionMessage.getMessageWith(id: index) == nil,
-            let content = content,
+            //let content = content,
 //              let amount = message.amount,
               let pubkey = message.senderPubkey,
               let uuid = message.uuid else{
@@ -411,6 +412,8 @@ extension SphinxOnionManager{
         newMessage.mediaKey = message.mediaKey
         newMessage.mediaType = message.mediaType
         newMessage.mediaToken = message.mediaToken
+        newMessage.paymentHash = message.paymentHash
+        
         if(type == TransactionMessage.TransactionMessageType.boost.rawValue && isTribe == true),
           let msgAmount = message.amount{
             newMessage.amount = NSDecimalNumber(value: msgAmount/1000)
@@ -419,6 +422,12 @@ extension SphinxOnionManager{
         else{
             newMessage.amount = NSDecimalNumber(value: amount)
             newMessage.amountMsat = NSDecimalNumber(value: amount)
+        }
+        
+        if type == TransactionMessage.TransactionMessageType.payment.rawValue,
+           let ph = message.paymentHash,
+           let invoice = TransactionMessage.getInvoiceWith(paymentHash: ph){
+            newMessage.setPaymentInvoiceAsPaid()
         }
         
         if(delaySave == false){

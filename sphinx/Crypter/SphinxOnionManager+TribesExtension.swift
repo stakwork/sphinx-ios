@@ -91,8 +91,10 @@ extension SphinxOnionManager{//tribes related
             completion: { groupInfo in
                 let qrString = "action=tribeV2&pubkey=\(pubkey)&host=\(host)"
                 var tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: host,uuid: pubkey)
+                self.stashedInitialTribe = nil
                 GroupsManager.sharedInstance.update(tribeInfo: &tribeInfo, from: groupInfo)
                 GroupsManager.sharedInstance.finalizeTribeJoin(tribeInfo: tribeInfo, qrString: qrString)
+                
             },
             errorCallback: {}
         )

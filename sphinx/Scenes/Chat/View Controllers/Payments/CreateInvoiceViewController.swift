@@ -313,7 +313,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     private func sendDirectPayment() {
         let fetchedChat = UserContact.getContactWith(pubkey: preloadedPubkey ?? "")?.getChat()
         guard let chat = chat ?? fetchedChat else{
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
+            AlertHelper.showAlert(title: "generic.error.title".localized, message: "contact.not.found".localized, completion: {
                 self.shouldDismissView()
             })
             return

@@ -165,6 +165,7 @@
 "paste.invoice.invoice.or.pubkey" = "I-paste ang Invoice o Public Key";
 
 //ADDRESS BOOK
+"contact.not.found" = "Contact not found";
 "edit.contact.upper" = "EDIT CONTACT";
 "subscribed.upper" = "SUBSCRIBED";
 "subscribe.upper" = "SUBSCRIBE";

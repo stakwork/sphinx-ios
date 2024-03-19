@@ -191,6 +191,7 @@ Derechos de autor © 2020 Sphinx. Todos los derechos reservados.
 "address-boox.contact-block.alert-message" = "您確定要封鎖此聯繫人嗎？";
 "address-boox.contact-unblock.alert-title" = "解封聯繫人";
 "address-boox.contact-unblock.alert-message" = "您確定要解封此聯繫人嗎？";
+"contact.not.found" = "Contact not found";
 
 //歡迎
 "welcome.initial.title" = "歡迎";

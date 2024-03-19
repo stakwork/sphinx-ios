@@ -363,10 +363,10 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         let setPinVC = PinCodeViewController.instantiate(subtitle: subtitle)
         setPinVC.doneCompletion = { pin in
             setPinVC.dismiss(animated: true, completion: {
-                if let keyJSONString = self.userData.exportKeysJSON(pin: pin) {
-                    AlertHelper.showAlert(title: "export.keys".localized, message: "keys.will.copy.clipboard".localized, completion: {
-                        ClipboardHelper.copyToClipboard(text: keyJSONString, message: "keys.copied.clipboard".localized)
-                    })
+                if let mnemonic = UserData.sharedInstance.getMnemonic() {
+                    SphinxOnionManager.sharedInstance.vc = self
+                    SphinxOnionManager.sharedInstance.showMnemonicToUser(mnemonic: mnemonic, callback: {})
+                    SphinxOnionManager.sharedInstance.vc = nil
                 } else {
                     AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
                 }

@@ -191,6 +191,7 @@
 "address-boox.contact-block.alert-message" = "Are you sure you want to block this contact?";
 "address-boox.contact-unblock.alert-title" = "Unblock Contact";
 "address-boox.contact-unblock.alert-message" = "Are you sure you want to unblock this contact?";
+"contact.not.found" = "Contact not found";
 
 //WELCOME
 "welcome.initial.title" = "Welcome";

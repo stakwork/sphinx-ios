@@ -614,6 +614,49 @@ extension SphinxOnionManager{
         return chat.getContact()?.publicKey ?? chat.ownerPubkey ?? nil
     }
     
+    func setMuteLevel(
+        muteLevel:UInt8,
+        chat:Chat,
+        recipContact:UserContact?
+    ){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        guard let recipPubkey = (recipContact?.publicKey ?? chat.ownerPubkey) else { return  }
+        
+        let rr = try! mute(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), pubkey: recipPubkey, muteLevel: muteLevel)
+        handleRunReturn(rr: rr)
+    }
+    
+    func getMuteLevels(){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        let rr = try!  getMutes(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
+        handleRunReturn(rr: rr)
+    }
+    
+    func setReadLevel(
+        index:UInt64,
+        chat:Chat,
+        recipContact:UserContact?
+    ){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        guard let recipPubkey = (recipContact?.publicKey ?? chat.ownerPubkey) else { return  }
+        
+        let rr = try! read(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), pubkey: recipPubkey, msgIdx: index)
+        handleRunReturn(rr: rr)
+    }
+    
+    func getReads(){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        let rr = try! sphinx.getReads(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
+        handleRunReturn(rr: rr)
+    }
 
 }
 

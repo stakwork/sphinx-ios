@@ -236,19 +236,20 @@ final class ChatListViewModel {
                     completion(0, 0)
                 }
             }, errorCallback: {
-                if retry < 5 {
-                    DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
-                        self.getMessagesPaginated(
-                            restoring: restoring,
-                            prevPageNewMessages: prevPageNewMessages,
-                            chatId: chatId,
-                            date: date,
-                            retry: retry + 1,
-                            progressCallback: progressCallback,
-                            completion: completion
-                        )
-                    })
-                }
+                completion(0, 0)
+//                if retry < 5 {
+//                    DelayPerformedHelper.performAfterDelay(seconds: 1.0, completion: {
+//                        self.getMessagesPaginated(
+//                            restoring: restoring,
+//                            prevPageNewMessages: prevPageNewMessages,
+//                            chatId: chatId,
+//                            date: date,
+//                            retry: retry + 1,
+//                            progressCallback: progressCallback,
+//                            completion: completion
+//                        )
+//                    })
+//                }
             })
     }
     

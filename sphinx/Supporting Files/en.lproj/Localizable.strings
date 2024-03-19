@@ -178,6 +178,7 @@
 "payment.request" = "Payment Request";
 
 //ADDRESS BOOK
+"contact.not.found" = "Contact not found";
 "edit.contact.upper" = "EDIT CONTACT";
 "subscribed.upper" = "SUBSCRIBED";
 "subscribe.upper" = "SUBSCRIBE";

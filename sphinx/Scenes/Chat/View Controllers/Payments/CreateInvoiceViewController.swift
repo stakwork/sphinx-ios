@@ -311,27 +311,29 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     }
     
     private func sendDirectPayment() {
+        let fetchedChat = UserContact.getContactWith(pubkey: preloadedPubkey ?? "")?.getChat()
+        guard let chat = chat ?? fetchedChat else{
+            AlertHelper.showAlert(title: "generic.error.title".localized, message: "contact.not.found".localized, completion: {
+                self.shouldDismissView()
+            })
+            return
+        }
         let parameters = TransactionMessage.getPaymentParamsFor(
             payment: paymentsViewModel.payment,
             contact: contact,
             chat: chat
         )
         
-        API.sharedInstance.sendDirectPayment(params: parameters, callback: { payment in
-            if let payment = payment {
-                self.createLocalMessages(message: payment)
-            } else {
-                AlertHelper.showAlert(title: "generic.success.title".localized, message: "payment.successfully.sent".localized, completion: {
+        let image =  #imageLiteral(resourceName: "appPinIcon")
+        SphinxOnionManager.sharedInstance.sendDirectPaymentMessage(params: parameters, chat: chat, image: image, completion: { success, _ in
+            if(success){
+                self.shouldDismissView()
+            }
+            else{
+                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized, completion: {
                     self.shouldDismissView()
                 })
             }
-        }, errorCallback: { error in
-            AlertHelper.showAlert(
-                title: "Payment error",
-                message: "\(error.capitalized)",
-                completion: {
-                    self.shouldDismissView()
-            })
         })
     }
     

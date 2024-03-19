@@ -177,6 +177,7 @@
 "payment.request" = "Solicitud de Pago";
 
 //ADDRESS BOOK
+"contact.not.found" = "Contact not found";
 "edit.contact.upper" = "EDITAR";
 "subscribed.upper" = "SUSCRIPTO";
 "subscribe.upper" = "SUSCRIBIRSE";

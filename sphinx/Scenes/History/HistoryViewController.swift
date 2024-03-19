@@ -55,19 +55,23 @@ class HistoryViewController: UIViewController {
         historyTableView.delegate = historyDataSource
         historyTableView.dataSource = historyDataSource
         
-        loading = true
+        //loading = true
+        loading = false
+        
+        self.setNoResultsLabel(count: 0)
+        self.checkResultsLimit(count: 0)
 
-        API.sharedInstance.getTransactionsList(page: page, itemsPerPage: itemsPerPage, callback: { transactions in
-            self.setNoResultsLabel(count: transactions.count)
-            self.checkResultsLimit(count: transactions.count)
-            self.historyDataSource.loadTransactions(transactions: transactions)
-            self.loading = false
-        }, errorCallback: {
-            self.checkResultsLimit(count: 0)
-            self.historyTableView.alpha = 0.0
-            self.loading = false
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.loading.transactions".localized)
-        })
+//        API.sharedInstance.getTransactionsList(page: page, itemsPerPage: itemsPerPage, callback: { transactions in
+//            self.setNoResultsLabel(count: transactions.count)
+//            self.checkResultsLimit(count: transactions.count)
+//            self.historyDataSource.loadTransactions(transactions: transactions)
+//            self.loading = false
+//        }, errorCallback: {
+//            self.checkResultsLimit(count: 0)
+//            self.historyTableView.alpha = 0.0
+//            self.loading = false
+//            AlertHelper.showAlert(title: "generic.error.title".localized, message: "error.loading.transactions".localized)
+//        })
     }
     
     func setNoResultsLabel(count: Int) {

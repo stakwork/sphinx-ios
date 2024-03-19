@@ -573,9 +573,9 @@ extension SphinxOnionManager{
         image:UIImage,
         completion: @escaping (Bool,TransactionMessage?)->()
     ){
+        let muid = params["muid"] as? String ?? "YkZJhKWUYWcSRM5JmFhqwq7SJpeV_ayx1Feiu6oq3CE="
         guard let contact = chat.getContact(),
         let amount = params["amount"] as? Int,
-        let muid = params["muid"] as? String,
         let data = image.pngData() else{
             completion(false,nil)
             return

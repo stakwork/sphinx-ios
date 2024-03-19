@@ -53,8 +53,8 @@ extension NewChatViewModel {
         }
         
         let tuuid = threadUUID ?? replyingTo?.threadUUID ?? replyingTo?.uuid
-        let error = SphinxOnionManager.sharedInstance.sendMessage(to: contact, content: text, chat: chat,msgType: UInt8(type), threadUUID: tuuid, replyUUID: replyingTo?.uuid)
-        completion(error == nil)
+        let validMessage = SphinxOnionManager.sharedInstance.sendMessage(to: contact, content: text, chat: chat,msgType: UInt8(type), threadUUID: tuuid, replyUUID: replyingTo?.uuid)
+        completion(validMessage != nil)
         
     }
     

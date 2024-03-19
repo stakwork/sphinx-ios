@@ -51,6 +51,9 @@ protocol NewChatTableDataSourceDelegate : class {
     ///Invoices
     func shouldPayInvoiceFor(messageId: Int)
     
+    ///Calls
+    func shouldDismissKeyboard()
+    
     ///Messages search
     func isOnStandardMode() -> Bool
     func didFinishSearchingWith(matchesCount: Int, index: Int)
@@ -190,8 +193,8 @@ class NewChatTableDataSource : NSObject {
     func makeCellProvider(
         for tableView: UITableView
     ) -> DataSource.CellProvider {
-        { (tableView, indexPath, dataSourceItem) -> UITableViewCell in
-            return self.getCellFor(
+        { [weak self] (tableView, indexPath, dataSourceItem) -> UITableViewCell? in
+            return self?.getCellFor(
                 dataSourceItem: dataSourceItem,
                 indexPath: indexPath
             )

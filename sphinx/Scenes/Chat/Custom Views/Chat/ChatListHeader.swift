@@ -54,6 +54,9 @@ class ChatListHeader: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         upgradeAppButton.layer.cornerRadius = upgradeAppButton.frame.size.height / 2
+        
+        let balanceTap = UITapGestureRecognizer(target: self, action: #selector(self.balanceLabelTapped(gesture:)))
+        self.smallBalanceLabel.addGestureRecognizer(balanceTap)
     }
     
     func listenForEvents() {
@@ -98,7 +101,14 @@ class ChatListHeader: UIView {
     
     func showBalance() {
         smallUnitLabel.text = "chat-header.balance.unit".localized
-        smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
+        
+        let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
+        
+        if (hideBalances) {
+            smallBalanceLabel.text = "＊＊＊＊"
+        } else {
+            smallBalanceLabel.text = walletBalanceService.balance.formattedWithSeparator
+        }
         
         shouldCheckAppVersions()
     }
@@ -142,7 +152,7 @@ class ChatListHeader: UIView {
     @IBAction func healthCheckButtonTouched() {
         let status = API.sharedInstance.connectionStatus
         let socketConnected = SphinxSocketManager.sharedInstance.isConnected()
-        var message: String? = nil
+//        var message: String? = nil
         
 //        let som = SphinxOnionManager.sharedInstance
 //        let selfContact = UserContact.getSelfContact()
@@ -207,6 +217,12 @@ class ChatListHeader: UIView {
     
     @IBAction func leftMenuButtonTouched() {
         delegate?.leftMenuButtonTouched()
+    }
+    
+    @objc private func balanceLabelTapped(gesture: UIGestureRecognizer) {
+        let hideBalances = UserDefaults.Keys.hideBalances.get(defaultValue: false)
+        UserDefaults.Keys.hideBalances.set(!hideBalances)
+        updateBalance()
     }
     
 }

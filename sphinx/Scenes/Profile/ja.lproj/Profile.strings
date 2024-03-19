@@ -1,0 +1,64 @@
+/* Class = "UILabel"; text = "PROFILE"; ObjectID = "41O-R2-bE7"; */
+"41O-R2-bE7.text" = "プロフィール"; // Purofīru
+
+/* Class = "UILabel"; text = "Meeting Server"; ObjectID = "8d4-ou-aLA"; */
+"8d4-ou-aLA.text" = "会議サーバー"; // Kaigi sābā
+
+/* Class = "UILabel"; text = "Invite Server"; ObjectID = "9WV-Bo-DnX"; */
+"9WV-Bo-DnX.text" = "招待サーバー"; // Shōtai sābā
+
+/* Class = "UILabel"; text = "User Name"; ObjectID = "ETI-Y9-dAa"; */
+"ETI-Y9-dAa.text" = "ユーザー名"; // Yūzā mei
+
+/* Class = "UILabel"; text = "Share my profile photo with contacts"; ObjectID = "Esr-uH-D1R"; */
+"Esr-uH-D1R.text" = "連絡先とプロフィール写真を共有する"; // Renrakusaki to purofīru shashin o kyōyū suru
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "FfL-nl-BnP"; */
+"FfL-nl-BnP.normalTitle" = "完了"; // Kanryō
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "Gwy-FV-c0D"; */
+"Gwy-FV-c0D.normalTitle" = "キャンセル"; // Kyanseru
+
+/* Class = "UILabel"; text = "File Server"; ObjectID = "MsM-st-6dn"; */
+"MsM-st-6dn.text" = "ファイルサーバー"; // Fairu sābā
+
+"aS3-Fj-p1j.text" = "さらにデバイスを同期する"; // Sara ni debbaisu o dōki suru
+
+"sX0-os-LQi.normalTitle" = "キーをバックアップする"; // Kī o bakkuappu suru
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "faG-bF-oVt"; */
+"faG-bF-oVt.text" = "アドレス"; // Adoressu
+
+"0Wh-WY-PvB.text" = "ルートヒント"; // Rūto hinto
+
+/* Class = "UILabel"; text = "Default tip amount"; ObjectID = "jJs-A6-b1l"; */
+"jJs-A6-b1l.text" = "デフォルトのチップ額"; // Defuoruto no chippu-gaku
+
+/* Class = "UILabel"; text = "Appearance"; ObjectID = "p1B-4h-bVu"; */
+"p1B-4h-bVu.text" = "外観"; // Gaikan
+
+"jxx-Fl-kXP.text" = "通知音"; // Tsūchi on
+
+"X8L-GC-hmH.text" = "通知音"; // Tsūchi on
+
+"gAs-58-jhi.normalTitle" = "確認"; // Kakunin
+
+"gjh-2S-Wpi.text" = "サイズ"; // Saizu
+
+"WVe-8j-tgh.text" = "サーバーURL"; // Sābā URL
+
+"2YG-L7-D9J.text" = "PINの変更"; // PIN no henkō
+
+"rlD-nH-ZkP.text" = "PINタイムアウト"; // PIN taimuauto
+
+"YQw-Cm-DzX.text" = "プライバシー PIN の設定"; // Puraibashī PIN no settei
+
+"IQP-Z6-eAF.text" = "Github のプライベートアクセストークンの設定"; // Github no puraibēto akusesu tōkun no settei
+
+"z8e-Oe-Tdt.text" = "署名者を設定する"; // Shomeisha o settei suru
+
+"9QJ-12-Kc1.text" = "MQTTを切断する"; // MQTT o setsudan suru
+
+"Uah-nc-EPN.text" = "フィードのレコメンデーション"; // Fīdo no rekomen'dēshon
+
+"mU1-dY-IRh.text" = "自動ダウンロードされたPodcastエピソード";

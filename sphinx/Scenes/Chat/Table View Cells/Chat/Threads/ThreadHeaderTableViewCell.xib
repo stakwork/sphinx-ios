@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,19 +18,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThreadHeaderTableViewCell" rowHeight="722" id="KGk-i7-Jjw" customClass="ThreadHeaderTableViewCell" customModule="sphinx" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="408" height="722"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ThreadHeaderTableViewCell" rowHeight="763" id="KGk-i7-Jjw" customClass="ThreadHeaderTableViewCell" customModule="sphinx" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="408" height="763"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="408" height="722"/>
+                <rect key="frame" x="0.0" y="0.0" width="408" height="763"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgW-bO-r6C">
-                        <rect key="frame" x="0.0" y="-300" width="408" height="1022"/>
+                        <rect key="frame" x="0.0" y="-300" width="408" height="1063"/>
                         <color key="backgroundColor" name="HeaderBG"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C4H-5D-8K4">
-                        <rect key="frame" x="0.0" y="0.0" width="408" height="722"/>
+                        <rect key="frame" x="0.0" y="0.0" width="408" height="763"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ymw-8s-TdE">
                                 <rect key="frame" x="0.0" y="0.0" width="408" height="36"/>
@@ -135,17 +135,34 @@
                                             <constraint firstAttribute="trailing" secondItem="51d-af-xpA" secondAttribute="trailing" id="r9A-Cd-sLN"/>
                                         </constraints>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DrI-5q-HTM">
+                                        <rect key="frame" x="0.0" y="685" width="408" height="1"/>
+                                        <color key="backgroundColor" name="Divider"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="dAQ-W0-t8X"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="NjK-yM-870" secondAttribute="bottom" constant="12" id="2RL-Ly-8Fa"/>
                                     <constraint firstItem="NjK-yM-870" firstAttribute="leading" secondItem="GG7-PQ-HiL" secondAttribute="leading" constant="16" id="4zR-aL-FrF"/>
+                                    <constraint firstItem="DrI-5q-HTM" firstAttribute="leading" secondItem="GG7-PQ-HiL" secondAttribute="leading" id="HLy-Fx-Gk6"/>
                                     <constraint firstAttribute="trailing" secondItem="NjK-yM-870" secondAttribute="trailing" constant="16" id="MeR-Xa-Th0"/>
+                                    <constraint firstAttribute="trailing" secondItem="DrI-5q-HTM" secondAttribute="trailing" id="WUs-bP-TJj"/>
+                                    <constraint firstItem="uDu-S2-CM1" firstAttribute="top" secondItem="DrI-5q-HTM" secondAttribute="bottom" constant="-12" id="bTW-o6-tga"/>
                                     <constraint firstItem="NjK-yM-870" firstAttribute="top" secondItem="GG7-PQ-HiL" secondAttribute="top" constant="12" id="c70-mY-GXf"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="92T-BN-Nbh" customClass="NewMessageBoostView" customModule="sphinx" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="722" width="408" height="41"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="TB9-9F-j9J"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22s-yO-xMt">
-                                <rect key="frame" x="0.0" y="722" width="408" height="0.0"/>
+                                <rect key="frame" x="0.0" y="763" width="408" height="0.0"/>
                                 <color key="backgroundColor" name="Body"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="KwA-we-rpb"/>
@@ -156,6 +173,8 @@
                         <constraints>
                             <constraint firstItem="22s-yO-xMt" firstAttribute="leading" secondItem="C4H-5D-8K4" secondAttribute="leading" id="6Wv-G5-R0k"/>
                             <constraint firstAttribute="trailing" secondItem="22s-yO-xMt" secondAttribute="trailing" id="ULY-Fe-EEb"/>
+                            <constraint firstAttribute="trailing" secondItem="92T-BN-Nbh" secondAttribute="trailing" id="tXl-rB-8v9"/>
+                            <constraint firstItem="92T-BN-Nbh" firstAttribute="leading" secondItem="C4H-5D-8K4" secondAttribute="leading" id="ywe-Ab-p4I"/>
                         </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q3P-ig-NFM">
@@ -214,6 +233,7 @@
                 <outlet property="differenceViewHeightConstraint" destination="KwA-we-rpb" id="xBA-ce-2ja"/>
                 <outlet property="fileDetailsView" destination="Bp1-26-g13" id="4a0-kz-cZ9"/>
                 <outlet property="mediaMessageView" destination="pm9-H9-xKv" id="f8y-Ax-VoI"/>
+                <outlet property="messageBoostView" destination="92T-BN-Nbh" id="vFD-59-oT0"/>
                 <outlet property="messageContainer" destination="51d-af-xpA" id="Ibt-iE-IZx"/>
                 <outlet property="messageLabel" destination="NmQ-7f-GFw" id="nTC-Yz-LeB"/>
                 <outlet property="senderAvatarView" destination="JhS-4M-gL7" id="QQl-QW-i0t"/>
@@ -228,6 +248,9 @@
     <resources>
         <namedColor name="Body">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Divider">
+            <color red="0.86274509803921573" green="0.8784313725490196" blue="0.8901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="HeaderBG">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

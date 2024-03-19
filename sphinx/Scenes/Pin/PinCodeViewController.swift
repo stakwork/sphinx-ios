@@ -32,6 +32,7 @@ class PinCodeViewController: UIViewController {
     
     var authenticationHelper = BiometricAuthenticationHelper()
     var doneCompletion: ((String) -> ())? = nil
+    var loggingCompletion: (() -> ())? = nil
     
     static func instantiate(subtitle: String = "") -> PinCodeViewController {
         let viewController = StoryboardScene.Pin.pinCodeViewController.instantiate()
@@ -133,6 +134,10 @@ class PinCodeViewController: UIViewController {
                 
                 DelayPerformedHelper.performAfterDelay(seconds: didChange ? 0.5 : 0.0, completion: {
                     WindowsManager.sharedInstance.removeCoveringWindow()
+                    
+                    if let loggingCompletion = self.loggingCompletion {
+                        loggingCompletion()
+                    }
                 })
             } else {
                 loading = false

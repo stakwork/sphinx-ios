@@ -23,6 +23,7 @@ protocol ThreadHeaderTableViewCellDelegate: class {
     func didTapPlayPauseButtonFor(messageId: Int, and rowIndex: Int)
     
     func didTapOnLink(_ link: String)
+    func didLongPressOn(cell: UITableViewCell, with messageId: Int, bubbleViewRect: CGRect)
 }
 
 class ThreadHeaderTableViewCell: UITableViewCell {
@@ -35,6 +36,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
     @IBOutlet weak var mediaMessageView: MediaMessageView!
     @IBOutlet weak var fileDetailsView: FileDetailsView!
     @IBOutlet weak var audioMessageView: AudioMessageView!
+    @IBOutlet weak var messageBoostView: NewMessageBoostView!
     @IBOutlet weak var messageContainer: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var senderNameLabel: UILabel!
@@ -62,6 +64,43 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         audioMessageView.clipsToBounds = true
         
         mediaMessageView.removeMargin()
+        
+        addLongPressRescognizer()
+    }
+    
+    func addLongPressRescognizer() {
+        let lpgr = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        lpgr.minimumPressDuration = 0.5
+        lpgr.delaysTouchesBegan = true
+        
+        contentView.addGestureRecognizer(lpgr)
+    }
+    
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        if (gestureReconizer.state == .began) {
+            didLongPressOnCell()
+        }
+    }
+    
+    func didLongPressOnCell() {
+        if let messageId = messageId {
+            
+            let kMargin: CGFloat = 16
+            let contentViewFrame = contentView.frame
+            
+            let frame = CGRect(
+                x: contentViewFrame.origin.x,
+                y: contentViewFrame.origin.y - kMargin,
+                width: contentViewFrame.size.width,
+                height: contentViewFrame.size.height - differenceViewHeightConstraint.constant + kMargin
+            )
+            
+            delegate?.didLongPressOn(
+                cell: self,
+                with: messageId,
+                bubbleViewRect: frame
+            )
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -73,6 +112,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         fileDetailsView.isHidden = true
         messageContainer.isHidden = true
         audioMessageView.isHidden = true
+        messageBoostView.isHidden = true
     }
     
     func configureWith(
@@ -100,6 +140,10 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         configureWith(messageMedia: mutableMessageCellState.messageMedia, mediaData: mediaData)
         configureWith(genericFile: mutableMessageCellState.genericFile, mediaData: mediaData)
         configureWith(audio: mutableMessageCellState.audio, mediaData: mediaData)
+        
+        if let bubble = mutableMessageCellState.bubble {
+            configureWith(boosts: mutableMessageCellState.boosts, and: bubble)
+        }
     }
     
     func configureWith(
@@ -141,7 +185,7 @@ class ThreadHeaderTableViewCell: UITableViewCell {
         
         let font = UIFont(name: "Roboto-Regular", size: 17.0)!
         
-        if threadOriginalMessage.linkMatches.isEmpty {
+        if threadOriginalMessage.linkMatches.isEmpty && threadOriginalMessage.highlightedMatches.isEmpty {
             messageLabel.attributedText = nil
             messageLabel.text = threadOriginalMessage.text
             messageLabel.font = font
@@ -150,9 +194,31 @@ class ThreadHeaderTableViewCell: UITableViewCell {
             let attributedString = NSMutableAttributedString(string: messageContent)
             attributedString.addAttributes([NSAttributedString.Key.font: font], range: messageContent.nsRange)
             
+            ///Highlighted text formatting
+            let highlightedNsRanges = threadOriginalMessage.highlightedMatches.map {
+                return $0.range
+            }
+            
+            for (index, nsRange) in highlightedNsRanges.enumerated() {
+                
+                ///Subtracting the previous matches delimiter characters since they have been removed from the string
+                let substractionNeeded = index * 2
+                let adaptedRange = NSRange(location: nsRange.location - substractionNeeded, length: nsRange.length - 2)
+                
+                attributedString.addAttributes(
+                    [
+                        NSAttributedString.Key.foregroundColor: UIColor.Sphinx.HighlightedText,
+                        NSAttributedString.Key.backgroundColor: UIColor.Sphinx.HighlightedTextBackground,
+                        NSAttributedString.Key.font: threadOriginalMessage.highlightedFont
+                    ],
+                    range: adaptedRange
+                )
+            }
+            
+            ///Links formatting
             for match in threadOriginalMessage.linkMatches {
                 
-                attributedString.setAttributes(
+                attributedString.addAttributes(
                     [
                         NSAttributedString.Key.foregroundColor: UIColor.Sphinx.PrimaryBlue,
                         NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -291,6 +357,16 @@ class ThreadHeaderTableViewCell: UITableViewCell {
                     )
                 }
             }
+        }
+    }
+    
+    func configureWith(
+        boosts: BubbleMessageLayoutState.Boosts?,
+        and bubble: BubbleMessageLayoutState.Bubble
+    ) {
+        if let boosts = boosts {
+            messageBoostView.configureWith(boosts: boosts, and: bubble)
+            messageBoostView.isHidden = false
         }
     }
     

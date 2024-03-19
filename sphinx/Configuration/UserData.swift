@@ -110,9 +110,10 @@ class UserData {
     }
     
     func getAndSaveTransportKey(
+        forceGet: Bool = false,
         completion: ((String?) ->())? = nil
     ) {
-        if let transportKey = getTransportKey(), !transportKey.isEmpty {
+        if let transportKey = getTransportKey(), !transportKey.isEmpty && !forceGet {
             completion?(transportKey)
             return
         }
@@ -140,6 +141,8 @@ class UserData {
             completion?()
             return
         }
+        
+        deleteHmacKey()
         
         API.sharedInstance.getHMACKey(callback: { hmacKey in
             let (decrypted, decryptedHMACKey) = EncryptionManager.sharedInstance.decryptMessage(message: hmacKey)
@@ -401,6 +404,10 @@ class UserData {
     
     func save(hmacKey: String) {
         saveValueFor(value: hmacKey, for: KeychainManager.KeychainKeys.hmacKey, userDefaultKey: UserDefaults.Keys.hmacKey)
+    }
+    
+    func deleteHmacKey() {
+        let _ = keychainManager.deleteValueFor(key: KeychainManager.KeychainKeys.hmacKey.rawValue)
     }
     
     func save(password: String) {

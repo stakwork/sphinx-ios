@@ -85,7 +85,7 @@ class CreateInvoiceViewController: CommonPaymentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.accessibilityIdentifier = "CreateInvoiceViewController"
         setStatusBarColor()
         
         setupContact()

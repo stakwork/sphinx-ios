@@ -44,7 +44,7 @@ class DiscoverTribesWebViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.accessibilityIdentifier = "DiscoverTribesWebViewController"
         configTableView()
         setupHeaderViews()
     }

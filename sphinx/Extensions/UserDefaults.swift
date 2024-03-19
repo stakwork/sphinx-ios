@@ -13,6 +13,7 @@ extension UserDefaults {
         public static let lastSeenHistoryDate = DefaultKey<Date>("lastSeenHistoryDate")
         public static let lastSeenMessagesDate = DefaultKey<Date>("lastSeenMessagesDate")
         public static let lastSeenContactsDate = DefaultKey<Date>("lastSeenContactsDate")
+        public static let hideBalances = DefaultKey<Bool>("hideBalances")
         public static let channelBalance = DefaultKey<Int>("channelBalance")
         public static let remoteBalance = DefaultKey<Int>("remoteBalance")
         public static let currentIP = DefaultKey<String>("currentIP")
@@ -29,6 +30,7 @@ extension UserDefaults {
         public static let subscriptionQuery = DefaultKey<String>("subscriptionQuery")
         public static let invoiceQuery = DefaultKey<String>("invoiceQuery")
         public static let tribeQuery = DefaultKey<String>("tribeQuery")
+        public static let jitsiLinkUrl = DefaultKey<String>("jitsiLinkUrl")
         public static let stakworkPaymentQuery = DefaultKey<String>("stakworkPaymentQuery")
         public static let attachmentsToken = DefaultKey<String>("attachmentsToken")
         public static let inviterNickname = DefaultKey<String>("inviterNickname")
@@ -46,7 +48,6 @@ extension UserDefaults {
         public static let personQuery = DefaultKey<String>("personQuery")
         public static let saveQuery = DefaultKey<String>("saveQuery")
         public static let shareContentQuery = DefaultKey<String>("shareContentQuery")
-        public static let stashedQuery = DefaultKey<String>("stashedQuery")
         public static let glyphQuery = DefaultKey<String>("glyphQuery")
         
         public static let previousIP = DefaultKey<String>("previousIP")

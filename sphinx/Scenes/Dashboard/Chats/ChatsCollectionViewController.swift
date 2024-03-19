@@ -110,7 +110,7 @@ extension ChatsCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.accessibilityIdentifier = "ChatsCollectionViewController"
         loadChatsList()
         addAccessibilityIdentifiers()
     }
@@ -280,7 +280,11 @@ extension ChatsCollectionViewController {
 extension ChatsCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
-        { (collectionView, indexPath, chatItem) -> UICollectionViewCell? in
+        { [weak self] (collectionView, indexPath, chatItem) -> UICollectionViewCell? in
+            guard let self else {
+                return nil
+            }
+            
             let section = CollectionViewSection.allCases[indexPath.section]
 
             switch section {

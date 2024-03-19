@@ -317,13 +317,8 @@ extension DashboardRootViewController {
         if didFinishInitialLoading {
             loadDataOnTabChange(to: activeTab)
         }
-        setupAddTribeButton()
         
-        if let stashedQuery = UserDefaults.Keys.stashedQuery.get(defaultValue: ""),
-           let url = URL(string:"sphinx.chat://?\(stashedQuery)") {
-            let _ = DeepLinksHandlerHelper.storeLinkQueryFrom(url: url)
-            self.handleLinkQueries()
-        }
+        setupAddTribeButton()
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
             self.connectToV2Server()

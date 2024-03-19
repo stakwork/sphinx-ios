@@ -451,7 +451,9 @@ extension NewChatTableDataSource {
         var purchaseMessagesMap: [String: [Int: TransactionMessage]] = [:]
         
         for purchaseMessage in purchaseMessages {
-            if let muid = purchaseMessage.originalMuid ?? purchaseMessage.muid, muid.isNotEmpty {
+            let muid = (purchaseMessage.originalMuid?.isNotEmpty == true) ? purchaseMessage.originalMuid : purchaseMessage.muid
+            
+            if let muid = muid, muid.isNotEmpty {
                 if var _ = purchaseMessagesMap[muid] {
                     purchaseMessagesMap[muid]![purchaseMessage.type] = purchaseMessage
                 } else {
@@ -501,7 +503,7 @@ extension NewChatTableDataSource {
             return [:]
         }
         
-        let messageUUIDs: [String] = messages.map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
+        let messageUUIDs: [String] = messages.filter({ !$0.isDeleted() }).map({ $0.uuid ?? "" }).filter({ $0.isNotEmpty })
         let threadMessages = TransactionMessage.getThreadMessagesFor(messageUUIDs, on: chat)
         
         var threadMessagesMap: [String: [TransactionMessage]] = [:]

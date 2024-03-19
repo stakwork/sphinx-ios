@@ -104,13 +104,16 @@ public extension UIColor {
         public static let ThreadLastReply = color("ThreadLastReply")
         public static let NewMessageIndicator = color("NewMessageIndicator")
         
+        public static let HighlightedText = color("HighlightedText")
+        public static let HighlightedTextBackground = color("HighlightedTextBackground")
+        
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta
             
         }
     }
     
-    func toHexString() -> String {
+    func toHexColorString() -> String {
         var r:CGFloat = 0
         var g:CGFloat = 0
         var b:CGFloat = 0
@@ -132,9 +135,13 @@ public extension UIColor {
     }
     
     convenience init(hex: String, alpha: CGFloat = 1) {
-        assert(hex[hex.startIndex] == "#", "Expected hex string of format #RRGGBB")
+        var hexString = hex
         
-        let scanner = Scanner(string: hex)
+        if hex[hex.startIndex] != "#" {
+            hexString = "#\(hex)"
+        }
+        
+        let scanner = Scanner(string: hexString)
         scanner.scanLocation = 1
         
         var rgb: UInt32 = 0

@@ -57,8 +57,8 @@ class BotResponseView: UIView {
         if !loading {
             loadingWheel.stopAnimating()
             
-            let backgroundColor = UIColor(cgColor: UIColor.Sphinx.ReceivedMsgBG.resolvedCGColor(with: self)).toHexString()
-            let textColor = UIColor(cgColor: UIColor.Sphinx.Text.resolvedCGColor(with: self)).toHexString()
+            let backgroundColor = UIColor(cgColor: UIColor.Sphinx.ReceivedMsgBG.resolvedCGColor(with: self)).toHexColorString()
+            let textColor = UIColor(cgColor: UIColor.Sphinx.Text.resolvedCGColor(with: self)).toHexColorString()
             
             let contentPrefix = String(format: kWebViewContentPrefix, textColor, backgroundColor, backgroundColor)
             let messageContent = botHTMLContent.html

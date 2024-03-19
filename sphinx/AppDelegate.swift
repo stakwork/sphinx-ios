@@ -87,6 +87,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
+        handleUrl(url)
+        return true
+    }
+    
+    func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+            guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+                    let url = userActivity.webpageURL,
+                    let _ = URLComponents(url: url, resolvingAgainstBaseURL: true) else
+            {
+                return false
+            }
+            
+            handleUrl(url)
+             
+            return true
+    }
+    
+    func handleUrl(_ url: URL) {
         if DeepLinksHandlerHelper.storeLinkQueryFrom(url: url) {
             if let currentVC = getCurrentVC() {
                 if let currentVC = currentVC as? DashboardRootViewController {
@@ -102,10 +123,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     currentVC.navigationController?.popToRootViewController(animated: true)
                 }
             } else {
-                setInitialVC(deepLink: true)
+                setInitialVC()
             }
         }
-        return true
     }
 
     func application(
@@ -248,9 +268,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //Initial VC
-    func setInitialVC(
-        deepLink: Bool = false
-    ) {
+    func setInitialVC() {
         let isUserLogged = UserData.sharedInstance.isUserLogged()
         
         if isUserLogged {
@@ -266,6 +284,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func presentPINIfNeeded() {
         if GroupsPinManager.sharedInstance.shouldAskForPin() {
             let pinVC = PinCodeViewController.instantiate()
+            pinVC.loggingCompletion = {
+                if let currentVC = self.getCurrentVC() {
+                    let _ = DeepLinksHandlerHelper.joinJitsiCall(vc: currentVC, forceJoin: true)
+                }
+            }
             WindowsManager.sharedInstance.showConveringWindowWith(rootVC: pinVC)
         }
     }
@@ -290,8 +313,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func getRelayKeys() {
-        UserData.sharedInstance.getAndSaveTransportKey()
-        UserData.sharedInstance.getOrCreateHMACKey(forceGet: true)
+        if UserData.sharedInstance.isUserLogged() {
+            UserData.sharedInstance.getAndSaveTransportKey(forceGet: true)
+            UserData.sharedInstance.getOrCreateHMACKey(forceGet: true)
+        }
     }
     
     //Notifications

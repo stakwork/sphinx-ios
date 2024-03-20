@@ -479,6 +479,7 @@ public struct Msg {
     public var `message`: String?
     public var `type`: UInt8?
     public var `uuid`: String?
+    public var `tag`: String?
     public var `index`: String?
     public var `sender`: String?
     public var `msat`: UInt64?
@@ -487,10 +488,11 @@ public struct Msg {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`message`: String?, `type`: UInt8?, `uuid`: String?, `index`: String?, `sender`: String?, `msat`: UInt64?, `timestamp`: UInt64?, `sentTo`: String?) {
+    public init(`message`: String?, `type`: UInt8?, `uuid`: String?, `tag`: String?, `index`: String?, `sender`: String?, `msat`: UInt64?, `timestamp`: UInt64?, `sentTo`: String?) {
         self.`message` = `message`
         self.`type` = `type`
         self.`uuid` = `uuid`
+        self.`tag` = `tag`
         self.`index` = `index`
         self.`sender` = `sender`
         self.`msat` = `msat`
@@ -509,6 +511,9 @@ extension Msg: Equatable, Hashable {
             return false
         }
         if lhs.`uuid` != rhs.`uuid` {
+            return false
+        }
+        if lhs.`tag` != rhs.`tag` {
             return false
         }
         if lhs.`index` != rhs.`index` {
@@ -533,6 +538,7 @@ extension Msg: Equatable, Hashable {
         hasher.combine(`message`)
         hasher.combine(`type`)
         hasher.combine(`uuid`)
+        hasher.combine(`tag`)
         hasher.combine(`index`)
         hasher.combine(`sender`)
         hasher.combine(`msat`)
@@ -548,6 +554,7 @@ public struct FfiConverterTypeMsg: FfiConverterRustBuffer {
             `message`: FfiConverterOptionString.read(from: &buf), 
             `type`: FfiConverterOptionUInt8.read(from: &buf), 
             `uuid`: FfiConverterOptionString.read(from: &buf), 
+            `tag`: FfiConverterOptionString.read(from: &buf), 
             `index`: FfiConverterOptionString.read(from: &buf), 
             `sender`: FfiConverterOptionString.read(from: &buf), 
             `msat`: FfiConverterOptionUInt64.read(from: &buf), 
@@ -560,6 +567,7 @@ public struct FfiConverterTypeMsg: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.`message`, into: &buf)
         FfiConverterOptionUInt8.write(value.`type`, into: &buf)
         FfiConverterOptionString.write(value.`uuid`, into: &buf)
+        FfiConverterOptionString.write(value.`tag`, into: &buf)
         FfiConverterOptionString.write(value.`index`, into: &buf)
         FfiConverterOptionString.write(value.`sender`, into: &buf)
         FfiConverterOptionUInt64.write(value.`msat`, into: &buf)
@@ -1902,7 +1910,7 @@ public func `payInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `b
     )
 }
 
-public func `payContactInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `bolt11`: String, `myAlias`: String, `myImg`: String) throws -> RunReturn {
+public func `payContactInvoice`(`seed`: String, `uniqueTime`: String, `state`: Data, `bolt11`: String, `myAlias`: String, `myImg`: String, `isTribe`: Bool) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_pay_contact_invoice(
@@ -1911,7 +1919,8 @@ public func `payContactInvoice`(`seed`: String, `uniqueTime`: String, `state`: D
         FfiConverterData.lower(`state`),
         FfiConverterString.lower(`bolt11`),
         FfiConverterString.lower(`myAlias`),
-        FfiConverterString.lower(`myImg`),$0)
+        FfiConverterString.lower(`myImg`),
+        FfiConverterBool.lower(`isTribe`),$0)
 }
     )
 }
@@ -2256,7 +2265,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_pay_invoice() != 40951) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_pay_contact_invoice() != 38258) {
+    if (uniffi_sphinxrs_checksum_func_pay_contact_invoice() != 2604) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_payment_hash_from_invoice() != 3194) {

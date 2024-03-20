@@ -38,7 +38,7 @@ extension SphinxOnionManager{//invoices related
               let nickname = selfContact.nickname ?? chat.name else{
             return
         }
-       let rr = try! payContactInvoice(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), bolt11: invoice, myAlias: nickname, myImg: selfContact.avatarUrl ?? "")
+       let rr = try! payContactInvoice(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), bolt11: invoice, myAlias: nickname, myImg: selfContact.avatarUrl ?? "",isTribe: false)
         handleRunReturn(rr: rr)
     }
     

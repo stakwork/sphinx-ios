@@ -22,7 +22,6 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     @IBOutlet weak var submitButtonArrow: UILabel!
     @IBOutlet weak var importSeedContainer: UIView!
     @IBOutlet weak var importSeedView : ImportSeedView!
-    @IBOutlet weak var connectToTestServerButton: UIButton!
     
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
@@ -64,7 +63,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     }
     
     func addAccessibilityIdentifiers(){
-        connectToTestServerButton.accessibilityIdentifier = connectToServerButton.titleLabel?.text
+        connectToServerButton.accessibilityIdentifier = connectToServerButton.titleLabel?.text
         submitButton.accessibilityIdentifier = "submit"
     }
 }

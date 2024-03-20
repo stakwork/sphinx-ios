@@ -68,6 +68,7 @@ extension NewUserSignupFormViewController {
         if let mnemonic = UserData.sharedInstance.getMnemonic(),
            SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
             SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code)
+            setupWatchdogTimer()
             listenForSelfContactRegistration()//get callbacks ready for sign up
             self.signup_v2_with_test_server()
         }
@@ -177,7 +178,7 @@ extension NewUserSignupFormViewController : NSFetchedResultsControllerDelegate{
             // Assuming 'isOwner' and 'routeHint' are attributes of your UserContact entity
             fetchRequest.predicate = NSPredicate(format: "isOwner == true AND routeHint != nil")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
-
+            
             selfContactFetchListener = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                                   managedObjectContext: managedContext,
                                                                   sectionNameKeyPath: nil,
@@ -188,10 +189,13 @@ extension NewUserSignupFormViewController : NSFetchedResultsControllerDelegate{
                 try selfContactFetchListener?.performFetch()
                 // Check if we already have the desired data
                 if let _ = selfContactFetchListener?.fetchedObjects?.first {
+                    watchdogTimer?.invalidate()
                     finalizeSignup()
                     self.selfContactFetchListener = nil
                 }
             } catch let error as NSError {
+                watchdogTimer?.invalidate()
+                self.selfContactFetchListener = nil
                 print("Could not fetch. \(error), \(error.userInfo)")
             }
         }
@@ -201,6 +205,21 @@ extension NewUserSignupFormViewController : NSFetchedResultsControllerDelegate{
             if let _ = controller.fetchedObjects?.first {
                 finalizeSignup()
                 self.selfContactFetchListener = nil
+            }
+        }
+    
+    private func setupWatchdogTimer() {
+            watchdogTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [weak self] _ in
+                guard let self = self else { return }
+                
+                // Check if the fetch result is still nil
+                if self.selfContactFetchListener?.fetchedObjects?.first == nil {
+                    // Perform the fallback action
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                        AlertHelper.showAlert(title: "Error", message: "Unable to connect to Sphinx V2 Test Server")
+                    }
+                }
             }
         }
 }

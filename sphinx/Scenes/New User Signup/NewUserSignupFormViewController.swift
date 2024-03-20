@@ -34,6 +34,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     var server : Server? = nil
     var balance : String? = nil
     var selfContactFetchListener: NSFetchedResultsController<UserContact>?
+    var watchdogTimer: Timer?
     
     static func instantiate() -> NewUserSignupFormViewController {
         let viewController = StoryboardScene.NewUserSignup.newUserSignupFormViewController.instantiate()

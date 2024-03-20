@@ -37,21 +37,26 @@ extension SphinxOnionManager{//account restore related
         nextMessageBlockWasReceived = false
         var syncComplete = false
         var syncIndex = 0
+        var firstRun = true
         
-        //set listener and make first fetch
-        listenForNewMessageBlock(targetIndex: syncIndex + indexStepSize)
-        getAllUnreadMessages()
-        fetchMessageBlock(seed: seed, sinceMsgIndex: syncIndex, msgCountLimit: indexStepSize)
+        
         
         while(syncComplete == false){
-            if(nextMessageBlockWasReceived){
+            if(firstRun){
+                //set listener and make first fetch
+                listenForNewMessageBlock(targetIndex: syncIndex + indexStepSize - 1)
+                //getAllUnreadMessages()
+                fetchMessageBlock(seed: seed, sinceMsgIndex: syncIndex, msgCountLimit: indexStepSize)
+            }
+            else if(nextMessageBlockWasReceived){
                 syncComplete = syncIndex >= UserData.sharedInstance.getLastMessageIndex() ?? 0
                 syncIndex = UserData.sharedInstance.getLastMessageIndex() ?? syncIndex
                 nextMessageBlockWasReceived = false
-                listenForNewMessageBlock(targetIndex: syncIndex + indexStepSize)
+                listenForNewMessageBlock(targetIndex: syncIndex + indexStepSize - 1)
                 fetchMessageBlock(seed: seed, sinceMsgIndex: syncIndex, msgCountLimit: indexStepSize)
             }
         }
+        print("post sync lastIndex:\(UserData.sharedInstance.getLastMessageIndex())")
     }
     
     func fetchMessageBlock(
@@ -99,7 +104,6 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
             if let _ = newMessageSyncedListener?.fetchedObjects?.first {
                 watchdogTimer?.invalidate()
                 signalNextMessageBlockReady()
-                self.newMessageSyncedListener = nil
         }
     }
     catch let error as NSError {

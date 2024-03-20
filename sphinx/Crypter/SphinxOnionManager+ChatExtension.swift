@@ -223,6 +223,7 @@ extension SphinxOnionManager{
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs{
+            print("got message idx:\(message.index)")
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
             if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,

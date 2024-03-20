@@ -190,6 +190,7 @@ extension NewUserSignupFormViewController : NSFetchedResultsControllerDelegate{
                 // Check if we already have the desired data
                 if let _ = selfContactFetchListener?.fetchedObjects?.first {
                     watchdogTimer?.invalidate()
+                    watchdogTimer = nil
                     finalizeSignup()
                     self.selfContactFetchListener = nil
                 }
@@ -205,6 +206,8 @@ extension NewUserSignupFormViewController : NSFetchedResultsControllerDelegate{
             if let _ = controller.fetchedObjects?.first {
                 finalizeSignup()
                 self.selfContactFetchListener = nil
+                watchdogTimer?.invalidate()
+                watchdogTimer = nil
             }
         }
     

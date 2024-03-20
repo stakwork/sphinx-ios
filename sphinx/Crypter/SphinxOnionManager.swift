@@ -9,6 +9,7 @@ import Foundation
 import CocoaMQTT
 import ObjectMapper
 import SwiftyJSON
+import CoreData
 
 
 class SphinxOnionManager : NSObject {
@@ -25,7 +26,10 @@ class SphinxOnionManager : NSObject {
     var stashedInitialTribe:String?=nil
     var stashedInviteCode:String?=nil
     var stashedInviterAlias:String?=nil
+    var watchdogTimer:Timer?=nil
+    var nextMessageBlockWasReceived = false
     
+    var newMessageSyncedListener: NSFetchedResultsController<TransactionMessage>?
     var isV2InitialSetup:Bool=false
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     var shouldPostUpdates : Bool = false

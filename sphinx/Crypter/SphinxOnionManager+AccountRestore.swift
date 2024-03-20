@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 extension SphinxOnionManager{//account restore related
     
@@ -29,24 +30,104 @@ extension SphinxOnionManager{//account restore related
         guard let seed = getAccountSeed() else{
             return
         }
-        var lastMessageIndex = 0
-        var indexStepSize = 50
+        
+        UserData.sharedInstance.setLastMessageIndex(index: 0)
+        let indexStepSize = 5
         //emulating getAllUnreadMessages()
-        while(lastMessageIndex <= UserData.sharedInstance.getLastMessageIndex() ?? -1){
-            let rr = try! fetchMsgs(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(indexStepSize))
-            handleRunReturn(rr: rr)
-            
-            var nextBlockWasReceived = false
-            var timeOutDidOccur = false
-            
-            while(nextBlockWasReceived == false && timeOutDidOccur == false){
-                
+        nextMessageBlockWasReceived = false
+        var syncComplete = false
+        var syncIndex = 0
+        
+        //set listener and make first fetch
+        listenForNewMessageBlock(targetIndex: syncIndex + indexStepSize)
+        getAllUnreadMessages()
+        fetchMessageBlock(seed: seed, sinceMsgIndex: syncIndex, msgCountLimit: indexStepSize)
+        
+        while(syncComplete == false){
+            if(nextMessageBlockWasReceived){
+                syncComplete = syncIndex >= UserData.sharedInstance.getLastMessageIndex() ?? 0
+                syncIndex = UserData.sharedInstance.getLastMessageIndex() ?? syncIndex
+                nextMessageBlockWasReceived = false
+                listenForNewMessageBlock(targetIndex: syncIndex + indexStepSize)
+                fetchMessageBlock(seed: seed, sinceMsgIndex: syncIndex, msgCountLimit: indexStepSize)
             }
-            
-            DelayPerformedHelper.performAfterDelay(seconds: 1.5, completion: {
-                lastMessageIndex = UserData.sharedInstance.getLastMessageIndex() ?? 0
-            })
         }
     }
     
+    func fetchMessageBlock(
+        seed:String,
+        sinceMsgIndex:Int,
+        msgCountLimit:Int
+    ){
+        do{
+            let rr = try fetchMsgs(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(sinceMsgIndex), limit: UInt32(msgCountLimit))
+            handleRunReturn(rr: rr)
+        }
+        catch{
+            
+        }
+    }
+    
+}
+
+
+extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
+    
+    func signalNextMessageBlockReady(){
+        nextMessageBlockWasReceived = true
+    }
+    
+    private func listenForNewMessageBlock(targetIndex:Int) {
+        setupWatchdogTimer()
+        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+
+        let fetchRequest: NSFetchRequest<TransactionMessage> = TransactionMessage.fetchRequest()
+        // Update the predicate to check for id greater than lastMessageIndex and adjust according to your entity attributes
+        fetchRequest.predicate = NSPredicate(format: "id >= %d", targetIndex)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        
+    newMessageSyncedListener = NSFetchedResultsController(fetchRequest: fetchRequest,
+          managedObjectContext: managedContext,
+          sectionNameKeyPath: nil,
+          cacheName: nil
+        )
+    newMessageSyncedListener?.delegate = self
+
+    do {
+            try newMessageSyncedListener?.performFetch()
+            // Check if we already have the desired data
+            if let _ = newMessageSyncedListener?.fetchedObjects?.first {
+                watchdogTimer?.invalidate()
+                signalNextMessageBlockReady()
+                self.newMessageSyncedListener = nil
+        }
+    }
+    catch let error as NSError {
+        watchdogTimer?.invalidate()
+        self.newMessageSyncedListener = nil
+        print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            // Called when the content of the fetchedResultsController changes.
+            if let _ = controller.fetchedObjects?.first {
+                signalNextMessageBlockReady()
+                self.newMessageSyncedListener = nil
+            }
+        }
+    
+    private func setupWatchdogTimer() {
+            watchdogTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [weak self] _ in
+                guard let self = self else { return }
+                
+                // Check if the fetch result is still nil
+                if self.newMessageSyncedListener?.fetchedObjects?.first == nil {
+                    // Perform the fallback action
+                    DispatchQueue.main.async {
+                        //error out
+                    }
+                }
+            }
+        }
 }

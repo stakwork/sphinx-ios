@@ -63,6 +63,7 @@ class ConfirmAddFriendViewController: UIViewController {
         viewTitle.addTextSpacing(value: 2)
         includeMessageLabel.addTextSpacing(value: 2)
         nickNameLabel.addTextSpacing(value: 2)
+        amountLabel.addTextSpacing(value: 2)
         
         messageFieldContainer.alpha = 0.0
         bottomContainer.alpha = 0.0
@@ -75,6 +76,10 @@ class ConfirmAddFriendViewController: UIViewController {
         nickNameView.layer.borderWidth = 1
         nickNameView.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
         
+        amountView.layer.cornerRadius = 5
+        amountView.layer.borderWidth = 1
+        amountView.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
+        
         messageTextView.text = kTextViewNewUserPlaceHolder
         createInvitationButton.layer.cornerRadius = createInvitationButton.frame.size.height / 2
         createInvitationButton.backgroundColor = UIColor.Sphinx.PrimaryGreen
@@ -86,10 +91,6 @@ class ConfirmAddFriendViewController: UIViewController {
         nickNameField.delegate = self
         
         amountField.textColor = kTextViewColor
-        amountField.layer.cornerRadius = 5
-        amountField.layer.borderWidth = 1
-        amountField.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
-        
         
         getLowestPrice()
         
@@ -174,7 +175,11 @@ class ConfirmAddFriendViewController: UIViewController {
 
 extension ConfirmAddFriendViewController : UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        messageTextView.becomeFirstResponder()
+        if textField == nickNameField {
+            amountField.becomeFirstResponder()
+        } else {
+            messageTextView.becomeFirstResponder()
+        }
         return true
     }
 }

@@ -231,6 +231,45 @@
                                     <constraint firstAttribute="height" constant="90" id="yZc-Ox-BAx"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9F-h2-fNq">
+                                <rect key="frame" x="0.0" y="242" width="414" height="90"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AMOUNT TO GIFT (Sats)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ant-en-okq">
+                                        <rect key="frame" x="146.33333333333334" y="18.666666666666686" width="121.33333333333334" height="13"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="10"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQZ-AD-ETN">
+                                        <rect key="frame" x="15" y="50" width="384" height="40"/>
+                                        <subviews>
+                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ap2-KC-sMa">
+                                                <rect key="frame" x="8" y="8" width="368" height="24"/>
+                                                <color key="textColor" name="Text"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" name="ProfileBG"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="2Rk-Bo-TuO"/>
+                                            <constraint firstAttribute="trailing" secondItem="ap2-KC-sMa" secondAttribute="trailing" constant="8" id="5N7-rJ-jTe"/>
+                                            <constraint firstItem="ap2-KC-sMa" firstAttribute="top" secondItem="CQZ-AD-ETN" secondAttribute="top" constant="8" id="Dol-7h-BjT"/>
+                                            <constraint firstAttribute="bottom" secondItem="ap2-KC-sMa" secondAttribute="bottom" constant="8" id="PQT-mJ-q5t"/>
+                                            <constraint firstItem="ap2-KC-sMa" firstAttribute="leading" secondItem="CQZ-AD-ETN" secondAttribute="leading" constant="8" id="d21-Ez-e7C"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="ant-en-okq" firstAttribute="centerX" secondItem="t9F-h2-fNq" secondAttribute="centerX" id="4Q6-K1-qJR"/>
+                                    <constraint firstAttribute="trailing" secondItem="CQZ-AD-ETN" secondAttribute="trailing" constant="15" id="Pab-Cv-6CN"/>
+                                    <constraint firstAttribute="height" constant="90" id="c93-aJ-F15"/>
+                                    <constraint firstItem="CQZ-AD-ETN" firstAttribute="leading" secondItem="t9F-h2-fNq" secondAttribute="leading" constant="15" id="d7D-l7-0v1"/>
+                                    <constraint firstItem="ant-en-okq" firstAttribute="top" secondItem="t9F-h2-fNq" secondAttribute="top" constant="18.5" id="nPo-x3-jC7"/>
+                                    <constraint firstAttribute="bottom" secondItem="CQZ-AD-ETN" secondAttribute="bottom" id="sA4-eh-Gc7"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vB5-7W-voe">
                                 <rect key="frame" x="0.0" y="358" width="414" height="160"/>
                                 <subviews>
@@ -243,7 +282,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="as7-YE-oDw">
                                         <rect key="frame" x="15" y="50" width="384" height="110"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Welcome to Sphinx!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iUT-7o-yHP">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" text="Welcome to Sphinx!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iUT-7o-yHP">
                                                 <rect key="frame" x="8" y="8" width="368" height="94"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" name="PlaceholderText"/>
@@ -347,45 +386,6 @@
                                     <constraint firstItem="BJe-2l-Ys3" firstAttribute="centerY" secondItem="k95-oK-Zox" secondAttribute="centerY" id="tW2-Bw-yDT"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9F-h2-fNq">
-                                <rect key="frame" x="0.0" y="242" width="414" height="90"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount to Gift (Satoshis)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ant-en-okq">
-                                        <rect key="frame" x="141" y="18.666666666666686" width="132" height="13"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="10"/>
-                                        <color key="textColor" name="Text"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQZ-AD-ETN">
-                                        <rect key="frame" x="15" y="50" width="384" height="40"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ap2-KC-sMa">
-                                                <rect key="frame" x="8" y="8" width="368" height="24"/>
-                                                <color key="textColor" name="Text"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="numberPad" returnKeyType="done"/>
-                                            </textField>
-                                        </subviews>
-                                        <color key="backgroundColor" name="ProfileBG"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="2Rk-Bo-TuO"/>
-                                            <constraint firstAttribute="trailing" secondItem="ap2-KC-sMa" secondAttribute="trailing" constant="8" id="5N7-rJ-jTe"/>
-                                            <constraint firstItem="ap2-KC-sMa" firstAttribute="top" secondItem="CQZ-AD-ETN" secondAttribute="top" constant="8" id="Dol-7h-BjT"/>
-                                            <constraint firstAttribute="bottom" secondItem="ap2-KC-sMa" secondAttribute="bottom" constant="8" id="PQT-mJ-q5t"/>
-                                            <constraint firstItem="ap2-KC-sMa" firstAttribute="leading" secondItem="CQZ-AD-ETN" secondAttribute="leading" constant="8" id="d21-Ez-e7C"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="ant-en-okq" firstAttribute="centerX" secondItem="t9F-h2-fNq" secondAttribute="centerX" id="4Q6-K1-qJR"/>
-                                    <constraint firstAttribute="trailing" secondItem="CQZ-AD-ETN" secondAttribute="trailing" constant="15" id="Pab-Cv-6CN"/>
-                                    <constraint firstAttribute="height" constant="90" id="c93-aJ-F15"/>
-                                    <constraint firstItem="CQZ-AD-ETN" firstAttribute="leading" secondItem="t9F-h2-fNq" secondAttribute="leading" constant="15" id="d7D-l7-0v1"/>
-                                    <constraint firstItem="ant-en-okq" firstAttribute="top" secondItem="t9F-h2-fNq" secondAttribute="top" constant="18.5" id="nPo-x3-jC7"/>
-                                    <constraint firstAttribute="bottom" secondItem="CQZ-AD-ETN" secondAttribute="bottom" id="sA4-eh-Gc7"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ceU-hj-dij"/>
                         <color key="backgroundColor" name="Body"/>
@@ -411,7 +411,7 @@
                     <connections>
                         <outlet property="amountField" destination="ap2-KC-sMa" id="kwL-BP-qV9"/>
                         <outlet property="amountLabel" destination="ant-en-okq" id="8Jt-1j-jhd"/>
-                        <outlet property="amountView" destination="t9F-h2-fNq" id="z68-Xb-ThW"/>
+                        <outlet property="amountView" destination="CQZ-AD-ETN" id="03k-Im-2wx"/>
                         <outlet property="bottomContainer" destination="aus-RY-I6m" id="J2X-M5-dvg"/>
                         <outlet property="bottomLeftContainer" destination="0a0-fq-uS6" id="NgO-95-Gsk"/>
                         <outlet property="createInvitationButton" destination="k95-oK-Zox" id="nvD-wu-EVE"/>

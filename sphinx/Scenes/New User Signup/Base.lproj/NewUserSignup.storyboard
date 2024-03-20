@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -343,7 +343,7 @@
                                             <constraint firstItem="ngQ-ql-U0M" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bEH-EM-lm0" secondAttribute="leading" constant="20" symbolic="YES" id="nOx-jS-079"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpk-Gu-yml" userLabel="Submit Button Container">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpk-Gu-yml" userLabel="Submit Button Container">
                                         <rect key="frame" x="0.0" y="170" width="354" height="62"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXG-r8-Ize">
@@ -435,7 +435,6 @@
                         <outlet property="codeTextField" destination="6Ax-pV-KVk" id="QaX-Ij-Z5u"/>
                         <outlet property="codeTextFieldContainer" destination="Awg-RS-jhR" id="QLH-q0-ZHG"/>
                         <outlet property="connectToServerButton" destination="WXG-r8-Ize" id="Bw1-Zx-Qgq"/>
-                        <outlet property="connectToTestServerButton" destination="WXG-r8-Ize" id="6ln-rC-FmD"/>
                         <outlet property="importSeedContainer" destination="mBm-gx-JCP" id="bkW-jl-Qv2"/>
                         <outlet property="importSeedView" destination="eVt-DT-WnS" id="RtO-lt-5Yw"/>
                         <outlet property="submitButton" destination="n1x-Nd-XT6" id="znz-ni-Dfl"/>

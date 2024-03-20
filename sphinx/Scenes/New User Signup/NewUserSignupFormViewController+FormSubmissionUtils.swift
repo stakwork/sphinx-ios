@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 extension NewUserSignupFormViewController {
@@ -67,6 +68,7 @@ extension NewUserSignupFormViewController {
         if let mnemonic = UserData.sharedInstance.getMnemonic(),
            SphinxOnionManager.sharedInstance.createMyAccount(mnemonic: mnemonic){
             SphinxOnionManager.sharedInstance.redeemInvite(inviteCode: code)
+            listenForSelfContactRegistration()//get callbacks ready for sign up
             self.signup_v2_with_test_server()
         }
     }
@@ -162,4 +164,43 @@ extension NewUserSignupFormViewController: QRCodeScannerDelegate {
         
         handleSubmit()
     }
+}
+
+
+extension NewUserSignupFormViewController : NSFetchedResultsControllerDelegate{
+    
+    
+    private func listenForSelfContactRegistration() {
+            let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+
+            let fetchRequest: NSFetchRequest<UserContact> = UserContact.fetchRequest()
+            // Assuming 'isOwner' and 'routeHint' are attributes of your UserContact entity
+            fetchRequest.predicate = NSPredicate(format: "isOwner == true AND routeHint != nil")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
+
+            selfContactFetchListener = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                                  managedObjectContext: managedContext,
+                                                                  sectionNameKeyPath: nil,
+                                                                  cacheName: nil)
+            selfContactFetchListener?.delegate = self
+
+            do {
+                try selfContactFetchListener?.performFetch()
+                // Check if we already have the desired data
+                if let _ = selfContactFetchListener?.fetchedObjects?.first {
+                    finalizeSignup()
+                    self.selfContactFetchListener = nil
+                }
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+        }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+            // Called when the content of the fetchedResultsController changes.
+            if let _ = controller.fetchedObjects?.first {
+                finalizeSignup()
+                self.selfContactFetchListener = nil
+            }
+        }
 }

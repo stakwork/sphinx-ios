@@ -158,23 +158,23 @@ extension ConnectionCodeSignupHandling {
     
     func signup_v2_with_test_server(){
         presentConnectingLoadingScreenVC()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-            let som = SphinxOnionManager.sharedInstance
-            if //let _ = som.currentServer,
-               let contact = som.pendingContact,
-               contact.isOwner == true{
-                if let vc = self as? NewUserSignupFormViewController{
-                    vc.isV2 = true
-                }
-                som.isV2InitialSetup = true
-                self.proceedToNewUserWelcome()
+    }
+    
+    func finalizeSignup(){
+        let som = SphinxOnionManager.sharedInstance
+        if //let _ = som.currentServer,
+           let contact = som.pendingContact,
+           contact.isOwner == true{
+            if let vc = self as? NewUserSignupFormViewController{
+                vc.isV2 = true
             }
-            else{
-                self.navigationController?.popViewController(animated: true)
-                AlertHelper.showAlert(title: "Error", message: "Unable to connect to Sphinx V2 Test Server")
-            }
-        })
-        
+            som.isV2InitialSetup = true
+            self.proceedToNewUserWelcome()
+        }
+        else{
+            self.navigationController?.popViewController(animated: true)
+            AlertHelper.showAlert(title: "Error", message: "Unable to connect to Sphinx V2 Test Server")
+        }
     }
     
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 
 class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHandling {
@@ -33,7 +34,7 @@ class NewUserSignupFormViewController: UIViewController, ConnectionCodeSignupHan
     var isV2:Bool = false
     var server : Server? = nil
     var balance : String? = nil
-
+    var selfContactFetchListener: NSFetchedResultsController<UserContact>?
     
     static func instantiate() -> NewUserSignupFormViewController {
         let viewController = StoryboardScene.NewUserSignup.newUserSignupFormViewController.instantiate()

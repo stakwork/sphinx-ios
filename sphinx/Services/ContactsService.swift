@@ -49,6 +49,7 @@ class ContactsService: NSObject {
     }
     
     func isRestoring() -> Bool {
+        return false
         return API.sharedInstance.lastSeenMessagesDate == nil
     }
     

@@ -347,11 +347,16 @@ extension DashboardRootViewController {
               }
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
-                som.getAllUnreadMessages()
+                if(ContactsService.sharedInstance.isRestoring()){
+                    som.performAccountRestore()
+                }
+                else{
+                    som.getAllUnreadMessages()
+                }
             }
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
             if som.isV2InitialSetup{
                 som.doInitialInviteSetup()
             }

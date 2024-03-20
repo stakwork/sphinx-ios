@@ -636,8 +636,8 @@
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
-		CE030A6B2B97C0860067F9F1 /* SphinOnionManager+InvoicesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE030A6A2B97C0860067F9F1 /* SphinOnionManager+InvoicesExtension.swift */; };
 		93FCEA782B91AF3B0069B344 /* DashboardUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */; };
+		CE030A6B2B97C0860067F9F1 /* SphinxOnionManager+InvoicesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE030A6A2B97C0860067F9F1 /* SphinxOnionManager+InvoicesExtension.swift */; };
 		CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */; };
 		CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */; };
 		CE07B83A29DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */; };
@@ -669,6 +669,7 @@
 		CE3D8CAD29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib */; };
 		CE3D8CB029B1471900EDB637 /* FeedItemDetailActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */; };
 		CE3D8CB129B1471900EDB637 /* FeedItemDetailActionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */; };
+		CE452E3A2BAB24BD008A0868 /* SphinxOnionManager+AccountRestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE452E392BAB24BD008A0868 /* SphinxOnionManager+AccountRestore.swift */; };
 		CE49E13229ACEFAA006D3CCE /* VoIPPushMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */; };
 		CE4A85932B5F051600813B59 /* SphinxOnionManager+TribesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4A85922B5F051600813B59 /* SphinxOnionManager+TribesExtension.swift */; };
 		CE4B53FD2AFC389C00708A0C /* SphinxOnionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */; };
@@ -1838,8 +1839,8 @@
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE030A6A2B97C0860067F9F1 /* SphinOnionManager+InvoicesExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SphinOnionManager+InvoicesExtension.swift"; sourceTree = "<group>"; };
 		93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardUITest.swift; sourceTree = "<group>"; };
+		CE030A6A2B97C0860067F9F1 /* SphinxOnionManager+InvoicesExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+InvoicesExtension.swift"; sourceTree = "<group>"; };
 		CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		CE07B83829DC9CA700A02652 /* ItemDescriptionImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -1870,6 +1871,7 @@
 		CE3D8CAB29B1124E00EDB637 /* FeedItemDetailHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailHeaderCell.xib; sourceTree = "<group>"; };
 		CE3D8CAE29B1471900EDB637 /* FeedItemDetailActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemDetailActionCell.swift; sourceTree = "<group>"; };
 		CE3D8CAF29B1471900EDB637 /* FeedItemDetailActionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedItemDetailActionCell.xib; sourceTree = "<group>"; };
+		CE452E392BAB24BD008A0868 /* SphinxOnionManager+AccountRestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+AccountRestore.swift"; sourceTree = "<group>"; };
 		CE49E13129ACEFAA006D3CCE /* VoIPPushMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoIPPushMessage.swift; sourceTree = "<group>"; };
 		CE4A85922B5F051600813B59 /* SphinxOnionManager+TribesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SphinxOnionManager+TribesExtension.swift"; sourceTree = "<group>"; };
 		CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SphinxOnionManager.swift; sourceTree = "<group>"; };
@@ -4176,8 +4178,9 @@
 		47F6CA0728786A13005EBCB6 /* Crypter */ = {
 			isa = PBXGroup;
 			children = (
-				CE030A6A2B97C0860067F9F1 /* SphinOnionManager+InvoicesExtension.swift */,
+				CE030A6A2B97C0860067F9F1 /* SphinxOnionManager+InvoicesExtension.swift */,
 				CE655AE12B1F88B90063518D /* SphinxOnionManager+ChatExtension.swift */,
+				CE452E392BAB24BD008A0868 /* SphinxOnionManager+AccountRestore.swift */,
 				CE2349842B8E749F00A708CB /* SphinxOnionManager+InvitesExtension.swift */,
 				CE4A85922B5F051600813B59 /* SphinxOnionManager+TribesExtension.swift */,
 				CE4B53FC2AFC389C00708A0C /* SphinxOnionManager.swift */,
@@ -5177,6 +5180,7 @@
 				F31EFCB42746968D00C05FF4 /* ContentFeed+FetchUtils.swift in Sources */,
 				475E416B23858D4900928931 /* Subscription+CoreDataProperties.swift in Sources */,
 				47308E0424FEE6E600FFAC6F /* SocketParsable.swift in Sources */,
+				CE452E3A2BAB24BD008A0868 /* SphinxOnionManager+AccountRestore.swift in Sources */,
 				47C7C1782938E84D00264BF6 /* RecommendationResult.swift in Sources */,
 				475043D72976F96F00830E9E /* PodcastSmallPlayer+Delegates.swift in Sources */,
 				CEA2ED172A12D6F700DAC671 /* StorageSummaryView.swift in Sources */,
@@ -5606,7 +5610,7 @@
 				CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */,
 				47FA18C8242D35F700469C8F /* CommonGroupContactsViewController.swift in Sources */,
 				47308E0B24FEE6E600FFAC6F /* SocketEngineSpec.swift in Sources */,
-				CE030A6B2B97C0860067F9F1 /* SphinOnionManager+InvoicesExtension.swift in Sources */,
+				CE030A6B2B97C0860067F9F1 /* SphinxOnionManager+InvoicesExtension.swift in Sources */,
 				47352E4A2440F54300E5CC7F /* MessageOptionsViewController.swift in Sources */,
 				47AAFC7A238706EA00E30BDA /* API+InviteExtension.swift in Sources */,
 				475BDD7F232C01FE00C5BBD6 /* QRCodeScannerView.swift in Sources */,

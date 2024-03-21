@@ -357,9 +357,9 @@ extension DashboardRootViewController {
         })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
-            if som.isV2InitialSetup{
-                som.doInitialInviteSetup()
-            }
+//            if som.isV2InitialSetup{
+//                som.doInitialInviteSetup()
+//            }
             self.shouldReloadContacts(reload: true)
         })
         

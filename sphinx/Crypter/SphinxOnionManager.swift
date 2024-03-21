@@ -29,6 +29,7 @@ class SphinxOnionManager : NSObject {
     var watchdogTimer:Timer?=nil
     var nextMessageBlockWasReceived = false
     
+    var messageFetchParams : MessageFetchParams? = nil
     var newMessageSyncedListener: NSFetchedResultsController<TransactionMessage>?
     var isV2InitialSetup:Bool=false
     let newMessageBubbleHelper = NewMessageBubbleHelper()

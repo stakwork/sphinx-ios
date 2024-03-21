@@ -19,12 +19,12 @@ extension NewPublicGroupViewController {
     }
     
     func showTagsVC() {
-        setTagsVCHeight()
+        let discoverVC = DiscoverTribesTagSelectionVC.instantiate()
+        discoverVC.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(discoverVC, animated: false)
         
-        tagsVC = GroupTagsViewController.instantiate()
-        addChildVC(child: tagsVC!, container: tagsVCContainer)
-        
-        toggleTagsVCView(show: true, completion: {})
+        discoverVC.discoverTribeTagSelectionVM.selectedTags = currentTags
+        discoverVC.delegate = self
     }
     
     func toggleTagsVCView(show: Bool, completion: @escaping () -> ()) {
@@ -351,5 +351,36 @@ extension NewPublicGroupViewController : AttachmentsManagerDelegate {
         groupsManager.newGroupInfo.img = url
         imageUrlTextField.text = url
         editOrCreateGroup()
+    }
+}
+
+extension NewPublicGroupViewController : DiscoverTribesTagSelectionDelegate {
+    func didSelect(selections: [String]) {
+        
+        let newSet = Set(selections)
+        let oldSet = Set(currentTags)
+        
+        if (newSet != oldSet) {
+            
+            self.currentTags = selections
+            
+            groupsManager.newGroupInfo.tags = getSelectedTags(currentTags: currentTags)
+            updateTags{ }
+        }
+    }
+    
+    func getSelectedTags(currentTags: [String]) -> [GroupsManager.Tag] {
+        let tagDictionary = [
+            "Bitcoin": GroupsManager.Tag(image: "bitcoinTagIcon", description: "Bitcoin", selected: true),
+            "Lightning": GroupsManager.Tag(image: "lightningTagIcon", description: "Lightning", selected: true),
+            "NSFW": GroupsManager.Tag(image: "sphinxTagIcon", description: "NSFW", selected: true),
+            "Crypto": GroupsManager.Tag(image: "cryptoTagIcon", description: "Crypto", selected: true),
+            "Tech": GroupsManager.Tag(image: "techTagIcon", description: "Tech", selected: true),
+            "Altcoins": GroupsManager.Tag(image: "altcoinsTagIcon", description: "Altcoins", selected: true),
+            "Music": GroupsManager.Tag(image: "musicTagIcon", description: "Music", selected: true),
+            "Podcast": GroupsManager.Tag(image: "podcastTagIcon", description: "Podcast", selected: true)
+        ]
+        
+        return currentTags.map({tagDictionary[$0] ?? GroupsManager.Tag(image: "bitcoinTagIcon", description: "Bitcoin")})
     }
 }

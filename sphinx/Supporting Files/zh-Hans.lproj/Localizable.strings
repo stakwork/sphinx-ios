@@ -251,7 +251,7 @@
 "nickname" = "Nickname";
 "change.image" = "Change Image";
 "nickname.cannot.empty" = "Nickname can't be empty.";
-"amout.cannot.empty" = "Nickname can't be empty.";
+"amount.cannot.empty" = "Amount can't be empty.";
 "ready.use.sphinx" = "You're ready\nto use Sphinx!";
 "ready" = "ready";
 "ready.sphinx.text" = "You can send messages,\nspend %@ sats, or receive\nup to %@ sats.";

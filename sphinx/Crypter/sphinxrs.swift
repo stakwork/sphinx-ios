@@ -2121,6 +2121,21 @@ public func `fetchMsgsBatchOkkey`(`seed`: String, `uniqueTime`: String, `state`:
     )
 }
 
+public func `fetchFirstMsgsPerKey`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?, `isRestore`: Bool?) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_fetch_first_msgs_per_key(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),
+        FfiConverterUInt64.lower(`lastMsgIdx`),
+        FfiConverterOptionUInt32.lower(`limit`),
+        FfiConverterOptionBool.lower(`reverse`),
+        FfiConverterOptionBool.lower(`isRestore`),$0)
+}
+    )
+}
+
 private enum InitializationResult {
     case ok
     case contractVersionMismatch
@@ -2314,6 +2329,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_fetch_msgs_batch_okkey() != 11004) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_fetch_first_msgs_per_key() != 10950) {
         return InitializationResult.apiChecksumMismatch
     }
 

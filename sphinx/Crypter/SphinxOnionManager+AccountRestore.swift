@@ -9,19 +9,28 @@
 import Foundation
 import CoreData
 
-struct MessageFetchParams{
-    var restoreInProgress : Bool
-    var fetchStartIndex : Int
-    var fetchTargetIndex : Int
-    var fetchLimit : Int
-    var blockCompletionHandler : ()->()
+class MessageFetchParams {
+    var restoreInProgress: Bool
+    var fetchStartIndex: Int
+    var fetchTargetIndex: Int
+    var fetchLimit: Int
+    var blockCompletionHandler: () -> ()
+
+    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: @escaping () -> ()) {
+        self.restoreInProgress = restoreInProgress
+        self.fetchStartIndex = fetchStartIndex
+        self.fetchTargetIndex = fetchTargetIndex
+        self.fetchLimit = fetchLimit
+        self.blockCompletionHandler = blockCompletionHandler
+    }
 }
+
 
 extension SphinxOnionManager{//account restore related
     
     func performAccountRestore(){
-        restoreContactsAndPayments()
         restoreTribes()
+        restoreContactsAndPayments()
         restoreMessages()
     }
     
@@ -31,7 +40,54 @@ extension SphinxOnionManager{//account restore related
     }
     
     func restoreTribes(){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+
         
+    }
+    
+    func nextMessageBlockHandler_fetchFirstMessagePerKey(){
+        print(messageFetchParams)
+        guard var messageFetchParams = messageFetchParams,
+              messageFetchParams.restoreInProgress == true,
+        let lastRetrievedIndex = UserData.sharedInstance.getLastMessageIndex(),
+        let seed = getAccountSeed()
+        else{
+            return
+        }
+        if lastRetrievedIndex < messageFetchParams.fetchTargetIndex{
+            let nextTargetIndex = messageFetchParams.fetchStartIndex + messageFetchParams.fetchLimit + 1
+            messageFetchParams.fetchTargetIndex = nextTargetIndex
+            messageFetchParams = MessageFetchParams(
+                restoreInProgress: true,
+                fetchStartIndex: lastRetrievedIndex + 1,
+                fetchTargetIndex: nextTargetIndex,
+                fetchLimit: messageFetchParams.fetchLimit,
+                blockCompletionHandler:  nextMessageBlockHandler_fetchFirstMessagePerKey
+            )
+            
+            listenForNewMessageBlock(targetIndex: lastRetrievedIndex + messageFetchParams.fetchLimit)
+            fetchFirstContactPerKey(seed: seed, lastMessageIndex: lastRetrievedIndex + 1, msgCountLimit: messageFetchParams.fetchLimit)
+        }
+        else{
+            messageFetchParams.restoreInProgress = false
+        }
+
+    }
+    
+    func fetchFirstContactPerKey(
+        seed:String,
+        lastMessageIndex:Int,
+        msgCountLimit:Int
+    ){
+        do{
+            let rr = try fetchFirstMsgsPerKey(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(msgCountLimit), reverse: false, isRestore: true)
+            handleRunReturn(rr: rr)
+        }
+        catch{
+            
+        }
     }
     
     func restoreMessages(){
@@ -49,7 +105,7 @@ extension SphinxOnionManager{//account restore related
             fetchStartIndex: startIndex,
             fetchTargetIndex: startIndex + indexStepSize,
             fetchLimit: indexStepSize,
-            blockCompletionHandler: nextMessageBlockHandler
+            blockCompletionHandler: nextMessageBlockHandler_fetchMsgs
         )
         
         listenForNewMessageBlock(targetIndex: startIndex + indexStepSize)
@@ -58,7 +114,7 @@ extension SphinxOnionManager{//account restore related
         print("post sync lastIndex:\(UserData.sharedInstance.getLastMessageIndex())")
     }
     
-    func nextMessageBlockHandler(){
+    func nextMessageBlockHandler_fetchMsgs(){
         print(messageFetchParams)
         guard var messageFetchParams = messageFetchParams,
               messageFetchParams.restoreInProgress == true,
@@ -75,7 +131,7 @@ extension SphinxOnionManager{//account restore related
                 fetchStartIndex: lastRetrievedIndex + 1,
                 fetchTargetIndex: nextTargetIndex,
                 fetchLimit: messageFetchParams.fetchLimit,
-                blockCompletionHandler: nextMessageBlockHandler
+                blockCompletionHandler: nextMessageBlockHandler_fetchMsgs
             )
             
             listenForNewMessageBlock(targetIndex: lastRetrievedIndex + messageFetchParams.fetchLimit)
@@ -154,7 +210,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
                 // Perform the fallback action
                 DispatchQueue.main.async {
                     //error out
-                    self.nextMessageBlockHandler()
+                    self.nextMessageBlockHandler_fetchMsgs()
                 }
             }
         }

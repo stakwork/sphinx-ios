@@ -183,6 +183,8 @@ RustBuffer uniffi_sphinxrs_fn_func_fetch_msgs_batch(RustBuffer seed, RustBuffer 
 );
 RustBuffer uniffi_sphinxrs_fn_func_fetch_msgs_batch_okkey(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t last_msg_idx, RustBuffer limit, RustBuffer reverse, RustBuffer is_restore, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_sphinxrs_fn_func_fetch_first_msgs_per_key(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t last_msg_idx, RustBuffer limit, RustBuffer reverse, RustBuffer is_restore, RustCallStatus *_Nonnull out_status
+);
 RustBuffer ffi_sphinxrs_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
 );
 RustBuffer ffi_sphinxrs_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
@@ -369,6 +371,9 @@ uint16_t uniffi_sphinxrs_checksum_func_fetch_msgs_batch(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_fetch_msgs_batch_okkey(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_fetch_first_msgs_per_key(void
     
 );
 uint32_t ffi_sphinxrs_uniffi_contract_version(void

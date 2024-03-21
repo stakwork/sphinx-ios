@@ -1,0 +1,5 @@
+/* Class = "UILabel"; text = "Resuming Restore..."; ObjectID = "NOq-cH-hgj"; */
+ "NOq-cH-hgj.text" = "復元を再開しています..."; // Fukuen o saikai shite imasu...
+
+ /* Class = "UIButton"; normalTitle = "FINISH RESTORING"; ObjectID = "NtL-An-bdW"; */
+ "NtL-An-bdW.normalTitle" = "後で続行"; // Atode zokukei

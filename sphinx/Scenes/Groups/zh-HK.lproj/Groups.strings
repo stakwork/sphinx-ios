@@ -1,0 +1,129 @@
+/* Class = "UILabel"; text = "NEW PUBLIC GROUP"; ObjectID = "09K-rw-bxW"; */
+"09K-rw-bxW.text" = "新公開群組"; // Xīn gōngkāi qúnzǔ
+
+/* Class = "UIButton"; normalTitle = "Private Group"; ObjectID = "0jO-Oq-zlh"; */
+"0jO-Oq-zlh.normalTitle" = "私人群組"; // Sīrén qúnzǔ
+
+/* Class = "UILabel"; text = "Price per Message"; ObjectID = "1AU-Kq-NxC"; */
+"1AU-Kq-NxC.text" = "每訊息價格"; // Měi xìnxi jiàgé
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "2pl-oP-RXu"; */
+"2pl-oP-RXu.normalTitle" = "下一步"; // Xià yī bù
+
+/* Class = "UILabel"; text = "Uploaded: 0%"; ObjectID = "2zj-we-RkJ"; */
+"2zj-we-RkJ.text" = "已上傳：0%"; // Yǐ shàngchuán: 0%
+
+/* Class = "UILabel"; text = "Description *"; ObjectID = "3RB-pb-8A5"; */
+"3RB-pb-8A5.text" = "描述 *"; // Miêu tả *
+
+/* Class = "UITextField"; placeholder = "Search Group Members"; ObjectID = "3Rf-Vh-ZtY"; */
+"3Rf-Vh-ZtY.placeholder" = "搜索群組成員"; // Sōusuǒ qúnzǔ chéngyuán
+
+/* Class = "UILabel"; text = "Pay Group Members"; ObjectID = "7HA-dj-Isx"; */
+"7HA-dj-Isx.text" = "支付群組成員"; // Zhīfù qúnzǔ chéngyuán
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "COk-lR-gi7"; */
+"COk-lR-gi7.normalTitle" = "完成"; // Wánchéng
+
+/* Class = "UILabel"; text = "JOIN PUBLIC GROUP"; ObjectID = "FSe-ea-ym5"; */
+"FSe-ea-ym5.text" = "加入公開群組"; // Jiārù gōngkāi qúnzǔ
+
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "JYV-Fj-Rzu"; */
+"JYV-Fj-Rzu.normalTitle" = "取消"; // Qǔxiào
+
+/* Class = "UITextField"; placeholder = "Search People"; ObjectID = "K3Z-8Q-JIa"; */
+"K3Z-8Q-JIa.placeholder" = "搜索人"; // Sōusuǒ rén
+
+/* Class = "UILabel"; text = "NEW GROUP"; ObjectID = "NhF-8s-bSd"; */
+"NhF-8s-bSd.text" = "新群組"; // Xīn qúnzǔ
+
+/* Class = "UILabel"; text = "Group Details"; ObjectID = "O1K-P2-cv9"; */
+"O1K-P2-cv9.text" = "群組詳細資訊"; // Qúnzǔ xiángxì zīxùn
+
+/* Class = "UILabel"; text = "Uploading Image..."; ObjectID = "Qmc-Nz-Qwz"; */
+"Qmc-Nz-Qwz.text" = "上傳圖片中..."; // Shàngchuán túpiān zhōng...
+
+/* Class = "UIButton"; normalTitle = "Public Group"; ObjectID = "Uer-jc-pey"; */
+"Uer-jc-pey.normalTitle" = "公開群組"; // Gōngkāi qúnzǔ
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "b5K-e6-WAd"; */
+"b5K-e6-WAd.normalTitle" = "下一步"; // Xià yī bù
+
+/* Class = "UITextField"; placeholder = "Group Name"; ObjectID = "blf-J3-yxP"; */
+"blf-J3-yxP.placeholder" = "群組名稱"; // Qúnzǔ míngchēng
+
+/* Class = "UILabel"; text = "Time to Stake: (hours)"; ObjectID = "bwz-DD-5Qu"; */
+"bwz-DD-5Qu.text" = "抵押時間：(小時)"; // Dǐyā shíjiān: (xiǎoshí)
+
+/* Class = "UILabel"; text = "Loading Group info..."; ObjectID = "c99-Vi-65m"; */
+"c99-Vi-65m.text" = "正在加載群組資訊..."; // Zhèngzài jiāzài qúnzǔ zīxùn...
+
+/* Class = "UIButton"; normalTitle = "CREATE GROUP"; ObjectID = "cf2-1k-Ril"; */
+"cf2-1k-Ril.normalTitle" = "創建群組"; // Chuàngjiàn qúnzǔ
+
+/* Class = "UILabel"; text = "Select Contacts"; ObjectID = "cgj-ca-WOq"; */
+"cgj-ca-WOq.text" = "選擇聯絡人"; // Xuǎnzé liánxì rén
+
+/* Class = "UILabel"; text = "Tags"; ObjectID = "dbS-d6-I3s"; */
+"dbS-d6-I3s.text" = "標籤"; // Biāoq籤
+
+/* Class = "UILabel"; text = "Amount to Stake:"; ObjectID = "gVi-4b-hTN"; */
+"gVi-4b-hTN.text" = "抵押金額："; // Dǐyā jīn'é:
+
+/* Class = "UIButton"; normalTitle = "JOIN GROUP"; ObjectID = "jpH-eJ-Dbz"; */
+"jpH-eJ-Dbz.normalTitle" = "加入群組"; // Jiārù qúnzǔ
+
+/* Class = "UIButton"; normalTitle = "DONE"; ObjectID = "m8D-yB-Qoq"; */
+"m8D-yB-Qoq.normalTitle" = "完成"; // Wánchéng
+
+/* Class = "UILabel"; text = "Price per Message:"; ObjectID = "osg-OM-VAr"; */
+"osg-OM-VAr.text" = "每訊息價格："; // Měi xìnxi jiàgé:
+
+/* Class = "UILabel"; text = "Price to Join:"; ObjectID = "qvX-dy-6Gx"; */
+"qvX-dy-6Gx.text" = "加入價格："; // Jiārù jiàgé:
+
+/* Class = "UILabel"; text = "Price to Join"; ObjectID = "rC4-MQ-7tj"; */
+"rC4-MQ-7tj.text" = "加入價格"; // Jiārù jiàgé
+
+/* Class = "UILabel"; text = "Group Image"; ObjectID = "rTn-ps-L7c"; */
+"rTn-ps-L7c.text" = "群組圖片"; // Qúnzǔ túpiān
+
+/* Class = "UILabel"; text = "Amount to Stake"; ObjectID = "tF7-eB-zYG"; */
+"tF7-eB-zYG.text" = "抵押金額"; // Dǐyā jīn'é
+
+/* Class = "UILabel"; text = "Name *"; ObjectID = "tKb-aq-70S"; */
+"tKb-aq-70S.text" = "名稱 *"; // Míngchēng *
+
+/* Class = "UILabel"; text = "Time to Stake (hours)"; ObjectID = "tvJ-jS-VqC"; */
+"tvJ-jS-VqC.text" = "抵押時間 (小時)"; // Dǐyā shíjiān (xiǎoshí)
+
+"xZk-s2-JIf.text" = "應用程式網址"; // Yīngyòng chéngshì wǎngzhǐ
+
+"XEl-j5-cm2.text" = "資訊流網址"; // Zīxùnliú wǎngzhǐ
+
+"xEP-Yp-HDB.text" = "資訊流內容類型"; // Zīxùnliú nèiróng lèixíng
+
+/* Class = "UILabel"; text = "New Group Chat"; ObjectID = "uMU-CU-DoL"; */
+"uMU-CU-DoL.text" = "新群組聊天"; // Xīn qúnzǔ liáotiān
+
+"IjR-gq-j9u.text" = "在 tribes.sphinx.chat 上列出？"; // Zài tribes.sphinx.chat shàng lièchū?
+
+"9fz-nc-HRb.text" = "批准每個成員資格要求？"; // Pīzhǔn měi gè chéngyuán zīgé yāoqiú?
+
+"9fa-JQ-04V.text" = "正在上傳圖片..."; // Zhèngzài shàngchuán túpiān...
+
+"TWz-rt-SOH.text" = "新增群組成員"; // Xīnzēng qúnzǔ chéngyuán
+
+"1aq-Kg-Gvl.text" = "暱稱 *"; // Nìchēng *
+
+"WbN-e3-yid.text" = "群組成員圖片"; // Qúnzǔ chéngyuán túpiān
+
+"6Ml-t1-tHR.text" = "公開金鑰 *"; // Gōngkāi jīnyào *
+
+"IOB-X9-wYC.text" = "路由提示"; // Lùyóu tǐshì
+
+"Hzg-6R-zf4.text" = "聯絡人金鑰 *"; // Liánxì rén jīnyào *
+
+"Kjs-er-Gfs.normalTitle" = "新增成員"; // Xīnzēng chéngyuán
+
+"2R1-bw-8cr.text" = "正在上傳圖片...X"; //

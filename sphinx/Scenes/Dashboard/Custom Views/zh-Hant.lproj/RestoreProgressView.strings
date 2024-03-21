@@ -1,0 +1,5 @@
+/* Class = "UILabel"; text = "Resuming Restore..."; ObjectID = "NOq-cH-hgj"; */
+  "NOq-cH-hgj.text" = "恢復中..."; // Huīfù zhōng...
+
+  /* Class = "UIButton"; normalTitle = "FINISH RESTORING"; ObjectID = "NtL-An-bdW"; */
+  "NtL-An-bdW.normalTitle" = "稍後繼續"; // Shāohòu jìxù

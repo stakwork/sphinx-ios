@@ -1,0 +1,5 @@
+/* Class = "UIButton"; normalTitle = "Delete group"; ObjectID = "2PJ-LV-kfi"; */
+"2PJ-LV-kfi.normalTitle" = "グループを削除"; // Gurūpu o sakujo
+
+/* Class = "UILabel"; text = "The admin has removed \nyou from this group"; ObjectID = "CyX-yB-yyl"; */
+"CyX-yB-yyl.text" = "管理者はあなたをこのグループから削除しました"; // Kanrisha wa anata o kono gurūpu kara sakujo shimashita

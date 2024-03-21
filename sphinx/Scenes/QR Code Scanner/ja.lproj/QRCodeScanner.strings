@@ -1,0 +1,26 @@
+/* Class = "UILabel"; text = "OR ENTER MANUALLY"; ObjectID = "2Jt-PW-cnd"; */
+"2Jt-PW-cnd.text" = "手動で入力";
+
+/* Class = "UIButton"; normalTitle = "PAY"; ObjectID = "GWX-p0-Vj0"; */
+"GWX-p0-Vj0.normalTitle" = "支払う";
+
+/* Class = "UILabel"; text = "To"; ObjectID = "IJc-Gb-Lrv"; */
+"IJc-Gb-Lrv.text" = "宛先";
+
+/* Class = "UILabel"; text = "Expiration Date: "; ObjectID = "Npg-6J-BTg"; */
+"Npg-6J-BTg.text" = "有効期限：";
+
+/* Class = "UITextField"; placeholder = "Enter Address"; ObjectID = "Y8I-bB-gmm"; */
+"Y8I-bB-gmm.placeholder" = "アドレスを入力";
+
+/* Class = "UILabel"; text = "Memo: "; ObjectID = "dnH-AU-ysf"; */
+"dnH-AU-ysf.text" = "メモ: ";
+
+/* Class = "UIButton"; normalTitle = "CONFIRM"; ObjectID = "ui2-4D-gqX"; */
+"ui2-4D-gqX.normalTitle" = "確認";
+
+/* Class = "UILabel"; text = "Invoice amount: "; ObjectID = "vAY-Bq-YBg"; */
+"vAY-Bq-YBg.text" = "請求金額：";
+
+/* Class = "UILabel"; text = "INVOICE DETAILS"; ObjectID = "vuM-l5-Wfj"; */
+"vuM-l5-Wfj.text" = "請求明細"; 

@@ -104,6 +104,9 @@ public extension UIColor {
         public static let ThreadLastReply = color("ThreadLastReply")
         public static let NewMessageIndicator = color("NewMessageIndicator")
         
+        public static let HighlightedText = color("HighlightedText")
+        public static let HighlightedTextBackground = color("HighlightedTextBackground")
+        
         private static func color(_ name: String) -> UIColor {
             return UIColor(named: name, in: Bundle.main, compatibleWith: nil) ?? UIColor.magenta
             

@@ -1,0 +1,74 @@
+/* Class = "UITextField"; placeholder = "Set Your Name"; ObjectID = "1ma-e3-9jK"; */
+"1ma-e3-9jK.placeholder" = "名前を設定する"; // Namae o settei suru
+
+/* Class = "UILabel"; text = "Select Image"; ObjectID = "2P2-S1-noc"; */
+"2P2-S1-noc.text" = "画像を選択"; // Gazō o sentaku
+
+/* Class = "UIButton"; normalTitle = "New to Sphinx"; ObjectID = "3rN-VK-zKy"; */
+"3rN-VK-zKy.normalTitle" = "Sphinx は初めて"; // Sphinx wa hajimete
+
+/* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "4Mg-Nw-7iA"; */
+"4Mg-Nw-7iA.text" = "友達を追加"; // Tomodachi o tsuika
+
+/* Class = "UILabel"; text = "INCLUDE A MESSAGE..."; ObjectID = "DsE-7M-zzl"; */
+"DsE-7M-zzl.text" = "メッセージを含める..."; // Messēji o fukumeru...
+
+/* Class = "UIButton"; normalTitle = "Already on Sphinx"; ObjectID = "Mi0-in-ems"; */
+"Mi0-in-ems.normalTitle" = "既にSphinxを利用中"; // Sudeni Sphinx o riyō-chū
+
+/* Class = "UILabel"; text = "FINISH"; ObjectID = "Oe8-KJ-BtX"; */
+"Oe8-KJ-BtX.text" = "完了"; // Kanryō
+
+/* Class = "UITextField"; placeholder = "Enter code..."; ObjectID = "QEu-hq-fQQ"; */
+"QEu-hq-fQQ.placeholder" = "コードを入力..."; // Kōdo o nyūryoku...
+
+/* Restore from Keychain */
+"RQP-ey-bcd.text" = "キーチェーンから復元";  // Kīchein kara fukungen
+
+/* Class = "UILabel"; text = "SHARE"; ObjectID = "UO4-zg-C4j"; */
+"UO4-zg-C4j.text" = "共有"; // Kyōyū
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "URL-hB-8Yz"; */
+"URL-hB-8Yz.normalTitle" = "次へ"; // Tsugi e
+
+/* Class = "UILabel"; text = "Welcome"; ObjectID = "VS5-RC-luB"; */
+"VS5-RC-luB.text" = "ようこそ"; // Yōkoso
+
+/* You're ready to use Sphinx! */
+"c8r-pr-tER.text" = "Sphinx を利用する準備ができました!";  // Sphinx o riyō suru junbi ga dekimashita!
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "fJ5-mk-nZs"; */
+"fJ5-mk-nZs.normalTitle" = "次へ"; // Tsugi e
+
+/* Class = "UITextView"; text = "Welcome to Sphinx!"; ObjectID = "iUT-7o-yHP"; */
+"iUT-7o-yHP.text" = "Sphinx へようこそ!"; // Sphinx e yōkoso!
+
+/* Class = "UIButton"; normalTitle = "Create Invitation"; ObjectID = "k95-oK-Zox"; */
+"k95-oK-Zox.normalTitle" = "招待を作成"; // Shōtai o sakusei
+
+/* Class = "UILabel"; text = "ESTIMATED COST"; ObjectID = "kW7-Wb-3DM"; */
+"kW7-Wb-3DM.text" = "推定コスト"; // Suitei kosuto
+
+/* Class = "UILabel"; text = "Your Name"; ObjectID = "klr-jZ-Odd"; */
+"klr-jZ-Odd.text" = "あなたの名前"; // Anata no namae
+
+/* Class = "UILabel"; text = "TAP TO COPY"; ObjectID = "pgo-lA-YWw"; */
+"pgo-lA-YWw.text" = "タップしてコピー"; // Tappu shite kopī
+
+/* Class = "UILabel"; text = "ADD FRIEND"; ObjectID = "rLb-IH-R1w"; */
+"rLb-IH-R1w.text" = "友達を追加"; // Tomodachi o tsuika
+
+/* SHARE INVITATION CODE */
+"vd2-aU-H2Y.text" = "招待コードを共有"; // Shōtai kōdo o kyōyū
+
+/* Class = "UILabel"; text = "\"Welcome to Sphinx!\""; ObjectID = "vl8-eB-4he"; */
+"vl8-eB-4he.text" = "\"Sphinx へようこそ!\""; // "Sphinx e yōkoso!"
+
+/* You've been invited to join Sphinx! */
+"xrd-8B-iyR.text" = "Sphinx への参加に招待されました!"; // Sphinx e no sanka ni shōtai saremashita!
+
+/* Class = "UILabel"; text = "NICKNAME"; ObjectID = "xrn-Sz-iM3"; */
+"xrn-Sz-iM3.text" = "ニックネーム"; // Nikkunēmu
+
+/* Class = "UILabel"; text = "Get Started"; ObjectID = "zc0-Xh-U1c"; */
+"zc0-Xh-U1c.text" = "始める"; // Hajimeru

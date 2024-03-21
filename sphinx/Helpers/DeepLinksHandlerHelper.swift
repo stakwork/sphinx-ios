@@ -93,7 +93,7 @@ class DeepLinksHandlerHelper {
     }
     
     static func storeJitsiCallLink(url: URL) {
-        if url.absoluteString.starts(with: "https://jitsi.sphinx.chat") {
+        if url.absoluteString.starts(with: API.kVideoCallServer) {
             UserDefaults.Keys.jitsiLinkUrl.set(url.absoluteString)
         }
     }
@@ -101,7 +101,7 @@ class DeepLinksHandlerHelper {
     static func storeLinkQueryFrom(url: URL) -> Bool {
         var shouldSetVC = false
         
-        if url.absoluteString.starts(with: "https://jitsi.sphinx.chat") {
+        if url.absoluteString.starts(with: API.kVideoCallServer) {
             UserDefaults.Keys.jitsiLinkUrl.set(url.absoluteString)
             return true
         }

@@ -1,0 +1,11 @@
+/* Class = "UILabel"; text = "Processing payment..."; ObjectID = "8g0-gq-jaf"; */
+"8g0-gq-jaf.text" = "支払い処理中..."; // Shiharai shori-chū...
+
+/* Class = "UILabel"; text = "Purchase Succeeded"; ObjectID = "DbX-b0-czT"; */
+"DbX-b0-czT.text" = "購入が成功しました"; // Kōnyū ga seikō shimashita
+
+/* Class = "UILabel"; text = "PAY"; ObjectID = "l1j-i5-mZA"; */
+"l1j-i5-mZA.text" = "支払う"; // Shiharau
+
+/* Class = "UILabel"; text = "Purchase Denied"; ObjectID = "sRP-LE-M0I"; */
+"sRP-LE-M0I.text" = "購入が拒否されました"; // Kōnyū ga kyohi saremashita

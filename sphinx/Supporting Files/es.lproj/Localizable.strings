@@ -254,6 +254,7 @@
 "nickname" = "Alias";
 "change.image" = "Cambiar Imagen";
 "nickname.cannot.empty" = "Debes ingresar un alias";
+"amount.cannot.empty" = "Debes ingresar un monto.";
 "ready.use.sphinx" = "Todo listo\npara usar Sphinx!";
 "ready" = "listo";
 "ready.sphinx.text" = "Puedes enviar mensajes,\nenviar %@ sats, o recibir\nhasta %@ sats.";

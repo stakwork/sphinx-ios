@@ -239,6 +239,7 @@
 "nickname" = "Palayaw";
 "change.image" = "Baguhin ang Larawan";
 "nickname.cannot.empty" = "Hindi maaaring walang laman ang palayaw.";
+"amout.cannot.empty" = "Nickname can't be empty.";
 "ready.use.sphinx" = "Handa ka nang gamitin ang Sphinx!";
 "ready" = "handa na";
 "ready.sphinx.text" = "Maaari kang magpadala ng mga mensahe, gumastos ng %@ sats, o makatanggap ng hanggang %@ sats.";

@@ -158,7 +158,7 @@ class ConfirmAddFriendViewController: UIViewController {
                 AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
             }
         } else {
-            AlertHelper.showAlert(title: "generic.error.title".localized, message: "nickname.cannot.empty".localized)
+            AlertHelper.showAlert(title: "generic.error.title".localized, message: "amout.cannot.empty".localized)
         }
     }
     

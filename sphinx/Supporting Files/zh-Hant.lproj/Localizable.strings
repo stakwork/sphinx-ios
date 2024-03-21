@@ -251,6 +251,7 @@ Derechos de autor © 2020 Sphinx. Todos los derechos reservados.
 "nickname" = "昵稱";
 "change.image" = "更改圖片";
 "nickname.cannot.empty" = "昵稱不能為空。";
+"amout.cannot.empty" = "Nickname can't be empty.";
 "ready.use.sphinx" = "您準備好\n使用Sphinx了！";
 "ready" = "準備好了";
 "ready.sphinx.text" = "您可以發送消息、\n花費%@ sats，或接收\n最多%@ sats。";

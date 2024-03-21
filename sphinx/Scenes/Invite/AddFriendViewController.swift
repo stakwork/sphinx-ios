@@ -63,12 +63,17 @@ class AddFriendViewController: UIViewController {
 }
 
 extension AddFriendViewController : NewContactVCDelegate {
-    func shouldReloadContacts(reload: Bool) {
-        delegate?.shouldReloadContacts?(reload: reload)
+    func shouldReloadContacts(reload: Bool, dashboardTabIndex: Int) {
+        delegate?.shouldReloadContacts?(reload: reload, dashboardTabIndex: dashboardTabIndex)
     }
     
     func shouldDismissView() {
-        delegate?.shouldReloadContacts?(reload: true)
+        delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: -1)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func didCreateInvite() {
+        delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: 1)
         self.dismiss(animated: true, completion: nil)
     }
 }

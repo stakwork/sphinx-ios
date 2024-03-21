@@ -180,7 +180,7 @@ extension NewPublicGroupViewController {
             self.delegate?.shouldReloadChat?(chat: chat)
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.delegate?.shouldReloadContacts?(reload: true)
+            self.delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: -1)
             self.dismiss(animated: true)
         }
     }

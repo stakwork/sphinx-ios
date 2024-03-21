@@ -15,16 +15,19 @@ extension DashboardRootViewController: QRCodeScannerDelegate {
 
 extension DashboardRootViewController: WindowsManagerDelegate {
 
-    func didDismissCoveringWindows() {
-    }
+    func didDismissCoveringWindows() {}
 }
 
 
 extension DashboardRootViewController: NewContactVCDelegate {
     
-    func shouldReloadContacts(reload: Bool) {
+    func shouldReloadContacts(reload: Bool, dashboardTabIndex: Int) {
         if reload {
             loadContactsAndSyncMessages()
+        }
+        
+        if dashboardTabIndex >= 0 || dashboardTabIndex <= 2 {
+            dashboardNavigationTabs.selectTabWith(index: dashboardTabIndex)
         }
     }
 }

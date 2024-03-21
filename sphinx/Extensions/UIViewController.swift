@@ -43,3 +43,18 @@ extension UIViewController {
         rootVC.setStatusBar()
     }
 }
+
+extension UINavigationController {
+    func pushOverRootVC(vc: UIViewController, animated: Bool = true) {
+        var viewControllers = self.viewControllers
+        
+        if viewControllers.count == 1 {
+            self.pushViewController(vc, animated: animated)
+            return
+        }
+        
+        viewControllers.removeLast()
+        viewControllers.append(vc)
+        self.setViewControllers(viewControllers, animated: animated)
+    }
+}

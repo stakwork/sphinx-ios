@@ -303,7 +303,16 @@ extension TransactionMessage {
         on chat: Chat
     ) -> [TransactionMessage] {
         let boostType = TransactionMessageType.boost.rawValue
-        let predicate = NSPredicate(format: "chat == %@ AND type == %d AND replyUUID != nil AND (replyUUID IN %@)", chat, boostType, messages)
+        let failedStatus = TransactionMessage.TransactionMessageStatus.failed.rawValue
+        
+        let predicate = NSPredicate(
+            format: "chat == %@ AND type == %d AND replyUUID != nil AND (replyUUID IN %@) AND status != %d",
+            chat,
+            boostType, 
+            messages,
+            failedStatus
+        )
+        
         let sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
         let reactions: [TransactionMessage] = CoreDataManager.sharedManager.getObjectsOfTypeWith(predicate: predicate, sortDescriptors: sortDescriptors, entityName: "TransactionMessage")
         

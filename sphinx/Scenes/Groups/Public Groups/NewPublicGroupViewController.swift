@@ -56,6 +56,8 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
+    var currentTags : [String] = []
+    
     public enum GroupFields: Int {
         case Name
         case Image

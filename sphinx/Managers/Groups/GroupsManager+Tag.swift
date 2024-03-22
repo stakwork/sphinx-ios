@@ -14,9 +14,10 @@ extension GroupsManager {
         var description : String
         var selected : Bool = false
         
-        init(image: String, description: String) {
+        init(image: String, description: String, selected: Bool = false) {
             self.image = image
             self.description = description
+            self.selected = selected
         }
     }
 }

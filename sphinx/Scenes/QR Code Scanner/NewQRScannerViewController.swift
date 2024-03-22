@@ -80,7 +80,7 @@ class NewQRScannerViewController: KeyboardEventsViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.accessibilityIdentifier = "NewQRScannerViewController"
         confirmButton.isHidden = true
         confirmButton.layer.cornerRadius = confirmButton.frame.height/2
         addressField.delegate = self

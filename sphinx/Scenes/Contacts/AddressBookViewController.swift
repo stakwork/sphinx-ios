@@ -100,7 +100,7 @@ extension AddressBookViewController : UITextFieldDelegate {
 }
 
 extension AddressBookViewController : NewContactVCDelegate {
-    func shouldReloadContacts(reload: Bool) {
+    func shouldReloadContacts(reload: Bool, dashboardTabIndex: Int) {
         if !reload {
             return
         }

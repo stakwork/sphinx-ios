@@ -12,6 +12,7 @@
 "generic.error.message" = "There was an error. Please try again later.";
 "generic.message.error" = "The message could not be sent. Please try again later";
 "generic.contact-support" = "Please contact support at support@stakwork.com";
+"boost.error.title" = "Boost error";
 "confirm" = "Confirm";
 "verify" = "Verify";
 "warning" = "Warning";

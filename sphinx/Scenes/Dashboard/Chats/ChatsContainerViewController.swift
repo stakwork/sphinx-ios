@@ -54,7 +54,7 @@ extension ChatsContainerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.accessibilityIdentifier = "ChatsContainerViewController"
         configureContactChatsCollectionView()
     }
     

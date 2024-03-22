@@ -324,7 +324,11 @@ extension DashboardVideoFeedCollectionViewController {
 extension DashboardVideoFeedCollectionViewController {
 
     func makeCellProvider(for collectionView: UICollectionView) -> DataSource.CellProvider {
-        { (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell in
+        { [weak self] (collectionView, indexPath, dataSourceItem) -> UICollectionViewCell? in
+            guard let self else {
+                return nil
+            }
+            
             guard
                 let section = CollectionViewSection(rawValue: indexPath.section)
             else {

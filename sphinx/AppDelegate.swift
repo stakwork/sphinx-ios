@@ -313,8 +313,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func getRelayKeys() {
-        UserData.sharedInstance.getAndSaveTransportKey()
-        UserData.sharedInstance.getOrCreateHMACKey(forceGet: true)
+        if UserData.sharedInstance.isUserLogged() {
+            UserData.sharedInstance.getAndSaveTransportKey(forceGet: true)
+            UserData.sharedInstance.getOrCreateHMACKey(forceGet: true)
+        }
     }
     
     //Notifications
@@ -546,10 +548,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 
                 if let presentedVC = navCenterController?.presentedViewController {
                     presentedVC.dismiss(animated: true) {
-                        navCenterController?.pushViewController(chatVC, animated: true)
+                        navCenterController?.pushOverRootVC(vc: chatVC)
                     }
                 } else {
-                    navCenterController?.pushViewController(chatVC, animated: true)
+                    navCenterController?.pushOverRootVC(vc: chatVC)
                 }
             }
         }

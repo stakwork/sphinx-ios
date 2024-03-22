@@ -10,7 +10,6 @@ import UIKit
 protocol CustomSegmentedControlDelegate: AnyObject {
     
     func segmentedControlDidSwitch(
-        _ segmentedControl: CustomSegmentedControl,
         to index: Int
     )
 }
@@ -79,6 +78,13 @@ extension CustomSegmentedControl {
 // MARK: - Action Handling
 extension CustomSegmentedControl {
     
+    func selectTabWith(index: Int) {
+        if index >= 0 && buttons.count > index {
+            let button = buttons[index]
+            buttonAction(sender: button)
+        }
+    }
+    
     @objc func buttonAction(sender: UIButton) {
         for (buttonIndex, button) in buttons.enumerated() {
             button.setTitleColor(buttonTextColor, for: .normal)
@@ -86,7 +92,7 @@ extension CustomSegmentedControl {
             if button == sender {
                 selectedIndex = buttonIndex
 
-                delegate?.segmentedControlDidSwitch(self, to: selectedIndex)
+                delegate?.segmentedControlDidSwitch(to: selectedIndex)
                 
                 updateButtonsOnIndexChange()
             }
@@ -206,7 +212,7 @@ extension CustomSegmentedControl {
     }
     
     
-    private func updateButtonsOnIndexChange() {
+    func updateButtonsOnIndexChange() {
         UIView.animate(withDuration: 0.3) {
             self.buttons[self.selectedIndex].setTitleColor(self.activeTextColor, for: .normal)
             self.selectorView.frame.origin.x = self.selectorPosition

@@ -52,7 +52,7 @@ class KeychainRestoreViewController: UIViewController {
             if EncryptionManager.sharedInstance.insertKeys(privateKey: credentials[3], publicKey: credentials[4]) {
                 UserData.sharedInstance.save(ip: credentials[0], token: credentials[1], pin: credentials[2])
 
-                userData.getAndSaveTransportKey(completion: { [weak self] _ in
+                userData.getAndSaveTransportKey(forceGet: true) { [weak self] _ in
                     guard let self = self else { return }
                     
                     self.userData.getOrCreateHMACKey(forceGet: true) { [weak self] in
@@ -64,7 +64,7 @@ class KeychainRestoreViewController: UIViewController {
                             self.messageBubbleHelper.hideLoadingWheel()
                         })
                     }
-                })
+                }
             } else {
                 self.dismissAndShowError()
             }

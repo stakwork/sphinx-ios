@@ -101,7 +101,7 @@ extension RestoreUserFormViewController {
 
         userData.save(ip: keys[2], token: keys[3], pin: pin)
 
-        userData.getAndSaveTransportKey(completion: { [weak self] _ in
+        userData.getAndSaveTransportKey(forceGet: true) { [weak self] _ in
             guard let self = self else { return }
             
             self.userData.getOrCreateHMACKey(forceGet: true) { [weak self] in
@@ -115,7 +115,7 @@ extension RestoreUserFormViewController {
                     self.errorRestoring(message: "generic.error.message".localized)
                 })
             }
-        })
+        }
     }
     
     

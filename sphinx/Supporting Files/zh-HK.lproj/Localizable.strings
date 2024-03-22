@@ -12,6 +12,7 @@ Derechos de autor © 2020 Sphinx. Todos los derechos reservados.
 "generic.error.message" = "出現錯誤。請稍後再試。";
 "generic.message.error" = "無法發送消息。請稍後再試";
 "generic.contact-support" = "請聯繫支持 support@stakwork.com";
+"boost.error.title" = "Boost error";
 "confirm" = "確認";
 "verify" = "驗證";
 "warning" = "警告";

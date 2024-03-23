@@ -636,6 +636,9 @@
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		93D7B5472BAE0FEA007C53A9 /* AddTagsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */; };
+		93D7B5492BAE1166007C53A9 /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B5482BAE1166007C53A9 /* UIView + Constraints.swift */; };
+		93D7B54B2BAE38F6007C53A9 /* AddedTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B54A2BAE38F6007C53A9 /* AddedTagCell.swift */; };
 		93FCEA782B91AF3B0069B344 /* DashboardUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */; };
 		CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */; };
 		CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */; };
@@ -1824,6 +1827,9 @@
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsButtonCell.swift; sourceTree = "<group>"; };
+		93D7B5482BAE1166007C53A9 /* UIView + Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
+		93D7B54A2BAE38F6007C53A9 /* AddedTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedTagCell.swift; sourceTree = "<group>"; };
 		93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardUITest.swift; sourceTree = "<group>"; };
 		CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
@@ -3070,6 +3076,7 @@
 				471161DE29156480008EAFF2 /* NSObject.swift */,
 				471161E92915937A008EAFF2 /* Array.swift */,
 				47C0613A2A4A1BAA00CEF221 /* UISegmentedControl.swift */,
+				93D7B5482BAE1166007C53A9 /* UIView + Constraints.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3363,6 +3370,8 @@
 				476EB47423C50662009745E2 /* GroupContactTableViewCell.xib */,
 				4712BB4023D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift */,
 				4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */,
+				93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */,
+				93D7B54A2BAE38F6007C53A9 /* AddedTagCell.swift */,
 			);
 			path = "View Cells";
 			sourceTree = "<group>";
@@ -5096,6 +5105,7 @@
 				CE842DE8298C67A500620AD3 /* KnownBadgeCell.swift in Sources */,
 				475BDD77232BF91A00C5BBD6 /* ContactsService.swift in Sources */,
 				475DD3042A0D6A9D00F92173 /* ChatMessageTextFieldView+UITextViewDelegate.swift in Sources */,
+				93D7B5492BAE1166007C53A9 /* UIView + Constraints.swift in Sources */,
 				CE30D95B2A0C09DE00C83555 /* MaxMemorySlider.swift in Sources */,
 				F3B2518D26D8DD1800C96D42 /* PodcastFeed+FetchUtils.swift in Sources */,
 				CEEFD60B2A6891E100FD7E73 /* ThreadHeaderView.swift in Sources */,
@@ -5184,6 +5194,7 @@
 				47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */,
 				47E6A4CC2A2E68A700A9509E /* DeletedMessageView.swift in Sources */,
 				47308E0824FEE6E600FFAC6F /* SocketEngineClient.swift in Sources */,
+				93D7B5472BAE0FEA007C53A9 /* AddTagsButtonCell.swift in Sources */,
 				475BDD89232C086C00C5BBD6 /* HistoryViewController.swift in Sources */,
 				CE94A50D2A4B2BF6001EDF7E /* MentionOrMacroItem.swift in Sources */,
 				F36C5EC027315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift in Sources */,
@@ -5556,6 +5567,7 @@
 				CE51F35A2989B19800ABBACB /* BadgeDetailCell.swift in Sources */,
 				47FA18C8242D35F700469C8F /* CommonGroupContactsViewController.swift in Sources */,
 				47308E0B24FEE6E600FFAC6F /* SocketEngineSpec.swift in Sources */,
+				93D7B54B2BAE38F6007C53A9 /* AddedTagCell.swift in Sources */,
 				47352E4A2440F54300E5CC7F /* MessageOptionsViewController.swift in Sources */,
 				47AAFC7A238706EA00E30BDA /* API+InviteExtension.swift in Sources */,
 				475BDD7F232C01FE00C5BBD6 /* QRCodeScannerView.swift in Sources */,

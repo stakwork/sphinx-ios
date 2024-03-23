@@ -11,7 +11,7 @@ import UIKit
 extension NewPublicGroupViewController {
     
     func setTagsVCHeight() {
-        let tagsContainerHeigh = (CGFloat(groupsManager.newGroupInfo.tags.count) * kTagRowHeight) + kTagContainerMargin
+        let tagsContainerHeigh = (CGFloat(groupsManager.newGroupInfo.tags.count) * kTagRowHeight) + kTagContainerMargin + kTagRowHeight
         if tagsVCContainerHeight.constant != tagsContainerHeigh {
             tagsVCContainerHeight.constant = tagsContainerHeigh
             tagsVCContainer.layoutIfNeeded()
@@ -35,20 +35,12 @@ extension NewPublicGroupViewController {
         })
     }
     
-    func hideTagsVC() {
-        updateTags() {
-            self.toggleTagsVCView(show: false, completion: {
-                self.tagsVC?.view.removeFromSuperview()
-                self.tagsVC?.removeFromParent()
-                self.tagsVC = nil
-            })
-        }
-    }
-    
     func updateTags(completion: @escaping () -> ()) {
         let previousTagsHeight = self.getCollectionViewHeight()
         tagsAddedDataSource = TagsAddedDataSource(collectionView: tagsCollectionView)
         tagsAddedDataSource.setTags(tags: groupsManager.newGroupInfo.tags)
+        tagsAddedDataSource.addButtonTapped = showTagsVC
+        tagsAddedDataSource.tagSelected = updateSelectedTags
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
             self.tagsCollectionHeightConstraint.constant = self.getCollectionViewHeight()
@@ -56,6 +48,12 @@ extension NewPublicGroupViewController {
             self.view.layoutIfNeeded()
             completion()
         })
+    }
+    
+    func updateSelectedTags(index: Int) {
+        groupsManager.newGroupInfo.tags.remove(at: index)
+        currentTags.remove(at: index)
+        updateTags { }
     }
     
     func getCollectionViewHeight() -> CGFloat {

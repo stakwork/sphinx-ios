@@ -10,14 +10,25 @@ import UIKit
 
 class GroupTagCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var groupTagView: GroupTagView!
+    @IBOutlet weak var groupTagView: UIView!
+    let tagView = AddedTagCell()
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        groupTagView.addSubview(tagView)
+        tagView.anchor(top: groupTagView.topAnchor,
+                       trailing: groupTagView.trailingAnchor,
+                       bottom: groupTagView.bottomAnchor,
+                       leading: groupTagView.leadingAnchor)
+    }
+    
     func configureWith(tag: GroupsManager.Tag) {
-        groupTagView.configureWith(tag: tag)
+        tagView.configureWith(tag: tag.description)
     }
 
 }

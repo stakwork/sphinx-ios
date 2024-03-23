@@ -588,6 +588,8 @@ public func FfiConverterTypeMsg_lower(_ value: Msg) -> RustBuffer {
 
 public struct RunReturn {
     public var `msgs`: [Msg]
+    public var `msgsTotal`: UInt64?
+    public var `msgsCounts`: String?
     public var `topics`: [String]
     public var `payloads`: [Data]
     public var `stateMp`: Data?
@@ -612,8 +614,10 @@ public struct RunReturn {
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`msgs`: [Msg], `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `stateToDelete`: [String], `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `inviterAlias`: String?, `initialTribe`: String?, `lspHost`: String?, `invoice`: String?, `route`: String?, `node`: String?, `lastRead`: String?, `muteLevels`: String?) {
+    public init(`msgs`: [Msg], `msgsTotal`: UInt64?, `msgsCounts`: String?, `topics`: [String], `payloads`: [Data], `stateMp`: Data?, `stateToDelete`: [String], `newBalance`: UInt64?, `myContactInfo`: String?, `sentStatus`: String?, `settledStatus`: String?, `error`: String?, `newTribe`: String?, `tribeMembers`: String?, `newInvite`: String?, `inviterContactInfo`: String?, `inviterAlias`: String?, `initialTribe`: String?, `lspHost`: String?, `invoice`: String?, `route`: String?, `node`: String?, `lastRead`: String?, `muteLevels`: String?) {
         self.`msgs` = `msgs`
+        self.`msgsTotal` = `msgsTotal`
+        self.`msgsCounts` = `msgsCounts`
         self.`topics` = `topics`
         self.`payloads` = `payloads`
         self.`stateMp` = `stateMp`
@@ -642,6 +646,12 @@ public struct RunReturn {
 extension RunReturn: Equatable, Hashable {
     public static func ==(lhs: RunReturn, rhs: RunReturn) -> Bool {
         if lhs.`msgs` != rhs.`msgs` {
+            return false
+        }
+        if lhs.`msgsTotal` != rhs.`msgsTotal` {
+            return false
+        }
+        if lhs.`msgsCounts` != rhs.`msgsCounts` {
             return false
         }
         if lhs.`topics` != rhs.`topics` {
@@ -712,6 +722,8 @@ extension RunReturn: Equatable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(`msgs`)
+        hasher.combine(`msgsTotal`)
+        hasher.combine(`msgsCounts`)
         hasher.combine(`topics`)
         hasher.combine(`payloads`)
         hasher.combine(`stateMp`)
@@ -741,6 +753,8 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
     public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> RunReturn {
         return try RunReturn(
             `msgs`: FfiConverterSequenceTypeMsg.read(from: &buf), 
+            `msgsTotal`: FfiConverterOptionUInt64.read(from: &buf), 
+            `msgsCounts`: FfiConverterOptionString.read(from: &buf), 
             `topics`: FfiConverterSequenceString.read(from: &buf), 
             `payloads`: FfiConverterSequenceData.read(from: &buf), 
             `stateMp`: FfiConverterOptionData.read(from: &buf), 
@@ -767,6 +781,8 @@ public struct FfiConverterTypeRunReturn: FfiConverterRustBuffer {
 
     public static func write(_ value: RunReturn, into buf: inout [UInt8]) {
         FfiConverterSequenceTypeMsg.write(value.`msgs`, into: &buf)
+        FfiConverterOptionUInt64.write(value.`msgsTotal`, into: &buf)
+        FfiConverterOptionString.write(value.`msgsCounts`, into: &buf)
         FfiConverterSequenceString.write(value.`topics`, into: &buf)
         FfiConverterSequenceData.write(value.`payloads`, into: &buf)
         FfiConverterOptionData.write(value.`stateMp`, into: &buf)
@@ -2091,6 +2107,17 @@ public func `setPushToken`(`seed`: String, `uniqueTime`: String, `state`: Data, 
     )
 }
 
+public func `getMsgsCounts`(`seed`: String, `uniqueTime`: String, `state`: Data) throws -> RunReturn {
+    return try  FfiConverterTypeRunReturn.lift(
+        try rustCallWithError(FfiConverterTypeSphinxError.lift) {
+    uniffi_sphinxrs_fn_func_get_msgs_counts(
+        FfiConverterString.lower(`seed`),
+        FfiConverterString.lower(`uniqueTime`),
+        FfiConverterData.lower(`state`),$0)
+}
+    )
+}
+
 public func `fetchMsgsBatch`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?, `isRestore`: Bool?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
@@ -2323,6 +2350,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_set_push_token() != 7668) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sphinxrs_checksum_func_get_msgs_counts() != 29743) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_fetch_msgs_batch() != 65179) {

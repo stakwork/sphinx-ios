@@ -112,6 +112,13 @@ extension SphinxOnionManager {
             
         }
         
+        if let msgsTotalsJSON = rr.msgsCounts,
+           let msgTotals = MsgTotalCounts(JSONString: msgsTotalsJSON) {
+            print(msgTotals) // Now you have your model populated with the JSON data
+            self.msgTotalCounts = msgTotals
+            NotificationCenter.default.post(name: .totalMessageCountReceived, object: nil)
+        }
+        
         purgeObsoleteState(keys: rr.stateToDelete)
         
     }

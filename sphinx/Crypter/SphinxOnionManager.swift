@@ -54,6 +54,8 @@ class SphinxOnionManager : NSObject {
             NotificationCenter.default.post(name: .onConnectionStatusChanged, object: nil)
         }
     }
+    var msgTotalCounts : MsgTotalCounts? = nil
+    
     
     func getAccountSeed(mnemonic:String?=nil)->String?{
         do{

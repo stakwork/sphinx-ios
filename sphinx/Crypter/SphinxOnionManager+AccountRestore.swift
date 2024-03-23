@@ -8,72 +8,115 @@
 
 import Foundation
 import CoreData
+import ObjectMapper
+
+public enum RestoreMessagePhase{
+    case firstScidMessages
+    case okKeyMessages
+    case allMessages
+    case none
+}
 
 class MessageFetchParams {
     var restoreInProgress: Bool
     var fetchStartIndex: Int
     var fetchTargetIndex: Int
     var fetchLimit: Int
-    var blockCompletionHandler: () -> ()
+    var messageCountForPhase:Int
+    var blockCompletionHandler: (() -> ())?
+    var restoreMessagePhase : RestoreMessagePhase = .none
 
-    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: @escaping () -> ()) {
+    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: (() -> ())?) {
         self.restoreInProgress = restoreInProgress
         self.fetchStartIndex = fetchStartIndex
         self.fetchTargetIndex = fetchTargetIndex
         self.fetchLimit = fetchLimit
         self.blockCompletionHandler = blockCompletionHandler
+        self.messageCountForPhase = 0
     }
+}
+
+class MsgTotalCounts: Mappable {
+    var totalMessageAvailableCount: Int?
+    var okKeyMessageAvailableCount: Int?
+    var firstMessageAvailableCount: Int?
+
+    required init?(map: Map) {
+    }
+
+    func mapping(map: Map) {
+        totalMessageAvailableCount             <- map["total"]
+        okKeyMessageAvailableCount             <- map["ok_key"]
+        firstMessageAvailableCount  <- map["first_for_each_scid"]
+    }
+    
+    func hasOneValidCount() -> Bool {
+        // Use an array to check for non-nil properties in a condensed form
+        let properties = [totalMessageAvailableCount, okKeyMessageAvailableCount, firstMessageAvailableCount]
+        return properties.contains(where: { $0 != nil })
+    }
+    
 }
 
 
 extension SphinxOnionManager{//account restore related
     
     func performAccountRestore(){
-        restoreTribes()
-        restoreContactsAndPayments()
-        restoreMessages()
+        setupRestore()
     }
     
-    
-    func restoreContactsAndPayments(){
+    func setupRestore(){
+        guard let seed = getAccountSeed() else{
+            return
+        }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(processMessageCountReceived), name: .totalMessageCountReceived, object: nil)
+        
+        let rr = try! getMsgsCounts(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
+        handleRunReturn(rr: rr)
     }
+    
+    @objc func processMessageCountReceived(){
+        if let msgTotalCounts = self.msgTotalCounts,
+           msgTotalCounts.hasOneValidCount(){
+            kickOffFullRestore()
+        }
+    }
+    
+    func kickOffFullRestore(){
+        guard let msgTotalCounts = msgTotalCounts else {return}
+        if let firstForEachScidCount = msgTotalCounts.firstMessageAvailableCount{
+            restoreTribes()
+        }
+//        restoreContactsAndPayments()
+//        restoreMessages()
+    }
+    
     
     func restoreTribes(){
         guard let seed = getAccountSeed() else{
             return
         }
-
         
+        let indexStepSize = 100
+        let startIndex = 0
+        //emulating getAllUnreadMessages()
+        
+        messageFetchParams = MessageFetchParams(
+            restoreInProgress: true,
+            fetchStartIndex: startIndex,
+            fetchTargetIndex: startIndex + indexStepSize,
+            fetchLimit: indexStepSize,
+            blockCompletionHandler: nil
+        )
+        messageFetchParams?.restoreMessagePhase = .firstScidMessages
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFetchFirstScidMessages), name: .newOnionMessageWasReceived, object: nil)
+        fetchFirstContactPerKey(seed: seed, lastMessageIndex: startIndex, msgCountLimit: indexStepSize)
     }
     
-    func nextMessageBlockHandler_fetchFirstMessagePerKey(){
-        print(messageFetchParams)
-        guard var messageFetchParams = messageFetchParams,
-              messageFetchParams.restoreInProgress == true,
-        let lastRetrievedIndex = UserData.sharedInstance.getLastMessageIndex(),
-        let seed = getAccountSeed()
-        else{
-            return
-        }
-        if lastRetrievedIndex < messageFetchParams.fetchTargetIndex{
-            let nextTargetIndex = messageFetchParams.fetchStartIndex + messageFetchParams.fetchLimit + 1
-            messageFetchParams.fetchTargetIndex = nextTargetIndex
-            messageFetchParams = MessageFetchParams(
-                restoreInProgress: true,
-                fetchStartIndex: lastRetrievedIndex + 1,
-                fetchTargetIndex: nextTargetIndex,
-                fetchLimit: messageFetchParams.fetchLimit,
-                blockCompletionHandler:  nextMessageBlockHandler_fetchFirstMessagePerKey
-            )
-            
-            listenForNewMessageBlock(targetIndex: lastRetrievedIndex + messageFetchParams.fetchLimit)
-            fetchFirstContactPerKey(seed: seed, lastMessageIndex: lastRetrievedIndex + 1, msgCountLimit: messageFetchParams.fetchLimit)
-        }
-        else{
-            messageFetchParams.restoreInProgress = false
-        }
-
+    
+    func restoreContactsAndPayments(){
+        
     }
     
     func fetchFirstContactPerKey(
@@ -161,7 +204,25 @@ extension SphinxOnionManager{//account restore related
 
 
 extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
+    //MARK: Process all first scid messages
+    @objc func handleFetchFirstScidMessages(n:Notification){
+        guard let message = n.userInfo?["message"] as? TransactionMessage else{
+              return
+          }
+        messageFetchParams?.messageCountForPhase += 1
+        print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
+        if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.firstMessageAvailableCount ?? 0)){ // we got all the messages
+            NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
+        }
+        else{//go again
+            
+        }
+    }
     
+    
+    
+    //MARK: Process Incoming Message Blocks (All Messages)
+
     private func listenForNewMessageBlock(targetIndex:Int) {
         setupWatchdogTimer()
         let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
@@ -182,7 +243,9 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
             try newMessageSyncedListener?.performFetch()
             // Check if we already have the desired data
             if let _ = newMessageSyncedListener?.fetchedObjects?.first {
-                messageFetchParams?.blockCompletionHandler()
+                if let handler = messageFetchParams?.blockCompletionHandler{
+                    handler()
+                }
                 watchdogTimer?.invalidate()
             }
         }
@@ -196,7 +259,9 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         // Called when the content of the fetchedResultsController changes.
         if let _ = controller.fetchedObjects?.first {
-            messageFetchParams?.blockCompletionHandler()
+            if let handler = messageFetchParams?.blockCompletionHandler{
+                handler()
+            }
             self.newMessageSyncedListener = nil
         }
     }

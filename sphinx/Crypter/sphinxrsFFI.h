@@ -179,6 +179,8 @@ RustBuffer uniffi_sphinxrs_fn_func_get_mutes(RustBuffer seed, RustBuffer unique_
 );
 RustBuffer uniffi_sphinxrs_fn_func_set_push_token(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustBuffer push_token, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_sphinxrs_fn_func_get_msgs_counts(RustBuffer seed, RustBuffer unique_time, RustBuffer state, RustCallStatus *_Nonnull out_status
+);
 RustBuffer uniffi_sphinxrs_fn_func_fetch_msgs_batch(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t last_msg_idx, RustBuffer limit, RustBuffer reverse, RustBuffer is_restore, RustCallStatus *_Nonnull out_status
 );
 RustBuffer uniffi_sphinxrs_fn_func_fetch_msgs_batch_okkey(RustBuffer seed, RustBuffer unique_time, RustBuffer state, uint64_t last_msg_idx, RustBuffer limit, RustBuffer reverse, RustBuffer is_restore, RustCallStatus *_Nonnull out_status
@@ -365,6 +367,9 @@ uint16_t uniffi_sphinxrs_checksum_func_get_mutes(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_set_push_token(void
+    
+);
+uint16_t uniffi_sphinxrs_checksum_func_get_msgs_counts(void
     
 );
 uint16_t uniffi_sphinxrs_checksum_func_fetch_msgs_batch(void

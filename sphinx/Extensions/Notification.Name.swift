@@ -29,4 +29,5 @@ extension Notification.Name {
     static let newTribeCreationComplete = Notification.Name("newTribeCreationComplete")
     static let newTribeMemberListRetrieved = Notification.Name("newTribeMemberListRetrieved")
     static let invoiceIPaidSettled = Notification.Name("invoiceIPaidSettled")
+    static let totalMessageCountReceived = Notification.Name("totalMessageCountReceived")
 }

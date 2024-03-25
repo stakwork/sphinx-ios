@@ -149,7 +149,7 @@ extension SphinxOnionManager {
     }
         
 
-    func isIndexedSentMessageFromMe(msg:Msg)->Bool{
+    func isMyMessageNeedingIndexUpdate(msg:Msg)->Bool{
         if let _ = msg.uuid,
            let _ = msg.index{
             return true

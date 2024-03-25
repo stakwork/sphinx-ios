@@ -85,14 +85,22 @@ extension SphinxOnionManager{//account restore related
     
     func kickOffFullRestore(){
         guard let msgTotalCounts = msgTotalCounts else {return}
-        if let firstForEachScidCount = msgTotalCounts.firstMessageAvailableCount{
-            restoreTribes()
+        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
+            restoreContactsAndPayments()
         }
-//        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
-//            restoreContactsAndPayments()
-//        }
-//        restoreContactsAndPayments()
-//        restoreMessages()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
+            if let firstForEachScidCount = msgTotalCounts.firstMessageAvailableCount{
+                self.restoreTribes()
+            }
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 30.0, execute: {
+            if let totalMessageAvailableCount = msgTotalCounts.totalMessageAvailableCount{
+                self.restoreMessages()
+            }
+        })
+        
     }
     
     
@@ -214,7 +222,7 @@ extension SphinxOnionManager{//account restore related
         msgCountLimit:Int
     ){
         do{
-            let rr = try fetchMsgs(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(msgCountLimit))
+           let rr = try fetchMsgsBatch(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(msgCountLimit), reverse: false, isRestore: true)
             handleRunReturn(rr: rr)
         }
         catch{

@@ -220,9 +220,37 @@ extension SphinxOnionManager{
         return nil
     }
     
+    func finalizeSentMessage(localMsg:TransactionMessage, remoteMsg:Msg){
+        let remoteMessageAsGenericMessage = GenericIncomingMessage(msg: remoteMsg)
+        if let contentTimestamp = remoteMessageAsGenericMessage.date{
+            let date = timestampToDate(timestamp: UInt64(contentTimestamp))
+            localMsg.date = date
+            localMsg.updatedAt = Date()
+        }
+        else if let timestamp = remoteMsg.timestamp
+        {
+            let date = timestampToDate(timestamp: timestamp) ?? Date()
+            localMsg.date = date
+            localMsg.updatedAt = Date()
+        }
+        
+        if let type = remoteMsg.type,
+           type == TransactionMessage.TransactionMessageType.memberApprove.rawValue,
+           let ruuid = localMsg.replyUUID,
+           let messageWeAreReplying = TransactionMessage.getMessageWith(uuid: ruuid){
+            localMsg.senderAlias = messageWeAreReplying.senderAlias
+        }
+        else if let owner = UserContact.getOwner(){
+            localMsg.senderAlias = owner.nickname
+            localMsg.senderPic = owner.avatarUrl
+        }
+        
+        localMsg.managedObjectContext?.saveContext()
+    }
+    
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
-        for message in rr.msgs{
+        for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
             print("got message idx:\(message.index)")
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
             if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
@@ -230,26 +258,20 @@ extension SphinxOnionManager{
                var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
                 originalMessage.uuid = newUUID
                 originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
-                if let timestamp = message.timestamp
-                {
-                    let date = timestampToDate(timestamp: timestamp) ?? Date()
-                    originalMessage.date = date
-                    originalMessage.updatedAt = date
-                }
-                
-                if let type = message.type,
-                   type == TransactionMessage.TransactionMessageType.memberApprove.rawValue,
-                   let ruuid = originalMessage.replyUUID,
-                   let messageWeAreReplying = TransactionMessage.getMessageWith(uuid: ruuid){
-                    originalMessage.senderAlias = messageWeAreReplying.senderAlias
-                }
-                else if let owner = UserContact.getOwner(){
-                    originalMessage.senderAlias = owner.nickname
-                    originalMessage.senderPic = owner.avatarUrl
-                }
-                
-                originalMessage.managedObjectContext?.saveContext()
+                finalizeSentMessage(localMsg: originalMessage, remoteMsg: message)
            }
+            else if let sentTo = message.sentTo,
+                    let uuid = message.uuid,
+                    TransactionMessage.getMessageWith(uuid: uuid) == nil,
+                    let contact = UserContact.getContactWithDisregardStatus(pubkey: sentTo),
+                    let chat = contact.getChat(),
+                    let type = message.type,
+                    var localMsg = TransactionMessage.createProvisionalMessage(messageContent: genericIncomingMessage.content ?? "", type: Int(type), date: Date(), chat: chat)
+            {
+                localMsg.uuid = uuid
+                finalizeSentMessage(localMsg: localMsg, remoteMsg: message)
+                print("sentTo is non-nil inner block, message:\(message)")
+            }
             else if let uuid = message.uuid,
                     TransactionMessage.getMessageWith(uuid: uuid) == nil{ // guarantee it is a new message
                 if let type = message.type,
@@ -333,16 +355,16 @@ extension SphinxOnionManager{
                     print("handleRunReturn message: \(message)")
                 }
             }
-            else if isIndexedSentMessageFromMe(msg: message),
-                    let uuid = message.uuid,
-                    var cachedMessage = TransactionMessage.getMessageWith(uuid: uuid),
-                    let indexString = message.index,
-                        let index = Int(indexString){
-                cachedMessage.id = index //sync self index
-                cachedMessage.updatedAt = Date()
-                cachedMessage.status = (cachedMessage.chat?.type == Chat.ChatType.conversation.rawValue) ? TransactionMessage.TransactionMessageStatus.received.rawValue : TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-                cachedMessage.managedObjectContext?.saveContext()
-                print(rr)
+            else if isMyMessageNeedingIndexUpdate(msg: message),
+                let uuid = message.uuid,
+                var cachedMessage = TransactionMessage.getMessageWith(uuid: uuid),
+                let indexString = message.index,
+                let index = Int(indexString){ //updates index of sent message
+                    cachedMessage.id = index //sync self index
+                    cachedMessage.updatedAt = Date()
+                    cachedMessage.status = (cachedMessage.chat?.type == Chat.ChatType.conversation.rawValue) ? TransactionMessage.TransactionMessageStatus.received.rawValue : TransactionMessage.TransactionMessageStatus.confirmed.rawValue
+                    cachedMessage.managedObjectContext?.saveContext()
+                    print(rr)
             }
         }
     }

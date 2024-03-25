@@ -52,10 +52,11 @@ extension SphinxOnionManager {
             })
         }
         
+        processKeyExchangeMessages(rr: rr)
         
         processGenericMessages(rr: rr)
                 
-        processKeyExchangeMessages(rr: rr)
+        
         
         // Assuming 'rr.tribeMembers' is a JSON string similar to the 'po map.JSON' output you've shown
         if let tribeMembersString = rr.tribeMembers,

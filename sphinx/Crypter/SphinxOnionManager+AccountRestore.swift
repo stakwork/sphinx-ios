@@ -88,6 +88,9 @@ extension SphinxOnionManager{//account restore related
         if let firstForEachScidCount = msgTotalCounts.firstMessageAvailableCount{
             restoreTribes()
         }
+//        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
+//            restoreContactsAndPayments()
+//        }
 //        restoreContactsAndPayments()
 //        restoreMessages()
     }
@@ -116,7 +119,26 @@ extension SphinxOnionManager{//account restore related
     
     
     func restoreContactsAndPayments(){
+        guard let seed = getAccountSeed() else{
+            return
+        }
         
+        let indexStepSize = 100
+        let startIndex = 0
+        //emulating getAllUnreadMessages()
+        
+        messageFetchParams = MessageFetchParams(
+            restoreInProgress: true,
+            fetchStartIndex: startIndex,
+            fetchTargetIndex: startIndex + indexStepSize,
+            fetchLimit: indexStepSize,
+            blockCompletionHandler: nil
+        )
+        messageFetchParams?.restoreMessagePhase = .firstScidMessages
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFetchFirstScidMessages), name: .newOnionMessageWasReceived, object: nil)
+        
+        let rr = try! fetchMsgsBatchOkkey(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(startIndex), limit: UInt32(indexStepSize), reverse: false, isRestore: true)
+        handleRunReturn(rr: rr)
     }
     
     func fetchFirstContactPerKey(

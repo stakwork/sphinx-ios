@@ -149,10 +149,8 @@ class ChatMessageTextFieldView: UIView {
     
     func setOngoingMessageFor(chat: Chat?) {
         if let text = ChatTrackingHandler.shared.getOngoingMessageFor(chatId: chat?.id) {
-            if
-                text.isEmpty ||
-                textView.text.isNotEmptyField(with: kFieldPlaceHolder)
-            {
+            if text.isEmpty {
+                clearMessage()
                 return
             }
             

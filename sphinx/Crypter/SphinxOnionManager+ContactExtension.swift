@@ -64,6 +64,47 @@ extension SphinxOnionManager{//contacts related
         
     }
     
+    //MARK: Processes key exchange messages (friend requests) between contacts
+    func processKeyExchangeMessages(rr:RunReturn){
+        for msg in rr.msgs{
+            if let sender = msg.sender,
+               let csr = ContactServerResponse(JSONString: sender),
+               let senderPubkey = csr.pubkey{
+                print(sender)
+                let type = msg.type ?? 255
+                if type == TransactionMessage.TransactionMessageType.contactKeyConfirmation.rawValue,
+                   let pubkey = csr.pubkey// incoming key exchange confirmation
+                   { // if contact exists it's a key exchange response from them or it exists already
+                    var keyExchangeContact = UserContact.getContactWithDisregardStatus(pubkey: senderPubkey) ?? createNewContact(pubkey: pubkey)
+                    guard let keyExchangeContact = keyExchangeContact
+                    else{
+                        //no existing contact!
+                        return
+                    }
+                    NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : keyExchangeContact.publicKey]))
+                    keyExchangeContact.nickname = csr.alias
+                    keyExchangeContact.avatarUrl = csr.photoUrl
+                    if keyExchangeContact.getChat() == nil{
+                        createChat(for: keyExchangeContact)
+                    }
+                    keyExchangeContact.nickname = csr.alias
+                    keyExchangeContact.status = UserContact.Status.Confirmed.rawValue
+                    CoreDataManager.sharedManager.saveContext()
+                    
+                }
+                else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue, // incoming key exchange request
+                        UserContact.getContactWithDisregardStatus(pubkey: senderPubkey) == nil,//don't respond to requests if already exists
+                        let newContactRequest = createNewContact(pubkey: senderPubkey, nickname: csr.alias, photo_url: csr.photoUrl, person: csr.person,code:csr.code){//new contact from a key exchange message
+                    NotificationCenter.default.post(Notification(name: .newContactWasRegisteredWithServer, object: nil, userInfo: ["contactPubkey" : newContactRequest.publicKey]))
+                    newContactRequest.status = UserContact.Status.Confirmed.rawValue
+                    createChat(for: newContactRequest)
+                    managedContext.saveContext()
+                }
+            }
+        }
+        
+    }
+    
     //MARK: END Contact Add helpers
     
     

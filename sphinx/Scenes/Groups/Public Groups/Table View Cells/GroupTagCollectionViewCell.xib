@@ -17,8 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yY-ZA-YVt">
-                        <rect key="frame" x="10" y="5" width="130" height="40"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yY-ZA-YVt" customClass="AddedTagsView" customModule="sphinx" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </subviews>
@@ -26,10 +26,10 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="4yY-ZA-YVt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="1x7-4u-pFE"/>
-                <constraint firstItem="4yY-ZA-YVt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="W7h-MF-0vS"/>
-                <constraint firstAttribute="trailing" secondItem="4yY-ZA-YVt" secondAttribute="trailing" constant="10" id="r67-Xi-IJE"/>
-                <constraint firstAttribute="bottom" secondItem="4yY-ZA-YVt" secondAttribute="bottom" constant="5" id="xX0-1O-mfm"/>
+                <constraint firstItem="4yY-ZA-YVt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="1x7-4u-pFE"/>
+                <constraint firstItem="4yY-ZA-YVt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="W7h-MF-0vS"/>
+                <constraint firstAttribute="trailing" secondItem="4yY-ZA-YVt" secondAttribute="trailing" id="r67-Xi-IJE"/>
+                <constraint firstAttribute="bottom" secondItem="4yY-ZA-YVt" secondAttribute="bottom" id="xX0-1O-mfm"/>
             </constraints>
             <connections>
                 <outlet property="groupTagView" destination="4yY-ZA-YVt" id="qhq-07-2QP"/>

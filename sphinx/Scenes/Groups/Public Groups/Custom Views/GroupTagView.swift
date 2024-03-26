@@ -49,9 +49,4 @@ class GroupTagView: UIView {
         tagLabel.text = tag.description
         container.backgroundColor = tag.selected ? kSelectedColor : kNormalColor
     }
-    
-    public static func getWidthWith(description: String) -> CGFloat {
-        return kDescriptionFont.sizeOfString(description, constrainedToWidth: .greatestFiniteMagnitude).width + kLeftMargin + kRightMargin
-    }
-
 }

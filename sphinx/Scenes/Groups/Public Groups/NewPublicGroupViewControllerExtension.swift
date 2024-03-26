@@ -57,10 +57,7 @@ extension NewPublicGroupViewController {
     }
     
     func getCollectionViewHeight() -> CGFloat {
-        if tagsCollectionView.contentSize.height <= 20 {
-            return 50
-        }
-        return tagsCollectionView.contentSize.height
+        return tagsCollectionView.contentSize.height + tagsCollectionView.contentInset.bottom + tagsCollectionView.contentInset.top
     }
     
     func completeEditView() {

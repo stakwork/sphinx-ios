@@ -133,6 +133,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         tagsCollectionView.layer.cornerRadius = 10
         tagsCollectionView.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
         tagsCollectionView.layer.borderWidth = 1
+        tagsCollectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
         configureFields()
         completeEditView()

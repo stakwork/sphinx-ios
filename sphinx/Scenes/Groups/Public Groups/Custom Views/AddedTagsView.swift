@@ -8,21 +8,23 @@
 
 import UIKit
 
+protocol AddedTagsViewDelegate: class {
+    func didTapCloseButton()
+}
+
 class AddedTagsView: UIView {
+    
+    weak var delegate: AddedTagsViewDelegate?
     
     @IBOutlet var contentView: UIView!
     
     @IBOutlet weak var container: UIView!
-//    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var tagLabel: UILabel!
     
-    let kNormalColor = UIColor.Sphinx.BodyInverted
-    let kTextColor = UIColor.Sphinx.Body
+    public static let kLeftMargin:CGFloat = 16
+    public static let kRightMargin:CGFloat = 42
     
-    public static let kLeftMargin:CGFloat = 55
-    public static let kRightMargin:CGFloat = 20
-    
-    public static let kDescriptionFont = UIFont(name: "Roboto-Regular", size: 13.0)!
+    public static let kDescriptionFont = UIFont(name: "Roboto-Regular", size: 14.0)!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,19 +41,27 @@ class AddedTagsView: UIView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
+
         container.layer.cornerRadius = container.frame.size.height / 2
-//        iconImageView.layer.cornerRadius = iconImageView.frame.size.height / 2
     }
     
-    func configureWith(tag: GroupsManager.Tag) {
-//        iconImageView.image = UIImage(named: tag.image)
+    func configureWith(
+        tag: GroupsManager.Tag,
+        delegate: AddedTagsViewDelegate?
+    ) {
+        self.delegate = delegate
+        
         tagLabel.text = tag.description
-        tagLabel.textColor = kTextColor
-        container.backgroundColor = kNormalColor
     }
     
     public static func getWidthWith(description: String) -> CGFloat {
-        return kDescriptionFont.sizeOfString(description, constrainedToWidth: .greatestFiniteMagnitude).width + kLeftMargin + kRightMargin
+        return kDescriptionFont.sizeOfString(
+            description,
+            constrainedToWidth: .greatestFiniteMagnitude
+        ).width + kRightMargin + kLeftMargin
+    }
+    
+    @IBAction func closeButtonTapped() {
+        self.delegate?.didTapCloseButton()
     }
 }

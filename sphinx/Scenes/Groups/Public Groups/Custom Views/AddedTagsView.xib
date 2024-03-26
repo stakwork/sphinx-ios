@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="MaterialIcons-Regular.ttf">
+            <string>MaterialIcons-Regular</string>
+        </array>
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddedTagsView" customModule="sphinx" customModuleProvider="target">
+            <connections>
+                <outlet property="container" destination="0Gb-ht-hs7" id="Ns1-FY-lcy"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="8s1-TJ-mU4"/>
+                <outlet property="tagLabel" destination="ZuL-6G-lbS" id="ZzF-wM-8wd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="56"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Gb-ht-hs7">
+                    <rect key="frame" x="0.0" y="0.0" width="284" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bitcoin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZuL-6G-lbS">
+                            <rect key="frame" x="16" y="12" width="226" height="16.5"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                            <color key="textColor" name="Body"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O8s-50-cah">
+                            <rect key="frame" x="246" y="5" width="30" height="30"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="Dy9-vn-tS3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="MaterialIcons-Regular" family="Material Icons" pointSize="18"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="close">
+                                <color key="titleColor" name="SecondaryText"/>
+                            </state>
+                            <connections>
+                                <action selector="closeButtonTapped" destination="-1" eventType="touchUpInside" id="giK-hh-Ani"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" name="BodyInverted"/>
+                    <constraints>
+                        <constraint firstItem="O8s-50-cah" firstAttribute="centerY" secondItem="0Gb-ht-hs7" secondAttribute="centerY" id="EJn-ZR-nXi"/>
+                        <constraint firstItem="O8s-50-cah" firstAttribute="leading" secondItem="ZuL-6G-lbS" secondAttribute="trailing" constant="4" id="F57-jI-dVA"/>
+                        <constraint firstItem="ZuL-6G-lbS" firstAttribute="leading" secondItem="0Gb-ht-hs7" secondAttribute="leading" constant="16" id="KVD-9g-5cu"/>
+                        <constraint firstItem="ZuL-6G-lbS" firstAttribute="centerY" secondItem="0Gb-ht-hs7" secondAttribute="centerY" id="UUd-63-xSQ"/>
+                        <constraint firstAttribute="trailing" secondItem="O8s-50-cah" secondAttribute="trailing" constant="8" id="t5N-gc-Ml6"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="0Gb-ht-hs7" secondAttribute="trailing" constant="16" id="3qb-zD-gSX"/>
+                <constraint firstItem="0Gb-ht-hs7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="FCe-Nk-BL4"/>
+                <constraint firstItem="0Gb-ht-hs7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="I6e-AD-wNb"/>
+                <constraint firstAttribute="bottom" secondItem="0Gb-ht-hs7" secondAttribute="bottom" constant="16" id="qNb-4t-t7e"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="137.68115942028987" y="123.88392857142857"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Body">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BodyInverted">
+            <color red="0.082352941176470587" green="0.11764705882352941" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryText">
+            <color red="0.55686274509803924" green="0.58823529411764708" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -852,7 +852,7 @@
                                                 <rect key="frame" x="30" y="150" width="354" height="75"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Public Key *" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ml-t1-tHR">
-                                                        <rect key="frame" x="0.0" y="25" width="64.5" height="14"/>
+                                                        <rect key="frame" x="0.0" y="25" width="65" height="14"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
                                                         <color key="textColor" name="SecondaryText"/>
                                                         <nil key="highlightedColor"/>
@@ -1065,7 +1065,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD TRIBE MEMBER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWz-rt-SOH">
-                                        <rect key="frame" x="133" y="19" width="148" height="17.5"/>
+                                        <rect key="frame" x="133.5" y="19" width="147.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="14"/>
                                         <color key="textColor" name="Text"/>
                                         <nil key="highlightedColor"/>
@@ -1816,24 +1816,14 @@
                                                         </collectionViewFlowLayout>
                                                         <cells/>
                                                     </collectionView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ibe-ge-p9n">
-                                                        <rect key="frame" x="0.0" y="0.0" width="354" height="100"/>
-                                                        <connections>
-                                                            <action selector="tagsButtonTouched" destination="Taj-6P-tFd" eventType="touchUpInside" id="Zfq-ah-Gs5"/>
-                                                        </connections>
-                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="Body"/>
                                                 <constraints>
                                                     <constraint firstItem="euf-iP-yfI" firstAttribute="leading" secondItem="3ht-TA-gFZ" secondAttribute="leading" id="2Ez-wp-51Y"/>
                                                     <constraint firstItem="euf-iP-yfI" firstAttribute="top" secondItem="dbS-d6-I3s" secondAttribute="bottom" constant="15" id="3Yd-EH-88W"/>
                                                     <constraint firstAttribute="bottom" secondItem="euf-iP-yfI" secondAttribute="bottom" constant="1" id="6wM-tT-Qr6"/>
-                                                    <constraint firstItem="Ibe-ge-p9n" firstAttribute="leading" secondItem="3ht-TA-gFZ" secondAttribute="leading" id="7Cm-zj-j87"/>
-                                                    <constraint firstAttribute="trailing" secondItem="Ibe-ge-p9n" secondAttribute="trailing" id="CSa-tJ-wFa"/>
                                                     <constraint firstItem="dbS-d6-I3s" firstAttribute="top" secondItem="3ht-TA-gFZ" secondAttribute="top" constant="20" id="D6x-Tx-rnH"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dbS-d6-I3s" secondAttribute="trailing" constant="20" symbolic="YES" id="HSN-42-VfU"/>
-                                                    <constraint firstItem="Ibe-ge-p9n" firstAttribute="top" secondItem="3ht-TA-gFZ" secondAttribute="top" id="JuZ-bP-7Hp"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Ibe-ge-p9n" secondAttribute="bottom" id="NSj-KM-jjm"/>
                                                     <constraint firstItem="dbS-d6-I3s" firstAttribute="leading" secondItem="3ht-TA-gFZ" secondAttribute="leading" id="V6u-KB-adT"/>
                                                     <constraint firstAttribute="trailing" secondItem="euf-iP-yfI" secondAttribute="trailing" id="bNG-KF-DPr"/>
                                                 </constraints>

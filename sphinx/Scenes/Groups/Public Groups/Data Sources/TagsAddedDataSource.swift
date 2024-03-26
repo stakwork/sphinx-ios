@@ -50,8 +50,6 @@ extension TagsAddedDataSource : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
             let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AddTagsButtonCell.reuseIdentifier, for: indexPath) as! AddTagsButtonCell
-            // Configure your footer view
-            footerView.titleLabel.text = "Add Tags"
             // Add tap gesture recognizer to the footer view
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(footerViewTapped(_:)))
             footerView.addGestureRecognizer(tapGesture)

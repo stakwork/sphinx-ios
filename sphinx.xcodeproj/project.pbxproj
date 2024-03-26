@@ -636,6 +636,7 @@
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		9386C2892BB25C2200ABDEF3 /* AddTagsButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9386C2882BB25C2200ABDEF3 /* AddTagsButtonCell.xib */; };
 		93D7B5472BAE0FEA007C53A9 /* AddTagsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */; };
 		93D7B5492BAE1166007C53A9 /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B5482BAE1166007C53A9 /* UIView + Constraints.swift */; };
 		93D7B54B2BAE38F6007C53A9 /* AddedTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B54A2BAE38F6007C53A9 /* AddedTagCell.swift */; };
@@ -1827,6 +1828,7 @@
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9386C2882BB25C2200ABDEF3 /* AddTagsButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTagsButtonCell.xib; sourceTree = "<group>"; };
 		93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsButtonCell.swift; sourceTree = "<group>"; };
 		93D7B5482BAE1166007C53A9 /* UIView + Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
 		93D7B54A2BAE38F6007C53A9 /* AddedTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedTagCell.swift; sourceTree = "<group>"; };
@@ -3372,6 +3374,7 @@
 				4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */,
 				93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */,
 				93D7B54A2BAE38F6007C53A9 /* AddedTagCell.swift */,
+				9386C2882BB25C2200ABDEF3 /* AddTagsButtonCell.xib */,
 			);
 			path = "View Cells";
 			sourceTree = "<group>";
@@ -4871,6 +4874,7 @@
 				474935662A2919D600AB5FFA /* AudioMessageView.xib in Resources */,
 				F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */,
 				F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */,
+				9386C2892BB25C2200ABDEF3 /* AddTagsButtonCell.xib in Resources */,
 				470F5CAD243E8823007E054F /* VideoCallPayButton.xib in Resources */,
 				CE842DE9298C67A500620AD3 /* KnownBadgeCell.xib in Resources */,
 				47E6A4CA2A2E66E500A9509E /* DateSeparatorView.xib in Resources */,

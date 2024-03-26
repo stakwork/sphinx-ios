@@ -9,8 +9,8 @@
 import UIKit
 
 class GroupTagCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var groupTagView: GroupTagView!
+    
+    @IBOutlet weak var groupTagView: AddedTagsView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,5 +19,5 @@ class GroupTagCollectionViewCell: UICollectionViewCell {
     func configureWith(tag: GroupsManager.Tag) {
         groupTagView.configureWith(tag: tag)
     }
-
+    
 }

@@ -94,6 +94,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
+        updateTags() { }
     }
 
     @objc override func keyboardWillShow(_ notification: Notification) {
@@ -182,10 +183,6 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         view.endEditing(true)
     }
     
-    @IBAction func tagsButtonTouched() {
-        showTagsVC()
-    }
-    
     @IBAction func listOnTribesSwitchChanged(_ sender: UISwitch) {
         groupsManager.newGroupInfo.unlisted = !sender.isOn
     }
@@ -195,7 +192,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     }
     
     @IBAction func dismissTagsButtonTouched() {
-        hideTagsVC()
+//        hideTagsVC()
     }
     
     @IBAction func createGroupButtonTouched() {

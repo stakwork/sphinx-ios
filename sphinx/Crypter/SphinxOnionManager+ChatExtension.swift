@@ -251,7 +251,6 @@ extension SphinxOnionManager{
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
-            print("got message idx:\(message.index)")
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
             if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,
@@ -260,14 +259,20 @@ extension SphinxOnionManager{
                 originalMessage.status = (originalMessage.status == (TransactionMessage.TransactionMessageStatus.deleted.rawValue)) ? (TransactionMessage.TransactionMessageStatus.deleted.rawValue) : (TransactionMessage.TransactionMessageStatus.received.rawValue)
                 finalizeSentMessage(localMsg: originalMessage, remoteMsg: message)
            }
-            else if let sentTo = message.sentTo,
+            else if let fromMe = message.fromMe,
+                    fromMe == true,
+                    let sentTo = message.sentTo,
                     let uuid = message.uuid,
                     TransactionMessage.getMessageWith(uuid: uuid) == nil,
                     let contact = UserContact.getContactWithDisregardStatus(pubkey: sentTo),
                     let chat = contact.getChat(),
                     let type = message.type,
                     var localMsg = TransactionMessage.createProvisionalMessage(messageContent: genericIncomingMessage.content ?? "", type: Int(type), date: Date(), chat: chat)
+                    //var localMsg = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type))
             {
+                print("got message idx:\(message.index), full message:\(message)")
+                let test = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type))
+                print("Trying to make generic message from processGenericIncomingMessage:\(genericIncomingMessage)")
                 localMsg.uuid = uuid
                 finalizeSentMessage(localMsg: localMsg, remoteMsg: message)
                 print("sentTo is non-nil inner block, message:\(message)")

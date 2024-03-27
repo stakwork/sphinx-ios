@@ -485,10 +485,11 @@ public struct Msg {
     public var `msat`: UInt64?
     public var `timestamp`: UInt64?
     public var `sentTo`: String?
+    public var `fromMe`: Bool?
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(`message`: String?, `type`: UInt8?, `uuid`: String?, `tag`: String?, `index`: String?, `sender`: String?, `msat`: UInt64?, `timestamp`: UInt64?, `sentTo`: String?) {
+    public init(`message`: String?, `type`: UInt8?, `uuid`: String?, `tag`: String?, `index`: String?, `sender`: String?, `msat`: UInt64?, `timestamp`: UInt64?, `sentTo`: String?, `fromMe`: Bool?) {
         self.`message` = `message`
         self.`type` = `type`
         self.`uuid` = `uuid`
@@ -498,6 +499,7 @@ public struct Msg {
         self.`msat` = `msat`
         self.`timestamp` = `timestamp`
         self.`sentTo` = `sentTo`
+        self.`fromMe` = `fromMe`
     }
 }
 
@@ -531,6 +533,9 @@ extension Msg: Equatable, Hashable {
         if lhs.`sentTo` != rhs.`sentTo` {
             return false
         }
+        if lhs.`fromMe` != rhs.`fromMe` {
+            return false
+        }
         return true
     }
 
@@ -544,6 +549,7 @@ extension Msg: Equatable, Hashable {
         hasher.combine(`msat`)
         hasher.combine(`timestamp`)
         hasher.combine(`sentTo`)
+        hasher.combine(`fromMe`)
     }
 }
 
@@ -559,7 +565,8 @@ public struct FfiConverterTypeMsg: FfiConverterRustBuffer {
             `sender`: FfiConverterOptionString.read(from: &buf), 
             `msat`: FfiConverterOptionUInt64.read(from: &buf), 
             `timestamp`: FfiConverterOptionUInt64.read(from: &buf), 
-            `sentTo`: FfiConverterOptionString.read(from: &buf)
+            `sentTo`: FfiConverterOptionString.read(from: &buf), 
+            `fromMe`: FfiConverterOptionBool.read(from: &buf)
         )
     }
 
@@ -573,6 +580,7 @@ public struct FfiConverterTypeMsg: FfiConverterRustBuffer {
         FfiConverterOptionUInt64.write(value.`msat`, into: &buf)
         FfiConverterOptionUInt64.write(value.`timestamp`, into: &buf)
         FfiConverterOptionString.write(value.`sentTo`, into: &buf)
+        FfiConverterOptionBool.write(value.`fromMe`, into: &buf)
     }
 }
 

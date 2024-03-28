@@ -244,7 +244,7 @@ extension SphinxOnionManager{
             localMsg.senderAlias = owner.nickname
             localMsg.senderPic = owner.avatarUrl
         }
-        
+        localMsg.senderId = UserData.sharedInstance.getUserId()
         localMsg.managedObjectContext?.saveContext()
     }
     
@@ -267,12 +267,8 @@ extension SphinxOnionManager{
                     let contact = UserContact.getContactWithDisregardStatus(pubkey: sentTo),
                     let chat = contact.getChat(),
                     let type = message.type,
-                    var localMsg = TransactionMessage.createProvisionalMessage(messageContent: genericIncomingMessage.content ?? "", type: Int(type), date: Date(), chat: chat)
-                    //var localMsg = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type))
+                    let localMsg = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type),fromMe:true)
             {
-                print("got message idx:\(message.index), full message:\(message)")
-                let test = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type))
-                print("Trying to make generic message from processGenericIncomingMessage:\(genericIncomingMessage)")
                 localMsg.uuid = uuid
                 finalizeSentMessage(localMsg: localMsg, remoteMsg: message)
                 print("sentTo is non-nil inner block, message:\(message)")
@@ -380,7 +376,8 @@ extension SphinxOnionManager{
         csr:ContactServerResponse?=nil ,
         amount:Int=0,
         delaySave:Bool=false,
-        type:Int?=nil
+        type:Int?=nil,
+        fromMe:Bool=false
     ) -> TransactionMessage?{
         let content = (type == TransactionMessage.TransactionMessageType.boost.rawValue) ? ("") : (message.content)
         guard let indexString = message.index,
@@ -400,7 +397,7 @@ extension SphinxOnionManager{
         if let contact = UserContact.getContactWithDisregardStatus(pubkey: pubkey),
            let oneOnOneChat = contact.getChat(){
             chat = oneOnOneChat
-            senderId = contact.id
+            senderId = (fromMe == true) ? (UserData.sharedInstance.getUserId()) : contact.id
         }
         else if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: pubkey){
             print("found tribeChat:\(tribeChat)")

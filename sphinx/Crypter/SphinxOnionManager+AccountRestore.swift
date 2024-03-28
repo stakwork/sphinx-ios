@@ -85,17 +85,17 @@ extension SphinxOnionManager{//account restore related
     
     func kickOffFullRestore(){
         guard let msgTotalCounts = msgTotalCounts else {return}
-        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
-            restoreContactsAndPayments()
-        }
+//        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
+//            restoreContactsAndPayments()
+//        }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             if let firstForEachScidCount = msgTotalCounts.firstMessageAvailableCount{
                 self.restoreTribes()
             }
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 30.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
             if let totalMessageAvailableCount = msgTotalCounts.totalMessageAvailableCount{
                 self.restoreMessages()
             }

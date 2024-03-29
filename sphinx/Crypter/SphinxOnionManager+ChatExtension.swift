@@ -12,6 +12,18 @@ import SwiftyJSON
 
 extension SphinxOnionManager{
     
+    func getChatWithTribeOrContactPubkey(contactPubkey:String?, tribePubkey:String?)->Chat?{
+        if let contact = UserContact.getContactWithDisregardStatus(pubkey: contactPubkey ?? ""),
+           let oneOnOneChat = contact.getChat(){
+            return oneOnOneChat
+        }
+        else if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey ?? ""){
+            return tribeChat
+        }
+        
+        return nil
+    }
+    
     func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?) -> ()) {
         // First try to fetch the chat from the database.
         if let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: ownerPubkey) {
@@ -277,8 +289,7 @@ extension SphinxOnionManager{
                     let sentTo = message.sentTo,
                     let uuid = message.uuid,
                     TransactionMessage.getMessageWith(uuid: uuid) == nil,
-                    let contact = UserContact.getContactWithDisregardStatus(pubkey: sentTo),
-                    let chat = contact.getChat(),
+                    //let contact = UserContact.getContactWithDisregardStatus(pubkey: sentTo),
                     let type = message.type,
                     let localMsg = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type),fromMe:true)
             {

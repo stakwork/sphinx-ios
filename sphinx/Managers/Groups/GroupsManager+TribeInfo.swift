@@ -136,4 +136,41 @@ extension GroupsManager {
             chat.managedObjectContext?.saveContext()
         }
     }
+    
+    func lookupAndRestoreTribe(pubkey:String, host:String,completion: @escaping (Chat?)->()){
+        var tribeInfo = GroupsManager.TribeInfo(ownerPubkey:pubkey, host: host,uuid: pubkey)
+        
+        GroupsManager.sharedInstance.fetchTribeInfo(
+            host: tribeInfo.host,
+            uuid: tribeInfo.uuid,
+            useSSL: false,
+            completion: { groupInfo in
+                //1. parse tribe info
+                print(groupInfo)
+                
+                var chatDict : [String:Any] = [
+                    "id":CrypterManager.sharedInstance.generateCryptographicallySecureRandomInt(upperBound: Int(1e5)),
+                    "owner_pubkey": groupInfo["pubkey"],
+                    "name" : groupInfo["name"],
+                    "private": groupInfo["private"],
+                    "photo_url": groupInfo["img"],
+                    "unlisted": groupInfo["unlisted"],
+                    "price_per_message": groupInfo["price_per_message"],
+                    "escrow_amount": max(groupInfo["escrow_amount"] ?? 3, 3)
+                ]
+                let chatJSON = JSON(chatDict)
+                //2. take the relevant information and create a chat accordingly
+                let resultantChat = Chat.insertChat(chat: chatJSON)
+                resultantChat?.status = (chatDict["private"] as? Bool ?? false) ? Chat.ChatStatus.pending.rawValue : Chat.ChatStatus.approved.rawValue
+                resultantChat?.type = (chatDict["private"] as? Bool ?? false) ? Chat.ChatType.privateGroup.rawValue : Chat.ChatType.publicGroup.rawValue
+                resultantChat?.managedObjectContext?.saveContext()
+                completion(resultantChat)
+                return
+            },
+            errorCallback: {
+                AlertHelper.showAlert(title: "Error Restoring tribe", message: "")
+        })
+        
+        completion(nil)
+    }
 }

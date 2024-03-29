@@ -241,6 +241,7 @@ extension SphinxOnionManager {
 struct ContactServerResponse: Mappable {
     var pubkey: String?
     var alias: String?
+    var host:String?
     var photoUrl: String?
     var person: String?
     var code: String?
@@ -253,6 +254,7 @@ struct ContactServerResponse: Mappable {
         photoUrl  <- map["photo_url"]
         person    <- map["person"]
         code <- map["code"]
+        host <- map["host"]
     }
     
 }
@@ -337,7 +339,7 @@ struct GenericIncomingMessage: Mappable {
             self.paymentHash = innerContent.paymentHash
             innerContentAmount = UInt64(innerContent.amount ?? 0)
         }
-        self.amount = Int((msg.msat ?? innerContentAmount) ?? 0)
+        self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
         self.uuid = msg.uuid
         self.index = msg.index
     }

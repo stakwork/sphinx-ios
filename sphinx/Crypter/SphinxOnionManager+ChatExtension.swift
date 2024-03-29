@@ -12,6 +12,19 @@ import SwiftyJSON
 
 extension SphinxOnionManager{
     
+    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?) -> ()) {
+        // First try to fetch the chat from the database.
+        if let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: ownerPubkey) {
+            completion(chat)
+        } else {
+            // If not found in the database, attempt to lookup and restore.
+            GroupsManager.sharedInstance.lookupAndRestoreTribe(pubkey: ownerPubkey, host: host) { chat in
+                completion(chat)
+            }
+        }
+    }
+
+    
     func loadMediaToken(
         recipPubkey:String?,
         muid:String?
@@ -306,24 +319,28 @@ extension SphinxOnionManager{
                         processIncomingDeletion(message: genericIncomingMessage, date: date)
                     }
                     else if isGroupAction(type: type),
-                        let tribePubkey = csr.pubkey,
-                        let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: tribePubkey){
-                        let groupActionMessage = TransactionMessage(context: self.managedContext)
-                        groupActionMessage.uuid = uuid
-                        groupActionMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
-                        groupActionMessage.chat = chat
-                        groupActionMessage.type = Int(type)
-                        groupActionMessage.chat?.lastMessage = groupActionMessage
-                        groupActionMessage.senderAlias = csr.alias
-                        groupActionMessage.senderPic = csr.photoUrl
-                        groupActionMessage.createdAt = date
-                        groupActionMessage.date = date
-                        groupActionMessage.updatedAt = date
-                        groupActionMessage.seen = false
-                        chat.seen = false
-                        (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
-                        (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
-                        self.managedContext.saveContext()
+                            let tribePubkey = csr.pubkey,
+                            let host = csr.host{
+                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: host, completion: { chat in
+                            if let chat = chat{
+                                let groupActionMessage = TransactionMessage(context: self.managedContext)
+                                groupActionMessage.uuid = uuid
+                                groupActionMessage.id = Int(index) ?? Int(Int32(UUID().hashValue & 0x7FFFFFFF))
+                                groupActionMessage.chat = chat
+                                groupActionMessage.type = Int(type)
+                                groupActionMessage.chat?.lastMessage = groupActionMessage
+                                groupActionMessage.senderAlias = csr.alias
+                                groupActionMessage.senderPic = csr.photoUrl
+                                groupActionMessage.createdAt = date
+                                groupActionMessage.date = date
+                                groupActionMessage.updatedAt = date
+                                groupActionMessage.seen = false
+                                chat.seen = false
+                                (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
+                                (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
+                                self.managedContext.saveContext()
+                            }
+                        })
                     }
                     else if type == TransactionMessage.TransactionMessageType.invoice.rawValue,
                             let invoice = genericIncomingMessage.invoice{

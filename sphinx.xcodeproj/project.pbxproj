@@ -557,6 +557,7 @@
 		47DE1C492A6ED0C30029597B /* ThreadLastMessageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */; };
 		47DE1C4B2A6ED0CA0029597B /* ThreadLastMessageHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */; };
 		47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */; };
+		47E19DEA2BB718A700A0E596 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 47E19DE92BB718A700A0E596 /* PrivacyInfo.xcprivacy */; };
 		47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */; };
 		47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */; };
 		47E6A4AC2A2E237400A9509E /* PodcastBoostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4AB2A2E237400A9509E /* PodcastBoostView.swift */; };
@@ -1739,6 +1740,7 @@
 		47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadLastMessageHeader.swift; sourceTree = "<group>"; };
 		47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadLastMessageHeader.xib; sourceTree = "<group>"; };
 		47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxSocketManager.swift; sourceTree = "<group>"; };
+		47E19DE92BB718A700A0E596 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuAddFriendTableViewCell.swift; sourceTree = "<group>"; };
 		47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRowButton.swift; sourceTree = "<group>"; };
 		47E61581237DC7F400630FD1 /* sphinx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sphinx.entitlements; sourceTree = "<group>"; };
@@ -3443,6 +3445,7 @@
 				F331199E268E99FE005082EB /* StoreKit */,
 				47F6CA0728786A13005EBCB6 /* Crypter */,
 				475BDD35232ACF8700C5BBD6 /* Supporting Files */,
+				47E19DE92BB718A700A0E596 /* PrivacyInfo.xcprivacy */,
 			);
 			path = sphinx;
 			sourceTree = "<group>";
@@ -4904,6 +4907,7 @@
 				47904C0924BF352300710E7A /* note.caf in Resources */,
 				475BDD4E232AD00D00C5BBD6 /* Roboto-Regular.ttf in Resources */,
 				4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */,
+				47E19DEA2BB718A700A0E596 /* PrivacyInfo.xcprivacy in Resources */,
 				47DE1C472A6ED0B00029597B /* MessageThreadView.xib in Resources */,
 				CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */,
 				47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */,

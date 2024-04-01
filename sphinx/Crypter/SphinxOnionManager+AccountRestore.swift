@@ -85,9 +85,6 @@ extension SphinxOnionManager{//account restore related
     
     func kickOffFullRestore(){
         guard let msgTotalCounts = msgTotalCounts else {return}
-        //        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
-        //            restoreContactsAndPayments()
-        //        }
         
         messageFetchParams?.restoreMessagePhase = .firstScidMessages
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -95,12 +92,6 @@ extension SphinxOnionManager{//account restore related
                 self.restoreFirstScidMessages()
             }
         })
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
-//            if let totalMessageAvailableCount = msgTotalCounts.totalMessageAvailableCount{
-//                self.restoreAllMessages()
-//            }
-//        })
         
     }
     
@@ -115,6 +106,7 @@ extension SphinxOnionManager{//account restore related
             restoreAllMessages()
             break
         case .allMessages:
+            messageFetchParams.restoreInProgress = false
             messageFetchParams.restoreMessagePhase = .none
             break
         default:
@@ -200,7 +192,8 @@ extension SphinxOnionManager{//account restore related
             blockCompletionHandler: nextMessageBlockHandler_fetchMsgs
         )
         
-        listenForNewMessageBlock(targetIndex: startIndex + indexStepSize)
+        messageFetchParams?.restoreMessagePhase = .allMessages
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
         fetchMessageBlock(seed: seed, lastMessageIndex: startIndex, msgCountLimit: indexStepSize)
         
         print("post sync lastIndex:\(UserData.sharedInstance.getLastMessageIndex())")
@@ -255,6 +248,22 @@ extension SphinxOnionManager{//account restore related
 extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     //MARK: Process all first scid messages
     @objc func handleFetchFirstScidMessages(n:Notification){
+        print("got first scid message notification:\(n)")
+        guard let message = n.userInfo?["message"] as? TransactionMessage else{
+              return
+          }
+        messageFetchParams?.messageCountForPhase += 1
+        print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
+        if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.firstMessageAvailableCount ?? 0)){ // we got all the messages
+            NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
+            doNextRestorePhase()
+        }
+        else{//go again
+            print(messageFetchParams)
+        }
+    }
+    
+    @objc func handleFetchAllMessages(n:Notification){
         print("got first scid message notification:\(n)")
         guard let message = n.userInfo?["message"] as? TransactionMessage else{
               return

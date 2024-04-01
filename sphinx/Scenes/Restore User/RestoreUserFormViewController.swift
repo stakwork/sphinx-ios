@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RestoreUserFormViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,6 +25,9 @@ class RestoreUserFormViewController: UIViewController {
     let onionConnector = SphinxOnionConnector.sharedInstance
     let authenticationHelper = BiometricAuthenticationHelper()
     let newMessageBubbleHelper = NewMessageBubbleHelper()
+    
+    var selfContactFetchListener: NSFetchedResultsController<UserContact>?
+    var watchdogTimer: Timer?
     
     static func instantiate() -> RestoreUserFormViewController {
         let viewController = StoryboardScene.RestoreUser.restoreUserFormViewController.instantiate()

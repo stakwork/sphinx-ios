@@ -271,12 +271,17 @@ extension SphinxOnionManager{
         }
         localMsg.senderId = UserData.sharedInstance.getUserId()
         localMsg.managedObjectContext?.saveContext()
+        
+        NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": localMsg])
     }
     
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
+            if message.type == 33{
+                NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
+            }
             if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,
                var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
@@ -349,7 +354,7 @@ extension SphinxOnionManager{
                                 chat.seen = false
                                 (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
                                 (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
-                                self.managedContext.saveContext()
+                                self.finalizeNewMessage(index: groupActionMessage.id, newMessage: groupActionMessage)
                             }
                         })
                     }
@@ -392,7 +397,7 @@ extension SphinxOnionManager{
                     cachedMessage.id = index //sync self index
                     cachedMessage.updatedAt = Date()
                     cachedMessage.status = (cachedMessage.chat?.type == Chat.ChatType.conversation.rawValue) ? TransactionMessage.TransactionMessageStatus.received.rawValue : TransactionMessage.TransactionMessageStatus.confirmed.rawValue
-                    cachedMessage.managedObjectContext?.saveContext()
+                    finalizeNewMessage(index: index, newMessage: cachedMessage)
                     print(rr)
             }
         }

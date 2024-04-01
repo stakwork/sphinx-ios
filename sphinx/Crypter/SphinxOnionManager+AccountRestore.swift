@@ -85,26 +85,45 @@ extension SphinxOnionManager{//account restore related
     
     func kickOffFullRestore(){
         guard let msgTotalCounts = msgTotalCounts else {return}
-//        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
-//            restoreContactsAndPayments()
-//        }
+        //        if let okKeyMsgCount = msgTotalCounts.okKeyMessageAvailableCount{
+        //            restoreContactsAndPayments()
+        //        }
         
+        messageFetchParams?.restoreMessagePhase = .firstScidMessages
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             if let firstForEachScidCount = msgTotalCounts.firstMessageAvailableCount{
-                self.restoreTribes()
+                self.restoreFirstScidMessages()
             }
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
-            if let totalMessageAvailableCount = msgTotalCounts.totalMessageAvailableCount{
-                self.restoreMessages()
-            }
-        })
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 15.0, execute: {
+//            if let totalMessageAvailableCount = msgTotalCounts.totalMessageAvailableCount{
+//                self.restoreAllMessages()
+//            }
+//        })
         
     }
     
+    func doNextRestorePhase(){
+        guard let messageFetchParams = messageFetchParams else{
+            return
+        }
+        
+        switch(messageFetchParams.restoreMessagePhase){
+        case .firstScidMessages:
+            messageFetchParams.restoreMessagePhase = .allMessages
+            restoreAllMessages()
+            break
+        case .allMessages:
+            messageFetchParams.restoreMessagePhase = .none
+            break
+        default:
+            break
+        }
+    }
     
-    func restoreTribes(){
+    
+    func restoreFirstScidMessages(){
         guard let seed = getAccountSeed() else{
             return
         }
@@ -163,7 +182,7 @@ extension SphinxOnionManager{//account restore related
         }
     }
     
-    func restoreMessages(){
+    func restoreAllMessages(){
         guard let seed = getAccountSeed() else{
             return
         }
@@ -236,6 +255,7 @@ extension SphinxOnionManager{//account restore related
 extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     //MARK: Process all first scid messages
     @objc func handleFetchFirstScidMessages(n:Notification){
+        print("got first scid message notification:\(n)")
         guard let message = n.userInfo?["message"] as? TransactionMessage else{
               return
           }
@@ -243,9 +263,10 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
         if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.firstMessageAvailableCount ?? 0)){ // we got all the messages
             NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
+            doNextRestorePhase()
         }
         else{//go again
-            
+            print(messageFetchParams)
         }
     }
     

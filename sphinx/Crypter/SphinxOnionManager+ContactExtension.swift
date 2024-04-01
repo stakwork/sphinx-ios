@@ -90,6 +90,7 @@ extension SphinxOnionManager{//contacts related
                     keyExchangeContact.nickname = csr.alias
                     keyExchangeContact.status = UserContact.Status.Confirmed.rawValue
                     CoreDataManager.sharedManager.saveContext()
+                    NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
                     
                 }
                 else if type == TransactionMessage.TransactionMessageType.contactKey.rawValue, // incoming key exchange request
@@ -99,6 +100,8 @@ extension SphinxOnionManager{//contacts related
                     newContactRequest.status = UserContact.Status.Confirmed.rawValue
                     createChat(for: newContactRequest)
                     managedContext.saveContext()
+                    
+                    NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
                 }
             }
         }

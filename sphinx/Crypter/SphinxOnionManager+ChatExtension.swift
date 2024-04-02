@@ -281,6 +281,7 @@ extension SphinxOnionManager{
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
             if message.type == 33{
                 NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
+
             }
             if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,

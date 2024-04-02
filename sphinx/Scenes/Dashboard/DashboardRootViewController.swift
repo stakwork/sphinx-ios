@@ -349,7 +349,7 @@ extension DashboardRootViewController {
               }
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
-                if(ContactsService.sharedInstance.isRestoring() || true){
+                if(ContactsService.sharedInstance.isRestoring()){
                     som.performAccountRestore()
                 }
                 else{

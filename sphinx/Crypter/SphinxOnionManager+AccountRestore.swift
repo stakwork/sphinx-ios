@@ -26,13 +26,13 @@ class MessageFetchParams {
     var blockCompletionHandler: (() -> ())?
     var restoreMessagePhase : RestoreMessagePhase = .none
 
-    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: (() -> ())?) {
+    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: (() -> ())?, initialCount:Int) {
         self.restoreInProgress = restoreInProgress
         self.fetchStartIndex = fetchStartIndex
         self.fetchTargetIndex = fetchTargetIndex
         self.fetchLimit = fetchLimit
         self.blockCompletionHandler = blockCompletionHandler
-        self.messageCountForPhase = 0
+        self.messageCountForPhase = initialCount
     }
 }
 
@@ -73,6 +73,7 @@ extension SphinxOnionManager{//account restore related
         NotificationCenter.default.addObserver(self, selector: #selector(processMessageCountReceived), name: .totalMessageCountReceived, object: nil)
         
         let rr = try! getMsgsCounts(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
+        
         handleRunReturn(rr: rr)
     }
     
@@ -120,7 +121,7 @@ extension SphinxOnionManager{//account restore related
             return
         }
         
-        let indexStepSize = 100
+        let indexStepSize = 50
         let startIndex = 0
         //emulating getAllUnreadMessages()
         
@@ -129,35 +130,12 @@ extension SphinxOnionManager{//account restore related
             fetchStartIndex: startIndex,
             fetchTargetIndex: startIndex + indexStepSize,
             fetchLimit: indexStepSize,
-            blockCompletionHandler: nil
+            blockCompletionHandler: nil, 
+            initialCount: startIndex
         )
         messageFetchParams?.restoreMessagePhase = .firstScidMessages
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchFirstScidMessages), name: .newOnionMessageWasReceived, object: nil)
         fetchFirstContactPerKey(seed: seed, lastMessageIndex: startIndex, msgCountLimit: indexStepSize)
-    }
-    
-    
-    func restoreContactsAndPayments(){
-        guard let seed = getAccountSeed() else{
-            return
-        }
-        
-        let indexStepSize = 100
-        let startIndex = 0
-        //emulating getAllUnreadMessages()
-        
-        messageFetchParams = MessageFetchParams(
-            restoreInProgress: true,
-            fetchStartIndex: startIndex,
-            fetchTargetIndex: startIndex + indexStepSize,
-            fetchLimit: indexStepSize,
-            blockCompletionHandler: nil
-        )
-        messageFetchParams?.restoreMessagePhase = .firstScidMessages
-        NotificationCenter.default.addObserver(self, selector: #selector(handleFetchFirstScidMessages), name: .newOnionMessageWasReceived, object: nil)
-        
-        let rr = try! fetchMsgsBatchOkkey(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(startIndex), limit: UInt32(indexStepSize), reverse: false, isRestore: true)
-        handleRunReturn(rr: rr)
     }
     
     func fetchFirstContactPerKey(
@@ -175,57 +153,29 @@ extension SphinxOnionManager{//account restore related
     }
     
     func restoreAllMessages(){
+        UserData.sharedInstance.setLastMessageIndex(index: 0)
+        let indexStepSize = 50
+        let startIndex = 0
+        //emulating getAllUnreadMessages()
+        startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: indexStepSize)
+    }
+    
+    func startAllMsgBlockFetch(startIndex:Int, indexStepSize:Int){
         guard let seed = getAccountSeed() else{
             return
         }
-        
-        UserData.sharedInstance.setLastMessageIndex(index: 0)
-        let indexStepSize = 100
-        let startIndex = 0
-        //emulating getAllUnreadMessages()
-        
         messageFetchParams = MessageFetchParams(
             restoreInProgress: true,
             fetchStartIndex: startIndex,
             fetchTargetIndex: startIndex + indexStepSize,
             fetchLimit: indexStepSize,
-            blockCompletionHandler: nextMessageBlockHandler_fetchMsgs
+            blockCompletionHandler: nil, 
+            initialCount: startIndex
         )
         
         messageFetchParams?.restoreMessagePhase = .allMessages
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
         fetchMessageBlock(seed: seed, lastMessageIndex: startIndex, msgCountLimit: indexStepSize)
-        
-        print("post sync lastIndex:\(UserData.sharedInstance.getLastMessageIndex())")
-    }
-    
-    func nextMessageBlockHandler_fetchMsgs(){
-        print(messageFetchParams)
-        guard var messageFetchParams = messageFetchParams,
-              messageFetchParams.restoreInProgress == true,
-        let lastRetrievedIndex = UserData.sharedInstance.getLastMessageIndex(),
-        let seed = getAccountSeed()
-        else{
-            return
-        }
-        if lastRetrievedIndex < messageFetchParams.fetchTargetIndex{
-            let nextTargetIndex = messageFetchParams.fetchStartIndex + messageFetchParams.fetchLimit + 1
-            messageFetchParams.fetchTargetIndex = nextTargetIndex
-            messageFetchParams = MessageFetchParams(
-                restoreInProgress: true,
-                fetchStartIndex: lastRetrievedIndex + 1,
-                fetchTargetIndex: nextTargetIndex,
-                fetchLimit: messageFetchParams.fetchLimit,
-                blockCompletionHandler: nextMessageBlockHandler_fetchMsgs
-            )
-            
-            listenForNewMessageBlock(targetIndex: lastRetrievedIndex + messageFetchParams.fetchLimit)
-            fetchMessageBlock(seed: seed, lastMessageIndex: lastRetrievedIndex + 1, msgCountLimit: messageFetchParams.fetchLimit)
-        }
-        else{
-            messageFetchParams.restoreInProgress = false
-        }
-
     }
     
     func fetchMessageBlock(
@@ -270,74 +220,35 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
           }
         messageFetchParams?.messageCountForPhase += 1
         print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
-        if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.firstMessageAvailableCount ?? 0)){ // we got all the messages
-            NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
+        if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.totalMessageAvailableCount ?? 0)){ // we got all the messages
+            resetWatchdogTimer()
             doNextRestorePhase()
         }
-        else{//go again
-            print(messageFetchParams)
+        else if let blockLimit = messageFetchParams?.fetchLimit,
+                let currentCount = messageFetchParams?.messageCountForPhase,
+                currentCount % blockLimit == 0{//go again
+            resetWatchdogTimer()
+            startAllMsgBlockFetch(startIndex: currentCount + 1, indexStepSize: blockLimit)
         }
     }
     
-    
-    
-    //MARK: Process Incoming Message Blocks (All Messages)
-
-    private func listenForNewMessageBlock(targetIndex:Int) {
-        setupWatchdogTimer()
-        let managedContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-
-        let fetchRequest: NSFetchRequest<TransactionMessage> = TransactionMessage.fetchRequest()
-        // Update the predicate to check for id greater than lastMessageIndex and adjust according to your entity attributes
-        fetchRequest.predicate = NSPredicate(format: "id >= %d", targetIndex - 1)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+    func resetWatchdogTimer() {
+        // Invalidate any existing timer
+        watchdogTimer?.invalidate()
         
-        newMessageSyncedListener = NSFetchedResultsController(fetchRequest: fetchRequest,
-              managedObjectContext: managedContext,
-              sectionNameKeyPath: nil,
-              cacheName: nil
-            )
-        newMessageSyncedListener?.delegate = self
+        // Start a new timer
+        watchdogTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(watchdogTimerFired), userInfo: nil, repeats: false)
+    }
+    
+    @objc func watchdogTimerFired() {
+        // This method is called when the watchdog timer expires
 
-        do {
-            try newMessageSyncedListener?.performFetch()
-            // Check if we already have the desired data
-            if let _ = newMessageSyncedListener?.fetchedObjects?.first {
-                if let handler = messageFetchParams?.blockCompletionHandler{
-                    handler()
-                }
-                watchdogTimer?.invalidate()
-            }
-        }
-        catch let error as NSError {
-            watchdogTimer?.invalidate()
-            self.newMessageSyncedListener = nil
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        // Called when the content of the fetchedResultsController changes.
-        if let _ = controller.fetchedObjects?.first {
-            if let handler = messageFetchParams?.blockCompletionHandler{
-                handler()
-            }
-            self.newMessageSyncedListener = nil
-        }
-    }
-    
-    private func setupWatchdogTimer() {
-        watchdogTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [weak self] _ in
-            guard let self = self else { return }
-            
-            // Check if the fetch result is still nil
-            if self.newMessageSyncedListener?.fetchedObjects?.first == nil {
-                // Perform the fallback action
-                DispatchQueue.main.async {
-                    //error out
-                    self.nextMessageBlockHandler_fetchMsgs()
-                }
-            }
-        }
+        // Perform cleanup or restart attempts here
+        NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
+        
+        // Log or handle the timeout as needed
+        print("Watchdog timer expired - Fetch process may be stalled or complete.")
+        
+        // Optionally, attempt to restart the process or notify the user
     }
 }

@@ -197,21 +197,41 @@ extension SphinxOnionManager{//account restore related
 
 extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     //MARK: Process all first scid messages
-    @objc func handleFetchFirstScidMessages(n:Notification){
-        print("got first scid message notification:\(n)")
-        guard let message = n.userInfo?["message"] as? TransactionMessage else{
-              return
-          }
+    @objc func handleFetchFirstScidMessages(n: Notification) {
+        print("Got first scid message notification: \(n)")
+        guard let message = n.userInfo?["message"] as? TransactionMessage else {
+            return
+        }
+
+        // Increment the count for messages processed in this phase
         messageFetchParams?.messageCountForPhase += 1
-        print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
-        if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.firstMessageAvailableCount ?? 0)){ // we got all the messages
+        print("First scid message count: \(messageFetchParams?.messageCountForPhase)")
+
+        if let params = messageFetchParams,
+           let firstForEachScidCount = msgTotalCounts?.firstMessageAvailableCount,
+           params.messageCountForPhase >= firstForEachScidCount {
+            // If all messages for this phase have been processed, move to the next phase
+            resetWatchdogTimer()
             NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
             doNextRestorePhase()
-        }
-        else{//go again
-            print(messageFetchParams)
+        } else if let params = messageFetchParams,
+                  params.messageCountForPhase % params.fetchLimit == 0 {
+            // If there are more messages to fetch in this phase, reset the watchdog timer and fetch the next block
+            resetWatchdogTimer()
+            
+            // Calculate new start index for the next block of messages to fetch
+            let newStartIndex = params.fetchStartIndex + params.messageCountForPhase
+            params.fetchStartIndex = newStartIndex
+            params.fetchTargetIndex = newStartIndex + params.fetchLimit
+            
+            // Fetch the next block of first scid messages
+            guard let seed = getAccountSeed() else {
+                return
+            }
+            fetchFirstContactPerKey(seed: seed, lastMessageIndex: newStartIndex, msgCountLimit: params.fetchLimit)
         }
     }
+
     
     @objc func handleFetchAllMessages(n:Notification){
         print("got first scid message notification:\(n)")

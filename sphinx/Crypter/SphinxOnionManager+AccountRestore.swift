@@ -24,26 +24,25 @@ class MessageFetchParams {
     var fetchLimit: Int
     var messageCountForPhase:Int
     var blockCompletionHandler: (() -> ())?
-    var restoreMessagePhase: RestoreMessagePhase = .none
-    var countDirection: CountDirection = .up
-    var arbitraryStartIndex: Int? = nil
-    
-    enum CountDirection {
-        case up, down
+    var restoreMessagePhase : RestoreMessagePhase = .none
+    var fetchDirection: FetchDirection
+    var arbitraryStartIndex: Int?
+
+    enum FetchDirection {
+        case forward, backward
     }
 
-    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: (() -> ())?, initialCount:Int, countDirection: CountDirection = .up, arbitraryStartIndex: Int? = nil) {
+    init(restoreInProgress: Bool, fetchStartIndex: Int, fetchTargetIndex: Int, fetchLimit: Int, blockCompletionHandler: (() -> ())?, initialCount:Int, fetchDirection: FetchDirection = .backward, arbitraryStartIndex: Int? = nil) {
         self.restoreInProgress = restoreInProgress
         self.fetchStartIndex = fetchStartIndex
         self.fetchTargetIndex = fetchTargetIndex
         self.fetchLimit = fetchLimit
         self.blockCompletionHandler = blockCompletionHandler
         self.messageCountForPhase = initialCount
-        self.countDirection = countDirection
+        self.fetchDirection = fetchDirection
         self.arbitraryStartIndex = arbitraryStartIndex
     }
 }
-
 
 class MsgTotalCounts: Mappable {
     var totalMessageAvailableCount: Int?
@@ -64,26 +63,21 @@ class MsgTotalCounts: Mappable {
         okKeyMessageMaxIndex             <- map["ok_key_highest_index"]
         firstMessageMaxIndex  <- map["first_for_each_scid_highest_index"]
     }
-    
+
     func hasOneValidCount() -> Bool {
         // Use an array to check for non-nil properties in a condensed form
         let properties = [totalMessageAvailableCount, okKeyMessageAvailableCount, firstMessageAvailableCount]
         return properties.contains(where: { $0 != nil })
     }
-    
+
 }
 
 
 extension SphinxOnionManager{//account restore related
     
-    func performAccountRestore(
-        contactRestoreCallback: @escaping RestoreProgressCallback,
-        messageRestoreCallback: @escaping RestoreProgressCallback,
-        hideRestoreViewCallback: @escaping () -> ()
-    ){
-        self.messageRestoreCallback = messageRestoreCallback
-        self.contactRestoreCallback = contactRestoreCallback
-        self.hideRestoreCallback = hideRestoreViewCallback
+    func performAccountRestore(contactRestoreCallback: @escaping RestoreProgressCallback, messageRestoreCallback: @escaping RestoreProgressCallback,hideRestoreViewCallback: @escaping ()->()){
+//        self.messageRestoreCallback = messageRestoreCallback
+//        self.contactRestoreCallback = contactRestoreCallback
         setupRestore()
     }
     
@@ -122,9 +116,7 @@ extension SphinxOnionManager{//account restore related
         guard let messageFetchParams = messageFetchParams else{
             return
         }
-        if let hideRestoreCallback = self.hideRestoreCallback{
-            hideRestoreCallback()
-        }
+        
         switch(messageFetchParams.restoreMessagePhase){
         case .firstScidMessages:
             messageFetchParams.restoreMessagePhase = .allMessages
@@ -154,7 +146,7 @@ extension SphinxOnionManager{//account restore related
             fetchStartIndex: startIndex,
             fetchTargetIndex: startIndex + indexStepSize,
             fetchLimit: indexStepSize,
-            blockCompletionHandler: nil, 
+            blockCompletionHandler: nil,
             initialCount: startIndex
         )
         messageFetchParams?.restoreMessagePhase = .firstScidMessages
@@ -176,62 +168,56 @@ extension SphinxOnionManager{//account restore related
         }
     }
     
-    func restoreAllMessages(stepBackward: Bool = true, arbitraryStartIndex: Int? = nil) {
-        let indexStepSize = 50
+    func restoreAllMessages(fetchDirection: MessageFetchParams.FetchDirection = .backward, arbitraryStartIndex: Int? = nil) {
+        // Check if an arbitrary start index is provided, otherwise use totalHighestIndex for backward, or 0 for forward
         let totalHighestIndex = msgTotalCounts?.totalMessageMaxIndex ?? 0
-        let startIndex = arbitraryStartIndex ?? (stepBackward ? totalHighestIndex : 0)
+        let startIndex = arbitraryStartIndex ?? (fetchDirection == .backward ? totalHighestIndex : 0)
 
-        if stepBackward {
-            startAllMsgBlockFetch(startIndex: max(startIndex - indexStepSize, 0), indexStepSize: indexStepSize, stepBackward: true)
-        } else {
-            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: indexStepSize, stepBackward: false)
-        }
+        // Initiate fetching with the determined start index
+        startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: fetchDirection)
     }
 
     
-    func startAllMsgBlockFetch(startIndex: Int, indexStepSize: Int, stepBackward: Bool) {
-        let totalHighestIndex = msgTotalCounts?.totalMessageMaxIndex ?? 0
-        let effectiveStartIndex: Int
-
-        if stepBackward {
-            // If stepping backward, adjust starting index to not go below zero
-            effectiveStartIndex = max(startIndex - indexStepSize, 0)
-        } else {
-            // Ensure the startIndex does not exceed the totalHighestIndex
-            effectiveStartIndex = min(startIndex, totalHighestIndex)
+    func startAllMsgBlockFetch(startIndex: Int, indexStepSize: Int, fetchDirection: MessageFetchParams.FetchDirection) {
+        guard let seed = getAccountSeed() else {
+            return
         }
 
-        // Adjust parameters for fetchMessageBlock call
+        let lastIndex = fetchDirection == .backward ? max(startIndex - indexStepSize, 0) : startIndex
+
         messageFetchParams = MessageFetchParams(
             restoreInProgress: true,
-            fetchStartIndex: effectiveStartIndex,
-            fetchTargetIndex: stepBackward ? max(effectiveStartIndex - indexStepSize, 0) : min(effectiveStartIndex + indexStepSize, totalHighestIndex),
+            fetchStartIndex: startIndex,
+            fetchTargetIndex: lastIndex + indexStepSize,
             fetchLimit: indexStepSize,
             blockCompletionHandler: nil,
-            initialCount: effectiveStartIndex
+            initialCount: startIndex,
+            fetchDirection: fetchDirection,
+            arbitraryStartIndex: startIndex
         )
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
-
         fetchMessageBlock(
-            seed: getAccountSeed() ?? "",
-            lastMessageIndex: effectiveStartIndex,
+            seed: seed,
+            lastMessageIndex: lastIndex,
             msgCountLimit: indexStepSize,
-            stepBackward: stepBackward
+            fetchDirection: fetchDirection
         )
     }
 
-    func fetchMessageBlock(
-        seed: String,
-        lastMessageIndex: Int,
-        msgCountLimit: Int,
-        stepBackward: Bool
-    ) {
-        let reverse = stepBackward
-        let indexForFetch = reverse ? max(lastMessageIndex - msgCountLimit, 0) : lastMessageIndex
 
+    
+    func fetchMessageBlock(seed: String, lastMessageIndex: Int, msgCountLimit: Int, fetchDirection: MessageFetchParams.FetchDirection) {
+        let reverse = fetchDirection == .backward
         do {
-            let rr = try fetchMsgsBatch(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(indexForFetch), limit: UInt32(msgCountLimit), reverse: reverse)
+            let rr = try fetchMsgsBatch(
+                seed: seed,
+                uniqueTime: getTimeWithEntropy(),
+                state: loadOnionStateAsData(),
+                lastMsgIdx: UInt64(lastMessageIndex),
+                limit: UInt32(msgCountLimit),
+                reverse: reverse
+            )
             handleRunReturn(rr: rr)
         } catch {
             // Handle error
@@ -258,8 +244,8 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         if let messageCount = messageFetchParams?.messageCountForPhase,
            let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
            let contactRestoreCallback = contactRestoreCallback{
-            let percentage = (Double(totalMsgCount - messageCount) / Double(totalMsgCount)) * 100
-            let pctInt = percentage.isFinite ? Int(percentage.rounded()) : 0
+            let percentage = (Double(messageCount) / Double(totalMsgCount)) * 100
+            let pctInt = Int(percentage.rounded())
             contactRestoreCallback(pctInt)
         }
         
@@ -289,33 +275,40 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     }
 
     
-    @objc func handleFetchAllMessages(n:Notification){
-        print("got first scid message notification:\(n)")
-        guard let message = n.userInfo?["message"] as? TransactionMessage else{
-              return
-          }
-        messageFetchParams?.messageCountForPhase -= 1
-        print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
-        
-        if let messageCount = messageFetchParams?.messageCountForPhase,
-           let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
-           let messageRestoreCallback = messageRestoreCallback{
-            let percentage = (Double(messageCount) / Double(totalMsgCount)) * 100
-            let pctInt = Int(percentage.rounded())
-            messageRestoreCallback(pctInt)
+    @objc func handleFetchAllMessages(notification: Notification) {
+        guard let params = messageFetchParams,
+              let totalHighestIndex = msgTotalCounts?.totalMessageMaxIndex else { return }
+
+        if params.fetchDirection == .backward {
+            // Decrement the start index for the next batch in backward fetching
+            params.fetchStartIndex -= params.fetchLimit
+
+            // Stop fetching if we've reached the beginning
+            if params.fetchStartIndex <= 0 {
+                finishRestoration()
+                return
+            }
+        } else {
+            // Increment the start index for the next batch in forward fetching
+            params.fetchStartIndex += params.fetchLimit
+
+            // Stop fetching if we've reached or exceeded the highest index
+            if params.fetchStartIndex >= totalHighestIndex {
+                finishRestoration()
+                return
+            }
         }
-        
-        if((messageFetchParams?.messageCountForPhase ?? 0) <= 0){ // we got all the messages
-            resetWatchdogTimer()
-            doNextRestorePhase()
-        }
-        else if let blockLimit = messageFetchParams?.fetchLimit,
-                let currentCount = messageFetchParams?.messageCountForPhase,
-                currentCount % blockLimit == 0{//go again
-            resetWatchdogTimer()
-            startAllMsgBlockFetch(startIndex: currentCount + 1, indexStepSize: blockLimit, stepBackward: true)
-        }
+
+        // Fetch the next batch of messages
+        fetchMessageBlock(
+            seed: getAccountSeed() ?? "",
+            lastMessageIndex: params.fetchStartIndex,
+            msgCountLimit: params.fetchLimit,
+            fetchDirection: params.fetchDirection
+        )
     }
+
+
     
     func resetWatchdogTimer() {
         // Invalidate any existing timer
@@ -336,4 +329,12 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         
         // Optionally, attempt to restart the process or notify the user
     }
+    
+    func finishRestoration() {
+        NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
+        resetWatchdogTimer() // Stop the watchdog timer as fetching is complete
+        messageFetchParams?.restoreInProgress = false
+        // Optionally, notify UI that restoration is complete
+    }
+
 }

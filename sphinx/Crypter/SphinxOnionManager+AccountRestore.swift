@@ -169,37 +169,36 @@ extension SphinxOnionManager{//account restore related
     }
     
     func restoreAllMessages(fetchDirection: MessageFetchParams.FetchDirection = .backward, arbitraryStartIndex: Int? = nil) {
-        // Check if an arbitrary start index is provided, otherwise use totalHighestIndex for backward, or 0 for forward
         let totalHighestIndex = msgTotalCounts?.totalMessageMaxIndex ?? 0
-        let startIndex = arbitraryStartIndex ?? (fetchDirection == .backward ? totalHighestIndex : 0)
-
-        // Initiate fetching with the determined start index
+        let startIndex = arbitraryStartIndex ?? totalHighestIndex // Use the highest index as the starting point
+        
+        // Begin the fetching process
         startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: fetchDirection)
     }
 
+
     
     func startAllMsgBlockFetch(startIndex: Int, indexStepSize: Int, fetchDirection: MessageFetchParams.FetchDirection) {
-        guard let seed = getAccountSeed() else {
-            return
-        }
+        guard let seed = getAccountSeed() else { return }
 
-        let lastIndex = fetchDirection == .backward ? max(startIndex - indexStepSize, 0) : startIndex
+        // Adjust startIndex based on direction and ensure it's not below 0
+        let adjustedStartIndex = max(startIndex - (fetchDirection == .backward ? indexStepSize : 0), 0)
 
         messageFetchParams = MessageFetchParams(
             restoreInProgress: true,
-            fetchStartIndex: startIndex,
-            fetchTargetIndex: lastIndex + indexStepSize,
+            fetchStartIndex: adjustedStartIndex,
+            fetchTargetIndex: adjustedStartIndex + indexStepSize,
             fetchLimit: indexStepSize,
             blockCompletionHandler: nil,
-            initialCount: startIndex,
+            initialCount: adjustedStartIndex,
             fetchDirection: fetchDirection,
-            arbitraryStartIndex: startIndex
+            arbitraryStartIndex: adjustedStartIndex
         )
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
         fetchMessageBlock(
             seed: seed,
-            lastMessageIndex: lastIndex,
+            lastMessageIndex: adjustedStartIndex, // Use adjustedStartIndex here
             msgCountLimit: indexStepSize,
             fetchDirection: fetchDirection
         )

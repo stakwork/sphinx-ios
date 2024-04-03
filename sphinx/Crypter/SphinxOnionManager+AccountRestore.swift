@@ -61,9 +61,14 @@ class MsgTotalCounts: Mappable {
 
 extension SphinxOnionManager{//account restore related
     
-    func performAccountRestore(contactRestoreCallback: @escaping RestoreProgressCallback, messageRestoreCallback: @escaping RestoreProgressCallback){
+    func performAccountRestore(
+        contactRestoreCallback: @escaping RestoreProgressCallback,
+        messageRestoreCallback: @escaping RestoreProgressCallback,
+        hideRestoreViewCallback: @escaping () -> ()
+    ){
         self.messageRestoreCallback = messageRestoreCallback
         self.contactRestoreCallback = contactRestoreCallback
+        self.hideRestoreCallback = hideRestoreViewCallback
         setupRestore()
     }
     
@@ -102,7 +107,9 @@ extension SphinxOnionManager{//account restore related
         guard let messageFetchParams = messageFetchParams else{
             return
         }
-        
+        if let hideRestoreCallback = self.hideRestoreCallback{
+            hideRestoreCallback()
+        }
         switch(messageFetchParams.restoreMessagePhase){
         case .firstScidMessages:
             messageFetchParams.restoreMessagePhase = .allMessages

@@ -353,7 +353,8 @@ extension DashboardRootViewController {
                     self.contactRestoreCallback(percentage: 1)
                     som.performAccountRestore(
                         contactRestoreCallback: self.contactRestoreCallback(percentage:),
-                        messageRestoreCallback: self.messageRestoreCallback(percentage:)
+                        messageRestoreCallback: self.messageRestoreCallback(percentage:),
+                        hideRestoreViewCallback: self.hideRestoreViewCallback
                     )
                 }
                 else{
@@ -369,6 +370,10 @@ extension DashboardRootViewController {
         })
         
         
+    }
+    
+    func hideRestoreViewCallback(){
+        self.restoreProgressView.hideViewAnimated()
     }
     
     func contactRestoreCallback(percentage:Int){
@@ -390,7 +395,7 @@ extension DashboardRootViewController {
                 label: "restoring-messages".localized,
                 buttonEnabled: true
             )
-            if value == 100 {self.restoreProgressView.hideViewAnimated()}
+            if value >= 100 {self.restoreProgressView.hideViewAnimated()}
         }
     }
     

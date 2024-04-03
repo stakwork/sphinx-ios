@@ -58,6 +58,7 @@ class SphinxOnionManager : NSObject {
     typealias RestoreProgressCallback = (Int) -> Void
     var messageRestoreCallback : RestoreProgressCallback? = nil
     var contactRestoreCallback : RestoreProgressCallback? = nil
+    var hideRestoreCallback: (() -> ())? = nil
 
     
     

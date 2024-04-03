@@ -169,36 +169,34 @@ extension SphinxOnionManager{//account restore related
     }
     
     func restoreAllMessages(fetchDirection: MessageFetchParams.FetchDirection = .backward, arbitraryStartIndex: Int? = nil) {
-        let totalHighestIndex = msgTotalCounts?.totalMessageMaxIndex ?? 0
-        let startIndex = arbitraryStartIndex ?? totalHighestIndex // Use the highest index as the starting point
+        // Use the highest index as the starting point for backward fetching
+        let startIndex = arbitraryStartIndex ?? (msgTotalCounts?.totalMessageMaxIndex ?? 0)
         
         // Begin the fetching process
         startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: fetchDirection)
     }
 
 
+
     
     func startAllMsgBlockFetch(startIndex: Int, indexStepSize: Int, fetchDirection: MessageFetchParams.FetchDirection) {
         guard let seed = getAccountSeed() else { return }
 
-        // Adjust startIndex based on direction and ensure it's not below 0
-        let adjustedStartIndex = max(startIndex - (fetchDirection == .backward ? indexStepSize : 0), 0)
-
         messageFetchParams = MessageFetchParams(
             restoreInProgress: true,
-            fetchStartIndex: adjustedStartIndex,
-            fetchTargetIndex: adjustedStartIndex + indexStepSize,
+            fetchStartIndex: startIndex,
+            fetchTargetIndex: startIndex - indexStepSize, // Adjust for backward fetching
             fetchLimit: indexStepSize,
             blockCompletionHandler: nil,
-            initialCount: adjustedStartIndex,
+            initialCount: startIndex,
             fetchDirection: fetchDirection,
-            arbitraryStartIndex: adjustedStartIndex
+            arbitraryStartIndex: startIndex
         )
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
         fetchMessageBlock(
             seed: seed,
-            lastMessageIndex: adjustedStartIndex, // Use adjustedStartIndex here
+            lastMessageIndex: startIndex, // Ensure we start from 150 for backward fetch
             msgCountLimit: indexStepSize,
             fetchDirection: fetchDirection
         )

@@ -154,22 +154,31 @@ extension SphinxOnionManager{//account restore related
         }
     }
     
-    func restoreAllMessages(){
+    func restoreAllMessages(stepBackward:Bool=true){
         UserData.sharedInstance.setLastMessageIndex(index: 0)
         let indexStepSize = 50
         let startIndex = 0
         //emulating getAllUnreadMessages()
-        startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: indexStepSize)
+        if(stepBackward),
+          let total = msgTotalCounts?.totalMessageAvailableCount{
+            startAllMsgBlockFetch(startIndex: max(total - indexStepSize, 0), indexStepSize: total, stepBackward: true)
+        }
+        else{
+            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: indexStepSize, stepBackward: false)
+        }
+        
+        //stepping backward:
     }
     
-    func startAllMsgBlockFetch(startIndex:Int, indexStepSize:Int){
+    func startAllMsgBlockFetch(startIndex:Int, indexStepSize:Int,stepBackward:Bool){
         guard let seed = getAccountSeed() else{
             return
         }
+
         messageFetchParams = MessageFetchParams(
             restoreInProgress: true,
             fetchStartIndex: startIndex,
-            fetchTargetIndex: startIndex + indexStepSize,
+            fetchTargetIndex: startIndex + indexStepSize + 1,
             fetchLimit: indexStepSize,
             blockCompletionHandler: nil, 
             initialCount: startIndex
@@ -177,16 +186,17 @@ extension SphinxOnionManager{//account restore related
         
         messageFetchParams?.restoreMessagePhase = .allMessages
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
-        fetchMessageBlock(seed: seed, lastMessageIndex: startIndex, msgCountLimit: indexStepSize)
+        fetchMessageBlock(seed: seed, lastMessageIndex: startIndex, msgCountLimit: indexStepSize,stepBackward: stepBackward)
     }
     
     func fetchMessageBlock(
         seed:String,
         lastMessageIndex:Int,
-        msgCountLimit:Int
+        msgCountLimit:Int,
+        stepBackward:Bool
     ){
         do{
-           let rr = try fetchMsgsBatch(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(msgCountLimit), reverse: false, isRestore: true)
+           let rr = try fetchMsgsBatch(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(msgCountLimit), reverse: stepBackward, isRestore: true)
             handleRunReturn(rr: rr)
         }
         catch{
@@ -212,7 +222,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         if let messageCount = messageFetchParams?.messageCountForPhase,
            let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
            let contactRestoreCallback = contactRestoreCallback{
-            let percentage = (Double(messageCount) / Double(totalMsgCount)) * 100
+            let percentage = (Double(totalMsgCount - messageCount) / Double(totalMsgCount)) * 100
             let pctInt = Int(percentage.rounded())
             contactRestoreCallback(pctInt)
         }
@@ -248,7 +258,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         guard let message = n.userInfo?["message"] as? TransactionMessage else{
               return
           }
-        messageFetchParams?.messageCountForPhase += 1
+        messageFetchParams?.messageCountForPhase -= 1
         print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
         
         if let messageCount = messageFetchParams?.messageCountForPhase,
@@ -259,7 +269,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
             messageRestoreCallback(pctInt)
         }
         
-        if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.totalMessageAvailableCount ?? 0)){ // we got all the messages
+        if((messageFetchParams?.messageCountForPhase ?? 0) <= 0){ // we got all the messages
             resetWatchdogTimer()
             doNextRestorePhase()
         }
@@ -267,7 +277,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
                 let currentCount = messageFetchParams?.messageCountForPhase,
                 currentCount % blockLimit == 0{//go again
             resetWatchdogTimer()
-            startAllMsgBlockFetch(startIndex: currentCount + 1, indexStepSize: blockLimit)
+            startAllMsgBlockFetch(startIndex: currentCount + 1, indexStepSize: blockLimit, stepBackward: true)
         }
     }
     

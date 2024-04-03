@@ -61,7 +61,9 @@ class MsgTotalCounts: Mappable {
 
 extension SphinxOnionManager{//account restore related
     
-    func performAccountRestore(){
+    func performAccountRestore(contactRestoreCallback: @escaping RestoreProgressCallback, messageRestoreCallback: @escaping RestoreProgressCallback){
+        self.messageRestoreCallback = messageRestoreCallback
+        self.contactRestoreCallback = contactRestoreCallback
         setupRestore()
     }
     
@@ -207,6 +209,14 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         messageFetchParams?.messageCountForPhase += 1
         print("First scid message count: \(messageFetchParams?.messageCountForPhase)")
 
+        if let messageCount = messageFetchParams?.messageCountForPhase,
+           let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
+           let contactRestoreCallback = contactRestoreCallback{
+            let percentage = (Double(messageCount) / Double(totalMsgCount)) * 100
+            let pctInt = Int(percentage.rounded())
+            contactRestoreCallback(pctInt)
+        }
+        
         if let params = messageFetchParams,
            let firstForEachScidCount = msgTotalCounts?.firstMessageAvailableCount,
            params.messageCountForPhase >= firstForEachScidCount {
@@ -240,6 +250,15 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
           }
         messageFetchParams?.messageCountForPhase += 1
         print("first scid message count:\(messageFetchParams?.messageCountForPhase)")
+        
+        if let messageCount = messageFetchParams?.messageCountForPhase,
+           let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
+           let messageRestoreCallback = messageRestoreCallback{
+            let percentage = (Double(messageCount) / Double(totalMsgCount)) * 100
+            let pctInt = Int(percentage.rounded())
+            messageRestoreCallback(pctInt)
+        }
+        
         if((messageFetchParams?.messageCountForPhase ?? 0) >= (msgTotalCounts?.totalMessageAvailableCount ?? 0)){ // we got all the messages
             resetWatchdogTimer()
             doNextRestorePhase()

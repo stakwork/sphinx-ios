@@ -350,7 +350,11 @@ extension DashboardRootViewController {
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
                 if(ContactsService.sharedInstance.isRestoring()){
-                    som.performAccountRestore()
+                    self.contactRestoreCallback(percentage: 1)
+                    som.performAccountRestore(
+                        contactRestoreCallback: self.contactRestoreCallback(percentage:),
+                        messageRestoreCallback: self.messageRestoreCallback(percentage:)
+                    )
                 }
                 else{
                     som.getAllUnreadMessages()
@@ -366,6 +370,29 @@ extension DashboardRootViewController {
         })
         
         
+    }
+    
+    func contactRestoreCallback(percentage:Int){
+        DispatchQueue.main.async {
+            self.restoreProgressView.showRestoreProgressView(
+                with: percentage,
+                label: "restoring-contacts".localized,
+                buttonEnabled: false
+            )
+        }
+    }
+    
+    func messageRestoreCallback(percentage:Int){
+        let value = min(percentage,100)
+        
+        DispatchQueue.main.async {
+            self.restoreProgressView.showRestoreProgressView(
+                with: value,
+                label: "restoring-messages".localized,
+                buttonEnabled: true
+            )
+            if value == 100 {self.restoreProgressView.hideViewAnimated()}
+        }
     }
     
     @objc func handleNewKeyExchangeReceived(){

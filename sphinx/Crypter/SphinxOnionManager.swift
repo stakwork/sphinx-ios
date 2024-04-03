@@ -55,6 +55,10 @@ class SphinxOnionManager : NSObject {
         }
     }
     var msgTotalCounts : MsgTotalCounts? = nil
+    typealias RestoreProgressCallback = (Int) -> Void
+    var messageRestoreCallback : RestoreProgressCallback? = nil
+    var contactRestoreCallback : RestoreProgressCallback? = nil
+
     
     
     func getAccountSeed(mnemonic:String?=nil)->String?{

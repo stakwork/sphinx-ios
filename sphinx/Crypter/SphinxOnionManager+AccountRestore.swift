@@ -179,14 +179,35 @@ extension SphinxOnionManager{//account restore related
     }
 
     func syncMessagesSinceLastKnownIndexHeight(){
-        guard let lastKnownHeight = UserData.sharedInstance.getLastMessageIndex() else{
+        guard let _ = UserData.sharedInstance.getLastMessageIndex() else{
+            return
+        }
+        setupSync()
+    }
+    
+    func setupSync(){
+        guard let seed = getAccountSeed() else{
             return
         }
         
-        let startIndex = (msgTotalCounts?.totalMessageMaxIndex ?? 0)
+        NotificationCenter.default.addObserver(self, selector: #selector(processMessageCountReceived), name: .totalMessageCountReceived, object: nil)
         
-        // Begin the fetching process
-        startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: .backward, stopIndex: lastKnownHeight)
+        let rr = try! getMsgsCounts(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
+        
+        handleRunReturn(rr: rr)
+    }
+    
+    @objc func processSyncCountsReceived(){
+        if let msgTotalCounts = self.msgTotalCounts,
+           msgTotalCounts.hasOneValidCount(){
+            let startIndex = (msgTotalCounts.totalMessageMaxIndex ?? 0)
+            guard let lastKnownHeight = UserData.sharedInstance.getLastMessageIndex() else{
+                return
+            }
+            
+            // Begin the fetching process
+            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: .backward, stopIndex: lastKnownHeight)
+        }
     }
 
     

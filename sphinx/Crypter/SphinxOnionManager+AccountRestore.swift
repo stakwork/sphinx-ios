@@ -23,11 +23,13 @@ class MessageFetchParams {
     var fetchTargetIndex: Int
     var fetchLimit: Int
     var messageCountForPhase:Int
-    var blockCompletionHandler: (() -> ())?
     var restoreMessagePhase : RestoreMessagePhase = .none
     var fetchDirection: FetchDirection
-    var arbitraryStartIndex: Int?
-    var stopIndex: Int?
+    var stopIndex: Int?{
+        didSet{
+            print(oldValue)
+        }
+    }
 
     enum FetchDirection {
         case forward, backward
@@ -38,11 +40,22 @@ class MessageFetchParams {
         self.fetchStartIndex = fetchStartIndex
         self.fetchTargetIndex = fetchTargetIndex
         self.fetchLimit = fetchLimit
-        self.blockCompletionHandler = blockCompletionHandler
         self.messageCountForPhase = initialCount
         self.fetchDirection = fetchDirection
-        self.arbitraryStartIndex = arbitraryStartIndex
         self.stopIndex = stopIndex
+    }
+    
+    var debugDescription: String {
+        return """
+        restoreInProgress: \(restoreInProgress)
+        fetchStartIndex: \(fetchStartIndex)
+        fetchTargetIndex: \(fetchTargetIndex)
+        fetchLimit: \(fetchLimit)
+        messageCountForPhase: \(messageCountForPhase)
+        restoreMessagePhase: \(restoreMessagePhase)
+        fetchDirection: \(fetchDirection)
+        stopIndex: \(String(describing: stopIndex))
+        """
     }
 }
 
@@ -172,14 +185,16 @@ extension SphinxOnionManager{//account restore related
     
     func restoreAllMessages(fetchDirection: MessageFetchParams.FetchDirection = .backward, arbitraryStartIndex: Int? = nil) {
         UserData.sharedInstance.setLastMessageIndex(index: 0)
+        messageFetchParams?.stopIndex = 0
         
         processSyncCountsReceived()
     }
 
     func syncMessagesSinceLastKnownIndexHeight(){
-        guard let _ = UserData.sharedInstance.getLastMessageIndex() else{
+        guard let lastKnownMax = UserData.sharedInstance.getLastMessageIndex() else{
             return
         }
+        messageFetchParams?.stopIndex = lastKnownMax
         setupSync()
     }
     
@@ -239,7 +254,7 @@ extension SphinxOnionManager{//account restore related
         let reverse = fetchDirection == .backward
         let safeLastMsgIndex = max(lastMessageIndex, 0)
         do {
-            let rr = try fetchMsgsBatch(
+            let rr = try! fetchMsgsBatch(
                 seed: seed,
                 uniqueTime: getTimeWithEntropy(),
                 state: loadOnionStateAsData(),
@@ -306,38 +321,43 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     
     @objc func handleFetchAllMessages(notification: Notification) {
         guard let params = messageFetchParams,
-              let totalHighestIndex = msgTotalCounts?.totalMessageMaxIndex else { return }
-
-        if params.fetchDirection == .backward {
-            // Decrement the start index for the next batch in backward fetching
-            params.fetchStartIndex -= params.fetchLimit
-
-            // Stop fetching if we've reached the beginning
-            if params.fetchStartIndex <= (messageFetchParams?.stopIndex ?? 0) {
-                if let maxIndex = msgTotalCounts?.totalMessageMaxIndex{
-                    UserData.sharedInstance.setLastMessageIndex(index: maxIndex)
-                }
-                finishRestoration()
-                return
-            }
-        } else {
-            // Increment the start index for the next batch in forward fetching
-            params.fetchStartIndex += params.fetchLimit
-
-            // Stop fetching if we've reached or exceeded the highest index
-            if params.fetchStartIndex >= totalHighestIndex {
-                finishRestoration()
-                return
-            }
+              let totalHighestIndex = self.msgTotalCounts?.totalMessageMaxIndex else {
+            finishRestoration()
+            return
         }
 
-        // Fetch the next batch of messages
-        fetchMessageBlock(
-            seed: getAccountSeed() ?? "",
-            lastMessageIndex: params.fetchStartIndex,
-            msgCountLimit: params.fetchLimit,
-            fetchDirection: params.fetchDirection
-        )
+        // Assuming each notification represents one message processed, adjust fetchStartIndex accordingly
+        params.messageCountForPhase += params.fetchDirection == .backward ? -1 : 1
+
+        // Determine the lower boundary to trigger the next fetch block
+        let nextFetchTriggerIndex = params.fetchDirection == .backward ? params.fetchStartIndex - params.fetchLimit + 1 : params.fetchStartIndex + params.fetchLimit - 1
+
+        // Determine if the next block should be fetched based on direction and boundaries
+        let shouldFetchNextBlock = params.fetchDirection == .backward ? params.messageCountForPhase <= nextFetchTriggerIndex && params.messageCountForPhase >= (params.stopIndex ?? 0) : params.messageCountForPhase >= nextFetchTriggerIndex && params.messageCountForPhase <= totalHighestIndex
+
+        if shouldFetchNextBlock {
+            if params.messageCountForPhase <= (params.stopIndex ?? -1) + 1 ?? 0{
+                finishRestoration()
+                return
+            }
+            // Adjust the start index for the next block
+            let newFetchStartIndex = params.fetchDirection == .backward ? max(params.fetchStartIndex - params.fetchLimit, params.stopIndex ?? 0) : min(params.fetchStartIndex + params.fetchLimit, totalHighestIndex)
+            params.fetchStartIndex = newFetchStartIndex
+
+            // Fetch the next block
+            fetchMessageBlock(
+                seed: getAccountSeed() ?? "",
+                lastMessageIndex: newFetchStartIndex,
+                msgCountLimit: params.fetchLimit,
+                fetchDirection: params.fetchDirection
+            )
+        } else if params.fetchDirection == .backward && params.fetchStartIndex < (params.stopIndex ?? 0) {
+            // Conclude the restoration if we have reached or exceeded the stop index
+            finishRestoration()
+        } else if params.fetchDirection == .forward && params.fetchStartIndex > totalHighestIndex {
+            // Conclude the restoration if we have reached or exceeded the total highest index in forward direction
+            finishRestoration()
+        }
     }
 
 
@@ -363,10 +383,15 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
     }
     
     func finishRestoration() {
+        // Concluding the restoration or synchronization process
         NotificationCenter.default.removeObserver(self, name: .newOnionMessageWasReceived, object: nil)
-        resetWatchdogTimer() // Stop the watchdog timer as fetching is complete
+        resetWatchdogTimer()
         messageFetchParams?.restoreInProgress = false
-        // Optionally, notify UI that restoration is complete
+        // Additional logic for setting the last message index in UserData or similar actions
+        if let counts = msgTotalCounts,
+           let maxIndex = counts.totalMessageMaxIndex{
+            UserData.sharedInstance.setLastMessageIndex(index: maxIndex)
+        }
     }
 
 }

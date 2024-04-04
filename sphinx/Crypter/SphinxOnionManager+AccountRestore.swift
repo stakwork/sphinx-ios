@@ -171,11 +171,9 @@ extension SphinxOnionManager{//account restore related
     }
     
     func restoreAllMessages(fetchDirection: MessageFetchParams.FetchDirection = .backward, arbitraryStartIndex: Int? = nil) {
-        // Use the highest index as the starting point for backward fetching
-        let startIndex = arbitraryStartIndex ?? (msgTotalCounts?.totalMessageMaxIndex ?? 0)
+        UserData.sharedInstance.setLastMessageIndex(index: 0)
         
-        // Begin the fetching process
-        startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: fetchDirection)
+        processSyncCountsReceived()
     }
 
     func syncMessagesSinceLastKnownIndexHeight(){
@@ -190,7 +188,7 @@ extension SphinxOnionManager{//account restore related
             return
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(processMessageCountReceived), name: .totalMessageCountReceived, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(processSyncCountsReceived), name: .totalMessageCountReceived, object: nil)
         
         let rr = try! getMsgsCounts(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData())
         

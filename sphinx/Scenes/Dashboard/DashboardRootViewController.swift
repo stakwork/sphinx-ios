@@ -349,8 +349,6 @@ extension DashboardRootViewController {
               }
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
-               let rr = try! fetchMsgsBatch(seed: seed, uniqueTime: som.getTimeWithEntropy(), state: som.loadOnionStateAsData(), lastMsgIdx: 25, limit: 5, reverse: true)
-                som.handleRunReturn(rr: rr)
                 if(ContactsService.sharedInstance.isRestoring()){
 //                    self.contactRestoreCallback(percentage: 1)
                     som.performAccountRestore(

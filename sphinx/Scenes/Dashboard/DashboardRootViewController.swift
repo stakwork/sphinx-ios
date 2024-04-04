@@ -349,7 +349,7 @@ extension DashboardRootViewController {
               }
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
-                if(ContactsService.sharedInstance.isRestoring() || true){
+                if(ContactsService.sharedInstance.isRestoring()){
 //                    self.contactRestoreCallback(percentage: 1)
                     som.performAccountRestore(
                         contactRestoreCallback: self.contactRestoreCallback(percentage:),
@@ -358,7 +358,7 @@ extension DashboardRootViewController {
                     )
                 }
                 else{
-                    som.getAllUnreadMessages()
+                    som.syncMessagesSinceLastKnownIndexHeight()
                 }
             }
         })

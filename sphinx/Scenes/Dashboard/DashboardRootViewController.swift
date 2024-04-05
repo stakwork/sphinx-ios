@@ -324,7 +324,6 @@ extension DashboardRootViewController {
             self.connectToV2Server()
         })
         
-//        GroupsManager.sharedInstance.lookupAndRestoreTribe(pubkey: "0244ecd7c305d0d07963eb63d8dabf331449de0ada2218d1532802661c23e7521f", host: "34.229.52.200:8801", completion: {_ in})
     }
     
     func connectToV2Server(){

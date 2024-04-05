@@ -449,9 +449,17 @@ extension SphinxOnionManager{
         
         newMessage.id = index
         newMessage.uuid = uuid
-        newMessage.createdAt = date
-        newMessage.updatedAt = date
-        newMessage.date = date
+        if let timestamp = message.date,
+        let dateFromMessage = timestampToDate(timestamp: UInt64(timestamp)){
+            newMessage.createdAt = dateFromMessage
+            newMessage.updatedAt = dateFromMessage
+            newMessage.date = dateFromMessage
+        }
+        else{
+            newMessage.createdAt = date
+            newMessage.updatedAt = date
+            newMessage.date = date
+        }
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
         newMessage.type = type ?? TransactionMessage.TransactionMessageType.message.rawValue
         newMessage.encrypted = true

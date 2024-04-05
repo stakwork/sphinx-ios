@@ -174,8 +174,9 @@ extension SphinxOnionManager{//account restore related
         lastMessageIndex:Int,
         msgCountLimit:Int
     ){
+        let safeIndex = max(lastMessageIndex,0)
         do{
-            let rr = try fetchFirstMsgsPerKey(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(lastMessageIndex), limit: UInt32(msgCountLimit), reverse: false)
+            let rr = try fetchFirstMsgsPerKey(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(safeIndex), limit: UInt32(msgCountLimit), reverse: false)
             handleRunReturn(rr: rr)
         }
         catch{

@@ -152,7 +152,7 @@ extension SphinxOnionManager{//account restore related
             return
         }
         
-        let indexStepSize = 50
+        let indexStepSize = SphinxOnionManager.kMessageBatchSize
         let startIndex = 0
         //emulating getAllUnreadMessages()
         
@@ -219,7 +219,7 @@ extension SphinxOnionManager{//account restore related
             }
             
             // Begin the fetching process
-            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: 50, fetchDirection: .backward, stopIndex: lastKnownHeight)
+            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: SphinxOnionManager.kMessageBatchSize, fetchDirection: .backward, stopIndex: lastKnownHeight)
         }
     }
 
@@ -242,7 +242,7 @@ extension SphinxOnionManager{//account restore related
         NotificationCenter.default.addObserver(self, selector: #selector(handleFetchAllMessages), name: .newOnionMessageWasReceived, object: nil)
         fetchMessageBlock(
             seed: seed,
-            lastMessageIndex: startIndex, // Ensure we start from 150 for backward fetch
+            lastMessageIndex: startIndex,
             msgCountLimit: indexStepSize,
             fetchDirection: fetchDirection
         )

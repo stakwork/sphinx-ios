@@ -63,6 +63,7 @@ class Constants {
     public static var kChatListNamePosition: CGFloat = -12
     public static var kChatListMessagePosition: CGFloat = 13
     
+    
     public static func setSize() {
         let size = UserDefaults.Keys.messagesSize.get(defaultValue: MessagesSize.Big.rawValue)
         let isIpad = UIDevice.current.isIpad

@@ -24,14 +24,14 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?) -> ()) {
+    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?,Bool) -> ()) {
         // First try to fetch the chat from the database.
         if let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: ownerPubkey) {
-            completion(chat)
+            completion(chat,false)
         } else {
             // If not found in the database, attempt to lookup and restore.
             GroupsManager.sharedInstance.lookupAndRestoreTribe(pubkey: ownerPubkey, host: host) { chat in
-                completion(chat)
+                completion(chat,true)
             }
         }
     }
@@ -338,7 +338,7 @@ extension SphinxOnionManager{
                     else if isGroupAction(type: type),
                             let tribePubkey = csr.pubkey,
                             let host = csr.host{
-                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: host, completion: { chat in
+                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: host, completion: { chat,didCreateTribe  in
                             if let chat = chat{
                                 let groupActionMessage = TransactionMessage(context: self.managedContext)
                                 groupActionMessage.uuid = uuid
@@ -353,6 +353,10 @@ extension SphinxOnionManager{
                                 groupActionMessage.updatedAt = date
                                 groupActionMessage.seen = false
                                 chat.seen = false
+                                
+                                if(didCreateTribe && csr.role != nil){
+                                    chat.isTribeICreated = csr.role == 0
+                                }
                                 (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
                                 (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
                                 self.finalizeNewMessage(index: groupActionMessage.id, newMessage: groupActionMessage)

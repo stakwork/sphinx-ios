@@ -245,6 +245,7 @@ struct ContactServerResponse: Mappable {
     var photoUrl: String?
     var person: String?
     var code: String?
+    var role: Int?
 
     init?(map: Map) {}
 
@@ -255,6 +256,7 @@ struct ContactServerResponse: Mappable {
         person    <- map["person"]
         code <- map["code"]
         host <- map["host"]
+        role <- map["role"]
     }
     
 }

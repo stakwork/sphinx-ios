@@ -91,8 +91,9 @@ class MsgTotalCounts: Mappable {
 extension SphinxOnionManager{//account restore related
     
     func performAccountRestore(contactRestoreCallback: @escaping RestoreProgressCallback, messageRestoreCallback: @escaping RestoreProgressCallback,hideRestoreViewCallback: @escaping ()->()){
-//        self.messageRestoreCallback = messageRestoreCallback
-//        self.contactRestoreCallback = contactRestoreCallback
+        self.messageRestoreCallback = messageRestoreCallback
+        self.contactRestoreCallback = contactRestoreCallback
+        self.hideRestoreCallback = hideRestoreViewCallback
         setupRestore()
     }
     
@@ -135,6 +136,7 @@ extension SphinxOnionManager{//account restore related
         switch(messageFetchParams.restoreMessagePhase){
         case .firstScidMessages:
             messageFetchParams.restoreMessagePhase = .allMessages
+            if let callback = hideRestoreCallback{ callback()}
             restoreAllMessages()
             break
         case .allMessages:
@@ -287,9 +289,9 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         print("First scid message count: \(messageFetchParams?.messageCountForPhase)")
 
         if let messageCount = messageFetchParams?.messageCountForPhase,
-           let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
+           let totalMsgCount = msgTotalCounts?.firstMessageAvailableCount,
            let contactRestoreCallback = contactRestoreCallback{
-            let percentage = (Double(messageCount) / Double(totalMsgCount)) * 100
+            let percentage = (Double(messageCount + 1) / Double(totalMsgCount)) * 100
             let pctInt = Int(percentage.rounded())
             contactRestoreCallback(pctInt)
         }
@@ -336,6 +338,15 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         // Determine if the next block should be fetched based on direction and boundaries
         let shouldFetchNextBlock = params.fetchDirection == .backward ? params.messageCountForPhase <= nextFetchTriggerIndex && params.messageCountForPhase >= (params.stopIndex ?? 0) : params.messageCountForPhase >= nextFetchTriggerIndex && params.messageCountForPhase <= totalHighestIndex
 
+        if let messageCount = messageFetchParams?.messageCountForPhase,
+           let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
+           let messageRestoreCallback = messageRestoreCallback{
+            let messagesCounted : Int = (params.fetchDirection) == .backward ? (totalMsgCount - messageCount) : (messageCount)
+            let percentage = (Double(messagesCounted) / Double(totalMsgCount)) * 100
+            let pctInt = Int(percentage.rounded())
+            messageRestoreCallback(pctInt)
+        }
+        
         if shouldFetchNextBlock {
             if params.messageCountForPhase <= (params.stopIndex ?? -1) + 1 ?? 0{
                 finishRestoration()

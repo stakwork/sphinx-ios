@@ -349,7 +349,7 @@ extension DashboardRootViewController {
             som.mqtt.didConnectAck = {_, _ in
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
                 if(ContactsService.sharedInstance.isRestoring()){
-//                    self.contactRestoreCallback(percentage: 1)
+                    self.contactRestoreCallback(percentage: 0)
                     som.performAccountRestore(
                         contactRestoreCallback: self.contactRestoreCallback(percentage:),
                         messageRestoreCallback: self.messageRestoreCallback(percentage:),
@@ -377,11 +377,13 @@ extension DashboardRootViewController {
     
     func contactRestoreCallback(percentage:Int){
         DispatchQueue.main.async {
+            let value = min(percentage,100)
             self.restoreProgressView.showRestoreProgressView(
-                with: percentage,
+                with: value,
                 label: "restoring-contacts".localized,
                 buttonEnabled: false
             )
+            if value >= 100 {self.restoreProgressView.hideViewAnimated()}
         }
     }
     

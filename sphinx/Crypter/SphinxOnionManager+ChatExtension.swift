@@ -279,6 +279,9 @@ extension SphinxOnionManager{
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
+            if(message.type == 2){
+                print(message)
+            }
             if message.type == 33{
                 NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
 
@@ -497,7 +500,7 @@ extension SphinxOnionManager{
         }
         else{
             newMessage.amount = NSDecimalNumber(value: amount)
-            newMessage.amountMsat = NSDecimalNumber(value: amount)
+            newMessage.amountMsat = NSDecimalNumber(value: amount * 1000)
         }
         
         if type == TransactionMessage.TransactionMessageType.payment.rawValue,

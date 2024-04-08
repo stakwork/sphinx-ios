@@ -341,9 +341,20 @@ struct GenericIncomingMessage: Mappable {
             self.paymentHash = innerContent.paymentHash
             innerContentAmount = UInt64(innerContent.amount ?? 0)
         }
-        self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
+        if let invoice = self.invoice{
+            print(msg)
+            let prd = PaymentRequestDecoder()
+            prd.decodePaymentRequest(paymentRequest: invoice)
+            let amount = prd.getAmount() ?? 0
+            self.amount = amount * 1000 // convert to msat
+        }
+        else{
+            self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
+        }
         self.uuid = msg.uuid
         self.index = msg.index
+        
+        
     }
 
     mutating func mapping(map: Map) {

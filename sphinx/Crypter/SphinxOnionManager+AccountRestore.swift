@@ -413,6 +413,8 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
                 let message = TransactionMessage.getMessageWith(id: maxIndex)
                 chat.lastMessage = message
             }
+            
+            self.updateIsPaidAllMessages() // ensure all paid invoices are marked as such
         }
     }
 

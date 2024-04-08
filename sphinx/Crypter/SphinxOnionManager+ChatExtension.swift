@@ -516,6 +516,16 @@ extension SphinxOnionManager{
         return newMessage
     }
     
+    func updateIsPaidAllMessages(){
+        let msgs = TransactionMessage.getAll().filter({$0.type == TransactionMessage.TransactionMessageType.payment.rawValue})
+        for msg in msgs{
+            if let ph = msg.paymentHash,
+               let _ = TransactionMessage.getInvoiceWith(paymentHash: ph){
+                msg.setPaymentInvoiceAsPaid()
+            }
+        }
+    }
+    
     func finalizeNewMessage(index:Int,newMessage:TransactionMessage){
         managedContext.saveContext()
         

@@ -141,6 +141,7 @@ extension SphinxOnionManager{//account restore related
             break
         case .allMessages:
             messageFetchParams.restoreInProgress = false
+            if let callback = hideRestoreCallback{ callback()}
             messageFetchParams.restoreMessagePhase = .none
             break
         default:
@@ -290,7 +291,8 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
 
         if let messageCount = messageFetchParams?.messageCountForPhase,
            let totalMsgCount = msgTotalCounts?.firstMessageAvailableCount,
-           let contactRestoreCallback = contactRestoreCallback{
+           let contactRestoreCallback = contactRestoreCallback,
+            totalMsgCount > 0{
             let percentage = (Double(messageCount + 1) / Double(totalMsgCount)) * 100
             let pctInt = Int(percentage.rounded())
             contactRestoreCallback(pctInt)
@@ -340,7 +342,8 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
 
         if let messageCount = messageFetchParams?.messageCountForPhase,
            let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,
-           let messageRestoreCallback = messageRestoreCallback{
+           let messageRestoreCallback = messageRestoreCallback,
+            totalMsgCount > 0 {
             let messagesCounted : Int = (params.fetchDirection) == .backward ? (totalMsgCount - messageCount) : (messageCount)
             let percentage = (Double(messagesCounted) / Double(totalMsgCount)) * 100
             let pctInt = Int(percentage.rounded())

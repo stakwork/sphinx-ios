@@ -300,6 +300,11 @@ extension SphinxOnionManager{
                     let localMsg = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type),fromMe:true)
             {
                 localMsg.uuid = uuid
+                if let genericMessageMsat = genericIncomingMessage.amount{
+                    localMsg.amount = NSDecimalNumber(value:  genericMessageMsat/1000)
+                    localMsg.amountMsat = NSDecimalNumber(value: Int(truncating: (genericMessageMsat) as NSNumber))
+                }
+                
                 finalizeSentMessage(localMsg: localMsg, remoteMsg: message)
                 print("sentTo is non-nil inner block, message:\(message)")
             }

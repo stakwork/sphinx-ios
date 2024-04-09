@@ -286,6 +286,8 @@ struct MessageInnerContent: Mappable {
     var invoice:String?=nil
     var paymentHash:String?=nil
     var amount:Int?=nil
+    var fullContactInfo:String?=nil
+    var recipientAlias:String?=nil
 
     init?(map: Map) {}
     
@@ -302,6 +304,8 @@ struct MessageInnerContent: Mappable {
         invoice <- map["invoice"]
         paymentHash <- map["paymentHash"]
         amount <- map["amount"]
+        fullContactInfo <- map["fullContactInfo"]
+        recipientAlias <- map["recipientAlias"]
     }
     
 }
@@ -332,10 +336,6 @@ struct GenericIncomingMessage: Mappable {
         if let sender = msg.sender,
            let csr = ContactServerResponse(JSONString: sender){
             self.senderPubkey = csr.pubkey
-            if msg.type == 33{
-                self.alias = csr.recipientAlias
-                self.fullContactInfo = csr.fullContactInfo
-            }
         }
         else if let fromMe = msg.fromMe, fromMe == true, let sentTo = msg.sentTo{
             self.senderPubkey = sentTo
@@ -356,6 +356,10 @@ struct GenericIncomingMessage: Mappable {
             self.invoice = innerContent.invoice
             self.paymentHash = innerContent.paymentHash
             innerContentAmount = UInt64(innerContent.amount ?? 0)
+            if msg.type == 33{
+                self.alias = innerContent.recipientAlias
+                self.fullContactInfo = innerContent.fullContactInfo
+            }
         }
         if let invoice = self.invoice{
             print(msg)

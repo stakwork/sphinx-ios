@@ -55,7 +55,7 @@ extension SphinxOnionManager{//contacts related
             if let inviteCode = inviteCode{
                 hexCode = try! codeFromInvite(inviteQr: inviteCode)
             }
-            let rr = try! addContact(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0, inviteCode: hexCode)
+            let rr = try! addContact(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0, inviteCode: hexCode, theirAlias: nickname)
             handleRunReturn(rr: rr)
         }
         catch{

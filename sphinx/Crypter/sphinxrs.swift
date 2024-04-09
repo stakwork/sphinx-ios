@@ -1762,7 +1762,7 @@ public func `setBlockheight`(`blockheight`: UInt32) throws -> RunReturn {
     )
 }
 
-public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `toPubkey`: String, `routeHint`: String, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64, `inviteCode`: String?) throws -> RunReturn {
+public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `toPubkey`: String, `routeHint`: String, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64, `inviteCode`: String?, `theirAlias`: String?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_add_contact(
@@ -1774,7 +1774,8 @@ public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `t
         FfiConverterString.lower(`myAlias`),
         FfiConverterString.lower(`myImg`),
         FfiConverterUInt64.lower(`amtMsat`),
-        FfiConverterOptionString.lower(`inviteCode`),$0)
+        FfiConverterOptionString.lower(`inviteCode`),
+        FfiConverterOptionString.lower(`theirAlias`),$0)
 }
     )
 }
@@ -2302,7 +2303,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_set_blockheight() != 43943) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_add_contact() != 11442) {
+    if (uniffi_sphinxrs_checksum_func_add_contact() != 30931) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_get_contact() != 19847) {

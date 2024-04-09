@@ -141,6 +141,12 @@ extension SphinxOnionManager {
         let date = Date(timeIntervalSince1970: TimeInterval(timestamp) / 1000)
         return date
     }
+    
+    func timestampToInt(timestamp: UInt64) -> Int? {
+        let dateInSeconds = Double(timestamp) / 1000.0
+        return Int(dateInSeconds)
+    }
+
 
     func isGroupAction(type:UInt8)->Bool{
         let throwAwayMessage = TransactionMessage(context: managedContext)
@@ -314,7 +320,7 @@ struct GenericIncomingMessage: Mappable {
     var mediaToken:String?=nil
     var mediaType:String?=nil
     var muid:String?=nil
-    var date:Int?=nil
+    var timestamp:Int?=nil
     var invoice:String?=nil
     var paymentHash:String?=nil
     var alias:String?=nil
@@ -346,7 +352,7 @@ struct GenericIncomingMessage: Mappable {
             self.mediaType = innerContent.mediaType
             self.muid = innerContent.muid
             self.originalUuid = innerContent.originalUuid
-            self.date = innerContent.date
+//            self.date = innerContent.date
             self.invoice = innerContent.invoice
             self.paymentHash = innerContent.paymentHash
             innerContentAmount = UInt64(innerContent.amount ?? 0)
@@ -361,6 +367,11 @@ struct GenericIncomingMessage: Mappable {
         else{
             self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
         }
+        
+        if let timestamp = msg.timestamp{
+            self.timestamp = Int(timestamp)
+        }
+        
         self.uuid = msg.uuid
         self.index = msg.index
     }

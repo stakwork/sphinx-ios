@@ -247,7 +247,7 @@ extension SphinxOnionManager{
     
     func finalizeSentMessage(localMsg:TransactionMessage, remoteMsg:Msg){
         let remoteMessageAsGenericMessage = GenericIncomingMessage(msg: remoteMsg)
-        if let contentTimestamp = remoteMessageAsGenericMessage.date{
+        if let contentTimestamp = remoteMessageAsGenericMessage.timestamp{
             let date = timestampToDate(timestamp: UInt64(contentTimestamp))
             localMsg.date = date
             localMsg.updatedAt = Date()
@@ -468,7 +468,7 @@ extension SphinxOnionManager{
         
         newMessage.id = index
         newMessage.uuid = uuid
-        if let timestamp = message.date,
+        if let timestamp = message.timestamp,
         let dateFromMessage = timestampToDate(timestamp: UInt64(timestamp)){
             newMessage.createdAt = dateFromMessage
             newMessage.updatedAt = dateFromMessage

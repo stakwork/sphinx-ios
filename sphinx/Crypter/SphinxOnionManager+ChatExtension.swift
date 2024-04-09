@@ -279,14 +279,21 @@ extension SphinxOnionManager{
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
-            if(message.type == 2){
-                print(message)
-            }
             if message.type == 33{
+                print(message)
+                print(genericIncomingMessage)
+                if let fullContactInfo = genericIncomingMessage.fullContactInfo,
+                let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: fullContactInfo),
+                   UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey) == nil{
+                    let pendingContact = self.createNewContact(pubkey: recipientPubkey,nickname: genericIncomingMessage.alias ?? "Unknown")
+                    pendingContact?.scid = scid
+                    pendingContact?.routeHint = recipLspPubkey
+                    pendingContact?.status = UserContact.Status.Pending.rawValue
+                }
                 NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
 
             }
-            if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
+            else if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,
                var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
                 originalMessage.uuid = newUUID

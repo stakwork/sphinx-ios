@@ -246,6 +246,8 @@ struct ContactServerResponse: Mappable {
     var person: String?
     var code: String?
     var role: Int?
+    var fullContactInfo:String?
+    var recipientAlias:String?
 
     init?(map: Map) {}
 
@@ -257,6 +259,8 @@ struct ContactServerResponse: Mappable {
         code <- map["code"]
         host <- map["host"]
         role <- map["role"]
+        fullContactInfo <- map["fullContactInfo"]
+        recipientAlias <- map["recipientAlias"]
     }
     
 }
@@ -313,6 +317,8 @@ struct GenericIncomingMessage: Mappable {
     var date:Int?=nil
     var invoice:String?=nil
     var paymentHash:String?=nil
+    var alias:String?=nil
+    var fullContactInfo:String?=nil
 
     init?(map: Map) {}
     
@@ -320,6 +326,10 @@ struct GenericIncomingMessage: Mappable {
         if let sender = msg.sender,
            let csr = ContactServerResponse(JSONString: sender){
             self.senderPubkey = csr.pubkey
+            if msg.type == 33{
+                self.alias = csr.recipientAlias
+                self.fullContactInfo = csr.fullContactInfo
+            }
         }
         else if let fromMe = msg.fromMe, fromMe == true, let sentTo = msg.sentTo{
             self.senderPubkey = sentTo
@@ -353,8 +363,6 @@ struct GenericIncomingMessage: Mappable {
         }
         self.uuid = msg.uuid
         self.index = msg.index
-        
-        
     }
 
     mutating func mapping(map: Map) {

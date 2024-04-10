@@ -11,6 +11,7 @@ import UIKit
 protocol PinMessageDelegate: class {
     func didTapUnpinButton(message: TransactionMessage)
     func willDismissPresentedVC()
+    func shouldNavigateTo(messageId: Int)
 }
 
 class PinMessageViewController: UIViewController {
@@ -236,5 +237,10 @@ extension PinMessageViewController {
         if mode == .PinnedMessageInfo {
             dismissBottomView()
         }
+    }
+    
+    @IBAction func navigateToMessageButtonTouched() {
+        delegate?.shouldNavigateTo(messageId: self.message.id)
+        dismissBottomView()
     }
 }

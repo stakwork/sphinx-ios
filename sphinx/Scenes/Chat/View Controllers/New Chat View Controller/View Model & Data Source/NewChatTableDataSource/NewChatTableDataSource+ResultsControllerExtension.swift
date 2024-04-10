@@ -637,6 +637,22 @@ extension NewChatTableDataSource {
         
         return webLinkMap
     }
+    
+    func reloadWith(pinnedMessageId: Int) {
+        self.pinnedMessageId = pinnedMessageId
+        
+        let results = messagesArray.filter({ $0.id == pinnedMessageId })
+        
+        if results.isEmpty {
+            configureResultsController(items: 100)
+        } else {
+            restoreScrollLastPosition()
+        }
+        
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            self.pinnedMessageId = nil
+        })
+    }
 }
 
 
@@ -657,7 +673,8 @@ extension NewChatTableDataSource : NSFetchedResultsControllerDelegate {
     ) -> NSFetchRequest<TransactionMessage> {
         return TransactionMessage.getChatMessagesFetchRequest(
             for: chat,
-            with: items
+            with: items,
+            pinnedMessageId: pinnedMessageId
         )
     }
     

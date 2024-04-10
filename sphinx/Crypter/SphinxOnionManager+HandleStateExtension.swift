@@ -360,6 +360,16 @@ struct GenericIncomingMessage: Mappable {
                 self.alias = innerContent.recipientAlias
                 self.fullContactInfo = innerContent.fullContactInfo
             }
+            
+            let isTribe = SphinxOnionManager.sharedInstance.isMessageTribeMessage(senderPubkey: self.senderPubkey ?? "")
+            
+            if let timestamp = msg.timestamp,
+                isTribe == false{
+                self.timestamp = Int(timestamp)
+            }
+            else{
+                self.timestamp = innerContent.date
+            }
         }
         if let invoice = self.invoice{
             print(msg)
@@ -370,10 +380,6 @@ struct GenericIncomingMessage: Mappable {
         }
         else{
             self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
-        }
-        
-        if let timestamp = msg.timestamp{
-            self.timestamp = Int(timestamp)
         }
         
         self.uuid = msg.uuid

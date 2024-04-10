@@ -275,6 +275,15 @@ extension SphinxOnionManager{
         NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": localMsg])
     }
     
+    func isMessageTribeMessage(senderPubkey:String)->Bool{
+        var isTribe = false
+        if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: senderPubkey){
+            print("found tribeChat:\(tribeChat)")
+            isTribe = true
+        }
+        return isTribe
+    }
+    
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
         for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
@@ -469,7 +478,7 @@ extension SphinxOnionManager{
         newMessage.id = index
         newMessage.uuid = uuid
         if let timestamp = message.timestamp,
-        let dateFromMessage = timestampToDate(timestamp: UInt64(timestamp)){
+           let dateFromMessage = timestampToDate(timestamp: UInt64(timestamp)){
             newMessage.createdAt = dateFromMessage
             newMessage.updatedAt = dateFromMessage
             newMessage.date = dateFromMessage

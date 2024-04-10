@@ -350,6 +350,8 @@ extension DashboardRootViewController {
                 som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
                 if(som.isV2InitialSetup){
                     //self.contactRestoreCallback(percentage: 0)
+                    som.isV2InitialSetup = false
+                    som.doInitialInviteSetup()
                     som.performAccountRestore(
                         contactRestoreCallback: self.contactRestoreCallback(percentage:),
                         messageRestoreCallback: self.messageRestoreCallback(percentage:),
@@ -360,12 +362,6 @@ extension DashboardRootViewController {
                     self.hideRestoreViewCallback()
                     som.syncMessagesSinceLastKnownIndexHeight()
                 }
-            }
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
-            if som.isV2InitialSetup{
-                som.doInitialInviteSetup()
             }
         })
         

@@ -62,29 +62,42 @@ extension NewChatTableDataSource {
         
         tableView.alpha = 1.0
         
-        if let scrollState = preloaderHelper.getScrollState(
-            for: chat.id,
-            with: dataSource.snapshot().itemIdentifiers
-        ) {
-            let row = scrollState.bottomFirstVisibleRow
-            let offset = scrollState.bottomFirstVisibleRowOffset
-            
-            if scrollState.shouldAdjustScroll && !loadingMoreItems {
-                
-                if tableView.numberOfRows(inSection: 0) > row {
-                    
-                    tableView.scrollToRow(
-                        at: IndexPath(row: row, section: 0),
-                        at: .top,
-                        animated: false
-                    )
-                    
-                    tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
-                }
+        if let pinnedMessageId = pinnedMessageId {
+            if let index = getTableCellStateFor(
+                messageId: pinnedMessageId,
+                and: nil
+            )?.0 {
+                tableView.scrollToRow(
+                    at: IndexPath(row: index, section: 0),
+                    at: .top,
+                    animated: true
+                )
             }
-            
-            if scrollState.shouldPreventSetMessagesAsSeen {
-                return
+        } else {
+            if let scrollState = preloaderHelper.getScrollState(
+                for: chat.id,
+                with: dataSource.snapshot().itemIdentifiers
+            ) {
+                let row = scrollState.bottomFirstVisibleRow
+                let offset = scrollState.bottomFirstVisibleRowOffset
+                
+                if scrollState.shouldAdjustScroll && !loadingMoreItems {
+                    
+                    if tableView.numberOfRows(inSection: 0) > row {
+                        
+                        tableView.scrollToRow(
+                            at: IndexPath(row: row, section: 0),
+                            at: .top,
+                            animated: false
+                        )
+                        
+                        tableView.contentOffset.y = tableView.contentOffset.y + (offset + tableView.contentInset.top)
+                    }
+                }
+                
+                if scrollState.shouldPreventSetMessagesAsSeen {
+                    return
+                }
             }
         }
         

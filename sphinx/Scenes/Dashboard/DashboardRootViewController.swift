@@ -227,6 +227,9 @@ extension DashboardRootViewController {
         
         SphinxOnionManager.sharedInstance.fetchMyAccountFromState()
         
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.connectToV2Server()
+        })
     }
     
     func addAccessibilityIdentifiers(){
@@ -319,10 +322,6 @@ extension DashboardRootViewController {
         }
         
         setupAddTribeButton()
-        
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-            self.connectToV2Server()
-        })
         
     }
     

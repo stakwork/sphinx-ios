@@ -275,12 +275,23 @@ extension SphinxOnionManager{
         NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": localMsg])
     }
     
-    func isMessageTribeMessage(senderPubkey:String)->Bool{
+    func isMessageTribeMessage(senderPubkey:String)->(Bool,Chat?){
         var isTribe = false
+        var chat: Chat? = nil
         if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: senderPubkey){
             print("found tribeChat:\(tribeChat)")
             isTribe = true
         }
+        return (isTribe,chat)
+    }
+    
+    func isExitedTribeMessage(senderPubkey:String) -> Bool{
+        var (isTribe, chat) = isMessageTribeMessage(senderPubkey: senderPubkey)
+        Chat.getTribeChatWithOwnerPubkey(ownerPubkey: senderPubkey)
+        if isTribe == false{
+            return false
+        }
+        var lastActionIsExit = chat?.getAllMessages(limit: 1).filter({$0.type == TransactionMessage.TransactionMessageType.groupLeave.rawValue || $0.type == TransactionMessage.TransactionMessageType.groupKick.rawValue || $0.type == TransactionMessage.TransactionMessageType.groupDelete.rawValue}).count ?? 0 > 0
         return isTribe
     }
     
@@ -302,6 +313,10 @@ extension SphinxOnionManager{
                 NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
 
             }
+//            else if isExitedTribeMessage(senderPubkey: genericIncomingMessage.senderPubkey ?? ""){
+//                NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
+//                return
+//            }
             else if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,
                var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){

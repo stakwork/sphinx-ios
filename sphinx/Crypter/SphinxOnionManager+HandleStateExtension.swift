@@ -361,7 +361,7 @@ struct GenericIncomingMessage: Mappable {
                 self.fullContactInfo = innerContent.fullContactInfo
             }
             
-            let isTribe = SphinxOnionManager.sharedInstance.isMessageTribeMessage(senderPubkey: self.senderPubkey ?? "")
+            let (isTribe, _) = SphinxOnionManager.sharedInstance.isMessageTribeMessage(senderPubkey: self.senderPubkey ?? "")
             
             if let timestamp = msg.timestamp,
                 isTribe == false{

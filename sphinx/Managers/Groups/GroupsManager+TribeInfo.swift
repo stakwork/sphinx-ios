@@ -29,6 +29,7 @@ extension GroupsManager {
         var privateTribe : Bool = false
         var deleted : Bool = false
         var appUrl : String? = nil
+        var secondBrainUrl : String? = nil
         var feedUrl : String? = nil
         var feedContentType : FeedContentType? = nil
         var ownerRouteHint : String? = nil

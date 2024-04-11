@@ -47,7 +47,7 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
         }
         
         // Schedule the watchdog timer to run after 10 seconds.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: watchdogTimer)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: watchdogTimer)
         
         SphinxOnionManager.sharedInstance.getTribeMembers(tribeChat: self.chat, completion: { [weak self] tribeMembers in
             guard let weakSelf = self else { return }

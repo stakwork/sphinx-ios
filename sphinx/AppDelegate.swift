@@ -167,6 +167,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         feedsManager.restoreContentFeedStatusInBackground()
         podcastPlayerController.finishAndSaveContentConsumed()
+        
+        SphinxOnionManager.sharedInstance.syncMessagesSinceLastKnownIndexHeight()
     }
     
     func applicationDidBecomeActive(

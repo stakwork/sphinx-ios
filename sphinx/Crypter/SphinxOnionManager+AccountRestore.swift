@@ -398,7 +398,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         
         // Log or handle the timeout as needed
         print("Watchdog timer expired - Fetch process may be stalled or complete.")
-        
+        resetFromRestore()
         // Optionally, attempt to restart the process or notify the user
     }
     
@@ -411,16 +411,28 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         if let counts = msgTotalCounts,
            let maxIndex = counts.totalMessageMaxIndex{
             UserData.sharedInstance.setLastMessageIndex(index: maxIndex)
-            for chat in Chat.getAll(){
-                if let lastMessage = TransactionMessage.getMaxIndexMessageFor(chat: chat){
-                    chat.lastMessage = lastMessage
-                }
-            }
-            self.isV2InitialSetup = false
-            self.contactRestoreCallback = nil
-            self.messageRestoreCallback = nil
-            self.updateIsPaidAllMessages() // ensure all paid invoices are marked as such
+            resetFromRestore()
         }
+    }
+    
+    func resetFromRestore(){
+        for chat in Chat.getAll(){
+            if let lastMessage = TransactionMessage.getMaxIndexMessageFor(chat: chat){
+                chat.lastMessage = lastMessage
+            }
+        }
+        for deleteRequest in TransactionMessage.getMessageDeletionRequests(){
+            if let replyUUID = deleteRequest.replyUUID,
+               let messageToDelete = TransactionMessage.getMessageWith(uuid: replyUUID){
+                messageToDelete.status = TransactionMessage.TransactionMessageStatus.deleted.rawValue
+                messageToDelete.managedObjectContext?.saveContext()
+            }
+        }
+        
+        self.isV2InitialSetup = false
+        self.contactRestoreCallback = nil
+        self.messageRestoreCallback = nil
+        self.updateIsPaidAllMessages() // ensure all paid invoices are marked as such
     }
 
 }

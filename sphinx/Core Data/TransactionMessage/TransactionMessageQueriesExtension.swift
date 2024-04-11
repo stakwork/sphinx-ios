@@ -97,6 +97,22 @@ extension TransactionMessage {
         return messages
     }
     
+    static func getMaxIndexMessageFor(chat: Chat) -> TransactionMessage? {
+        let context = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<TransactionMessage> = TransactionMessage.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "chat == %@", chat)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: false)]
+        fetchRequest.fetchLimit = 1
+
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        } catch let error as NSError {
+            print("Error fetching message with max ID: \(error), \(error.userInfo)")
+            return nil
+        }
+    }
+    
     static func getPredicate(
         chat: Chat,
         threadUUID: String?,

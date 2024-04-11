@@ -412,11 +412,9 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
            let maxIndex = counts.totalMessageMaxIndex{
             UserData.sharedInstance.setLastMessageIndex(index: maxIndex)
             for chat in Chat.getAll(){
-                guard let maxIndex = chat.getAllMessages().map{ $0.id }.sorted().last else { 
-                    return
+                if let lastMessage = TransactionMessage.getMaxIndexMessageFor(chat: chat){
+                    chat.lastMessage = lastMessage
                 }
-                let message = TransactionMessage.getMessageWith(id: maxIndex)
-                chat.lastMessage = message
             }
             self.isV2InitialSetup = false
             self.contactRestoreCallback = nil

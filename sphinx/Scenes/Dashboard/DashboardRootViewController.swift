@@ -327,44 +327,7 @@ extension DashboardRootViewController {
     
     func connectToV2Server(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
-        
-        
-        let som = SphinxOnionManager.sharedInstance
-        guard let seed = som.getAccountSeed(),
-              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
-              let my_xpub = som.getAccountXpub(seed: seed)
-        else{
-            //possibly send error message?
-            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
-            return
-        }
-        som.disconnectMqtt()
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-            let success = som.connectToBroker(seed:seed,xpub: my_xpub)
-            if(success == false) {
-                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker.")
-                return
-              }
-            som.mqtt.didConnectAck = {_, _ in
-                som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
-                if(som.isV2InitialSetup){
-                    //self.contactRestoreCallback(percentage: 0)
-                    som.isV2InitialSetup = false
-                    som.doInitialInviteSetup()
-                    som.performAccountRestore(
-                        contactRestoreCallback: self.contactRestoreCallback(percentage:),
-                        messageRestoreCallback: self.messageRestoreCallback(percentage:),
-                        hideRestoreViewCallback: self.hideRestoreViewCallback
-                    )
-                }
-                else{
-                    self.hideRestoreViewCallback()
-                    som.syncMessagesSinceLastKnownIndexHeight()
-                }
-            }
-        })
-        
-        
+        SphinxOnionManager.sharedInstance.connectToV2Server(contactRestoreCallback: contactRestoreCallback(percentage:), messageRestoreCallback: messageRestoreCallback(percentage:), hideRestoreViewCallback: hideRestoreViewCallback)
     }
     
     func hideRestoreViewCallback(){

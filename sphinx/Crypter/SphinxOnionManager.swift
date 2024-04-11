@@ -155,21 +155,45 @@ class SphinxOnionManager : NSObject {
             mqtt.disconnect()
         }
     }
-    func getAllUnreadMessages(sinceIndex:Int?=nil,limit:Int?=nil){
-        guard let seed = getAccountSeed() else {
-            return //throw error?
+
+    func connectToV2Server(contactRestoreCallback: @escaping RestoreProgressCallback, messageRestoreCallback: @escaping RestoreProgressCallback,hideRestoreViewCallback: @escaping ()->()){
+        let som = self
+        guard let seed = som.getAccountSeed(),
+              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
+              let my_xpub = som.getAccountXpub(seed: seed)
+        else{
+            //possibly send error message?
+            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
+            return
         }
-        let sinceMsgIndex = UserData.sharedInstance.getLastMessageIndex() != nil ? UserData.sharedInstance.getLastMessageIndex()! + 1 : 0 //TODO: store last read index?
-        let msgCountLimit = limit ?? 50
-        do{
-            let rr = try fetchMsgs(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), lastMsgIdx: UInt64(sinceMsgIndex), limit: UInt32(msgCountLimit))
-            handleRunReturn(rr: rr)
-        }
-        catch{
-            
-        }
+        som.disconnectMqtt()
+        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
+            let success = som.connectToBroker(seed:seed,xpub: my_xpub)
+            if(success == false) {
+                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker.")
+                return
+              }
+            som.mqtt.didConnectAck = {_, _ in
+                som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
+                if(som.isV2InitialSetup){
+                    //self.contactRestoreCallback(percentage: 0)
+                    som.isV2InitialSetup = false
+                    som.doInitialInviteSetup()
+                    som.performAccountRestore(
+                        contactRestoreCallback: contactRestoreCallback,
+                        messageRestoreCallback: messageRestoreCallback,
+                        hideRestoreViewCallback: hideRestoreViewCallback
+                    )
+                }
+                else{
+                    if let hideRestoreCallback = self.hideRestoreCallback{
+                        hideRestoreCallback()
+                    }
+                    som.syncMessagesSinceLastKnownIndexHeight()
+                }
+            }
+        })
     }
-    
 
     func listContacts()->String{
         let contacts = try! sphinx.listContacts(state: self.loadOnionStateAsData())

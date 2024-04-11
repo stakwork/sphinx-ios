@@ -136,6 +136,7 @@ extension SphinxOnionManager{//account restore related
         switch(messageFetchParams.restoreMessagePhase){
         case .firstScidMessages:
             messageFetchParams.restoreMessagePhase = .allMessages
+            messageFetchParams.restoreInProgress = false //temporarily reset this
             if let callback = hideRestoreCallback{ callback()}
             restoreAllMessages()
             break
@@ -216,14 +217,18 @@ extension SphinxOnionManager{//account restore related
     
     @objc func processSyncCountsReceived(){
         if let msgTotalCounts = self.msgTotalCounts,
-           msgTotalCounts.hasOneValidCount(){
+           msgTotalCounts.hasOneValidCount(),
+           messageFetchParams?.restoreInProgress != true{
+            messageFetchParams?.restoreInProgress = true
             let startIndex = (msgTotalCounts.totalMessageMaxIndex ?? 0)
             guard let lastKnownHeight = UserData.sharedInstance.getLastMessageIndex() else{
                 return
             }
-            
+            let safeSpread = max(0, startIndex - lastKnownHeight)
+            if(safeSpread <= 0){finishRestoration(); return}
+            let firstBatchSize = min(SphinxOnionManager.kMessageBatchSize, safeSpread)//either do max batch size or less if less is needed
             // Begin the fetching process
-            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: SphinxOnionManager.kMessageBatchSize, fetchDirection: .backward, stopIndex: lastKnownHeight)
+            startAllMsgBlockFetch(startIndex: startIndex, indexStepSize: firstBatchSize, fetchDirection: .backward, stopIndex: lastKnownHeight)
         }
     }
 

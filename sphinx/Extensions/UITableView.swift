@@ -84,7 +84,12 @@ extension UITableView {
     func isCellOutOfBounds(indexPath: IndexPath) -> (Bool, Bool) {
         let cellRect = rectForRow(at: indexPath)
         
-        if bounds.contains(cellRect) {
+        let screenSize = UIScreen.main.bounds.size
+        let contentHeightThreshold = screenSize.height - (1.1 * cellRect.size.height)
+        
+        if cellRect.size.height > contentHeightThreshold {
+            return (false, true)
+        } else if bounds.contains(cellRect) {
             return (false, false)
         } else {
             if cellRect.origin.y == 0 {

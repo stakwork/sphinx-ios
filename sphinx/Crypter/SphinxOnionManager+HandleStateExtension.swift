@@ -333,13 +333,15 @@ struct GenericIncomingMessage: Mappable {
     init?(map: Map) {}
     
     init(msg:Msg){
-        if let sender = msg.sender,
+        
+        if let fromMe = msg.fromMe, fromMe == true, let sentTo = msg.sentTo{
+            self.senderPubkey = sentTo
+        }
+        else if let sender = msg.sender,
            let csr = ContactServerResponse(JSONString: sender){
             self.senderPubkey = csr.pubkey
         }
-        else if let fromMe = msg.fromMe, fromMe == true, let sentTo = msg.sentTo{
-            self.senderPubkey = sentTo
-        }
+        
         
         var innerContentAmount : UInt64? = nil
         if let message = msg.message,

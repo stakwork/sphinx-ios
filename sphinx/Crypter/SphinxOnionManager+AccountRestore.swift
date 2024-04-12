@@ -343,7 +343,7 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
         let nextFetchTriggerIndex = params.fetchDirection == .backward ? params.fetchStartIndex - params.fetchLimit + 1 : params.fetchStartIndex + params.fetchLimit - 1
 
         // Determine if the next block should be fetched based on direction and boundaries
-        let shouldFetchNextBlock = params.fetchDirection == .backward ? params.messageCountForPhase <= nextFetchTriggerIndex && params.messageCountForPhase >= ((params.stopIndex ?? 1) - 1 ) : params.messageCountForPhase >= nextFetchTriggerIndex && params.messageCountForPhase <= totalHighestIndex
+        let shouldFetchNextBlock = params.fetchDirection == .backward ? params.messageCountForPhase <= nextFetchTriggerIndex && params.messageCountForPhase >= ((params.stopIndex ?? 0) + 1 ) : params.messageCountForPhase >= nextFetchTriggerIndex && params.messageCountForPhase <= totalHighestIndex
 
         if let messageCount = messageFetchParams?.messageCountForPhase,
            let totalMsgCount = msgTotalCounts?.totalMessageAvailableCount,

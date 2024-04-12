@@ -297,7 +297,9 @@ extension SphinxOnionManager{
     
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
-        for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
+        let filteredMsgs = rr.msgs.filter({$0.type != 11 && $0.type != 10})
+        if filteredMsgs.count <= 0 {return}
+        for message in filteredMsgs{
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
             if message.type == 33{
                 print(message)

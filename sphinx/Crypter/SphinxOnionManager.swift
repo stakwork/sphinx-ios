@@ -157,7 +157,6 @@ class SphinxOnionManager : NSObject {
     }
 
     func connectToV2Server(contactRestoreCallback: @escaping RestoreProgressCallback, messageRestoreCallback: @escaping RestoreProgressCallback,hideRestoreViewCallback: @escaping ()->()){
-        contactRestoreCallback(0)
         let som = self
         guard let seed = som.getAccountSeed(),
               let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),

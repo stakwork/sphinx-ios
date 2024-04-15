@@ -227,6 +227,9 @@ extension DashboardRootViewController {
         
         SphinxOnionManager.sharedInstance.fetchMyAccountFromState()
         
+        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
+            self.connectToV2Server()
+        })
     }
     
     func addAccessibilityIdentifiers(){
@@ -320,65 +323,26 @@ extension DashboardRootViewController {
         
         setupAddTribeButton()
         
-        DelayPerformedHelper.performAfterDelay(seconds: 0.5, completion: {
-            self.connectToV2Server()
-        })
-        
-//        GroupsManager.sharedInstance.lookupAndRestoreTribe(pubkey: "0244ecd7c305d0d07963eb63d8dabf331449de0ada2218d1532802661c23e7521f", host: "34.229.52.200:8801", completion: {_ in})
     }
     
     func connectToV2Server(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleNewKeyExchangeReceived), name: .newContactKeyExchangeResponseWasReceived, object: nil)
-        
-        
-        let som = SphinxOnionManager.sharedInstance
-        guard let seed = som.getAccountSeed(),
-              let myPubkey = som.getAccountOnlyKeysendPubkey(seed: seed),
-              let my_xpub = som.getAccountXpub(seed: seed)
-        else{
-            //possibly send error message?
-            AlertHelper.showAlert(title: "Error", message: "Could not connect to server")
-            return
-        }
-        som.disconnectMqtt()
-        DelayPerformedHelper.performAfterDelay(seconds: 2.0, completion: {
-            let success = som.connectToBroker(seed:seed,xpub: my_xpub)
-            if(success == false) {
-                AlertHelper.showAlert(title: "Error", message: "Could not connect to MQTT Broker.")
-                return
-              }
-            som.mqtt.didConnectAck = {_, _ in
-                som.subscribeAndPublishMyTopics(pubkey: myPubkey, idx: 0)
-                if(ContactsService.sharedInstance.isRestoring()){
-                    self.contactRestoreCallback(percentage: 1)
-                    som.performAccountRestore(
-                        contactRestoreCallback: self.contactRestoreCallback(percentage:),
-                        messageRestoreCallback: self.messageRestoreCallback(percentage:)
-                    )
-                }
-                else{
-                    som.getAllUnreadMessages()
-                }
-            }
-        })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
-//            if som.isV2InitialSetup{
-//                som.doInitialInviteSetup()
-//            }
-            self.shouldReloadContacts(reload: true)
-        })
-        
-        
+        SphinxOnionManager.sharedInstance.connectToV2Server(contactRestoreCallback: contactRestoreCallback(percentage:), messageRestoreCallback: messageRestoreCallback(percentage:), hideRestoreViewCallback: hideRestoreViewCallback)
+    }
+    
+    func hideRestoreViewCallback(){
+        self.restoreProgressView.hideViewAnimated()
     }
     
     func contactRestoreCallback(percentage:Int){
         DispatchQueue.main.async {
+            let value = min(percentage,100)
             self.restoreProgressView.showRestoreProgressView(
-                with: percentage,
+                with: value,
                 label: "restoring-contacts".localized,
                 buttonEnabled: false
             )
+            if value >= 100 {self.restoreProgressView.hideViewAnimated()}
         }
     }
     
@@ -391,7 +355,7 @@ extension DashboardRootViewController {
                 label: "restoring-messages".localized,
                 buttonEnabled: true
             )
-            if value == 100 {self.restoreProgressView.hideViewAnimated()}
+            if value >= 100 {self.restoreProgressView.hideViewAnimated()}
         }
     }
     

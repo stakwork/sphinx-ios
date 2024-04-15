@@ -12,10 +12,16 @@ import CocoaMQTT
 import ObjectMapper
 import SwiftyJSON
 
-extension SphinxOnionManager{//tribes related
+extension SphinxOnionManager{//tribes related1
+    
+    func getTribePubkey()->String?{
+        let tribePubkey = try? getDefaultTribeServer(state: loadOnionStateAsData())
+        return tribePubkey
+    }
     
     func createTribe(params:[String:Any]){
-        guard let seed = getAccountSeed() else{
+        guard let seed = getAccountSeed(),
+        let tribeServerPubkey = getTribePubkey() else{
             return
         }
         
@@ -115,7 +121,8 @@ extension SphinxOnionManager{//tribes related
         tribeChat:Chat,
         completion: (([String:AnyObject]) ->())?
     ){
-        guard let seed = getAccountSeed() else{
+        guard let seed = getAccountSeed(),
+        let tribeServerPubkey = getTribePubkey() else{
             return
         }
         do{
@@ -129,6 +136,9 @@ extension SphinxOnionManager{//tribes related
     }
     
     func kickTribeMember(pubkey:String, chat:Chat){
+        guard let tribeServerPubkey = getTribePubkey() else{
+            return
+        }
         do{
             sendMessage(to: nil, content: pubkey, chat: chat, msgType: UInt8(TransactionMessage.TransactionMessageType.groupKick.rawValue), recipPubkey: tribeServerPubkey, threadUUID: nil, replyUUID: nil)
         }
@@ -142,6 +152,9 @@ extension SphinxOnionManager{//tribes related
         chat: Chat,
         type: TransactionMessage.TransactionMessageType
     ){
+        guard let tribeServerPubkey = getTribePubkey() else{
+            return
+        }
         if (type.rawValue == TransactionMessage.TransactionMessageType.memberApprove.rawValue ||
             type.rawValue == TransactionMessage.TransactionMessageType.memberReject.rawValue) == false{
             return
@@ -152,6 +165,9 @@ extension SphinxOnionManager{//tribes related
     
     
     func deleteTribe(tribeChat:Chat){
+        guard let tribeServerPubkey = getTribePubkey() else{
+            return
+        }
         do{
             sendMessage(to: nil, content: "", chat: tribeChat, msgType: UInt8(TransactionMessage.TransactionMessageType.groupDelete.rawValue), recipPubkey: tribeServerPubkey, threadUUID: nil, replyUUID: nil)
         }

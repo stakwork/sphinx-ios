@@ -264,5 +264,7 @@ class NewContactViewController: KeyboardEventsViewController {
         reloadChatIfNeeded()
         navigationController?.popViewController(animated: true)
     }
+    
+    
 }
 

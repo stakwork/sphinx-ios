@@ -24,14 +24,14 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?) -> ()) {
+    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?,Bool) -> ()) {
         // First try to fetch the chat from the database.
         if let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: ownerPubkey) {
-            completion(chat)
+            completion(chat,false)
         } else {
             // If not found in the database, attempt to lookup and restore.
             GroupsManager.sharedInstance.lookupAndRestoreTribe(pubkey: ownerPubkey, host: host) { chat in
-                completion(chat)
+                completion(chat,true)
             }
         }
     }
@@ -247,7 +247,7 @@ extension SphinxOnionManager{
     
     func finalizeSentMessage(localMsg:TransactionMessage, remoteMsg:Msg){
         let remoteMessageAsGenericMessage = GenericIncomingMessage(msg: remoteMsg)
-        if let contentTimestamp = remoteMessageAsGenericMessage.date{
+        if let contentTimestamp = remoteMessageAsGenericMessage.timestamp{
             let date = timestampToDate(timestamp: UInt64(contentTimestamp))
             localMsg.date = date
             localMsg.updatedAt = Date()
@@ -275,15 +275,51 @@ extension SphinxOnionManager{
         NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": localMsg])
     }
     
+    func isMessageTribeMessage(senderPubkey:String)->(Bool,Chat?){
+        var isTribe = false
+        var chat: Chat? = nil
+        if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: senderPubkey){
+            print("found tribeChat:\(tribeChat)")
+            isTribe = true
+        }
+        return (isTribe,chat)
+    }
+    
+    func isExitedTribeMessage(senderPubkey:String) -> Bool{
+        var (isTribe, chat) = isMessageTribeMessage(senderPubkey: senderPubkey)
+        Chat.getTribeChatWithOwnerPubkey(ownerPubkey: senderPubkey)
+        if isTribe == false{
+            return false
+        }
+        var lastActionIsExit = chat?.getAllMessages(limit: 1).filter({$0.type == TransactionMessage.TransactionMessageType.groupLeave.rawValue || $0.type == TransactionMessage.TransactionMessageType.groupKick.rawValue || $0.type == TransactionMessage.TransactionMessageType.groupDelete.rawValue}).count ?? 0 > 0
+        return isTribe
+    }
+    
     //MARK: processes updates from general purpose messages like plaintext and attachments
     func processGenericMessages(rr:RunReturn){
-        for message in rr.msgs.filter({$0.type != 11 && $0.type != 10}){
+        let filteredMsgs = rr.msgs.filter({$0.type != 11 && $0.type != 10})
+        if filteredMsgs.count <= 0 {return}
+        for message in filteredMsgs{
             var genericIncomingMessage = GenericIncomingMessage(msg: message)
             if message.type == 33{
+                print(message)
+                print(genericIncomingMessage)
+                if let fullContactInfo = genericIncomingMessage.fullContactInfo,
+                let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(fullContactInfo: fullContactInfo),
+                   UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey) == nil{
+                    let pendingContact = self.createNewContact(pubkey: recipientPubkey,nickname: genericIncomingMessage.alias ?? "Unknown")
+                    pendingContact?.scid = scid
+                    pendingContact?.routeHint = recipLspPubkey
+                    pendingContact?.status = UserContact.Status.Pending.rawValue
+                }
                 NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
 
             }
-            if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
+//            else if isExitedTribeMessage(senderPubkey: genericIncomingMessage.senderPubkey ?? ""){
+//                NotificationCenter.default.post(name: .newOnionMessageWasReceived,object:nil, userInfo: ["message": TransactionMessage()])
+//                return
+//            }
+            else if let omuuid = genericIncomingMessage.originalUuid,//update uuid if it's changing/
                let newUUID = message.uuid,
                var originalMessage = TransactionMessage.getMessageWith(uuid: omuuid){
                 originalMessage.uuid = newUUID
@@ -300,6 +336,11 @@ extension SphinxOnionManager{
                     let localMsg = processGenericIncomingMessage(message: genericIncomingMessage,date: Date(),delaySave: true, type: Int(type),fromMe:true)
             {
                 localMsg.uuid = uuid
+                if let genericMessageMsat = genericIncomingMessage.amount{
+                    localMsg.amount = NSDecimalNumber(value:  genericMessageMsat/1000)
+                    localMsg.amountMsat = NSDecimalNumber(value: Int(truncating: (genericMessageMsat) as NSNumber))
+                }
+                
                 finalizeSentMessage(localMsg: localMsg, remoteMsg: message)
                 print("sentTo is non-nil inner block, message:\(message)")
             }
@@ -338,7 +379,7 @@ extension SphinxOnionManager{
                     else if isGroupAction(type: type),
                             let tribePubkey = csr.pubkey,
                             let host = csr.host{
-                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: host, completion: { chat in
+                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: host, completion: { chat,didCreateTribe  in
                             if let chat = chat{
                                 let groupActionMessage = TransactionMessage(context: self.managedContext)
                                 groupActionMessage.uuid = uuid
@@ -353,6 +394,10 @@ extension SphinxOnionManager{
                                 groupActionMessage.updatedAt = date
                                 groupActionMessage.seen = false
                                 chat.seen = false
+                                
+                                if(didCreateTribe && csr.role != nil){
+                                    chat.isTribeICreated = csr.role == 0
+                                }
                                 (type == TransactionMessage.TransactionMessageType.memberApprove.rawValue) ? (chat.status = Chat.ChatStatus.approved.rawValue) : ()
                                 (type == TransactionMessage.TransactionMessageType.memberReject.rawValue) ? (chat.status = Chat.ChatStatus.rejected.rawValue) : ()
                                 self.finalizeNewMessage(index: groupActionMessage.id, newMessage: groupActionMessage)
@@ -449,9 +494,17 @@ extension SphinxOnionManager{
         
         newMessage.id = index
         newMessage.uuid = uuid
-        newMessage.createdAt = date
-        newMessage.updatedAt = date
-        newMessage.date = date
+        if let timestamp = message.timestamp,
+           let dateFromMessage = timestampToDate(timestamp: UInt64(timestamp)){
+            newMessage.createdAt = dateFromMessage
+            newMessage.updatedAt = dateFromMessage
+            newMessage.date = dateFromMessage
+        }
+        else{
+            newMessage.createdAt = date
+            newMessage.updatedAt = date
+            newMessage.date = date
+        }
         newMessage.status = TransactionMessage.TransactionMessageStatus.confirmed.rawValue
         newMessage.type = type ?? TransactionMessage.TransactionMessageType.message.rawValue
         newMessage.encrypted = true
@@ -480,7 +533,7 @@ extension SphinxOnionManager{
         }
         else{
             newMessage.amount = NSDecimalNumber(value: amount)
-            newMessage.amountMsat = NSDecimalNumber(value: amount)
+            newMessage.amountMsat = NSDecimalNumber(value: amount * 1000)
         }
         
         if type == TransactionMessage.TransactionMessageType.payment.rawValue,
@@ -494,6 +547,16 @@ extension SphinxOnionManager{
         }
         
         return newMessage
+    }
+    
+    func updateIsPaidAllMessages(){
+        let msgs = TransactionMessage.getAll().filter({$0.type == TransactionMessage.TransactionMessageType.payment.rawValue})
+        for msg in msgs{
+            if let ph = msg.paymentHash,
+               let _ = TransactionMessage.getInvoiceWith(paymentHash: ph){
+                msg.setPaymentInvoiceAsPaid()
+            }
+        }
     }
     
     func finalizeNewMessage(index:Int,newMessage:TransactionMessage){

@@ -40,9 +40,24 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
     }
     
     func loadTribeContacts() {
-        SphinxOnionManager.sharedInstance.getTribeMembers(tribeChat: self.chat, completion: { tribeMembers in
+        // Create a watchdog timer as a DispatchWorkItem.
+        let watchdogTimer = DispatchWorkItem { [weak self] in
+            self?.messageBubbleHelper.hideLoadingWheel()
+            self?.messageBubbleHelper.showGenericMessageView(text: "Error loading tribe members")
+        }
+        
+        // Schedule the watchdog timer to run after 10 seconds.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: watchdogTimer)
+        
+        SphinxOnionManager.sharedInstance.getTribeMembers(tribeChat: self.chat, completion: { [weak self] tribeMembers in
+            guard let weakSelf = self else { return }
+            
+            // Cancel the watchdog timer as the completion block executed successfully.
+            watchdogTimer.cancel()
+            
             if let tribeMemberArray = tribeMembers["confirmedMembers"] as? [TribeMembersRRObject],
-            let pendingMembersArray = tribeMembers["pendingMembers"] as? [TribeMembersRRObject]{
+               let selfContact = UserContact.getSelfContact(),
+            let pendingMembersArray = tribeMembers["pendingMembers"] as? [TribeMembersRRObject] {
                 var contactsMap = tribeMemberArray.map({
                     var contact = JSON($0.toJSON())
                     contact["pending"] = false
@@ -55,15 +70,14 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
                     return contact
                 })
                 
-                let (contacts, pendingContacts) = self.getGroupContactsFrom(contacts: contactsMap + pendingContactsMap)
-                self.groupContacts = contacts
-                self.groupPendingContacts = pendingContacts
+                let (contacts, pendingContacts) = weakSelf.getGroupContactsFrom(contacts: contactsMap + pendingContactsMap)
+                weakSelf.groupContacts = contacts
+                weakSelf.groupPendingContacts = pendingContacts
                 
-                self.tableView.reloadData()
-                self.messageBubbleHelper.hideLoadingWheel()
+                weakSelf.tableView.reloadData()
+                weakSelf.messageBubbleHelper.hideLoadingWheel()
             }
             print(tribeMembers)
-            
         })
     }
     
@@ -117,7 +131,7 @@ class GroupMembersDataSource: GroupAllContactsDataSource {
             let nickname = contact["alias"].stringValue
             let avatarUrl = contact["photo_url"].stringValue
             let pubkey = contact["pubkey"].stringValue
-            let isOwner = chat.isTribeICreated && UserContact.getOwner()?.getName() == nickname
+            let isOwner = pubkey == (UserContact.getSelfContact()?.publicKey ?? "-1")
             let pending = contact["pending"].boolValue
             
             if let initial = nickname.first {

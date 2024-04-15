@@ -410,6 +410,9 @@ extension String {
     }
     
     var hasPubkeyLinks: Bool {
+        if let contactInfo = SphinxOnionManager.sharedInstance.parseContactInfoString(fullContactInfo: self){
+            return true
+        }
         return pubKeyMatches.count > 0 && !hasTribeLinks
     }
     

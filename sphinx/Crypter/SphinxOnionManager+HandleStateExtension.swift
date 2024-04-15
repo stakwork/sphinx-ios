@@ -39,7 +39,7 @@ extension SphinxOnionManager {
         
         if let mci = rr.myContactInfo{
             let components = mci.split(separator: "_").map({String($0)})
-            if let components = parseContactInfoString(routeHint: mci),
+            if let components = parseContactInfoString(fullContactInfo: mci),
                UserContact.getContactWithDisregardStatus(pubkey: components.0) == nil{//only add this if we don't already have a "self" contact
                 createSelfContact(scid: components.2, serverPubkey: components.1,myOkKey: components.0)                
             }
@@ -141,6 +141,12 @@ extension SphinxOnionManager {
         let date = Date(timeIntervalSince1970: TimeInterval(timestamp) / 1000)
         return date
     }
+    
+    func timestampToInt(timestamp: UInt64) -> Int? {
+        let dateInSeconds = Double(timestamp) / 1000.0
+        return Int(dateInSeconds)
+    }
+
 
     func isGroupAction(type:UInt8)->Bool{
         let throwAwayMessage = TransactionMessage(context: managedContext)
@@ -245,6 +251,9 @@ struct ContactServerResponse: Mappable {
     var photoUrl: String?
     var person: String?
     var code: String?
+    var role: Int?
+    var fullContactInfo:String?
+    var recipientAlias:String?
 
     init?(map: Map) {}
 
@@ -255,6 +264,9 @@ struct ContactServerResponse: Mappable {
         person    <- map["person"]
         code <- map["code"]
         host <- map["host"]
+        role <- map["role"]
+        fullContactInfo <- map["fullContactInfo"]
+        recipientAlias <- map["recipientAlias"]
     }
     
 }
@@ -274,6 +286,8 @@ struct MessageInnerContent: Mappable {
     var invoice:String?=nil
     var paymentHash:String?=nil
     var amount:Int?=nil
+    var fullContactInfo:String?=nil
+    var recipientAlias:String?=nil
 
     init?(map: Map) {}
     
@@ -290,6 +304,8 @@ struct MessageInnerContent: Mappable {
         invoice <- map["invoice"]
         paymentHash <- map["paymentHash"]
         amount <- map["amount"]
+        fullContactInfo <- map["fullContactInfo"]
+        recipientAlias <- map["recipientAlias"]
     }
     
 }
@@ -308,20 +324,24 @@ struct GenericIncomingMessage: Mappable {
     var mediaToken:String?=nil
     var mediaType:String?=nil
     var muid:String?=nil
-    var date:Int?=nil
+    var timestamp:Int?=nil
     var invoice:String?=nil
     var paymentHash:String?=nil
+    var alias:String?=nil
+    var fullContactInfo:String?=nil
 
     init?(map: Map) {}
     
     init(msg:Msg){
-        if let sender = msg.sender,
+        
+        if let fromMe = msg.fromMe, fromMe == true, let sentTo = msg.sentTo{
+            self.senderPubkey = sentTo
+        }
+        else if let sender = msg.sender,
            let csr = ContactServerResponse(JSONString: sender){
             self.senderPubkey = csr.pubkey
         }
-        else if let fromMe = msg.fromMe, fromMe == true, let sentTo = msg.sentTo{
-            self.senderPubkey = sentTo
-        }
+        
         
         var innerContentAmount : UInt64? = nil
         if let message = msg.message,
@@ -334,12 +354,36 @@ struct GenericIncomingMessage: Mappable {
             self.mediaType = innerContent.mediaType
             self.muid = innerContent.muid
             self.originalUuid = innerContent.originalUuid
-            self.date = innerContent.date
+//            self.date = innerContent.date
             self.invoice = innerContent.invoice
             self.paymentHash = innerContent.paymentHash
             innerContentAmount = UInt64(innerContent.amount ?? 0)
+            if msg.type == 33{
+                self.alias = innerContent.recipientAlias
+                self.fullContactInfo = innerContent.fullContactInfo
+            }
+            
+            let (isTribe, _) = SphinxOnionManager.sharedInstance.isMessageTribeMessage(senderPubkey: self.senderPubkey ?? "")
+            
+            if let timestamp = msg.timestamp,
+                isTribe == false{
+                self.timestamp = Int(timestamp)
+            }
+            else{
+                self.timestamp = innerContent.date
+            }
         }
-        self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
+        if let invoice = self.invoice{
+            print(msg)
+            let prd = PaymentRequestDecoder()
+            prd.decodePaymentRequest(paymentRequest: invoice)
+            let amount = prd.getAmount() ?? 0
+            self.amount = amount * 1000 // convert to msat
+        }
+        else{
+            self.amount = (msg.fromMe == true) ? Int((innerContentAmount) ?? 0) : Int((msg.msat ?? innerContentAmount) ?? 0)
+        }
+        
         self.uuid = msg.uuid
         self.index = msg.index
     }

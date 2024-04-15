@@ -1762,7 +1762,7 @@ public func `setBlockheight`(`blockheight`: UInt32) throws -> RunReturn {
     )
 }
 
-public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `toPubkey`: String, `routeHint`: String, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64, `inviteCode`: String?) throws -> RunReturn {
+public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `toPubkey`: String, `routeHint`: String, `myAlias`: String, `myImg`: String, `amtMsat`: UInt64, `inviteCode`: String?, `theirAlias`: String?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_add_contact(
@@ -1774,7 +1774,8 @@ public func `addContact`(`seed`: String, `uniqueTime`: String, `state`: Data, `t
         FfiConverterString.lower(`myAlias`),
         FfiConverterString.lower(`myImg`),
         FfiConverterUInt64.lower(`amtMsat`),
-        FfiConverterOptionString.lower(`inviteCode`),$0)
+        FfiConverterOptionString.lower(`inviteCode`),
+        FfiConverterOptionString.lower(`theirAlias`),$0)
 }
     )
 }
@@ -2142,7 +2143,7 @@ public func `getMsgsCounts`(`seed`: String, `uniqueTime`: String, `state`: Data)
     )
 }
 
-public func `fetchMsgsBatch`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?, `isRestore`: Bool?) throws -> RunReturn {
+public func `fetchMsgsBatch`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_fetch_msgs_batch(
@@ -2151,13 +2152,12 @@ public func `fetchMsgsBatch`(`seed`: String, `uniqueTime`: String, `state`: Data
         FfiConverterData.lower(`state`),
         FfiConverterUInt64.lower(`lastMsgIdx`),
         FfiConverterOptionUInt32.lower(`limit`),
-        FfiConverterOptionBool.lower(`reverse`),
-        FfiConverterOptionBool.lower(`isRestore`),$0)
+        FfiConverterOptionBool.lower(`reverse`),$0)
 }
     )
 }
 
-public func `fetchMsgsBatchOkkey`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?, `isRestore`: Bool?) throws -> RunReturn {
+public func `fetchMsgsBatchOkkey`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_fetch_msgs_batch_okkey(
@@ -2166,13 +2166,12 @@ public func `fetchMsgsBatchOkkey`(`seed`: String, `uniqueTime`: String, `state`:
         FfiConverterData.lower(`state`),
         FfiConverterUInt64.lower(`lastMsgIdx`),
         FfiConverterOptionUInt32.lower(`limit`),
-        FfiConverterOptionBool.lower(`reverse`),
-        FfiConverterOptionBool.lower(`isRestore`),$0)
+        FfiConverterOptionBool.lower(`reverse`),$0)
 }
     )
 }
 
-public func `fetchFirstMsgsPerKey`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?, `isRestore`: Bool?) throws -> RunReturn {
+public func `fetchFirstMsgsPerKey`(`seed`: String, `uniqueTime`: String, `state`: Data, `lastMsgIdx`: UInt64, `limit`: UInt32?, `reverse`: Bool?) throws -> RunReturn {
     return try  FfiConverterTypeRunReturn.lift(
         try rustCallWithError(FfiConverterTypeSphinxError.lift) {
     uniffi_sphinxrs_fn_func_fetch_first_msgs_per_key(
@@ -2181,8 +2180,7 @@ public func `fetchFirstMsgsPerKey`(`seed`: String, `uniqueTime`: String, `state`
         FfiConverterData.lower(`state`),
         FfiConverterUInt64.lower(`lastMsgIdx`),
         FfiConverterOptionUInt32.lower(`limit`),
-        FfiConverterOptionBool.lower(`reverse`),
-        FfiConverterOptionBool.lower(`isRestore`),$0)
+        FfiConverterOptionBool.lower(`reverse`),$0)
 }
     )
 }
@@ -2305,7 +2303,7 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_set_blockheight() != 43943) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_add_contact() != 11442) {
+    if (uniffi_sphinxrs_checksum_func_add_contact() != 30931) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_get_contact() != 19847) {
@@ -2395,13 +2393,13 @@ private var initializationResult: InitializationResult {
     if (uniffi_sphinxrs_checksum_func_get_msgs_counts() != 29743) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_fetch_msgs_batch() != 65179) {
+    if (uniffi_sphinxrs_checksum_func_fetch_msgs_batch() != 22256) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_fetch_msgs_batch_okkey() != 11004) {
+    if (uniffi_sphinxrs_checksum_func_fetch_msgs_batch_okkey() != 330) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_sphinxrs_checksum_func_fetch_first_msgs_per_key() != 10950) {
+    if (uniffi_sphinxrs_checksum_func_fetch_first_msgs_per_key() != 29398) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sphinxrs_checksum_func_fetch_payments() != 18180) {

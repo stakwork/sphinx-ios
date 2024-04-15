@@ -229,7 +229,7 @@ class sphinxOnionAddContactTests: XCTestCase {
         fulfillExpectationAfterDelay(newContactRegistrationExpectation, delayInSeconds: 4.5)
         wait(for: [newContactRegistrationExpectation], timeout: 5.0)//give self contact time to take
         //test_mqtt_server_broker_registration() //pre requisite before we do any key exchange is register self contact
-        let contactPubkey = sphinxOnionManager.parseContactInfoString(routeHint: test_contact_info)?.0 ?? ""
+        let contactPubkey = sphinxOnionManager.parseContactInfoString(fullContactInfo: test_contact_info)?.0 ?? ""
         
         guard let contact = UserContact.getContactsWith(pubkeys: [contactPubkey]).first else{
             XCTFail("Failed contact registration")

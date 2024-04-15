@@ -24,8 +24,8 @@ extension SphinxOnionManager{//contacts related
         managedContext.saveContext()
     }
     
-    func parseContactInfoString(routeHint:String)->(String,String,String)?{
-        let components = routeHint.split(separator: "_").map({String($0)})
+    func parseContactInfoString(fullContactInfo:String)->(String,String,String)?{
+        let components = fullContactInfo.split(separator: "_").map({String($0)})
         if components.count != 3 {return nil}
         return (components.count == 3) ? (components[0],components[1],components[2]) : nil
     }
@@ -35,7 +35,7 @@ extension SphinxOnionManager{//contacts related
         nickname:String?=nil,
         inviteCode:String?=nil
     ){
-        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: contactInfo) else{
+        guard let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(fullContactInfo: contactInfo) else{
             return
         }
         if let existingContact = UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey){
@@ -55,7 +55,7 @@ extension SphinxOnionManager{//contacts related
             if let inviteCode = inviteCode{
                 hexCode = try! codeFromInvite(inviteQr: inviteCode)
             }
-            let rr = try! addContact(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 0, inviteCode: hexCode)
+            let rr = try! addContact(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 1000, inviteCode: hexCode, theirAlias: nickname)
             handleRunReturn(rr: rr)
         }
         catch{

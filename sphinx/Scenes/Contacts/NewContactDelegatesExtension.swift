@@ -115,6 +115,13 @@ extension NewContactViewController : UITextFieldDelegate {
                 self.completePubkeyComponents(newString)
             })
         }
+        else if let parsedContact = SphinxOnionManager.sharedInstance.parseContactInfoString(fullContactInfo: newString){
+            DelayPerformedHelper.performAfterDelay(seconds: 0.3, completion: {
+                self.addressTextField.text = parsedContact.0
+                self.routeHintTextField.text = parsedContact.1 + "_" + parsedContact.2
+                self.routeHintTextField.becomeFirstResponder()
+            })
+        }
         return true
     }
     

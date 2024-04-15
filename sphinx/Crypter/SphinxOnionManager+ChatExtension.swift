@@ -305,7 +305,7 @@ extension SphinxOnionManager{
                 print(message)
                 print(genericIncomingMessage)
                 if let fullContactInfo = genericIncomingMessage.fullContactInfo,
-                let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(routeHint: fullContactInfo),
+                let (recipientPubkey, recipLspPubkey,scid) = parseContactInfoString(fullContactInfo: fullContactInfo),
                    UserContact.getContactWithDisregardStatus(pubkey: recipientPubkey) == nil{
                     let pendingContact = self.createNewContact(pubkey: recipientPubkey,nickname: genericIncomingMessage.alias ?? "Unknown")
                     pendingContact?.scid = scid

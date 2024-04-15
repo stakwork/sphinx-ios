@@ -147,7 +147,7 @@ extension NewChatViewController : NewChatTableDataSourceDelegate, SocketManagerD
             let chat = contact.getChat()
             goToChatWith(contactId: contact.id, chatId: chat?.id)
         } else {
-            let routeHintString = (routeHint != nil && routeHint!.isNotEmpty) ? ":\(routeHint!)" : ""
+            let routeHintString = (routeHint != nil && routeHint!.isNotEmpty) ? "_\(routeHint!)" : ""
             let newContactVC = NewContactViewController.instantiate(pubkey: "\(pubkey)\(routeHintString)")
             present(newContactVC, animated: true)
         }

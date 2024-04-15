@@ -564,10 +564,10 @@ extension NewChatTableDataSource {
         
         messages.forEach({
             if $0.bubbleMessageContentString?.hasPubkeyLinks == true {
-                if let link = $0.messageContent?.stringFirstLink, link.isPubKey {
+                if let contactInfo = SphinxOnionManager.sharedInstance.parseContactInfoString(fullContactInfo: $0.messageContent ?? ""){
                     pubkeys[$0.id] = (
-                        link.pubkeyComponents.0,
-                        link.pubkeyComponents.1
+                        contactInfo.0,
+                        contactInfo.1 + "_" + contactInfo.2
                     )
                 }
             }

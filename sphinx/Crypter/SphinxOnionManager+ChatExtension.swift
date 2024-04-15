@@ -477,6 +477,17 @@ extension SphinxOnionManager{
            let oneOnOneChat = contact.getChat(){
             chat = oneOnOneChat
             senderId = (fromMe == true) ? (UserData.sharedInstance.getUserId()) : contact.id
+            
+            var contactDidChange = false
+            if(contact.nickname != message.alias){
+                contact.nickname = message.alias
+                contactDidChange = true
+            }
+            if(contact.avatarUrl != message.photoUrl){
+                contact.avatarUrl = message.photoUrl
+                contactDidChange = true
+            }
+            contactDidChange ? (contact.managedObjectContext?.saveContext()) :()
         }
         else if let tribeChat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: pubkey){
             print("found tribeChat:\(tribeChat)")

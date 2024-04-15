@@ -277,7 +277,15 @@ class ProfileViewController: NewKeyboardHandlerViewController {
         switch (sender.tag) {
         case KeyboardButtons.Done.rawValue:
             if let currentField = currentField {
-                let _ = textFieldShouldReturn(currentField)
+                if currentField == nameTextField,
+                   let name = nameTextField.text{
+                    UserContact.updateOwnerAlias(newNickname: name)
+                    nameLabel.text = name
+                    let _ = textFieldShouldReturn(currentField)
+                }
+                else{
+                    let _ = textFieldShouldReturn(currentField)
+                }
             }
             break
         case KeyboardButtons.Cancel.rawValue:

@@ -329,6 +329,7 @@ struct GenericIncomingMessage: Mappable {
     var paymentHash:String?=nil
     var alias:String?=nil
     var fullContactInfo:String?=nil
+    var photoUrl:String?=nil
 
     init?(map: Map) {}
     
@@ -340,6 +341,8 @@ struct GenericIncomingMessage: Mappable {
         else if let sender = msg.sender,
            let csr = ContactServerResponse(JSONString: sender){
             self.senderPubkey = csr.pubkey
+            self.photoUrl = csr.photoUrl
+            self.alias = csr.alias
         }
         
         

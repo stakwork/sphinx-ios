@@ -122,9 +122,9 @@ extension ProfileViewController : UITextFieldDelegate {
     
     func updateProfile(photoUrl: String? = nil) {
         if let profile = UserContact.getOwner() {
-            if profile.id < 0 {
-                return
-            }
+//            if profile.id < 0 {
+//                return
+//            }
             
             let nickname = profile.nickname ?? ""
             let privatePhoto = profile.privatePhoto
@@ -132,25 +132,31 @@ extension ProfileViewController : UITextFieldDelegate {
             let updatedName = nameTextField.text ?? nickname
             let updatedPrivatePhoto = !sharePhotoSwitch.isOn
             
-            if nickname == updatedName && privatePhoto == updatedPrivatePhoto && photoUrl == nil {
-                return
-            }
+            profile.avatarUrl = photoUrl
             
-            var parameters = [String : AnyObject]()
-            parameters["alias"] = updatedName as AnyObject?
-            parameters["private_photo"] = updatedPrivatePhoto as AnyObject?
+            self.configureProfile()
             
-            if let photoUrl = photoUrl, !photoUrl.isEmpty {
-                parameters["photo_url"] = photoUrl as AnyObject?
-            }
+//            if nickname == updatedName && privatePhoto == updatedPrivatePhoto && photoUrl == nil {
+//                return
+//            }
+//            
+//            var parameters = [String : AnyObject]()
+//            parameters["alias"] = updatedName as AnyObject?
+//            parameters["private_photo"] = updatedPrivatePhoto as AnyObject?
+//            
+//            if let photoUrl = photoUrl, !photoUrl.isEmpty {
+//                parameters["photo_url"] = photoUrl as AnyObject?
+//            }
             
-            API.sharedInstance.updateUser(id: profile.id, params: parameters, callback: { contact in
-                let _ = UserContactsHelper.insertContact(contact: contact)
-                self.configureProfile()
-            }, errorCallback: {
-                self.configureProfile()
-                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
-            })
+            
+            
+//            API.sharedInstance.updateUser(id: profile.id, params: parameters, callback: { contact in
+//                let _ = UserContactsHelper.insertContact(contact: contact)
+//                self.configureProfile()
+//            }, errorCallback: {
+//                self.configureProfile()
+//                AlertHelper.showAlert(title: "generic.error.title".localized, message: "generic.error.message".localized)
+//            })
         }
     }
 }
@@ -194,8 +200,7 @@ extension ProfileViewController : UIImagePickerControllerDelegate, UINavigationC
     }
     
     func uploadImageData(data: Data) {
-        if let profile = UserContact.getOwner(),
-           profile.id > 0 {
+        if let profile = UserContact.getOwner() {
             
             uploading = true
             

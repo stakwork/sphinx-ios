@@ -353,6 +353,13 @@ public class UserContact: NSManagedObject {
         return contact
     }
     
+    public static func updateOwnerAlias(newNickname:String){
+        if var owner = getOwner(){
+            owner.nickname = newNickname
+            owner.managedObjectContext?.saveContext()
+        }
+    }
+    
     func getAddress() -> String? {
         if let address = self.publicKey, !address.isEmpty {
             let delimiter = self.routeHint?.isV2RouteHint == false ? ":" : "_"

@@ -309,7 +309,7 @@ class ProfileViewController: NewKeyboardHandlerViewController {
     
     func getAddress() -> String? {
         if let address = addressTextField.text, !address.isEmpty {
-            let routeHint = (routeHintTextField.text ?? "").isEmpty ? "" : ":\((routeHintTextField.text ?? ""))"
+            let routeHint = (routeHintTextField.text ?? "").isEmpty ? "" : "_\((routeHintTextField.text ?? ""))"
             return "\(address)\(routeHint)"
         }
         return nil

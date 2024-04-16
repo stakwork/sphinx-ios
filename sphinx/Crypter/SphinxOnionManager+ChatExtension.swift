@@ -483,7 +483,7 @@ extension SphinxOnionManager{
             senderId = (fromMe == true) ? (UserData.sharedInstance.getUserId()) : contact.id
             
             var contactDidChange = false
-            if(contact.nickname != message.alias){
+            if(contact.nickname != message.alias && message.alias != nil){
                 contact.nickname = message.alias
                 contactDidChange = true
             }

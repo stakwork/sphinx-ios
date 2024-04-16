@@ -48,6 +48,7 @@ class NewChatViewController: NewKeyboardHandlerViewController {
     let messageBubbleHelper = NewMessageBubbleHelper()
     
     var webAppVC : WebAppViewController? = nil
+    var isAppUrl = false
     
     enum ViewMode: Int {
         case Standard

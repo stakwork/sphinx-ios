@@ -98,6 +98,9 @@ extension NewPublicGroupViewController {
                     case GroupFields.AppUrl.rawValue:
                         field.text = chatTribeInfo.appUrl ?? ""
                         break
+                    case GroupFields.SecondBrainUrl.rawValue:
+                        field.text = chatTribeInfo.secondBrainUrl ?? ""
+                        break
                     case GroupFields.FeedUrl.rawValue:
                         field.text = chatTribeInfo.feedUrl ?? ""
                         break
@@ -245,6 +248,13 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
         case GroupFields.AppUrl.rawValue:
             if let url = textField.text, url.isValidURL || url.isEmpty {
                 groupsManager.newGroupInfo.appUrl = textField.text ?? ""
+            } else {
+                invalidUrl()
+            }
+            break
+        case GroupFields.SecondBrainUrl.rawValue:
+            if let url = textField.text, url.isValidURL || url.isEmpty {
+                groupsManager.newGroupInfo.secondBrainUrl = textField.text ?? ""
             } else {
                 invalidUrl()
             }

@@ -56,6 +56,10 @@ class NewChatHeaderView: UIView {
         chatHeaderView.toggleWebAppIcon(showChatIcon: showChatIcon)
     }
     
+    func toggleSBIcon(showChatIcon: Bool) {
+        chatHeaderView.toggleSBIcon(showChatIcon: showChatIcon)
+    }
+    
     func configureHeaderWith(
         chat: Chat?,
         contact: UserContact?,

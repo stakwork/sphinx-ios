@@ -67,6 +67,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         case AmountToStake
         case TimeToStake
         case AppUrl
+        case SecondBrainUrl
         case FeedUrl
     }
     

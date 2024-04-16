@@ -31,6 +31,10 @@ extension NewChatViewController : ChatHeaderViewDelegate, ThreadHeaderViewDelega
         toggleWebAppContainer()
     }
     
+    func didTapSecondBrainButton() {
+        toggleWebAppContainer(isAppURL: false)
+    }
+    
     func didTapThreadHeaderButton() {
         chatTableView.scrollToBottom()
     }

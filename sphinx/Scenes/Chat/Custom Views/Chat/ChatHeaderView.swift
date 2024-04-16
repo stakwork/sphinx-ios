@@ -13,6 +13,7 @@ protocol ChatHeaderViewDelegate : class {
     func didTapHeaderButton()
     func didTapBackButton()
     func didTapWebAppButton()
+    func didTapSecondBrainButton()
     func didTapMuteButton()
     func didTapMoreOptionsButton(sender: UIButton)
     func didTapShowThreadsButton()
@@ -39,6 +40,7 @@ class ChatHeaderView: UIView {
     @IBOutlet weak var boltSign: UILabel!
     @IBOutlet weak var keyLoadingWheel: UIActivityIndicatorView!
     @IBOutlet weak var volumeButton: UIButton!
+    @IBOutlet weak var secondBrainButton: UIButton!
     @IBOutlet weak var webAppButton: UIButton!
     @IBOutlet weak var contributionsContainer: UIStackView!
     @IBOutlet weak var optionsButton: UIButton!
@@ -54,6 +56,7 @@ class ChatHeaderView: UIView {
     var contact: UserContact? = nil
     
     public enum RightButtons: Int {
+        case SecondBrain
         case WebApp
         case Mute
         case More
@@ -107,6 +110,7 @@ class ChatHeaderView: UIView {
         
         configureWebAppButton()
         configureThreadsButton()
+        configureSecondBrainButton()
         
         setVolumeState(muted: chat?.isMuted() ?? false)
         configureImageOrInitials()
@@ -198,6 +202,11 @@ class ChatHeaderView: UIView {
         webAppButton.setTitle("apps", for: .normal)
     }
     
+    func configureSecondBrainButton() {
+        let hasSecondBrain = chat?.getSecondBrainAppUrl() != nil
+        secondBrainButton.isHidden = !hasSecondBrain
+    }
+    
     func configureThreadsButton() {
         let isTribe = chat?.isPublicGroup() == true
         showThreadsButton.isHidden = !isTribe
@@ -220,6 +229,11 @@ class ChatHeaderView: UIView {
     func toggleWebAppIcon(showChatIcon: Bool) {
         webAppButton.setTitle(showChatIcon ? "chat" : "apps", for: .normal)
     }
+    
+    func toggleSBIcon(showChatIcon: Bool) {
+        secondBrainButton.setTitle(showChatIcon ? "chat" : "", for: .normal)
+        secondBrainButton.setImage(showChatIcon ? nil : UIImage(named: "secondBrainIcon"), for: .normal)
+    }
 
     @IBAction func backButtonTouched() {
         delegate?.didTapBackButton()
@@ -231,6 +245,9 @@ class ChatHeaderView: UIView {
     
     @IBAction func rightButtonTouched(_ sender: UIButton) {
         switch(sender.tag) {
+        case RightButtons.SecondBrain.rawValue:
+            delegate?.didTapSecondBrainButton()
+            break
         case RightButtons.WebApp.rawValue:
             delegate?.didTapWebAppButton()
             break

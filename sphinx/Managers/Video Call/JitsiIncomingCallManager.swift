@@ -62,6 +62,8 @@ final class JitsiIncomingCallManager: NSObject, CXProviderDelegate {
                 audioOnly: !hasVideo
             )
         }
+        
+        finishCall()
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction){

@@ -3,6 +3,7 @@
 "generic.error.message" = "May mali. Paki ulit sa ilang saglit.";
 "generic.message.error" = "Hindi maipadala ang mensahe dahil sa isang error sa pag-encrypt.";
 "generic.contact-support" = "Paki contact and suporta sa support@stakwork.com";
+"boost.error.title" = "Boost error";
 "confirm" = "Kumpirma";
 "verify" = "Patunayan";
 "warning" = "Babala";

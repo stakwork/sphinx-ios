@@ -23,7 +23,7 @@ extension NewContactViewController {
                 self.loading = false
 
                 if success {
-                    self.delegate?.shouldReloadContacts?(reload: true)
+                    self.delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: -1)
                     self.backButtonTouched()
                 } else {
                     self.showErrorAlert(message: "generic.error.message".localized)
@@ -77,7 +77,7 @@ extension NewContactViewController {
                 self.loading = false
 
                 if success {
-                    self.delegate?.shouldReloadContacts?(reload: true)
+                    self.delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: 1)
                     self.closeButtonTouched()
                 } else {
                     self.showErrorAlert(message: "generic.error.message".localized)

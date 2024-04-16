@@ -214,7 +214,9 @@ extension NewChatViewModel {
         ChatTrackingHandler.shared.deleteOngoingMessage(with: chat?.id)
 
         joinIfCallMessage(message: message)
-        resetReply()        
+        showBoostErrorAlert(message: message)
+        
+        resetReply()
         
         completion(true)
     }
@@ -226,6 +228,14 @@ extension NewChatViewModel {
             if let callLink = message.messageContent {
                 VideoCallManager.sharedInstance.startVideoCall(link: callLink)
             }
+        }
+    }
+    
+    func showBoostErrorAlert(
+        message: TransactionMessage
+    ) {
+        if message.isMessageBoost() && message.failed() {
+            AlertHelper.showAlert(title: "boost.error.title".localized, message: message.errorMessage ?? "generic.error.message".localized)
         }
     }
 

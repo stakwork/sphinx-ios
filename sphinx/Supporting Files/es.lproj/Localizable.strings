@@ -12,6 +12,7 @@
 "generic.error.message" = "Ha habido un problema. Por favor vuelva a intentarlo más tarde.";
 "generic.message.error" = "El mensaje no pudo ser encriptado correctamente por lo cual no puede ser enviado.";
 "generic.contact-support" = "Por favor contacta con soporte en support@stakwork.com";
+"boost.error.title" = "Boost error";
 "confirm" = "Confirmar";
 "verify" = "Verificar";
 "warning" = "Atención";

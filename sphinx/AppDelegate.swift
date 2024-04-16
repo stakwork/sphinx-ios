@@ -550,10 +550,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 
                 if let presentedVC = navCenterController?.presentedViewController {
                     presentedVC.dismiss(animated: true) {
-                        navCenterController?.pushViewController(chatVC, animated: true)
+                        navCenterController?.pushOverRootVC(vc: chatVC)
                     }
                 } else {
-                    navCenterController?.pushViewController(chatVC, animated: true)
+                    navCenterController?.pushOverRootVC(vc: chatVC)
                 }
             }
         }

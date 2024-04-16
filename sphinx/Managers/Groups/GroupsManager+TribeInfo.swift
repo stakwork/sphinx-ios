@@ -30,11 +30,8 @@ extension GroupsManager {
         var privateTribe : Bool = false
         var deleted : Bool = false
         var appUrl : String? = nil
-        var feedUrl : String? = nil {
-            didSet{
-                print("Got feed url: \(feedUrl)")
-            }
-        }
+        var secondBrainUrl : String? = nil
+        var feedUrl : String? = nil
         var feedContentType : FeedContentType? = nil
         var ownerRouteHint : String? = nil
         var bots : [Bot] = []

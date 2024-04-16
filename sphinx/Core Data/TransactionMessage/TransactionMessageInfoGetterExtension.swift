@@ -342,6 +342,10 @@ extension TransactionMessage {
                (type == TransactionMessageType.boost.rawValue && replyUUID == nil)
     }
     
+    func isMessageBoost() -> Bool {
+        return (type == TransactionMessageType.boost.rawValue && replyUUID != nil)
+    }
+    
     func isPayment() -> Bool {
         return type == TransactionMessageType.payment.rawValue
     }

@@ -129,7 +129,7 @@ extension GroupsManager {
             let isPrivate = tribeInfo.privateTribe
             SphinxOnionManager.sharedInstance.joinTribe(tribePubkey: pubkey, routeHint: routeHint, alias: UserContact.getOwner()?.nickname,isPrivate: isPrivate)
             chat.status = (isPrivate) ? Chat.ChatStatus.pending.rawValue : Chat.ChatStatus.approved.rawValue
-            chat.type = (isPrivate) ? Chat.ChatType.privateGroup.rawValue : Chat.ChatType.publicGroup.rawValue
+            chat.type = Chat.ChatType.publicGroup.rawValue
             chat.managedObjectContext?.saveContext()
         }
     }

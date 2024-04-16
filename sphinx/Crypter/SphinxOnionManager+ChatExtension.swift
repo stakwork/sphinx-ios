@@ -24,15 +24,19 @@ extension SphinxOnionManager{
         return nil
     }
     
-    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String, completion: @escaping (Chat?,Bool) -> ()) {
+    func fetchOrCreateChatWithTribe(ownerPubkey: String, host: String?, completion: @escaping (Chat?,Bool) -> ()) {
         // First try to fetch the chat from the database.
         if let chat = Chat.getTribeChatWithOwnerPubkey(ownerPubkey: ownerPubkey) {
             completion(chat,false)
-        } else {
+        } 
+        else if let host = host{
             // If not found in the database, attempt to lookup and restore.
             GroupsManager.sharedInstance.lookupAndRestoreTribe(pubkey: ownerPubkey, host: host) { chat in
                 completion(chat,true)
             }
+        }
+        else{
+            completion(nil,false)
         }
     }
 
@@ -377,9 +381,9 @@ extension SphinxOnionManager{
                         processIncomingDeletion(message: genericIncomingMessage, date: date)
                     }
                     else if isGroupAction(type: type),
-                            let tribePubkey = csr.pubkey,
-                            let host = csr.host{
-                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: host, completion: { chat,didCreateTribe  in
+                            let tribePubkey = csr.pubkey
+                    {
+                        fetchOrCreateChatWithTribe(ownerPubkey: tribePubkey, host: csr.host, completion: { chat,didCreateTribe  in
                             if let chat = chat{
                                 let groupActionMessage = TransactionMessage(context: self.managedContext)
                                 groupActionMessage.uuid = uuid

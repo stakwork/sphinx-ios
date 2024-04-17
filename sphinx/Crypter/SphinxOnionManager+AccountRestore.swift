@@ -437,5 +437,13 @@ extension SphinxOnionManager : NSFetchedResultsControllerDelegate{
 //            hideRestoreCallback()
 //        }
     }
+    
+    func registerDeviceID(id:String){
+        guard let seed = getAccountSeed() else{
+            return
+        }
+        let rr = try! setPushToken(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), pushToken: id)
+        handleRunReturn(rr: rr)
+    }
 
 }

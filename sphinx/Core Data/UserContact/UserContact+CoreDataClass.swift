@@ -467,14 +467,8 @@ public class UserContact: NSManagedObject {
         newDeviceId: String? = nil
     ) {
         if let currentDeviceId = newDeviceId ?? UserDefaults.Keys.deviceId.get(), !currentDeviceId.isEmpty {
-            
-            let parameters : [String: AnyObject] = ["device_id" : currentDeviceId as AnyObject]
-            let id = UserData.sharedInstance.getUserId()
-
-            API.sharedInstance.updateUser(id: id, params: parameters, callback: { contact in
-                UserDefaults.Keys.deviceId.set(contact["device_id"].string)
-            }, errorCallback: {
-                print("Error updating device id")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+                SphinxOnionManager.sharedInstance.registerDeviceID(id: currentDeviceId)
             })
         }
     }

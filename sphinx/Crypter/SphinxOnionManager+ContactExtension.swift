@@ -57,6 +57,8 @@ extension SphinxOnionManager{//contacts related
             }
             let rr = try! addContact(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), toPubkey: recipientPubkey, routeHint: "\(recipLspPubkey)_\(scid)", myAlias: (selfContact.nickname ?? nickname) ?? "", myImg: selfContact.avatarUrl ?? "", amtMsat: 1000, inviteCode: hexCode, theirAlias: nickname)
             handleRunReturn(rr: rr)
+            print("INITIATED KEY EXCHANGE WITH ARGS:\(seed,getTimeWithEntropy(),loadOnionStateAsData(),recipientPubkey,"\(recipLspPubkey)_\(scid)",selfContact.avatarUrl,1000,hexCode,nickname) ")
+            print("INITIATED KEY EXCHANGE WITH RR:\(rr)")
         }
         catch{
             
@@ -66,7 +68,8 @@ extension SphinxOnionManager{//contacts related
     
     //MARK: Processes key exchange messages (friend requests) between contacts
     func processKeyExchangeMessages(rr:RunReturn){
-        for msg in rr.msgs{
+        for msg in rr.msgs.filter({$0.type == 11 || $0.type == 10}){
+            print("KEY EXCHANGE MSG of Type \(String(describing: msg.type)) RECEIVED:\(msg)")
             if let sender = msg.sender,
                let csr = ContactServerResponse(JSONString: sender),
                let senderPubkey = csr.pubkey{

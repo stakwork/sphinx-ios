@@ -22,6 +22,7 @@ class SphinxOnionManager : NSObject {
     
     var pendingContact : UserContact? = nil
     var currentServer : Server? = nil
+    var pendingInviteLookupByTag : [String:String] = [String:String]()
     var stashedContactInfo:String?=nil
     var stashedInitialTribe:String?=nil
     var stashedInviteCode:String?=nil

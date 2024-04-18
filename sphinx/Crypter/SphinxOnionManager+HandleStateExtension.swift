@@ -120,11 +120,30 @@ extension SphinxOnionManager {
             NotificationCenter.default.post(name: .totalMessageCountReceived, object: nil)
         }
         
+        if let newInvite = rr.newInvite,
+           rr.msgs.count > 0,
+           let tag = rr.msgs[0].tag{
+            self.pendingInviteLookupByTag[tag] = newInvite // if it's a new invite stash it
+        }
+        else if let sentStatusJSON = rr.sentStatus,
+                let sentStatus = SentStatus(JSONString: sentStatusJSON){
+            processInvitePurchaseAcks(sentStatus: sentStatus) //if it's not a new invite, allow us to process the tags to find invite acks
+        }
+
         purgeObsoleteState(keys: rr.stateToDelete)
-        
     }
     
-    
+    func processInvitePurchaseAcks(sentStatus:SentStatus){
+        guard let tag = sentStatus.tag else{
+            return
+        }
+        if pendingInviteLookupByTag.keys.contains(tag){
+            let inviteCode = sentStatus.status != "COMPLETE" ? (nil) : (pendingInviteLookupByTag[tag])
+            NotificationCenter.default.post(name: .inviteCodeAckReceived,object:nil, userInfo: ["inviteCode": inviteCode])
+            pendingInviteLookupByTag.removeValue(forKey: tag)
+        }
+        
+    }
 
     func pushRRTopic(topic:String,payloadData:Data?){
         let byteArray: [UInt8] = payloadData != nil ? [UInt8](payloadData!) : [UInt8]()
@@ -422,4 +441,22 @@ struct TribeMembersRRObject: Mappable {
         contactKey    <- map["contact_key"]
     }
     
+}
+
+
+class SentStatus: Mappable {
+    var tag: String?
+    var status: String?
+    var preimage: String?
+    var paymentHash: String?
+
+    required init?(map: Map) {
+    }
+
+    func mapping(map: Map) {
+        tag         <- map["tag"]
+        status      <- map["status"]
+        preimage    <- map["preimage"]
+        paymentHash <- map["payment_hash"]
+    }
 }

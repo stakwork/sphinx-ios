@@ -10,20 +10,19 @@ import Foundation
 
 extension SphinxOnionManager{//invites related
     
-    func issueInvite(amountMsat:Int)->String?{
+    func requestInviteCode(amountMsat:Int){
         guard let seed = getAccountSeed(),
             let selfContact = UserContact.getSelfContact(),
             let nickname = selfContact.nickname else{
-            return nil
+            return
         }
         do{
             
             let rr = try! makeInvite(seed: seed, uniqueTime: getTimeWithEntropy(), state: loadOnionStateAsData(), host: self.server_IP, amtMsat: UInt64(amountMsat), myAlias: nickname,tribeHost: "\(server_IP):8801", tribePubkey: defaultTribePubkey)
             handleRunReturn(rr: rr)
-            return rr.newInvite
         }
         catch{
-            return nil
+            return
         }
     }
     

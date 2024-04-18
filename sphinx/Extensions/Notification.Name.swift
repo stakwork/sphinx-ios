@@ -30,4 +30,5 @@ extension Notification.Name {
     static let newTribeMemberListRetrieved = Notification.Name("newTribeMemberListRetrieved")
     static let invoiceIPaidSettled = Notification.Name("invoiceIPaidSettled")
     static let totalMessageCountReceived = Notification.Name("totalMessageCountReceived")
+    static let inviteCodeAckReceived = Notification.Name("inviteCodeAckReceived")
 }

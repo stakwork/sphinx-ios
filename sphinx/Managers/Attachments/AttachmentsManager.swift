@@ -164,13 +164,14 @@ class AttachmentsManager {
         
         if let _ = attachmentObject.data {
             uploadEncryptedData(attachmentObject: attachmentObject, token: token) { fileJSON, AttachmentObject in
-                self.sendAttachment(
+                let sentMessage = self.sendAttachment(
                     file: fileJSON,
                     chat:chat,
                     attachmentObject: attachmentObject,
                     replyingMessage: replyingMessage,
                     threadUUID: threadUUID
                 )
+                self.provisionalMessage = sentMessage
             }
         }
     }
@@ -208,9 +209,9 @@ class AttachmentsManager {
         attachmentObject: AttachmentObject,
         replyingMessage: TransactionMessage? = nil,
         threadUUID: String? = nil
-    ) {
+    ) -> TransactionMessage? {
         
-        SphinxOnionManager.sharedInstance.sendAttachment(file: file, attachmentObject: attachmentObject, chat: chat,replyingMessage: replyingMessage,threadUUID: threadUUID)
+        return SphinxOnionManager.sharedInstance.sendAttachment(file: file, attachmentObject: attachmentObject, chat: chat,replyingMessage: replyingMessage,threadUUID: threadUUID)
         
     }
     

@@ -10,10 +10,14 @@ import UIKit
 import CoreData
 
 @objc protocol NewContactVCDelegate: class {
-    @objc optional func shouldReloadContacts(reload: Bool)
+    @objc optional func shouldReloadContacts(
+        reload: Bool,
+        dashboardTabIndex: Int
+    )
     @objc optional func shouldReloadChat(chat: Chat)
     @objc optional func shouldDismissView()
     @objc optional func didDismissPresentedView()
+    @objc optional func didCreateInvite()
 }
 
 class NewContactViewController: KeyboardEventsViewController {
@@ -194,7 +198,7 @@ class NewContactViewController: KeyboardEventsViewController {
     func reloadChatIfNeeded() {
         if self.shouldRealodChat {
             self.shouldRealodChat = false
-            self.delegate?.shouldReloadContacts?(reload: true)
+            self.delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: -1)
         }
     }
     

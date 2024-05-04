@@ -136,7 +136,7 @@ class GroupNameViewController: UIViewController {
     }
     
     func shouldDismissView() {
-        self.delegate?.shouldReloadContacts?(reload: true)
+        self.delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: -1)
         self.dismiss(animated: true, completion: nil)
     }
 }

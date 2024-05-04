@@ -11,7 +11,7 @@ import UIKit
 extension NewPublicGroupViewController {
     
     func setTagsVCHeight() {
-        let tagsContainerHeigh = (CGFloat(groupsManager.newGroupInfo.tags.count) * kTagRowHeight) + kTagContainerMargin
+        let tagsContainerHeigh = (CGFloat(groupsManager.newGroupInfo.tags.count) * kTagRowHeight) + kTagContainerMargin + kTagRowHeight
         if tagsVCContainerHeight.constant != tagsContainerHeigh {
             tagsVCContainerHeight.constant = tagsContainerHeigh
             tagsVCContainer.layoutIfNeeded()
@@ -19,12 +19,12 @@ extension NewPublicGroupViewController {
     }
     
     func showTagsVC() {
-        setTagsVCHeight()
+        let discoverVC = DiscoverTribesTagSelectionVC.instantiate()
+        discoverVC.modalPresentationStyle = .overCurrentContext
+        self.navigationController?.present(discoverVC, animated: false)
         
-        tagsVC = GroupTagsViewController.instantiate()
-        addChildVC(child: tagsVC!, container: tagsVCContainer)
-        
-        toggleTagsVCView(show: true, completion: {})
+        discoverVC.discoverTribeTagSelectionVM.selectedTags = currentTags
+        discoverVC.delegate = self
     }
     
     func toggleTagsVCView(show: Bool, completion: @escaping () -> ()) {
@@ -35,20 +35,12 @@ extension NewPublicGroupViewController {
         })
     }
     
-    func hideTagsVC() {
-        updateTags() {
-            self.toggleTagsVCView(show: false, completion: {
-                self.tagsVC?.view.removeFromSuperview()
-                self.tagsVC?.removeFromParent()
-                self.tagsVC = nil
-            })
-        }
-    }
-    
     func updateTags(completion: @escaping () -> ()) {
         let previousTagsHeight = self.getCollectionViewHeight()
         tagsAddedDataSource = TagsAddedDataSource(collectionView: tagsCollectionView)
         tagsAddedDataSource.setTags(tags: groupsManager.newGroupInfo.tags)
+        tagsAddedDataSource.addButtonTapped = showTagsVC
+        tagsAddedDataSource.tagSelected = updateSelectedTags
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.2, completion: {
             self.tagsCollectionHeightConstraint.constant = self.getCollectionViewHeight()
@@ -58,11 +50,14 @@ extension NewPublicGroupViewController {
         })
     }
     
+    func updateSelectedTags(index: Int) {
+        groupsManager.newGroupInfo.tags.remove(at: index)
+        currentTags.remove(at: index)
+        updateTags { }
+    }
+    
     func getCollectionViewHeight() -> CGFloat {
-        if tagsCollectionView.contentSize.height <= 20 {
-            return 50
-        }
-        return tagsCollectionView.contentSize.height
+        return tagsCollectionView.contentSize.height + tagsCollectionView.contentInset.bottom + tagsCollectionView.contentInset.top
     }
     
     func completeEditView() {
@@ -102,6 +97,9 @@ extension NewPublicGroupViewController {
                         break
                     case GroupFields.AppUrl.rawValue:
                         field.text = chatTribeInfo.appUrl ?? ""
+                        break
+                    case GroupFields.SecondBrainUrl.rawValue:
+                        field.text = chatTribeInfo.secondBrainUrl ?? ""
                         break
                     case GroupFields.FeedUrl.rawValue:
                         field.text = chatTribeInfo.feedUrl ?? ""
@@ -180,7 +178,7 @@ extension NewPublicGroupViewController {
             self.delegate?.shouldReloadChat?(chat: chat)
             self.navigationController?.popViewController(animated: true)
         } else {
-            self.delegate?.shouldReloadContacts?(reload: true)
+            self.delegate?.shouldReloadContacts?(reload: true, dashboardTabIndex: -1)
             self.dismiss(animated: true)
         }
     }
@@ -250,6 +248,13 @@ extension NewPublicGroupViewController : UITextFieldDelegate {
         case GroupFields.AppUrl.rawValue:
             if let url = textField.text, url.isValidURL || url.isEmpty {
                 groupsManager.newGroupInfo.appUrl = textField.text ?? ""
+            } else {
+                invalidUrl()
+            }
+            break
+        case GroupFields.SecondBrainUrl.rawValue:
+            if let url = textField.text, url.isValidURL || url.isEmpty {
+                groupsManager.newGroupInfo.secondBrainUrl = textField.text ?? ""
             } else {
                 invalidUrl()
             }
@@ -351,5 +356,36 @@ extension NewPublicGroupViewController : AttachmentsManagerDelegate {
         groupsManager.newGroupInfo.img = url
         imageUrlTextField.text = url
         editOrCreateGroup()
+    }
+}
+
+extension NewPublicGroupViewController : DiscoverTribesTagSelectionDelegate {
+    func didSelect(selections: [String]) {
+        
+        let newSet = Set(selections)
+        let oldSet = Set(currentTags)
+        
+        if (newSet != oldSet) {
+            
+            self.currentTags = selections
+            
+            groupsManager.newGroupInfo.tags = getSelectedTags(currentTags: currentTags)
+            updateTags{ }
+        }
+    }
+    
+    func getSelectedTags(currentTags: [String]) -> [GroupsManager.Tag] {
+        let tagDictionary = [
+            "Bitcoin": GroupsManager.Tag(image: "bitcoinTagIcon", description: "Bitcoin", selected: true),
+            "Lightning": GroupsManager.Tag(image: "lightningTagIcon", description: "Lightning", selected: true),
+            "NSFW": GroupsManager.Tag(image: "sphinxTagIcon", description: "NSFW", selected: true),
+            "Crypto": GroupsManager.Tag(image: "cryptoTagIcon", description: "Crypto", selected: true),
+            "Tech": GroupsManager.Tag(image: "techTagIcon", description: "Tech", selected: true),
+            "Altcoins": GroupsManager.Tag(image: "altcoinsTagIcon", description: "Altcoins", selected: true),
+            "Music": GroupsManager.Tag(image: "musicTagIcon", description: "Music", selected: true),
+            "Podcast": GroupsManager.Tag(image: "podcastTagIcon", description: "Podcast", selected: true)
+        ]
+        
+        return currentTags.map({tagDictionary[$0] ?? GroupsManager.Tag(image: "bitcoinTagIcon", description: "Bitcoin")})
     }
 }

@@ -56,6 +56,8 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     
     let newMessageBubbleHelper = NewMessageBubbleHelper()
     
+    var currentTags : [String] = []
+    
     public enum GroupFields: Int {
         case Name
         case Image
@@ -65,6 +67,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         case AmountToStake
         case TimeToStake
         case AppUrl
+        case SecondBrainUrl
         case FeedUrl
     }
     
@@ -92,6 +95,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareView()
+        updateTags() { }
     }
 
     @objc override func keyboardWillShow(_ notification: Notification) {
@@ -130,6 +134,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         tagsCollectionView.layer.cornerRadius = 10
         tagsCollectionView.layer.borderColor = UIColor.Sphinx.LightDivider.resolvedCGColor(with: self.view)
         tagsCollectionView.layer.borderWidth = 1
+        tagsCollectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
         configureFields()
         completeEditView()
@@ -180,10 +185,6 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
         view.endEditing(true)
     }
     
-    @IBAction func tagsButtonTouched() {
-        showTagsVC()
-    }
-    
     @IBAction func listOnTribesSwitchChanged(_ sender: UISwitch) {
         groupsManager.newGroupInfo.unlisted = !sender.isOn
     }
@@ -193,7 +194,7 @@ class NewPublicGroupViewController: KeyboardEventsViewController, BackCameraVC {
     }
     
     @IBAction func dismissTagsButtonTouched() {
-        hideTagsVC()
+//        hideTagsVC()
     }
     
     @IBAction func createGroupButtonTouched() {

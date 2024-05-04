@@ -9,13 +9,13 @@
 import UIKit
 
 extension NewChatViewController {
-    func toggleWebAppContainer() {
+    func toggleWebAppContainer(isAppURL: Bool = true) {
         let shouldShow = webAppContainerView.isHidden
         
         if shouldShow {
             if let chat = chat {
-                if webAppVC == nil {
-                    if let webAppVC = WebAppViewController.instantiate(chat: chat) {
+                if webAppVC == nil || self.isAppUrl != isAppURL {
+                    if let webAppVC = WebAppViewController.instantiate(chat: chat, isAppURL: isAppURL) {
                         self.webAppVC = webAppVC
                     }
                 }
@@ -27,9 +27,14 @@ extension NewChatViewController {
             removeChildVC(child: webAppVC)
         }
         
+        self.isAppUrl = isAppURL
         bottomView.isHidden = shouldShow
         webAppContainerView.isHidden = !webAppContainerView.isHidden
         
-        headerView.toggleWebAppIcon(showChatIcon: shouldShow)
+        if isAppURL {
+            headerView.toggleWebAppIcon(showChatIcon: shouldShow)
+        } else {
+            headerView.toggleSBIcon(showChatIcon: shouldShow)
+        }
     }
 }

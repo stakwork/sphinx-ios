@@ -33,9 +33,13 @@ extension NewChatViewController {
         )
         
         shouldAdjustTableViewTopInset()
-        
-        PodcastNewEpisodeViewController.checkForNewEpisode(chatId: chat?.id)
         headerView.updateSatsEarnedOnHeader()
+        
+        if let _ =  self.presentedViewController {
+            ///Prevent showing new episode view if another VC is presented
+            return
+        }
+        PodcastNewEpisodeViewController.checkForNewEpisode(chatId: chat?.id)
     }
 }
 

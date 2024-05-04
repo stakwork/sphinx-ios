@@ -557,6 +557,7 @@
 		47DE1C492A6ED0C30029597B /* ThreadLastMessageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */; };
 		47DE1C4B2A6ED0CA0029597B /* ThreadLastMessageHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */; };
 		47E194CE2350DB0E004B86A1 /* SphinxSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */; };
+		47E19DEA2BB718A700A0E596 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 47E19DE92BB718A700A0E596 /* PrivacyInfo.xcprivacy */; };
 		47E300DF234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */; };
 		47E300E4234B83EC00DB56DB /* AddFriendRowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */; };
 		47E6A4AC2A2E237400A9509E /* PodcastBoostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E6A4AB2A2E237400A9509E /* PodcastBoostView.swift */; };
@@ -636,6 +637,10 @@
 		47FB189B23A299000097695B /* SignupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB189A23A299000097695B /* SignupHelper.swift */; };
 		47FDDB1C2562D77200BBF15F /* boost_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 47FDDB1B2562D77100BBF15F /* boost_animation.json */; };
 		47FE9A3E23C381A20090913F /* UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */; };
+		9386C2892BB25C2200ABDEF3 /* AddTagsButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9386C2882BB25C2200ABDEF3 /* AddTagsButtonCell.xib */; };
+		9386C28B2BB25EDC00ABDEF3 /* AddedTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9386C28A2BB25EDC00ABDEF3 /* AddedTagsView.swift */; };
+		9386C28D2BB25F2700ABDEF3 /* AddedTagsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9386C28C2BB25F2700ABDEF3 /* AddedTagsView.xib */; };
+		93D7B5472BAE0FEA007C53A9 /* AddTagsButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */; };
 		93FCEA782B91AF3B0069B344 /* DashboardUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */; };
 		CE07B83629DC92F900A02652 /* ItemDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */; };
 		CE07B83729DC92F900A02652 /* ItemDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */; };
@@ -1735,6 +1740,7 @@
 		47DE1C482A6ED0C30029597B /* ThreadLastMessageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadLastMessageHeader.swift; sourceTree = "<group>"; };
 		47DE1C4A2A6ED0CA0029597B /* ThreadLastMessageHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadLastMessageHeader.xib; sourceTree = "<group>"; };
 		47E194CD2350DB0E004B86A1 /* SphinxSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphinxSocketManager.swift; sourceTree = "<group>"; };
+		47E19DE92BB718A700A0E596 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		47E300DE234B81F800DB56DB /* LeftMenuAddFriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftMenuAddFriendTableViewCell.swift; sourceTree = "<group>"; };
 		47E300E3234B83EC00DB56DB /* AddFriendRowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRowButton.swift; sourceTree = "<group>"; };
 		47E61581237DC7F400630FD1 /* sphinx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sphinx.entitlements; sourceTree = "<group>"; };
@@ -1824,6 +1830,10 @@
 		47FDDB1B2562D77100BBF15F /* boost_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = boost_animation.json; sourceTree = "<group>"; };
 		47FE9A3D23C381A20090913F /* UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizer.swift; sourceTree = "<group>"; };
 		487E10CEB3D07B0840A84681 /* Pods_sphinx.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sphinx.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9386C2882BB25C2200ABDEF3 /* AddTagsButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTagsButtonCell.xib; sourceTree = "<group>"; };
+		9386C28A2BB25EDC00ABDEF3 /* AddedTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedTagsView.swift; sourceTree = "<group>"; };
+		9386C28C2BB25F2700ABDEF3 /* AddedTagsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddedTagsView.xib; sourceTree = "<group>"; };
+		93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsButtonCell.swift; sourceTree = "<group>"; };
 		93FCEA772B91AF3B0069B344 /* DashboardUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardUITest.swift; sourceTree = "<group>"; };
 		CE07B83429DC92F900A02652 /* ItemDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		CE07B83529DC92F900A02652 /* ItemDescriptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDescriptionTableViewCell.xib; sourceTree = "<group>"; };
@@ -3363,6 +3373,8 @@
 				476EB47423C50662009745E2 /* GroupContactTableViewCell.xib */,
 				4712BB4023D755EA00DDCC3B /* GroupAddMemberTableViewCell.swift */,
 				4712BB4123D755EA00DDCC3B /* GroupAddMemberTableViewCell.xib */,
+				93D7B5462BAE0FEA007C53A9 /* AddTagsButtonCell.swift */,
+				9386C2882BB25C2200ABDEF3 /* AddTagsButtonCell.xib */,
 			);
 			path = "View Cells";
 			sourceTree = "<group>";
@@ -3433,6 +3445,7 @@
 				F331199E268E99FE005082EB /* StoreKit */,
 				47F6CA0728786A13005EBCB6 /* Crypter */,
 				475BDD35232ACF8700C5BBD6 /* Supporting Files */,
+				47E19DE92BB718A700A0E596 /* PrivacyInfo.xcprivacy */,
 			);
 			path = sphinx;
 			sourceTree = "<group>";
@@ -3551,6 +3564,8 @@
 				4787F87D24745BBD00CCE8B9 /* GroupTagView.xib */,
 				470F4C45257E6EE400288A9B /* TribeMemberInfoView.swift */,
 				470F4C4B257E708400288A9B /* TribeMemberInfoView.xib */,
+				9386C28A2BB25EDC00ABDEF3 /* AddedTagsView.swift */,
+				9386C28C2BB25F2700ABDEF3 /* AddedTagsView.xib */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -4862,6 +4877,7 @@
 				474935662A2919D600AB5FFA /* AudioMessageView.xib in Resources */,
 				F33119A5268FA097005082EB /* XcodeStoreKitTestCertificate.cer in Resources */,
 				F3188BA3271CDA4200890DDD /* VideoFeed.storyboard in Resources */,
+				9386C2892BB25C2200ABDEF3 /* AddTagsButtonCell.xib in Resources */,
 				470F5CAD243E8823007E054F /* VideoCallPayButton.xib in Resources */,
 				CE842DE9298C67A500620AD3 /* KnownBadgeCell.xib in Resources */,
 				47E6A4CA2A2E66E500A9509E /* DateSeparatorView.xib in Resources */,
@@ -4891,6 +4907,7 @@
 				47904C0924BF352300710E7A /* note.caf in Resources */,
 				475BDD4E232AD00D00C5BBD6 /* Roboto-Regular.ttf in Resources */,
 				4779F16F232AA0F300D35E81 /* LaunchScreen.storyboard in Resources */,
+				47E19DEA2BB718A700A0E596 /* PrivacyInfo.xcprivacy in Resources */,
 				47DE1C472A6ED0B00029597B /* MessageThreadView.xib in Resources */,
 				CEE433B329AE538B00ACE6C1 /* UnifiedEpisodeTableViewCell.xib in Resources */,
 				47018F8127CFB7CE00797E0B /* pause_animation.json in Resources */,
@@ -4974,6 +4991,7 @@
 				CEE49BF42A1BBC70009E0EC4 /* MediaStorageTypeSummaryTableViewCell.xib in Resources */,
 				4705D39B2799AAC0009C0729 /* CustomBoostView.xib in Resources */,
 				47183CB42548AA5100E6FD19 /* PodcastPlayerView.xib in Resources */,
+				9386C28D2BB25F2700ABDEF3 /* AddedTagsView.xib in Resources */,
 				F3446B9426BABAB400855516 /* ChatListCollectionViewCell.xib in Resources */,
 				F3188BAE271CF20B00890DDD /* VideoFeedEpisodePlayerCollectionViewDetailsCell.xib in Resources */,
 				47CFA94C2A38CA4E0030BC23 /* NewMessagesIndicatorView.xib in Resources */,
@@ -5184,6 +5202,7 @@
 				47A79D3A2444A15C005CD72F /* MessageOptionsView.swift in Sources */,
 				47E6A4CC2A2E68A700A9509E /* DeletedMessageView.swift in Sources */,
 				47308E0824FEE6E600FFAC6F /* SocketEngineClient.swift in Sources */,
+				93D7B5472BAE0FEA007C53A9 /* AddTagsButtonCell.swift in Sources */,
 				475BDD89232C086C00C5BBD6 /* HistoryViewController.swift in Sources */,
 				CE94A50D2A4B2BF6001EDF7E /* MentionOrMacroItem.swift in Sources */,
 				F36C5EC027315EBB00F3D944 /* GeneralVideoFeedEpisodePlayerViewController GeneralVideoFeedEpisodePlayerViewController.swift in Sources */,
@@ -5455,6 +5474,7 @@
 				4726A40D24C09C38005A66B4 /* ChatListHeader.swift in Sources */,
 				F373BF0C26AAFB990093C886 /* CustomSegmentedControl.swift in Sources */,
 				F3197C1326811DE400330F79 /* RestoreUserFormViewController+KeychainRestorationUtils.swift in Sources */,
+				9386C28B2BB25EDC00ABDEF3 /* AddedTagsView.swift in Sources */,
 				47E6A4F72A2F788300A9509E /* NewChatTableDataSource+ResultsControllerExtension.swift in Sources */,
 				4785C10224D4A0BE004E2D6C /* Constants.swift in Sources */,
 				CE3133AD2977747E00E91E3A /* BadgeAdminManagementListDataSource.swift in Sources */,
@@ -6592,7 +6612,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 434;
+				CURRENT_PROJECT_VERSION = 440;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
@@ -6682,7 +6702,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = sphinx/sphinx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 434;
+				CURRENT_PROJECT_VERSION = 440;
 				DEVELOPMENT_TEAM = 8297M44YTW;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

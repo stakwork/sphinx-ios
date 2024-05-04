@@ -102,4 +102,8 @@ extension NewChatViewController : PinnedMessageViewDelegate, PinMessageDelegate 
         vc.modalPresentationStyle = .overCurrentContext
         self.present(vc, animated: false)
     }
+    
+    func shouldNavigateTo(messageId: Int) {
+        chatTableDataSource?.reloadWith(pinnedMessageId: messageId)
+    }
 }

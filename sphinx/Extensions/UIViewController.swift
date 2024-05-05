@@ -17,6 +17,11 @@ extension UIViewController {
         self.present(navigationController, animated: true)
     }
     
+    func presentViewController(vc: UIViewController) {
+        vc.modalPresentationStyle = .overCurrentContext
+        self.present(vc, animated: true)
+    }
+    
     func addChildVC(child: UIViewController, container: UIView) {
         addChild(child)
         child.view.frame = container.bounds

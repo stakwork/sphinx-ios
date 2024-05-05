@@ -189,7 +189,8 @@ extension NewPodcastPlayerViewController : PodcastEpisodesDSDelegate {
     
     func showEpisodeDetails(episode: PodcastEpisode, indexPath:IndexPath) {
         let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
-        self.present(vc, animated: true)
+        self.presentViewController(vc: vc)
+//        self.present(vc, animated: true)
     }
 
     func pauseTapped(_ indexPath: IndexPath, episode: PodcastEpisode) {

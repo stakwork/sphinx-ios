@@ -412,14 +412,16 @@ extension VideoFeedEpisodePlayerCollectionViewController: FeedItemRowDelegate, P
     func shouldShowMore(episode: PodcastEpisode, cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
             let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: indexPath)
-            self.present(vc, animated: true)
+            self.presentViewController(vc: vc)
+//            self.present(vc, animated: true)
         }
     }
     
     func shouldShowMore(video: Video, cell: UICollectionViewCell) {
         if let indexPath = collectionView.indexPath(for: cell) {
             let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: indexPath)
-            self.present(vc, animated: true)
+            self.presentViewController(vc: vc)
+//            self.present(vc, animated: true)
         }
     }
     

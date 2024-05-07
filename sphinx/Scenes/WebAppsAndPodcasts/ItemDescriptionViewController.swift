@@ -335,14 +335,12 @@ extension ItemDescriptionViewController : ItemDescriptionTableViewHeaderCellDele
     
     func itemMoreTapped(episode: PodcastEpisode) {
         let vc = FeedItemDetailVC.instantiate(episode: episode, delegate: self, indexPath: IndexPath(item: 0, section: 0))
-        self.presentViewController(vc: vc)
-//        self.present(vc, animated: true)
+        self.present(vc, animated: true)
     }
     
     func itemMoreTapped(video: Video) {
         let vc = FeedItemDetailVC.instantiate(video: video, delegate: self, indexPath: IndexPath(item: 0, section: 0))
-        self.presentViewController(vc: vc)
-//        self.present(vc, animated: true)
+        self.present(vc, animated: true)
     }
     
     func itemDownloadTapped(episode: PodcastEpisode) {

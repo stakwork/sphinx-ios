@@ -1637,7 +1637,6 @@
                                 <color key="backgroundColor" name="HeaderBG"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="djr-xM-hzO" secondAttribute="bottom" id="CAc-EV-u8q"/>
-                                    <constraint firstAttribute="height" constant="113" id="HBk-PK-aL5"/>
                                     <constraint firstAttribute="trailing" secondItem="djr-xM-hzO" secondAttribute="trailing" id="PsE-HP-FcR"/>
                                     <constraint firstItem="djr-xM-hzO" firstAttribute="leading" secondItem="iwI-6f-Ciu" secondAttribute="leading" id="UTe-Ke-dS4"/>
                                 </constraints>

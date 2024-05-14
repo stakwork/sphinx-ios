@@ -97,7 +97,7 @@ class FeedItemDetailVM : NSObject {
         tableView?.dataSource = self
         
         DelayPerformedHelper.performAfterDelay(seconds: 0.1, completion: {
-            self.tableView?.scrollToBottom()
+            self.tableView?.scrollToTop()
         })
     }
     
